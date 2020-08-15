@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,21 +343,23 @@
 <h1>RESTful Resource Handling<a class="headerlink" href="#restful-resource-handling" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#resource-routes" id="id4">Resource Routes</a><ul>
-<li><a class="reference internal" href="#change-the-controller-used" id="id5">Change the Controller Used</a></li>
-<li><a class="reference internal" href="#change-the-placeholder-used" id="id6">Change the Placeholder Used</a></li>
-<li><a class="reference internal" href="#limit-the-routes-made" id="id7">Limit the Routes Made</a></li>
+<li><p><a class="reference internal" href="#resource-routes" id="id4">Resource Routes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#change-the-controller-used" id="id5">Change the Controller Used</a></p></li>
+<li><p><a class="reference internal" href="#change-the-placeholder-used" id="id6">Change the Placeholder Used</a></p></li>
+<li><p><a class="reference internal" href="#limit-the-routes-made" id="id7">Limit the Routes Made</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resourcecontroller" id="id8">ResourceController</a></li>
-<li><a class="reference internal" href="#presenter-routes" id="id9">Presenter Routes</a><ul>
-<li><a class="reference internal" href="#id1" id="id10">Change the Controller Used</a></li>
-<li><a class="reference internal" href="#id2" id="id11">Change the Placeholder Used</a></li>
-<li><a class="reference internal" href="#id3" id="id12">Limit the Routes Made</a></li>
+<li><p><a class="reference internal" href="#resourcecontroller" id="id8">ResourceController</a></p></li>
+<li><p><a class="reference internal" href="#presenter-routes" id="id9">Presenter Routes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id10">Change the Controller Used</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id11">Change the Placeholder Used</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id12">Limit the Routes Made</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resourcepresenter" id="id13">ResourcePresenter</a></li>
-<li><a class="reference internal" href="#presenter-controller-comparison" id="id14">Presenter/Controller Comparison</a></li>
+<li><p><a class="reference internal" href="#resourcepresenter" id="id13">ResourcePresenter</a></p></li>
+<li><p><a class="reference internal" href="#presenter-controller-comparison" id="id14">Presenter/Controller Comparison</a></p></li>
 </ul>
 </div>
 <p>Representational State Transfer (REST) is an architectural style for
@@ -390,12 +395,12 @@ name:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
+<p class="admonition-title">Note</p>
+<p>The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">The routes are matched in the order they are specified, so if you have a resource photos above a get ‘photos/poll’ the show action’s route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.</p>
+<p class="admonition-title">Important</p>
+<p>The routes are matched in the order they are specified, so if you have a resource photos above a get ‘photos/poll’ the show action’s route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.</p>
 </div>
 <p>The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the ‘websafe’ option to have it
@@ -497,8 +502,8 @@ Its usage is similar to the resource routing:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
+<p class="admonition-title">Note</p>
+<p>The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
 </div>
 <p>You would not have routes for <cite>photos</cite> for both a resource and a presenter
 controller. You need to distinguish them, for instance:</p>
@@ -577,108 +582,108 @@ implement those methods that you want handled.:</p>
 <h2><a class="toc-backref" href="#id14">Presenter/Controller Comparison</a><a class="headerlink" href="#presenter-controller-comparison" title="Permalink to this headline">¶</a></h2>
 <p>This table presents a comparison of the default routes created by <cite>resource()</cite>
 and <cite>presenter()</cite> with their corresponding Controller functions.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="14%" />
-<col width="8%" />
-<col width="19%" />
-<col width="21%" />
-<col width="19%" />
-<col width="19%" />
+<col style="width: 14%" />
+<col style="width: 8%" />
+<col style="width: 19%" />
+<col style="width: 21%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">Method</th>
-<th class="head">Controller Route</th>
-<th class="head">Presenter Route</th>
-<th class="head">Controller Function</th>
-<th class="head">Presenter Function</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Method</p></th>
+<th class="head"><p>Controller Route</p></th>
+<th class="head"><p>Presenter Route</p></th>
+<th class="head"><p>Controller Function</p></th>
+<th class="head"><p>Presenter Function</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><strong>New</strong></td>
-<td>GET</td>
-<td>photos/new</td>
-<td>photos/new</td>
-<td><code class="docutils literal notranslate"><span class="pre">new()</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">new()</span></code></td>
+<tbody>
+<tr class="row-even"><td><p><strong>New</strong></p></td>
+<td><p>GET</p></td>
+<td><p>photos/new</p></td>
+<td><p>photos/new</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">new()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">new()</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><strong>Create</strong></td>
-<td>POST</td>
-<td>photos</td>
-<td>photos</td>
-<td><code class="docutils literal notranslate"><span class="pre">create()</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">create()</span></code></td>
+<tr class="row-odd"><td><p><strong>Create</strong></p></td>
+<td><p>POST</p></td>
+<td><p>photos</p></td>
+<td><p>photos</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create()</span></code></p></td>
 </tr>
-<tr class="row-even"><td>Create (alias)</td>
-<td>POST</td>
-<td>&#160;</td>
-<td>photos/create</td>
-<td>&#160;</td>
-<td><code class="docutils literal notranslate"><span class="pre">create()</span></code></td>
+<tr class="row-even"><td><p>Create (alias)</p></td>
+<td><p>POST</p></td>
+<td></td>
+<td><p>photos/create</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create()</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><strong>List</strong></td>
-<td>GET</td>
-<td>photos</td>
-<td>photos</td>
-<td><code class="docutils literal notranslate"><span class="pre">index()</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">index()</span></code></td>
+<tr class="row-odd"><td><p><strong>List</strong></p></td>
+<td><p>GET</p></td>
+<td><p>photos</p></td>
+<td><p>photos</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">index()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">index()</span></code></p></td>
 </tr>
-<tr class="row-even"><td><strong>Show</strong></td>
-<td>GET</td>
-<td>photos/(:segment)</td>
-<td>photos/(:segment)</td>
-<td><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-even"><td><p><strong>Show</strong></p></td>
+<td><p>GET</p></td>
+<td><p>photos/(:segment)</p></td>
+<td><p>photos/(:segment)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
-<tr class="row-odd"><td>Show (alias)</td>
-<td>GET</td>
-<td>&#160;</td>
-<td>photos/show/(:segment)</td>
-<td>&#160;</td>
-<td><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-odd"><td><p>Show (alias)</p></td>
+<td><p>GET</p></td>
+<td></td>
+<td><p>photos/show/(:segment)</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">show($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
-<tr class="row-even"><td><strong>Edit</strong></td>
-<td>GET</td>
-<td>photos/(:segment)/edit</td>
-<td>photos/edit/(:segment)</td>
-<td><code class="docutils literal notranslate"><span class="pre">edit($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">edit($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-even"><td><p><strong>Edit</strong></p></td>
+<td><p>GET</p></td>
+<td><p>photos/(:segment)/edit</p></td>
+<td><p>photos/edit/(:segment)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">edit($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">edit($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><strong>Update</strong></td>
-<td>PUT/PATCH</td>
-<td>photos/(:segment)</td>
-<td>&#160;</td>
-<td><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p><strong>Update</strong></p></td>
+<td><p>PUT/PATCH</p></td>
+<td><p>photos/(:segment)</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>Update (websafe)</td>
-<td>POST</td>
-<td>photos/(:segment)</td>
-<td>photos/update/(:segment)</td>
-<td><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-even"><td><p>Update (websafe)</p></td>
+<td><p>POST</p></td>
+<td><p>photos/(:segment)</p></td>
+<td><p>photos/update/(:segment)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">update($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><strong>Remove</strong></td>
-<td>GET</td>
-<td>&#160;</td>
-<td>photos/remove/(:segment)</td>
-<td>&#160;</td>
-<td><code class="docutils literal notranslate"><span class="pre">remove($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-odd"><td><p><strong>Remove</strong></p></td>
+<td><p>GET</p></td>
+<td></td>
+<td><p>photos/remove/(:segment)</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">remove($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
-<tr class="row-even"><td><strong>Delete</strong></td>
-<td>DELETE</td>
-<td>photos/(:segment)</td>
-<td>&#160;</td>
-<td><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td>&#160;</td>
+<tr class="row-even"><td><p><strong>Delete</strong></p></td>
+<td><p>DELETE</p></td>
+<td><p>photos/(:segment)</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>Delete (websafe)</td>
-<td>POST</td>
-<td>&#160;</td>
-<td>photos/delete/(:segment)</td>
-<td><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></td>
+<tr class="row-odd"><td><p>Delete (websafe)</p></td>
+<td><p>POST</p></td>
+<td></td>
+<td><p>photos/delete/(:segment)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">delete($id</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></td>
 </tr>
 </tbody>
 </table>

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,8 +344,8 @@
 <p>The Test Helper file contains functions that assist in testing your project.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -357,25 +360,21 @@
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="fake">
-<code class="descname">fake</code><span class="sig-paren">(</span><em>$model</em>, <em>array $overrides = null</em><span class="sig-paren">)</span><a class="headerlink" href="#fake" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$model</strong> (<em>Model|object|string</em>) – Instance or name of the model to use with Fabricator</li>
-<li><strong>$overrides</strong> (<em>array|null</em>) – Overriding data to pass to Fabricator::setOverrides()</li>
+<code class="sig-name descname">fake</code><span class="sig-paren">(</span><em class="sig-param">$model</em>, <em class="sig-param">array $overrides = null</em><span class="sig-paren">)</span><a class="headerlink" href="#fake" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$model</strong> (<em>Model|object|string</em>) – Instance or name of the model to use with Fabricator</p></li>
+<li><p><strong>$overrides</strong> (<em>array|null</em>) – Overriding data to pass to Fabricator::setOverrides()</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A random fake item created and aded ot the database by Fabricator</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object|array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A random fake item created and aded ot the database by Fabricator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object|array</p>
+</dd>
+</dl>
 <p>Uses <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Fabricator</span></code> to create a random item and add it to the database.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">testUserAccess</span><span class="p">()</span>

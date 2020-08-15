@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,8 +345,8 @@
 directories.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -358,33 +361,29 @@ directories.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="directory_map">
-<code class="descname">directory_map</code><span class="sig-paren">(</span><em>$source_dir</em><span class="optional">[</span>, <em>$directory_depth = 0</em><span class="optional">[</span>, <em>$hidden = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) – Path to the source directory</li>
-<li><strong>$directory_depth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</li>
-<li><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden directories</li>
+<code class="sig-name descname">directory_map</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em><span class="optional">[</span>, <em class="sig-param">$directory_depth = 0</em><span class="optional">[</span>, <em class="sig-param">$hidden = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$source_dir</strong> (<em>string</em>) – Path to the source directory</p></li>
+<li><p><strong>$directory_depth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</p></li>
+<li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden directories</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array of files</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array of files</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Paths are almost always relative to your main index.php file.</p>
+<p class="admonition-title">Note</p>
+<p>Paths are almost always relative to your main index.php file.</p>
 </div>
 <p>Sub-folders contained within the directory will be mapped as well. If
 you wish to control the recursion depth, you can do so using the second
@@ -431,26 +430,22 @@ be numerically indexed. Here is an example of a typical array:</p>
 
 <dl class="function">
 <dt id="write_file">
-<code class="descname">write_file</code><span class="sig-paren">(</span><em>$path</em>, <em>$data</em><span class="optional">[</span>, <em>$mode = 'wb'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#write_file" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) – File path</li>
-<li><strong>$data</strong> (<em>string</em>) – Data to write to file</li>
-<li><strong>$mode</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">fopen()</span></code> mode</li>
+<code class="sig-name descname">write_file</code><span class="sig-paren">(</span><em class="sig-param">$path</em>, <em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$mode = 'wb'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#write_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$path</strong> (<em>string</em>) – File path</p></li>
+<li><p><strong>$data</strong> (<em>string</em>) – Data to write to file</p></li>
+<li><p><strong>$mode</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">fopen()</span></code> mode</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the write was successful, FALSE in case of an error</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the write was successful, FALSE in case of an error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Writes data to the file specified in the path. If the file does not exist then the
 function will create it.</p>
 <p>Example:</p>
@@ -472,45 +467,41 @@ function will create it.</p>
 <p>The default mode is ‘wb’. Please see the <a class="reference external" href="https://www.php.net/manual/en/function.fopen.php">PHP user guide</a>
 for mode options.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In order for this function to write data to a file, its permissions must
+<p class="admonition-title">Note</p>
+<p>In order for this function to write data to a file, its permissions must
 be set such that it is writable. If the file does not already exist,
 then the directory containing it must be writable.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The path is relative to your main site index.php file, NOT your
+<p class="admonition-title">Note</p>
+<p>The path is relative to your main site index.php file, NOT your
 controller or view files. CodeIgniter uses a front controller so paths
 are always relative to the main site index.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This function acquires an exclusive lock on the file while writing to it.</p>
+<p class="admonition-title">Note</p>
+<p>This function acquires an exclusive lock on the file while writing to it.</p>
 </div>
 </dd></dl>
 
 <dl class="function">
 <dt id="delete_files">
-<code class="descname">delete_files</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$del_dir = FALSE</em><span class="optional">[</span>, <em>$htdocs = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) – Directory path</li>
-<li><strong>$del_dir</strong> (<em>bool</em>) – Whether to also delete directories</li>
-<li><strong>$htdocs</strong> (<em>bool</em>) – Whether to skip deleting .htaccess and index page files</li>
+<code class="sig-name descname">delete_files</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$del_dir = FALSE</em><span class="optional">[</span>, <em class="sig-param">$htdocs = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$path</strong> (<em>string</em>) – Directory path</p></li>
+<li><p><strong>$del_dir</strong> (<em>bool</em>) – Whether to also delete directories</p></li>
+<li><p><strong>$htdocs</strong> (<em>bool</em>) – Whether to skip deleting .htaccess and index page files</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE in case of an error</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE in case of an error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Deletes ALL files contained in the supplied path.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">);</span>
@@ -523,33 +514,29 @@ root path will be deleted as well.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The files must be writable or owned by the system in order to be deleted.</p>
+<p class="admonition-title">Note</p>
+<p>The files must be writable or owned by the system in order to be deleted.</p>
 </div>
 </dd></dl>
 
 <dl class="function">
 <dt id="get_filenames">
-<code class="descname">get_filenames</code><span class="sig-paren">(</span><em>$source_dir</em><span class="optional">[</span>, <em>$include_path = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) – Directory path</li>
-<li><strong>$include_path</strong> (<em>bool|null</em>) – Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path</li>
-<li><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden files (files beginning with a period)</li>
+<code class="sig-name descname">get_filenames</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em><span class="optional">[</span>, <em class="sig-param">$include_path = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$source_dir</strong> (<em>string</em>) – Directory path</p></li>
+<li><p><strong>$include_path</strong> (<em>bool|null</em>) – Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path</p></li>
+<li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden files (files beginning with a period)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array of file names</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array of file names</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Takes a server path as input and returns an array containing the names of all files
 contained within it. The file path can optionally be added to the file names by setting
 the second parameter to ‘relative’ for relative paths or any other non-empty value for
@@ -562,25 +549,21 @@ a full file path.</p>
 
 <dl class="function">
 <dt id="get_dir_file_info">
-<code class="descname">get_dir_file_info</code><span class="sig-paren">(</span><em>$source_dir</em>, <em>$top_level_only</em><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) – Directory path</li>
-<li><strong>$top_level_only</strong> (<em>bool</em>) – Whether to look only at the specified directory (excluding sub-directories)</li>
+<code class="sig-name descname">get_dir_file_info</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em>, <em class="sig-param">$top_level_only</em><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$source_dir</strong> (<em>string</em>) – Directory path</p></li>
+<li><p><strong>$top_level_only</strong> (<em>bool</em>) – Whether to look only at the specified directory (excluding sub-directories)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array containing info on the supplied directory’s contents</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array containing info on the supplied directory’s contents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Reads the specified directory and builds an array containing the filenames, filesize,
 dates, and permissions. Sub-folders contained within the specified path are only read
 if forced by sending the second parameter to FALSE, as this can be an intensive
@@ -593,25 +576,21 @@ operation.</p>
 
 <dl class="function">
 <dt id="get_file_info">
-<code class="descname">get_file_info</code><span class="sig-paren">(</span><em>$file[, $returned_values = ['name', 'server_path', 'size', 'date']]</em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$file</strong> (<em>string</em>) – File path</li>
-<li><strong>$returned_values</strong> (<em>array|string</em>) – What type of info to return to be passed as array or comma separated string</li>
+<code class="sig-name descname">get_file_info</code><span class="sig-paren">(</span><em class="sig-param">$file[, $returned_values = ['name', 'server_path', 'size', 'date']]</em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$file</strong> (<em>string</em>) – File path</p></li>
+<li><p><strong>$returned_values</strong> (<em>array|string</em>) – What type of info to return to be passed as array or comma separated string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array containing info on the specified file or FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array containing info on the specified file or FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Given a file and path, returns (optionally) the <em>name</em>, <em>path</em>, <em>size</em> and <em>date modified</em>
 information attributes for a file. Second parameter allows you to explicitly declare what
 information you want returned.</p>
@@ -621,24 +600,20 @@ information you want returned.</p>
 
 <dl class="function">
 <dt id="symbolic_permissions">
-<code class="descname">symbolic_permissions</code><span class="sig-paren">(</span><em>$perms</em><span class="sig-paren">)</span><a class="headerlink" href="#symbolic_permissions" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$perms</strong> (<em>int</em>) – Permissions</li>
+<code class="sig-name descname">symbolic_permissions</code><span class="sig-paren">(</span><em class="sig-param">$perms</em><span class="sig-paren">)</span><a class="headerlink" href="#symbolic_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$perms</strong> (<em>int</em>) – Permissions</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Symbolic permissions string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Symbolic permissions string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Takes numeric permissions (such as is returned by <code class="docutils literal notranslate"><span class="pre">fileperms()</span></code>) and returns
 standard symbolic notation of file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
@@ -648,24 +623,20 @@ standard symbolic notation of file permissions.</p>
 
 <dl class="function">
 <dt id="octal_permissions">
-<code class="descname">octal_permissions</code><span class="sig-paren">(</span><em>$perms</em><span class="sig-paren">)</span><a class="headerlink" href="#octal_permissions" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$perms</strong> (<em>int</em>) – Permissions</li>
+<code class="sig-name descname">octal_permissions</code><span class="sig-paren">(</span><em class="sig-param">$perms</em><span class="sig-paren">)</span><a class="headerlink" href="#octal_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$perms</strong> (<em>int</em>) – Permissions</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Octal permissions string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Octal permissions string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Takes numeric permissions (such as is returned by <code class="docutils literal notranslate"><span class="pre">fileperms()</span></code>) and returns
 a three character octal notation of file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span> <span class="c1">// 644</span>
@@ -675,25 +646,21 @@ a three character octal notation of file permissions.</p>
 
 <dl class="function">
 <dt id="set_realpath">
-<code class="descname">set_realpath</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$check_existence = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) – Path</li>
-<li><strong>$check_existence</strong> (<em>bool</em>) – Whether to check if the path actually exists</li>
+<code class="sig-name descname">set_realpath</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$check_existence = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$path</strong> (<em>string</em>) – Path</p></li>
+<li><p><strong>$check_existence</strong> (<em>bool</em>) – Whether to check if the path actually exists</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An absolute path</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An absolute path</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>This function will return a server path without symbolic links or
 relative directory structures. An optional second argument will
 cause an error to be triggered if the path cannot be resolved.</p>

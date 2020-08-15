@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -345,8 +348,8 @@ modules, projects, and the framework itself.</p>
 <div class="section" id="recommendations">
 <h2>Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Modules that handle login and logout operations should trigger the <code class="docutils literal notranslate"><span class="pre">login</span></code> and <code class="docutils literal notranslate"><span class="pre">logout</span></code> Events when successful</li>
-<li>Modules that define a “current user” should define the function <code class="docutils literal notranslate"><span class="pre">user_id()</span></code> to return the user’s unique identifier, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “no current user”</li>
+<li><p>Modules that handle login and logout operations should trigger the <code class="docutils literal notranslate"><span class="pre">login</span></code> and <code class="docutils literal notranslate"><span class="pre">logout</span></code> Events when successful</p></li>
+<li><p>Modules that define a “current user” should define the function <code class="docutils literal notranslate"><span class="pre">user_id()</span></code> to return the user’s unique identifier, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “no current user”</p></li>
 </ul>
 </div>
 </div>

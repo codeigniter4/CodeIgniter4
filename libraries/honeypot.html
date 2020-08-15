@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -344,8 +347,8 @@ and this form field is hidden from a human but accessible to a Bot. When data is
 assumed the request is coming from a Bot, and you can throw a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#enabling-honeypot" id="id1">Enabling Honeypot</a></li>
-<li><a class="reference internal" href="#customizing-honeypot" id="id2">Customizing Honeypot</a></li>
+<li><p><a class="reference internal" href="#enabling-honeypot" id="id1">Enabling Honeypot</a></p></li>
+<li><p><a class="reference internal" href="#customizing-honeypot" id="id2">Customizing Honeypot</a></p></li>
 </ul>
 </div>
 <div class="section" id="enabling-honeypot">
@@ -373,10 +376,10 @@ and modify the <code class="docutils literal notranslate"><span class="pre">$ali
 <p>Honeypot can be customized. The fields below can be set either in
 <code class="docutils literal notranslate"><span class="pre">app/Config/Honeypot.php</span></code> or in <code class="docutils literal notranslate"><span class="pre">.env</span></code>.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">hidden</span></code> - true|false to control visibility of the honeypot field; default is <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">label</span></code> - HTML label for the honeypot field, default is ‘Fill This Field’</li>
-<li><code class="docutils literal notranslate"><span class="pre">name</span></code> - name of the HTML form field used for the template; default is ‘honeypot’</li>
-<li><code class="docutils literal notranslate"><span class="pre">template</span></code> - form field template used for the honeypot; default is ‘&lt;label&gt;{label}&lt;/label&gt;&lt;input type=”text” name=”{name}” value=””/&gt;’</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hidden</span></code> - true|false to control visibility of the honeypot field; default is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code> - HTML label for the honeypot field, default is ‘Fill This Field’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> - name of the HTML form field used for the template; default is ‘honeypot’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">template</span></code> - form field template used for the honeypot; default is ‘&lt;label&gt;{label}&lt;/label&gt;&lt;input type=”text” name=”{name}” value=””/&gt;’</p></li>
 </ul>
 </div>
 </div>

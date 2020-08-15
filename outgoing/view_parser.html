@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,29 +343,32 @@
 <h1>View Parser<a class="headerlink" href="#view-parser" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#using-the-view-parser-class" id="id1">Using the View Parser Class</a><ul>
-<li><a class="reference internal" href="#what-it-does" id="id2">What It Does</a></li>
-<li><a class="reference internal" href="#parser-templates" id="id3">Parser templates</a></li>
-<li><a class="reference internal" href="#parser-configuration-options" id="id4">Parser Configuration Options</a></li>
+<li><p><a class="reference internal" href="#using-the-view-parser-class" id="id1">Using the View Parser Class</a></p>
+<ul>
+<li><p><a class="reference internal" href="#what-it-does" id="id2">What It Does</a></p></li>
+<li><p><a class="reference internal" href="#parser-templates" id="id3">Parser templates</a></p></li>
+<li><p><a class="reference internal" href="#parser-configuration-options" id="id4">Parser Configuration Options</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#substitution-variations" id="id5">Substitution Variations</a><ul>
-<li><a class="reference internal" href="#loop-substitutions" id="id6">Loop Substitutions</a></li>
-<li><a class="reference internal" href="#nested-substitutions" id="id7">Nested Substitutions</a></li>
-<li><a class="reference internal" href="#comments" id="id8">Comments</a></li>
-<li><a class="reference internal" href="#cascading-data" id="id9">Cascading Data</a></li>
-<li><a class="reference internal" href="#preventing-parsing" id="id10">Preventing Parsing</a></li>
-<li><a class="reference internal" href="#conditional-logic" id="id11">Conditional Logic</a></li>
-<li><a class="reference internal" href="#escaping-data" id="id12">Escaping Data</a></li>
-<li><a class="reference internal" href="#filters" id="id13">Filters</a></li>
-<li><a class="reference internal" href="#parser-plugins" id="id14">Parser Plugins</a></li>
+<li><p><a class="reference internal" href="#substitution-variations" id="id5">Substitution Variations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#loop-substitutions" id="id6">Loop Substitutions</a></p></li>
+<li><p><a class="reference internal" href="#nested-substitutions" id="id7">Nested Substitutions</a></p></li>
+<li><p><a class="reference internal" href="#comments" id="id8">Comments</a></p></li>
+<li><p><a class="reference internal" href="#cascading-data" id="id9">Cascading Data</a></p></li>
+<li><p><a class="reference internal" href="#preventing-parsing" id="id10">Preventing Parsing</a></p></li>
+<li><p><a class="reference internal" href="#conditional-logic" id="id11">Conditional Logic</a></p></li>
+<li><p><a class="reference internal" href="#escaping-data" id="id12">Escaping Data</a></p></li>
+<li><p><a class="reference internal" href="#filters" id="id13">Filters</a></p></li>
+<li><p><a class="reference internal" href="#parser-plugins" id="id14">Parser Plugins</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#usage-notes" id="id15">Usage Notes</a><ul>
-<li><a class="reference internal" href="#view-fragments" id="id16">View Fragments</a></li>
+<li><p><a class="reference internal" href="#usage-notes" id="id15">Usage Notes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#view-fragments" id="id16">View Fragments</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#class-reference" id="id17">Class Reference</a></li>
+<li><p><a class="reference internal" href="#class-reference" id="id17">Class Reference</a></p></li>
 </ul>
 </div>
 <p>The View Parser can perform simple text substitution for
@@ -389,8 +395,8 @@ It can parse simple variables or variable tag pairs.</p>
 representations that allow you to eliminate PHP from your templates
 (view files).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">CodeIgniter does <strong>not</strong> require you to use this class since
+<p class="admonition-title">Note</p>
+<p>CodeIgniter does <strong>not</strong> require you to use this class since
 using pure PHP in your view pages (for instance using the
 <a class="reference internal" href="view_renderer.html"><span class="doc">View renderer</span></a> )
 lets them run a little faster.
@@ -450,28 +456,28 @@ template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to <code class="docutils literal notranslate"><span class="pre">render()</span></code> contains the name of the <a class="reference internal" href="views.html"><span class="doc">view
 file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If the file extension is omitted, then the views are expected to end with the .php extension.</p>
+<p class="admonition-title">Important</p>
+<p>If the file extension is omitted, then the views are expected to end with the .php extension.</p>
 </div>
 </div>
 <div class="section" id="parser-configuration-options">
 <h3><a class="toc-backref" href="#id4">Parser Configuration Options</a><a class="headerlink" href="#parser-configuration-options" title="Permalink to this headline">¶</a></h3>
 <p>Several options can be passed to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> or <code class="docutils literal notranslate"><span class="pre">renderString()</span></code> methods.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath;</dt>
-<dd>ignored for renderString()</dd>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath;</dt><dd><p>ignored for renderString()</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls;</dt>
-<dd>default is <strong>false</strong></dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls;</dt><dd><p>default is <strong>false</strong></p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> - true if pseudo-variable settings should be passed on to nested</dt>
-<dd>substitutions; default is <strong>true</strong></dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> - true if pseudo-variable settings should be passed on to nested</dt><dd><p>substitutions; default is <strong>true</strong></p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -503,9 +509,9 @@ used for nested substitutions or looping, and with some advanced
 constructs for conditional substitution.</p>
 <p>When the parser executes, it will generally</p>
 <ul class="simple">
-<li>handle any conditional substitutions</li>
-<li>handle any nested/looping substitutions</li>
-<li>handle the remaining single substitutions</li>
+<li><p>handle any conditional substitutions</p></li>
+<li><p>handle any nested/looping substitutions</p></li>
+<li><p>handle the remaining single substitutions</p></li>
 </ul>
 <div class="section" id="loop-substitutions">
 <h3><a class="toc-backref" href="#id6">Loop Substitutions</a><a class="headerlink" href="#loop-substitutions" title="Permalink to this headline">¶</a></h3>
@@ -697,8 +703,8 @@ of the comparison operators you would normally, like <code class="docutils liter
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In the background, conditionals are parsed using an <strong>eval()</strong>, so you must ensure that you take
+<p class="admonition-title">Note</p>
+<p>In the background, conditionals are parsed using an <strong>eval()</strong>, so you must ensure that you take
 care with the user data that is used within conditionals, or you could open your application up to security risks.</p>
 </div>
 </div>
@@ -741,178 +747,178 @@ left to right:</p>
 <div class="section" id="provided-filters">
 <h4>Provided Filters<a class="headerlink" href="#provided-filters" title="Permalink to this headline">¶</a></h4>
 <p>The following filters are available when using the parser:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="11%" />
-<col width="16%" />
-<col width="46%" />
-<col width="27%" />
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 46%" />
+<col style="width: 27%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td rowspan="2"><strong>Filter</strong></td>
-<td rowspan="2"><strong>Arguments</strong></td>
-<td rowspan="2"><strong>Description</strong></td>
-<td rowspan="2"><strong>Example</strong></td>
+<tbody>
+<tr class="row-odd"><td rowspan="2"><p><strong>Filter</strong></p></td>
+<td rowspan="2"><p><strong>Arguments</strong></p></td>
+<td rowspan="2"><p><strong>Description</strong></p></td>
+<td rowspan="2"><p><strong>Example</strong></p></td>
 </tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">abs</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">Displays the absolute value of a number.</td>
-<td rowspan="2">{ v|abs }</td>
+<tr class="row-odd"><td rowspan="2"><p>abs</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>Displays the absolute value of a number.</p></td>
+<td rowspan="2"><p>{ v|abs }</p></td>
 </tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">capitalize</td>
-<td rowspan="3">&#160;</td>
-<td rowspan="3">Displays the string in sentence case: all lowercase
-with firstletter capitalized.</td>
-<td rowspan="3">{ v|capitalize}</td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">date</td>
-<td rowspan="2">format (Y-m-d)</td>
-<td rowspan="2">A PHP <strong>date</strong>-compatible formatting string.</td>
-<td rowspan="2">{ v|date(Y-m-d) }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">date_modify</td>
-<td rowspan="3">value to add
-/ subtract</td>
-<td rowspan="3">A <strong>strtotime</strong> compatible string to modify the date,
-like <code class="docutils literal notranslate"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span> <span class="pre">week</span></code>.</td>
-<td rowspan="3">{ v|date_modify(+1 day) }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">default</td>
-<td rowspan="3">default value</td>
-<td rowspan="3">Displays the default value if the variable is empty or
-undefined.</td>
-<td rowspan="3">{ v|default(just in case) }</td>
+<tr class="row-odd"><td rowspan="3"><p>capitalize</p></td>
+<td rowspan="3"></td>
+<td rowspan="3"><p>Displays the string in sentence case: all lowercase
+with firstletter capitalized.</p></td>
+<td rowspan="3"><p>{ v|capitalize}</p></td>
 </tr>
 <tr class="row-even"></tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">esc</td>
-<td rowspan="2">html, attr, css, js</td>
-<td rowspan="2">Specifies the context to escape the data.</td>
-<td rowspan="2">{ v|esc(attr) }</td>
+<tr class="row-even"><td rowspan="2"><p>date</p></td>
+<td rowspan="2"><p>format (Y-m-d)</p></td>
+<td rowspan="2"><p>A PHP <strong>date</strong>-compatible formatting string.</p></td>
+<td rowspan="2"><p>{ v|date(Y-m-d) }</p></td>
 </tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">excerpt</td>
-<td rowspan="3">phrase, radius</td>
-<td rowspan="3">Returns the text within a radius of words from a given
-phrase. Same as <strong>excerpt</strong> helper function.</td>
-<td rowspan="3">{ v|excerpt(green giant, 20) }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">highlight</td>
-<td rowspan="3">phrase</td>
-<td rowspan="3">Highlights a given phrase within the text using
-‘&lt;mark&gt;&lt;/mark&gt;’ tags.</td>
-<td rowspan="3">{ v|highlight(view parser) }</td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">highlight_code</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">Highlights code samples with HTML/CSS.</td>
-<td rowspan="2">{ v|highlight_code }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">limit_chars</td>
-<td rowspan="2">limit</td>
-<td rowspan="2">Limits the number of characters to $limit.</td>
-<td rowspan="2">{ v|limit_chars(100) }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">limit_words</td>
-<td rowspan="2">limit</td>
-<td rowspan="2">Limits the number of words to $limit.</td>
-<td rowspan="2">{ v|limit_words(20) }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">local_currency</td>
-<td rowspan="3">currency, locale</td>
-<td rowspan="3">Displays a localized version of a currency. “currency”
-valueis any 3-letter ISO 4217 currency code.</td>
-<td rowspan="3">{ v|local_currency(EUR,en_US) }</td>
+<tr class="row-even"><td rowspan="3"><p>date_modify</p></td>
+<td rowspan="3"><p>value to add
+/ subtract</p></td>
+<td rowspan="3"><p>A <strong>strtotime</strong> compatible string to modify the date,
+like <code class="docutils literal notranslate"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span> <span class="pre">week</span></code>.</p></td>
+<td rowspan="3"><p>{ v|date_modify(+1 day) }</p></td>
 </tr>
 <tr class="row-odd"></tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="4">local_number</td>
-<td rowspan="4">type, precision,
-locale</td>
-<td rowspan="4">Displays a localized version of a number. “type” can be
+<tr class="row-odd"><td rowspan="3"><p>default</p></td>
+<td rowspan="3"><p>default value</p></td>
+<td rowspan="3"><p>Displays the default value if the variable is empty or
+undefined.</p></td>
+<td rowspan="3"><p>{ v|default(just in case) }</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><p>esc</p></td>
+<td rowspan="2"><p>html, attr, css, js</p></td>
+<td rowspan="2"><p>Specifies the context to escape the data.</p></td>
+<td rowspan="2"><p>{ v|esc(attr) }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3"><p>excerpt</p></td>
+<td rowspan="3"><p>phrase, radius</p></td>
+<td rowspan="3"><p>Returns the text within a radius of words from a given
+phrase. Same as <strong>excerpt</strong> helper function.</p></td>
+<td rowspan="3"><p>{ v|excerpt(green giant, 20) }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3"><p>highlight</p></td>
+<td rowspan="3"><p>phrase</p></td>
+<td rowspan="3"><p>Highlights a given phrase within the text using
+‘&lt;mark&gt;&lt;/mark&gt;’ tags.</p></td>
+<td rowspan="3"><p>{ v|highlight(view parser) }</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><p>highlight_code</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>Highlights code samples with HTML/CSS.</p></td>
+<td rowspan="2"><p>{ v|highlight_code }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><p>limit_chars</p></td>
+<td rowspan="2"><p>limit</p></td>
+<td rowspan="2"><p>Limits the number of characters to $limit.</p></td>
+<td rowspan="2"><p>{ v|limit_chars(100) }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><p>limit_words</p></td>
+<td rowspan="2"><p>limit</p></td>
+<td rowspan="2"><p>Limits the number of words to $limit.</p></td>
+<td rowspan="2"><p>{ v|limit_words(20) }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3"><p>local_currency</p></td>
+<td rowspan="3"><p>currency, locale</p></td>
+<td rowspan="3"><p>Displays a localized version of a currency. “currency”
+valueis any 3-letter ISO 4217 currency code.</p></td>
+<td rowspan="3"><p>{ v|local_currency(EUR,en_US) }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="4"><p>local_number</p></td>
+<td rowspan="4"><p>type, precision,
+locale</p></td>
+<td rowspan="4"><p>Displays a localized version of a number. “type” can be
 one of: decimal, currency, percent, scientific, spellout,
-ordinal, duration.</td>
-<td rowspan="4">{ v|local_number(decimal,2,en_US) }</td>
+ordinal, duration.</p></td>
+<td rowspan="4"><p>{ v|local_number(decimal,2,en_US) }</p></td>
 </tr>
 <tr class="row-even"></tr>
 <tr class="row-odd"></tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">lower</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">Converts a string to lowercase.</td>
-<td rowspan="2">{ v|lower }</td>
+<tr class="row-odd"><td rowspan="2"><p>lower</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>Converts a string to lowercase.</p></td>
+<td rowspan="2"><p>{ v|lower }</p></td>
 </tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">nl2br</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</td>
-<td rowspan="2">{ v|nl2br }</td>
+<tr class="row-odd"><td rowspan="2"><p>nl2br</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</p></td>
+<td rowspan="2"><p>{ v|nl2br }</p></td>
 </tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">number_format</td>
-<td rowspan="3">places</td>
-<td rowspan="3">Wraps PHP <strong>number_format</strong> function for use within the
-parser.</td>
-<td rowspan="3">{ v|number_format(3) }</td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">prose</td>
-<td rowspan="3">&#160;</td>
-<td rowspan="3">Takes a body of text and uses the <strong>auto_typography()</strong>
-method to turn it into prettier, easier-to-read, prose.</td>
-<td rowspan="3">{ v|prose }</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">round</td>
-<td rowspan="3">places, type</td>
-<td rowspan="3">Rounds a number to the specified places. Types of <strong>ceil</strong>
-and <strong>floor</strong> can be passed to use those functions instead.</td>
-<td rowspan="3">{ v|round(3) } { v|round(ceil) }</td>
+<tr class="row-odd"><td rowspan="3"><p>number_format</p></td>
+<td rowspan="3"><p>places</p></td>
+<td rowspan="3"><p>Wraps PHP <strong>number_format</strong> function for use within the
+parser.</p></td>
+<td rowspan="3"><p>{ v|number_format(3) }</p></td>
 </tr>
 <tr class="row-even"></tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">strip_tags</td>
-<td rowspan="3">allowed chars</td>
-<td rowspan="3">Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
-tags.</td>
-<td rowspan="3">{ v|strip_tags(&lt;br&gt;) }</td>
+<tr class="row-even"><td rowspan="3"><p>prose</p></td>
+<td rowspan="3"></td>
+<td rowspan="3"><p>Takes a body of text and uses the <strong>auto_typography()</strong>
+method to turn it into prettier, easier-to-read, prose.</p></td>
+<td rowspan="3"><p>{ v|prose }</p></td>
 </tr>
 <tr class="row-odd"></tr>
 <tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3">title</td>
-<td rowspan="3">&#160;</td>
-<td rowspan="3">Displays a “title case” version of the string, with all
-lowercase, and each word capitalized.</td>
-<td rowspan="3">{ v|title }</td>
+<tr class="row-odd"><td rowspan="3"><p>round</p></td>
+<td rowspan="3"><p>places, type</p></td>
+<td rowspan="3"><p>Rounds a number to the specified places. Types of <strong>ceil</strong>
+and <strong>floor</strong> can be passed to use those functions instead.</p></td>
+<td rowspan="3"><p>{ v|round(3) } { v|round(ceil) }</p></td>
 </tr>
 <tr class="row-even"></tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">upper</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">Displays the string in all uppercase.</td>
-<td rowspan="2">{ v|upper }</td>
+<tr class="row-even"><td rowspan="3"><p>strip_tags</p></td>
+<td rowspan="3"><p>allowed chars</p></td>
+<td rowspan="3"><p>Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
+tags.</p></td>
+<td rowspan="3"><p>{ v|strip_tags(&lt;br&gt;) }</p></td>
 </tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2">&#160;</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">&#160;</td>
-<td rowspan="2">&#160;</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3"><p>title</p></td>
+<td rowspan="3"></td>
+<td rowspan="3"><p>Displays a “title case” version of the string, with all
+lowercase, and each word capitalized.</p></td>
+<td rowspan="3"><p>{ v|title }</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><p>upper</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>Displays the string in all uppercase.</p></td>
+<td rowspan="2"><p>{ v|upper }</p></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"></td>
+<td rowspan="2"></td>
+<td rowspan="2"></td>
+<td rowspan="2"></td>
 </tr>
 <tr class="row-odd"></tr>
 </tbody>
@@ -970,60 +976,60 @@ key/value pairs:</p>
 <div class="section" id="provided-plugins">
 <h4>Provided Plugins<a class="headerlink" href="#provided-plugins" title="Permalink to this headline">¶</a></h4>
 <p>The following plugins are available when using the parser:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="13%" />
-<col width="42%" />
-<col width="34%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 42%" />
+<col style="width: 34%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Plugin</th>
-<th class="head">Arguments</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Plugin</p></th>
+<th class="head"><p>Arguments</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>current_url</td>
-<td>&#160;</td>
-<td>Alias for the current_url helper function.</td>
-<td>{+ current_url +}</td>
+<tbody>
+<tr class="row-even"><td><p>current_url</p></td>
+<td></td>
+<td><p>Alias for the current_url helper function.</p></td>
+<td><p>{+ current_url +}</p></td>
 </tr>
-<tr class="row-odd"><td>previous_url</td>
-<td>&#160;</td>
-<td>Alias for the previous_url helper function.</td>
-<td>{+ previous_url +}</td>
+<tr class="row-odd"><td><p>previous_url</p></td>
+<td></td>
+<td><p>Alias for the previous_url helper function.</p></td>
+<td><p>{+ previous_url +}</p></td>
 </tr>
-<tr class="row-even"><td>siteURL</td>
-<td>&#160;</td>
-<td>Alias for the site_url helper function.</td>
-<td>{+ siteURL “login” +}</td>
+<tr class="row-even"><td><p>siteURL</p></td>
+<td></td>
+<td><p>Alias for the site_url helper function.</p></td>
+<td><p>{+ siteURL “login” +}</p></td>
 </tr>
-<tr class="row-odd"><td>mailto</td>
-<td>email, title, attributes</td>
-<td>Alias for the mailto helper function.</td>
-<td>{+ mailto <a class="reference external" href="mailto:email=foo&#37;&#52;&#48;example&#46;com">email=foo<span>&#64;</span>example<span>&#46;</span>com</a> title=”Stranger Things” +}</td>
+<tr class="row-odd"><td><p>mailto</p></td>
+<td><p>email, title, attributes</p></td>
+<td><p>Alias for the mailto helper function.</p></td>
+<td><p>{+ mailto <a class="reference external" href="mailto:email=foo&#37;&#52;&#48;example&#46;com">email=foo<span>&#64;</span>example<span>&#46;</span>com</a> title=”Stranger Things” +}</p></td>
 </tr>
-<tr class="row-even"><td>safe_mailto</td>
-<td>email, title, attributes</td>
-<td>Alias for the safe_mailto helper function.</td>
-<td>{+ safe_mailto <a class="reference external" href="mailto:email=foo&#37;&#52;&#48;example&#46;com">email=foo<span>&#64;</span>example<span>&#46;</span>com</a> title=”Stranger Things” +}</td>
+<tr class="row-even"><td><p>safe_mailto</p></td>
+<td><p>email, title, attributes</p></td>
+<td><p>Alias for the safe_mailto helper function.</p></td>
+<td><p>{+ safe_mailto <a class="reference external" href="mailto:email=foo&#37;&#52;&#48;example&#46;com">email=foo<span>&#64;</span>example<span>&#46;</span>com</a> title=”Stranger Things” +}</p></td>
 </tr>
-<tr class="row-odd"><td>lang</td>
-<td>language string</td>
-<td>Alias for the lang helper function.</td>
-<td>{+ lang number.terabyteAbbr +}</td>
+<tr class="row-odd"><td><p>lang</p></td>
+<td><p>language string</p></td>
+<td><p>Alias for the lang helper function.</p></td>
+<td><p>{+ lang number.terabyteAbbr +}</p></td>
 </tr>
-<tr class="row-even"><td>validation_errors</td>
-<td>fieldname(optional)</td>
-<td>Returns either error string for the field (if specified) or all validation errors.</td>
-<td>{+ validation_errors +} , {+ validation_errors field=”email” +}</td>
+<tr class="row-even"><td><p>validation_errors</p></td>
+<td><p>fieldname(optional)</p></td>
+<td><p>Returns either error string for the field (if specified) or all validation errors.</p></td>
+<td><p>{+ validation_errors +} , {+ validation_errors field=”email” +}</p></td>
 </tr>
-<tr class="row-odd"><td>route</td>
-<td>route name</td>
-<td>Alias for the route_to helper function.</td>
-<td>{+ route “login” +}</td>
+<tr class="row-odd"><td><p>route</p></td>
+<td><p>route name</p></td>
+<td><p>Alias for the route_to helper function.</p></td>
+<td><p>{+ route “login” +}</p></td>
 </tr>
 </tbody>
 </table>
@@ -1191,29 +1197,25 @@ using a view fragment:</p>
 <h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\View\Parser</code></dt>
+<code class="sig-name descname">CodeIgniter\View\Parser</code></dt>
 <dd><dl class="method">
 <dt id="render">
-<code class="descname">render</code><span class="sig-paren">(</span><em>$view</em><span class="optional">[</span>, <em>$options</em><span class="optional">[</span>, <em>$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$view</strong> (<em>string</em>) – File name of the view source</li>
-<li><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</li>
-<li><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</li>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$view</strong> (<em>string</em>) – File name of the view source</p></li>
+<li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
+<li><p><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The rendered text for the chosen view</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The rendered text for the chosen view</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Builds the output based upon a file name and any data that has already been set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myview&#39;</span><span class="p">);</span>
 </pre></div>
@@ -1223,38 +1225,34 @@ using a view fragment:</p>
 <p>Options supported:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results</li>
-<li><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath</li>
-<li><code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> - true if the data pairs in effect when a nested or loop substitution occurs should be propagated</li>
-<li><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameter should be retained for subsequent calls</li>
-<li><code class="docutils literal notranslate"><span class="pre">leftDelimiter</span></code> - the left delimiter to use in pseudo-variable syntax</li>
-<li><code class="docutils literal notranslate"><span class="pre">rightDelimiter</span></code> - the right delimiter to use in pseudo-variable syntax</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> - true if the data pairs in effect when a nested or loop substitution occurs should be propagated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameter should be retained for subsequent calls</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leftDelimiter</span></code> - the left delimiter to use in pseudo-variable syntax</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rightDelimiter</span></code> - the right delimiter to use in pseudo-variable syntax</p></li>
 </ul>
 <p>Any conditional substitutions are performed first, then remaining
 substitutions are performed for each data pair.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="renderString">
-<code class="descname">renderString</code><span class="sig-paren">(</span><em>$template</em><span class="optional">[</span>, <em>$options</em><span class="optional">[</span>, <em>$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$template</strong> (<em>string</em>) – View source provided as a string</li>
-<li><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</li>
-<li><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</li>
+<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$template</strong> (<em>string</em>) – View source provided as a string</p></li>
+<li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
+<li><p><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The rendered text for the chosen view</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The rendered text for the chosen view</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Builds the output based upon a provided template source and any data that has already been set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myview&#39;</span><span class="p">);</span>
 </pre></div>
@@ -1264,88 +1262,76 @@ substitutions are performed for each data pair.</p>
 <p>Options supported, and behavior, as above.</p>
 <dl class="method">
 <dt id="setData">
-<code class="descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em>$data</em><span class="optional">[</span>, <em>$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>array</em>) – Array of view data strings, as key/value pairs</li>
-<li><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</li>
+<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>array</em>) – Array of view data strings, as key/value pairs</p></li>
+<li><p><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Renderer, for method chaining</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\View\RendererInterface.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Renderer, for method chaining</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
+</dd>
+</dl>
 <p>Sets several pieces of view data at once:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="docutils">
-<dt>Supported escape contexts: html, css, js, url, or attr or raw.</dt>
-<dd>If ‘raw’, no escaping will happen.</dd>
+<dl class="simple">
+<dt>Supported escape contexts: html, css, js, url, or attr or raw.</dt><dd><p>If ‘raw’, no escaping will happen.</p>
+</dd>
 </dl>
 <dl class="method">
 <dt id="setVar">
-<code class="descname">setVar</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>$value=null</em><span class="optional">[</span>, <em>$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – Name of the view data variable</li>
-<li><strong>$value</strong> (<em>mixed</em>) – The value of this view data</li>
-<li><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</li>
+<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value=null</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Name of the view data variable</p></li>
+<li><p><strong>$value</strong> (<em>mixed</em>) – The value of this view data</p></li>
+<li><p><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Renderer, for method chaining</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\View\RendererInterface.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Renderer, for method chaining</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
+</dd>
+</dl>
 <p>Sets a single piece of view data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span><span class="s1">&#39;html&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="docutils">
-<dt>Supported escape contexts: html, css, js, url, attr or raw.</dt>
-<dd>If ‘raw’, no escaping will happen.</dd>
+<dl class="simple">
+<dt>Supported escape contexts: html, css, js, url, attr or raw.</dt><dd><p>If ‘raw’, no escaping will happen.</p>
+</dd>
 </dl>
 <dl class="method">
 <dt id="setDelimiters">
-<code class="descname">setDelimiters</code><span class="sig-paren">(</span><em>$leftDelimiter = '{'</em>, <em>$rightDelimiter = '}'</em><span class="sig-paren">)</span><a class="headerlink" href="#setDelimiters" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$leftDelimiter</strong> (<em>string</em>) – Left delimiter for substitution fields</li>
-<li><strong>$rightDelimiter</strong> (<em>string</em>) – right delimiter for substitution fields</li>
+<code class="sig-name descname">setDelimiters</code><span class="sig-paren">(</span><em class="sig-param">$leftDelimiter = '{'</em>, <em class="sig-param">$rightDelimiter = '}'</em><span class="sig-paren">)</span><a class="headerlink" href="#setDelimiters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$leftDelimiter</strong> (<em>string</em>) – Left delimiter for substitution fields</p></li>
+<li><p><strong>$rightDelimiter</strong> (<em>string</em>) – right delimiter for substitution fields</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Renderer, for method chaining</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\View\RendererInterface.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Renderer, for method chaining</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
+</dd>
+</dl>
 <p>Over-ride the substitution field delimiters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setDelimiters</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span><span class="s1">&#39;]&#39;</span><span class="p">);</span>
 </pre></div>

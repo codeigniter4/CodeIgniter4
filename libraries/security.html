@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,9 +344,9 @@
 <p>The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></li>
-<li><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id2">Cross-site request forgery (CSRF)</a></li>
-<li><a class="reference internal" href="#other-helpful-methods" id="id3">Other Helpful Methods</a></li>
+<li><p><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></p></li>
+<li><p><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id2">Cross-site request forgery (CSRF)</a></p></li>
+<li><p><a class="reference internal" href="#other-helpful-methods" id="id3">Other Helpful Methods</a></p></li>
 </ul>
 </div>
 <div class="section" id="loading-the-library">
@@ -409,9 +412,9 @@ meta tag for you:</p>
 </div>
 <p>The order of checking the avability of the CSRF token is as follows:</p>
 <ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</li>
-<li>Http header</li>
-<li><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</p></li>
+<li><p>Http header</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again</p></li>
 </ol>
 <p>Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,15 +343,17 @@
 <h1>Debugging Your Application<a class="headerlink" href="#debugging-your-application" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#replace-var-dump" id="id1">Replace var_dump</a><ul>
-<li><a class="reference internal" href="#enabling-kint" id="id2">Enabling Kint</a></li>
-<li><a class="reference internal" href="#using-kint" id="id3">Using Kint</a></li>
+<li><p><a class="reference internal" href="#replace-var-dump" id="id1">Replace var_dump</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enabling-kint" id="id2">Enabling Kint</a></p></li>
+<li><p><a class="reference internal" href="#using-kint" id="id3">Using Kint</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-debug-toolbar" id="id4">The Debug Toolbar</a><ul>
-<li><a class="reference internal" href="#enabling-the-toolbar" id="id5">Enabling the Toolbar</a></li>
-<li><a class="reference internal" href="#setting-benchmark-points" id="id6">Setting Benchmark Points</a></li>
-<li><a class="reference internal" href="#creating-custom-collectors" id="id7">Creating Custom Collectors</a></li>
+<li><p><a class="reference internal" href="#the-debug-toolbar" id="id4">The Debug Toolbar</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enabling-the-toolbar" id="id5">Enabling the Toolbar</a></p></li>
+<li><p><a class="reference internal" href="#setting-benchmark-points" id="id6">Setting Benchmark Points</a></p></li>
+<li><p><a class="reference internal" href="#creating-custom-collectors" id="id7">Creating Custom Collectors</a></p></li>
 </ul>
 </li>
 </ul>
@@ -392,8 +397,8 @@ allows the script to continue executing:</p>
 queries you have run, request and response data, and more. This can all prove very useful during development
 to help you debug and optimize.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The Debug Toolbar is still under construction with several planned features not yet implemented.</p>
+<p class="admonition-title">Note</p>
+<p>The Debug Toolbar is still under construction with several planned features not yet implemented.</p>
 </div>
 <div class="section" id="enabling-the-toolbar">
 <h3><a class="toc-backref" href="#id5">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this headline">¶</a></h3>
@@ -424,20 +429,20 @@ the <strong>app/Config/Toolbar.php</strong> configuration file:</p>
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
 shown on the Timeline.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Some tabs, like Database and Logs, will only display when they have content to show. Otherwise, they
+<p class="admonition-title">Note</p>
+<p>Some tabs, like Database and Logs, will only display when they have content to show. Otherwise, they
 are removed to help out on smaller displays.</p>
 </div>
 <p>The Collectors that ship with CodeIgniter are:</p>
 <ul class="simple">
-<li><strong>Timers</strong> collects all of the benchmark data, both by the system and by your application.</li>
-<li><strong>Database</strong> Displays a list of queries that all database connections have performed, and their execution time.</li>
-<li><strong>Logs</strong> Any information that was logged will be displayed here. In long-running systems, or systems with many items being logged, this can cause memory issues and should be disabled.</li>
-<li><strong>Views</strong> Displays render time for views on the timeline, and shows any data passed to the views on a separate tab.</li>
-<li><strong>Cache</strong> Will display information about cache hits and misses, and execution times.</li>
-<li><strong>Files</strong> displays a list of all files that have been loaded during this request.</li>
-<li><strong>Routes</strong> displays information about the current route and all routes defined in the system.</li>
-<li><strong>Events</strong> displays a list of all events that have been loaded during this request.</li>
+<li><p><strong>Timers</strong> collects all of the benchmark data, both by the system and by your application.</p></li>
+<li><p><strong>Database</strong> Displays a list of queries that all database connections have performed, and their execution time.</p></li>
+<li><p><strong>Logs</strong> Any information that was logged will be displayed here. In long-running systems, or systems with many items being logged, this can cause memory issues and should be disabled.</p></li>
+<li><p><strong>Views</strong> Displays render time for views on the timeline, and shows any data passed to the views on a separate tab.</p></li>
+<li><p><strong>Cache</strong> Will display information about cache hits and misses, and execution times.</p></li>
+<li><p><strong>Files</strong> displays a list of all files that have been loaded during this request.</p></li>
+<li><p><strong>Routes</strong> displays information about the current route and all routes defined in the system.</p></li>
+<li><p><strong>Events</strong> displays a list of all events that have been loaded during this request.</p></li>
 </ul>
 </div>
 </div>
@@ -482,10 +487,10 @@ is true, you will need to implement the <code class="docutils literal notranslat
 <h4>Displaying a Toolbar Tab<a class="headerlink" href="#displaying-a-toolbar-tab" title="Permalink to this headline">¶</a></h4>
 <p>To display a toolbar tab you must:</p>
 <ol class="arabic simple">
-<li>Fill in <code class="docutils literal notranslate"><span class="pre">$title</span></code> with the text displayed as both the toolbar title and the tab header.</li>
-<li>Set <code class="docutils literal notranslate"><span class="pre">$hasTabContent</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
-<li>Implement the <code class="docutils literal notranslate"><span class="pre">display()</span></code> method.</li>
-<li>Optionally, implement the <code class="docutils literal notranslate"><span class="pre">getTitleDetails()</span></code> method.</li>
+<li><p>Fill in <code class="docutils literal notranslate"><span class="pre">$title</span></code> with the text displayed as both the toolbar title and the tab header.</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">$hasTabContent</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+<li><p>Implement the <code class="docutils literal notranslate"><span class="pre">display()</span></code> method.</p></li>
+<li><p>Optionally, implement the <code class="docutils literal notranslate"><span class="pre">getTitleDetails()</span></code> method.</p></li>
 </ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">display()</span></code> creates the HTML that is displayed within the tab itself. It does not need to worry about
 the title of the tab, as that is automatically handled by the toolbar. It should return a string of HTML.</p>
@@ -497,8 +502,8 @@ number of queries across all connections, while the Files tab displays the total
 <h4>Providing Timeline Data<a class="headerlink" href="#providing-timeline-data" title="Permalink to this headline">¶</a></h4>
 <p>To provide information to be displayed in the Timeline you must:</p>
 <ol class="arabic simple">
-<li>Set <code class="docutils literal notranslate"><span class="pre">$hasTimeline</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
-<li>Implement the <code class="docutils literal notranslate"><span class="pre">formatTimelineData()</span></code> method.</li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">$hasTimeline</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+<li><p>Implement the <code class="docutils literal notranslate"><span class="pre">formatTimelineData()</span></code> method.</p></li>
 </ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">formatTimelineData()</span></code> method must return an array of arrays formatted in a way that the timeline can use
 it to sort it correctly and display the correct information. The inner arrays must include the following information:</p>
@@ -515,8 +520,8 @@ it to sort it correctly and display the correct information. The inner arrays mu
 <h4>Providing Vars<a class="headerlink" href="#providing-vars" title="Permalink to this headline">¶</a></h4>
 <p>To add data to the Vars tab you must:</p>
 <ol class="arabic simple">
-<li>Set <code class="docutils literal notranslate"><span class="pre">$hasVarData</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
-<li>Implement <code class="docutils literal notranslate"><span class="pre">getVarData()</span></code> method.</li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">$hasVarData</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">getVarData()</span></code> method.</p></li>
 </ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">getVarData()</span></code> method should return an array containing arrays of key/value pairs to display. The name of the
 outer array’s key is the name of the section on the Vars tab:</p>

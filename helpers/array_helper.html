@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,8 +345,8 @@
 any of the existing functionality that PHP provides - unless it is to vastly simplify their usage.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="section" id="loading-this-helper">
@@ -358,25 +361,21 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="dot_array_search">
-<code class="descname">dot_array_search</code><span class="sig-paren">(</span><em>string $search</em>, <em>array $values</em><span class="sig-paren">)</span><a class="headerlink" href="#dot_array_search" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$search</strong> (<em>string</em>) – The dot-notation string describing how to search the array</li>
-<li><strong>$values</strong> (<em>array</em>) – The array to search</li>
+<code class="sig-name descname">dot_array_search</code><span class="sig-paren">(</span><em class="sig-param">string $search</em>, <em class="sig-param">array $values</em><span class="sig-paren">)</span><a class="headerlink" href="#dot_array_search" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$search</strong> (<em>string</em>) – The dot-notation string describing how to search the array</p></li>
+<li><p><strong>$values</strong> (<em>array</em>) – The array to search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value found within the array, or null</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value found within the array, or null</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>This method allows you to use dot-notation to search through an array for a specific-key,
 and allows the use of a the ‘*’ wildcard. Given the following array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>

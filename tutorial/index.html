@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -349,25 +352,25 @@ will create a news section that reads news items from a database.
 Finally, you’ll add a form to create news items in the database.</p>
 <p>This tutorial will primarily focus on:</p>
 <ul class="simple">
-<li>Model-View-Controller basics</li>
-<li>Routing basics</li>
-<li>Form validation</li>
-<li>Performing basic database queries using CodeIgniter’s “Query Builder”</li>
+<li><p>Model-View-Controller basics</p></li>
+<li><p>Routing basics</p></li>
+<li><p>Form validation</p></li>
+<li><p>Performing basic database queries using CodeIgniter’s “Query Builder”</p></li>
 </ul>
 <p>The entire tutorial is split up over several pages, each explaining a
 small part of the functionality of the CodeIgniter framework. You’ll go
 through the following pages:</p>
 <ul class="simple">
-<li>Introduction, this page, which gives you an overview of what to
-expect and gets your default application downloaded and running.</li>
-<li><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics
-of controllers, views and routing.</li>
-<li><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models
-and will be doing some basic database operations.</li>
-<li><a class="reference internal" href="create_news_items.html"><span class="doc">Create news items</span></a>, which will introduce
-more advanced database operations and form validation.</li>
-<li><a class="reference internal" href="conclusion.html"><span class="doc">Conclusion</span></a>, which will give you some pointers on
-further reading and other resources.</li>
+<li><p>Introduction, this page, which gives you an overview of what to
+expect and gets your default application downloaded and running.</p></li>
+<li><p><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics
+of controllers, views and routing.</p></li>
+<li><p><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models
+and will be doing some basic database operations.</p></li>
+<li><p><a class="reference internal" href="create_news_items.html"><span class="doc">Create news items</span></a>, which will introduce
+more advanced database operations and form validation.</p></li>
+<li><p><a class="reference internal" href="conclusion.html"><span class="doc">Conclusion</span></a>, which will give you some pointers on
+further reading and other resources.</p></li>
 </ul>
 <p>Enjoy your exploration of the CodeIgniter framework.</p>
 <div class="toctree-wrapper compound">
@@ -429,10 +432,10 @@ greeted by a screen looking something like this:</p>
 <img alt="../_images/error.png" src="../_images/error.png" />
 <p>There are a couple of things to note here:</p>
 <ol class="arabic simple">
-<li>Hovering over the red header at the top reveals a <code class="docutils literal notranslate"><span class="pre">search</span></code> link that will open up
-Google.com in a new tab and searching for the exception.</li>
-<li>Clicking the <code class="docutils literal notranslate"><span class="pre">arguments</span></code> link on any line in the Backtrace will expand a list of
-the arguments that were passed into that function call.</li>
+<li><p>Hovering over the red header at the top reveals a <code class="docutils literal notranslate"><span class="pre">search</span></code> link that will open up
+Google.com in a new tab and searching for the exception.</p></li>
+<li><p>Clicking the <code class="docutils literal notranslate"><span class="pre">arguments</span></code> link on any line in the Backtrace will expand a list of
+the arguments that were passed into that function call.</p></li>
 </ol>
 <p>Everything else should be clear when you see it.</p>
 <p>Now that we know how to get started and how to debug a little, let’s get started building this

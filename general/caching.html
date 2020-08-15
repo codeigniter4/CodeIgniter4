@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -356,8 +359,8 @@ will be retrieved and sent to the requesting user’s browser. If it has
 expired, it will be deleted and refreshed before being sent to the
 browser.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The Benchmark tag is not cached so you can still view your page
+<p class="admonition-title">Note</p>
+<p>The Benchmark tag is not cached so you can still view your page
 load speed when caching is enabled.</p>
 </div>
 </div>
@@ -374,13 +377,13 @@ cached between refreshes.</p>
 the order that it appears, so place it wherever it seems most logical to
 you. Once the tag is in place, your pages will begin being cached.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If you change configuration options that might affect
+<p class="admonition-title">Important</p>
+<p>If you change configuration options that might affect
 your output, you have to manually delete your cache files.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Before the cache files can be written you must set the cache
+<p class="admonition-title">Note</p>
+<p>Before the cache files can be written you must set the cache
 engine up by editing <strong>app/Config/Cache.php</strong>.</p>
 </div>
 </div>
@@ -389,8 +392,8 @@ engine up by editing <strong>app/Config/Cache.php</strong>.</p>
 <p>If you no longer wish to cache a file you can remove the caching tag and
 it will no longer be refreshed when it expires.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Removing the tag will not delete the cache immediately. It will
+<p class="admonition-title">Note</p>
+<p>Removing the tag will not delete the cache immediately. It will
 have to expire normally.</p>
 </div>
 </div>

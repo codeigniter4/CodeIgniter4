@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,14 +345,14 @@
 <p><strong>4.0.5 release of CodeIgniter4</strong></p>
 <p>Enhancements:</p>
 <ul class="simple">
-<li>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_to()</span></code> which creates absolute URLs based on controllers.</li>
-<li>New Model option: <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> which when set to <code class="docutils literal notranslate"><span class="pre">false</span></code> allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.</li>
-<li>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_is()</span></code> which allows you to check the current URL to see if matches the given string.</li>
+<li><p>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_to()</span></code> which creates absolute URLs based on controllers.</p></li>
+<li><p>New Model option: <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> which when set to <code class="docutils literal notranslate"><span class="pre">false</span></code> allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.</p></li>
+<li><p>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_is()</span></code> which allows you to check the current URL to see if matches the given string.</p></li>
 </ul>
 <p>Bugs Fixed:</p>
 <ul class="simple">
-<li>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</li>
-<li>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
+<li><p>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</p></li>
 </ul>
 </div>
 

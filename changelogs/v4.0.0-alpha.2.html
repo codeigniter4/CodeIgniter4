@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,433 +344,390 @@
 <p>Release Date: Oct 26, 2018</p>
 <p><strong>Second alpha release of CodeIgniter4</strong></p>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<dl class="docutils">
-<dt>application /</dt>
-<dd><ul class="first last simple">
-<li>composer.json #1312</li>
-<li>Config/Boot/development, production, testing #1312</li>
-<li>Config/Paths #1341</li>
-<li>Config/Routes #1281</li>
-<li>Filters/Honeypot #1314</li>
-<li>Views/errors/cli/error_404 #1272</li>
-<li>Views/welcome_message #1342</li>
+<dl class="simple">
+<dt>application /</dt><dd><ul class="simple">
+<li><p>composer.json #1312</p></li>
+<li><p>Config/Boot/development, production, testing #1312</p></li>
+<li><p>Config/Paths #1341</p></li>
+<li><p>Config/Routes #1281</p></li>
+<li><p>Filters/Honeypot #1314</p></li>
+<li><p>Views/errors/cli/error_404 #1272</p></li>
+<li><p>Views/welcome_message #1342</p></li>
 </ul>
 </dd>
-<dt>public /</dt>
-<dd><ul class="first last simple">
-<li>.htaccess #1281</li>
-<li>index #1295, #1313</li>
+<dt>public /</dt><dd><ul class="simple">
+<li><p>.htaccess #1281</p></li>
+<li><p>index #1295, #1313</p></li>
 </ul>
 </dd>
-<dt>system /</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>CLI/</dt>
-<dd><ul class="first last">
-<li>CommandRunner #1350, #1356</li>
+<dt>system /</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>CLI/</dt><dd><ul>
+<li><p>CommandRunner #1350, #1356</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Commands/</dt>
-<dd><ul class="first last">
-<li>Server/Serve #1313</li>
+<li><dl class="simple">
+<dt>Commands/</dt><dd><ul>
+<li><p>Server/Serve #1313</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>AutoloadConfig #1271</li>
-<li>Services #1341</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>AutoloadConfig #1271</p></li>
+<li><p>Services #1341</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilder #1217</li>
-<li>BaseUtils #1209, #1329</li>
-<li>Database #1339</li>
-<li>MySQLi/Utils #1209</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>BaseBuilder #1217</p></li>
+<li><p>BaseUtils #1209, #1329</p></li>
+<li><p>Database #1339</p></li>
+<li><p>MySQLi/Utils #1209</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/Toolbar/</dt>
-<dd><ul class="first last">
-<li>Views/toolbar.css #1342</li>
+<li><dl class="simple">
+<dt>Debug/Toolbar/</dt><dd><ul>
+<li><p>Views/toolbar.css #1342</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Exceptions/</dt>
-<dd><ul class="first last">
-<li>CastException #1283</li>
-<li>DownloadException #1239</li>
-<li>FrameworkException #1313</li>
+<li><dl class="simple">
+<dt>Exceptions/</dt><dd><ul>
+<li><p>CastException #1283</p></li>
+<li><p>DownloadException #1239</p></li>
+<li><p>FrameworkException #1313</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>Filters #1239</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>Filters #1239</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>cookie_helper #1286</li>
-<li>form_helper #1244, #1327</li>
-<li>url_helper #1321</li>
-<li>xml_helper #1209</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>cookie_helper #1286</p></li>
+<li><p>form_helper #1244, #1327</p></li>
+<li><p>url_helper #1321</p></li>
+<li><p>xml_helper #1209</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Honeypot/</dt>
-<dd><ul class="first last">
-<li>Honeypot #1314</li>
+<li><dl class="simple">
+<dt>Honeypot/</dt><dd><ul>
+<li><p>Honeypot #1314</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>CliRequest #1303</li>
-<li>CURLRequest #1303</li>
-<li>DownloadResponse #1239</li>
-<li>Exceptions/HTTPException #1303</li>
-<li>IncomingRequest #1304, #1313</li>
-<li>Negotiate #1306</li>
-<li>RedirectResponse #1300, #1306, #1329</li>
-<li>Response #1239, #1286</li>
-<li>ResponseInterface #1239</li>
-<li>URI #1300</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>CliRequest #1303</p></li>
+<li><p>CURLRequest #1303</p></li>
+<li><p>DownloadResponse #1239</p></li>
+<li><p>Exceptions/HTTPException #1303</p></li>
+<li><p>IncomingRequest #1304, #1313</p></li>
+<li><p>Negotiate #1306</p></li>
+<li><p>RedirectResponse #1300, #1306, #1329</p></li>
+<li><p>Response #1239, #1286</p></li>
+<li><p>ResponseInterface #1239</p></li>
+<li><p>URI #1300</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/en/</dt>
-<dd><ul class="first last">
-<li>Cast #1283</li>
-<li>HTTP #1239</li>
+<li><dl class="simple">
+<dt>Language/en/</dt><dd><ul>
+<li><p>Cast #1283</p></li>
+<li><p>HTTP #1239</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollection #1285, #1355</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollection #1285, #1355</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>CIUnitTestCase #1312, #1361</li>
-<li>FeatureTestCase #1282</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>CIUnitTestCase #1312, #1361</p></li>
+<li><p>FeatureTestCase #1282</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CodeIgniter #1239 #1337</li>
-<li>Common #1291</li>
-<li>Entity #1283, #1311</li>
-<li>Model #1311</li>
+<li><p>CodeIgniter #1239 #1337</p></li>
+<li><p>Common #1291</p></li>
+<li><p>Entity #1283, #1311</p></li>
+<li><p>Model #1311</p></li>
 </ul>
 </dd>
-<dt>tests /</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>API/</dt>
-<dd><ul class="first last">
-<li>ResponseTraitTest #1302</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Commands/</dt>
-<dd><ul class="first last">
-<li>CommandsTest #1356</li>
+<dt>tests /</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>API/</dt><dd><ul>
+<li><p>ResponseTraitTest #1302</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilderTest #1217</li>
-<li>Live/ModelTest #1311</li>
+<li><dl class="simple">
+<dt>Commands/</dt><dd><ul>
+<li><p>CommandsTest #1356</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/</dt>
-<dd><ul class="first last">
-<li>TimerTest #1273</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>BaseBuilderTest #1217</p></li>
+<li><p>Live/ModelTest #1311</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>CookieHelperTest #1286</li>
+<li><dl class="simple">
+<dt>Debug/</dt><dd><ul>
+<li><p>TimerTest #1273</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Honeypot/</dt>
-<dd><ul class="first last">
-<li>HoneypotTest #1314</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>CookieHelperTest #1286</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>FileMovingTest #1302</li>
-<li>UploadedFileTest #1302</li>
+<li><dl class="simple">
+<dt>Honeypot/</dt><dd><ul>
+<li><p>HoneypotTest #1314</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CLIRequestTest #1303</li>
-<li>CURLRequestTest #1303</li>
-<li>DownloadResponseTest #1239</li>
-<li>NegotiateTest #1306</li>
-<li>RedirectResponseTest #1300, #1306, #1329</li>
-<li>ResponseTest #1239</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Files/</dt><dd><ul>
+<li><p>FileMovingTest #1302</p></li>
+<li><p>UploadedFileTest #1302</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>I18n/</dt>
-<dd><ul class="first last">
-<li>TimeTest #1273, #1316</li>
+<li><p>CLIRequestTest #1303</p></li>
+<li><p>CURLRequestTest #1303</p></li>
+<li><p>DownloadResponseTest #1239</p></li>
+<li><p>NegotiateTest #1306</p></li>
+<li><p>RedirectResponseTest #1300, #1306, #1329</p></li>
+<li><p>ResponseTest #1239</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteTest #1285, #1355</li>
+<li><dl class="simple">
+<dt>I18n/</dt><dd><ul>
+<li><p>TimeTest #1273, #1316</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>TestCaseEmissionsTest #1312</li>
-<li>TestCaseTest #1312</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteTest #1285, #1355</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>ParserTest #1311</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>TestCaseEmissionsTest #1312</p></li>
+<li><p>TestCaseTest #1312</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>EntityTest #1319</li>
-</ul>
-</dd>
-<dt>user_guide_src /source/</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>cli/</dt>
-<dd><ul class="first last">
-<li>cli_request #1303</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>ParserTest #1311</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>database/</dt>
-<dd><ul class="first last">
-<li>query_builder #1217</li>
-<li>utilities #1209</li>
+<li><p>EntityTest #1319</p></li>
+</ul>
+</dd>
+<dt>user_guide_src /source/</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>cli/</dt><dd><ul>
+<li><p>cli_request #1303</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>extending/</dt>
-<dd><ul class="first last">
-<li>contributing #1280</li>
+<li><dl class="simple">
+<dt>database/</dt><dd><ul>
+<li><p>query_builder #1217</p></li>
+<li><p>utilities #1209</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>general/</dt>
-<dd><ul class="first last">
-<li>common_functions #1300, #1329</li>
-<li>helpers #1291</li>
-<li>managing_apps #1341</li>
+<li><dl class="simple">
+<dt>extending/</dt><dd><ul>
+<li><p>contributing #1280</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>helpers/</dt>
-<dd><ul class="first last">
-<li>xml_helper #1321</li>
+<li><dl class="simple">
+<dt>general/</dt><dd><ul>
+<li><p>common_functions #1300, #1329</p></li>
+<li><p>helpers #1291</p></li>
+<li><p>managing_apps #1341</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>controllers #1323</li>
-<li>routing #1337</li>
+<li><dl class="simple">
+<dt>helpers/</dt><dd><ul>
+<li><p>xml_helper #1321</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>intro/</dt>
-<dd><ul class="first last">
-<li>requirements #1280, #1303</li>
+<li><dl class="simple">
+<dt>incoming/</dt><dd><ul>
+<li><p>controllers #1323</p></li>
+<li><p>routing #1337</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>installation/ #1280, #1303</dt>
-<dd><ul class="first last">
-<li>troubleshooting #1265</li>
+<li><dl class="simple">
+<dt>intro/</dt><dd><ul>
+<li><p>requirements #1280, #1303</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>curlrequest #1303</li>
-<li>honeypot #1314</li>
-<li>sessions #1333</li>
-<li>uploaded_files #1302</li>
+<li><dl class="simple">
+<dt>installation/ #1280, #1303</dt><dd><ul>
+<li><p>troubleshooting #1265</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>models/</dt>
-<dd><ul class="first last">
-<li>entities #1283</li>
+<li><dl class="simple">
+<dt>libraries/</dt><dd><ul>
+<li><p>curlrequest #1303</p></li>
+<li><p>honeypot #1314</p></li>
+<li><p>sessions #1333</p></li>
+<li><p>uploaded_files #1302</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>outgoing/</dt>
-<dd><ul class="first last">
-<li>response #1340</li>
+<li><dl class="simple">
+<dt>models/</dt><dd><ul>
+<li><p>entities #1283</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>testing/</dt>
-<dd><ul class="first last">
-<li>overview #1312</li>
+<li><dl class="simple">
+<dt>outgoing/</dt><dd><ul>
+<li><p>response #1340</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>tutorial… #1265, #1281, #1294</li>
+<li><dl class="simple">
+<dt>testing/</dt><dd><ul>
+<li><p>overview #1312</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="docutils">
-<dt>/</dt>
-<dd><ul class="first last simple">
-<li>spark #1305</li>
+</li>
+<li><p>tutorial… #1265, #1281, #1294</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>/</dt><dd><ul class="simple">
+<li><p>spark #1305</p></li>
 </ul>
 </dd>
 </dl>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#1361 Add timing assertion to CIUnitTestCase</li>
-<li>#1312 Add headerEmitted assertions to CIUnitTestCase</li>
-<li>#1356 Testing/commands</li>
-<li>#1355 Handle duplicate HTTP verb and generic rules properly</li>
-<li>#1350 Checks if class is instantiable and is a command</li>
-<li>#1348 Fix sphinx formatting in sessions</li>
-<li>#1347 Fix sphinx formatting in sessions</li>
-<li>#1342 Toolbar Styles</li>
-<li>#1341 Make viewpath configurable in Paths.php. Fixes #1296</li>
-<li>#1340 Update docs for downloads to reflect the need to return it. Fixes #1331</li>
-<li>#1339 Fix error where Forge class might not be returned. Fixes #1225</li>
-<li>#1337 Filter in the router Fixes #1315</li>
-<li>#1336 Revert alpha.2</li>
-<li>#1334 Proposed changelog for alpha.2</li>
-<li>#1333 Error in user guide for session config. Fixes #1330</li>
-<li>#1329 Tweaks</li>
-<li>#1327 FIX form_hidden and form_open - value escaping as is in form_input.</li>
-<li>#1323 Fix doc error : show_404() doesn’t exist any more</li>
-<li>#1321 Added missing xml_helper UG page</li>
-<li>#1319 Testing/entity</li>
-<li>#1316 Refactor TimeTest</li>
-<li>#1314 Fix &amp; expand Honeypot &amp; its tests</li>
-<li>#1313 Clean exception</li>
-<li>#1311 Entities store an original stack of values to compare against so we d…</li>
-<li>#1306 Testing3/http</li>
-<li>#1305 Change chdir(‘public’) to chdir($public)</li>
-<li>#1304 Refactor script name stripping in parseRequestURI()</li>
-<li>#1303 Testing/http</li>
-<li>#1302 Exception：No Formatter defined for mime type ‘’</li>
-<li>#1300 Allow redirect with Query Vars from the current request.</li>
-<li>#1295 Fix grammar in front controller comment.</li>
-<li>#1294 Updated final tutorial page. Fixes #1292</li>
-<li>#1291 Allows extending of helpers. Fixes #1264</li>
-<li>#1286 Cookies</li>
-<li>#1285 Ensure current HTTP verb routes are matched prior to any * matched ro…</li>
-<li>#1283 Entities</li>
-<li>#1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…</li>
-<li>#1281 Tut</li>
-<li>#1280 Add contributing reference to user guide</li>
-<li>#1273 Fix/timing</li>
-<li>#1272 Fix undefined variable “heading” in cli 404</li>
-<li>#1271 remove inexistent “CodeIgniterLoader” from AutoloadConfig::classmap</li>
-<li>#1269 Release notes &amp; process</li>
-<li>#1266 Adjusting the release build scripts</li>
-<li>#1265 WIP Fix docs re PHP server</li>
-<li>#1245 Fix #1244 (form_hidden declaration)</li>
-<li>#1239 【Unsolicited PR】I changed the download method to testable.</li>
-<li>#1217 Optional parameter for resetSelect() call in Builder’s countAll();</li>
-<li>#1209 Fix undefined function xml_convert at DatabaseBaseUtils</li>
+<li><p>#1361 Add timing assertion to CIUnitTestCase</p></li>
+<li><p>#1312 Add headerEmitted assertions to CIUnitTestCase</p></li>
+<li><p>#1356 Testing/commands</p></li>
+<li><p>#1355 Handle duplicate HTTP verb and generic rules properly</p></li>
+<li><p>#1350 Checks if class is instantiable and is a command</p></li>
+<li><p>#1348 Fix sphinx formatting in sessions</p></li>
+<li><p>#1347 Fix sphinx formatting in sessions</p></li>
+<li><p>#1342 Toolbar Styles</p></li>
+<li><p>#1341 Make viewpath configurable in Paths.php. Fixes #1296</p></li>
+<li><p>#1340 Update docs for downloads to reflect the need to return it. Fixes #1331</p></li>
+<li><p>#1339 Fix error where Forge class might not be returned. Fixes #1225</p></li>
+<li><p>#1337 Filter in the router Fixes #1315</p></li>
+<li><p>#1336 Revert alpha.2</p></li>
+<li><p>#1334 Proposed changelog for alpha.2</p></li>
+<li><p>#1333 Error in user guide for session config. Fixes #1330</p></li>
+<li><p>#1329 Tweaks</p></li>
+<li><p>#1327 FIX form_hidden and form_open - value escaping as is in form_input.</p></li>
+<li><p>#1323 Fix doc error : show_404() doesn’t exist any more</p></li>
+<li><p>#1321 Added missing xml_helper UG page</p></li>
+<li><p>#1319 Testing/entity</p></li>
+<li><p>#1316 Refactor TimeTest</p></li>
+<li><p>#1314 Fix &amp; expand Honeypot &amp; its tests</p></li>
+<li><p>#1313 Clean exception</p></li>
+<li><p>#1311 Entities store an original stack of values to compare against so we d…</p></li>
+<li><p>#1306 Testing3/http</p></li>
+<li><p>#1305 Change chdir(‘public’) to chdir($public)</p></li>
+<li><p>#1304 Refactor script name stripping in parseRequestURI()</p></li>
+<li><p>#1303 Testing/http</p></li>
+<li><p>#1302 Exception：No Formatter defined for mime type ‘’</p></li>
+<li><p>#1300 Allow redirect with Query Vars from the current request.</p></li>
+<li><p>#1295 Fix grammar in front controller comment.</p></li>
+<li><p>#1294 Updated final tutorial page. Fixes #1292</p></li>
+<li><p>#1291 Allows extending of helpers. Fixes #1264</p></li>
+<li><p>#1286 Cookies</p></li>
+<li><p>#1285 Ensure current HTTP verb routes are matched prior to any * matched ro…</p></li>
+<li><p>#1283 Entities</p></li>
+<li><p>#1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…</p></li>
+<li><p>#1281 Tut</p></li>
+<li><p>#1280 Add contributing reference to user guide</p></li>
+<li><p>#1273 Fix/timing</p></li>
+<li><p>#1272 Fix undefined variable “heading” in cli 404</p></li>
+<li><p>#1271 remove inexistent “CodeIgniterLoader” from AutoloadConfig::classmap</p></li>
+<li><p>#1269 Release notes &amp; process</p></li>
+<li><p>#1266 Adjusting the release build scripts</p></li>
+<li><p>#1265 WIP Fix docs re PHP server</p></li>
+<li><p>#1245 Fix #1244 (form_hidden declaration)</p></li>
+<li><p>#1239 【Unsolicited PR】I changed the download method to testable.</p></li>
+<li><p>#1217 Optional parameter for resetSelect() call in Builder’s countAll();</p></li>
+<li><p>#1209 Fix undefined function xml_convert at DatabaseBaseUtils</p></li>
 </ul>
 </div>
 </div>

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,14 +343,14 @@
 <h1>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#creating-a-view" id="id1">Creating a View</a></li>
-<li><a class="reference internal" href="#displaying-a-view" id="id2">Displaying a View</a></li>
-<li><a class="reference internal" href="#loading-multiple-views" id="id3">Loading Multiple Views</a></li>
-<li><a class="reference internal" href="#storing-views-within-sub-directories" id="id4">Storing Views within Sub-directories</a></li>
-<li><a class="reference internal" href="#namespaced-views" id="id5">Namespaced Views</a></li>
-<li><a class="reference internal" href="#caching-views" id="id6">Caching Views</a></li>
-<li><a class="reference internal" href="#adding-dynamic-data-to-the-view" id="id7">Adding Dynamic Data to the View</a></li>
-<li><a class="reference internal" href="#creating-loops" id="id8">Creating Loops</a></li>
+<li><p><a class="reference internal" href="#creating-a-view" id="id1">Creating a View</a></p></li>
+<li><p><a class="reference internal" href="#displaying-a-view" id="id2">Displaying a View</a></p></li>
+<li><p><a class="reference internal" href="#loading-multiple-views" id="id3">Loading Multiple Views</a></p></li>
+<li><p><a class="reference internal" href="#storing-views-within-sub-directories" id="id4">Storing Views within Sub-directories</a></p></li>
+<li><p><a class="reference internal" href="#namespaced-views" id="id5">Namespaced Views</a></p></li>
+<li><p><a class="reference internal" href="#caching-views" id="id6">Caching Views</a></p></li>
+<li><p><a class="reference internal" href="#adding-dynamic-data-to-the-view" id="id7">Adding Dynamic Data to the View</a></p></li>
+<li><p><a class="reference internal" href="#creating-loops" id="id8">Creating Loops</a></p></li>
 </ul>
 </div>
 <p>A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
@@ -380,8 +383,8 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 </div>
 <p>Where <em>name</em> is the name of your view file.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If the file extension is omitted, then the views are expected to end with the .php extension.</p>
+<p class="admonition-title">Important</p>
+<p>If the file extension is omitted, then the views are expected to end with the .php extension.</p>
 </div>
 <p>Now, open the controller file you made earlier called <code class="docutils literal notranslate"><span class="pre">Blog.php</span></code>, and replace the echo statement with the view function:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -400,8 +403,8 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">While all of the examples show echo the view directly, you can also return the output from the view, instead,
+<p class="admonition-title">Note</p>
+<p>While all of the examples show echo the view directly, you can also return the output from the view, instead,
 and it will be appended to any captured output.</p>
 </div>
 </div>

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,20 +346,22 @@ them completely optional to use. They are commonly used as part of the Repositor
 be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that fits your needs better.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#entity-usage" id="id1">Entity Usage</a><ul>
-<li><a class="reference internal" href="#create-the-entity-class" id="id2">Create the Entity Class</a></li>
-<li><a class="reference internal" href="#create-the-model" id="id3">Create the Model</a></li>
-<li><a class="reference internal" href="#working-with-the-entity-class" id="id4">Working With the Entity Class</a></li>
-<li><a class="reference internal" href="#filling-properties-quickly" id="id5">Filling Properties Quickly</a></li>
+<li><p><a class="reference internal" href="#entity-usage" id="id1">Entity Usage</a></p>
+<ul>
+<li><p><a class="reference internal" href="#create-the-entity-class" id="id2">Create the Entity Class</a></p></li>
+<li><p><a class="reference internal" href="#create-the-model" id="id3">Create the Model</a></p></li>
+<li><p><a class="reference internal" href="#working-with-the-entity-class" id="id4">Working With the Entity Class</a></p></li>
+<li><p><a class="reference internal" href="#filling-properties-quickly" id="id5">Filling Properties Quickly</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#handling-business-logic" id="id6">Handling Business Logic</a></li>
-<li><a class="reference internal" href="#data-mapping" id="id7">Data Mapping</a></li>
-<li><a class="reference internal" href="#mutators" id="id8">Mutators</a><ul>
-<li><a class="reference internal" href="#date-mutators" id="id9">Date Mutators</a></li>
-<li><a class="reference internal" href="#property-casting" id="id10">Property Casting</a></li>
-<li><a class="reference internal" href="#array-json-casting" id="id11">Array/Json Casting</a></li>
-<li><a class="reference internal" href="#checking-for-changed-attributes" id="id12">Checking for Changed Attributes</a></li>
+<li><p><a class="reference internal" href="#handling-business-logic" id="id6">Handling Business Logic</a></p></li>
+<li><p><a class="reference internal" href="#data-mapping" id="id7">Data Mapping</a></p></li>
+<li><p><a class="reference internal" href="#mutators" id="id8">Mutators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#date-mutators" id="id9">Date Mutators</a></p></li>
+<li><p><a class="reference internal" href="#property-casting" id="id10">Property Casting</a></p></li>
+<li><p><a class="reference internal" href="#array-json-casting" id="id11">Array/Json Casting</a></p></li>
+<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id12">Checking for Changed Attributes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -521,8 +526,8 @@ be automatically called whenever you set or retrieve the class property using th
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal notranslate"><span class="pre">created_at</span></code>
 class property will be accessed through the <code class="docutils literal notranslate"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code> methods.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This only works when trying to access the properties from outside of the class. Any methods internal to the
+<p class="admonition-title">Note</p>
+<p>This only works when trying to access the properties from outside of the class. Any methods internal to the
 class must call the <code class="docutils literal notranslate"><span class="pre">setX()</span></code> and <code class="docutils literal notranslate"><span class="pre">getX()</span></code> methods directly.</p>
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">setPassword()</span></code> method we ensure that the password is always hashed.</p>
@@ -656,15 +661,15 @@ Add a question mark at the beginning of type to mark property as nullable, i.e. 
 <h3><a class="toc-backref" href="#id11">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline">¶</a></h3>
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
-<li>an <strong>array</strong>, they will automatically be unserialized,</li>
-<li>a <strong>json</strong>, they will automatically be set as an value of json_decode($value, false),</li>
-<li>a <strong>json-array</strong>, they will automatically be set as an value of json_decode($value, true),</li>
+<li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
+<li><p>a <strong>json</strong>, they will automatically be set as an value of json_decode($value, false),</p></li>
+<li><p>a <strong>json-array</strong>, they will automatically be set as an value of json_decode($value, true),</p></li>
 </ul>
 <p>when you read the property’s value.
 Unlike the rest of the data types that you can cast properties into, the:</p>
 <ul class="simple">
-<li><strong>array</strong> cast type will serialize,</li>
-<li><strong>json</strong> and <strong>json-array</strong> cast will use json_encode function on</li>
+<li><p><strong>array</strong> cast type will serialize,</p></li>
+<li><p><strong>json</strong> and <strong>json-array</strong> cast will use json_encode function on</p></li>
 </ul>
 <p>the value whenever the property is set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>

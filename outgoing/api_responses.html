@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -344,9 +347,10 @@ used with any controller to make common response types simple, with no need to r
 should be returned for which response types.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#example-usage" id="id1">Example Usage</a></li>
-<li><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a><ul>
-<li><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></li>
+<li><p><a class="reference internal" href="#example-usage" id="id1">Example Usage</a></p></li>
+<li><p><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></p></li>
 </ul>
 </li>
 </ul>
@@ -407,11 +411,11 @@ exist for the most common use cases:</p>
 <p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:</p>
 <ul class="simple">
-<li>If $data is a string, it will be treated as HTML to send back to the client.</li>
-<li><dl class="first docutils">
-<dt>If $data is an array, it will be formatted according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value. If that is empty</dt>
-<dd>it will try to negotiate the content type with what the client asked for, defaulting to JSON
-if nothing else has been specified within ConfigAPI.php, the <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property.</dd>
+<li><p>If $data is a string, it will be treated as HTML to send back to the client.</p></li>
+<li><dl class="simple">
+<dt>If $data is an array, it will be formatted according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value. If that is empty</dt><dd><p>it will try to negotiate the content type with what the client asked for, defaulting to JSON
+if nothing else has been specified within ConfigAPI.php, the <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -443,7 +447,7 @@ JSON data will be sent back to the client.</p>
 <h3><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 <dl class="method">
 <dt id="setResponseFormat">
-<code class="descname">setResponseFormat</code><span class="sig-paren">(</span><em>$format</em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setResponseFormat</code><span class="sig-paren">(</span><em class="sig-param">$format</em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>:param string $format The type of response to return, either <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code></p>
 <p>This defines the format to be used when formatting arrays in responses. If you provide a <code class="docutils literal notranslate"><span class="pre">null</span></code> value for
 <code class="docutils literal notranslate"><span class="pre">$format</span></code>, it will be automatically determined through content negotiation.</p>
@@ -454,20 +458,16 @@ JSON data will be sent back to the client.</p>
 </div>
 <dl class="method">
 <dt id="respond">
-<code class="descname">respond</code><span class="sig-paren">(</span><em>$data</em><span class="optional">[</span>, <em>$statusCode=200</em><span class="optional">[</span>, <em>$message=''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</li>
-<li><strong>$statusCode</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 200</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">respond</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$statusCode=200</em><span class="optional">[</span>, <em class="sig-param">$message=''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$statusCode</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 200</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This is the method used by all other methods in this trait to return a response to the client.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> element can be either a string or an array. By default, a string will be returned as HTML,
 while an array will be run through json_encode and returned as JSON, unless <a class="reference internal" href="../incoming/content_negotiation.html"><span class="doc">Content Negotiation</span></a>
@@ -476,32 +476,28 @@ determines it should be returned in a different format.</p>
 response status. Not every client will respect the custom codes, though, and will use the IANA standards
 that match the status code.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since it sets the status code and body on the active Response instance, this should always
+<p class="admonition-title">Note</p>
+<p>Since it sets the status code and body on the active Response instance, this should always
 be the final method in the script execution.</p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="fail">
-<code class="descname">fail</code><span class="sig-paren">(</span><em>$messages</em><span class="optional">[</span>, <em>int $status=400</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message=''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$messages</strong> (<em>mixed</em>) – A string or array of strings that contain error messages encountered.</li>
-<li><strong>$status</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 400.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">fail</code><span class="sig-paren">(</span><em class="sig-param">$messages</em><span class="optional">[</span>, <em class="sig-param">int $status=400</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message=''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$messages</strong> (<em>mixed</em>) – A string or array of strings that contain error messages encountered.</p></li>
+<li><p><strong>$status</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 400.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A multi-part response in the client’s preferred format.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A multi-part response in the client’s preferred format.</p>
+</dd>
+</dl>
 <p>The is the generic method used to represent a failed response, and is used by all of the other “fail” methods.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$messages</span></code> element can be either a string or an array of strings.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$status</span></code> parameter is the HTTP status code that should be returned.</p>
@@ -526,22 +522,18 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 
 <dl class="method">
 <dt id="respondCreated">
-<code class="descname">respondCreated</code><span class="sig-paren">(</span><em>$data = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">respondCreated</code><span class="sig-paren">(</span><em class="sig-param">$data = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when a new resource was created, typically 201.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
@@ -551,22 +543,18 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 
 <dl class="method">
 <dt id="respondDeleted">
-<code class="descname">respondDeleted</code><span class="sig-paren">(</span><em>$data = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">respondDeleted</code><span class="sig-paren">(</span><em class="sig-param">$data = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
@@ -576,21 +564,17 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 
 <dl class="method">
 <dt id="respondNoContent">
-<code class="descname">respondNoContent</code><span class="sig-paren">(</span><em>string $message = 'No Content'</em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">respondNoContent</code><span class="sig-paren">(</span><em class="sig-param">string $message = 'No Content'</em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when a command was successfully executed by the server but there is no
 meaningful reply to send back to the client, typically 204.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -601,23 +585,19 @@ meaningful reply to send back to the client, typically 204.</p>
 
 <dl class="method">
 <dt id="failUnauthorized">
-<code class="descname">failUnauthorized</code><span class="sig-paren">(</span><em>string $description = 'Unauthorized'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failUnauthorized</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Unauthorized'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when the user either has not been authorized,
 or has incorrect authorization. Status code is 401.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failUnauthorized</span><span class="p">(</span><span class="s1">&#39;Invalid Auth token&#39;</span><span class="p">);</span>
@@ -627,23 +607,19 @@ or has incorrect authorization. Status code is 401.</p>
 
 <dl class="method">
 <dt id="failForbidden">
-<code class="descname">failForbidden</code><span class="sig-paren">(</span><em>string $description = 'Forbidden'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failForbidden</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Forbidden'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Unlike <code class="docutils literal notranslate"><span class="pre">failUnauthorized</span></code>, this method should be used when the requested API endpoint is never allowed.
 Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
 the client should not try again because it won’t help. Status code is 403.</p>
@@ -654,23 +630,19 @@ the client should not try again because it won’t help. Status code is 403.</p>
 
 <dl class="method">
 <dt id="failNotFound">
-<code class="descname">failNotFound</code><span class="sig-paren">(</span><em>string $description = 'Not Found'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failNotFound</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Not Found'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User 13 cannot be found.&#39;</span><span class="p">);</span>
 </pre></div>
@@ -679,23 +651,19 @@ the client should not try again because it won’t help. Status code is 403.</p>
 
 <dl class="method">
 <dt id="failValidationError">
-<code class="descname">failValidationError</code><span class="sig-paren">(</span><em>string $description = 'Bad Request'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationError" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failValidationError</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Bad Request'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when data the client sent did not pass validation rules.
 Status code is typically 400.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationError</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
@@ -705,23 +673,19 @@ Status code is typically 400.</p>
 
 <dl class="method">
 <dt id="failResourceExists">
-<code class="descname">failResourceExists</code><span class="sig-paren">(</span><em>string $description = 'Conflict'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failResourceExists</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Conflict'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when the resource the client is trying to create already exists.
 Status code is typically 409.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceExists</span><span class="p">(</span><span class="s1">&#39;A user already exists with that email.&#39;</span><span class="p">);</span>
@@ -731,23 +695,19 @@ Status code is typically 409.</p>
 
 <dl class="method">
 <dt id="failResourceGone">
-<code class="descname">failResourceGone</code><span class="sig-paren">(</span><em>string $description = 'Gone'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failResourceGone</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Gone'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when the requested resource was previously deleted and
 is no longer available. Status code is typically 410.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceGone</span><span class="p">(</span><span class="s1">&#39;That user has been previously deleted.&#39;</span><span class="p">);</span>
@@ -757,23 +717,19 @@ is no longer available. Status code is typically 410.</p>
 
 <dl class="method">
 <dt id="failTooManyRequests">
-<code class="descname">failTooManyRequests</code><span class="sig-paren">(</span><em>string $description = 'Too Many Requests'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failTooManyRequests</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Too Many Requests'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when the client has called an API endpoint too many times.
 This might be due to some form of throttling or rate limiting. Status code is typically 400.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failTooManyRequests</span><span class="p">(</span><span class="s1">&#39;You must wait 15 seconds before making another request.&#39;</span><span class="p">);</span>
@@ -783,23 +739,19 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
 <dl class="method">
 <dt id="failServerError">
-<code class="descname">failServerError</code><span class="sig-paren">(</span><em>string $description = 'Internal Server Error'</em><span class="optional">[</span>, <em>string $code = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$description</strong> (<em>string</em>) – The error message to show the user.</li>
-<li><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</li>
-<li><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</li>
+<code class="sig-name descname">failServerError</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Internal Server Error'</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object’s send() method.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the Response object’s send() method.</p>
+</dd>
+</dl>
 <p>Sets the appropriate status code to use when there is a server error.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failServerError</span><span class="p">(</span><span class="s1">&#39;Server error.&#39;</span><span class="p">);</span>
 </pre></div>

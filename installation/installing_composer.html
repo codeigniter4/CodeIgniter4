@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,9 +343,9 @@
 <h1>Composer Installation<a class="headerlink" href="#composer-installation" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#app-starter" id="id5">App Starter</a></li>
-<li><a class="reference internal" href="#adding-codeigniter4-to-an-existing-project" id="id6">Adding CodeIgniter4 to an Existing Project</a></li>
-<li><a class="reference internal" href="#translations-installation" id="id7">Translations Installation</a></li>
+<li><p><a class="reference internal" href="#app-starter" id="id5">App Starter</a></p></li>
+<li><p><a class="reference internal" href="#adding-codeigniter4-to-an-existing-project" id="id6">Adding CodeIgniter4 to an Existing Project</a></p></li>
+<li><p><a class="reference internal" href="#translations-installation" id="id7">Translations Installation</a></p></li>
 </ul>
 </div>
 <p>Composer can be used in several ways to install CodeIgniter4 on your system.</p>
@@ -388,10 +391,12 @@ trusted dependencies that we bundle, being composer-installed.</p>
 </div>
 <p>If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with <cite>–prefer-source</cite>:</p>
 <blockquote>
-<div>composer update codeigniter4/framework –prefer-source</div></blockquote>
+<div><p>composer update codeigniter4/framework –prefer-source</p>
+</div></blockquote>
 <p>If <cite>–prefer-source</cite> doesn’t automatically update to pull latest framework source structure, you can remove first:</p>
 <blockquote>
-<div>rm -rf vendor/codeigniter4/framework &amp;&amp; composer update codeigniter4/framework –prefer-source</div></blockquote>
+<div><p>rm -rf vendor/codeigniter4/framework &amp;&amp; composer update codeigniter4/framework –prefer-source</p>
+</div></blockquote>
 <p>If you used the “–no-dev” option when you created the project, it
 would be appropriate to do so here too, i.e. <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code>.</p>
 <p>Read the upgrade instructions, and check designated  <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> folders for affected changes.</p>
@@ -408,9 +413,9 @@ would be appropriate to do so here too, i.e. <code class="docutils literal notra
 <h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
-<li>app, public, tests, writable</li>
-<li>vendor/codeigniter4/framework/system</li>
-<li>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating when using <cite>–prefer-source</cite>)</li>
+<li><p>app, public, tests, writable</p></li>
+<li><p>vendor/codeigniter4/framework/system</p></li>
+<li><p>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating when using <cite>–prefer-source</cite>)</p></li>
 </ul>
 </div>
 <div class="section" id="latest-dev">
@@ -478,8 +483,8 @@ to your project root</p>
 <h3>Structure<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
-<li>app, public, tests, writable (when using <cite>–prefer-source</cite>)</li>
-<li>vendor/codeigniter4/framework/system</li>
+<li><p>app, public, tests, writable (when using <cite>–prefer-source</cite>)</p></li>
+<li><p>vendor/codeigniter4/framework/system</p></li>
 </ul>
 </div>
 </div>

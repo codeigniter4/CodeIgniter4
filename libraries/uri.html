@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,24 +346,26 @@ simple to ensure that the structure is always correct, no matter how complex the
 relative URI to an existing one and have it resolved safely and correctly.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#creating-uri-instances" id="id1">Creating URI instances</a><ul>
-<li><a class="reference internal" href="#the-current-uri" id="id2">The Current URI</a></li>
+<li><p><a class="reference internal" href="#creating-uri-instances" id="id1">Creating URI instances</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-current-uri" id="id2">The Current URI</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#uri-strings" id="id3">URI Strings</a></li>
-<li><a class="reference internal" href="#the-uri-parts" id="id4">The URI Parts</a><ul>
-<li><a class="reference internal" href="#scheme" id="id5">Scheme</a></li>
-<li><a class="reference internal" href="#authority" id="id6">Authority</a></li>
-<li><a class="reference internal" href="#userinfo" id="id7">Userinfo</a></li>
-<li><a class="reference internal" href="#host" id="id8">Host</a></li>
-<li><a class="reference internal" href="#port" id="id9">Port</a></li>
-<li><a class="reference internal" href="#path" id="id10">Path</a></li>
-<li><a class="reference internal" href="#query" id="id11">Query</a></li>
-<li><a class="reference internal" href="#fragment" id="id12">Fragment</a></li>
+<li><p><a class="reference internal" href="#uri-strings" id="id3">URI Strings</a></p></li>
+<li><p><a class="reference internal" href="#the-uri-parts" id="id4">The URI Parts</a></p>
+<ul>
+<li><p><a class="reference internal" href="#scheme" id="id5">Scheme</a></p></li>
+<li><p><a class="reference internal" href="#authority" id="id6">Authority</a></p></li>
+<li><p><a class="reference internal" href="#userinfo" id="id7">Userinfo</a></p></li>
+<li><p><a class="reference internal" href="#host" id="id8">Host</a></p></li>
+<li><p><a class="reference internal" href="#port" id="id9">Port</a></p></li>
+<li><p><a class="reference internal" href="#path" id="id10">Path</a></p></li>
+<li><p><a class="reference internal" href="#query" id="id11">Query</a></p></li>
+<li><p><a class="reference internal" href="#fragment" id="id12">Fragment</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#uri-segments" id="id13">URI Segments</a></li>
-<li><a class="reference internal" href="#disable-throwing-exceptions" id="id14">Disable Throwing Exceptions</a></li>
+<li><p><a class="reference internal" href="#uri-segments" id="id13">URI Segments</a></p></li>
+<li><p><a class="reference internal" href="#disable-throwing-exceptions" id="id14">Disable Throwing Exceptions</a></p></li>
 </ul>
 </div>
 <div class="section" id="creating-uri-instances">
@@ -450,8 +455,8 @@ until you turn it off again, so always make sure that you turn it off as soon as
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the current port is the default port for the scheme it will never be displayed.</p>
+<p class="admonition-title">Note</p>
+<p>If the current port is the default port for the scheme it will never be displayed.</p>
 </div>
 </div>
 <div class="section" id="userinfo">
@@ -500,8 +505,8 @@ can be used to manipulate it:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
+<p class="admonition-title">Note</p>
+<p>When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
 characters, and remove dot segments for safety.</p>
 </div>
 </div>
@@ -516,8 +521,8 @@ be set as a string currently.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
+<p class="admonition-title">Note</p>
+<p>Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
 </div>
 <p>You can set query values using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
@@ -553,8 +558,8 @@ you can use the <code class="docutils literal notranslate"><span class="pre">str
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">By default <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> methods uses native <code class="docutils literal notranslate"><span class="pre">parse_str()</span></code> function to prepare data.
+<p class="admonition-title">Note</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> methods uses native <code class="docutils literal notranslate"><span class="pre">parse_str()</span></code> function to prepare data.
 If you want to use more liberal rules (which allow key names to contain dots), you can use a special method
 <code class="docutils literal notranslate"><span class="pre">useRawQueryString()</span></code> beforehand.</p>
 </div>

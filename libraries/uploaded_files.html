@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,23 +344,25 @@
 <p>CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP’s <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code>
 array directly. This extends the <a class="reference internal" href="files.html"><span class="doc">File class</span></a> and thus gains all of the features of that class.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
+<p class="admonition-title">Note</p>
+<p>This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
 interface to the uploaded files with a few small features.</p>
 </div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#accessing-files" id="id1">Accessing Files</a><ul>
-<li><a class="reference internal" href="#all-files" id="id2">All Files</a></li>
-<li><a class="reference internal" href="#single-file" id="id3">Single File</a></li>
+<li><p><a class="reference internal" href="#accessing-files" id="id1">Accessing Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#all-files" id="id2">All Files</a></p></li>
+<li><p><a class="reference internal" href="#single-file" id="id3">Single File</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#working-with-the-file" id="id4">Working With the File</a><ul>
-<li><a class="reference internal" href="#verify-a-file" id="id5">Verify A File</a></li>
-<li><a class="reference internal" href="#file-names" id="id6">File Names</a></li>
-<li><a class="reference internal" href="#other-file-info" id="id7">Other File Info</a></li>
-<li><a class="reference internal" href="#moving-files" id="id8">Moving Files</a></li>
-<li><a class="reference internal" href="#store-files" id="id9">Store Files</a></li>
+<li><p><a class="reference internal" href="#working-with-the-file" id="id4">Working With the File</a></p>
+<ul>
+<li><p><a class="reference internal" href="#verify-a-file" id="id5">Verify A File</a></p></li>
+<li><p><a class="reference internal" href="#file-names" id="id6">File Names</a></p></li>
+<li><p><a class="reference internal" href="#other-file-info" id="id7">Other File Info</a></p></li>
+<li><p><a class="reference internal" href="#moving-files" id="id8">Moving Files</a></p></li>
+<li><p><a class="reference internal" href="#store-files" id="id9">Store Files</a></p></li>
 </ul>
 </li>
 </ul>
@@ -484,8 +489,8 @@ In controller:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">using <code class="docutils literal notranslate"><span class="pre">getFiles()</span></code> is more appropriate</p>
+<p class="admonition-title">Note</p>
+<p>using <code class="docutils literal notranslate"><span class="pre">getFiles()</span></code> is more appropriate</p>
 </div>
 </div>
 </div>
@@ -507,13 +512,13 @@ move the file to a new location.</p>
 message with the <code class="docutils literal notranslate"><span class="pre">getError()</span></code> and <code class="docutils literal notranslate"><span class="pre">getErrorString()</span></code> methods. The following errors can be discovered through
 this method:</p>
 <ul class="simple">
-<li>The file exceeds your upload_max_filesize ini directive.</li>
-<li>The file exceeds the upload limit defined in your form.</li>
-<li>The file was only partially uploaded.</li>
-<li>No file was uploaded.</li>
-<li>The file could not be written on disk.</li>
-<li>File could not be uploaded: missing temporary directory.</li>
-<li>File upload was stopped by a PHP extension.</li>
+<li><p>The file exceeds your upload_max_filesize ini directive.</p></li>
+<li><p>The file exceeds the upload limit defined in your form.</p></li>
+<li><p>The file was only partially uploaded.</p></li>
+<li><p>No file was uploaded.</p></li>
+<li><p>The file could not be written on disk.</p></li>
+<li><p>File could not be uploaded: missing temporary directory.</p></li>
+<li><p>File upload was stopped by a PHP extension.</p></li>
 </ul>
 </div>
 <div class="section" id="file-names">
@@ -575,9 +580,9 @@ the <code class="docutils literal notranslate"><span class="pre">hasMoved()</spa
 </div>
 <p>Moving an uploaded file can fail, with an HTTPException, under several circumstances:</p>
 <ul class="simple">
-<li>the file has already been moved</li>
-<li>the file did not upload successfully</li>
-<li>the file move operation fails (eg. improper permissions)</li>
+<li><p>the file has already been moved</p></li>
+<li><p>the file did not upload successfully</p></li>
+<li><p>the file move operation fails (eg. improper permissions)</p></li>
 </ul>
 </div>
 <div class="section" id="store-files">
@@ -599,9 +604,9 @@ passing it as the second parameter:</p>
 </div>
 <p>Moving an uploaded file can fail, with an HTTPException, under several circumstances:</p>
 <ul class="simple">
-<li>the file has already been moved</li>
-<li>the file did not upload successfully</li>
-<li>the file move operation fails (eg. improper permissions)</li>
+<li><p>the file has already been moved</p></li>
+<li><p>the file did not upload successfully</p></li>
+<li><p>the file move operation fails (eg. improper permissions)</p></li>
 </ul>
 </div>
 </div>

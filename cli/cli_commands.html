@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -345,17 +348,19 @@ their jobs simpler, whether by handling migrations or database seeding, checking
 building out custom code generators for your company.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#running-commands" id="id1">Running Commands</a><ul>
-<li><a class="reference internal" href="#calling-commands" id="id2">Calling Commands</a></li>
+<li><p><a class="reference internal" href="#running-commands" id="id1">Running Commands</a></p>
+<ul>
+<li><p><a class="reference internal" href="#calling-commands" id="id2">Calling Commands</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#using-help-command" id="id3">Using Help Command</a></li>
-<li><a class="reference internal" href="#creating-new-commands" id="id4">Creating New Commands</a><ul>
-<li><a class="reference internal" href="#file-location" id="id5">File Location</a></li>
-<li><a class="reference internal" href="#an-example-command" id="id6">An Example Command</a></li>
+<li><p><a class="reference internal" href="#using-help-command" id="id3">Using Help Command</a></p></li>
+<li><p><a class="reference internal" href="#creating-new-commands" id="id4">Creating New Commands</a></p>
+<ul>
+<li><p><a class="reference internal" href="#file-location" id="id5">File Location</a></p></li>
+<li><p><a class="reference internal" href="#an-example-command" id="id6">An Example Command</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#basecommand" id="id7">BaseCommand</a></li>
+<li><p><a class="reference internal" href="#basecommand" id="id7">BaseCommand</a></p></li>
 </ul>
 </div>
 <div class="section" id="running-commands">
@@ -407,12 +412,12 @@ so that you can choose to display it or not.</p>
 and must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CLI\BaseCommand</span></code>, and implement the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
 <p>The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:</p>
 <ul class="simple">
-<li>($group): a string to describe the group the command is lumped under when listing commands. For example (Database)</li>
-<li>($name): a string to describe the command’s name. For example (migrate:create)</li>
-<li>($description): a string to describe the command. For example (Creates a new migration file.)</li>
-<li>($usage): a string to describe the command usage. For example (migrate:create [migration_name] [Options])</li>
-<li>($arguments): an array of strings to describe each command argument. For example (‘migration_name’ =&gt; ‘The migration file name’)</li>
-<li>($options): an array of strings to describe each command option. For example (‘-n’ =&gt; ‘Set migration namespace’)</li>
+<li><p>($group): a string to describe the group the command is lumped under when listing commands. For example (Database)</p></li>
+<li><p>($name): a string to describe the command’s name. For example (migrate:create)</p></li>
+<li><p>($description): a string to describe the command. For example (Creates a new migration file.)</p></li>
+<li><p>($usage): a string to describe the command usage. For example (migrate:create [migration_name] [Options])</p></li>
+<li><p>($arguments): an array of strings to describe each command argument. For example (‘migration_name’ =&gt; ‘The migration file name’)</p></li>
+<li><p>($options): an array of strings to describe each command option. For example (‘-n’ =&gt; ‘Set migration namespace’)</p></li>
 </ul>
 <p><strong>Help description will be automatically generated according to the above parameters.</strong></p>
 <div class="section" id="file-location">
@@ -421,8 +426,8 @@ and must extend <code class="docutils literal notranslate"><span class="pre">Cod
 that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> can locate it. This could be in <strong>/app/Commands</strong>, or
 a directory that you keep commands in to use in all of your project development, like <strong>Acme/Commands</strong>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
+<p class="admonition-title">Note</p>
+<p>When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
 possible to get environment information, path information, and to use any of the tools you would use when making a Controller.</p>
 </div>
 </div>
@@ -493,22 +498,18 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <strong>$this-&gt;logger</strong>.</p>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\CLI\BaseCommand</code></dt>
+<code class="sig-name descname">CodeIgniter\CLI\BaseCommand</code></dt>
 <dd><dl class="method">
 <dt id="call">
-<code class="descname">call</code><span class="sig-paren">(</span><em>string $command</em><span class="optional">[</span>, <em>array $params=[]</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#call" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$command</strong> (<em>string</em>) – The name of another command to call.</li>
-<li><strong>$params</strong> (<em>array</em>) – Additional cli arguments to make available to that command.</li>
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">string $command</em><span class="optional">[</span>, <em class="sig-param">array $params=[]</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#call" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$command</strong> (<em>string</em>) – The name of another command to call.</p></li>
+<li><p><strong>$params</strong> (<em>array</em>) – Additional cli arguments to make available to that command.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This method allows you to run other commands during the execution of your current command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;command_one&#39;</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;command_two&#39;</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
@@ -518,18 +519,14 @@ be familiar with when creating your own commands. It also has a <a class="refere
 
 <dl class="method">
 <dt id="showError">
-<code class="descname">showError</code><span class="sig-paren">(</span><em>Exception $e</em><span class="sig-paren">)</span><a class="headerlink" href="#showError" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$e</strong> (<em>Exception</em>) – The exception to use for error reporting.</li>
+<code class="sig-name descname">showError</code><span class="sig-paren">(</span><em class="sig-param">Exception $e</em><span class="sig-paren">)</span><a class="headerlink" href="#showError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$e</strong> (<em>Exception</em>) – The exception to use for error reporting.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>A convenience method to maintain a consistent and clear error output to the cli:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span>
 <span class="p">{</span>
@@ -545,25 +542,21 @@ be familiar with when creating your own commands. It also has a <a class="refere
 
 <dl class="method">
 <dt id="showHelp">
-<code class="descname">showHelp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#showHelp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showHelp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#showHelp" title="Permalink to this definition">¶</a></dt>
 <dd><p>A method to show command help: (usage,arguments,description,options)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getPad">
-<code class="descname">getPad</code><span class="sig-paren">(</span><em>$array</em>, <em>$pad</em><span class="sig-paren">)</span><a class="headerlink" href="#getPad" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$array</strong> (<em>array</em>) – The  $key =&gt; $value array.</li>
-<li><strong>$pad</strong> (<em>integer</em>) – The pad spaces.</li>
+<code class="sig-name descname">getPad</code><span class="sig-paren">(</span><em class="sig-param">$array</em>, <em class="sig-param">$pad</em><span class="sig-paren">)</span><a class="headerlink" href="#getPad" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$array</strong> (<em>array</em>) – The  $key =&gt; $value array.</p></li>
+<li><p><strong>$pad</strong> (<em>integer</em>) – The pad spaces.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>A method to calculate padding for $key =&gt; $value array output. The padding can be used to output a will formatted table in CLI:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pad</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPad</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span> <span class="k">as</span> <span class="nv">$option</span> <span class="o">=&gt;</span> <span class="nv">$description</span><span class="p">)</span>

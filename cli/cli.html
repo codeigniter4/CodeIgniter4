@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,12 +346,13 @@ via the URL in a browser they can also be loaded via the command-line
 interface (CLI).</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#what-is-the-cli" id="id1">What is the CLI?</a></li>
-<li><a class="reference internal" href="#why-run-via-the-command-line" id="id2">Why run via the command-line?</a></li>
-<li><a class="reference internal" href="#let-s-try-it-hello-world" id="id3">Let’s try it: Hello World!</a></li>
-<li><a class="reference internal" href="#that-s-the-basics" id="id4">That’s the basics!</a><ul>
-<li><a class="reference internal" href="#cli-only-routing" id="id5">CLI-Only Routing</a></li>
-<li><a class="reference internal" href="#the-cli-library" id="id6">The CLI Library</a></li>
+<li><p><a class="reference internal" href="#what-is-the-cli" id="id1">What is the CLI?</a></p></li>
+<li><p><a class="reference internal" href="#why-run-via-the-command-line" id="id2">Why run via the command-line?</a></p></li>
+<li><p><a class="reference internal" href="#let-s-try-it-hello-world" id="id3">Let’s try it: Hello World!</a></p></li>
+<li><p><a class="reference internal" href="#that-s-the-basics" id="id4">That’s the basics!</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cli-only-routing" id="id5">CLI-Only Routing</a></p></li>
+<li><p><a class="reference internal" href="#the-cli-library" id="id6">The CLI Library</a></p></li>
 </ul>
 </li>
 </ul>
@@ -364,13 +368,13 @@ article</a>.</p>
 <p>There are many reasons for running CodeIgniter from the command-line,
 but they are not always obvious.</p>
 <ul class="simple">
-<li>Run your cron-jobs without needing to use <em>wget</em> or <em>curl</em>.</li>
-<li>Make your cron-jobs inaccessible from being loaded in the URL by
-checking the return value of <a class="reference internal" href="../general/common_functions.html#is_cli" title="is_cli"><code class="xref php php-func docutils literal notranslate"><span class="pre">is_cli()</span></code></a>.</li>
-<li>Make interactive “tasks” that can do things like set permissions,
-prune cache folders, run backups, etc.</li>
-<li>Integrate with other applications in other languages. For example, a
-random C++ script could call one command and run code in your models!</li>
+<li><p>Run your cron-jobs without needing to use <em>wget</em> or <em>curl</em>.</p></li>
+<li><p>Make your cron-jobs inaccessible from being loaded in the URL by
+checking the return value of <a class="reference internal" href="../general/common_functions.html#is_cli" title="is_cli"><code class="xref php php-func docutils literal notranslate"><span class="pre">is_cli()</span></code></a>.</p></li>
+<li><p>Make interactive “tasks” that can do things like set permissions,
+prune cache folders, run backups, etc.</p></li>
+<li><p>Integrate with other applications in other languages. For example, a
+random C++ script could call one command and run code in your models!</p></li>
 </ul>
 </div>
 <div class="section" id="let-s-try-it-hello-world">

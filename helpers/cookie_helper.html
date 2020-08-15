@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,8 +345,8 @@
 cookies.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -358,28 +361,24 @@ cookies.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="set_cookie">
-<code class="descname">set_cookie</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$expire = ''</em><span class="optional">[</span>, <em>$domain = ''</em><span class="optional">[</span>, <em>$path = '/'</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">[</span>, <em>$secure = false</em><span class="optional">[</span>, <em>$httpOnly = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_cookie" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>mixed</em>) – Cookie name <em>or</em> associative array of all of the parameters available to this function</li>
-<li><strong>$value</strong> (<em>string</em>) – Cookie value</li>
-<li><strong>$expire</strong> (<em>int</em>) – Number of seconds until expiration</li>
-<li><strong>$domain</strong> (<em>string</em>) – Cookie domain (usually: .yourdomain.com)</li>
-<li><strong>$path</strong> (<em>string</em>) – Cookie path</li>
-<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
-<li><strong>$secure</strong> (<em>bool</em>) – Whether to only send the cookie through HTTPS</li>
-<li><strong>$httpOnly</strong> (<em>bool</em>) – Whether to hide the cookie from JavaScript</li>
+<code class="sig-name descname">set_cookie</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httpOnly = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>mixed</em>) – Cookie name <em>or</em> associative array of all of the parameters available to this function</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Cookie value</p></li>
+<li><p><strong>$expire</strong> (<em>int</em>) – Number of seconds until expiration</p></li>
+<li><p><strong>$domain</strong> (<em>string</em>) – Cookie domain (usually: .yourdomain.com)</p></li>
+<li><p><strong>$path</strong> (<em>string</em>) – Cookie path</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
+<li><p><strong>$secure</strong> (<em>bool</em>) – Whether to only send the cookie through HTTPS</p></li>
+<li><p><strong>$httpOnly</strong> (<em>bool</em>) – Whether to hide the cookie from JavaScript</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>void</p>
+</dd>
+</dl>
 <p>This helper function gives you friendlier syntax to set browser
 cookies. Refer to the <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Library</span></a> for
 a description of its use, as this function is an alias for
@@ -388,25 +387,21 @@ a description of its use, as this function is an alias for
 
 <dl class="function">
 <dt id="get_cookie">
-<code class="descname">get_cookie</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xssClean = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_cookie" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – Cookie name</li>
-<li><strong>$xss_clean</strong> (<em>bool</em>) – Whether to apply XSS filtering to the returned value</li>
+<code class="sig-name descname">get_cookie</code><span class="sig-paren">(</span><em class="sig-param">$index</em><span class="optional">[</span>, <em class="sig-param">$xssClean = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$xss_clean</strong> (<em>bool</em>) – Whether to apply XSS filtering to the returned value</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The cookie value or NULL if not found</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The cookie value or NULL if not found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>This helper function gives you friendlier syntax to get browser
 cookies. Refer to the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest Library</span></a> for
 detailed description of its use, as this function acts very
@@ -417,24 +412,20 @@ the <code class="docutils literal notranslate"><span class="pre">$cookiePrefix</
 
 <dl class="function">
 <dt id="delete_cookie">
-<code class="descname">delete_cookie</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>$domain = ''</em><span class="optional">[</span>, <em>$path = '/'</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_cookie" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – Cookie name</li>
-<li><strong>$domain</strong> (<em>string</em>) – Cookie domain (usually: .yourdomain.com)</li>
-<li><strong>$path</strong> (<em>string</em>) – Cookie path</li>
-<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
+<code class="sig-name descname">delete_cookie</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$domain</strong> (<em>string</em>) – Cookie domain (usually: .yourdomain.com)</p></li>
+<li><p><strong>$path</strong> (<em>string</em>) – Cookie path</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>void</p>
+</dd>
+</dl>
 <p>Lets you delete a cookie. Unless you’ve set a custom path or other
 values, only the name of the cookie is needed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_cookie</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -347,29 +350,29 @@ configuration file with the same name as the class that uses it. You will find
 the application configuration files in the <strong>/app/Config</strong> folder.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#working-with-configuration-files" id="id2">Working With Configuration Files</a></li>
-<li><a class="reference internal" href="#creating-configuration-files" id="id3">Creating Configuration Files</a></li>
-<li><a class="reference internal" href="#environment-variables" id="id4">Environment Variables</a></li>
-<li><a class="reference internal" href="#environment-variables-and-codeigniter" id="id5">Environment Variables and CodeIgniter</a></li>
-<li><a class="reference internal" href="#nesting-variables" id="id6">Nesting Variables</a></li>
-<li><a class="reference internal" href="#namespaced-variables" id="id7">Namespaced Variables</a></li>
-<li><a class="reference internal" href="#configuration-classes-and-environment-variables" id="id8">Configuration Classes and Environment Variables</a></li>
-<li><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id9">Treating Environment Variables as Arrays</a></li>
-<li><a class="reference internal" href="#handling-different-environments" id="id10">Handling Different Environments</a></li>
-<li><a class="reference internal" href="#registrars" id="id11">Registrars</a></li>
+<li><p><a class="reference internal" href="#working-with-configuration-files" id="id2">Working With Configuration Files</a></p></li>
+<li><p><a class="reference internal" href="#creating-configuration-files" id="id3">Creating Configuration Files</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables" id="id4">Environment Variables</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables-and-codeigniter" id="id5">Environment Variables and CodeIgniter</a></p></li>
+<li><p><a class="reference internal" href="#nesting-variables" id="id6">Nesting Variables</a></p></li>
+<li><p><a class="reference internal" href="#namespaced-variables" id="id7">Namespaced Variables</a></p></li>
+<li><p><a class="reference internal" href="#configuration-classes-and-environment-variables" id="id8">Configuration Classes and Environment Variables</a></p></li>
+<li><p><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id9">Treating Environment Variables as Arrays</a></p></li>
+<li><p><a class="reference internal" href="#handling-different-environments" id="id10">Handling Different Environments</a></p></li>
+<li><p><a class="reference internal" href="#registrars" id="id11">Registrars</a></p></li>
 </ul>
 </div>
 <div class="section" id="working-with-configuration-files">
 <h2><a class="toc-backref" href="#id2">Working With Configuration Files</a><a class="headerlink" href="#working-with-configuration-files" title="Permalink to this headline">¶</a></h2>
 <p>You can access configuration files for your classes in several different ways.</p>
 <ul>
-<li><p class="first">By using the <code class="docutils literal notranslate"><span class="pre">new</span></code> keyword to create an instance:</p>
+<li><p>By using the <code class="docutils literal notranslate"><span class="pre">new</span></code> keyword to create an instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Creating new configuration object by hand</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Pager</span><span class="p">();</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">By using the <code class="docutils literal notranslate"><span class="pre">config()</span></code> function:</p>
+<li><p>By using the <code class="docutils literal notranslate"><span class="pre">config()</span></code> function:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get shared instance with config function</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
 
@@ -433,8 +436,8 @@ It has a large collection of variables your project might use that have been ass
 empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to <strong>.env</strong>, or by making a copy of it named <strong>.env</strong>.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Make sure the <strong>.env</strong> file is NOT tracked by your version control system. For <em>git</em> that means adding it to <strong>.gitignore</strong>. Failure to do so could result in sensitive credentials being exposed to the public.</p>
+<p class="admonition-title">Important</p>
+<p>Make sure the <strong>.env</strong> file is NOT tracked by your version control system. For <em>git</em> that means adding it to <strong>.gitignore</strong>. Failure to do so could result in sensitive credentials being exposed to the public.</p>
 </div>
 <p>Settings are stored in <strong>.env</strong> files as a simple a collection of name/value pairs separated by an equal sign.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">S3_BUCKET</span> <span class="o">=</span> <span class="nx">dotenv</span>
@@ -499,8 +502,8 @@ the full (case-sensitive) namespace of the class.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Both the namespace prefix and the property name are case-sensitive. They must exactly match the full namespace and property names as defined in the configuration class file.</p>
+<p class="admonition-title">Note</p>
+<p>Both the namespace prefix and the property name are case-sensitive. They must exactly match the full namespace and property names as defined in the configuration class file.</p>
 </div>
 <p>The same holds for a <em>short prefix</em>, which is a namespace using only the lowercase version of
 the configuration class name. If the short prefix matches the class name,
@@ -511,8 +514,8 @@ the value from <strong>.env</strong> replaces the configuration file value.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
+<p class="admonition-title">Note</p>
+<p>When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
 </div>
 </div>
 <div class="section" id="treating-environment-variables-as-arrays">

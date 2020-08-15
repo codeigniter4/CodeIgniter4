@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,14 +345,16 @@
 These do not require loading any additional libraries or helpers.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#global-functions" id="id1">Global Functions</a><ul>
-<li><a class="reference internal" href="#service-accessors" id="id2">Service Accessors</a></li>
-<li><a class="reference internal" href="#miscellaneous-functions" id="id3">Miscellaneous Functions</a></li>
+<li><p><a class="reference internal" href="#global-functions" id="id1">Global Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#service-accessors" id="id2">Service Accessors</a></p></li>
+<li><p><a class="reference internal" href="#miscellaneous-functions" id="id3">Miscellaneous Functions</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#global-constants" id="id4">Global Constants</a><ul>
-<li><a class="reference internal" href="#core-constants" id="id5">Core Constants</a></li>
-<li><a class="reference internal" href="#time-constants" id="id6">Time Constants</a></li>
+<li><p><a class="reference internal" href="#global-constants" id="id4">Global Constants</a></p>
+<ul>
+<li><p><a class="reference internal" href="#core-constants" id="id5">Core Constants</a></p></li>
+<li><p><a class="reference internal" href="#time-constants" id="id6">Time Constants</a></p></li>
 </ul>
 </li>
 </ul>
@@ -360,24 +365,20 @@ These do not require loading any additional libraries or helpers.</p>
 <h3><a class="toc-backref" href="#id2">Service Accessors</a><a class="headerlink" href="#service-accessors" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="cache">
-<code class="descname">cache</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cache" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The cache name of the item to retrieve from cache (Optional)</li>
+<code class="sig-name descname">cache</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cache" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The cache name of the item to retrieve from cache (Optional)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Either the cache object, or the item retrieved from the cache</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Either the cache object, or the item retrieved from the cache</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>If no $key is provided, will return the Cache engine instance. If a $key
 is provided, will return the value of $key as stored in the cache currently,
 or null if no value is found.</p>
@@ -390,25 +391,21 @@ or null if no value is found.</p>
 
 <dl class="function">
 <dt id="env">
-<code class="descname">env</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$default=null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The name of the environment variable to retrieve</li>
-<li><strong>$default</strong> (<em>mixed</em>) – The default value to return if no value is found.</li>
+<code class="sig-name descname">env</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default=null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The name of the environment variable to retrieve</p></li>
+<li><p><strong>$default</strong> (<em>mixed</em>) – The default value to return if no value is found.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The environment variable, the default value, or null.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The environment variable, the default value, or null.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Used to retrieve values that have previously been set to the environment,
 or return a default value if it is not found. Will format boolean values
 to actual booleans instead of string representations.</p>
@@ -419,26 +416,22 @@ settings, API keys, etc.</p>
 
 <dl class="function">
 <dt id="esc">
-<code class="descname">esc</code><span class="sig-paren">(</span><em>$data</em>, <em>$context='html'</em><span class="optional">[</span>, <em>$encoding</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>string|array</em>) – The information to be escaped.</li>
-<li><strong>$context</strong> (<em>string</em>) – The escaping context. Default is ‘html’.</li>
-<li><strong>$encoding</strong> (<em>string</em>) – The character encoding of the string.</li>
+<code class="sig-name descname">esc</code><span class="sig-paren">(</span><em class="sig-param">$data</em>, <em class="sig-param">$context='html'</em><span class="optional">[</span>, <em class="sig-param">$encoding</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>string|array</em>) – The information to be escaped.</p></li>
+<li><p><strong>$context</strong> (<em>string</em>) – The escaping context. Default is ‘html’.</p></li>
+<li><p><strong>$encoding</strong> (<em>string</em>) – The character encoding of the string.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The escaped data.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The escaped data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Escapes data for inclusion in web pages, to help prevent XSS attacks.
 This uses the Laminas Escaper library to handle the actual filtering of the data.</p>
 <p>If $data is a string, then it simply escapes and returns it.
@@ -448,88 +441,72 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 
 <dl class="function">
 <dt id="helper">
-<code class="descname">helper</code><span class="sig-paren">(</span><em>$filename</em><span class="sig-paren">)</span><a class="headerlink" href="#helper" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$filename</strong> (<em>string|array</em>) – The name of the helper file to load, or an array of names.</li>
+<code class="sig-name descname">helper</code><span class="sig-paren">(</span><em class="sig-param">$filename</em><span class="sig-paren">)</span><a class="headerlink" href="#helper" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$filename</strong> (<em>string|array</em>) – The name of the helper file to load, or an array of names.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Loads a helper file.</p>
 <p>For full details, see the <a class="reference internal" href="helpers.html"><span class="doc">Helper Functions</span></a> page.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lang">
-<code class="descname">lang</code><span class="sig-paren">(</span><em>$line</em><span class="optional">[</span>, <em>$args</em><span class="optional">[</span>, <em>$locale</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#lang" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$line</strong> (<em>string</em>) – The line of text to retrieve</li>
-<li><strong>$args</strong> (<em>array</em>) – An array of data to substitute for placeholders.</li>
-<li><strong>$locale</strong> (<em>string</em>) – Specify a different locale to be used instead of default one.</li>
+<code class="sig-name descname">lang</code><span class="sig-paren">(</span><em class="sig-param">$line</em><span class="optional">[</span>, <em class="sig-param">$args</em><span class="optional">[</span>, <em class="sig-param">$locale</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#lang" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$line</strong> (<em>string</em>) – The line of text to retrieve</p></li>
+<li><p><strong>$args</strong> (<em>array</em>) – An array of data to substitute for placeholders.</p></li>
+<li><p><strong>$locale</strong> (<em>string</em>) – Specify a different locale to be used instead of default one.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Retrieves a locale-specific file based on an alias string.</p>
 <p>For more information, see the <a class="reference internal" href="../outgoing/localization.html"><span class="doc">Localization</span></a> page.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="model">
-<code class="descname">model</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>$getShared = true</em><span class="optional">[</span>, <em>&amp;$conn = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#model" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – </li>
-<li><strong>$getShared</strong> (<em>boolean</em>) – </li>
-<li><strong>$conn</strong> (<em>ConnectionInterface|null</em>) – </li>
+<code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$getShared = true</em><span class="optional">[</span>, <em class="sig-param">&amp;$conn = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#model" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$getShared</strong> (<em>boolean</em>) – </p></li>
+<li><p><strong>$conn</strong> (<em>ConnectionInterface|null</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">More simple way of getting model instances</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>More simple way of getting model instances</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="old">
-<code class="descname">old</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$default = null</em><span class="optional">[</span>, <em>$escape = 'html'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#old" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The name of the old form data to check for.</li>
-<li><strong>$default</strong> (<em>mixed</em>) – The default value to return if $key doesn’t exist.</li>
-<li><strong>$escape</strong> (<em>mixed</em>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</li>
+<code class="sig-name descname">old</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default = null</em><span class="optional">[</span>, <em class="sig-param">$escape = 'html'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#old" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The name of the old form data to check for.</p></li>
+<li><p><strong>$default</strong> (<em>mixed</em>) – The default value to return if $key doesn’t exist.</p></li>
+<li><p><strong>$escape</strong> (<em>mixed</em>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the defined key, or the default value.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the defined key, or the default value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Provides a simple way to access “old input data” from submitting a form.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// in controller, checking form submittal</span>
@@ -549,54 +526,46 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 </dd></dl>
 
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are using the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
+<p class="admonition-title">Note</p>
+<p>If you are using the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
 need to use this function when not using the form helper.</p>
 </div>
 <dl class="function">
 <dt id="session">
-<code class="descname">session</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#session" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The name of the session item to check for.</li>
+<code class="sig-name descname">session</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#session" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The name of the session item to check for.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An instance of the Session object if no $key, the value found in the session for $key, or null.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of the Session object if no $key, the value found in the session for $key, or null.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Provides a convenient way to access the session class and to retrieve a
 stored value. For more information, see the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Sessions</span></a> page.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timer">
-<code class="descname">timer</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the benchmark point.</li>
+<code class="sig-name descname">timer</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the benchmark point.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Timer instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDebugTimer</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Timer instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDebugTimer</p>
+</dd>
+</dl>
 <p>A convenience method that provides quick access to the Timer class. You can pass in the name
 of a benchmark point as the only parameter. This will start timing from this point, or stop
 timing if a timer with this name is already running.</p>
@@ -614,26 +583,22 @@ timing if a timer with this name is already running.</p>
 
 <dl class="function">
 <dt id="view">
-<code class="descname">view</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>$data</em><span class="optional">[</span>, <em>$options</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the file to load</li>
-<li><strong>$data</strong> (<em>array</em>) – An array of key/value pairs to make available within the view.</li>
-<li><strong>$options</strong> (<em>array</em>) – An array of options that will be passed to the rendering class.</li>
+<code class="sig-name descname">view</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the file to load</p></li>
+<li><p><strong>$data</strong> (<em>array</em>) – An array of key/value pairs to make available within the view.</p></li>
+<li><p><strong>$options</strong> (<em>array</em>) – An array of options that will be passed to the rendering class.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The output from the view.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output from the view.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Grabs the current RendererInterface-compatible class
 and tells it to render the specified view. Simply provides
 a convenience method that can be used in Controllers,
@@ -654,27 +619,23 @@ libraries like Twig.</p>
 
 <dl class="function">
 <dt id="view_cell">
-<code class="descname">view_cell</code><span class="sig-paren">(</span><em>$library</em><span class="optional">[</span>, <em>$params = null</em><span class="optional">[</span>, <em>$ttl = 0</em><span class="optional">[</span>, <em>$cacheName = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view_cell" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$library</strong> (<em>string</em>) – </li>
-<li><strong>$params</strong> (<em>null</em>) – </li>
-<li><strong>$ttl</strong> (<em>integer</em>) – </li>
-<li><strong>$cacheName</strong> (<em>string|null</em>) – </li>
+<code class="sig-name descname">view_cell</code><span class="sig-paren">(</span><em class="sig-param">$library</em><span class="optional">[</span>, <em class="sig-param">$params = null</em><span class="optional">[</span>, <em class="sig-param">$ttl = 0</em><span class="optional">[</span>, <em class="sig-param">$cacheName = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view_cell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$library</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$params</strong> (<em>null</em>) – </p></li>
+<li><p><strong>$ttl</strong> (<em>integer</em>) – </p></li>
+<li><p><strong>$cacheName</strong> (<em>string|null</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">View cells are used within views to insert HTML chunks that are managed by other classes.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>View cells are used within views to insert HTML chunks that are managed by other classes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>For more details, see the <a class="reference internal" href="../outgoing/view_cells.html"><span class="doc">View Cells</span></a> page.</p>
 </dd></dl>
 
@@ -683,81 +644,71 @@ libraries like Twig.</p>
 <h3><a class="toc-backref" href="#id3">Miscellaneous Functions</a><a class="headerlink" href="#miscellaneous-functions" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="app_timezone">
-<code class="descname">app_timezone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app_timezone" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The timezone the application has been set to display dates in.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">app_timezone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app_timezone" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The timezone the application has been set to display dates in.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns the timezone the application has been set to display dates in.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="csrf_token">
-<code class="descname">csrf_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_token" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the current CSRF token.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">csrf_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_token" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The name of the current CSRF token.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns the name of the current CSRF token.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="csrf_header">
-<code class="descname">csrf_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_header" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the header for current CSRF token.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">csrf_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_header" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The name of the header for current CSRF token.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>The name of the header for current CSRF token.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="csrf_hash">
-<code class="descname">csrf_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_hash" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current value of the CSRF hash.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">csrf_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_hash" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current value of the CSRF hash.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns the current CSRF hash value.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="csrf_field">
-<code class="descname">csrf_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_field" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string with the HTML for hidden input with all required CSRF information.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">csrf_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_field" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string with the HTML for hidden input with all required CSRF information.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a hidden input with the CSRF information already inserted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;{csrf_token}&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;{csrf_hash}&quot;</span><span class="o">&gt;</span>
 </pre></div>
@@ -766,17 +717,15 @@ libraries like Twig.</p>
 
 <dl class="function">
 <dt id="csrf_meta">
-<code class="descname">csrf_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_meta" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string with the HTML for meta tag with all required CSRF information.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">csrf_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string with the HTML for meta tag with all required CSRF information.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a meta tag with the CSRF information already inserted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;{csrf_header}&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;{csrf_hash}&quot;</span><span class="o">&gt;</span>
 </pre></div>
@@ -785,20 +734,16 @@ libraries like Twig.</p>
 
 <dl class="function">
 <dt id="force_https">
-<code class="descname">force_https</code><span class="sig-paren">(</span><em>$duration = 31536000</em><span class="optional">[</span>, <em>$request = null</em><span class="optional">[</span>, <em>$response = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#force_https" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$duration</strong> (<em>int</em>) – The number of seconds browsers should convert links to this resource to HTTPS.</li>
-<li><strong>$request</strong> (<em>RequestInterface</em>) – An instance of the current Request object.</li>
-<li><strong>$response</strong> (<em>ResponseInterface</em>) – An instance of the current Response object.</li>
+<code class="sig-name descname">force_https</code><span class="sig-paren">(</span><em class="sig-param">$duration = 31536000</em><span class="optional">[</span>, <em class="sig-param">$request = null</em><span class="optional">[</span>, <em class="sig-param">$response = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#force_https" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$duration</strong> (<em>int</em>) – The number of seconds browsers should convert links to this resource to HTTPS.</p></li>
+<li><p><strong>$request</strong> (<em>RequestInterface</em>) – An instance of the current Request object.</p></li>
+<li><p><strong>$response</strong> (<em>ResponseInterface</em>) – An instance of the current Response object.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Checks to see if the page is currently being accessed via HTTPS. If it is, then
 nothing happens. If it is not, then the user is redirected back to the current URI
 but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
@@ -807,85 +752,71 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 
 <dl class="function">
 <dt id="function_usable">
-<code class="descname">function_usable</code><span class="sig-paren">(</span><em>$function_name</em><span class="sig-paren">)</span><a class="headerlink" href="#function_usable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$function_name</strong> (<em>string</em>) – Function to check for</li>
+<code class="sig-name descname">function_usable</code><span class="sig-paren">(</span><em class="sig-param">$function_name</em><span class="sig-paren">)</span><a class="headerlink" href="#function_usable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$function_name</strong> (<em>string</em>) – Function to check for</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the function exists and is safe to call, FALSE otherwise.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the function exists and is safe to call, FALSE otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="is_cli">
-<code class="descname">is_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_cli" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE if the script is being executed from the command line or FALSE otherwise.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">is_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_cli" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>TRUE if the script is being executed from the command line or FALSE otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="is_really_writable">
-<code class="descname">is_really_writable</code><span class="sig-paren">(</span><em>$file</em><span class="sig-paren">)</span><a class="headerlink" href="#is_really_writable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$file</strong> (<em>string</em>) – The filename being checked.</li>
+<code class="sig-name descname">is_really_writable</code><span class="sig-paren">(</span><em class="sig-param">$file</em><span class="sig-paren">)</span><a class="headerlink" href="#is_really_writable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$file</strong> (<em>string</em>) – The filename being checked.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if you can write to the file, FALSE otherwise.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if you can write to the file, FALSE otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="log_message">
-<code class="descname">log_message</code><span class="sig-paren">(</span><em>$level</em>, <em>$message</em><span class="optional">[</span>, <em>$context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#log_message" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$level</strong> (<em>string</em>) – The level of severity</li>
-<li><strong>$message</strong> (<em>string</em>) – The message that is to be logged.</li>
-<li><strong>$context</strong> (<em>array</em>) – An associative array of tags and their values that should be replaced in $message</li>
+<code class="sig-name descname">log_message</code><span class="sig-paren">(</span><em class="sig-param">$level</em>, <em class="sig-param">$message</em><span class="optional">[</span>, <em class="sig-param">$context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#log_message" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$level</strong> (<em>string</em>) – The level of severity</p></li>
+<li><p><strong>$message</strong> (<em>string</em>) – The message that is to be logged.</p></li>
+<li><p><strong>$context</strong> (<em>array</em>) – An associative array of tags and their values that should be replaced in $message</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if was logged successfully or FALSE if there was a problem logging it</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if was logged successfully or FALSE if there was a problem logging it</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Logs a message using the Log Handlers defined in <strong>app/Config/Logger.php</strong>.</p>
 <p>Level can be one of the following values: <strong>emergency</strong>, <strong>alert</strong>, <strong>critical</strong>, <strong>error</strong>, <strong>warning</strong>,
 <strong>notice</strong>, <strong>info</strong>, or <strong>debug</strong>.</p>
@@ -895,18 +826,14 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 
 <dl class="function">
 <dt id="redirect">
-<code class="descname">redirect</code><span class="sig-paren">(</span><em>string $uri</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$uri</strong> (<em>string</em>) – The URI to redirect the user to.</li>
+<code class="sig-name descname">redirect</code><span class="sig-paren">(</span><em class="sig-param">string $uri</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$uri</strong> (<em>string</em>) – The URI to redirect the user to.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Returns a RedirectResponse instance allowing you to easily create redirects:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
@@ -940,25 +867,21 @@ treating it the same as using redirect()-&gt;route():</p>
 
 <dl class="function">
 <dt id="remove_invisible_characters">
-<code class="descname">remove_invisible_characters</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$urlEncoded = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#remove_invisible_characters" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$urlEncoded</strong> (<em>bool</em>) – Whether to remove URL-encoded characters as well</li>
+<code class="sig-name descname">remove_invisible_characters</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$urlEncoded = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#remove_invisible_characters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$urlEncoded</strong> (<em>bool</em>) – Whether to remove URL-encoded characters as well</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sanitized string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sanitized string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>This function prevents inserting NULL characters between ASCII
 characters, like Java\0script.</p>
 <p>Example:</p>
@@ -970,19 +893,15 @@ characters, like Java\0script.</p>
 
 <dl class="function">
 <dt id="route_to">
-<code class="descname">route_to</code><span class="sig-paren">(</span><em>$method</em><span class="optional">[</span>, <em>...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#route_to" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$method</strong> (<em>string</em>) – The named route alias, or name of the controller/method to match.</li>
-<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to be passed to be matched in the route.</li>
+<code class="sig-name descname">route_to</code><span class="sig-paren">(</span><em class="sig-param">$method</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#route_to" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$method</strong> (<em>string</em>) – The named route alias, or name of the controller/method to match.</p></li>
+<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to be passed to be matched in the route.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Generates a URI relative to the domain name (not <strong>baseUrl</strong>) for you based on either a named route alias,
 or a controller::method combination. Will take parameters into effect, if provided.</p>
 <p>For full details, see the <a class="reference internal" href="../incoming/routing.html"><span class="doc">URI Routing</span></a> page.</p>
@@ -990,25 +909,21 @@ or a controller::method combination. Will take parameters into effect, if provid
 
 <dl class="function">
 <dt id="service">
-<code class="descname">service</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#service" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the service to load</li>
-<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</li>
+<code class="sig-name descname">service</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#service" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the service to load</p></li>
+<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An instance of the service class specified.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of the service class specified.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Provides easy access to any of the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a> defined in the system.
 This will always return a shared instance of the class, so no matter how many times this is called
 during a single request, only one class instance will be created.</p>
@@ -1021,25 +936,21 @@ during a single request, only one class instance will be created.</p>
 
 <dl class="function">
 <dt id="single_service">
-<code class="descname">single_service</code><span class="sig-paren">(</span><em>$name</em><span class="optional">[</span>, <em>...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#single_service" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the service to load</li>
-<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</li>
+<code class="sig-name descname">single_service</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#single_service" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the service to load</p></li>
+<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An instance of the service class specified.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of the service class specified.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Identical to the <strong>service()</strong> function described above, except that all calls to this
 function will return a new instance of the class, where <strong>service</strong> returns the same
 instance every time.</p>
@@ -1047,48 +958,40 @@ instance every time.</p>
 
 <dl class="function">
 <dt id="slash_item">
-<code class="descname">slash_item</code><span class="sig-paren">(</span><em>$item</em><span class="sig-paren">)</span><a class="headerlink" href="#slash_item" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$item</strong> (<em>string</em>) – Config item name</li>
+<code class="sig-name descname">slash_item</code><span class="sig-paren">(</span><em class="sig-param">$item</em><span class="sig-paren">)</span><a class="headerlink" href="#slash_item" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$item</strong> (<em>string</em>) – Config item name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The configuration item or NULL if the item doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The configuration item or NULL if the item doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string|null</p>
+</dd>
+</dl>
 <p>Fetch a config file item with slash appended (if not empty)</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="stringify_attributes">
-<code class="descname">stringify_attributes</code><span class="sig-paren">(</span><em>$attributes</em><span class="optional">[</span>, <em>$js</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#stringify_attributes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$attributes</strong> (<em>mixed</em>) – string, array of key value pairs, or object</li>
-<li><strong>$js</strong> (<em>boolean</em>) – TRUE if values do not need quotes (Javascript-style)</li>
+<code class="sig-name descname">stringify_attributes</code><span class="sig-paren">(</span><em class="sig-param">$attributes</em><span class="optional">[</span>, <em class="sig-param">$js</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#stringify_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$attributes</strong> (<em>mixed</em>) – string, array of key value pairs, or object</p></li>
+<li><p><strong>$js</strong> (<em>boolean</em>) – TRUE if values do not need quotes (Javascript-style)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String containing the attribute key/value pairs, comma-separated</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String containing the attribute key/value pairs, comma-separated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Helper function used to convert a string, array, or object of attributes to a string.</p>
 </dd></dl>
 
@@ -1101,31 +1004,31 @@ instance every time.</p>
 <h3><a class="toc-backref" href="#id5">Core Constants</a><a class="headerlink" href="#core-constants" title="Permalink to this headline">¶</a></h3>
 <dl class="const">
 <dt id="APPPATH">
-<em class="property">constant </em><code class="descname">APPPATH</code><a class="headerlink" href="#APPPATH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">APPPATH</code><a class="headerlink" href="#APPPATH" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the <strong>app</strong> directory.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="ROOTPATH">
-<em class="property">constant </em><code class="descname">ROOTPATH</code><a class="headerlink" href="#ROOTPATH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">ROOTPATH</code><a class="headerlink" href="#ROOTPATH" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the project root directory. Just above <code class="docutils literal notranslate"><span class="pre">APPPATH</span></code>.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="SYSTEMPATH">
-<em class="property">constant </em><code class="descname">SYSTEMPATH</code><a class="headerlink" href="#SYSTEMPATH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">SYSTEMPATH</code><a class="headerlink" href="#SYSTEMPATH" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the <strong>system</strong> directory.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="FCPATH">
-<em class="property">constant </em><code class="descname">FCPATH</code><a class="headerlink" href="#FCPATH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">FCPATH</code><a class="headerlink" href="#FCPATH" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the directory that holds the front controller.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="WRITEPATH">
-<em class="property">constant </em><code class="descname">WRITEPATH</code><a class="headerlink" href="#WRITEPATH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">WRITEPATH</code><a class="headerlink" href="#WRITEPATH" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the <strong>writable</strong> directory.</p>
 </dd></dl>
 
@@ -1134,49 +1037,49 @@ instance every time.</p>
 <h3><a class="toc-backref" href="#id6">Time Constants</a><a class="headerlink" href="#time-constants" title="Permalink to this headline">¶</a></h3>
 <dl class="const">
 <dt id="SECOND">
-<em class="property">constant </em><code class="descname">SECOND</code><a class="headerlink" href="#SECOND" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">SECOND</code><a class="headerlink" href="#SECOND" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 1.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="MINUTE">
-<em class="property">constant </em><code class="descname">MINUTE</code><a class="headerlink" href="#MINUTE" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">MINUTE</code><a class="headerlink" href="#MINUTE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 60.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="HOUR">
-<em class="property">constant </em><code class="descname">HOUR</code><a class="headerlink" href="#HOUR" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">HOUR</code><a class="headerlink" href="#HOUR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 3600.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="DAY">
-<em class="property">constant </em><code class="descname">DAY</code><a class="headerlink" href="#DAY" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">DAY</code><a class="headerlink" href="#DAY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 86400.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="WEEK">
-<em class="property">constant </em><code class="descname">WEEK</code><a class="headerlink" href="#WEEK" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">WEEK</code><a class="headerlink" href="#WEEK" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 604800.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="MONTH">
-<em class="property">constant </em><code class="descname">MONTH</code><a class="headerlink" href="#MONTH" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">MONTH</code><a class="headerlink" href="#MONTH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 2592000.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="YEAR">
-<em class="property">constant </em><code class="descname">YEAR</code><a class="headerlink" href="#YEAR" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">YEAR</code><a class="headerlink" href="#YEAR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 31536000.</p>
 </dd></dl>
 
 <dl class="const">
 <dt id="DECADE">
-<em class="property">constant </em><code class="descname">DECADE</code><a class="headerlink" href="#DECADE" title="Permalink to this definition">¶</a></dt>
+<em class="property">constant </em><code class="sig-name descname">DECADE</code><a class="headerlink" href="#DECADE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equals 315360000.</p>
 </dd></dl>
 

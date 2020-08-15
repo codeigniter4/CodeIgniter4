@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,14 +346,15 @@ It extends from, and has access to all the methods of the <a class="reference in
 classes, in addition to the methods listed below.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#accessing-the-request" id="id1">Accessing the Request</a></li>
-<li><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></li>
-<li><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></li>
-<li><a class="reference internal" href="#retrieving-headers" id="id4">Retrieving Headers</a></li>
-<li><a class="reference internal" href="#the-request-url" id="id5">The Request URL</a></li>
-<li><a class="reference internal" href="#uploaded-files" id="id6">Uploaded Files</a></li>
-<li><a class="reference internal" href="#content-negotiation" id="id7">Content Negotiation</a><ul>
-<li><a class="reference internal" href="#class-reference" id="id8">Class Reference</a></li>
+<li><p><a class="reference internal" href="#accessing-the-request" id="id1">Accessing the Request</a></p></li>
+<li><p><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-headers" id="id4">Retrieving Headers</a></p></li>
+<li><p><a class="reference internal" href="#the-request-url" id="id5">The Request URL</a></p></li>
+<li><p><a class="reference internal" href="#uploaded-files" id="id6">Uploaded Files</a></p></li>
+<li><p><a class="reference internal" href="#content-negotiation" id="id7">Content Negotiation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#class-reference" id="id8">Class Reference</a></p></li>
 </ul>
 </li>
 </ul>
@@ -417,8 +421,8 @@ be checked with the <code class="docutils literal notranslate"><span class="pre"
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
 </div>
 <p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">method()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;post&#39;</span>
@@ -457,22 +461,22 @@ like this:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
 is convenient, you will often need to use a more specific method, like:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGet()</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPost()</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getCookie()</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGet()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPost()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getCookie()</span></code></p></li>
 </ul>
 <p>In addition, there are a few utility methods for retrieving information from either $_GET or $_POST, while
 maintaining the ability to control the order you look for it:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPostGet()</span></code> - checks $_POST first, then $_GET</li>
-<li><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGetPost()</span></code> - checks $_GET first, then $_POST</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPostGet()</span></code> - checks $_POST first, then $_GET</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGetPost()</span></code> - checks $_GET first, then $_POST</p></li>
 </ul>
 <p><strong>Getting JSON data</strong></p>
 <p>You can grab the contents of php://input as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This has no way of checking if the incoming data is valid JSON or not, you should only use this
+<p class="admonition-title">Note</p>
+<p>This has no way of checking if the incoming data is valid JSON or not, you should only use this
 method if you know that you’re expecting JSON.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$json</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
@@ -618,105 +622,95 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <div class="section" id="class-reference">
 <h3><a class="toc-backref" href="#id8">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In addition to the methods listed here, this class inherits the methods from the
+<p class="admonition-title">Note</p>
+<p>In addition to the methods listed here, this class inherits the methods from the
 <a class="reference internal" href="request.html"><span class="doc">Request Class</span></a> and the <a class="reference internal" href="message.html"><span class="doc">Message Class</span></a>.</p>
 </div>
 <p>The methods provided by the parent classes that are available are:</p>
 <ul class="simple">
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getIPAddress()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::isValidIP()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getMethod()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setMethod()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getServer()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getEnv()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setGlobal()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::fetchGlobal()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getBody()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendBody()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaders()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::hasHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaderLine()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::removeHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::prependHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getProtocolVersion()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getIPAddress()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::isValidIP()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getMethod()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setMethod()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getServer()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getEnv()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setGlobal()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::fetchGlobal()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getBody()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendBody()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaders()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::hasHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaderLine()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::removeHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::prependHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getProtocolVersion()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></p></li>
 </ul>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\HTTP\IncomingRequest</code></dt>
+<code class="sig-name descname">CodeIgniter\HTTP\IncomingRequest</code></dt>
 <dd><dl class="method">
 <dt id="isCLI">
-<code class="descname">isCLI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isCLI" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the request was initiated from the command line, otherwise false.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">isCLI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isCLI" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the request was initiated from the command line, otherwise false.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="isAJAX">
-<code class="descname">isAJAX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isAJAX" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the request is an AJAX request, otherwise false.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">isAJAX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isAJAX" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the request is an AJAX request, otherwise false.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="isSecure">
-<code class="descname">isSecure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isSecure" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the request is an HTTPS request, otherwise false.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">isSecure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isSecure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the request is an HTTPS request, otherwise false.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="getVar">
-<code class="descname">getVar</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getVar" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getVar</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getVar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed|null</p>
+</dd>
+</dl>
 <p>The first parameter will contain the name of the REQUEST item you are looking for:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
 </pre></div>
@@ -748,77 +742,65 @@ the filter type to apply:</p>
 
 <dl class="method">
 <dt id="getGet">
-<code class="descname">getGet</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getGet" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getGet</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getGet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_GET if no parameters supplied, otherwise the GET value if found, or null if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_GET if no parameters supplied, otherwise the GET value if found, or null if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed|null</p>
+</dd>
+</dl>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>, only it fetches GET data.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getPost">
-<code class="descname">getPost</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPost" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getPost</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPost" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><p>mixed|null</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><p>mixed|null</p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>, only it fetches POST data.</p>
 </p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="getPostGet">
-<code class="descname">getPostGet</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPostGet" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getPostGet</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPostGet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed|null</p>
+</dd>
+</dl>
 <p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
 It will search through both POST and GET streams for data, looking first in POST, and
 then in GET:</p>
@@ -829,26 +811,22 @@ then in GET:</p>
 
 <dl class="method">
 <dt id="getGetPost">
-<code class="descname">getGetPost</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getGetPost" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getGetPost</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getGetPost" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed|null</p>
+</dd>
+</dl>
 <p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
 It will search through both POST and GET streams for data, looking first in GET, and
 then in POST:</p>
@@ -859,28 +837,24 @@ then in POST:</p>
 
 <dl class="method">
 <dt id="getCookie">
-<code class="descname">getCookie</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Noindex:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>mixed</em>) – COOKIE name</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Noindex</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>$index</strong> (<em>mixed</em>) – COOKIE name</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>mixed</p>
+</dd>
+</dl>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only it fetches cookie data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;some_cookie&#39;</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;some_cookie&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_STRING</span><span class="p">);</span> <span class="c1">// with filter</span>
@@ -891,8 +865,8 @@ then in POST:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Unlike the <a class="reference internal" href="../helpers/cookie_helper.html"><span class="doc">Cookie Helper</span></a>
+<p class="admonition-title">Note</p>
+<p>Unlike the <a class="reference internal" href="../helpers/cookie_helper.html"><span class="doc">Cookie Helper</span></a>
 function <a class="reference internal" href="../helpers/cookie_helper.html#get_cookie" title="get_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">get_cookie()</span></code></a>, this method does NOT prepend
 your configured <code class="docutils literal notranslate"><span class="pre">$config['cookie_prefix']</span></code> value.</p>
 </div>
@@ -900,26 +874,22 @@ your configured <code class="docutils literal notranslate"><span class="pre">$co
 
 <dl class="method">
 <dt>
-<code class="descname">getServer</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = null</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">[</span>, <em>$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>mixed</em>) – Value name</li>
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<code class="sig-name descname">getServer</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$index</strong> (<em>mixed</em>) – Value name</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_SERVER item value if found, NULL if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_SERVER item value if found, NULL if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code>
 methods, only it fetches getServer data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
@@ -934,24 +904,20 @@ as an array.</p>
 
 <dl class="method">
 <dt id="getUserAgent">
-<code class="descname">getUserAgent</code><span class="sig-paren">(</span><span class="optional">[</span><em>$filter = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUserAgent" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</li>
+<code class="sig-name descname">getUserAgent</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$filter = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUserAgent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The User Agent string, as found in the SERVER data, or null if not found.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The User Agent string, as found in the SERVER data, or null if not found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>This method returns the User Agent string from the SERVER data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
 </pre></div>

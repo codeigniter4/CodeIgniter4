@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -387,8 +390,8 @@ new namespace value under the <code class="docutils literal notranslate"><span c
 </div>
 <p>You will need to modify any existing files that are referencing the current namespace.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Config files are namespaced in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal notranslate"><span class="pre">App\Config</span></code> as you might
+<p class="admonition-title">Important</p>
+<p>Config files are namespaced in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal notranslate"><span class="pre">App\Config</span></code> as you might
 expect. This allows the core system files to always be able to locate them, even when the application
 namespace has changed.</p>
 </div>
@@ -418,8 +421,8 @@ a measure to help ease the transition from previous versions.</p>
 <code class="docutils literal notranslate"><span class="pre">ROOTPATH.'vendor/autoload.php'</span></code>. If you need to change the location of that file for any reason, you can modify
 the value defined in <code class="docutils literal notranslate"><span class="pre">Config\Constants.php</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter’s autoloader will be
+<p class="admonition-title">Note</p>
+<p>If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter’s autoloader will be
 the first one to get a chance to locate the file.</p>
 </div>
 </div>

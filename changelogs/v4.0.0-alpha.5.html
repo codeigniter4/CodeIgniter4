@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,381 +345,41 @@
 <p><strong>Next alpha release of CodeIgniter4</strong></p>
 <p>Highlights:</p>
 <ul class="simple">
-<li>added $maxQueries setting to app/Config/Toolbar.php</li>
-<li>updated PHP dependency to 7.2</li>
-<li>new feature branches have been created for the email and queue modules, so they don’t impact the release of 4.0.0</li>
-<li>dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)</li>
-<li>lots of bug fixes, especially for the database support</li>
-<li>provided filters (CSRF, Honeypot, DebugToolbar) have been moved from app/Filters/ to system/Filters/</li>
-<li>revisited the installation and tutorial sections of the user guide</li>
-<li>code coverage is at 77% … getting ever closer to our target of 80% :)</li>
+<li><p>added $maxQueries setting to app/Config/Toolbar.php</p></li>
+<li><p>updated PHP dependency to 7.2</p></li>
+<li><p>new feature branches have been created for the email and queue modules, so they don’t impact the release of 4.0.0</p></li>
+<li><p>dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)</p></li>
+<li><p>lots of bug fixes, especially for the database support</p></li>
+<li><p>provided filters (CSRF, Honeypot, DebugToolbar) have been moved from app/Filters/ to system/Filters/</p></li>
+<li><p>revisited the installation and tutorial sections of the user guide</p></li>
+<li><p>code coverage is at 77% … getting ever closer to our target of 80% :)</p></li>
 </ul>
 <p>We hope this will be the last alpha, and that the next pre-release will be our first beta … fingers crossed!</p>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul>
-<li><dl class="first docutils">
-<dt>admin/</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>starter/</dt>
-<dd><ul class="first last">
-<li>README.md #1637</li>
-<li>app/Config/Paths.php #1685</li>
+<li><dl class="simple">
+<dt>admin/</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>starter/</dt><dd><ul>
+<li><p>README.md #1637</p></li>
+<li><p>app/Config/Paths.php #1685</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>release-appstarter #1685</li>
+<li><p>release-appstarter #1685</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>app/</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>Filters #1686</li>
-<li>Modules #1665</li>
-<li>Services #614216</li>
-<li>Toolbar</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>contributing/</dt>
-<dd><ul class="first last simple">
-<li>guidelines.rst #1671, #1673</li>
-<li>internals.rst #1671</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>public/</dt>
-<dd><ul class="first last simple">
-<li>index.php #1648, #1670</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>system/</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>Autoloader #1665, #1672</li>
-<li>FileLocator #1665</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Commands/</dt>
-<dd><ul class="first last">
-<li>Database/MigrationRollback #1683</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>BaseConfig #1635</li>
-<li>BaseService #1635, #1665</li>
-<li>Paths #1626</li>
-<li>Services #614216, #3a4ade, #1643</li>
-<li>View #1616</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilder #1640, #1663, #1677</li>
-<li>BaseConnection #1677</li>
-<li>Config #6b8b8b, #1660</li>
-<li>MigrationRunner #81d371, #1660</li>
-<li>Query #1677</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Database/Postgre/</dt>
-<dd><ul class="first last">
-<li>Builder #d2b377</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Debug/Toolbar/Collectors/</dt>
-<dd><ul class="first last">
-<li>Logs #1654</li>
-<li>Views #3a4ade</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Events/</dt>
-<dd><ul class="first last">
-<li>Events #1635</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Exceptions/</dt>
-<dd><ul class="first last">
-<li>ConfigException #1660</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>Exceptions/FileException #1636</li>
-<li>File #1636</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>Filters #1635, #1625, #6dab8f</li>
-<li>CSRF #1686</li>
-<li>DebugToolbar #1686</li>
-<li>Honeypot #1686</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>form_helper #1633</li>
-<li>html_helper #1538</li>
-<li>xml_helper #1641</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>ContentSecurityPolicy #1641, #1642</li>
-<li>URI #2e698a</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Language/</dt>
-<dd><ul class="first last">
-<li>/en/Files #1636</li>
-<li>Language #1641</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Log/</dt>
-<dd><ul class="first last">
-<li>Handlers/FileHandler #1641</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollection #1665, #5951c3</li>
-<li>Router #9e435c, #7993a7, #1678</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Session/</dt>
-<dd><ul class="first last">
-<li>Handlers/BaseHandler #1684</li>
-<li>Handlers/FileHandler #1684</li>
-<li>Handlers/MemcachedHandler #1679</li>
-<li>Session #1679</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li>bootstrap #81d371, #1665</li>
-<li>Common #1660</li>
-<li>Entity #1623, #1622</li>
-<li>Model #1617, #1632, #1656, #1689</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>tests/</dt>
-<dd><ul class="first last simple">
-<li>README.md #1671</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>tests/system/</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>API/</dt>
-<dd><ul class="first last">
-<li>ResponseTraitTest #1635</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>AutoloaderTest #1665</li>
-<li>FileLocatorTest #1665, #1686</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>CLI/</dt>
-<dd><ul class="first last">
-<li>CommandRunnerTest #1635</li>
-<li>CommandsTest #1635</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>BaseConfigTest #1635</li>
-<li>ConfigTest #1643</li>
-<li>ServicesTest #1635, #1643</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Database/Builder/</dt>
-<dd><ul class="first last">
-<li>AliasTest #bea1dd</li>
-<li>DeleteTest #1677</li>
-<li>GroupTest #1640</li>
-<li>InsertTest #1640, #1677</li>
-<li>LikeTest #1640, #1677</li>
-<li>SelectTest #1663</li>
-<li>UpdateTest #1640, #1677</li>
-<li>WhereTest #1640, #1677</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Database/Live/</dt>
-<dd><ul class="first last">
-<li>AliasTest #1675</li>
-<li>ConnectTest #1660, #1675</li>
-<li>ForgeTest #6b8b8b</li>
-<li>InsertTest #1677</li>
-<li>Migrations/MigrationRunnerTest #1660, #1675</li>
-<li>ModelTest #1617, #1689</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Events/</dt>
-<dd><ul class="first last">
-<li>EventTest #1635</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>CSRFTest #1686</li>
-<li>DebugToolbarTest #1686</li>
-<li>FiltersTest #1635, #6dab8f, #1686</li>
-<li>HoneypotTest #1686</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>FormHelperTest #1633</li>
-<li>XMLHelperTest #1641</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Honeypot/</dt>
-<dd><ul class="first last">
-<li>HoneypotTest #1686</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>ContentSecurityPolicyTest #1641</li>
-<li>IncomingRequestTest #1641</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Language/</dt>
-<dd><ul class="first last">
-<li>LanguageTest #1643</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollectionTest #5951c3</li>
-<li>RouterTest #9e435c</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Validation/</dt>
-<dd><ul class="first last">
-<li>RulesTest #1689</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>ParserPluginTest #1669</li>
-<li>ParserTest #1669</li>
+<li><dl class="simple">
+<dt>app/</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>Filters #1686</p></li>
+<li><p>Modules #1665</p></li>
+<li><p>Services #614216</p></li>
+<li><p>Toolbar</p></li>
 </ul>
 </dd>
 </dl>
@@ -725,86 +388,378 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">user_guide_src/</p>
+<li><dl class="simple">
+<dt>contributing/</dt><dd><ul class="simple">
+<li><p>guidelines.rst #1671, #1673</p></li>
+<li><p>internals.rst #1671</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>public/</dt><dd><ul class="simple">
+<li><p>index.php #1648, #1670</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>system/</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>Autoloader #1665, #1672</p></li>
+<li><p>FileLocator #1665</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Commands/</dt><dd><ul>
+<li><p>Database/MigrationRollback #1683</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>BaseConfig #1635</p></li>
+<li><p>BaseService #1635, #1665</p></li>
+<li><p>Paths #1626</p></li>
+<li><p>Services #614216, #3a4ade, #1643</p></li>
+<li><p>View #1616</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>BaseBuilder #1640, #1663, #1677</p></li>
+<li><p>BaseConnection #1677</p></li>
+<li><p>Config #6b8b8b, #1660</p></li>
+<li><p>MigrationRunner #81d371, #1660</p></li>
+<li><p>Query #1677</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Database/Postgre/</dt><dd><ul>
+<li><p>Builder #d2b377</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Debug/Toolbar/Collectors/</dt><dd><ul>
+<li><p>Logs #1654</p></li>
+<li><p>Views #3a4ade</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Events/</dt><dd><ul>
+<li><p>Events #1635</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Exceptions/</dt><dd><ul>
+<li><p>ConfigException #1660</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Files/</dt><dd><ul>
+<li><p>Exceptions/FileException #1636</p></li>
+<li><p>File #1636</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>Filters #1635, #1625, #6dab8f</p></li>
+<li><p>CSRF #1686</p></li>
+<li><p>DebugToolbar #1686</p></li>
+<li><p>Honeypot #1686</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>form_helper #1633</p></li>
+<li><p>html_helper #1538</p></li>
+<li><p>xml_helper #1641</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>ContentSecurityPolicy #1641, #1642</p></li>
+<li><p>URI #2e698a</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Language/</dt><dd><ul>
+<li><p>/en/Files #1636</p></li>
+<li><p>Language #1641</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Log/</dt><dd><ul>
+<li><p>Handlers/FileHandler #1641</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollection #1665, #5951c3</p></li>
+<li><p>Router #9e435c, #7993a7, #1678</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Session/</dt><dd><ul>
+<li><p>Handlers/BaseHandler #1684</p></li>
+<li><p>Handlers/FileHandler #1684</p></li>
+<li><p>Handlers/MemcachedHandler #1679</p></li>
+<li><p>Session #1679</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>bootstrap #81d371, #1665</p></li>
+<li><p>Common #1660</p></li>
+<li><p>Entity #1623, #1622</p></li>
+<li><p>Model #1617, #1632, #1656, #1689</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>tests/</dt><dd><ul class="simple">
+<li><p>README.md #1671</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>tests/system/</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>API/</dt><dd><ul>
+<li><p>ResponseTraitTest #1635</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>AutoloaderTest #1665</p></li>
+<li><p>FileLocatorTest #1665, #1686</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CLI/</dt><dd><ul>
+<li><p>CommandRunnerTest #1635</p></li>
+<li><p>CommandsTest #1635</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>BaseConfigTest #1635</p></li>
+<li><p>ConfigTest #1643</p></li>
+<li><p>ServicesTest #1635, #1643</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Database/Builder/</dt><dd><ul>
+<li><p>AliasTest #bea1dd</p></li>
+<li><p>DeleteTest #1677</p></li>
+<li><p>GroupTest #1640</p></li>
+<li><p>InsertTest #1640, #1677</p></li>
+<li><p>LikeTest #1640, #1677</p></li>
+<li><p>SelectTest #1663</p></li>
+<li><p>UpdateTest #1640, #1677</p></li>
+<li><p>WhereTest #1640, #1677</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Database/Live/</dt><dd><ul>
+<li><p>AliasTest #1675</p></li>
+<li><p>ConnectTest #1660, #1675</p></li>
+<li><p>ForgeTest #6b8b8b</p></li>
+<li><p>InsertTest #1677</p></li>
+<li><p>Migrations/MigrationRunnerTest #1660, #1675</p></li>
+<li><p>ModelTest #1617, #1689</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Events/</dt><dd><ul>
+<li><p>EventTest #1635</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>CSRFTest #1686</p></li>
+<li><p>DebugToolbarTest #1686</p></li>
+<li><p>FiltersTest #1635, #6dab8f, #1686</p></li>
+<li><p>HoneypotTest #1686</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>FormHelperTest #1633</p></li>
+<li><p>XMLHelperTest #1641</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Honeypot/</dt><dd><ul>
+<li><p>HoneypotTest #1686</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>ContentSecurityPolicyTest #1641</p></li>
+<li><p>IncomingRequestTest #1641</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Language/</dt><dd><ul>
+<li><p>LanguageTest #1643</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollectionTest #5951c3</p></li>
+<li><p>RouterTest #9e435c</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Validation/</dt><dd><ul>
+<li><p>RulesTest #1689</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>ParserPluginTest #1669</p></li>
+<li><p>ParserTest #1669</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>user_guide_src/</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt>concepts/</dt>
-<dd><ul class="first last">
-<li>autoloader #1665</li>
-<li>structure #1648</li>
+<li><dl class="simple">
+<dt>concepts/</dt><dd><ul>
+<li><p>autoloader #1665</p></li>
+<li><p>structure #1648</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>database/</dt>
-<dd><ul class="first last">
-<li>connecting #1660</li>
-<li>transactions #1645</li>
+<li><dl class="simple">
+<dt>database/</dt><dd><ul>
+<li><p>connecting #1660</p></li>
+<li><p>transactions #1645</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>general/</dt>
-<dd><ul class="first last">
-<li>configuration #1643</li>
-<li>managing_apps #5f305a, #1648</li>
-<li>modules #1613, #1665</li>
+<li><dl class="simple">
+<dt>general/</dt><dd><ul>
+<li><p>configuration #1643</p></li>
+<li><p>managing_apps #5f305a, #1648</p></li>
+<li><p>modules #1613, #1665</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>helpers/</dt>
-<dd><ul class="first last">
-<li>form_helper #1633</li>
+<li><dl class="simple">
+<dt>helpers/</dt><dd><ul>
+<li><p>form_helper #1633</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>filters #1686</li>
-<li>index #4a1886</li>
-<li>methodspoofing #4a1886</li>
+<li><dl class="simple">
+<dt>incoming/</dt><dd><ul>
+<li><p>filters #1686</p></li>
+<li><p>index #4a1886</p></li>
+<li><p>methodspoofing #4a1886</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>installation/</dt>
-<dd><ul class="first last">
-<li>index #1690, #1693</li>
-<li>installing_composer #1673, #1690</li>
-<li>installing_git #1673, #1690</li>
-<li>installing_manual #1673, #1690</li>
-<li>repositories #1673, #1690</li>
-<li>running #1690, #1691</li>
-<li>troubleshooting #1690, #1693</li>
+<li><dl class="simple">
+<dt>installation/</dt><dd><ul>
+<li><p>index #1690, #1693</p></li>
+<li><p>installing_composer #1673, #1690</p></li>
+<li><p>installing_git #1673, #1690</p></li>
+<li><p>installing_manual #1673, #1690</p></li>
+<li><p>repositories #1673, #1690</p></li>
+<li><p>running #1690, #1691</p></li>
+<li><p>troubleshooting #1690, #1693</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>honeypot #1686</li>
-<li>index #1643, #1690</li>
-<li>throttler #1686</li>
+<li><dl class="simple">
+<dt>libraries/</dt><dd><ul>
+<li><p>honeypot #1686</p></li>
+<li><p>index #1643, #1690</p></li>
+<li><p>throttler #1686</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tutorial/</dt>
-<dd><ul class="first last">
-<li>create_news_item  #1693</li>
-<li>index #1693</li>
-<li>news_section #1693</li>
-<li>static_pages #1693</li>
+<li><dl class="simple">
+<dt>tutorial/</dt><dd><ul>
+<li><p>create_news_item  #1693</p></li>
+<li><p>index #1693</p></li>
+<li><p>news_section #1693</p></li>
+<li><p>static_pages #1693</p></li>
 </ul>
 </dd>
 </dl>
@@ -812,80 +767,75 @@
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">composer.json #1670</p>
-</li>
-<li><p class="first">contributing.md #1670</p>
-</li>
-<li><p class="first">README.md #1670</p>
-</li>
-<li><p class="first">spark #1648</p>
-</li>
-<li><p class="first">.travis.yml #1649, #1670</p>
-</li>
+<li><p>composer.json #1670</p></li>
+<li><p>contributing.md #1670</p></li>
+<li><p>README.md #1670</p></li>
+<li><p>spark #1648</p></li>
+<li><p>.travis.yml #1649, #1670</p></li>
 </ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#1693 Docs/tutorial</li>
-<li>#5951c3 Allow domain/sub-domain routes to overwrite existing routes</li>
-<li>#1691 Update the running docs</li>
-<li>#1690 Rework install docs</li>
-<li>#bea1dd Additional AliasTests for potential LeftJoin issue</li>
-<li>#1689 Model Validation Fix</li>
-<li>#1687 Add copyright blocks to filters</li>
-<li>#1686 Refactor/filters</li>
-<li>#1685 Fix admin - app starter creation</li>
-<li>#1684 Updating session id cleanup for filehandler</li>
-<li>#1683 Fix migrate:refresh bug</li>
-<li>#d2b377 Fix Postgres replace command to work new way of storing binds</li>
-<li>#4a1886 Document method spoofing</li>
-<li>#2e698a urldecode URI keys as well as values.</li>
-<li>#1679 save_path - for memcached</li>
-<li>#1678 fix route not replacing forward slashes</li>
-<li>#1677 Implement Don’t Escape feature for db engine</li>
-<li>#1675 Add missing test group directives</li>
-<li>#1674 Update changelog</li>
-<li>#1673 Updated download &amp; installation docs</li>
-<li>#1672 Update Autoloader.php</li>
-<li>#1670 Update PHP dependency to 7.2</li>
-<li>#1671 Update docs</li>
-<li>#1669 Enhance Parser &amp; Plugin testing</li>
-<li>#1665 Composer PSR4 namespaces are now part of the modules auto-discovery</li>
-<li>#6dab8f Filters match case-insensitively</li>
-<li>#1663 Fix bind issue that occurred when using whereIn</li>
-<li>#1660 Migrations Tests and database tweaks</li>
-<li>#1656 DBGroup in __get(), allows to validate “database” data outside the model</li>
-<li>#1654 Toolbar - Return Logger::$logCache items</li>
-<li>#1649 remove php 7.3 from “allow_failures” in travis config</li>
-<li>#1648 Update “managing apps” docs</li>
-<li>#1645 Fix transaction enabling confusing (docu)</li>
-<li>#1643 Remove email module</li>
-<li>#1642 CSP nonce attribute value in “”</li>
-<li>#81d371 Safety checks for config files during autoload and migrations</li>
-<li>#1641 More unit testing tweaks</li>
-<li>#1640 Update getCompiledX methods in BaseBuilder</li>
-<li>#1637 Fix starter README</li>
-<li>#1636 Refactor Files module</li>
-<li>#5f305a UG - Typo in managing apps</li>
-<li>#1635 Unit testing enhancements</li>
-<li>#1633 Uses csrf_field and form_hidden</li>
-<li>#1632 DBGroup should be passed to -&gt;run instead of -&gt;setRules</li>
-<li>#1631 move use statement after License doc at UploadedFile class</li>
-<li>#1630 Update copyright to 2019</li>
-<li>#1629 “application” to “app” directory doc and comments</li>
-<li>#3a4ade view() now properly reads the app config again</li>
-<li>#7993a7 Final piece to get translateURIDashes working appropriately</li>
-<li>#9e435c TranslateURIDashes fix</li>
-<li>#1626 clean up Paths::$viewDirectory property</li>
-<li>#1625 After matches is not set empty</li>
-<li>#1623 Property was not cast if was defined as nullable</li>
-<li>#1622 Nullable support for __set</li>
-<li>#1617 countAllResults() should respect soft deletes</li>
-<li>#1616 Fix View config merge order</li>
-<li>#614216 Moved honeypot service out of the app Services file to the system Services where it belongs</li>
-<li>#6b8b8b Allow db forge and utils to take an array of connection info instead of a group name</li>
-<li>#1613 Typo in documentation</li>
-<li>#1538 img fix(?) - html_helper</li>
+<li><p>#1693 Docs/tutorial</p></li>
+<li><p>#5951c3 Allow domain/sub-domain routes to overwrite existing routes</p></li>
+<li><p>#1691 Update the running docs</p></li>
+<li><p>#1690 Rework install docs</p></li>
+<li><p>#bea1dd Additional AliasTests for potential LeftJoin issue</p></li>
+<li><p>#1689 Model Validation Fix</p></li>
+<li><p>#1687 Add copyright blocks to filters</p></li>
+<li><p>#1686 Refactor/filters</p></li>
+<li><p>#1685 Fix admin - app starter creation</p></li>
+<li><p>#1684 Updating session id cleanup for filehandler</p></li>
+<li><p>#1683 Fix migrate:refresh bug</p></li>
+<li><p>#d2b377 Fix Postgres replace command to work new way of storing binds</p></li>
+<li><p>#4a1886 Document method spoofing</p></li>
+<li><p>#2e698a urldecode URI keys as well as values.</p></li>
+<li><p>#1679 save_path - for memcached</p></li>
+<li><p>#1678 fix route not replacing forward slashes</p></li>
+<li><p>#1677 Implement Don’t Escape feature for db engine</p></li>
+<li><p>#1675 Add missing test group directives</p></li>
+<li><p>#1674 Update changelog</p></li>
+<li><p>#1673 Updated download &amp; installation docs</p></li>
+<li><p>#1672 Update Autoloader.php</p></li>
+<li><p>#1670 Update PHP dependency to 7.2</p></li>
+<li><p>#1671 Update docs</p></li>
+<li><p>#1669 Enhance Parser &amp; Plugin testing</p></li>
+<li><p>#1665 Composer PSR4 namespaces are now part of the modules auto-discovery</p></li>
+<li><p>#6dab8f Filters match case-insensitively</p></li>
+<li><p>#1663 Fix bind issue that occurred when using whereIn</p></li>
+<li><p>#1660 Migrations Tests and database tweaks</p></li>
+<li><p>#1656 DBGroup in __get(), allows to validate “database” data outside the model</p></li>
+<li><p>#1654 Toolbar - Return Logger::$logCache items</p></li>
+<li><p>#1649 remove php 7.3 from “allow_failures” in travis config</p></li>
+<li><p>#1648 Update “managing apps” docs</p></li>
+<li><p>#1645 Fix transaction enabling confusing (docu)</p></li>
+<li><p>#1643 Remove email module</p></li>
+<li><p>#1642 CSP nonce attribute value in “”</p></li>
+<li><p>#81d371 Safety checks for config files during autoload and migrations</p></li>
+<li><p>#1641 More unit testing tweaks</p></li>
+<li><p>#1640 Update getCompiledX methods in BaseBuilder</p></li>
+<li><p>#1637 Fix starter README</p></li>
+<li><p>#1636 Refactor Files module</p></li>
+<li><p>#5f305a UG - Typo in managing apps</p></li>
+<li><p>#1635 Unit testing enhancements</p></li>
+<li><p>#1633 Uses csrf_field and form_hidden</p></li>
+<li><p>#1632 DBGroup should be passed to -&gt;run instead of -&gt;setRules</p></li>
+<li><p>#1631 move use statement after License doc at UploadedFile class</p></li>
+<li><p>#1630 Update copyright to 2019</p></li>
+<li><p>#1629 “application” to “app” directory doc and comments</p></li>
+<li><p>#3a4ade view() now properly reads the app config again</p></li>
+<li><p>#7993a7 Final piece to get translateURIDashes working appropriately</p></li>
+<li><p>#9e435c TranslateURIDashes fix</p></li>
+<li><p>#1626 clean up Paths::$viewDirectory property</p></li>
+<li><p>#1625 After matches is not set empty</p></li>
+<li><p>#1623 Property was not cast if was defined as nullable</p></li>
+<li><p>#1622 Nullable support for __set</p></li>
+<li><p>#1617 countAllResults() should respect soft deletes</p></li>
+<li><p>#1616 Fix View config merge order</p></li>
+<li><p>#614216 Moved honeypot service out of the app Services file to the system Services where it belongs</p></li>
+<li><p>#6b8b8b Allow db forge and utils to take an array of connection info instead of a group name</p></li>
+<li><p>#1613 Typo in documentation</p></li>
+<li><p>#1538 img fix(?) - html_helper</p></li>
 </ul>
 </div>
 </div>

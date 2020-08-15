@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,13 +345,14 @@
 tables from arrays or database result sets.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#using-the-table-class" id="id1">Using the Table Class</a><ul>
-<li><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></li>
-<li><a class="reference internal" href="#examples" id="id3">Examples</a></li>
-<li><a class="reference internal" href="#changing-the-look-of-your-table" id="id4">Changing the Look of Your Table</a></li>
+<li><p><a class="reference internal" href="#using-the-table-class" id="id1">Using the Table Class</a></p>
+<ul>
+<li><p><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id3">Examples</a></p></li>
+<li><p><a class="reference internal" href="#changing-the-look-of-your-table" id="id4">Changing the Look of Your Table</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></li>
+<li><p><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="using-the-table-class">
@@ -460,8 +464,8 @@ specify the design of your layout. Here is the template prototype:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You’ll notice there are two sets of “row” blocks in the
+<p class="admonition-title">Note</p>
+<p>You’ll notice there are two sets of “row” blocks in the
 template. These permit you to create alternating row colors or design
 elements that alternate with each iteration of the row data.</p>
 </div>
@@ -490,10 +494,10 @@ to the Table constructor.:</p>
 <h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="Table">
-<em class="property">class </em><code class="descname">Table</code><a class="headerlink" href="#Table" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Table</code><a class="headerlink" href="#Table" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="attribute">
 <dt>
-<code class="descname">$function = NULL</code></dt>
+<code class="sig-name descname">$function = NULL</code></dt>
 <dd><p>Allows you to specify a native PHP function or a valid function array object to be applied to all cell data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
@@ -512,47 +516,39 @@ to the Table constructor.:</p>
 
 <dl class="method">
 <dt id="Table::generate">
-<code class="descname">generate</code><span class="sig-paren">(</span><span class="optional">[</span><em>$tableData = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::generate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$tableData</strong> (<em>mixed</em>) – Data to populate the table rows with</li>
+<code class="sig-name descname">generate</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$tableData = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::generate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$tableData</strong> (<em>mixed</em>) – Data to populate the table rows with</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML table</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML table</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the generated table. Accepts an optional parameter which can be an array or a database result object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Table::setCaption">
-<code class="descname">setCaption</code><span class="sig-paren">(</span><em>$caption</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setCaption" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$caption</strong> (<em>string</em>) – Table caption</li>
+<code class="sig-name descname">setCaption</code><span class="sig-paren">(</span><em class="sig-param">$caption</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setCaption" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$caption</strong> (<em>string</em>) – Table caption</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Table" title="Table">Table</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Permits you to add a caption to the table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Colors&#39;</span><span class="p">);</span>
 </pre></div>
@@ -561,24 +557,20 @@ to the Table constructor.:</p>
 
 <dl class="method">
 <dt id="Table::setHeading">
-<code class="descname">setHeading</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = []</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setHeading" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the table column titles</li>
+<code class="sig-name descname">setHeading</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$args = []</em><span class="optional">[</span>, <em class="sig-param">...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setHeading" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the table column titles</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Table" title="Table">Table</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Permits you to set the table heading. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span> <span class="c1">// or</span>
 
@@ -589,24 +581,20 @@ to the Table constructor.:</p>
 
 <dl class="method">
 <dt id="Table::setFooting">
-<code class="descname">setFooting</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = []</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setFooting" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the table footing values</li>
+<code class="sig-name descname">setFooting</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$args = []</em><span class="optional">[</span>, <em class="sig-param">...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setFooting" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the table footing values</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Table" title="Table">Table</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Permits you to set the table footing. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">(</span><span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">);</span> <span class="c1">// or</span>
 
@@ -617,24 +605,20 @@ to the Table constructor.:</p>
 
 <dl class="method">
 <dt id="Table::addRow">
-<code class="descname">addRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = array()</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::addRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the row values</li>
+<code class="sig-name descname">addRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$args = array()</em><span class="optional">[</span>, <em class="sig-param">...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::addRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$args</strong> (<em>mixed</em>) – An array or multiple strings containing the row values</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Table" title="Table">Table</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Permits you to add a row to your table. You can submit an array or discrete params:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span> <span class="c1">// or</span>
 
@@ -654,25 +638,21 @@ The associative key <strong>data</strong> defines the cell’s data. Any other k
 
 <dl class="method">
 <dt id="Table::makeColumns">
-<code class="descname">makeColumns</code><span class="sig-paren">(</span><span class="optional">[</span><em>$array = []</em><span class="optional">[</span>, <em>$columnLimit = 0</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::makeColumns" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$array</strong> (<em>array</em>) – An array containing multiple rows’ data</li>
-<li><strong>$columnLimit</strong> (<em>int</em>) – Count of columns in the table</li>
+<code class="sig-name descname">makeColumns</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$array = []</em><span class="optional">[</span>, <em class="sig-param">$columnLimit = 0</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::makeColumns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$array</strong> (<em>array</em>) – An array containing multiple rows’ data</p></li>
+<li><p><strong>$columnLimit</strong> (<em>int</em>) – Count of columns in the table</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array of HTML table columns</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array of HTML table columns</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to the number of columns desired.
 This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">,</span> <span class="s1">&#39;seven&#39;</span><span class="p">,</span> <span class="s1">&#39;eight&#39;</span><span class="p">,</span> <span class="s1">&#39;nine&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;eleven&#39;</span><span class="p">,</span> <span class="s1">&#39;twelve&#39;</span><span class="p">];</span>
@@ -699,24 +679,20 @@ This allows a single array with many elements to be displayed in a table that ha
 
 <dl class="method">
 <dt id="Table::setTemplate">
-<code class="descname">setTemplate</code><span class="sig-paren">(</span><em>$template</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setTemplate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$template</strong> (<em>array</em>) – An associative array containing template values</li>
+<code class="sig-name descname">setTemplate</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$template</strong> (<em>array</em>) – An associative array containing template values</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Permits you to set your template. You can submit a full or partial template.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;table_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
@@ -729,24 +705,20 @@ This allows a single array with many elements to be displayed in a table that ha
 
 <dl class="method">
 <dt id="Table::setEmpty">
-<code class="descname">setEmpty</code><span class="sig-paren">(</span><em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setEmpty" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$value</strong> (<em>mixed</em>) – Value to put in empty cells</li>
+<code class="sig-name descname">setEmpty</code><span class="sig-paren">(</span><em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$value</strong> (<em>mixed</em>) – Value to put in empty cells</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Table" title="Table">Table</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Lets you set a default value for use in any table cells that are empty.
 You might, for example, set a non-breaking space:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s2">&quot;&amp;nbsp;&quot;</span><span class="p">);</span>
@@ -756,17 +728,15 @@ You might, for example, set a non-breaking space:</p>
 
 <dl class="method">
 <dt id="Table::clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::clear" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Table instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Table" title="Table">Table</a></td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::clear" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#Table" title="Table">Table</a></p>
+</dd>
+</dl>
 <p>Lets you clear the table heading, row data and caption. If
 you need to show multiple tables with different data you
 should to call this method after each table has been

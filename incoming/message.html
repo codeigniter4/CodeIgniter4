@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -356,29 +359,27 @@ is requesting and selects the best match from the image formats that it supports
 likely choosing a JPEG image to return.</p>
 <p>This same negotiation can happen with four types of data:</p>
 <ul class="simple">
-<li><strong>Media/Document Type</strong> - this could be image format, or HTML vs. XML or JSON.</li>
-<li><strong>Character Set</strong> - The character set the returned document should be set in. Typically is UTF-8.</li>
-<li><strong>Document Encoding</strong> - Typically the type of compression used on the results.</li>
-<li><strong>Document Language</strong> - For sites that support multiple languages, this helps determine which to return.</li>
+<li><p><strong>Media/Document Type</strong> - this could be image format, or HTML vs. XML or JSON.</p></li>
+<li><p><strong>Character Set</strong> - The character set the returned document should be set in. Typically is UTF-8.</p></li>
+<li><p><strong>Document Encoding</strong> - Typically the type of compression used on the results.</p></li>
+<li><p><strong>Document Language</strong> - For sites that support multiple languages, this helps determine which to return.</p></li>
 </ul>
 <div class="section" id="class-reference">
 <h3>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\HTTP\Message</code></dt>
+<code class="sig-name descname">CodeIgniter\HTTP\Message</code></dt>
 <dd><dl class="method">
 <dt id="getBody">
-<code class="descname">getBody</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBody" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current message body</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">mixed</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getBody</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBody" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current message body</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>mixed</p>
+</dd>
+</dl>
 <p>Returns the current message body, if any has been set. If not body exists, returns null:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
 </pre></div>
@@ -387,61 +388,50 @@ likely choosing a JPEG image to return.</p>
 
 <dl class="method">
 <dt id="setBody">
-<code class="descname">setBody</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#setBody" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) – The body of the message.</li>
+<code class="sig-name descname">setBody</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#setBody" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – The body of the message.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the Message|Response instance to allow methods to be chained together.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the Message|Response instance to allow methods to be chained together.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+</dd>
+</dl>
 <p>Sets the body of the current request.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="appendBody">
-<code class="descname">appendBody</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#appendBody" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) – The body of the message.</li>
+<code class="sig-name descname">appendBody</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#appendBody" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – The body of the message.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the Message|Response instance to allow methods to be chained together.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the Message|Response instance to allow methods to be chained together.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+</dd>
+</dl>
 <p>Appends data to the body of the current request.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="populateHeaders">
-<code class="descname">populateHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#populateHeaders" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">populateHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#populateHeaders" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>void</p>
+</dd>
+</dl>
 <p>Scans and parses the headers found in the SERVER data and stores it for later access.
 This is used by the <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a> to make
 the current request’s headers available.</p>
@@ -453,40 +443,34 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 
 <dl class="method">
 <dt id="getHeaders">
-<code class="descname">getHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHeaders" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array of all of the headers found.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHeaders" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An array of all of the headers found.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>Returns an array of all headers found or previously set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getHeader">
-<code class="descname">getHeader</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header you want to retrieve the value of.</li>
+<code class="sig-name descname">getHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header you want to retrieve the value of.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Header|array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Header|array</p>
+</dd>
+</dl>
 <p>Allows you to retrieve the current value of a single message header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive header name.
 While the header is converted internally as described above, you can access the header with any type of case:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
@@ -524,46 +508,38 @@ method to retrieve the values as a string:</p>
 
 <dl class="method">
 <dt id="hasHeader">
-<code class="descname">hasHeader</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#hasHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header you want to see if it exists.</li>
+<code class="sig-name descname">hasHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#hasHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header you want to see if it exists.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns TRUE if it exists, FALSE otherwise.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns TRUE if it exists, FALSE otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="getHeaderLine">
-<code class="descname">getHeaderLine</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeaderLine" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header to retrieve.</li>
+<code class="sig-name descname">getHeaderLine</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeaderLine" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to retrieve.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string representing the header value.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string representing the header value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Returns the value(s) of the header as a string. This method allows you to easily get a string representation
 of the header values when the header has multiple values. The values are appropriately joined:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
@@ -576,25 +552,21 @@ of the header values when the header has multiple values. The values are appropr
 
 <dl class="method">
 <dt id="setHeader">
-<code class="descname">setHeader</code><span class="sig-paren">(</span><em>$name</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header to set the value for.</li>
-<li><strong>$value</strong> (<em>mixed</em>) – The value to set the header to.</li>
+<code class="sig-name descname">setHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to set the value for.</p></li>
+<li><p><strong>$value</strong> (<em>mixed</em>) – The value to set the header to.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current Message|Response instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current Message|Response instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+</dd>
+</dl>
 <p>Sets the value of a single header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header. If the header
 doesn’t already exist in the collection, it will be created. The <code class="docutils literal notranslate"><span class="pre">$value</span></code> can be either a string
 or an array of strings:</p>
@@ -605,24 +577,20 @@ or an array of strings:</p>
 
 <dl class="method">
 <dt id="removeHeader">
-<code class="descname">removeHeader</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#removeHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header to remove.</li>
+<code class="sig-name descname">removeHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#removeHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to remove.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current message instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current message instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+</dd>
+</dl>
 <p>Removes the header from the Message. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 </pre></div>
@@ -631,25 +599,21 @@ or an array of strings:</p>
 
 <dl class="method">
 <dt id="appendHeader">
-<code class="descname">appendHeader</code><span class="sig-paren">(</span><em>$name</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#appendHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header to modify</li>
-<li><strong>$value</strong> (<em>string</em>) – The value to add to the header.</li>
+<code class="sig-name descname">appendHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#appendHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to modify</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – The value to add to the header.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current message instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current message instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+</dd>
+</dl>
 <p>Adds a value to an existing header. The header must already be an array of values instead of a single string.
 If it is a string then a LogicException will be thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
@@ -659,25 +623,21 @@ If it is a string then a LogicException will be thrown.</p>
 
 <dl class="method">
 <dt id="prependHeader">
-<code class="descname">prependHeader</code><span class="sig-paren">(</span><em>$name</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#prependHeader" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the header to modify</li>
-<li><strong>$value</strong> (<em>string</em>) – The value to prepend to the header.</li>
+<code class="sig-name descname">prependHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#prependHeader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to modify</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – The value to prepend to the header.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current message instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current message instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+</dd>
+</dl>
 <p>Prepends a value to an existing header. The header must already be an array of values instead of a single string.
 If it is a string then a LogicException will be thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">prependHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en,&#39;</span><span class="p">);</span>
@@ -687,41 +647,35 @@ If it is a string then a LogicException will be thrown.</p>
 
 <dl class="method">
 <dt id="getProtocolVersion">
-<code class="descname">getProtocolVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getProtocolVersion" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current HTTP protocol version</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getProtocolVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getProtocolVersion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current HTTP protocol version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns the message’s current HTTP protocol. If none has been set, will return <code class="docutils literal notranslate"><span class="pre">null</span></code>.
 Acceptable values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="setProtocolVersion">
-<code class="descname">setProtocolVersion</code><span class="sig-paren">(</span><em>$version</em><span class="sig-paren">)</span><a class="headerlink" href="#setProtocolVersion" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$version</strong> (<em>string</em>) – The HTTP protocol version</li>
+<code class="sig-name descname">setProtocolVersion</code><span class="sig-paren">(</span><em class="sig-param">$version</em><span class="sig-paren">)</span><a class="headerlink" href="#setProtocolVersion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$version</strong> (<em>string</em>) – The HTTP protocol version</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current message instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\HTTP\Message</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current message instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+</dd>
+</dl>
 <p>Sets the HTTP protocol version this Message uses. Valid values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
 </pre></div>

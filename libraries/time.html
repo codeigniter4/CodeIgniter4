@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,15 +345,15 @@
 extension’s features to convert times across timezones and display the output correctly for different locales. This class
 is the <strong>Time</strong> class and lives in the <strong>CodeIgniter\I18n</strong> namespace.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since the Time class extends DateTime, if there are features that you need that this class doesn’t provide,
+<p class="admonition-title">Note</p>
+<p>Since the Time class extends DateTime, if there are features that you need that this class doesn’t provide,
 you can likely find them within the DateTime class itself.</p>
 </div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#instantiating" id="id2">Instantiating</a></li>
-<li><a class="reference internal" href="#displaying-the-value" id="id3">Displaying the Value</a></li>
-<li><a class="reference internal" href="#working-with-individual-values" id="id4">Working with Individual Values</a></li>
+<li><p><a class="reference internal" href="#instantiating" id="id2">Instantiating</a></p></li>
+<li><p><a class="reference internal" href="#displaying-the-value" id="id3">Displaying the Value</a></p></li>
+<li><p><a class="reference internal" href="#working-with-individual-values" id="id4">Working with Individual Values</a></p></li>
 </ul>
 </div>
 <div class="section" id="instantiating">
@@ -530,40 +533,40 @@ human readable format that is geared towards being easily understood. It can cre
 </pre></div>
 </div>
 <p>The exact time displayed is determined in the following manner:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="48%" />
-<col width="52%" />
+<col style="width: 48%" />
+<col style="width: 52%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Time difference</th>
-<th class="head">Result</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Time difference</p></th>
+<th class="head"><p>Result</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>$time &gt; 1 year &amp;&amp; &lt; 2 years</td>
-<td>in 1 year / 1 year ago</td>
+<tbody>
+<tr class="row-even"><td><p>$time &gt; 1 year &amp;&amp; &lt; 2 years</p></td>
+<td><p>in 1 year / 1 year ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; 1 month &amp;&amp; &lt; 1 year</td>
-<td>in 6 months / 6 months ago</td>
+<tr class="row-odd"><td><p>$time &gt; 1 month &amp;&amp; &lt; 1 year</p></td>
+<td><p>in 6 months / 6 months ago</p></td>
 </tr>
-<tr class="row-even"><td>$time &gt; 7 days &amp;&amp; &lt; 1 month</td>
-<td>in 3 weeks / 3 weeks ago</td>
+<tr class="row-even"><td><p>$time &gt; 7 days &amp;&amp; &lt; 1 month</p></td>
+<td><p>in 3 weeks / 3 weeks ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; today &amp;&amp; &lt; 7 days</td>
-<td>in 4 days / 4 days ago</td>
+<tr class="row-odd"><td><p>$time &gt; today &amp;&amp; &lt; 7 days</p></td>
+<td><p>in 4 days / 4 days ago</p></td>
 </tr>
-<tr class="row-even"><td>$time == tomorrow / yesterday</td>
-<td>Tomorrow / Yesterday</td>
+<tr class="row-even"><td><p>$time == tomorrow / yesterday</p></td>
+<td><p>Tomorrow / Yesterday</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; 59 minutes &amp;&amp; &lt; 1 day</td>
-<td>1:37pm</td>
+<tr class="row-odd"><td><p>$time &gt; 59 minutes &amp;&amp; &lt; 1 day</p></td>
+<td><p>1:37pm</p></td>
 </tr>
-<tr class="row-even"><td>$time &gt; now &amp;&amp; &lt; 1 hour</td>
-<td>in 35 minutes / 35 minutes ago</td>
+<tr class="row-even"><td><p>$time &gt; now &amp;&amp; &lt; 1 hour</p></td>
+<td><p>in 35 minutes / 35 minutes ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time == now</td>
-<td>Now</td>
+<tr class="row-odd"><td><p>$time == now</p></td>
+<td><p>Now</p></td>
 </tr>
 </tbody>
 </table>
@@ -675,12 +678,12 @@ instance:</p>
 <p>The following basic setters exist. If any of the values set are out of range, an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentExeption</span></code> will be
 thrown.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All setters will return a new Time instance, leaving the original instance untouched.</p>
+<p class="admonition-title">Note</p>
+<p>All setters will return a new Time instance, leaving the original instance untouched.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All setters will throw an InvalidArgumentException if the value is out of range.</p>
+<p class="admonition-title">Note</p>
+<p>All setters will throw an InvalidArgumentException if the value is out of range.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setYear</span><span class="p">(</span><span class="mi">2017</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonthNumber</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>           <span class="c1">// April</span>
@@ -857,37 +860,37 @@ human readable format that is geared towards being easily understood. It can cre
 </pre></div>
 </div>
 <p>The exact time displayed is determined in the following manner:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="48%" />
-<col width="52%" />
+<col style="width: 48%" />
+<col style="width: 52%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Time difference</th>
-<th class="head">Result</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Time difference</p></th>
+<th class="head"><p>Result</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>$time &gt; 1 year &amp;&amp; &lt; 2 years</td>
-<td>in 1 year / 1 year ago</td>
+<tbody>
+<tr class="row-even"><td><p>$time &gt; 1 year &amp;&amp; &lt; 2 years</p></td>
+<td><p>in 1 year / 1 year ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; 1 month &amp;&amp; &lt; 1 year</td>
-<td>in 6 months / 6 months ago</td>
+<tr class="row-odd"><td><p>$time &gt; 1 month &amp;&amp; &lt; 1 year</p></td>
+<td><p>in 6 months / 6 months ago</p></td>
 </tr>
-<tr class="row-even"><td>$time &gt; 7 days &amp;&amp; &lt; 1 month</td>
-<td>in 3 weeks / 3 weeks ago</td>
+<tr class="row-even"><td><p>$time &gt; 7 days &amp;&amp; &lt; 1 month</p></td>
+<td><p>in 3 weeks / 3 weeks ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; today &amp;&amp; &lt; 7 days</td>
-<td>in 4 days / 4 days ago</td>
+<tr class="row-odd"><td><p>$time &gt; today &amp;&amp; &lt; 7 days</p></td>
+<td><p>in 4 days / 4 days ago</p></td>
 </tr>
-<tr class="row-even"><td>$time &gt; 1 hour &amp;&amp; &lt; 1 day</td>
-<td>in 8 hours / 8 hours ago</td>
+<tr class="row-even"><td><p>$time &gt; 1 hour &amp;&amp; &lt; 1 day</p></td>
+<td><p>in 8 hours / 8 hours ago</p></td>
 </tr>
-<tr class="row-odd"><td>$time &gt; 1 minute &amp;&amp; &lt; 1 hour</td>
-<td>in 35 minutes / 35 minutes ago</td>
+<tr class="row-odd"><td><p>$time &gt; 1 minute &amp;&amp; &lt; 1 hour</p></td>
+<td><p>in 35 minutes / 35 minutes ago</p></td>
 </tr>
-<tr class="row-even"><td>$time &lt; 1 minute</td>
-<td>Now</td>
+<tr class="row-even"><td><p>$time &lt; 1 minute</p></td>
+<td><p>Now</p></td>
 </tr>
 </tbody>
 </table>

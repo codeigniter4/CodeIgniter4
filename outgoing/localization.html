@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,17 +343,19 @@
 <h1>Localization<a class="headerlink" href="#localization" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#working-with-locales" id="id1">Working With Locales</a><ul>
-<li><a class="reference internal" href="#configuring-the-locale" id="id2">Configuring the Locale</a></li>
-<li><a class="reference internal" href="#locale-detection" id="id3">Locale Detection</a></li>
-<li><a class="reference internal" href="#retrieving-the-current-locale" id="id4">Retrieving the Current Locale</a></li>
+<li><p><a class="reference internal" href="#working-with-locales" id="id1">Working With Locales</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuring-the-locale" id="id2">Configuring the Locale</a></p></li>
+<li><p><a class="reference internal" href="#locale-detection" id="id3">Locale Detection</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-the-current-locale" id="id4">Retrieving the Current Locale</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#language-localization" id="id5">Language Localization</a><ul>
-<li><a class="reference internal" href="#creating-language-files" id="id6">Creating Language Files</a></li>
-<li><a class="reference internal" href="#basic-usage" id="id7">Basic Usage</a></li>
-<li><a class="reference internal" href="#language-fallback" id="id8">Language Fallback</a></li>
-<li><a class="reference internal" href="#message-translations" id="id9">Message Translations</a></li>
+<li><p><a class="reference internal" href="#language-localization" id="id5">Language Localization</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-language-files" id="id6">Creating Language Files</a></p></li>
+<li><p><a class="reference internal" href="#basic-usage" id="id7">Basic Usage</a></p></li>
+<li><p><a class="reference internal" href="#language-fallback" id="id8">Language Fallback</a></p></li>
+<li><p><a class="reference internal" href="#message-translations" id="id9">Message Translations</a></p></li>
 </ul>
 </li>
 </ul>
@@ -371,8 +376,8 @@ supported language:</p>
 </pre></div>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Locale detection only works for web-based requests that use the IncomingRequest class.
+<p class="admonition-title">Important</p>
+<p>Locale detection only works for web-based requests that use the IncomingRequest class.
 Command-line requests will not have these features.</p>
 </div>
 <div class="section" id="configuring-the-locale">
@@ -422,8 +427,8 @@ segment will be your locale:</p>
 <p>In this example, if the user tried to visit <code class="docutils literal notranslate"><span class="pre">http://example.com/fr/books</span></code>, then the locale would be
 set to <code class="docutils literal notranslate"><span class="pre">fr</span></code>, assuming it was configured as a valid locale.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the value doesn’t match a valid locale as defined in the App configuration file, the default
+<p class="admonition-title">Note</p>
+<p>If the value doesn’t match a valid locale as defined in the App configuration file, the default
 locale will be used in it’s place.</p>
 </div>
 </div>
@@ -469,8 +474,8 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It’s good practice to use a common prefix for all messages in a given file to avoid collisions with
+<p class="admonition-title">Note</p>
+<p>It’s good practice to use a common prefix for all messages in a given file to avoid collisions with
 similarly named items in other files. For example, if you are creating error messages you might prefix them
 with error_</p>
 </div>
@@ -504,8 +509,8 @@ back, unchanged. In this example, it would return ‘Errors.errorEmailMissing’
 <div class="section" id="replacing-parameters">
 <h4>Replacing Parameters<a class="headerlink" href="#replacing-parameters" title="Permalink to this headline">¶</a></h4>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The following functions all require the <a class="reference external" href="https://www.php.net/manual/en/book.intl.php">intl</a> extension to
+<p class="admonition-title">Note</p>
+<p>The following functions all require the <a class="reference external" href="https://www.php.net/manual/en/book.intl.php">intl</a> extension to
 be loaded on your system in order to work. If the extension is not loaded, no replacement will be attempted.
 A great overview can be found over at <a class="reference external" href="https://www.sitepoint.com/localization-demystified-understanding-php-intl/">Sitepoint</a>.</p>
 </div>
@@ -536,12 +541,12 @@ A great overview can be found over at <a class="reference external" href="https:
 <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details">official ICU docs</a> for the underlying
 library, the following types of data can be replaced:</p>
 <ul class="simple">
-<li>numbers - integer, currency, percent</li>
-<li>dates - short, medium, long, full</li>
-<li>time - short, medium, long, full</li>
-<li>spellout - spells out numbers (i.e. 34 becomes thirty-four)</li>
-<li>ordinal</li>
-<li>duration</li>
+<li><p>numbers - integer, currency, percent</p></li>
+<li><p>dates - short, medium, long, full</p></li>
+<li><p>time - short, medium, long, full</p></li>
+<li><p>spellout - spells out numbers (i.e. 34 becomes thirty-four)</p></li>
+<li><p>ordinal</p></li>
+<li><p>duration</p></li>
 </ul>
 <p>Here are a few examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php</span>

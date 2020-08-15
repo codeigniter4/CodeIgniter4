@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,160 +345,144 @@
 <p><strong>RC.1 release of CodeIgniter4</strong></p>
 <p>Enhancements:</p>
 <ul class="simple">
-<li>CI3 Email ported to CI4</li>
-<li>Encryption (basic) added</li>
-<li>Migrations refactored and streamlined for more wholistic functionality (BC)</li>
-<li>added convert() to ImageHandlerInterface</li>
-<li>disabled debug toolbar for downloads</li>
-<li>CLI commands returns an error code now (“spark” changed)</li>
-<li>RESTful controllers added to shorten dev time for RESTful APIs</li>
-<li>added RouteCollection::presenter() as part of the RESTful support</li>
+<li><p>CI3 Email ported to CI4</p></li>
+<li><p>Encryption (basic) added</p></li>
+<li><p>Migrations refactored and streamlined for more wholistic functionality (BC)</p></li>
+<li><p>added convert() to ImageHandlerInterface</p></li>
+<li><p>disabled debug toolbar for downloads</p></li>
+<li><p>CLI commands returns an error code now (“spark” changed)</p></li>
+<li><p>RESTful controllers added to shorten dev time for RESTful APIs</p></li>
+<li><p>added RouteCollection::presenter() as part of the RESTful support</p></li>
 </ul>
 <p>App changes:</p>
 <ul class="simple">
-<li>added app/Common to make it easier to override common functions</li>
-<li>Config/Email and Encryption added</li>
-<li>Config/Migration modified, and has different settings</li>
-<li>Controllers/Home fixed, removing unnecessary model reference</li>
+<li><p>added app/Common to make it easier to override common functions</p></li>
+<li><p>Config/Email and Encryption added</p></li>
+<li><p>Config/Migration modified, and has different settings</p></li>
+<li><p>Controllers/Home fixed, removing unnecessary model reference</p></li>
 </ul>
 <p>Message changes:</p>
 <ul class="simple">
-<li>Migration has new &amp; modified messages</li>
-<li>Messages now has RESTful set</li>
+<li><p>Migration has new &amp; modified messages</p></li>
+<li><p>Messages now has RESTful set</p></li>
 </ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>admin/</dt>
-<dd><ul class="first last">
-<li>release-appstarter #2155</li>
-<li>release-framework #2155</li>
+<li><dl class="simple">
+<dt>admin/</dt><dd><ul>
+<li><p>release-appstarter #2155</p></li>
+<li><p>release-framework #2155</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>app/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>Email #2092</li>
-<li>Encryption #2135</li>
-<li>Migrations #2065</li>
+<li><dl class="simple">
+<dt>app/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>Email #2092</p></li>
+<li><p>Encryption #2135</p></li>
+<li><p>Migrations #2065</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Controllers/</dt>
-<dd><ul class="first last">
-<li>BaseController #2046</li>
-<li>Home #2145</li>
+<li><dl class="simple">
+<dt>Controllers/</dt><dd><ul>
+<li><p>BaseController #2046</p></li>
+<li><p>Home #2145</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Common #2110</li>
+<li><p>Common #2110</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>public/</li>
-<li><dl class="first docutils">
-<dt>system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>API/</dt>
-<dd><ul class="first last">
-<li>ResponseTrait #2131</li>
+<li><p>public/</p></li>
+<li><dl class="simple">
+<dt>system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>API/</dt><dd><ul>
+<li><p>ResponseTrait #2131</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>Autoloader #2149</li>
-<li>FileLocator #2149</li>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>Autoloader #2149</p></li>
+<li><p>FileLocator #2149</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Cache/Handlders/</dt>
-<dd><ul class="first last">
-<li>RedisHandler #2144</li>
+<li><dl class="simple">
+<dt>Cache/Handlders/</dt><dd><ul>
+<li><p>RedisHandler #2144</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>CLI/</dt>
-<dd><ul class="first last">
-<li>CommandRunner #2164</li>
+<li><dl class="simple">
+<dt>CLI/</dt><dd><ul>
+<li><p>CommandRunner #2164</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Commands/Database/</dt>
-<dd><ul class="first last">
-<li>CreateMigration #2065</li>
-<li>Migrate #2065, 2137</li>
-<li>MigrateRefresh #2065, 2137</li>
-<li>MigrateRollback #2065, 2137</li>
-<li>MigrateStatus #2137</li>
-<li>MigrateVersion #2137</li>
+<li><dl class="simple">
+<dt>Commands/Database/</dt><dd><ul>
+<li><p>CreateMigration #2065</p></li>
+<li><p>Migrate #2065, 2137</p></li>
+<li><p>MigrateRefresh #2065, 2137</p></li>
+<li><p>MigrateRollback #2065, 2137</p></li>
+<li><p>MigrateStatus #2137</p></li>
+<li><p>MigrateVersion #2137</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>BaseConfig #2082</li>
-<li>Services #2135, 2092</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>BaseConfig #2082</p></li>
+<li><p>Services #2135, 2092</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001</li>
-<li>MigrationRunner #2065, 2137</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001</p></li>
+<li><p>MigrationRunner #2065, 2137</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/</dt>
-<dd><ul class="first last">
-<li>Toolbar #2118</li>
+<li><dl class="simple">
+<dt>Debug/</dt><dd><ul>
+<li><p>Toolbar #2118</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Email/</dt>
-<dd><ul class="first last">
-<li>Email #2092</li>
+<li><dl class="simple">
+<dt>Email/</dt><dd><ul>
+<li><p>Email #2092</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Encryption/</dt>
-<dd><ul class="first last">
-<li>EncrypterInterface #2135</li>
-<li>Encryption #2135</li>
-<li>Exceptions/EncryptionException #2135</li>
-<li><dl class="first docutils">
-<dt>Handlers/</dt>
-<dd><ul class="first last">
-<li>BaseHandler #2135</li>
-<li>OpenSSLHandler #2135</li>
+<li><dl class="simple">
+<dt>Encryption/</dt><dd><ul>
+<li><p>EncrypterInterface #2135</p></li>
+<li><p>Encryption #2135</p></li>
+<li><p>Exceptions/EncryptionException #2135</p></li>
+<li><dl class="simple">
+<dt>Handlers/</dt><dd><ul>
+<li><p>BaseHandler #2135</p></li>
+<li><p>OpenSSLHandler #2135</p></li>
 </ul>
 </dd>
 </dl>
@@ -504,312 +491,277 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Exceptions/</dt>
-<dd><ul class="first last">
-<li>ConfigException #2065</li>
+<li><dl class="simple">
+<dt>Exceptions/</dt><dd><ul>
+<li><p>ConfigException #2065</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>File #2178</li>
+<li><dl class="simple">
+<dt>Files/</dt><dd><ul>
+<li><p>File #2178</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>DebugToolbar #2118</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>DebugToolbar #2118</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>inflector_helper #2065</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>inflector_helper #2065</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Honeypot/</dt>
-<dd><ul class="first last">
-<li>Honeypot #2177</li>
+<li><dl class="simple">
+<dt>Honeypot/</dt><dd><ul>
+<li><p>Honeypot #2177</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>DownloadResponse #2129</li>
-<li>Files/UploadedFile #2128</li>
-<li>Message &#64;2171</li>
-<li>Response #2166</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>DownloadResponse #2129</p></li>
+<li><p>Files/UploadedFile #2128</p></li>
+<li><p>Message &#64;2171</p></li>
+<li><p>Response #2166</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Images/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Handlers/</dt>
-<dd>-BaseHandler #2113, 2150
-- ImageMagickHandler #2151</dd>
+<li><dl class="simple">
+<dt>Images/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Handlers/</dt><dd><p>-BaseHandler #2113, 2150
+- ImageMagickHandler #2151</p>
+</dd>
 </dl>
 </li>
-<li>BImageHandlerInterface #2113</li>
+<li><p>BImageHandlerInterface #2113</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/en/</dt>
-<dd><ul class="first last">
-<li>Email #2092</li>
-<li>Encryption #2135</li>
-<li>Migrations #2065, 2137</li>
-<li>RESTful #2165</li>
+<li><dl class="simple">
+<dt>Language/en/</dt><dd><ul>
+<li><p>Email #2092</p></li>
+<li><p>Encryption #2135</p></li>
+<li><p>Migrations #2065, 2137</p></li>
+<li><p>RESTful #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>RESTful/</dt>
-<dd><ul class="first last">
-<li>ResourceController #2165</li>
-<li>ResourcePresenter #2165</li>
+<li><dl class="simple">
+<dt>RESTful/</dt><dd><ul>
+<li><p>ResourceController #2165</p></li>
+<li><p>ResourcePresenter #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollection #2165</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollection #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Security/</dt>
-<dd><ul class="first last">
-<li>Security #2027</li>
+<li><dl class="simple">
+<dt>Security/</dt><dd><ul>
+<li><p>Security #2027</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Session/Handlers/</dt>
-<dd><ul class="first last">
-<li>RedisHandler #2125</li>
+<li><dl class="simple">
+<dt>Session/Handlers/</dt><dd><ul>
+<li><p>RedisHandler #2125</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>CIDatabaseTestCase #2137</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>CIDatabaseTestCase #2137</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>bootstrap #2110</li>
-<li>CodeIgniter #2126, 2164</li>
-<li>Common #2109</li>
-<li>Entity #2112</li>
-<li>Model #2090</li>
+<li><p>bootstrap #2110</p></li>
+<li><p>CodeIgniter #2126, 2164</p></li>
+<li><p>Common #2109</p></li>
+<li><p>Entity #2112</p></li>
+<li><p>Model #2090</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests/_support/</dt>
-<dd><ul class="first last">
-<li>RESTful/… #2165</li>
+<li><dl class="simple">
+<dt>tests/_support/</dt><dd><ul>
+<li><p>RESTful/… #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests/system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>API/</dt>
-<dd><ul class="first last">
-<li>ResponseTraitTest #2131</li>
+<li><dl class="simple">
+<dt>tests/system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>API/</dt><dd><ul>
+<li><p>ResponseTraitTest #2131</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Builder/</dt>
-<dd><ul class="first last">
-<li>GetTest #2142</li>
-<li>SelectTest #2160</li>
-<li>WhereTest #2001</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Builder/</dt><dd><ul>
+<li><p>GetTest #2142</p></li>
+<li><p>SelectTest #2160</p></li>
+<li><p>WhereTest #2001</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Live/</dt>
-<dd><ul class="first last">
-<li>GroupTest #2160</li>
-<li>ModelTest #2090</li>
-<li>SelectTest #2160</li>
+<li><dl class="simple">
+<dt>Live/</dt><dd><ul>
+<li><p>GroupTest #2160</p></li>
+<li><p>ModelTest #2090</p></li>
+<li><p>SelectTest #2160</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Migrations/MigrationRunnerTest #2065, 2137</li>
+<li><p>Migrations/MigrationRunnerTest #2065, 2137</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Encryption/</dt>
-<dd><ul class="first last">
-<li>EncryptionTest #2135</li>
-<li>OpenSSLHandlerTest #2135</li>
+<li><dl class="simple">
+<dt>Encryption/</dt><dd><ul>
+<li><p>EncryptionTest #2135</p></li>
+<li><p>OpenSSLHandlerTest #2135</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>InflectorHelperTest #2065</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>InflectorHelperTest #2065</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>DownloadResponseTest #2129</li>
-<li>MessageTest #2171</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>DownloadResponseTest #2129</p></li>
+<li><p>MessageTest #2171</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Images/</dt>
-<dd><ul class="first last">
-<li>GDHandlerTest #2113</li>
+<li><dl class="simple">
+<dt>Images/</dt><dd><ul>
+<li><p>GDHandlerTest #2113</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>RESTful/</dt>
-<dd><ul class="first last">
-<li>ResourceControllerTest #2165</li>
-<li>ResourcePresenterTest #2165</li>
+<li><dl class="simple">
+<dt>RESTful/</dt><dd><ul>
+<li><p>ResourceControllerTest #2165</p></li>
+<li><p>ResourcePresenterTest #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollectionTest #2165</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollectionTest #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>ControllerTest #2165</li>
-<li>EntityTest #2112</li>
+<li><p>ControllerTest #2165</p></li>
+<li><p>EntityTest #2112</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>user_guide_src/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>changelogs/</dt>
-<dd><ul class="first last">
-<li>next #2154</li>
+<li><dl class="simple">
+<dt>user_guide_src/</dt><dd><ul>
+<li><dl class="simple">
+<dt>changelogs/</dt><dd><ul>
+<li><p>next #2154</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>database/</dt>
-<dd><ul class="first last">
-<li>query_builder #2160, 2001</li>
+<li><dl class="simple">
+<dt>database/</dt><dd><ul>
+<li><p>query_builder #2160, 2001</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>dbmgmt/</dt>
-<dd><ul class="first last">
-<li>migrations #2065, 2132, 2136, 2154, 2137</li>
+<li><dl class="simple">
+<dt>dbmgmt/</dt><dd><ul>
+<li><p>migrations #2065, 2132, 2136, 2154, 2137</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>extending/</dt>
-<dd><ul class="first last">
-<li>common #2162</li>
+<li><dl class="simple">
+<dt>extending/</dt><dd><ul>
+<li><p>common #2162</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>helpers/</dt>
-<dd><ul class="first last">
-<li>inflector_helper #2065</li>
+<li><dl class="simple">
+<dt>helpers/</dt><dd><ul>
+<li><p>inflector_helper #2065</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>restful #2165</li>
-<li>routing #2165</li>
+<li><dl class="simple">
+<dt>incoming/</dt><dd><ul>
+<li><p>restful #2165</p></li>
+<li><p>routing #2165</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>email #2092, 2154</li>
-<li>encryption #2135</li>
-<li>images #2113, 2169</li>
+<li><dl class="simple">
+<dt>libraries/</dt><dd><ul>
+<li><p>email #2092, 2154</p></li>
+<li><p>encryption #2135</p></li>
+<li><p>images #2113, 2169</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>outgoing/</dt>
-<dd><ul class="first last">
-<li>api_responses #2131</li>
-<li>localization #2134</li>
-<li>response #2129</li>
+<li><dl class="simple">
+<dt>outgoing/</dt><dd><ul>
+<li><p>api_responses #2131</p></li>
+<li><p>localization #2134</p></li>
+<li><p>response #2129</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>testing/</dt>
-<dd><ul class="first last">
-<li>database #2137</li>
+<li><dl class="simple">
+<dt>testing/</dt><dd><ul>
+<li><p>database #2137</p></li>
 </ul>
 </dd>
 </dl>
@@ -818,56 +770,56 @@
 </dd>
 </dl>
 </li>
-<li>CONTRIBUTING.md #2010</li>
-<li>README.md #2010</li>
-<li>spark</li>
+<li><p>CONTRIBUTING.md #2010</p></li>
+<li><p>README.md #2010</p></li>
+<li><p>spark</p></li>
 </ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#2178 Add fallback for missing finfo_open</li>
-<li>#2177 Fix missing form close tag</li>
-<li>#2171 Setheader dupes</li>
-<li>#2169 Add $quality usage for Image Library</li>
-<li>#2166 Cookie error</li>
-<li>#2165 RESTful help</li>
-<li>#2164 Exit error code on CLI Command failure</li>
-<li>#2162 User Guide updates for Common.php</li>
-<li>#2160 Add BaseBuilder SelectCount</li>
-<li>#2155 Include .gitignore in starters</li>
-<li>#2153 Bug fix countAllResults with LIMIT</li>
-<li>#2154 Fix email &amp; migrations docs; update changelog</li>
-<li>#2151 ImageMagick-&gt;save() return value</li>
-<li>#2150 New logic for Image-&gt;fit()</li>
-<li>#2149 listNamespaceFiles: Ensure trailing slash</li>
-<li>#2145 Remove UserModel reference from Home controller</li>
-<li>#2144 Update Redis legacy function</li>
-<li>#2142 Fixing BuilderBase resetting when getting the SQL</li>
-<li>#2137 New Migration Logic</li>
-<li>#2136 Migrations user guide fixes</li>
-<li>#2135 Encryption</li>
-<li>#2134 Fix localization writeup</li>
-<li>#2132 Update migration User Guide</li>
-<li>#2131 Added No Content response to APIResponseTrait</li>
-<li>#2129 Add setFileName() to DownloadResponse</li>
-<li>#2128 guessExtension fallback to clientExtension</li>
-<li>#2127 Update limit function since $offset is nullable</li>
-<li>#2126 Limit storePreviousURL to certain requests</li>
-<li>#2125 Updated redis session handler to support redis 5.0.x</li>
-<li>#2118 Disabled Toolbar on downloads</li>
-<li>#2113 Add Image-&gt;convert()</li>
-<li>#2112 Update <cite>Entity.php</cite> <cite>__isset</cite> method</li>
-<li>#2110 Added app/Common.php</li>
-<li>#2109 Fix typo in checking if exists db_connect()</li>
-<li>#2092 Original email port</li>
-<li>#2090 Fix prevent soft delete all without conditions set</li>
-<li>#2082 Update BaseConfig.php</li>
-<li>#2065 Migration updates for more wholistic functionality</li>
-<li>#2046 clean base controller code</li>
-<li>#2027 Fix CSRF hash regeneration</li>
-<li>#2023 whereIn $value do not have to be an array</li>
-<li>#2010 Fix CSRF hash regenerationerbiage revisions</li>
-<li>#2001 Subqueries in BaseBuilder</li>
+<li><p>#2178 Add fallback for missing finfo_open</p></li>
+<li><p>#2177 Fix missing form close tag</p></li>
+<li><p>#2171 Setheader dupes</p></li>
+<li><p>#2169 Add $quality usage for Image Library</p></li>
+<li><p>#2166 Cookie error</p></li>
+<li><p>#2165 RESTful help</p></li>
+<li><p>#2164 Exit error code on CLI Command failure</p></li>
+<li><p>#2162 User Guide updates for Common.php</p></li>
+<li><p>#2160 Add BaseBuilder SelectCount</p></li>
+<li><p>#2155 Include .gitignore in starters</p></li>
+<li><p>#2153 Bug fix countAllResults with LIMIT</p></li>
+<li><p>#2154 Fix email &amp; migrations docs; update changelog</p></li>
+<li><p>#2151 ImageMagick-&gt;save() return value</p></li>
+<li><p>#2150 New logic for Image-&gt;fit()</p></li>
+<li><p>#2149 listNamespaceFiles: Ensure trailing slash</p></li>
+<li><p>#2145 Remove UserModel reference from Home controller</p></li>
+<li><p>#2144 Update Redis legacy function</p></li>
+<li><p>#2142 Fixing BuilderBase resetting when getting the SQL</p></li>
+<li><p>#2137 New Migration Logic</p></li>
+<li><p>#2136 Migrations user guide fixes</p></li>
+<li><p>#2135 Encryption</p></li>
+<li><p>#2134 Fix localization writeup</p></li>
+<li><p>#2132 Update migration User Guide</p></li>
+<li><p>#2131 Added No Content response to APIResponseTrait</p></li>
+<li><p>#2129 Add setFileName() to DownloadResponse</p></li>
+<li><p>#2128 guessExtension fallback to clientExtension</p></li>
+<li><p>#2127 Update limit function since $offset is nullable</p></li>
+<li><p>#2126 Limit storePreviousURL to certain requests</p></li>
+<li><p>#2125 Updated redis session handler to support redis 5.0.x</p></li>
+<li><p>#2118 Disabled Toolbar on downloads</p></li>
+<li><p>#2113 Add Image-&gt;convert()</p></li>
+<li><p>#2112 Update <cite>Entity.php</cite> <cite>__isset</cite> method</p></li>
+<li><p>#2110 Added app/Common.php</p></li>
+<li><p>#2109 Fix typo in checking if exists db_connect()</p></li>
+<li><p>#2092 Original email port</p></li>
+<li><p>#2090 Fix prevent soft delete all without conditions set</p></li>
+<li><p>#2082 Update BaseConfig.php</p></li>
+<li><p>#2065 Migration updates for more wholistic functionality</p></li>
+<li><p>#2046 clean base controller code</p></li>
+<li><p>#2027 Fix CSRF hash regeneration</p></li>
+<li><p>#2023 whereIn $value do not have to be an array</p></li>
+<li><p>#2010 Fix CSRF hash regenerationerbiage revisions</p></li>
+<li><p>#2001 Subqueries in BaseBuilder</p></li>
 </ul>
 </div>
 </div>

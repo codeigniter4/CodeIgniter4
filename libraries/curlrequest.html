@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,30 +346,32 @@ web sites and servers. It can be used to get the contents of a Google search, re
 or communicate with an API, among many other things.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></li>
-<li><a class="reference internal" href="#working-with-the-library" id="id2">Working with the Library</a><ul>
-<li><a class="reference internal" href="#making-requests" id="id3">Making Requests</a></li>
-<li><a class="reference internal" href="#using-responses" id="id4">Using Responses</a></li>
+<li><p><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></p></li>
+<li><p><a class="reference internal" href="#working-with-the-library" id="id2">Working with the Library</a></p>
+<ul>
+<li><p><a class="reference internal" href="#making-requests" id="id3">Making Requests</a></p></li>
+<li><p><a class="reference internal" href="#using-responses" id="id4">Using Responses</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#request-options" id="id5">Request Options</a><ul>
-<li><a class="reference internal" href="#allow-redirects" id="id6">allow_redirects</a></li>
-<li><a class="reference internal" href="#auth" id="id7">auth</a></li>
-<li><a class="reference internal" href="#body" id="id8">body</a></li>
-<li><a class="reference internal" href="#cert" id="id9">cert</a></li>
-<li><a class="reference internal" href="#connect-timeout" id="id10">connect_timeout</a></li>
-<li><a class="reference internal" href="#cookie" id="id11">cookie</a></li>
-<li><a class="reference internal" href="#debug" id="id12">debug</a></li>
-<li><a class="reference internal" href="#delay" id="id13">delay</a></li>
-<li><a class="reference internal" href="#form-params" id="id14">form_params</a></li>
-<li><a class="reference internal" href="#headers" id="id15">headers</a></li>
-<li><a class="reference internal" href="#http-errors" id="id16">http_errors</a></li>
-<li><a class="reference internal" href="#json" id="id17">json</a></li>
-<li><a class="reference internal" href="#multipart" id="id18">multipart</a></li>
-<li><a class="reference internal" href="#query" id="id19">query</a></li>
-<li><a class="reference internal" href="#timeout" id="id20">timeout</a></li>
-<li><a class="reference internal" href="#verify" id="id21">verify</a></li>
-<li><a class="reference internal" href="#version" id="id22">version</a></li>
+<li><p><a class="reference internal" href="#request-options" id="id5">Request Options</a></p>
+<ul>
+<li><p><a class="reference internal" href="#allow-redirects" id="id6">allow_redirects</a></p></li>
+<li><p><a class="reference internal" href="#auth" id="id7">auth</a></p></li>
+<li><p><a class="reference internal" href="#body" id="id8">body</a></p></li>
+<li><p><a class="reference internal" href="#cert" id="id9">cert</a></p></li>
+<li><p><a class="reference internal" href="#connect-timeout" id="id10">connect_timeout</a></p></li>
+<li><p><a class="reference internal" href="#cookie" id="id11">cookie</a></p></li>
+<li><p><a class="reference internal" href="#debug" id="id12">debug</a></p></li>
+<li><p><a class="reference internal" href="#delay" id="id13">delay</a></p></li>
+<li><p><a class="reference internal" href="#form-params" id="id14">form_params</a></p></li>
+<li><p><a class="reference internal" href="#headers" id="id15">headers</a></p></li>
+<li><p><a class="reference internal" href="#http-errors" id="id16">http_errors</a></p></li>
+<li><p><a class="reference internal" href="#json" id="id17">json</a></p></li>
+<li><p><a class="reference internal" href="#multipart" id="id18">multipart</a></p></li>
+<li><p><a class="reference internal" href="#query" id="id19">query</a></p></li>
+<li><p><a class="reference internal" href="#timeout" id="id20">timeout</a></p></li>
+<li><p><a class="reference internal" href="#verify" id="id21">verify</a></p></li>
+<li><p><a class="reference internal" href="#version" id="id22">version</a></p></li>
 </ul>
 </li>
 </ul>
@@ -376,8 +381,8 @@ it is one of the more widely used libraries. Where possible, the syntax has been
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This class requires the <a class="reference external" href="https://www.php.net/manual/en/book.curl.php">cURL Library</a> to be installed
+<p class="admonition-title">Note</p>
+<p>This class requires the <a class="reference external" href="https://www.php.net/manual/en/book.curl.php">cURL Library</a> to be installed
 in your version of PHP. This is a very common library that is typically available but not all hosts
 will provide it, so please check with your host to verify if you run into problems.</p>
 </div>
@@ -465,42 +470,42 @@ with the baseURI according to the rules described by
 <a class="reference external" href="https://tools.ietf.org/html/rfc3986#section-5.2">RFC 2986, section 2</a>. To save you some time, here are some
 examples of how the combinations are resolved.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="34%" />
-<col width="26%" />
-<col width="39%" />
+<col style="width: 34%" />
+<col style="width: 26%" />
+<col style="width: 39%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">baseURI</th>
-<th class="head">URI</th>
-<th class="head">Result</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>baseURI</p></th>
+<th class="head"><p>URI</p></th>
+<th class="head"><p>Result</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><cite>http://foo.com</cite></td>
-<td>/bar</td>
-<td><cite>http://foo.com/bar</cite></td>
+<tbody>
+<tr class="row-even"><td><p><cite>http://foo.com</cite></p></td>
+<td><p>/bar</p></td>
+<td><p><cite>http://foo.com/bar</cite></p></td>
 </tr>
-<tr class="row-odd"><td><cite>http://foo.com/foo</cite></td>
-<td>/bar</td>
-<td><cite>http://foo.com/bar</cite></td>
+<tr class="row-odd"><td><p><cite>http://foo.com/foo</cite></p></td>
+<td><p>/bar</p></td>
+<td><p><cite>http://foo.com/bar</cite></p></td>
 </tr>
-<tr class="row-even"><td><cite>http://foo.com/foo</cite></td>
-<td>bar</td>
-<td><cite>http://foo.com/bar</cite></td>
+<tr class="row-even"><td><p><cite>http://foo.com/foo</cite></p></td>
+<td><p>bar</p></td>
+<td><p><cite>http://foo.com/bar</cite></p></td>
 </tr>
-<tr class="row-odd"><td><cite>http://foo.com/foo/</cite></td>
-<td>bar</td>
-<td><cite>http://foo.com/foo/bar</cite></td>
+<tr class="row-odd"><td><p><cite>http://foo.com/foo/</cite></p></td>
+<td><p>bar</p></td>
+<td><p><cite>http://foo.com/foo/bar</cite></p></td>
 </tr>
-<tr class="row-even"><td><cite>http://foo.com</cite></td>
-<td><cite>http://baz.com</cite></td>
-<td><cite>http://baz.com</cite></td>
+<tr class="row-even"><td><p><cite>http://foo.com</cite></p></td>
+<td><p><cite>http://baz.com</cite></p></td>
+<td><p><cite>http://baz.com</cite></p></td>
 </tr>
-<tr class="row-odd"><td><cite>http://foo.com/?bar</cite></td>
-<td>bar</td>
-<td><cite>http://foo.com/bar</cite></td>
+<tr class="row-odd"><td><p><cite>http://foo.com/?bar</cite></p></td>
+<td><p>bar</p></td>
+<td><p><cite>http://foo.com/bar</cite></p></td>
 </tr>
 </tbody>
 </table>
@@ -570,8 +575,8 @@ allows you to modify how that works.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.</p>
+<p class="admonition-title">Note</p>
+<p>Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.</p>
 </div>
 </div>
 <div class="section" id="auth">
@@ -633,7 +638,8 @@ script execution. This is done by passing CURLOPT_VERBOSE and echoing the output
 server via <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">serve</span></code> you will see the output in the console. Otherwise, the output will be written to
 the server’s error log.</p>
 <blockquote>
-<div>$response-&gt;request(‘GET’, ‘<a class="reference external" href="http://example.com">http://example.com</a>’, [‘debug’ =&gt; true]);</div></blockquote>
+<div><p>$response-&gt;request(‘GET’, ‘<a class="reference external" href="http://example.com">http://example.com</a>’, [‘debug’ =&gt; true]);</p>
+</div></blockquote>
 <p>You can pass a filename as the value for debug to have the output written to a file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/curl_log.txt&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -661,8 +667,8 @@ if it’s not already set:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">form_params</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">multipart</span></code> option. You will need to use one or the other.
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">form_params</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">multipart</span></code> option. You will need to use one or the other.
 Use <code class="docutils literal notranslate"><span class="pre">form_params</span></code> for <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code> request, and <code class="docutils literal notranslate"><span class="pre">multipart</span></code> for <code class="docutils literal notranslate"><span class="pre">multipart/form-data</span></code>
 requests.</p>
 </div>
@@ -706,8 +712,8 @@ this option can be any value that <code class="docutils literal notranslate"><sp
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This option does not allow for any customization of the <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> function, or the Content-Type
+<p class="admonition-title">Note</p>
+<p>This option does not allow for any customization of the <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> function, or the Content-Type
 header. If you need that ability, you will need to encode the data manually, passing it through the <code class="docutils literal notranslate"><span class="pre">setBody()</span></code>
 method of CURLRequest, and set the Content-Type header with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method.</p>
 </div>
@@ -725,8 +731,8 @@ has been disabled. Any files that you want to send must be passed as instances o
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">multipart</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. You can only use one or the other. Use
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">multipart</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. You can only use one or the other. Use
 <code class="docutils literal notranslate"><span class="pre">form_params</span></code> for <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code> requests, and <code class="docutils literal notranslate"><span class="pre">multipart</span></code> for <code class="docutils literal notranslate"><span class="pre">multipart/form-data</span></code>
 requests.</p>
 </div>

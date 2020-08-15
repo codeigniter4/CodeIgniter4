@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,29 +345,27 @@
 <p>Highlights:</p>
 <p>There are some breaking changes…</p>
 <ul class="simple">
-<li>The Entity class has been refactored;</li>
-<li>The Model class changing has been updated to better handle soft deletes</li>
-<li>The routing has been beefed up</li>
+<li><p>The Entity class has been refactored;</p></li>
+<li><p>The Model class changing has been updated to better handle soft deletes</p></li>
+<li><p>The routing has been beefed up</p></li>
 </ul>
 <p>New messages:</p>
 <ul class="simple">
-<li>new translation key: Database/noDateFormat</li>
+<li><p>new translation key: Database/noDateFormat</p></li>
 </ul>
 <p>App changes:</p>
 <p>Testing changes:</p>
 <ul class="simple">
-<li>enhanced database &amp; migration testing in tests/_support</li>
+<li><p>enhanced database &amp; migration testing in tests/_support</p></li>
 </ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
-<li>admin/</li>
-<li><dl class="first docutils">
-<dt>app/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Controllers/</dt>
-<dd><ul class="first last">
-<li>Home #1999</li>
+<li><p>admin/</p></li>
+<li><dl class="simple">
+<dt>app/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Controllers/</dt><dd><ul>
+<li><p>Home #1999</p></li>
 </ul>
 </dd>
 </dl>
@@ -373,28 +374,24 @@
 </dd>
 </dl>
 </li>
-<li>public/</li>
-<li><dl class="first docutils">
-<dt>system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>FileLocator #2059, #2064</li>
+<li><p>public/</p></li>
+<li><dl class="simple">
+<dt>system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>FileLocator #2059, #2064</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Cache/</dt>
-<dd><ul class="first last">
-<li>CacheFactory #2060</li>
-<li><dl class="first docutils">
-<dt>Handlers/</dt>
-<dd><ul class="first last">
-<li>MemcachedHandler #2060</li>
-<li>PredisHandler #2060</li>
-<li>RedisHandler #2060</li>
+<li><dl class="simple">
+<dt>Cache/</dt><dd><ul>
+<li><p>CacheFactory #2060</p></li>
+<li><dl class="simple">
+<dt>Handlers/</dt><dd><ul>
+<li><p>MemcachedHandler #2060</p></li>
+<li><p>PredisHandler #2060</p></li>
+<li><p>RedisHandler #2060</p></li>
 </ul>
 </dd>
 </dl>
@@ -403,331 +400,294 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Commands/</dt>
-<dd><ul class="first last">
-<li>Utilities/Routes #2008</li>
+<li><dl class="simple">
+<dt>Commands/</dt><dd><ul>
+<li><p>Utilities/Routes #2008</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>Config #2079</li>
-<li>Services #2024</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>Config #2079</p></li>
+<li><p>Services #2024</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>MySQLi/</dt>
-<dd><ul class="first last">
-<li>Connection #2042</li>
-<li>Result #2011</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><dl class="simple">
+<dt>MySQLi/</dt><dd><ul>
+<li><p>Connection #2042</p></li>
+<li><p>Result #2011</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Postgre/</dt>
-<dd><ul class="first last">
-<li>Connection #2042</li>
-<li>Result #2011</li>
+<li><dl class="simple">
+<dt>Postgre/</dt><dd><ul>
+<li><p>Connection #2042</p></li>
+<li><p>Result #2011</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>SQLite3/</dt>
-<dd><ul class="first last">
-<li>Connection #2042</li>
-<li>Forge #2042</li>
-<li>Result #2011</li>
-<li>Table #2042</li>
+<li><dl class="simple">
+<dt>SQLite3/</dt><dd><ul>
+<li><p>Connection #2042</p></li>
+<li><p>Forge #2042</p></li>
+<li><p>Result #2011</p></li>
+<li><p>Table #2042</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>BaseBuilder #1989</li>
-<li>BaseConnection #2042</li>
-<li>BaseResult #2002</li>
-<li>Forge #2042</li>
-<li>MigratiopnRollback #2035</li>
-<li>MigrationRunner #2019</li>
+<li><p>BaseBuilder #1989</p></li>
+<li><p>BaseConnection #2042</p></li>
+<li><p>BaseResult #2002</p></li>
+<li><p>Forge #2042</p></li>
+<li><p>MigratiopnRollback #2035</p></li>
+<li><p>MigrationRunner #2019</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/</dt>
-<dd><ul class="first last">
-<li>Toolbar/Collectors/Routes #2030</li>
+<li><dl class="simple">
+<dt>Debug/</dt><dd><ul>
+<li><p>Toolbar/Collectors/Routes #2030</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Exceptions.</dt>
-<dd><ul class="first last">
-<li>ModelException #2054</li>
+<li><dl class="simple">
+<dt>Exceptions.</dt><dd><ul>
+<li><p>ModelException #2054</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>File #2104</li>
+<li><dl class="simple">
+<dt>Files/</dt><dd><ul>
+<li><p>File #2104</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>Filters #2039 - helpers/</li>
-<li>date_helper #2091</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>Filters #2039 - helpers/</p></li>
+<li><p>date_helper #2091</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>CLIRequest #2024</li>
-<li>CURLRequest #1996, #2050</li>
-<li>IncomingRequest #2063</li>
-<li>Request #2024</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>CLIRequest #2024</p></li>
+<li><p>CURLRequest #1996, #2050</p></li>
+<li><p>IncomingRequest #2063</p></li>
+<li><p>Request #2024</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/en/</dt>
-<dd><ul class="first last">
-<li>Database #2054</li>
+<li><dl class="simple">
+<dt>Language/en/</dt><dd><ul>
+<li><p>Database #2054</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Pager/</dt>
-<dd><ul class="first last">
-<li>Pager #2026</li>
+<li><dl class="simple">
+<dt>Pager/</dt><dd><ul>
+<li><p>Pager #2026</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollection #1959, #2012, #2024</li>
-<li>Router #2024, #2031, #2043</li>
-<li>RouterInterface #2024</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollection #1959, #2012, #2024</p></li>
+<li><p>Router #2024, #2031, #2043</p></li>
+<li><p>RouterInterface #2024</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Session/</dt>
-<dd><ul class="first last">
-<li>Handlers/ArrayHandler #2014</li>
+<li><dl class="simple">
+<dt>Session/</dt><dd><ul>
+<li><p>Handlers/ArrayHandler #2014</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>CIUnitTestCase #2002</li>
-<li>FeatureTestCase #2043</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>CIUnitTestCase #2002</p></li>
+<li><p>FeatureTestCase #2043</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Throttle/</dt>
-<dd><ul class="first last">
-<li>Throttler #2074</li>
+<li><dl class="simple">
+<dt>Throttle/</dt><dd><ul>
+<li><p>Throttler #2074</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CodeIgniter #2012, #2024</li>
-<li>Common #2036</li>
-<li>Entity #2002, #2004, #2011, #2081</li>
-<li>Model #2050, #2051, #2053, #2054</li>
+<li><p>CodeIgniter #2012, #2024</p></li>
+<li><p>Common #2036</p></li>
+<li><p>Entity #2002, #2004, #2011, #2081</p></li>
+<li><p>Model #2050, #2051, #2053, #2054</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests/system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>CLI/</dt>
-<dd><ul class="first last">
-<li>ConsoleTest #2024</li>
+<li><dl class="simple">
+<dt>tests/system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>CLI/</dt><dd><ul>
+<li><p>ConsoleTest #2024</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Live/</dt>
-<dd><ul class="first last">
-<li>DbUtilsTest #2051, #2053</li>
-<li>ForgeTest #2019, #2042</li>
-<li>ModelTest #2002, #2051, #2053, #2054</li>
-<li>SQLite/AlterTablesTest #2042</li>
-<li>WhereTest #2052</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Live/</dt><dd><ul>
+<li><p>DbUtilsTest #2051, #2053</p></li>
+<li><p>ForgeTest #2019, #2042</p></li>
+<li><p>ModelTest #2002, #2051, #2053, #2054</p></li>
+<li><p>SQLite/AlterTablesTest #2042</p></li>
+<li><p>WhereTest #2052</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Migrations/MigrationRunnerTest #2019</li>
+<li><p>Migrations/MigrationRunnerTest #2019</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>CLIRequest #2024</li>
-<li>CURLRequestTest #1996</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>CLIRequest #2024</p></li>
+<li><p>CURLRequestTest #1996</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouteCollectionTest #1959, #2012, #2024</li>
-<li>RouterTest #2024, #2043</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouteCollectionTest #1959, #2012, #2024</p></li>
+<li><p>RouterTest #2024, #2043</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>FeatureTestCaseTest #2043</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>FeatureTestCaseTest #2043</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Throttle/</dt>
-<dd><ul class="first last">
-<li>ThrottleTest #2074</li>
+<li><dl class="simple">
+<dt>Throttle/</dt><dd><ul>
+<li><p>ThrottleTest #2074</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>ParserTest #2005</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>ParserTest #2005</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CodeIgniterTest #2024</li>
-<li>EntityTest #2002, #2004</li>
+<li><p>CodeIgniterTest #2024</p></li>
+<li><p>EntityTest #2002, #2004</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>user_guide_src/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>concepts/</dt>
-<dd><ul class="first last">
-<li>autoloader #2035, #2071</li>
+<li><dl class="simple">
+<dt>user_guide_src/</dt><dd><ul>
+<li><dl class="simple">
+<dt>concepts/</dt><dd><ul>
+<li><p>autoloader #2035, #2071</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>database/</dt>
-<dd><ul class="first last">
-<li>query_builder #2035</li>
+<li><dl class="simple">
+<dt>database/</dt><dd><ul>
+<li><p>query_builder #2035</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>dbmgmt/</dt>
-<dd><ul class="first last">
-<li>forge #2042</li>
-<li>migration #2042</li>
+<li><dl class="simple">
+<dt>dbmgmt/</dt><dd><ul>
+<li><p>forge #2042</p></li>
+<li><p>migration #2042</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>helpers/</dt>
-<dd><ul class="first last">
-<li>date_helper #2091</li>
+<li><dl class="simple">
+<dt>helpers/</dt><dd><ul>
+<li><p>date_helper #2091</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>routing #2035</li>
+<li><dl class="simple">
+<dt>incoming/</dt><dd><ul>
+<li><p>routing #2035</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>installation/</dt>
-<dd><ul class="first last">
-<li>installing_composer #2015, #2035</li>
+<li><dl class="simple">
+<dt>installation/</dt><dd><ul>
+<li><p>installing_composer #2015, #2035</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>pagination #2026</li>
-<li>sessions #2014, #2035</li>
-<li>validaiton #2069</li>
-<li>uploaded_files #2104</li>
+<li><dl class="simple">
+<dt>libraries/</dt><dd><ul>
+<li><p>pagination #2026</p></li>
+<li><p>sessions #2014, #2035</p></li>
+<li><p>validaiton #2069</p></li>
+<li><p>uploaded_files #2104</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>models/</dt>
-<dd><ul class="first last">
-<li>entitites #2002, #2004, #2035</li>
-<li>model #2051, #2053, #2054</li>
+<li><dl class="simple">
+<dt>models/</dt><dd><ul>
+<li><p>entitites #2002, #2004, #2035</p></li>
+<li><p>model #2051, #2053, #2054</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>outgoing/</dt>
-<dd><ul class="first last">
-<li>view_parser #e21823, 32005</li>
+<li><dl class="simple">
+<dt>outgoing/</dt><dd><ul>
+<li><p>view_parser #e21823, 32005</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>testing/</dt>
-<dd><ul class="first last">
-<li>database #2051, #2053</li>
+<li><dl class="simple">
+<dt>testing/</dt><dd><ul>
+<li><p>database #2051, #2053</p></li>
 </ul>
 </dd>
 </dl>
@@ -740,46 +700,46 @@
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#2104 File &amp; UploadFile Fixes</li>
-<li>#2091 Timezone select</li>
-<li>#2081 JSON format checking improved</li>
-<li>#2079 Update config() to check all namespaces</li>
-<li>#2074 Throttler can access bucket for bucket life time</li>
-<li>#2071 Fix autoloader.rst formatting</li>
-<li>#2069 validation rule: then -&gt; than (spelling)</li>
-<li>#2064 Bugfix file locator slash error</li>
-<li>#2063 Ensure query vars are part of request-&gt;uri. Fixes #2062</li>
-<li>#2060 Cache Drive Backups</li>
-<li>#2059 Add multi-path support to <cite>locateFile()</cite></li>
-<li>#2054 Add model exceptions for missing/invalid dateFormat</li>
-<li>#2053 Change Model’s deleted flag to a deleted_at datetime/timestamp. Fixes #2041</li>
-<li>#2052 Add various tests for (not) null</li>
-<li>#2051 Soft deletes use deleted_at</li>
-<li>#2050 Stash insert ID before event trigger</li>
-<li>#2043 Zero params should be passed through when routing. Fixes #2032</li>
-<li>#2042 SQLite3 now supports dropping foreign keys. Fixes #1982</li>
-<li>#2040 Update CURLRequest.php</li>
-<li>#2039 Restrict filter matching of uris so they require an exact match. Fixes #2038</li>
-<li>#2036 Make <cite>force_https()</cite> send headers before exit</li>
-<li>#2035 Various typos and Guide corrections</li>
-<li>#2031 Fallback to server request for default method</li>
-<li>#2030 Support the new <cite>router</cite> service in Debug Toolbar</li>
-<li>#2026 Extension Pager::makeLinks (optional grup name)</li>
-<li>#2024 Refactor the way the router and route collection determine the current HTTP verb</li>
-<li>#2019 SQLite and Mysql driver additional tests and migration runner test fixes</li>
-<li>#2015 Direct user to follow the upgrade steps after installation</li>
-<li>#2014 Added a new Session/ArrayHandler that can be used during testing</li>
-<li>#2012 Use request-&gt;method for HTTP verb</li>
-<li>#2011 Set the raw data array without any mutations for the Entity</li>
-<li>#2008 Add <cite>patch</cite> method to command “routes”</li>
-<li>#2005 Plugin closures docs update and test</li>
-<li>#2004 Allow hasChanged() without parameter</li>
-<li>#2002 Entity Refactor</li>
-<li>#1999 use CodeIgniterController; not needed since Home Controller extends …</li>
-<li>#1996 Attempting to fix CURLRequest debug issue. #1994</li>
-<li>#e21823 Corrected docs for parser plugins. Closes #1995</li>
-<li>#1989 argument set() must by type of string - cannot agree</li>
-<li>#1959 Prevent reverseRoute from searching closures</li>
+<li><p>#2104 File &amp; UploadFile Fixes</p></li>
+<li><p>#2091 Timezone select</p></li>
+<li><p>#2081 JSON format checking improved</p></li>
+<li><p>#2079 Update config() to check all namespaces</p></li>
+<li><p>#2074 Throttler can access bucket for bucket life time</p></li>
+<li><p>#2071 Fix autoloader.rst formatting</p></li>
+<li><p>#2069 validation rule: then -&gt; than (spelling)</p></li>
+<li><p>#2064 Bugfix file locator slash error</p></li>
+<li><p>#2063 Ensure query vars are part of request-&gt;uri. Fixes #2062</p></li>
+<li><p>#2060 Cache Drive Backups</p></li>
+<li><p>#2059 Add multi-path support to <cite>locateFile()</cite></p></li>
+<li><p>#2054 Add model exceptions for missing/invalid dateFormat</p></li>
+<li><p>#2053 Change Model’s deleted flag to a deleted_at datetime/timestamp. Fixes #2041</p></li>
+<li><p>#2052 Add various tests for (not) null</p></li>
+<li><p>#2051 Soft deletes use deleted_at</p></li>
+<li><p>#2050 Stash insert ID before event trigger</p></li>
+<li><p>#2043 Zero params should be passed through when routing. Fixes #2032</p></li>
+<li><p>#2042 SQLite3 now supports dropping foreign keys. Fixes #1982</p></li>
+<li><p>#2040 Update CURLRequest.php</p></li>
+<li><p>#2039 Restrict filter matching of uris so they require an exact match. Fixes #2038</p></li>
+<li><p>#2036 Make <cite>force_https()</cite> send headers before exit</p></li>
+<li><p>#2035 Various typos and Guide corrections</p></li>
+<li><p>#2031 Fallback to server request for default method</p></li>
+<li><p>#2030 Support the new <cite>router</cite> service in Debug Toolbar</p></li>
+<li><p>#2026 Extension Pager::makeLinks (optional grup name)</p></li>
+<li><p>#2024 Refactor the way the router and route collection determine the current HTTP verb</p></li>
+<li><p>#2019 SQLite and Mysql driver additional tests and migration runner test fixes</p></li>
+<li><p>#2015 Direct user to follow the upgrade steps after installation</p></li>
+<li><p>#2014 Added a new Session/ArrayHandler that can be used during testing</p></li>
+<li><p>#2012 Use request-&gt;method for HTTP verb</p></li>
+<li><p>#2011 Set the raw data array without any mutations for the Entity</p></li>
+<li><p>#2008 Add <cite>patch</cite> method to command “routes”</p></li>
+<li><p>#2005 Plugin closures docs update and test</p></li>
+<li><p>#2004 Allow hasChanged() without parameter</p></li>
+<li><p>#2002 Entity Refactor</p></li>
+<li><p>#1999 use CodeIgniterController; not needed since Home Controller extends …</p></li>
+<li><p>#1996 Attempting to fix CURLRequest debug issue. #1994</p></li>
+<li><p>#e21823 Corrected docs for parser plugins. Closes #1995</p></li>
+<li><p>#1989 argument set() must by type of string - cannot agree</p></li>
+<li><p>#1959 Prevent reverseRoute from searching closures</p></li>
 </ul>
 </div>
 </div>

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,8 +344,8 @@
 <p>The Text Helper file contains functions that assist in working with Text.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -357,38 +360,34 @@
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="random_string">
-<code class="descname">random_string</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'alnum'</em><span class="optional">[</span>, <em>$len = 8</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random_string" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Randomization type</li>
-<li><strong>$len</strong> (<em>int</em>) – Output string length</li>
+<code class="sig-name descname">random_string</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'alnum'</em><span class="optional">[</span>, <em class="sig-param">$len = 8</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random_string" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Randomization type</p></li>
+<li><p><strong>$len</strong> (<em>int</em>) – Output string length</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A random string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A random string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Generates a random string based on the type and length you specify.
 Useful for creating passwords or generating random hashes.</p>
 <p>The first parameter specifies the type of string, the second parameter
 specifies the length. The following choices are available:</p>
 <ul class="simple">
-<li><strong>alpha</strong>: A string with lower and uppercase letters only.</li>
-<li><strong>alnum</strong>: Alphanumeric string with lower and uppercase characters.</li>
-<li><strong>basic</strong>: A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</li>
-<li><strong>numeric</strong>: Numeric string.</li>
-<li><strong>nozero</strong>: Numeric string with no zeros.</li>
-<li><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</li>
-<li><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</li>
-<li><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</li>
+<li><p><strong>alpha</strong>: A string with lower and uppercase letters only.</p></li>
+<li><p><strong>alnum</strong>: Alphanumeric string with lower and uppercase characters.</p></li>
+<li><p><strong>basic</strong>: A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</p></li>
+<li><p><strong>numeric</strong>: Numeric string.</p></li>
+<li><p><strong>nozero</strong>: Numeric string with no zeros.</p></li>
+<li><p><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
+<li><p><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
+<li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
 </ul>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
@@ -398,26 +397,22 @@ specifies the length. The following choices are available:</p>
 
 <dl class="function">
 <dt id="increment_string">
-<code class="descname">increment_string</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$separator = '_'</em><span class="optional">[</span>, <em>$first = 1</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment_string" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$separator</strong> (<em>string</em>) – Separator to append a duplicate number with</li>
-<li><strong>$first</strong> (<em>int</em>) – Starting number</li>
+<code class="sig-name descname">increment_string</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$separator = '_'</em><span class="optional">[</span>, <em class="sig-param">$first = 1</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment_string" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$separator</strong> (<em>string</em>) – Separator to append a duplicate number with</p></li>
+<li><p><strong>$first</strong> (<em>int</em>) – Starting number</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An incremented string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An incremented string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Increments a string by appending a number to it or increasing the
 number. Useful for creating “copies” or a file or duplicating database
 content which has unique titles or slugs.</p>
@@ -431,24 +426,20 @@ content which has unique titles or slugs.</p>
 
 <dl class="function">
 <dt id="alternator">
-<code class="descname">alternator</code><span class="sig-paren">(</span><em>$args</em><span class="sig-paren">)</span><a class="headerlink" href="#alternator" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$args</strong> (<em>mixed</em>) – A variable number of arguments</li>
+<code class="sig-name descname">alternator</code><span class="sig-paren">(</span><em class="sig-param">$args</em><span class="sig-paren">)</span><a class="headerlink" href="#alternator" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$args</strong> (<em>mixed</em>) – A variable number of arguments</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Alternated string(s)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Alternated string(s)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Allows two or more items to be alternated between, when cycling through
 a loop. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
@@ -466,32 +457,28 @@ your loop the next item will be returned.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">To use multiple separate calls to this function simply call the
+<p class="admonition-title">Note</p>
+<p>To use multiple separate calls to this function simply call the
 function with no arguments to re-initialize.</p>
 </div>
 </dd></dl>
 
 <dl class="function">
 <dt id="reduce_double_slashes">
-<code class="descname">reduce_double_slashes</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#reduce_double_slashes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">reduce_double_slashes</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#reduce_double_slashes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string with normalized slashes</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string with normalized slashes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Converts double slashes in a string to a single slash, except those
 found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 <p>Example:</p>
@@ -503,24 +490,20 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 
 <dl class="function">
 <dt id="strip_slashes">
-<code class="descname">strip_slashes</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_slashes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) – Input string or an array of strings</li>
+<code class="sig-name descname">strip_slashes</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_slashes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>mixed</em>) – Input string or an array of strings</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String(s) with stripped slashes</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String(s) with stripped slashes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Removes any slashes from an array of strings.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
@@ -539,8 +522,8 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For historical reasons, this function will also accept
+<p class="admonition-title">Note</p>
+<p>For historical reasons, this function will also accept
 and handle string inputs. This however makes it just an
 alias for <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code>.</p>
 </div>
@@ -548,26 +531,22 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 
 <dl class="function">
 <dt id="reduce_multiples">
-<code class="descname">reduce_multiples</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$character = ''</em><span class="optional">[</span>, <em>$trim = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Text to search in</li>
-<li><strong>$character</strong> (<em>string</em>) – Character to reduce</li>
-<li><strong>$trim</strong> (<em>bool</em>) – Whether to also trim the specified character</li>
+<code class="sig-name descname">reduce_multiples</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$character = ''</em><span class="optional">[</span>, <em class="sig-param">$trim = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Text to search in</p></li>
+<li><p><strong>$character</strong> (<em>string</em>) – Character to reduce</p></li>
+<li><p><strong>$trim</strong> (<em>bool</em>) – Whether to also trim the specified character</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Reduced string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Reduced string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Reduces multiple instances of a particular character occurring directly
 after each other. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
@@ -584,24 +563,20 @@ character at the beginning and the end of the string. Example:</p>
 
 <dl class="function">
 <dt id="quotes_to_entities">
-<code class="descname">quotes_to_entities</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#quotes_to_entities" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">quotes_to_entities</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#quotes_to_entities" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String with quotes converted to HTML entities</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String with quotes converted to HTML entities</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Converts single and double quotes in a string to the corresponding HTML
 entities. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
@@ -612,24 +587,20 @@ entities. Example:</p>
 
 <dl class="function">
 <dt id="strip_quotes">
-<code class="descname">strip_quotes</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_quotes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">strip_quotes</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_quotes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String with quotes stripped</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String with quotes stripped</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Removes single and double quotes from a string. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_quotes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joes dinner&quot;</span>
@@ -639,26 +610,22 @@ entities. Example:</p>
 
 <dl class="function">
 <dt id="word_limiter">
-<code class="descname">word_limiter</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$limit = 100</em><span class="optional">[</span>, <em>$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_limiter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$limit</strong> (<em>int</em>) – Limit</li>
-<li><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</li>
+<code class="sig-name descname">word_limiter</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$limit = 100</em><span class="optional">[</span>, <em class="sig-param">$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_limiter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$limit</strong> (<em>int</em>) – Limit</p></li>
+<li><p><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Word-limited string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Word-limited string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Truncates a string to the number of <em>words</em> specified. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">word_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
@@ -671,26 +638,22 @@ default it adds an ellipsis.</p>
 
 <dl class="function">
 <dt id="character_limiter">
-<code class="descname">character_limiter</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$n = 500</em><span class="optional">[</span>, <em>$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#character_limiter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$n</strong> (<em>int</em>) – Number of characters</li>
-<li><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</li>
+<code class="sig-name descname">character_limiter</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$n = 500</em><span class="optional">[</span>, <em class="sig-param">$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#character_limiter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$n</strong> (<em>int</em>) – Number of characters</p></li>
+<li><p><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Character-limited string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Character-limited string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Truncates a string to the number of <em>characters</em> specified. It
 maintains the integrity of words so the character count may be slightly
 more or less than what you specify.</p>
@@ -703,32 +666,28 @@ more or less than what you specify.</p>
 <p>The third parameter is an optional suffix added to the string, if
 undeclared this helper uses an ellipsis.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you need to truncate to an exact number of characters, please
+<p class="admonition-title">Note</p>
+<p>If you need to truncate to an exact number of characters, please
 see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code class="xref php php-func docutils literal notranslate"><span class="pre">ellipsize()</span></code></a> function below.</p>
 </div>
 </dd></dl>
 
 <dl class="function">
 <dt id="ascii_to_entities">
-<code class="descname">ascii_to_entities</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#ascii_to_entities" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">ascii_to_entities</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#ascii_to_entities" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string with ASCII values converted to entities</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string with ASCII values converted to entities</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Converts ASCII values to character entities, including high ASCII and MS
 Word characters that can cause problems when used in a web page, so that
 they can be shown consistently regardless of browser settings or stored
@@ -744,49 +703,41 @@ the normal range (like accented characters).</p>
 
 <dl class="function">
 <dt id="entities_to_ascii">
-<code class="descname">entities_to_ascii</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$all = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#entities_to_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$all</strong> (<em>bool</em>) – Whether to convert unsafe entities as well</li>
+<code class="sig-name descname">entities_to_ascii</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$all = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#entities_to_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$all</strong> (<em>bool</em>) – Whether to convert unsafe entities as well</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string with HTML entities converted to ASCII characters</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string with HTML entities converted to ASCII characters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal notranslate"><span class="pre">ascii_to_entities()</span></code></a>.
 It turns character entities back into ASCII.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="convert_accented_characters">
-<code class="descname">convert_accented_characters</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#convert_accented_characters" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">convert_accented_characters</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#convert_accented_characters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string with accented characters converted</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string with accented characters converted</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Transliterates high ASCII characters to low ASCII equivalents. Useful
 when non-English characters need to be used where only standard ASCII
 characters are safely used, for instance, in URLs.</p>
@@ -795,8 +746,8 @@ characters are safely used, for instance, in URLs.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This function uses a companion config file
+<p class="admonition-title">Note</p>
+<p>This function uses a companion config file
 <cite>app/Config/ForeignCharacters.php</cite> to define the to and
 from array for transliteration.</p>
 </div>
@@ -804,26 +755,22 @@ from array for transliteration.</p>
 
 <dl class="function">
 <dt id="word_censor">
-<code class="descname">word_censor</code><span class="sig-paren">(</span><em>$str</em>, <em>$censored</em><span class="optional">[</span>, <em>$replacement = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_censor" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$censored</strong> (<em>array</em>) – List of bad words to censor</li>
-<li><strong>$replacement</strong> (<em>string</em>) – What to replace bad words with</li>
+<code class="sig-name descname">word_censor</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$censored</em><span class="optional">[</span>, <em class="sig-param">$replacement = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_censor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$censored</strong> (<em>array</em>) – List of bad words to censor</p></li>
+<li><p><strong>$replacement</strong> (<em>string</em>) – What to replace bad words with</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Censored string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Censored string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Enables you to censor words within a text string. The first parameter
 will contain the original string. The second will contain an array of
 words which you disallow. The third (optional) parameter can contain
@@ -838,24 +785,20 @@ with pound signs: ####.</p>
 
 <dl class="function">
 <dt id="highlight_code">
-<code class="descname">highlight_code</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#highlight_code" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">highlight_code</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#highlight_code" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String with code highlighted via HTML</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String with code highlighted via HTML</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Colorizes a string of code (PHP, HTML, etc.). Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
@@ -866,27 +809,23 @@ colors used are the ones specified in your php.ini file.</p>
 
 <dl class="function">
 <dt id="highlight_phrase">
-<code class="descname">highlight_phrase</code><span class="sig-paren">(</span><em>$str</em>, <em>$phrase</em><span class="optional">[</span>, <em>$tag_open = '&lt;mark&gt;'</em><span class="optional">[</span>, <em>$tag_close = '&lt;/mark&gt;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#highlight_phrase" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$phrase</strong> (<em>string</em>) – Phrase to highlight</li>
-<li><strong>$tag_open</strong> (<em>string</em>) – Opening tag used for the highlight</li>
-<li><strong>$tag_close</strong> (<em>string</em>) – Closing tag for the highlight</li>
+<code class="sig-name descname">highlight_phrase</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$phrase</em><span class="optional">[</span>, <em class="sig-param">$tag_open = '&lt;mark&gt;'</em><span class="optional">[</span>, <em class="sig-param">$tag_close = '&lt;/mark&gt;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#highlight_phrase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$phrase</strong> (<em>string</em>) – Phrase to highlight</p></li>
+<li><p><strong>$tag_open</strong> (<em>string</em>) – Opening tag used for the highlight</p></li>
+<li><p><strong>$tag_close</strong> (<em>string</em>) – Closing tag for the highlight</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String with a phrase highlighted via HTML</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String with a phrase highlighted via HTML</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Will highlight a phrase within a text string. The first parameter will
 contain the original string, the second will contain the phrase you wish
 to highlight. The third and fourth parameters will contain the
@@ -901,12 +840,12 @@ opening/closing HTML tags you would like the phrase wrapped in.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>This function used to use the <code class="docutils literal notranslate"><span class="pre">&lt;strong&gt;</span></code> tag by default. Older browsers
 might not support the new HTML5 mark tag, so it is recommended that you
 insert the following CSS code into your stylesheet if you need to support
 such browsers:</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
         <span class="nx">background</span><span class="o">:</span> <span class="c1">#ff0;</span>
         <span class="nx">color</span><span class="o">:</span> <span class="c1">#000;</span>
 <span class="p">};</span>
@@ -917,25 +856,21 @@ such browsers:</p>
 
 <dl class="function">
 <dt id="word_wrap">
-<code class="descname">word_wrap</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$charlim = 76</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_wrap" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$charlim</strong> (<em>int</em>) – Character limit</li>
+<code class="sig-name descname">word_wrap</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$charlim = 76</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_wrap" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$charlim</strong> (<em>int</em>) – Character limit</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Word-wrapped string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Word-wrapped string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Wraps text at the specified <em>character</em> count while maintaining
 complete words.</p>
 <p>Example:</p>
@@ -954,27 +889,23 @@ complete words.</p>
 
 <dl class="function">
 <dt id="ellipsize">
-<code class="descname">ellipsize</code><span class="sig-paren">(</span><em>$str</em>, <em>$max_length</em><span class="optional">[</span>, <em>$position = 1</em><span class="optional">[</span>, <em>$ellipsis = '&amp;hellip;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ellipsize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) – Input string</li>
-<li><strong>$max_length</strong> (<em>int</em>) – String length limit</li>
-<li><strong>$position</strong> (<em>mixed</em>) – Position to split at (int or float)</li>
-<li><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</li>
+<code class="sig-name descname">ellipsize</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$max_length</em><span class="optional">[</span>, <em class="sig-param">$position = 1</em><span class="optional">[</span>, <em class="sig-param">$ellipsis = '&amp;hellip;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ellipsize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$max_length</strong> (<em>int</em>) – String length limit</p></li>
+<li><p><strong>$position</strong> (<em>mixed</em>) – Position to split at (int or float)</p></li>
+<li><p><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Ellipsized string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Ellipsized string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>This function will strip tags from a string, split it at a defined
 maximum length, and insert an ellipsis.</p>
 <p>The first parameter is the string to ellipsize, the second is the number
@@ -997,27 +928,23 @@ string, .5 in the middle, and 0 at the left.</p>
 
 <dl class="function">
 <dt id="excerpt">
-<code class="descname">excerpt</code><span class="sig-paren">(</span><em>$text</em>, <em>$phrase = false</em>, <em>$radius = 100</em>, <em>$ellipsis = '...'</em><span class="sig-paren">)</span><a class="headerlink" href="#excerpt" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$text</strong> (<em>string</em>) – Text to extract an excerpt</li>
-<li><strong>$phrase</strong> (<em>string</em>) – Phrase or word to extract the text arround</li>
-<li><strong>$radius</strong> (<em>int</em>) – Number of characters before and after $phrase</li>
-<li><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</li>
+<code class="sig-name descname">excerpt</code><span class="sig-paren">(</span><em class="sig-param">$text</em>, <em class="sig-param">$phrase = false</em>, <em class="sig-param">$radius = 100</em>, <em class="sig-param">$ellipsis = '...'</em><span class="sig-paren">)</span><a class="headerlink" href="#excerpt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$text</strong> (<em>string</em>) – Text to extract an excerpt</p></li>
+<li><p><strong>$phrase</strong> (<em>string</em>) – Phrase or word to extract the text arround</p></li>
+<li><p><strong>$radius</strong> (<em>int</em>) – Number of characters before and after $phrase</p></li>
+<li><p><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Excerpt.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Excerpt.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>This function will extract $radius number of characters before and after the
 central $phrase with an elipsis before and after.</p>
 <p>The first paramenter is the text to extract an excerpt from, the second is the

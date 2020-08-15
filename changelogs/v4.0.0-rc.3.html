@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,24 +345,22 @@
 <p><strong>RC.3 release of CodeIgniter4</strong></p>
 <p>Enhancements:</p>
 <ul class="simple">
-<li>Beefed up database, session &amp; routing handling.</li>
-<li>Fixed numerous bugs &amp; user guide errata.</li>
+<li><p>Beefed up database, session &amp; routing handling.</p></li>
+<li><p>Fixed numerous bugs &amp; user guide errata.</p></li>
 </ul>
 <p>App changes:</p>
 <ul class="simple">
-<li>New $CSRFHeaderName property in App/Config/App</li>
+<li><p>New $CSRFHeaderName property in App/Config/App</p></li>
 </ul>
 <p>Message changes:</p>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
-<li>admin/</li>
-<li><dl class="first docutils">
-<dt>app/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>App #2272</li>
+<li><p>admin/</p></li>
+<li><dl class="simple">
+<dt>app/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>App #2272</p></li>
 </ul>
 </dd>
 </dl>
@@ -368,145 +369,129 @@
 </dd>
 </dl>
 </li>
-<li>public/</li>
-<li><dl class="first docutils">
-<dt>system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>FileLocator #2336</li>
+<li><p>public/</p></li>
+<li><dl class="simple">
+<dt>system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>FileLocator #2336</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>MySQLi/Forge #2100</li>
-<li>Postgre/Forge #2100</li>
-<li>SQLite3/Forge #2100</li>
-<li>BaseBuilder #2252, 2312</li>
-<li>Forge $2100</li>
-<li>Migration #2303</li>
-<li>MigrationRunner #2303</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>MySQLi/Forge #2100</p></li>
+<li><p>Postgre/Forge #2100</p></li>
+<li><p>SQLite3/Forge #2100</p></li>
+<li><p>BaseBuilder #2252, 2312</p></li>
+<li><p>Forge $2100</p></li>
+<li><p>Migration #2303</p></li>
+<li><p>MigrationRunner #2303</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/</dt>
-<dd><ul class="first last">
-<li>Exceptions #2288</li>
-<li><dl class="first docutils">
-<dt>Toolbar/Collectors/</dt>
-<dd><ul class="first last">
-<li>Route #2300</li>
+<li><dl class="simple">
+<dt>Debug/</dt><dd><ul>
+<li><p>Exceptions #2288</p></li>
+<li><dl class="simple">
+<dt>Toolbar/Collectors/</dt><dd><ul>
+<li><p>Route #2300</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Toolbar #2315</li>
-<li>Views/ #2283</li>
+<li><p>Toolbar #2315</p></li>
+<li><p>Views/ #2283</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>inflector_helper #2296</li>
-<li>url_helper #2325</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>inflector_helper #2296</p></li>
+<li><p>url_helper #2325</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>CURLRequest #2285, 2305</li>
-<li>Files/UploadedFile #2123</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>CURLRequest #2285, 2305</p></li>
+<li><p>Files/UploadedFile #2123</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/en/</dt>
-<dd><ul class="first last">
-<li>Encryption #2311</li>
-<li>RESTful #2311</li>
-<li>Session #2311</li>
+<li><dl class="simple">
+<dt>Language/en/</dt><dd><ul>
+<li><p>Encryption #2311</p></li>
+<li><p>RESTful #2311</p></li>
+<li><p>Session #2311</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>Exceptions/RedirectException #2338</li>
-<li>Router #2308, 2338</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>Exceptions/RedirectException #2338</p></li>
+<li><p>Router #2308, 2338</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Security/</dt>
-<dd><ul class="first last">
-<li>Security #2272, 2279</li>
+<li><dl class="simple">
+<dt>Security/</dt><dd><ul>
+<li><p>Security #2272, 2279</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Session/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Handlers/</dt>
-<dd><ul class="first last">
-<li>DatabaseHandler #2298</li>
-<li>FileHandler #2298, 2307</li>
-<li>MemcachedHandler #2298</li>
-<li>RedisHandler #2298</li>
+<li><dl class="simple">
+<dt>Session/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Handlers/</dt><dd><ul>
+<li><p>DatabaseHandler #2298</p></li>
+<li><p>FileHandler #2298, 2307</p></li>
+<li><p>MemcachedHandler #2298</p></li>
+<li><p>RedisHandler #2298</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Session #2339</li>
+<li><p>Session #2339</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Validation/</dt>
-<dd><ul class="first last">
-<li>Validation #2284, 2341</li>
+<li><dl class="simple">
+<dt>Validation/</dt><dd><ul>
+<li><p>Validation #2284, 2341</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>View #2324</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>View #2324</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CodeIgniter #2338</li>
-<li>Common #2279</li>
-<li>Model #2289, 2332</li>
+<li><p>CodeIgniter #2338</p></li>
+<li><p>Common #2279</p></li>
+<li><p>Model #2289, 2332</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>tests/README.md #2345</li>
-<li><dl class="first docutils">
-<dt>tests/_support/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>MockAppConfig #2272</li>
+<li><p>tests/README.md #2345</p></li>
+<li><dl class="simple">
+<dt>tests/_support/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>MockAppConfig #2272</p></li>
 </ul>
 </dd>
 </dl>
@@ -515,24 +500,20 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests/system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Builder/</dt>
-<dd><ul class="first last">
-<li>UpdateTest #2295</li>
+<li><dl class="simple">
+<dt>tests/system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Builder/</dt><dd><ul>
+<li><p>UpdateTest #2295</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Live/</dt>
-<dd><ul class="first last">
-<li>ForgeTest #2100</li>
+<li><dl class="simple">
+<dt>Live/</dt><dd><ul>
+<li><p>ForgeTest #2100</p></li>
 </ul>
 </dd>
 </dl>
@@ -541,113 +522,100 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>InflectorHelperTest #2296</li>
-<li>URLHelperTest #2325</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>InflectorHelperTest #2296</p></li>
+<li><p>URLHelperTest #2325</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>CURLRequestTest #2285</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>CURLRequestTest #2285</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Log/</dt>
-<dd><ul class="first last">
-<li>FileHandlerTest #2346</li>
+<li><dl class="simple">
+<dt>Log/</dt><dd><ul>
+<li><p>FileHandlerTest #2346</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Security/</dt>
-<dd><ul class="first last">
-<li>SecurityTest #2279</li>
+<li><dl class="simple">
+<dt>Security/</dt><dd><ul>
+<li><p>SecurityTest #2279</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Session/</dt>
-<dd><ul class="first last">
-<li>SessionTest #2339</li>
+<li><dl class="simple">
+<dt>Session/</dt><dd><ul>
+<li><p>SessionTest #2339</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CommonFunctionsTest #2279</li>
+<li><p>CommonFunctionsTest #2279</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>user_guide_src/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>dbmgmt/</dt>
-<dd><ul class="first last">
-<li>forge #2100</li>
-<li>migration #2337</li>
+<li><dl class="simple">
+<dt>user_guide_src/</dt><dd><ul>
+<li><dl class="simple">
+<dt>dbmgmt/</dt><dd><ul>
+<li><p>forge #2100</p></li>
+<li><p>migration #2337</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>general/</dt>
-<dd><ul class="first last">
-<li>common_functions #2279</li>
-<li>errors #2338</li>
-<li>modules #2290</li>
+<li><dl class="simple">
+<dt>general/</dt><dd><ul>
+<li><p>common_functions #2279</p></li>
+<li><p>errors #2338</p></li>
+<li><p>modules #2290</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>helpers/</dt>
-<dd><ul class="first last">
-<li>inflector_helper #2296</li>
+<li><dl class="simple">
+<dt>helpers/</dt><dd><ul>
+<li><p>inflector_helper #2296</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>message #2282</li>
-<li>restful #2313, 2321, 2333</li>
-<li>routing #2327</li>
+<li><dl class="simple">
+<dt>incoming/</dt><dd><ul>
+<li><p>message #2282</p></li>
+<li><p>restful #2313, 2321, 2333</p></li>
+<li><p>routing #2327</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>curlrequest #2305</li>
-<li>security #2279</li>
+<li><dl class="simple">
+<dt>libraries/</dt><dd><ul>
+<li><p>curlrequest #2305</p></li>
+<li><p>security #2279</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>models/</dt>
-<dd><ul class="first last">
-<li>model #2316, 2332</li>
+<li><dl class="simple">
+<dt>models/</dt><dd><ul>
+<li><p>model #2316, 2332</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>outgoing/</dt>
-<dd><ul class="first last">
-<li>table #2337</li>
+<li><dl class="simple">
+<dt>outgoing/</dt><dd><ul>
+<li><p>table #2337</p></li>
 </ul>
 </dd>
 </dl>
@@ -660,48 +628,48 @@
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#2348 CodeIgniter Foundation gets copyright</li>
-<li>#2346 Fix FilerHandlerTest.php wierdness</li>
-<li>#2345 Tests readme polish</li>
-<li>#2344 Setup vs Set Up</li>
-<li>#2343 User guide minor fixes. Fix class names and code area</li>
-<li>#2341 Simplify Validation::getErrors()</li>
-<li>#2339 Fix Session::get(‘key’) returns null when value is (int) 0</li>
-<li>#2338 Revert RedirectException change</li>
-<li>#2337 Guide: Minor grammar corrections</li>
-<li>#2336 Correct cleaning of namespaces in Windows</li>
-<li>#2333 Guide: RESTful table formatting</li>
-<li>#2332 Change after methods to use actual data</li>
-<li>#2328 Update Application structure</li>
-<li>#2327 Correct the tourint UG page</li>
-<li>#2325 Fix bug in url_title() function with diacritics</li>
-<li>#2324 Renderer Toolbar Debug Toggle</li>
-<li>#2321 Update RESTful User Guide</li>
-<li>#2316 Add getValidationRules() to model UG page</li>
-<li>#2315 Enhance Toolbar::renderTimeline</li>
-<li>#2313 RESTful User Guide cleanup</li>
-<li>#2312 BaseBuilder variable type fix</li>
-<li>#2311 Convert all language returns to single quote</li>
-<li>#2308 Bugfix extra autoroute slashes</li>
-<li>#2307 Resolve session save handler issue</li>
-<li>#2305 Fix curl debug bug</li>
-<li>#2303 Use DBGroup variable from migration class if defined</li>
-<li>#2300 Routes collector for toolbar should not die when a method name is calculated through _remap</li>
-<li>#2298 fix issue on session_regenerate</li>
-<li>#2296 Add counted() to Inflector Helper</li>
-<li>#2295 Test set() method in Builder class more</li>
-<li>#2290 Fix Code Modules documentation for psr4 namespace configuration</li>
-<li>#2289 Don’t restrict model’s access to properties in a read-only manner</li>
-<li>#2288 Fix line numbering in Debug/Exceptions class</li>
-<li>#2285 Fix error with Host header for CURLRequest class</li>
-<li>#2284 Fix getErrors() for validation with redirect</li>
-<li>#2283 Hotfix: Rename collectors _*.tpl.php to _*.tpl</li>
-<li>#2282 Fix user guide for Message class</li>
-<li>#2279 Bug in CSRF parameter cleanup</li>
-<li>#2272 Handle X-CSRF-TOKEN - CSRF</li>
-<li>#2252 Batch Update Where Reset</li>
-<li>#2123 WIP fix store() default value bug</li>
-<li>#2100 Added validation on exists database before created for MySQLi</li>
+<li><p>#2348 CodeIgniter Foundation gets copyright</p></li>
+<li><p>#2346 Fix FilerHandlerTest.php wierdness</p></li>
+<li><p>#2345 Tests readme polish</p></li>
+<li><p>#2344 Setup vs Set Up</p></li>
+<li><p>#2343 User guide minor fixes. Fix class names and code area</p></li>
+<li><p>#2341 Simplify Validation::getErrors()</p></li>
+<li><p>#2339 Fix Session::get(‘key’) returns null when value is (int) 0</p></li>
+<li><p>#2338 Revert RedirectException change</p></li>
+<li><p>#2337 Guide: Minor grammar corrections</p></li>
+<li><p>#2336 Correct cleaning of namespaces in Windows</p></li>
+<li><p>#2333 Guide: RESTful table formatting</p></li>
+<li><p>#2332 Change after methods to use actual data</p></li>
+<li><p>#2328 Update Application structure</p></li>
+<li><p>#2327 Correct the tourint UG page</p></li>
+<li><p>#2325 Fix bug in url_title() function with diacritics</p></li>
+<li><p>#2324 Renderer Toolbar Debug Toggle</p></li>
+<li><p>#2321 Update RESTful User Guide</p></li>
+<li><p>#2316 Add getValidationRules() to model UG page</p></li>
+<li><p>#2315 Enhance Toolbar::renderTimeline</p></li>
+<li><p>#2313 RESTful User Guide cleanup</p></li>
+<li><p>#2312 BaseBuilder variable type fix</p></li>
+<li><p>#2311 Convert all language returns to single quote</p></li>
+<li><p>#2308 Bugfix extra autoroute slashes</p></li>
+<li><p>#2307 Resolve session save handler issue</p></li>
+<li><p>#2305 Fix curl debug bug</p></li>
+<li><p>#2303 Use DBGroup variable from migration class if defined</p></li>
+<li><p>#2300 Routes collector for toolbar should not die when a method name is calculated through _remap</p></li>
+<li><p>#2298 fix issue on session_regenerate</p></li>
+<li><p>#2296 Add counted() to Inflector Helper</p></li>
+<li><p>#2295 Test set() method in Builder class more</p></li>
+<li><p>#2290 Fix Code Modules documentation for psr4 namespace configuration</p></li>
+<li><p>#2289 Don’t restrict model’s access to properties in a read-only manner</p></li>
+<li><p>#2288 Fix line numbering in Debug/Exceptions class</p></li>
+<li><p>#2285 Fix error with Host header for CURLRequest class</p></li>
+<li><p>#2284 Fix getErrors() for validation with redirect</p></li>
+<li><p>#2283 Hotfix: Rename collectors _*.tpl.php to _*.tpl</p></li>
+<li><p>#2282 Fix user guide for Message class</p></li>
+<li><p>#2279 Bug in CSRF parameter cleanup</p></li>
+<li><p>#2272 Handle X-CSRF-TOKEN - CSRF</p></li>
+<li><p>#2252 Batch Update Where Reset</p></li>
+<li><p>#2123 WIP fix store() default value bug</p></li>
+<li><p>#2100 Added validation on exists database before created for MySQLi</p></li>
 </ul>
 </div>
 </div>

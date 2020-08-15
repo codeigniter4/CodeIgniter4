@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -344,35 +347,35 @@ the core versions.</p>
 <p><strong>Most users will never have any need to do this, but the option to replace or extend them does exist for those
 who would like to significantly alter the CodeIgniter core.</strong></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Messing with a core system class has a lot of implications, so make sure you know what you are doing before
+<p class="admonition-title">Note</p>
+<p>Messing with a core system class has a lot of implications, so make sure you know what you are doing before
 attempting it.</p>
 </div>
 <div class="section" id="system-class-list">
 <h2>System Class List<a class="headerlink" href="#system-class-list" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of the core system files that are invoked every time CodeIgniter runs:</p>
 <ul class="simple">
-<li>Config\Services</li>
-<li>CodeIgniter\Autoloader\Autoloader</li>
-<li>CodeIgniter\Config\DotEnv</li>
-<li>CodeIgniter\Controller</li>
-<li>CodeIgniter\Debug\Exceptions</li>
-<li>CodeIgniter\Debug\Timer</li>
-<li>CodeIgniter\Events\Events</li>
-<li>CodeIgniter\HTTP\CLIRequest (if launched from command line only)</li>
-<li>CodeIgniter\HTTP\IncomingRequest (if launched over HTTP)</li>
-<li>CodeIgniter\HTTP\Request</li>
-<li>CodeIgniter\HTTP\Response</li>
-<li>CodeIgniter\HTTP\Message</li>
-<li>CodeIgniter\HTTP\URI</li>
-<li>CodeIgniter\Log\Logger</li>
-<li>CodeIgniter\Log\Handlers\BaseHandler</li>
-<li>CodeIgniter\Log\Handlers\FileHandler</li>
-<li>CodeIgniter\Router\RouteCollection</li>
-<li>CodeIgniter\Router\Router</li>
-<li>CodeIgniter\Security\Security</li>
-<li>CodeIgniter\View\View</li>
-<li>CodeIgniter\View\Escaper</li>
+<li><p>Config\Services</p></li>
+<li><p>CodeIgniter\Autoloader\Autoloader</p></li>
+<li><p>CodeIgniter\Config\DotEnv</p></li>
+<li><p>CodeIgniter\Controller</p></li>
+<li><p>CodeIgniter\Debug\Exceptions</p></li>
+<li><p>CodeIgniter\Debug\Timer</p></li>
+<li><p>CodeIgniter\Events\Events</p></li>
+<li><p>CodeIgniter\HTTP\CLIRequest (if launched from command line only)</p></li>
+<li><p>CodeIgniter\HTTP\IncomingRequest (if launched over HTTP)</p></li>
+<li><p>CodeIgniter\HTTP\Request</p></li>
+<li><p>CodeIgniter\HTTP\Response</p></li>
+<li><p>CodeIgniter\HTTP\Message</p></li>
+<li><p>CodeIgniter\HTTP\URI</p></li>
+<li><p>CodeIgniter\Log\Logger</p></li>
+<li><p>CodeIgniter\Log\Handlers\BaseHandler</p></li>
+<li><p>CodeIgniter\Log\Handlers\FileHandler</p></li>
+<li><p>CodeIgniter\Router\RouteCollection</p></li>
+<li><p>CodeIgniter\Router\Router</p></li>
+<li><p>CodeIgniter\Security\Security</p></li>
+<li><p>CodeIgniter\View\View</p></li>
+<li><p>CodeIgniter\View\Escaper</p></li>
 </ul>
 </div>
 <div class="section" id="replacing-core-classes">
@@ -411,7 +414,7 @@ the core system class, you would create your class like this:</p>
 to recreate the entire library. In this case, it’s better to simply extend the class. Extending the class is nearly
 identical to replacing a class with one exception:</p>
 <ul class="simple">
-<li>The class declaration must extend the parent class.</li>
+<li><p>The class declaration must extend the parent class.</p></li>
 </ul>
 <p>For example, to extend the native RouteCollection class, you would declare your class with:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>

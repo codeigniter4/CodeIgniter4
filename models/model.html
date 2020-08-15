@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,35 +343,38 @@
 <h1>Using CodeIgniter’s Model<a class="headerlink" href="#using-codeigniter-s-model" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#models" id="id1">Models</a></li>
-<li><a class="reference internal" href="#accessing-models" id="id2">Accessing Models</a></li>
-<li><a class="reference internal" href="#codeigniter-s-model" id="id3">CodeIgniter’s Model</a></li>
-<li><a class="reference internal" href="#creating-your-model" id="id4">Creating Your Model</a><ul>
-<li><a class="reference internal" href="#connecting-to-the-database" id="id5">Connecting to the Database</a></li>
-<li><a class="reference internal" href="#configuring-your-model" id="id6">Configuring Your Model</a></li>
+<li><p><a class="reference internal" href="#models" id="id1">Models</a></p></li>
+<li><p><a class="reference internal" href="#accessing-models" id="id2">Accessing Models</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-s-model" id="id3">CodeIgniter’s Model</a></p></li>
+<li><p><a class="reference internal" href="#creating-your-model" id="id4">Creating Your Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="#connecting-to-the-database" id="id5">Connecting to the Database</a></p></li>
+<li><p><a class="reference internal" href="#configuring-your-model" id="id6">Configuring Your Model</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#working-with-data" id="id7">Working With Data</a><ul>
-<li><a class="reference internal" href="#finding-data" id="id8">Finding Data</a></li>
-<li><a class="reference internal" href="#saving-data" id="id9">Saving Data</a></li>
-<li><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></li>
-<li><a class="reference internal" href="#validating-data" id="id11">Validating Data</a></li>
-<li><a class="reference internal" href="#retrieving-validation-rules" id="id12">Retrieving Validation Rules</a></li>
-<li><a class="reference internal" href="#validation-placeholders" id="id13">Validation Placeholders</a></li>
-<li><a class="reference internal" href="#protecting-fields" id="id14">Protecting Fields</a></li>
-<li><a class="reference internal" href="#working-with-query-builder" id="id15">Working With Query Builder</a></li>
-<li><a class="reference internal" href="#runtime-return-type-changes" id="id16">Runtime Return Type Changes</a></li>
-<li><a class="reference internal" href="#processing-large-amounts-of-data" id="id17">Processing Large Amounts of Data</a></li>
+<li><p><a class="reference internal" href="#working-with-data" id="id7">Working With Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#finding-data" id="id8">Finding Data</a></p></li>
+<li><p><a class="reference internal" href="#saving-data" id="id9">Saving Data</a></p></li>
+<li><p><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></p></li>
+<li><p><a class="reference internal" href="#validating-data" id="id11">Validating Data</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-validation-rules" id="id12">Retrieving Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#validation-placeholders" id="id13">Validation Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#protecting-fields" id="id14">Protecting Fields</a></p></li>
+<li><p><a class="reference internal" href="#working-with-query-builder" id="id15">Working With Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id16">Runtime Return Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id17">Processing Large Amounts of Data</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#model-events" id="id18">Model Events</a><ul>
-<li><a class="reference internal" href="#defining-callbacks" id="id19">Defining Callbacks</a></li>
-<li><a class="reference internal" href="#specifying-callbacks-to-run" id="id20">Specifying Callbacks To Run</a></li>
-<li><a class="reference internal" href="#event-parameters" id="id21">Event Parameters</a></li>
-<li><a class="reference internal" href="#modifying-find-data" id="id22">Modifying Find* Data</a></li>
+<li><p><a class="reference internal" href="#model-events" id="id18">Model Events</a></p>
+<ul>
+<li><p><a class="reference internal" href="#defining-callbacks" id="id19">Defining Callbacks</a></p></li>
+<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id20">Specifying Callbacks To Run</a></p></li>
+<li><p><a class="reference internal" href="#event-parameters" id="id21">Event Parameters</a></p></li>
+<li><p><a class="reference internal" href="#modifying-find-data" id="id22">Modifying Find* Data</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#manual-model-creation" id="id23">Manual Model Creation</a></li>
+<li><p><a class="reference internal" href="#manual-model-creation" id="id23">Manual Model Creation</a></p></li>
 </ul>
 </div>
 <div class="section" id="models">
@@ -403,11 +409,11 @@ location within the directory, like <code class="docutils literal notranslate"><
 <h2><a class="toc-backref" href="#id3">CodeIgniter’s Model</a><a class="headerlink" href="#codeigniter-s-model" title="Permalink to this headline">¶</a></h2>
 <p>CodeIgniter does provide a model class that provides a few nice features, including:</p>
 <ul class="simple">
-<li>automatic database connection</li>
-<li>basic CRUD methods</li>
-<li>in-model validation</li>
-<li>automatic pagination</li>
-<li>and more</li>
+<li><p>automatic database connection</p></li>
+<li><p>basic CRUD methods</p></li>
+<li><p>in-model validation</p></li>
+<li><p>automatic pagination</p></li>
+<li><p>and more</p></li>
 </ul>
 <p>This class provides a solid base from which to build your own models, allowing you to
 rapidly build out your application’s model layer.</p>
@@ -489,8 +495,8 @@ queries.</p>
 does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like <code class="docutils literal notranslate"><span class="pre">find()</span></code> to know what column to match the specified value to.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All Models must have a primaryKey specified to allow all of the features to work
+<p class="admonition-title">Note</p>
+<p>All Models must have a primaryKey specified to allow all of the features to work
 as expected.</p>
 </div>
 <p><strong>$useAutoIncrement</strong></p>
@@ -498,8 +504,8 @@ as expected.</p>
 then you are responsible for providing primary key value for every record in the table. This
 feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you set <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> then make sure to set your primary
+<p class="admonition-title">Note</p>
+<p>If you set <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> then make sure to set your primary
 key in the database to <code class="docutils literal notranslate"><span class="pre">unique</span></code>. This way you will make sure that all of Model’s features
 will still work the same as before.</p>
 </div>
@@ -753,8 +759,8 @@ model’s <code class="docutils literal notranslate"><span class="pre">save()</s
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you find yourself working with Entities a lot, CodeIgniter provides a built-in <a class="reference internal" href="entities.html"><span class="doc">Entity class</span></a>
+<p class="admonition-title">Note</p>
+<p>If you find yourself working with Entities a lot, CodeIgniter provides a built-in <a class="reference internal" href="entities.html"><span class="doc">Entity class</span></a>
 that provides several handy features that make developing Entities simpler.</p>
 </div>
 </div>
@@ -809,19 +815,15 @@ be applied. If you have custom error message that you want to use, place them in
 <p>The other way to set the validation rules to fields by functions,</p>
 <dl class="function">
 <dt id="setValidationRule">
-<code class="descname">setValidationRule</code><span class="sig-paren">(</span><em>$field</em>, <em>$fieldRules</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRule" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$field</strong> (<em>string</em>) – </li>
-<li><strong>$fieldRules</strong> (<em>array</em>) – </li>
+<code class="sig-name descname">setValidationRule</code><span class="sig-paren">(</span><em class="sig-param">$field</em>, <em class="sig-param">$fieldRules</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$fieldRules</strong> (<em>array</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This function will set the field validation rules.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
@@ -834,18 +836,14 @@ be applied. If you have custom error message that you want to use, place them in
 
 <dl class="function">
 <dt id="setValidationRules">
-<code class="descname">setValidationRules</code><span class="sig-paren">(</span><em>$validationRules</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRules" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$validationRules</strong> (<em>array</em>) – </li>
+<code class="sig-name descname">setValidationRules</code><span class="sig-paren">(</span><em class="sig-param">$validationRules</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRules" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$validationRules</strong> (<em>array</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This function will set the validation rules.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
@@ -865,19 +863,15 @@ be applied. If you have custom error message that you want to use, place them in
 <p>The other way to set the validation message to fields by functions,</p>
 <dl class="function">
 <dt id="setValidationMessage">
-<code class="descname">setValidationMessage</code><span class="sig-paren">(</span><em>$field</em>, <em>$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessage" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$field</strong> (<em>string</em>) – </li>
-<li><strong>$fieldMessages</strong> (<em>array</em>) – </li>
+<code class="sig-name descname">setValidationMessage</code><span class="sig-paren">(</span><em class="sig-param">$field</em>, <em class="sig-param">$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$fieldMessages</strong> (<em>array</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This function will set the field wise error messages.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
@@ -891,18 +885,14 @@ be applied. If you have custom error message that you want to use, place them in
 
 <dl class="function">
 <dt id="setValidationMessages">
-<code class="descname">setValidationMessages</code><span class="sig-paren">(</span><em>$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessages" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$fieldMessages</strong> (<em>array</em>) – </li>
+<code class="sig-name descname">setValidationMessages</code><span class="sig-paren">(</span><em class="sig-param">$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessages" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$fieldMessages</strong> (<em>array</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>This function will set the field messages.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
@@ -1028,9 +1018,9 @@ very elegant use:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>You can also access the model’s database connection seamlessly:</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user_name</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user_name</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1041,8 +1031,8 @@ very elegant use:</p>
 $returnType. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">These methods only change the return type for the next find*() method call. After that,
+<p class="admonition-title">Note</p>
+<p>These methods only change the return type for the next find*() method call. After that,
 it is reset to its default value.</p>
 </div>
 <p><strong>asArray()</strong></p>
@@ -1125,78 +1115,78 @@ use the same callback in multiple events:</p>
 <h3><a class="toc-backref" href="#id21">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Since the exact data passed to each callback varies a bit, here are the details on what is in the $data parameter
 passed to each event:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col style="width: 13%" />
+<col style="width: 87%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Event</th>
-<th class="head">$data contents</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Event</p></th>
+<th class="head"><p>$data contents</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>beforeInsert</td>
-<td><strong>data</strong> = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-insert method, it is first converted to an array.</td>
+<tbody>
+<tr class="row-even"><td><p>beforeInsert</p></td>
+<td><p><strong>data</strong> = the key/value pairs that are being inserted. If an object or Entity class is passed to the
+insert method, it is first converted to an array.</p></td>
 </tr>
-<tr class="row-odd"><td>afterInsert</td>
-<td><strong>id</strong> = the primary key of the new row, or 0 on failure.
+<tr class="row-odd"><td><p>afterInsert</p></td>
+<td><p><strong>id</strong> = the primary key of the new row, or 0 on failure.
 <strong>data</strong> = the key/value pairs being inserted.
-<strong>result</strong> = the results of the insert() method used through the Query Builder.</td>
+<strong>result</strong> = the results of the insert() method used through the Query Builder.</p></td>
 </tr>
-<tr class="row-even"><td>beforeUpdate</td>
-<td><strong>id</strong> = the array of primary keys of the rows being updated.
+<tr class="row-even"><td><p>beforeUpdate</p></td>
+<td><p><strong>id</strong> = the array of primary keys of the rows being updated.
 <strong>data</strong> = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-insert method, it is first converted to an array.</td>
+insert method, it is first converted to an array.</p></td>
 </tr>
-<tr class="row-odd"><td>afterUpdate</td>
-<td><strong>id</strong> = the array of primary keys of the rows being updated.
+<tr class="row-odd"><td><p>afterUpdate</p></td>
+<td><p><strong>id</strong> = the array of primary keys of the rows being updated.
 <strong>data</strong> = the key/value pairs being updated.
-<strong>result</strong> = the results of the update() method used through the Query Builder.</td>
+<strong>result</strong> = the results of the update() method used through the Query Builder.</p></td>
 </tr>
-<tr class="row-even"><td>afterFind</td>
-<td>Varies by find* method. See the following:</td>
+<tr class="row-even"><td><p>afterFind</p></td>
+<td><p>Varies by find* method. See the following:</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>find()</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>find()</p></li>
 </ul>
 </td>
-<td><strong>id</strong> = the primary key of the row being searched for.
-<strong>data</strong> = The resulting row of data, or null if no result found.</td>
+<td><p><strong>id</strong> = the primary key of the row being searched for.
+<strong>data</strong> = The resulting row of data, or null if no result found.</p></td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>findAll()</li>
+<tr class="row-even"><td><ul class="simple">
+<li><p>findAll()</p></li>
 </ul>
 </td>
-<td><strong>data</strong> = the resulting rows of data, or null if no result found.
+<td><p><strong>data</strong> = the resulting rows of data, or null if no result found.
 <strong>limit</strong> = the number of rows to find.
-<strong>offset</strong> = the number of rows to skip during the search.</td>
+<strong>offset</strong> = the number of rows to skip during the search.</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>first()</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>first()</p></li>
 </ul>
 </td>
-<td><strong>data</strong> = the resulting row found during the search, or null if none found.</td>
+<td><p><strong>data</strong> = the resulting row found during the search, or null if none found.</p></td>
 </tr>
-<tr class="row-even"><td>beforeFind</td>
-<td>Same as <strong>afterFind</strong> but with the name of the calling <strong>$method</strong> instead of <strong>$data</strong>.</td>
+<tr class="row-even"><td><p>beforeFind</p></td>
+<td><p>Same as <strong>afterFind</strong> but with the name of the calling <strong>$method</strong> instead of <strong>$data</strong>.</p></td>
 </tr>
-<tr class="row-odd"><td>beforeDelete</td>
-<td>Varies by delete* method. See the following:</td>
+<tr class="row-odd"><td><p>beforeDelete</p></td>
+<td><p>Varies by delete* method. See the following:</p></td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>delete()</li>
+<tr class="row-even"><td><ul class="simple">
+<li><p>delete()</p></li>
 </ul>
 </td>
-<td><strong>id</strong> = primary key of row being deleted.
-<strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</td>
+<td><p><strong>id</strong> = primary key of row being deleted.
+<strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</p></td>
 </tr>
-<tr class="row-odd"><td>afterDelete</td>
-<td><strong>id</strong> = primary key of row being deleted.
+<tr class="row-odd"><td><p>afterDelete</p></td>
+<td><p><strong>id</strong> = primary key of row being deleted.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.
 <strong>result</strong> = the result of the delete() call on the Query Builder.
-<strong>data</strong> = unused.</td>
+<strong>data</strong> = unused.</p></td>
 </tr>
 </tbody>
 </table>

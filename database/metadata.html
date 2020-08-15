@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,16 +343,18 @@
 <h1>Database Metadata<a class="headerlink" href="#database-metadata" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#table-metadata" id="id1">Table MetaData</a><ul>
-<li><a class="reference internal" href="#list-the-tables-in-your-database" id="id2">List the Tables in Your Database</a></li>
-<li><a class="reference internal" href="#determine-if-a-table-exists" id="id3">Determine If a Table Exists</a></li>
+<li><p><a class="reference internal" href="#table-metadata" id="id1">Table MetaData</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-the-tables-in-your-database" id="id2">List the Tables in Your Database</a></p></li>
+<li><p><a class="reference internal" href="#determine-if-a-table-exists" id="id3">Determine If a Table Exists</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#field-metadata" id="id4">Field MetaData</a><ul>
-<li><a class="reference internal" href="#list-the-fields-in-a-table" id="id5">List the Fields in a Table</a></li>
-<li><a class="reference internal" href="#determine-if-a-field-is-present-in-a-table" id="id6">Determine If a Field is Present in a Table</a></li>
-<li><a class="reference internal" href="#retrieve-field-metadata" id="id7">Retrieve Field Metadata</a></li>
-<li><a class="reference internal" href="#list-the-indexes-in-a-table" id="id8">List the Indexes in a Table</a></li>
+<li><p><a class="reference internal" href="#field-metadata" id="id4">Field MetaData</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-the-fields-in-a-table" id="id5">List the Fields in a Table</a></p></li>
+<li><p><a class="reference internal" href="#determine-if-a-field-is-present-in-a-table" id="id6">Determine If a Field is Present in a Table</a></p></li>
+<li><p><a class="reference internal" href="#retrieve-field-metadata" id="id7">Retrieve Field Metadata</a></p></li>
+<li><p><a class="reference internal" href="#list-the-indexes-in-a-table" id="id8">List the Indexes in a Table</a></p></li>
 </ul>
 </li>
 </ul>
@@ -371,8 +376,8 @@ you are currently connected to. Example:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Some drivers have additional system tables that are excluded from this return.</p>
+<p class="admonition-title">Note</p>
+<p>Some drivers have additional system tables that are excluded from this return.</p>
 </div>
 </div>
 <div class="section" id="determine-if-a-table-exists">
@@ -387,8 +392,8 @@ running an operation on it. Returns a boolean TRUE/FALSE. Usage example:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Replace <em>table_name</em> with the name of the table you are looking for.</p>
+<p class="admonition-title">Note</p>
+<p>Replace <em>table_name</em> with the name of the table you are looking for.</p>
 </div>
 </div>
 </div>
@@ -432,8 +437,8 @@ performing an action. Returns a boolean TRUE/FALSE. Usage example:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Replace <em>field_name</em> with the name of the column you are looking
+<p class="admonition-title">Note</p>
+<p>Replace <em>field_name</em> with the name of the column you are looking
 for, and replace <em>table_name</em> with the name of the table you are
 looking for.</p>
 </div>
@@ -445,8 +450,8 @@ looking for.</p>
 <p>Sometimes it’s helpful to gather the field names or other metadata, like
 the column type, max length, etc.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Not all databases provide meta-data.</p>
+<p class="admonition-title">Note</p>
+<p>Not all databases provide meta-data.</p>
 </div>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
@@ -469,10 +474,10 @@ supplying the table name:</p>
 <p>The following data is available from this function if supported by your
 database:</p>
 <ul class="simple">
-<li>name - column name</li>
-<li>max_length - maximum length of the column</li>
-<li>primary_key - 1 if the column is a primary key</li>
-<li>type - the type of the column</li>
+<li><p>name - column name</p></li>
+<li><p>max_length - maximum length of the column</p></li>
+<li><p>primary_key - 1 if the column is a primary key</p></li>
+<li><p>type - the type of the column</p></li>
 </ul>
 </div>
 <div class="section" id="list-the-indexes-in-a-table">

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,8 +345,8 @@
 HTML.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -358,26 +361,22 @@ HTML.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="img">
-<code class="descname">img</code><span class="sig-paren">(</span><span class="optional">[</span><em>$src = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#img" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>mixed</em>) – Image source data</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</li>
-<li><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</li>
+<code class="sig-name descname">img</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$src = ''</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#img" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>mixed</em>) – Image source data</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</p></li>
+<li><p><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML image tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML image tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;img /&gt; tags. The first parameter contains the
 image source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">);</span>
@@ -414,30 +413,26 @@ is not provided, CodeIgniter will generate an empty string.</p>
 
 <dl class="function">
 <dt id="link_tag">
-<code class="descname">link_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em>$href = ''</em><span class="optional">[</span>, <em>$rel = 'stylesheet'</em><span class="optional">[</span>, <em>$type = 'text/css'</em><span class="optional">[</span>, <em>$title = ''</em><span class="optional">[</span>, <em>$media = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">[</span>, <em>$hreflang = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#link_tag" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$href</strong> (<em>string</em>) – The source of the link file</li>
-<li><strong>$rel</strong> (<em>string</em>) – Relation type</li>
-<li><strong>$type</strong> (<em>string</em>) – Type of the related document</li>
-<li><strong>$title</strong> (<em>string</em>) – Link title</li>
-<li><strong>$media</strong> (<em>string</em>) – Media type</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</li>
-<li><strong>$hreflang</strong> (<em>string</em>) – Hreflang type</li>
+<code class="sig-name descname">link_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$href = ''</em><span class="optional">[</span>, <em class="sig-param">$rel = 'stylesheet'</em><span class="optional">[</span>, <em class="sig-param">$type = 'text/css'</em><span class="optional">[</span>, <em class="sig-param">$title = ''</em><span class="optional">[</span>, <em class="sig-param">$media = ''</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">[</span>, <em class="sig-param">$hreflang = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#link_tag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$href</strong> (<em>string</em>) – The source of the link file</p></li>
+<li><p><strong>$rel</strong> (<em>string</em>) – Relation type</p></li>
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the related document</p></li>
+<li><p><strong>$title</strong> (<em>string</em>) – Link title</p></li>
+<li><p><strong>$media</strong> (<em>string</em>) – Media type</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</p></li>
+<li><p><strong>$hreflang</strong> (<em>string</em>) – Hreflang type</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML link tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML link tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;link /&gt; tags. This is useful for stylesheet links,
 as well as other links. The parameters are <em>href</em>, with optional <em>rel</em>,
 <em>type</em>, <em>title</em>, <em>media</em> and <em>indexPage</em>.</p>
@@ -473,25 +468,21 @@ for complete control over all attributes and values:</p>
 
 <dl class="function">
 <dt id="script_tag">
-<code class="descname">script_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em>$src = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#script_tag" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>mixed</em>) – The source name of a JavaScript file</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</li>
+<code class="sig-name descname">script_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$src = ''</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#script_tag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>mixed</em>) – The source name of a JavaScript file</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat $src as a routed URI string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML script tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML script tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;script&gt;&lt;/script&gt; tags. The parameters is <em>src</em>, with optional <em>indexPage</em>.</p>
 <p><em>indexPage</em> is a boolean value that specifies if the <em>src</em> should have
 the page specified by <code class="docutils literal notranslate"><span class="pre">$config['indexPage']</span></code> added to the address it creates.</p>
@@ -512,25 +503,21 @@ for complete control over all attributes and values:</p>
 
 <dl class="function">
 <dt id="ul">
-<code class="descname">ul</code><span class="sig-paren">(</span><em>$list</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ul" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$list</strong> (<em>array</em>) – List entries</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
+<code class="sig-name descname">ul</code><span class="sig-paren">(</span><em class="sig-param">$list</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ul" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$list</strong> (<em>array</em>) – List entries</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted unordered list</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML-formatted unordered list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Permits you to generate unordered HTML lists from simple or
 multi-dimensional arrays. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
@@ -644,53 +631,45 @@ multi-dimensional arrays. Example:</p>
 
 <dl class="function">
 <dt id="ol">
-<code class="descname">ol</code><span class="sig-paren">(</span><em>$list</em>, <em>$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#ol" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$list</strong> (<em>array</em>) – List entries</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
+<code class="sig-name descname">ol</code><span class="sig-paren">(</span><em class="sig-param">$list</em>, <em class="sig-param">$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#ol" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$list</strong> (<em>array</em>) – List entries</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted ordered list</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML-formatted ordered list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Identical to <a class="reference internal" href="#ul" title="ul"><code class="xref php php-func docutils literal notranslate"><span class="pre">ul()</span></code></a>, only it produces the &lt;ol&gt; tag for
 ordered lists instead of &lt;ul&gt;.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="video">
-<code class="descname">video</code><span class="sig-paren">(</span><em>$src</em><span class="optional">[</span>, <em>$unsupportedMessage = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$tracks = []</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#video" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>mixed</em>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</li>
-<li><strong>$unsupportedMessage</strong> (<em>string</em>) – The message to display if the media tag is not supported by the browser</li>
-<li><strong>$attributes</strong> (<em>string</em>) – HTML attributes</li>
-<li><strong>$tracks</strong> (<em>array</em>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – </li>
+<code class="sig-name descname">video</code><span class="sig-paren">(</span><em class="sig-param">$src</em><span class="optional">[</span>, <em class="sig-param">$unsupportedMessage = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$tracks = []</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#video" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>mixed</em>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</p></li>
+<li><p><strong>$unsupportedMessage</strong> (<em>string</em>) – The message to display if the media tag is not supported by the browser</p></li>
+<li><p><strong>$attributes</strong> (<em>string</em>) – HTML attributes</p></li>
+<li><p><strong>$tracks</strong> (<em>array</em>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted video element</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML-formatted video element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Permits you to generate HTML video element from simple or
 source arrays. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$tracks</span> <span class="o">=</span>
@@ -749,53 +728,45 @@ source arrays. Example:</p>
 
 <dl class="function">
 <dt id="audio">
-<code class="descname">audio</code><span class="sig-paren">(</span><em>$src</em><span class="optional">[</span>, <em>$unsupportedMessage = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$tracks = []</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#audio" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>mixed</em>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</li>
-<li><strong>$unsupportedMessage</strong> (<em>string</em>) – The message to display if the media tag is not supported by the browser</li>
-<li><strong>$attributes</strong> (<em>string</em>) – </li>
-<li><strong>$tracks</strong> (<em>array</em>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – </li>
+<code class="sig-name descname">audio</code><span class="sig-paren">(</span><em class="sig-param">$src</em><span class="optional">[</span>, <em class="sig-param">$unsupportedMessage = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$tracks = []</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#audio" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>mixed</em>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</p></li>
+<li><p><strong>$unsupportedMessage</strong> (<em>string</em>) – The message to display if the media tag is not supported by the browser</p></li>
+<li><p><strong>$attributes</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$tracks</strong> (<em>array</em>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted audio element</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML-formatted audio element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Identical to <a class="reference internal" href="#video" title="video"><code class="xref php php-func docutils literal notranslate"><span class="pre">video()</span></code></a>, only it produces the &lt;audio&gt; tag instead of &lt;video&gt;.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="source">
-<code class="descname">source</code><span class="sig-paren">(</span><em>$src = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#source" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>string</em>) – The path of the media resource</li>
-<li><strong>$type</strong> (<em>bool</em>) – The MIME-type of the resource with optional codecs parameters</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
+<code class="sig-name descname">source</code><span class="sig-paren">(</span><em class="sig-param">$src = ''</em><span class="optional">[</span>, <em class="sig-param">$type = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#source" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>string</em>) – The path of the media resource</p></li>
+<li><p><strong>$type</strong> (<em>bool</em>) – The MIME-type of the resource with optional codecs parameters</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML source tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML source tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;source /&gt; tags. The first parameter contains the
 source source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
@@ -806,27 +777,23 @@ source source. Example:</p>
 
 <dl class="function">
 <dt id="embed">
-<code class="descname">embed</code><span class="sig-paren">(</span><em>$src = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#embed" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$src</strong> (<em>string</em>) – The path of the resource to embed</li>
-<li><strong>$type</strong> (<em>bool</em>) – MIME-type</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
-<li><strong>$indexPage</strong> (<em>bool</em>) – </li>
+<code class="sig-name descname">embed</code><span class="sig-paren">(</span><em class="sig-param">$src = ''</em><span class="optional">[</span>, <em class="sig-param">$type = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#embed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$src</strong> (<em>string</em>) – The path of the resource to embed</p></li>
+<li><p><strong>$type</strong> (<em>bool</em>) – MIME-type</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
+<li><p><strong>$indexPage</strong> (<em>bool</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML embed tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML embed tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;embed /&gt; tags. The first parameter contains the
 embed source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">embed</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
@@ -837,27 +804,23 @@ embed source. Example:</p>
 
 <dl class="function">
 <dt id="object">
-<code class="descname">object</code><span class="sig-paren">(</span><em>$data = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#object" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>string</em>) – A resource URL</li>
-<li><strong>$type</strong> (<em>bool</em>) – Content-type of the resource</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
-<li><strong>$params</strong> (<em>array</em>) – Use the param function inside an array. See <a class="reference internal" href="#param" title="param"><code class="xref php php-func docutils literal notranslate"><span class="pre">param()</span></code></a> function</li>
+<code class="sig-name descname">object</code><span class="sig-paren">(</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$type = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#object" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$data</strong> (<em>string</em>) – A resource URL</p></li>
+<li><p><strong>$type</strong> (<em>bool</em>) – Content-type of the resource</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
+<li><p><strong>$params</strong> (<em>array</em>) – Use the param function inside an array. See <a class="reference internal" href="#param" title="param"><code class="xref php php-func docutils literal notranslate"><span class="pre">param()</span></code></a> function</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML object tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML object tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;object /&gt; tags. The first parameter contains the
 object data. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">object</span><span class="p">(</span><span class="s1">&#39;movie.swf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/x-shockwave-flash&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
@@ -887,26 +850,22 @@ object data. Example:</p>
 
 <dl class="function">
 <dt id="param">
-<code class="descname">param</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#param" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the parameter</li>
-<li><strong>$value</strong> (<em>string</em>) – The value of the parameter</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
+<code class="sig-name descname">param</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$type = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#param" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the parameter</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – The value of the parameter</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML param tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML param tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Lets you create HTML &lt;param /&gt; tags. The first parameter contains the
 param source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
@@ -917,26 +876,22 @@ param source. Example:</p>
 
 <dl class="function">
 <dt id="track">
-<code class="descname">track</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#track" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) – The name of the parameter</li>
-<li><strong>$value</strong> (<em>string</em>) – The value of the parameter</li>
-<li><strong>$attributes</strong> (<em>array</em>) – HTML attributes</li>
+<code class="sig-name descname">track</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$type = false</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#track" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The name of the parameter</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – The value of the parameter</p></li>
+<li><p><strong>$attributes</strong> (<em>array</em>) – HTML attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML track tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML track tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Generates a track element to specify timed tracks. The tracks are
 formatted in WebVTT format. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">);</span>
@@ -947,24 +902,20 @@ formatted in WebVTT format. Example:</p>
 
 <dl class="function">
 <dt id="doctype">
-<code class="descname">doctype</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'html5'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#doctype" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Doctype name</li>
+<code class="sig-name descname">doctype</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'html5'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#doctype" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Doctype name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML DocType tag</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML DocType tag</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Helps you generate document type declarations, or DTD’s. HTML 5
 is used by default, but many doctypes are available.</p>
 <p>Example:</p>
@@ -977,94 +928,94 @@ is used by default, but many doctypes are available.</p>
 </div>
 <p>The following is a list of the pre-defined doctype choices. These are configurable,
 pulled from <cite>application/Config/DocTypes.php</cite>, or they could be over-ridden in your <cite>.env</cite> configuration.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="16%" />
-<col width="10%" />
-<col width="74%" />
+<col style="width: 16%" />
+<col style="width: 10%" />
+<col style="width: 74%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Document type</th>
-<th class="head">Option</th>
-<th class="head">Result</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Document type</p></th>
+<th class="head"><p>Option</p></th>
+<th class="head"><p>Result</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>XHTML 1.1</td>
-<td>xhtml11</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.1//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</a>”&gt;</td>
+<tbody>
+<tr class="row-even"><td><p>XHTML 1.1</p></td>
+<td><p>xhtml11</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.1//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>XHTML 1.0 Strict</td>
-<td>xhtml1-strict</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Strict//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>XHTML 1.0 Strict</p></td>
+<td><p>xhtml1-strict</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Strict//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>XHTML 1.0 Transitional</td>
-<td>xhtml1-trans</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>XHTML 1.0 Transitional</p></td>
+<td><p>xhtml1-trans</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>XHTML 1.0 Frameset</td>
-<td>xhtml1-frame</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Frameset//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>XHTML 1.0 Frameset</p></td>
+<td><p>xhtml1-frame</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Frameset//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>XHTML Basic 1.1</td>
-<td>xhtml-basic11</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML Basic 1.1//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>XHTML Basic 1.1</p></td>
+<td><p>xhtml-basic11</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML Basic 1.1//EN” “<a class="reference external" href="http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>HTML 5</td>
-<td>html5</td>
-<td>&lt;!DOCTYPE html&gt;</td>
+<tr class="row-odd"><td><p>HTML 5</p></td>
+<td><p>html5</p></td>
+<td><p>&lt;!DOCTYPE html&gt;</p></td>
 </tr>
-<tr class="row-even"><td>HTML 4 Strict</td>
-<td>html4-strict</td>
-<td>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/strict.dtd">http://www.w3.org/TR/html4/strict.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>HTML 4 Strict</p></td>
+<td><p>html4-strict</p></td>
+<td><p>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/strict.dtd">http://www.w3.org/TR/html4/strict.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>HTML 4 Transitional</td>
-<td>html4-trans</td>
-<td>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>HTML 4 Transitional</p></td>
+<td><p>html4-trans</p></td>
+<td><p>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>HTML 4 Frameset</td>
-<td>html4-frame</td>
-<td>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Frameset//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/frameset.dtd">http://www.w3.org/TR/html4/frameset.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>HTML 4 Frameset</p></td>
+<td><p>html4-frame</p></td>
+<td><p>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Frameset//EN” “<a class="reference external" href="http://www.w3.org/TR/html4/frameset.dtd">http://www.w3.org/TR/html4/frameset.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>MathML 1.01</td>
-<td>mathml1</td>
-<td>&lt;!DOCTYPE math SYSTEM “<a class="reference external" href="http://www.w3.org/Math/DTD/mathml1/mathml.dtd">http://www.w3.org/Math/DTD/mathml1/mathml.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>MathML 1.01</p></td>
+<td><p>mathml1</p></td>
+<td><p>&lt;!DOCTYPE math SYSTEM “<a class="reference external" href="http://www.w3.org/Math/DTD/mathml1/mathml.dtd">http://www.w3.org/Math/DTD/mathml1/mathml.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>MathML 2.0</td>
-<td>mathml2</td>
-<td>&lt;!DOCTYPE math PUBLIC “-//W3C//DTD MathML 2.0//EN” “<a class="reference external" href="http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">http://www.w3.org/Math/DTD/mathml2/mathml2.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>MathML 2.0</p></td>
+<td><p>mathml2</p></td>
+<td><p>&lt;!DOCTYPE math PUBLIC “-//W3C//DTD MathML 2.0//EN” “<a class="reference external" href="http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">http://www.w3.org/Math/DTD/mathml2/mathml2.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>SVG 1.0</td>
-<td>svg10</td>
-<td>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.0//EN” “<a class="reference external" href="http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>SVG 1.0</p></td>
+<td><p>svg10</p></td>
+<td><p>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.0//EN” “<a class="reference external" href="http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>SVG 1.1 Full</td>
-<td>svg11</td>
-<td>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>SVG 1.1 Full</p></td>
+<td><p>svg11</p></td>
+<td><p>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>SVG 1.1 Basic</td>
-<td>svg11-basic</td>
-<td>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1 Basic//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>SVG 1.1 Basic</p></td>
+<td><p>svg11-basic</p></td>
+<td><p>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1 Basic//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>SVG 1.1 Tiny</td>
-<td>svg11-tiny</td>
-<td>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1 Tiny//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>SVG 1.1 Tiny</p></td>
+<td><p>svg11-tiny</p></td>
+<td><p>&lt;!DOCTYPE svg PUBLIC “-//W3C//DTD SVG 1.1 Tiny//EN” “<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>XHTML+MathML+SVG (XHTML host)</td>
-<td>xhtml-math-svg-xh</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN” “<a class="reference external" href="http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>XHTML+MathML+SVG (XHTML host)</p></td>
+<td><p>xhtml-math-svg-xh</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN” “<a class="reference external" href="http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>XHTML+MathML+SVG (SVG host)</td>
-<td>xhtml-math-svg-sh</td>
-<td>&lt;!DOCTYPE svg:svg PUBLIC “-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN” “http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd”&gt;</td>
+<tr class="row-even"><td><p>XHTML+MathML+SVG (SVG host)</p></td>
+<td><p>xhtml-math-svg-sh</p></td>
+<td><p>&lt;!DOCTYPE svg:svg PUBLIC “-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN” “http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd”&gt;</p></td>
 </tr>
-<tr class="row-odd"><td>XHTML+RDFa 1.0</td>
-<td>xhtml-rdfa-1</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML+RDFa 1.0//EN” “<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd</a>”&gt;</td>
+<tr class="row-odd"><td><p>XHTML+RDFa 1.0</p></td>
+<td><p>xhtml-rdfa-1</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML+RDFa 1.0//EN” “<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd</a>”&gt;</p></td>
 </tr>
-<tr class="row-even"><td>XHTML+RDFa 1.1</td>
-<td>xhtml-rdfa-2</td>
-<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML+RDFa 1.1//EN” “<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd</a>”&gt;</td>
+<tr class="row-even"><td><p>XHTML+RDFa 1.1</p></td>
+<td><p>xhtml-rdfa-2</p></td>
+<td><p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML+RDFa 1.1//EN” “<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd</a>”&gt;</p></td>
 </tr>
 </tbody>
 </table>

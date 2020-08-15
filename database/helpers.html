@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,8 +346,8 @@
 <p><strong>$db-&gt;insertID()</strong></p>
 <p>The insert ID number when performing database inserts.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If using the PDO driver with PostgreSQL, or using the Interbase
+<p class="admonition-title">Note</p>
+<p>If using the PDO driver with PostgreSQL, or using the Interbase
 driver, this function requires a $name parameter, which specifies the
 appropriate sequence to check for the insert id.</p>
 </div>
@@ -352,8 +355,8 @@ appropriate sequence to check for the insert id.</p>
 <p>Displays the number of affected rows, when doing “write” type queries
 (insert, update, etc.).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In MySQL “DELETE FROM TABLE” returns 0 affected rows. The database
+<p class="admonition-title">Note</p>
+<p>In MySQL “DELETE FROM TABLE” returns 0 affected rows. The database
 class has a small hack that allows it to return the correct number of
 affected rows. By default this hack is enabled but it can be turned off
 in the database driver file.</p>

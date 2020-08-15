@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -434,10 +437,10 @@ When <strong>true</strong>, all events will be skipped over during the trigger m
 <h2>Event Points<a class="headerlink" href="#event-points" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of available event points within the CodeIgniter core code:</p>
 <ul class="simple">
-<li><strong>pre_system</strong> Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.</li>
-<li><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</li>
-<li><strong>post_system</strong> Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.</li>
-<li><strong>email</strong> Called after an email sent successfully from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code>. Receives an array of the <code class="docutils literal notranslate"><span class="pre">Email</span></code> class’s properties as a parameter.</li>
+<li><p><strong>pre_system</strong> Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.</p></li>
+<li><p><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</p></li>
+<li><p><strong>post_system</strong> Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.</p></li>
+<li><p><strong>email</strong> Called after an email sent successfully from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code>. Receives an array of the <code class="docutils literal notranslate"><span class="pre">Email</span></code> class’s properties as a parameter.</p></li>
 </ul>
 </div>
 </div>

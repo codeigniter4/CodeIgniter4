@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,9 +345,9 @@
 numeric data in a locale-aware manner.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#when-things-go-wrong" id="id2">When Things Go Wrong</a></li>
-<li><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#when-things-go-wrong" id="id2">When Things Go Wrong</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -365,25 +368,21 @@ a value provided, for the given locale and options, then a
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="number_to_size">
-<code class="descname">number_to_size</code><span class="sig-paren">(</span><em>$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$num</strong> (<em>mixed</em>) – Number of bytes</li>
-<li><strong>$precision</strong> (<em>int</em>) – Floating point precision</li>
+<code class="sig-name descname">number_to_size</code><span class="sig-paren">(</span><em class="sig-param">$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$num</strong> (<em>mixed</em>) – Number of bytes</p></li>
+<li><p><strong>$precision</strong> (<em>int</em>) – Floating point precision</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Formatted data size string, or false if the provided value is not numeric</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Formatted data size string, or false if the provided value is not numeric</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Formats numbers as bytes, based on size, and adds the appropriate
 suffix. Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456</span><span class="p">);</span> <span class="c1">// Returns 456 Bytes</span>
@@ -410,34 +409,30 @@ locale taken from the headers, or the app-default:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The text generated by this function is found in the following
+<p class="admonition-title">Note</p>
+<p>The text generated by this function is found in the following
 language file: <em>language/&lt;your_lang&gt;/Number.php</em></p>
 </div>
 </dd></dl>
 
 <dl class="function">
 <dt id="number_to_amount">
-<code class="descname">number_to_amount</code><span class="sig-paren">(</span><em>$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_amount" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$num</strong> (<em>mixed</em>) – Number to format</li>
-<li><strong>$precision</strong> (<em>int</em>) – Floating point precision</li>
-<li><strong>$locale</strong> (<em>string</em>) – The locale to use for formatting</li>
+<code class="sig-name descname">number_to_amount</code><span class="sig-paren">(</span><em class="sig-param">$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_amount" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$num</strong> (<em>mixed</em>) – Number to format</p></li>
+<li><p><strong>$precision</strong> (<em>int</em>) – Floating point precision</p></li>
+<li><p><strong>$locale</strong> (<em>string</em>) – The locale to use for formatting</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A human-readable version of the string, or false if the provided value is not numeric</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A human-readable version of the string, or false if the provided value is not numeric</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Converts a number into a human-readable version, like <strong>123.4 trillion</strong>
 for numbers up to the quadrillions. Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456</span><span class="p">);</span> <span class="c1">// Returns 123 thousand</span>
@@ -458,27 +453,23 @@ for numbers up to the quadrillions. Examples:</p>
 
 <dl class="function">
 <dt id="number_to_currency">
-<code class="descname">number_to_currency</code><span class="sig-paren">(</span><em>$num</em>, <em>$currency</em><span class="optional">[</span>, <em>$locale = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$num</strong> (<em>mixed</em>) – Number to format</li>
-<li><strong>$currency</strong> (<em>string</em>) – The currency type, i.e. USD, EUR, etc</li>
-<li><strong>$locale</strong> (<em>string</em>) – The locale to use for formatting</li>
-<li><strong>$fraction</strong> (<em>integer</em>) – Number of fraction digits after decimal point</li>
+<code class="sig-name descname">number_to_currency</code><span class="sig-paren">(</span><em class="sig-param">$num</em>, <em class="sig-param">$currency</em><span class="optional">[</span>, <em class="sig-param">$locale = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$num</strong> (<em>mixed</em>) – Number to format</p></li>
+<li><p><strong>$currency</strong> (<em>string</em>) – The currency type, i.e. USD, EUR, etc</p></li>
+<li><p><strong>$locale</strong> (<em>string</em>) – The locale to use for formatting</p></li>
+<li><p><strong>$fraction</strong> (<em>integer</em>) – Number of fraction digits after decimal point</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The number as the appropriate currency for the locale</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number as the appropriate currency for the locale</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Converts a number in common currency formats, like USD, EUR, GBP, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
 <span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">);</span>  <span class="c1">// Returns €1,234.56</span>
@@ -490,24 +481,20 @@ for numbers up to the quadrillions. Examples:</p>
 
 <dl class="function">
 <dt id="number_to_roman">
-<code class="descname">number_to_roman</code><span class="sig-paren">(</span><em>$num</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_roman" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$num</strong> (<em>string</em>) – The number want to convert</li>
+<code class="sig-name descname">number_to_roman</code><span class="sig-paren">(</span><em class="sig-param">$num</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_roman" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$num</strong> (<em>string</em>) – The number want to convert</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The roman number converted from given parameter</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string|null</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The roman number converted from given parameter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string|null</p>
+</dd>
+</dl>
 <p>Converts a number into roman:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>  <span class="c1">// Returns XXIII</span>
 <span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">324</span><span class="p">);</span>  <span class="c1">// Returns CCCXXIV</span>

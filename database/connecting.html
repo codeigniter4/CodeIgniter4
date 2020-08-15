@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -355,9 +358,9 @@ and is provided for your convenience:</p>
 <div class="section" id="available-parameters">
 <h2>Available Parameters<a class="headerlink" href="#available-parameters" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>The database group name, a string that must match the config class’ property name. Default value is $config-&gt;defaultGroup.</li>
-<li>TRUE/FALSE (boolean). Whether to return the shared connection (see
-Connecting to Multiple Databases below).</li>
+<li><p>The database group name, a string that must match the config class’ property name. Default value is $config-&gt;defaultGroup.</p></li>
+<li><p>TRUE/FALSE (boolean). Whether to return the shared connection (see
+Connecting to Multiple Databases below).</p></li>
 </ol>
 </div>
 <div class="section" id="manually-connecting-to-a-database">
@@ -390,11 +393,11 @@ do so as follows:</p>
 <p>Note: Change the words “group_one” and “group_two” to the specific
 group names you are connecting to.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>You don’t need to create separate database configurations if you
 only need to use a different database on the same connection. You
 can switch to a different database when you need to, like this:</p>
-<div class="last line-block">
+<div class="line-block">
 <div class="line">$db-&gt;setDatabase($database2_name);</div>
 </div>
 </div>
@@ -437,8 +440,8 @@ consider pinging the server by using the reconnect() method before
 sending further queries, which can gracefully keep the connection alive
 or re-establish it.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If you are using MySQLi database driver, the reconnect() method
+<p class="admonition-title">Important</p>
+<p>If you are using MySQLi database driver, the reconnect() method
 does not ping the server but it closes the connection then connects again.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>

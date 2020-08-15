@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -415,14 +418,14 @@ includes the following code:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you look closely in <strong>header.php</strong> template we are using an <strong>esc()</strong>
+<p class="admonition-title">Note</p>
+<p>If you look closely in <strong>header.php</strong> template we are using an <strong>esc()</strong>
 function. It’s a global function provided by CodeIgniter to help prevent
 XSS attacks. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">There are two <strong>view()</strong> functions referred to in this tutorial.
+<p class="admonition-title">Warning</p>
+<p>There are two <strong>view()</strong> functions referred to in this tutorial.
 One is the class method created with <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">view($page</span> <span class="pre">=</span> <span class="pre">'home')</span></code>
 and <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view('welcome_message');</span></code> for displaying a view.
 Both are <em>technically</em> a function. But when you create a function in a class,
@@ -476,8 +479,8 @@ is assigned to a variable with the name of its key. So the value of
 <code class="docutils literal notranslate"><span class="pre">$data['title']</span></code> in the controller is equivalent to <code class="docutils literal notranslate"><span class="pre">$title</span></code> in the
 view.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Any files and directory names passed into the <strong>view()</strong> function MUST
+<p class="admonition-title">Note</p>
+<p>Any files and directory names passed into the <strong>view()</strong> function MUST
 match the case of the actual directory and file itself or the system will
 throw errors on case-sensitive platforms. You can read more about it
 <a class="reference internal" href="../outgoing/views.html"><span class="doc">here</span></a>.</p>
@@ -497,41 +500,41 @@ as part of a URL. CodeIgniter has its own command that you can use though.</p>
 in your browser to <code class="docutils literal notranslate"><span class="pre">localhost:8080</span></code>, you should see the CodeIgniter welcome page.</p>
 <p>You can now try several URLs in the browser location field, to see what the <code class="docutils literal notranslate"><span class="pre">Pages</span></code>
 controller you made above produces…</p>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col width="20%" />
-<col width="80%" />
+<col style="width: 20%" />
+<col style="width: 80%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">URL</th>
-<th class="head">Will show</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>URL</p></th>
+<th class="head"><p>Will show</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>localhost:8080/pages</td>
-<td>the results from the <cite>index</cite> method inside our <cite>Pages</cite>
+<tbody>
+<tr class="row-even"><td><p>localhost:8080/pages</p></td>
+<td><p>the results from the <cite>index</cite> method inside our <cite>Pages</cite>
 controller, which is to display the CodeIgniter “welcome” page,
-because “index” is the default controller method</td>
+because “index” is the default controller method</p></td>
 </tr>
-<tr class="row-odd"><td>localhost:8080/pages/index</td>
-<td>the CodeIgniter “welcome” page, because we explicitly asked for
-the “index” method</td>
+<tr class="row-odd"><td><p>localhost:8080/pages/index</p></td>
+<td><p>the CodeIgniter “welcome” page, because we explicitly asked for
+the “index” method</p></td>
 </tr>
-<tr class="row-even"><td>localhost:8080/pages/view</td>
-<td>the “home” page that you made above, because it is the default
-“page” parameter to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method.</td>
+<tr class="row-even"><td><p>localhost:8080/pages/view</p></td>
+<td><p>the “home” page that you made above, because it is the default
+“page” parameter to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method.</p></td>
 </tr>
-<tr class="row-odd"><td>localhost:8080/pages/view/home</td>
-<td>show the “home” page that you made above, because we explicitly
-asked for it</td>
+<tr class="row-odd"><td><p>localhost:8080/pages/view/home</p></td>
+<td><p>show the “home” page that you made above, because we explicitly
+asked for it</p></td>
 </tr>
-<tr class="row-even"><td>localhost:8080/pages/view/about</td>
-<td>the “about” page that you made above, because we explicitly
-asked for it</td>
+<tr class="row-even"><td><p>localhost:8080/pages/view/about</p></td>
+<td><p>the “about” page that you made above, because we explicitly
+asked for it</p></td>
 </tr>
-<tr class="row-odd"><td>localhost:8080/pages/view/shop</td>
-<td>a “404 - File Not Found” error page, because there is no
-<cite>app/Views/pages/shop.php</cite></td>
+<tr class="row-odd"><td><p>localhost:8080/pages/view/shop</p></td>
+<td><p>a “404 - File Not Found” error page, because there is no
+<cite>app/Views/pages/shop.php</cite></p></td>
 </tr>
 </tbody>
 </table>
@@ -573,8 +576,8 @@ method in the pages controller? Awesome!</p>
 <p>You should see something like the following:</p>
 <img alt="../_images/tutorial1.png" class="align-center" src="../_images/tutorial1.png" />
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When manually specifying routes, it is recommended to disable
+<p class="admonition-title">Note</p>
+<p>When manually specifying routes, it is recommended to disable
 auto-routing by setting <code class="docutils literal notranslate"><span class="pre">$routes-&gt;setAutoRoute(false);</span></code> in the Routes.php file.
 This ensures that only routes you define can be accessed.</p>
 </div>

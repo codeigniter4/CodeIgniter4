@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,13 +345,14 @@
 about the browser, mobile device, or robot visiting your site.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#using-the-user-agent-class" id="id1">Using the User Agent Class</a><ul>
-<li><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></li>
-<li><a class="reference internal" href="#user-agent-definitions" id="id3">User Agent Definitions</a></li>
-<li><a class="reference internal" href="#example" id="id4">Example</a></li>
+<li><p><a class="reference internal" href="#using-the-user-agent-class" id="id1">Using the User Agent Class</a></p>
+<ul>
+<li><p><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></p></li>
+<li><p><a class="reference internal" href="#user-agent-definitions" id="id3">User Agent Definitions</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id4">Example</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></li>
+<li><p><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="using-the-user-agent-class">
@@ -404,27 +408,23 @@ is available:</p>
 <h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\HTTP\UserAgent</code></dt>
+<code class="sig-name descname">CodeIgniter\HTTP\UserAgent</code></dt>
 <dd><dl class="method">
 <dt id="isBrowser">
-<code class="descname">isBrowser</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isBrowser" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Optional browser name</li>
+<code class="sig-name descname">isBrowser</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isBrowser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Optional browser name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the user agent is a (specified) browser, FALSE if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the user agent is a (specified) browser, FALSE if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Returns TRUE/FALSE (boolean) if the user agent is a known web browser.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">(</span><span class="s1">&#39;Safari&#39;</span><span class="p">))</span>
 <span class="p">{</span>
@@ -437,8 +437,8 @@ is available:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The string “Safari” in this example is an array key in the list of browser definitions.
+<p class="admonition-title">Note</p>
+<p>The string “Safari” in this example is an array key in the list of browser definitions.
 You can find this list in <strong>app/Config/UserAgents.php</strong> if you want to add new
 browsers or change the strings.</p>
 </div>
@@ -446,24 +446,20 @@ browsers or change the strings.</p>
 
 <dl class="method">
 <dt id="isMobile">
-<code class="descname">isMobile</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isMobile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Optional mobile device name</li>
+<code class="sig-name descname">isMobile</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isMobile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Optional mobile device name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the user agent is a (specified) mobile device, FALSE if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the user agent is a (specified) mobile device, FALSE if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Returns TRUE/FALSE (boolean) if the user agent is a known mobile device.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">(</span><span class="s1">&#39;iphone&#39;</span><span class="p">))</span>
 <span class="p">{</span>
@@ -483,28 +479,24 @@ browsers or change the strings.</p>
 
 <dl class="method">
 <dt id="isRobot">
-<code class="descname">isRobot</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isRobot" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Optional robot name</li>
+<code class="sig-name descname">isRobot</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isRobot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Optional robot name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the user agent is a (specified) robot, FALSE if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the user agent is a (specified) robot, FALSE if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Returns TRUE/FALSE (boolean) if the user agent is a known robot.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The user agent library only contains the most common robot definitions. It is not a complete list of bots.
+<p class="admonition-title">Note</p>
+<p>The user agent library only contains the most common robot definitions. It is not a complete list of bots.
 There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
 that commonly visit your site are missing from the list you can add them to your
 <strong>app/Config/UserAgents.php</strong> file.</p>
@@ -513,113 +505,99 @@ that commonly visit your site are missing from the list you can add them to your
 
 <dl class="method">
 <dt id="isReferral">
-<code class="descname">isReferral</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isReferral" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE if the user agent is a referral, FALSE if not</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">isReferral</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isReferral" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>TRUE if the user agent is a referral, FALSE if not</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 <p>Returns TRUE/FALSE (boolean) if the user agent was referred from another site.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getBrowser">
-<code class="descname">getBrowser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBrowser" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected browser or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getBrowser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBrowser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected browser or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the name of the web browser viewing your site.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getVersion">
-<code class="descname">getVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getVersion" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected browser version or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getVersion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected browser version or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the version number of the web browser viewing your site.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getMobile">
-<code class="descname">getMobile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getMobile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected mobile device brand or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getMobile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getMobile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected mobile device brand or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the name of the mobile device viewing your site.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getRobot">
-<code class="descname">getRobot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getRobot" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected robot name or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getRobot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getRobot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected robot name or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the name of the robot viewing your site.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getPlatform">
-<code class="descname">getPlatform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getPlatform" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected operating system or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getPlatform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getPlatform" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected operating system or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the platform viewing your site (Linux, Windows, OS X, etc.).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getReferrer">
-<code class="descname">getReferrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReferrer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Detected referrer or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getReferrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReferrer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected referrer or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>The referrer, if the user agent was referred from another site. Typically you’ll test for this as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isReferral</span><span class="p">())</span>
 <span class="p">{</span>
@@ -631,17 +609,15 @@ that commonly visit your site are missing from the list you can add them to your
 
 <dl class="method">
 <dt id="getAgentString">
-<code class="descname">getAgentString</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getAgentString" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Full user agent string or an empty string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getAgentString</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getAgentString" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Full user agent string or an empty string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
 <p>Returns a string containing the full user agent string. Typically it will be something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="nx">Macintosh</span><span class="p">;</span> <span class="nx">U</span><span class="p">;</span> <span class="nx">Intel</span> <span class="nx">Mac</span> <span class="nx">OS</span> <span class="nx">X</span><span class="p">;</span> <span class="nx">en</span><span class="o">-</span><span class="nx">US</span><span class="p">;</span> <span class="nx">rv</span><span class="o">:</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">0.4</span><span class="p">)</span> <span class="nx">Gecko</span><span class="o">/</span><span class="mi">20060613</span> <span class="nx">Camino</span><span class="o">/</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">2</span>
 </pre></div>
@@ -650,21 +626,17 @@ that commonly visit your site are missing from the list you can add them to your
 
 <dl class="method">
 <dt id="parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#parse" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – A custom user-agent string</li>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#parse" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – A custom user-agent string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>void</p>
+</dd>
+</dl>
 <p>Parses a custom user-agent string, different from the one reported by the current visitor.</p>
 </dd></dl>
 

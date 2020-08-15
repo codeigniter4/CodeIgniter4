@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,11 +344,11 @@
 <p>There are several ways to generate query results:</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#result-arrays" id="id1">Result Arrays</a></li>
-<li><a class="reference internal" href="#result-rows" id="id2">Result Rows</a></li>
-<li><a class="reference internal" href="#custom-result-objects" id="id3">Custom Result Objects</a></li>
-<li><a class="reference internal" href="#result-helper-methods" id="id4">Result Helper Methods</a></li>
-<li><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></li>
+<li><p><a class="reference internal" href="#result-arrays" id="id1">Result Arrays</a></p></li>
+<li><p><a class="reference internal" href="#result-rows" id="id2">Result Rows</a></p></li>
+<li><p><a class="reference internal" href="#custom-result-objects" id="id3">Custom Result Objects</a></p></li>
+<li><p><a class="reference internal" href="#result-helper-methods" id="id4">Result Helper Methods</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="result-arrays">
@@ -478,8 +481,8 @@ parameter:</p>
 </div>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All the methods above will load the whole result into memory
+<p class="admonition-title">Note</p>
+<p>All the methods above will load the whole result into memory
 (prefetching). Use <code class="docutils literal notranslate"><span class="pre">getUnbufferedRow()</span></code> for processing large
 result sets.</p>
 </div>
@@ -637,8 +640,8 @@ TRUE on success or FALSE on failure.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Not all database drivers support this feature and will return FALSE.
+<p class="admonition-title">Note</p>
+<p>Not all database drivers support this feature and will return FALSE.
 Most notably - you won’t be able to use it with PDO.</p>
 </div>
 </div>
@@ -646,28 +649,24 @@ Most notably - you won’t be able to use it with PDO.</p>
 <h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\Database\BaseResult</code></dt>
+<code class="sig-name descname">CodeIgniter\Database\BaseResult</code></dt>
 <dd><blockquote>
 <div><dl class="method">
 <dt id="getResult">
-<code class="descname">getResult</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getResult" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of requested results - array, object, or class name</li>
+<code class="sig-name descname">getResult</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getResult" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of requested results - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array containing the fetched rows</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array containing the fetched rows</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>A wrapper for the <code class="docutils literal notranslate"><span class="pre">getResultArray()</span></code>, <code class="docutils literal notranslate"><span class="pre">getResultObject()</span></code>
 and <code class="docutils literal notranslate"><span class="pre">getCustomResultObject()</span></code> methods.</p>
 <p>Usage: see <a class="reference internal" href="#result-arrays">Result Arrays</a>.</p>
@@ -675,17 +674,15 @@ and <code class="docutils literal notranslate"><span class="pre">getCustomResult
 
 <dl class="method">
 <dt id="getResultArray">
-<code class="descname">getResultArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultArray" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array containing the fetched rows</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getResultArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultArray" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array containing the fetched rows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>Returns the query results as an array of rows, where each
 row is itself an associative array.</p>
 <p>Usage: see <a class="reference internal" href="#result-arrays">Result Arrays</a>.</p>
@@ -693,17 +690,15 @@ row is itself an associative array.</p>
 
 <dl class="method">
 <dt id="getResultObject">
-<code class="descname">getResultObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultObject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array containing the fetched rows</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getResultObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array containing the fetched rows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>Returns the query results as an array of rows, where each
 row is an object of type <code class="docutils literal notranslate"><span class="pre">stdClass</span></code>.</p>
 <p>Usage: see <a class="reference internal" href="#result-arrays">Result Arrays</a>.</p>
@@ -711,49 +706,41 @@ row is an object of type <code class="docutils literal notranslate"><span class=
 
 <dl class="method">
 <dt id="getCustomResultObject">
-<code class="descname">getCustomResultObject</code><span class="sig-paren">(</span><em>$class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomResultObject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$class_name</strong> (<em>string</em>) – Class name for the resulting rows</li>
+<code class="sig-name descname">getCustomResultObject</code><span class="sig-paren">(</span><em class="sig-param">$class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomResultObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$class_name</strong> (<em>string</em>) – Class name for the resulting rows</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array containing the fetched rows</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array containing the fetched rows</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Returns the query results as an array of rows, where each
 row is an instance of the specified class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getRow">
-<code class="descname">getRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$n = 0</em><span class="optional">[</span>, <em>$type = 'object'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</li>
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">[</span>, <em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</p></li>
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The requested row or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The requested row or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>A wrapper for the <code class="docutils literal notranslate"><span class="pre">getRowArray()</span></code>, <code class="docutils literal notranslate"><span class="pre">getRowObject()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">getCustomRowObject()</span></code> methods.</p>
 <p>Usage: see <a class="reference internal" href="#result-rows">Result Rows</a>.</p>
@@ -761,24 +748,20 @@ row is an instance of the specified class.</p>
 
 <dl class="method">
 <dt id="getUnbufferedRow">
-<code class="descname">getUnbufferedRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUnbufferedRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getUnbufferedRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUnbufferedRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Next row from the result set or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Next row from the result set or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Fetches the next result row and returns it in the
 requested form.</p>
 <p>Usage: see <a class="reference internal" href="#result-rows">Result Rows</a>.</p>
@@ -786,48 +769,40 @@ requested form.</p>
 
 <dl class="method">
 <dt id="getRowArray">
-<code class="descname">getRowArray</code><span class="sig-paren">(</span><span class="optional">[</span><em>$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowArray" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</li>
+<code class="sig-name descname">getRowArray</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowArray" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The requested row or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The requested row or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 <p>Returns the requested result row as an associative array.</p>
 <p>Usage: see <a class="reference internal" href="#result-rows">Result Rows</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getRowObject">
-<code class="descname">getRowObject</code><span class="sig-paren">(</span><span class="optional">[</span><em>$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowObject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</li>
+<code class="sig-name descname">getRowObject</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The requested row or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">stdClass</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The requested row or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>stdClass</p>
+</dd>
+</dl>
 <p>Returns the requested result row as an object of type
 <code class="docutils literal notranslate"><span class="pre">stdClass</span></code>.</p>
 <p>Usage: see <a class="reference internal" href="#result-rows">Result Rows</a>.</p>
@@ -835,179 +810,149 @@ requested form.</p>
 
 <dl class="method">
 <dt id="getCustomRowObject">
-<code class="descname">getCustomRowObject</code><span class="sig-paren">(</span><em>$n</em>, <em>$type</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomRowObject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$n</strong> (<em>int</em>) – Index of the results row to return</li>
-<li><strong>$class_name</strong> (<em>string</em>) – Class name for the resulting row</li>
+<code class="sig-name descname">getCustomRowObject</code><span class="sig-paren">(</span><em class="sig-param">$n</em>, <em class="sig-param">$type</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomRowObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the results row to return</p></li>
+<li><p><strong>$class_name</strong> (<em>string</em>) – Class name for the resulting row</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The requested row or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">$type</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The requested row or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>$type</p>
+</dd>
+</dl>
 <p>Returns the requested result row as an instance of the
 requested class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="dataSeek">
-<code class="descname">dataSeek</code><span class="sig-paren">(</span><span class="optional">[</span><em>$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dataSeek" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$n</strong> (<em>int</em>) – Index of the results row to be returned next</li>
+<code class="sig-name descname">dataSeek</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dataSeek" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the results row to be returned next</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Moves the internal results row pointer to the desired offset.</p>
 <p>Usage: see <a class="reference internal" href="#result-helper-methods">Result Helper Methods</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="setRow">
-<code class="descname">setRow</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Column name or array of key/value pairs</li>
-<li><strong>$value</strong> (<em>mixed</em>) – Value to assign to the column, $key is a single field name</li>
+<code class="sig-name descname">setRow</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Column name or array of key/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>mixed</em>) – Value to assign to the column, $key is a single field name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>void</p>
+</dd>
+</dl>
 <p>Assigns a value to a particular column.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getNextRow">
-<code class="descname">getNextRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getNextRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getNextRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getNextRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Next row of result set, or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Next row of result set, or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Returns the next row from the result set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getPreviousRow">
-<code class="descname">getPreviousRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPreviousRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getPreviousRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPreviousRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Previous row of result set, or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Previous row of result set, or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Returns the previous row from the result set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getFirstRow">
-<code class="descname">getFirstRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getFirstRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getFirstRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getFirstRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">First row of result set, or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>First row of result set, or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Returns the first row from the result set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getLastRow">
-<code class="descname">getLastRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getLastRow" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</li>
+<code class="sig-name descname">getLastRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getLastRow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$type</strong> (<em>string</em>) – Type of the requested result - array, object, or class name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Last row of result set, or NULL if it doesn’t exist</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Last row of result set, or NULL if it doesn’t exist</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Returns the last row from the result set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getFieldCount">
-<code class="descname">getFieldCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldCount" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Number of fields in the result set</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getFieldCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldCount" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of fields in the result set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
 <p>Returns the number of fields in the result set.</p>
 <p>Usage: see <a class="reference internal" href="#result-helper-methods">Result Helper Methods</a>.</p>
 </dd></dl>
@@ -1015,49 +960,42 @@ requested class.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="getFieldNames">
-<code class="descname">getFieldNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFieldNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldNames" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">Array of column names</td>
-</tr>
-<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<div><dl class="field-list simple">
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p>Array of column names</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>Returns an array containing the field names in the
 result set.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="getFieldData">
-<code class="descname">getFieldData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldData" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array containing field meta-data</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">getFieldData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldData" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array containing field meta-data</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>Generates an array of <code class="docutils literal notranslate"><span class="pre">stdClass</span></code> objects containing
 field meta-data.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="freeResult">
-<code class="descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>void</p>
+</dd>
+</dl>
 <p>Frees a result set.</p>
 <p>Usage: see <a class="reference internal" href="#result-helper-methods">Result Helper Methods</a>.</p>
 </dd></dl>

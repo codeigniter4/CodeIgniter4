@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -343,15 +346,17 @@ Support for <code class="docutils literal notranslate"><span class="pre">PHPUnit
 helper methods to make testing every aspect of your application as painless as possible.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#system-set-up" id="id2">System Set Up</a><ul>
-<li><a class="reference internal" href="#installing-phpunit" id="id3">Installing phpUnit</a></li>
+<li><p><a class="reference internal" href="#system-set-up" id="id2">System Set Up</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installing-phpunit" id="id3">Installing phpUnit</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#testing-your-application" id="id4">Testing Your Application</a><ul>
-<li><a class="reference internal" href="#phpunit-configuration" id="id5">PHPUnit Configuration</a></li>
-<li><a class="reference internal" href="#the-test-class" id="id6">The Test Class</a></li>
-<li><a class="reference internal" href="#mocking-services" id="id7">Mocking Services</a></li>
-<li><a class="reference internal" href="#stream-filters" id="id8">Stream Filters</a></li>
+<li><p><a class="reference internal" href="#testing-your-application" id="id4">Testing Your Application</a></p>
+<ul>
+<li><p><a class="reference internal" href="#phpunit-configuration" id="id5">PHPUnit Configuration</a></p></li>
+<li><p><a class="reference internal" href="#the-test-class" id="id6">The Test Class</a></p></li>
+<li><p><a class="reference internal" href="#mocking-services" id="id7">Mocking Services</a></p></li>
+<li><p><a class="reference internal" href="#stream-filters" id="id8">Stream Filters</a></p></li>
 </ul>
 </li>
 </ul>
@@ -431,8 +436,8 @@ are expected to be located in the <strong>tests/app</strong> directory by defaul
 remember that the <strong>app</strong> directory is the root of the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, so any classes you use must
 have the correct namespace relative to <code class="docutils literal notranslate"><span class="pre">App</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
+<p class="admonition-title">Note</p>
+<p>Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
 </div>
 <p>When testing database results, you must use the <a class="reference external" href="database.html">CIDatabaseTestClass</a> class.</p>
 <div class="section" id="staging">
@@ -616,8 +621,8 @@ class exactly. The second parameter is the instance to replace it with.</p>
 <p><strong>reset()</strong></p>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
 </div>
 </div>
 <div class="section" id="stream-filters">

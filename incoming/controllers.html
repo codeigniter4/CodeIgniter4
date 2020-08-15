@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -341,20 +344,21 @@
 <p>Controllers are the heart of your application, as they determine how HTTP requests should be handled.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#what-is-a-controller" id="id1">What is a Controller?</a></li>
-<li><a class="reference internal" href="#let-s-try-it-hello-world" id="id2">Let’s try it: Hello World!</a></li>
-<li><a class="reference internal" href="#methods" id="id3">Methods</a></li>
-<li><a class="reference internal" href="#passing-uri-segments-to-your-methods" id="id4">Passing URI Segments to your methods</a></li>
-<li><a class="reference internal" href="#defining-a-default-controller" id="id5">Defining a Default Controller</a></li>
-<li><a class="reference internal" href="#remapping-method-calls" id="id6">Remapping Method Calls</a></li>
-<li><a class="reference internal" href="#private-methods" id="id7">Private methods</a></li>
-<li><a class="reference internal" href="#organizing-your-controllers-into-sub-directories" id="id8">Organizing Your Controllers into Sub-directories</a></li>
-<li><a class="reference internal" href="#included-properties" id="id9">Included Properties</a><ul>
-<li><a class="reference internal" href="#helpers" id="id10">Helpers</a></li>
+<li><p><a class="reference internal" href="#what-is-a-controller" id="id1">What is a Controller?</a></p></li>
+<li><p><a class="reference internal" href="#let-s-try-it-hello-world" id="id2">Let’s try it: Hello World!</a></p></li>
+<li><p><a class="reference internal" href="#methods" id="id3">Methods</a></p></li>
+<li><p><a class="reference internal" href="#passing-uri-segments-to-your-methods" id="id4">Passing URI Segments to your methods</a></p></li>
+<li><p><a class="reference internal" href="#defining-a-default-controller" id="id5">Defining a Default Controller</a></p></li>
+<li><p><a class="reference internal" href="#remapping-method-calls" id="id6">Remapping Method Calls</a></p></li>
+<li><p><a class="reference internal" href="#private-methods" id="id7">Private methods</a></p></li>
+<li><p><a class="reference internal" href="#organizing-your-controllers-into-sub-directories" id="id8">Organizing Your Controllers into Sub-directories</a></p></li>
+<li><p><a class="reference internal" href="#included-properties" id="id9">Included Properties</a></p>
+<ul>
+<li><p><a class="reference internal" href="#helpers" id="id10">Helpers</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#validating-data" id="id11">Validating data</a></li>
-<li><a class="reference internal" href="#that-s-it" id="id12">That’s it!</a></li>
+<li><p><a class="reference internal" href="#validating-data" id="id11">Validating data</a></p></li>
+<li><p><a class="reference internal" href="#that-s-it" id="id12">That’s it!</a></p></li>
 </ul>
 </div>
 <div class="section" id="what-is-a-controller">
@@ -386,8 +390,8 @@ and put the following code in it:</p>
 </div>
 <p>Then save the file to your <strong>/app/Controllers/</strong> directory.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">The file must be called ‘Helloworld.php’, with a capital ‘H’.</p>
+<p class="admonition-title">Important</p>
+<p>The file must be called ‘Helloworld.php’, with a capital ‘H’.</p>
 </div>
 <p>Now visit your site using a URL similar to this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span>
@@ -398,8 +402,8 @@ and put the following code in it:</p>
 </pre></div>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.</p>
+<p class="admonition-title">Important</p>
+<p>Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.</p>
 </div>
 <p>This is valid:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -437,14 +441,14 @@ and put the following code in it:</p>
 <p>Also, always make sure your controller extends the parent controller
 class so that it can inherit all its methods.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The system will attempt to match the URI against Controllers by matching each segment against
 folders/files in APPPATH/Controllers, when a match wasn’t found against defined routes.
 That’s why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 If you want another naming convention you need to manually define it using the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
 <p>Here is an example based on PSR-4: Autoloader:</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">NamespaceName</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">SubNamespaceNames</span><span class="o">&gt;</span><span class="p">)</span><span class="o">*</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">ClassName</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">NamespaceName</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">SubNamespaceNames</span><span class="o">&gt;</span><span class="p">)</span><span class="o">*</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">ClassName</span><span class="o">&gt;</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
 </pre></div>
@@ -510,8 +514,8 @@ method as parameters.</p>
 </pre></div>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If you are using the <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a>
+<p class="admonition-title">Important</p>
+<p>If you are using the <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a>
 feature, the segments passed to your method will be the re-routed
 ones.</p>
 </div>
@@ -534,8 +538,8 @@ file and set this variable:</p>
 <p>If you now browse to your site without specifying any URI segments you’ll
 see the “Hello World” message.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The line <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code> is an optimization that you will want to use in a “real-world” app. But for demonstration purposes we don’t want to use that feature. <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get()</span></code> is explained in <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a></p>
+<p class="admonition-title">Note</p>
+<p>The line <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code> is an optimization that you will want to use in a “real-world” app. But for demonstration purposes we don’t want to use that feature. <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get()</span></code> is explained in <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a></p>
 </div>
 <p>For more information, please refer to the “Routes Configuration Options” section of the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> documentation.</p>
@@ -552,8 +556,8 @@ this behavior through the use of the <code class="docutils literal notranslate">
 </pre></div>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">If your controller contains a method named _remap(),
+<p class="admonition-title">Important</p>
+<p>If your controller contains a method named _remap(),
 it will <strong>always</strong> get called regardless of what your URI contains. It
 overrides the normal behavior in which the URI determines which method
 is called, allowing you to define your own method routing rules.</p>
@@ -613,18 +617,18 @@ permits you to do this.</p>
 <p>Simply create sub-directories under the main <em>app/Controllers/</em>
 one and place your controller classes within them.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.</p>
+<p class="admonition-title">Important</p>
+<p>Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>When using this feature the first segment of your URI must
 specify the folder. For example, let’s say you have a controller located here:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">/</span><span class="nx">Controllers</span><span class="o">/</span><span class="nx">Products</span><span class="o">/</span><span class="nx">Shoes</span><span class="o">.</span><span class="nx">php</span>
 </pre></div>
 </div>
 <p>To call the above controller your URI will look something like this:</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">show</span><span class="o">/</span><span class="mi">123</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">show</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 </div>
@@ -666,8 +670,8 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including YEAR, MONTH, and more.</p>
+<p class="admonition-title">Note</p>
+<p>A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including YEAR, MONTH, and more.</p>
 </div>
 <div class="section" id="helpers">
 <h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
@@ -726,8 +730,8 @@ the $rules array with the name of the group as defined in <code class="docutils 
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Validation can also be handled automatically in the model, but sometimes it’s easier to do it in the controller. Where is up to you.</p>
+<p class="admonition-title">Note</p>
+<p>Validation can also be handled automatically in the model, but sometimes it’s easier to do it in the controller. Where is up to you.</p>
 </div>
 </div>
 <div class="section" id="that-s-it">

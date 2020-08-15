@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -344,21 +347,23 @@ life-cycle of a single request, ensuring that the routing works, the response is
 and more.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></li>
-<li><a class="reference internal" href="#requesting-a-page" id="id2">Requesting A Page</a><ul>
-<li><a class="reference internal" href="#setting-different-routes" id="id3">Setting Different Routes</a></li>
-<li><a class="reference internal" href="#setting-session-values" id="id4">Setting Session Values</a></li>
-<li><a class="reference internal" href="#bypassing-events" id="id5">Bypassing Events</a></li>
+<li><p><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></p></li>
+<li><p><a class="reference internal" href="#requesting-a-page" id="id2">Requesting A Page</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-different-routes" id="id3">Setting Different Routes</a></p></li>
+<li><p><a class="reference internal" href="#setting-session-values" id="id4">Setting Session Values</a></p></li>
+<li><p><a class="reference internal" href="#bypassing-events" id="id5">Bypassing Events</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#testing-the-response" id="id6">Testing the Response</a><ul>
-<li><a class="reference internal" href="#checking-response-status" id="id7">Checking Response Status</a></li>
-<li><a class="reference internal" href="#session-assertions" id="id8">Session Assertions</a></li>
-<li><a class="reference internal" href="#header-assertions" id="id9">Header Assertions</a></li>
-<li><a class="reference internal" href="#cookie-assertions" id="id10">Cookie Assertions</a></li>
-<li><a class="reference internal" href="#dom-assertions" id="id11">DOM Assertions</a></li>
-<li><a class="reference internal" href="#working-with-json" id="id12">Working With JSON</a></li>
-<li><a class="reference internal" href="#working-with-xml" id="id13">Working With XML</a></li>
+<li><p><a class="reference internal" href="#testing-the-response" id="id6">Testing the Response</a></p>
+<ul>
+<li><p><a class="reference internal" href="#checking-response-status" id="id7">Checking Response Status</a></p></li>
+<li><p><a class="reference internal" href="#session-assertions" id="id8">Session Assertions</a></p></li>
+<li><p><a class="reference internal" href="#header-assertions" id="id9">Header Assertions</a></p></li>
+<li><p><a class="reference internal" href="#cookie-assertions" id="id10">Cookie Assertions</a></p></li>
+<li><p><a class="reference internal" href="#dom-assertions" id="id11">DOM Assertions</a></p></li>
+<li><p><a class="reference internal" href="#working-with-json" id="id12">Working With JSON</a></p></li>
+<li><p><a class="reference internal" href="#working-with-xml" id="id13">Working With XML</a></p></li>
 </ul>
 </li>
 </ul>
@@ -415,8 +420,8 @@ populated, while a <strong>post</strong> request would have the <strong>$_POST</
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The $params array does not make sense for every HTTP verb, but is included for consistency.</p>
+<p class="admonition-title">Note</p>
+<p>The $params array does not make sense for every HTTP verb, but is included for consistency.</p>
 </div>
 <div class="section" id="setting-different-routes">
 <h3><a class="toc-backref" href="#id3">Setting Different Routes</a><a class="headerlink" href="#setting-different-routes" title="Permalink to this headline">¶</a></h3>
@@ -468,8 +473,8 @@ to send out emails. You can tell the system to skip any event handling with the 
 <p>Once you’ve performed a <code class="docutils literal notranslate"><span class="pre">call()</span></code> and have results, there are a number of new assertions that you can use in your
 tests.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The Response object is publicly available at <code class="docutils literal notranslate"><span class="pre">$result-&gt;response</span></code>. You can use that instance to perform
+<p class="admonition-title">Note</p>
+<p>The Response object is publicly available at <code class="docutils literal notranslate"><span class="pre">$result-&gt;response</span></code>. You can use that instance to perform
 other assertions against, if needed.</p>
 </div>
 <div class="section" id="checking-response-status">
@@ -636,8 +641,8 @@ can help to test the responses.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Be aware that the JSON string will be pretty-printed in the result.</p>
+<p class="admonition-title">Note</p>
+<p>Be aware that the JSON string will be pretty-printed in the result.</p>
 </div>
 <p><strong>assertJSONFragment(array $fragment)</strong></p>
 <p>Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.</p>
@@ -651,8 +656,8 @@ can help to test the responses.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This simply uses phpUnit’s own <a class="reference external" href="https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset">assertArraySubset()</a>
+<p class="admonition-title">Note</p>
+<p>This simply uses phpUnit’s own <a class="reference external" href="https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset">assertArraySubset()</a>
 method to do the comparison.</p>
 </div>
 <p><strong>assertJSONExact($test)</strong></p>

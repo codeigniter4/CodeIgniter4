@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -351,19 +354,19 @@ for safer queries, since the values are escaped automatically by the
 system.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-the-query-builder" id="id1">Loading the Query Builder</a></li>
-<li><a class="reference internal" href="#selecting-data" id="id2">Selecting Data</a></li>
-<li><a class="reference internal" href="#looking-for-specific-data" id="id3">Looking for Specific Data</a></li>
-<li><a class="reference internal" href="#looking-for-similar-data" id="id4">Looking for Similar Data</a></li>
-<li><a class="reference internal" href="#ordering-results" id="id5">Ordering results</a></li>
-<li><a class="reference internal" href="#limiting-or-counting-results" id="id6">Limiting or Counting Results</a></li>
-<li><a class="reference internal" href="#query-grouping" id="id7">Query grouping</a></li>
-<li><a class="reference internal" href="#inserting-data" id="id8">Inserting Data</a></li>
-<li><a class="reference internal" href="#updating-data" id="id9">Updating Data</a></li>
-<li><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></li>
-<li><a class="reference internal" href="#method-chaining" id="id11">Method Chaining</a></li>
-<li><a class="reference internal" href="#resetting-query-builder" id="id12">Resetting Query Builder</a></li>
-<li><a class="reference internal" href="#class-reference" id="id13">Class Reference</a></li>
+<li><p><a class="reference internal" href="#loading-the-query-builder" id="id1">Loading the Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#selecting-data" id="id2">Selecting Data</a></p></li>
+<li><p><a class="reference internal" href="#looking-for-specific-data" id="id3">Looking for Specific Data</a></p></li>
+<li><p><a class="reference internal" href="#looking-for-similar-data" id="id4">Looking for Similar Data</a></p></li>
+<li><p><a class="reference internal" href="#ordering-results" id="id5">Ordering results</a></p></li>
+<li><p><a class="reference internal" href="#limiting-or-counting-results" id="id6">Limiting or Counting Results</a></p></li>
+<li><p><a class="reference internal" href="#query-grouping" id="id7">Query grouping</a></p></li>
+<li><p><a class="reference internal" href="#inserting-data" id="id8">Inserting Data</a></p></li>
+<li><p><a class="reference internal" href="#updating-data" id="id9">Updating Data</a></p></li>
+<li><p><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></p></li>
+<li><p><a class="reference internal" href="#method-chaining" id="id11">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id12">Resetting Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id13">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="loading-the-query-builder">
@@ -452,8 +455,8 @@ function:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are selecting all (*) from a table you do not need to
+<p class="admonition-title">Note</p>
+<p>If you are selecting all (*) from a table you do not need to
 use this function. When omitted, CodeIgniter assumes that you wish
 to select all fields and automatically adds ‘SELECT *’.</p>
 </div>
@@ -504,8 +507,8 @@ the resulting field.</p>
 selectMax(), You can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This method is particularly helpful when used with <code class="docutils literal notranslate"><span class="pre">groupBy()</span></code>. For
+<p class="admonition-title">Note</p>
+<p>This method is particularly helpful when used with <code class="docutils literal notranslate"><span class="pre">groupBy()</span></code>. For
 counting results generally see <code class="docutils literal notranslate"><span class="pre">countAll()</span></code> or <code class="docutils literal notranslate"><span class="pre">countAllResults()</span></code>.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectCount</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
@@ -520,8 +523,8 @@ counting results generally see <code class="docutils literal notranslate"><span 
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">As shown earlier, the FROM portion of your query can is specified
+<p class="admonition-title">Note</p>
+<p>As shown earlier, the FROM portion of your query can is specified
 in the $db-&gt;table() function. Additional calls to from() will add more tables
 to the FROM portion of your query.</p>
 </div>
@@ -552,12 +555,12 @@ outer, and right outer.</p>
 <p>This function enables you to set <strong>WHERE</strong> clauses using one of four
 methods:</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values passed to this function are escaped automatically,
+<p class="admonition-title">Note</p>
+<p>All values passed to this function are escaped automatically,
 producing safer queries.</p>
 </div>
 <ol class="arabic">
-<li><p class="first"><strong>Simple key/value method:</strong></p>
+<li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span> <span class="c1">// Produces: WHERE name = &#39;Joe&#39;</span>
 </pre></div>
@@ -573,7 +576,7 @@ AND between them:</p>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Custom key/value method:</strong></p>
+<li><p><strong>Custom key/value method:</strong></p>
 <blockquote>
 <div><p>You can include an operator in the first parameter in order to
 control the comparison:</p>
@@ -583,7 +586,7 @@ control the comparison:</p>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Associative array method:</strong></p>
+<li><p><strong>Associative array method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
@@ -597,9 +600,8 @@ control the comparison:</p>
 </div>
 </div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Custom string:</strong></dt>
-<dd><blockquote class="first">
+<li><dl>
+<dt><strong>Custom string:</strong></dt><dd><blockquote>
 <div><p>You can write your own clauses manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
@@ -608,16 +610,15 @@ control the comparison:</p>
 </div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code> accepts an optional third parameter. If you set it to
 FALSE, CodeIgniter will not try to protect your field or table names.</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Subqueries:</strong></dt>
-<dd><p class="first">You can use an anonymous function to create a subquery.</p>
-<div class="last highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<li><dl>
+<dt><strong>Subqueries:</strong></dt><dd><p>You can use an anonymous function to create a subquery.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;MAX(advance_amount)&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="p">});</span>
 <span class="c1">// Produces: WHERE &quot;advance_amount&quot; &lt; (SELECT MAX(advance_amount) FROM &quot;orders&quot; WHERE &quot;id&quot; &gt; 2)</span>
@@ -722,18 +723,18 @@ if appropriate</p>
 <p>This method enables you to generate <strong>LIKE</strong> clauses, useful for doing
 searches.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values passed to this method are escaped automatically.</p>
+<p class="admonition-title">Note</p>
+<p>All values passed to this method are escaped automatically.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All <code class="docutils literal notranslate"><span class="pre">like*</span></code> method variations can be forced to perform case-insensitive searches by passing
+<p class="admonition-title">Note</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">like*</span></code> method variations can be forced to perform case-insensitive searches by passing
 a fifth parameter of <code class="docutils literal notranslate"><span class="pre">true</span></code> to the method. This will use platform-specific features where available
 otherwise, will force the values to be lowercase, i.e. <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
 may require indexes to be made for <code class="docutils literal notranslate"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">column</span></code> to be effective.</p>
 </div>
 <ol class="arabic">
-<li><p class="first"><strong>Simple key/value method:</strong></p>
+<li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
@@ -756,7 +757,7 @@ an optional third argument. Your options are ‘before’, ‘after’ and
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Associative array method:</strong></p>
+<li><p><strong>Associative array method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
@@ -906,18 +907,18 @@ if appropriate</p>
 <p>This method enables you to generate <strong>LIKE</strong> clauses for HAVING part or the query, useful for doing
 searches.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values passed to this method are escaped automatically.</p>
+<p class="admonition-title">Note</p>
+<p>All values passed to this method are escaped automatically.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All <code class="docutils literal notranslate"><span class="pre">havingLike*</span></code> method variations can be forced to perform case-insensitive searches by passing
+<p class="admonition-title">Note</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">havingLike*</span></code> method variations can be forced to perform case-insensitive searches by passing
 a fifth parameter of <code class="docutils literal notranslate"><span class="pre">true</span></code> to the method. This will use platform-specific features where available
 otherwise, will force the values to be lowercase, i.e. <code class="docutils literal notranslate"><span class="pre">HAVING</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
 may require indexes to be made for <code class="docutils literal notranslate"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">column</span></code> to be effective.</p>
 </div>
 <ol class="arabic">
-<li><p class="first"><strong>Simple key/value method:</strong></p>
+<li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
@@ -940,7 +941,7 @@ an optional third argument. Your options are ‘before’, ‘after’ and
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Associative array method:</strong></p>
+<li><p><strong>Associative array method:</strong></p>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
@@ -1004,8 +1005,8 @@ be ignored, unless you specify a numeric seed value.</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Random ordering is not currently supported in Oracle and
+<p class="admonition-title">Note</p>
+<p>Random ordering is not currently supported in Oracle and
 will default to ASC instead.</p>
 </div>
 </div>
@@ -1034,7 +1035,8 @@ Builder query. Queries will accept Query Builder restrictors such as
 to <code class="docutils literal notranslate"><span class="pre">select()</span></code>. If you need to keep them, you can pass <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> as the
 first parameter.</p>
 <blockquote>
-<div>echo $builder-&gt;countAllResults(false); // Produces an integer, like 17</div></blockquote>
+<div><p>echo $builder-&gt;countAllResults(false); // Produces an integer, like 17</p>
+</div></blockquote>
 <p><strong>$builder-&gt;countAll()</strong></p>
 <p>Permits you to determine the number of rows in a particular table.
 Example:</p>
@@ -1065,8 +1067,8 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">groups need to be balanced, make sure every groupStart() is matched by a groupEnd().</p>
+<p class="admonition-title">Note</p>
+<p>groups need to be balanced, make sure every groupStart() is matched by a groupEnd().</p>
 </div>
 <p><strong>$builder-&gt;groupStart()</strong></p>
 <p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query.</p>
@@ -1122,8 +1124,8 @@ function. Here is an example using an array:</p>
 </div>
 <p>The first parameter is an object.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values are escaped automatically producing safer queries.</p>
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
 </div>
 <p><strong>$builder-&gt;ignore()</strong></p>
 <p>Generates an insert ignore string based on the data you supply, and runs the
@@ -1172,8 +1174,8 @@ parameter. The reason this worked is that the query has not been executed
 using <cite>$builder-&gt;insert()</cite> which resets values or reset directly using
 <cite>$builder-&gt;resetQuery()</cite>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This method doesn’t work for batched inserts.</p>
+<p class="admonition-title">Note</p>
+<p>This method doesn’t work for batched inserts.</p>
 </div>
 <p><strong>$builder-&gt;insertBatch()</strong></p>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1198,8 +1200,8 @@ function. Here is an example using an array:</p>
 </div>
 <p>The first parameter is an associative array of values.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values are escaped automatically producing safer queries.</p>
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
 </div>
 </div>
 <div class="section" id="updating-data">
@@ -1321,8 +1323,8 @@ is an example using an array:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values are escaped automatically producing safer queries.</p>
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
 </div>
 <p>You’ll notice the use of the $builder-&gt;where() function, enabling you
 to set the WHERE clause. You can optionally pass this information
@@ -1369,12 +1371,12 @@ Here is an example using an array:</p>
 </div>
 <p>The first parameter is an associative array of values, the second parameter is the where key.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All values are escaped automatically producing safer queries.</p>
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">affectedRows()</span></code> won’t give you proper results with this method,
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">affectedRows()</span></code> won’t give you proper results with this method,
 due to the very nature of how it works. Instead, <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>
 returns the number of rows affected.</p>
 </div>
@@ -1383,8 +1385,8 @@ returns the number of rows affected.</p>
 that it produces an UPDATE SQL string instead of an INSERT SQL string.</p>
 <p>For more information view documentation for <cite>$builder-&gt;getCompiledInsert()</cite>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This method doesn’t work for batched updates.</p>
+<p class="admonition-title">Note</p>
+<p>This method doesn’t work for batched updates.</p>
 </div>
 </div>
 <div class="section" id="deleting-data">
@@ -1422,8 +1424,8 @@ query:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the TRUNCATE command isn’t available, truncate() will
+<p class="admonition-title">Note</p>
+<p>If the TRUNCATE command isn’t available, truncate() will
 execute as “DELETE FROM table”.</p>
 </div>
 <p><strong>$builder-&gt;getCompiledDelete()</strong></p>
@@ -1471,1200 +1473,1018 @@ run the query:</p>
 <h2><a class="toc-backref" href="#id13">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\Database\BaseBuilder</code></dt>
+<code class="sig-name descname">CodeIgniter\Database\BaseBuilder</code></dt>
 <dd><blockquote>
 <div><dl class="method">
 <dt id="resetQuery">
-<code class="descname">resetQuery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resetQuery" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">resetQuery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resetQuery" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Resets the current Query Builder state. Useful when you want
 to build a query that can be canceled under certain conditions.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="countAllResults">
-<code class="descname">countAllResults</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAllResults" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset values for SELECTs</li>
+<code class="sig-name descname">countAllResults</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAllResults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset values for SELECTs</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows in the query result</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows in the query result</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 <p>Generates a platform-specific query string that counts
 all records returned by an Query Builder query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="countAll">
-<code class="descname">countAll</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAll" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset values for SELECTs</li>
+<code class="sig-name descname">countAll</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAll" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset values for SELECTs</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows in the query result</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows in the query result</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 <p>Generates a platform-specific query string that counts
 all records returned by an Query Builder query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>[$limit = NULL[, $offset = NULL[, $reset = TRUE]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#get" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</li>
-<li><strong>$offset</strong> (<em>int</em>) – The OFFSET clause</li>
-<li><strong>$reset</strong> (<em>bool</em>) – Do we want to clear query builder values?</li>
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">[$limit = NULL[, $offset = NULL[, $reset = TRUE]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#get" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</p></li>
+<li><p><strong>$offset</strong> (<em>int</em>) – The OFFSET clause</p></li>
+<li><p><strong>$reset</strong> (<em>bool</em>) – Do we want to clear query builder values?</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseResultInterface instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseResultInterface</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseResultInterface instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseResultInterface</p>
+</dd>
+</dl>
 <p>Compiles and runs SELECT statement based on the already
 called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getWhere">
-<code class="descname">getWhere</code><span class="sig-paren">(</span><em>[$where = NULL[, $limit = NULL[, $offset = NULL[, $reset = TRUE]]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#getWhere" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$where</strong> (<em>string</em>) – The WHERE clause</li>
-<li><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</li>
-<li><strong>$offset</strong> (<em>int</em>) – The OFFSET clause</li>
-<li><strong>$reset</strong> (<em>bool</em>) – Do we want to clear query builder values?</li>
+<code class="sig-name descname">getWhere</code><span class="sig-paren">(</span><em class="sig-param">[$where = NULL[, $limit = NULL[, $offset = NULL[, $reset = TRUE]]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#getWhere" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$where</strong> (<em>string</em>) – The WHERE clause</p></li>
+<li><p><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</p></li>
+<li><p><strong>$offset</strong> (<em>int</em>) – The OFFSET clause</p></li>
+<li><p><strong>$reset</strong> (<em>bool</em>) – Do we want to clear query builder values?</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseResultInterface instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseResultInterface</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseResultInterface instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseResultInterface</p>
+</dd>
+</dl>
 <p>Same as <code class="docutils literal notranslate"><span class="pre">get()</span></code>, but also allows the WHERE to be added directly.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="select">
-<code class="descname">select</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = '*'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#select" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – The SELECT portion of a query</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = '*'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#select" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – The SELECT portion of a query</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="selectAvg">
-<code class="descname">selectAvg</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectAvg" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – Field to compute the average of</li>
-<li><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</li>
+<code class="sig-name descname">selectAvg</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = ''</em><span class="optional">[</span>, <em class="sig-param">$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectAvg" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – Field to compute the average of</p></li>
+<li><p><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT AVG(field) clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="selectMax">
-<code class="descname">selectMax</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMax" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – Field to compute the maximum of</li>
-<li><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</li>
+<code class="sig-name descname">selectMax</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = ''</em><span class="optional">[</span>, <em class="sig-param">$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMax" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – Field to compute the maximum of</p></li>
+<li><p><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT MAX(field) clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="selectMin">
-<code class="descname">selectMin</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMin" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – Field to compute the minimum of</li>
-<li><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</li>
+<code class="sig-name descname">selectMin</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = ''</em><span class="optional">[</span>, <em class="sig-param">$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – Field to compute the minimum of</p></li>
+<li><p><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT MIN(field) clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="selectSum">
-<code class="descname">selectSum</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectSum" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – Field to compute the sum of</li>
-<li><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</li>
+<code class="sig-name descname">selectSum</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = ''</em><span class="optional">[</span>, <em class="sig-param">$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectSum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – Field to compute the sum of</p></li>
+<li><p><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT SUM(field) clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="selectCount">
-<code class="descname">selectCount</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectCount" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$select</strong> (<em>string</em>) – Field to compute the average of</li>
-<li><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</li>
+<code class="sig-name descname">selectCount</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$select = ''</em><span class="optional">[</span>, <em class="sig-param">$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectCount" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$select</strong> (<em>string</em>) – Field to compute the average of</p></li>
+<li><p><strong>$alias</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a SELECT COUNT(field) clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="distinct">
-<code class="descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em>$val = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#distinct" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$val</strong> (<em>bool</em>) – Desired value of the “distinct” flag</li>
+<code class="sig-name descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$val = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#distinct" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$val</strong> (<em>bool</em>) – Desired value of the “distinct” flag</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Sets a flag which tells the query builder to add
 a DISTINCT clause to the SELECT portion of the query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="from">
-<code class="descname">from</code><span class="sig-paren">(</span><em>$from</em><span class="optional">[</span>, <em>$overwrite = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#from" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$from</strong> (<em>mixed</em>) – Table name(s); string or array</li>
-<li><strong>$overwrite</strong> (<em>bool</em>) – Should we remove the first table existing?</li>
+<code class="sig-name descname">from</code><span class="sig-paren">(</span><em class="sig-param">$from</em><span class="optional">[</span>, <em class="sig-param">$overwrite = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#from" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$from</strong> (<em>mixed</em>) – Table name(s); string or array</p></li>
+<li><p><strong>$overwrite</strong> (<em>bool</em>) – Should we remove the first table existing?</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Specifies the FROM clause of a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="join">
-<code class="descname">join</code><span class="sig-paren">(</span><em>$table</em>, <em>$cond</em><span class="optional">[</span>, <em>$type = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#join" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Table name to join</li>
-<li><strong>$cond</strong> (<em>string</em>) – The JOIN ON condition</li>
-<li><strong>$type</strong> (<em>string</em>) – The JOIN type</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param">$table</em>, <em class="sig-param">$cond</em><span class="optional">[</span>, <em class="sig-param">$type = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#join" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Table name to join</p></li>
+<li><p><strong>$cond</strong> (<em>string</em>) – The JOIN ON condition</p></li>
+<li><p><strong>$type</strong> (<em>string</em>) – The JOIN type</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a JOIN clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="where">
-<code class="descname">where</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#where" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Name of field to compare, or associative array</li>
-<li><strong>$value</strong> (<em>mixed</em>) – If a single key, compared to this value</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">where</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#where" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Name of field to compare, or associative array</p></li>
+<li><p><strong>$value</strong> (<em>mixed</em>) – If a single key, compared to this value</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates the WHERE portion of the query.
 Separates multiple calls with ‘AND’.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orWhere">
-<code class="descname">orWhere</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhere" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Name of field to compare, or associative array</li>
-<li><strong>$value</strong> (<em>mixed</em>) – If a single key, compared to this value</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orWhere</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhere" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Name of field to compare, or associative array</p></li>
+<li><p><strong>$value</strong> (<em>mixed</em>) – If a single key, compared to this value</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates the WHERE portion of the query.
 Separates multiple calls with ‘OR’.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orWhereIn">
-<code class="descname">orWhereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The field to search</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orWhereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The field to search</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a WHERE field IN(‘item’, ‘item’) SQL query,
 joined with ‘OR’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orWhereNotIn">
-<code class="descname">orWhereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereNotIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The field to search</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orWhereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The field to search</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a WHERE field NOT IN(‘item’, ‘item’) SQL query,
 joined with ‘OR’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="whereIn">
-<code class="descname">whereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Name of field to examine</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">whereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Name of field to examine</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a WHERE field IN(‘item’, ‘item’) SQL query,
 joined with ‘AND’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="whereNotIn">
-<code class="descname">whereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereNotIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Name of field to examine</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">whereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Name of field to examine</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a WHERE field NOT IN(‘item’, ‘item’) SQL query,
 joined with ‘AND’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="groupStart">
-<code class="descname">groupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">groupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression, using ANDs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orGroupStart">
-<code class="descname">orGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">orGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression, using ORs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="notGroupStart">
-<code class="descname">notGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">notGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression, using AND NOTs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orNotGroupStart">
-<code class="descname">orNotGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">orNotGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression, using OR NOTs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="groupEnd">
-<code class="descname">groupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupEnd" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">groupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupEnd" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Ends a group expression.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="like">
-<code class="descname">like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#like" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">like</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#like" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a LIKE clause to a query, separating multiple calls with AND.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orLike">
-<code class="descname">orLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">orLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a LIKE clause to a query, separating multiple class with OR.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="notLike">
-<code class="descname">notLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">notLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a NOT LIKE clause to a query, separating multiple calls with AND.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orNotLike">
-<code class="descname">orNotLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">orNotLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a NOT LIKE clause to a query, separating multiple calls with OR.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="having">
-<code class="descname">having</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#having" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Identifier (string) or associative array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Value sought if $key is an identifier</li>
-<li><strong>$escape</strong> (<em>string</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">having</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#having" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Identifier (string) or associative array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Value sought if $key is an identifier</p></li>
+<li><p><strong>$escape</strong> (<em>string</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a HAVING clause to a query, separating multiple calls with AND.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orHaving">
-<code class="descname">orHaving</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHaving" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Identifier (string) or associative array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Value sought if $key is an identifier</li>
-<li><strong>$escape</strong> (<em>string</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orHaving</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHaving" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Identifier (string) or associative array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Value sought if $key is an identifier</p></li>
+<li><p><strong>$escape</strong> (<em>string</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a HAVING clause to a query, separating multiple calls with OR.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orHavingIn">
-<code class="descname">orHavingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The field to search</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orHavingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The field to search</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a HAVING field IN(‘item’, ‘item’) SQL query,
 joined with ‘OR’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orHavingNotIn">
-<code class="descname">orHavingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingNotIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – The field to search</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orHavingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The field to search</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a HAVING field NOT IN(‘item’, ‘item’) SQL query,
 joined with ‘OR’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="havingIn">
-<code class="descname">havingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Name of field to examine</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">havingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Name of field to examine</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a HAVING field IN(‘item’, ‘item’) SQL query,
 joined with ‘AND’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="havingNotIn">
-<code class="descname">havingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingNotIn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) – Name of field to examine</li>
-<li><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">havingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key = NULL</em><span class="optional">[</span>, <em class="sig-param">$values = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Name of field to examine</p></li>
+<li><p><strong>$values</strong> (<em>array|Closure</em>) – Array of target values, or anonymous function for subquery</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Generates a HAVING field NOT IN(‘item’, ‘item’) SQL query,
 joined with ‘AND’ if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="havingLike">
-<code class="descname">havingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">havingLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a LIKE clause to a HAVING part of the query, separating multiple calls with AND.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orHavingLike">
-<code class="descname">orHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">orHavingLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a LIKE clause to a HAVING part of the query, separating multiple class with OR.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="notHavingLike">
-<code class="descname">notHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</li>
+<code class="sig-name descname">notHavingLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$insensitiveSearch</strong> (<em>bool</em>) – Whether to force a case-insensitive search</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with AND.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orNotHavingLike">
-<code class="descname">orNotHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingLike" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>string</em>) – Field name</li>
-<li><strong>$match</strong> (<em>string</em>) – Text portion to match</li>
-<li><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orNotHavingLike</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
+<li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with OR.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="havingGroupStart">
-<code class="descname">havingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">havingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression for HAVING clause, using ANDs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orHavingGroupStart">
-<code class="descname">orHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">orHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression for HAVING clause, using ORs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="notHavingGroupStart">
-<code class="descname">notHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">notHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression for HAVING clause, using AND NOTs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orNotHavingGroupStart">
-<code class="descname">orNotHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingGroupStart" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">orNotHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Starts a group expression for HAVING clause, using OR NOTs for the conditions inside it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="havingGroupEnd">
-<code class="descname">havingGroupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupEnd" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">havingGroupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupEnd" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>BaseBuilder instance</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../helpers/html_helper.html#object" title="object">object</a></p>
+</dd>
+</dl>
 <p>Ends a group expression for HAVING clause.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="groupBy">
-<code class="descname">groupBy</code><span class="sig-paren">(</span><em>$by</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#groupBy" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$by</strong> (<em>mixed</em>) – Field(s) to group by; string or array</li>
+<code class="sig-name descname">groupBy</code><span class="sig-paren">(</span><em class="sig-param">$by</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#groupBy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$by</strong> (<em>mixed</em>) – Field(s) to group by; string or array</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds a GROUP BY clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="orderBy">
-<code class="descname">orderBy</code><span class="sig-paren">(</span><em>$orderby</em><span class="optional">[</span>, <em>$direction = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orderBy" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$orderby</strong> (<em>string</em>) – Field to order by</li>
-<li><strong>$direction</strong> (<em>string</em>) – The order requested - ASC, DESC or random</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">orderBy</code><span class="sig-paren">(</span><em class="sig-param">$orderby</em><span class="optional">[</span>, <em class="sig-param">$direction = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orderBy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$orderby</strong> (<em>string</em>) – Field to order by</p></li>
+<li><p><strong>$direction</strong> (<em>string</em>) – The order requested - ASC, DESC or random</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds an ORDER BY clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="limit">
-<code class="descname">limit</code><span class="sig-paren">(</span><em>$value</em><span class="optional">[</span>, <em>$offset = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#limit" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$value</strong> (<em>int</em>) – Number of rows to limit the results to</li>
-<li><strong>$offset</strong> (<em>int</em>) – Number of rows to skip</li>
+<code class="sig-name descname">limit</code><span class="sig-paren">(</span><em class="sig-param">$value</em><span class="optional">[</span>, <em class="sig-param">$offset = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#limit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$value</strong> (<em>int</em>) – Number of rows to limit the results to</p></li>
+<li><p><strong>$offset</strong> (<em>int</em>) – Number of rows to skip</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds LIMIT and OFFSET clauses to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="offset">
-<code class="descname">offset</code><span class="sig-paren">(</span><em>$offset</em><span class="sig-paren">)</span><a class="headerlink" href="#offset" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$offset</strong> (<em>int</em>) – Number of rows to skip</li>
+<code class="sig-name descname">offset</code><span class="sig-paren">(</span><em class="sig-param">$offset</em><span class="sig-paren">)</span><a class="headerlink" href="#offset" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$offset</strong> (<em>int</em>) – Number of rows to skip</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds an OFFSET clause to a query.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="set">
-<code class="descname">set</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Field name, or an array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Field name, or an array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds field/value pairs to be passed later to <code class="docutils literal notranslate"><span class="pre">insert()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">update()</span></code> or <code class="docutils literal notranslate"><span class="pre">replace()</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="insert">
-<code class="descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insert" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insert" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Compiles and executes an INSERT statement.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="insertBatch">
-<code class="descname">insertBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insertBatch" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$set</strong> (<em>array</em>) – Data to insert</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
-<li><strong>$batch_size</strong> (<em>int</em>) – Count of rows to insert at once</li>
+<code class="sig-name descname">insertBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = NULL</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">[</span>, <em class="sig-param">$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insertBatch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<em>array</em>) – Data to insert</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
+<li><p><strong>$batch_size</strong> (<em>int</em>) – Count of rows to insert at once</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows inserted or FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows inserted or FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> statements.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> rows are provided, multiple
+<p class="admonition-title">Note</p>
+<p>When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> rows are provided, multiple
 <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> queries will be executed, each trying to insert
 up to <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> rows.</p>
 </div>
@@ -2672,80 +2492,68 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 
 <dl class="method">
 <dt id="setInsertBatch">
-<code class="descname">setInsertBatch</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setInsertBatch" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Field name or an array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">setInsertBatch</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setInsertBatch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Field name or an array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds field/value pairs to be inserted in a table later via <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="update">
-<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#update" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</li>
-<li><strong>$where</strong> (<em>string</em>) – The WHERE clause</li>
-<li><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</li>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = NULL</em><span class="optional">[</span>, <em class="sig-param">$where = NULL</em><span class="optional">[</span>, <em class="sig-param">$limit = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</p></li>
+<li><p><strong>$where</strong> (<em>string</em>) – The WHERE clause</p></li>
+<li><p><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Compiles and executes an UPDATE statement.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="updateBatch">
-<code class="descname">updateBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#updateBatch" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$set</strong> (<em>array</em>) – Field name, or an associative array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Field value, if $set is a single field</li>
-<li><strong>$batch_size</strong> (<em>int</em>) – Count of conditions to group in a single query</li>
+<code class="sig-name descname">updateBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = NULL</em><span class="optional">[</span>, <em class="sig-param">$value = NULL</em><span class="optional">[</span>, <em class="sig-param">$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#updateBatch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<em>array</em>) – Field name, or an associative array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Field value, if $set is a single field</p></li>
+<li><p><strong>$batch_size</strong> (<em>int</em>) – Count of conditions to group in a single query</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows updated or FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows updated or FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statements.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> field/value pairs are provided,
+<p class="admonition-title">Note</p>
+<p>When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> field/value pairs are provided,
 multiple queries will be executed, each handling up to
 <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> field/value pairs.</p>
 </div>
@@ -2753,93 +2561,77 @@ multiple queries will be executed, each handling up to
 
 <dl class="method">
 <dt id="setUpdateBatch">
-<code class="descname">setUpdateBatch</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setUpdateBatch" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Field name or an array of field/value pairs</li>
-<li><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</li>
-<li><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</li>
+<code class="sig-name descname">setUpdateBatch</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setUpdateBatch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Field name or an array of field/value pairs</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Field value, if $key is a single field</p></li>
+<li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseBuilder</p>
+</dd>
+</dl>
 <p>Adds field/value pairs to be updated in a table later via <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="replace">
-<code class="descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#replace" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</li>
+<code class="sig-name descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#replace" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<em>array</em>) – An associative array of field/value pairs</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Compiles and executes a REPLACE statement.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em>$where = ''</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$reset_data = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$where</strong> (<em>string</em>) – The WHERE clause</li>
-<li><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</li>
-<li><strong>$reset_data</strong> (<em>bool</em>) – TRUE to reset the query “write” clause</li>
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$where = ''</em><span class="optional">[</span>, <em class="sig-param">$limit = NULL</em><span class="optional">[</span>, <em class="sig-param">$reset_data = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$where</strong> (<em>string</em>) – The WHERE clause</p></li>
+<li><p><strong>$limit</strong> (<em>int</em>) – The LIMIT clause</p></li>
+<li><p><strong>$reset_data</strong> (<em>bool</em>) – TRUE to reset the query “write” clause</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining) or FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BaseBuilder instance (method chaining) or FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Compiles and executes a DELETE query.</p>
 </dd></dl>
 
 </div></blockquote>
 <dl class="method">
 <dt id="increment">
-<code class="descname">increment</code><span class="sig-paren">(</span><em>$column</em><span class="optional">[</span>, <em>$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$column</strong> (<em>string</em>) – The name of the column to increment</li>
-<li><strong>$value</strong> (<em>int</em>) – The amount to increment the column by</li>
+<code class="sig-name descname">increment</code><span class="sig-paren">(</span><em class="sig-param">$column</em><span class="optional">[</span>, <em class="sig-param">$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$column</strong> (<em>string</em>) – The name of the column to increment</p></li>
+<li><p><strong>$value</strong> (<em>int</em>) – The amount to increment the column by</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Increments the value of a field by the specified amount. If the field
 is not a numeric field, like a VARCHAR, it will likely be replaced
 with $value.</p>
@@ -2847,148 +2639,124 @@ with $value.</p>
 
 <dl class="method">
 <dt id="decrement">
-<code class="descname">decrement</code><span class="sig-paren">(</span><em>$column</em><span class="optional">[</span>, <em>$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decrement" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$column</strong> (<em>string</em>) – The name of the column to decrement</li>
-<li><strong>$value</strong> (<em>int</em>) – The amount to decrement the column by</li>
+<code class="sig-name descname">decrement</code><span class="sig-paren">(</span><em class="sig-param">$column</em><span class="optional">[</span>, <em class="sig-param">$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decrement" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$column</strong> (<em>string</em>) – The name of the column to decrement</p></li>
+<li><p><strong>$value</strong> (<em>int</em>) – The amount to decrement the column by</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Decrements the value of a field by the specified amount. If the field
 is not a numeric field, like a VARCHAR, it will likely be replaced
 with $value.</p>
 <dl class="method">
 <dt id="truncate">
-<code class="descname">truncate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#truncate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">truncate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#truncate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 <p>Executes a TRUNCATE statement on a table.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the database platform in use doesn’t support TRUNCATE,
+<p class="admonition-title">Note</p>
+<p>If the database platform in use doesn’t support TRUNCATE,
 a DELETE statement will be used instead.</p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="emptyTable">
-<code class="descname">emptyTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#emptyTable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">emptyTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#emptyTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 <p>Deletes all records from a table via a DELETE statement.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getCompiledSelect">
-<code class="descname">getCompiledSelect</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledSelect" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</li>
+<code class="sig-name descname">getCompiledSelect</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledSelect" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The compiled SQL statement as a string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Compiles a SELECT statement and returns it as a string.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getCompiledInsert">
-<code class="descname">getCompiledInsert</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledInsert" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</li>
+<code class="sig-name descname">getCompiledInsert</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledInsert" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The compiled SQL statement as a string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Compiles an INSERT statement and returns it as a string.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getCompiledUpdate">
-<code class="descname">getCompiledUpdate</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</li>
+<code class="sig-name descname">getCompiledUpdate</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The compiled SQL statement as a string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Compiles an UPDATE statement and returns it as a string.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="getCompiledDelete">
-<code class="descname">getCompiledDelete</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledDelete" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</li>
+<code class="sig-name descname">getCompiledDelete</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledDelete" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$reset</strong> (<em>bool</em>) – Whether to reset the current QB values or not</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The compiled SQL statement as a string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Compiles a DELETE statement and returns it as a string.</p>
 </dd></dl>
 

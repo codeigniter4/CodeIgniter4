@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,45 +345,51 @@
 helps minimize the amount of code you’ll write.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
-<li><a class="reference internal" href="#form-validation-tutorial" id="id2">Form Validation Tutorial</a><ul>
-<li><a class="reference internal" href="#the-form" id="id3">The Form</a></li>
-<li><a class="reference internal" href="#the-success-page" id="id4">The Success Page</a></li>
-<li><a class="reference internal" href="#the-controller" id="id5">The Controller</a></li>
-<li><a class="reference internal" href="#try-it" id="id6">Try it!</a></li>
-<li><a class="reference internal" href="#explanation" id="id7">Explanation</a></li>
-<li><a class="reference internal" href="#loading-the-library" id="id8">Loading the Library</a></li>
-<li><a class="reference internal" href="#setting-validation-rules" id="id9">Setting Validation Rules</a></li>
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#form-validation-tutorial" id="id2">Form Validation Tutorial</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-form" id="id3">The Form</a></p></li>
+<li><p><a class="reference internal" href="#the-success-page" id="id4">The Success Page</a></p></li>
+<li><p><a class="reference internal" href="#the-controller" id="id5">The Controller</a></p></li>
+<li><p><a class="reference internal" href="#try-it" id="id6">Try it!</a></p></li>
+<li><p><a class="reference internal" href="#explanation" id="id7">Explanation</a></p></li>
+<li><p><a class="reference internal" href="#loading-the-library" id="id8">Loading the Library</a></p></li>
+<li><p><a class="reference internal" href="#setting-validation-rules" id="id9">Setting Validation Rules</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#working-with-validation" id="id10">Working with Validation</a><ul>
-<li><a class="reference internal" href="#validating-keys-that-are-arrays" id="id11">Validating Keys that are Arrays</a></li>
-<li><a class="reference internal" href="#validate-1-value" id="id12">Validate 1 Value</a></li>
-<li><a class="reference internal" href="#saving-sets-of-validation-rules-to-the-config-file" id="id13">Saving Sets of Validation Rules to the Config File</a></li>
-<li><a class="reference internal" href="#running-multiple-validations" id="id14">Running Multiple Validations</a></li>
-<li><a class="reference internal" href="#validation-placeholders" id="id15">Validation Placeholders</a></li>
+<li><p><a class="reference internal" href="#working-with-validation" id="id10">Working with Validation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validating-keys-that-are-arrays" id="id11">Validating Keys that are Arrays</a></p></li>
+<li><p><a class="reference internal" href="#validate-1-value" id="id12">Validate 1 Value</a></p></li>
+<li><p><a class="reference internal" href="#saving-sets-of-validation-rules-to-the-config-file" id="id13">Saving Sets of Validation Rules to the Config File</a></p></li>
+<li><p><a class="reference internal" href="#running-multiple-validations" id="id14">Running Multiple Validations</a></p></li>
+<li><p><a class="reference internal" href="#validation-placeholders" id="id15">Validation Placeholders</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#working-with-errors" id="id16">Working With Errors</a><ul>
-<li><a class="reference internal" href="#setting-custom-error-messages" id="id17">Setting Custom Error Messages</a></li>
-<li><a class="reference internal" href="#translation-of-messages-and-validation-labels" id="id18">Translation Of Messages And Validation Labels</a></li>
-<li><a class="reference internal" href="#getting-all-errors" id="id19">Getting All Errors</a></li>
-<li><a class="reference internal" href="#getting-a-single-error" id="id20">Getting a Single Error</a></li>
-<li><a class="reference internal" href="#check-if-error-exists" id="id21">Check If Error Exists</a></li>
+<li><p><a class="reference internal" href="#working-with-errors" id="id16">Working With Errors</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-custom-error-messages" id="id17">Setting Custom Error Messages</a></p></li>
+<li><p><a class="reference internal" href="#translation-of-messages-and-validation-labels" id="id18">Translation Of Messages And Validation Labels</a></p></li>
+<li><p><a class="reference internal" href="#getting-all-errors" id="id19">Getting All Errors</a></p></li>
+<li><p><a class="reference internal" href="#getting-a-single-error" id="id20">Getting a Single Error</a></p></li>
+<li><p><a class="reference internal" href="#check-if-error-exists" id="id21">Check If Error Exists</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#customizing-error-display" id="id22">Customizing Error Display</a><ul>
-<li><a class="reference internal" href="#creating-the-views" id="id23">Creating the Views</a></li>
-<li><a class="reference internal" href="#configuration" id="id24">Configuration</a></li>
-<li><a class="reference internal" href="#specifying-the-template" id="id25">Specifying the Template</a></li>
+<li><p><a class="reference internal" href="#customizing-error-display" id="id22">Customizing Error Display</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-the-views" id="id23">Creating the Views</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id24">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#specifying-the-template" id="id25">Specifying the Template</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#creating-custom-rules" id="id26">Creating Custom Rules</a><ul>
-<li><a class="reference internal" href="#allowing-parameters" id="id27">Allowing Parameters</a></li>
+<li><p><a class="reference internal" href="#creating-custom-rules" id="id26">Creating Custom Rules</a></p>
+<ul>
+<li><p><a class="reference internal" href="#allowing-parameters" id="id27">Allowing Parameters</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#available-rules" id="id28">Available Rules</a><ul>
-<li><a class="reference internal" href="#rules-for-file-uploads" id="id29">Rules for File Uploads</a></li>
+<li><p><a class="reference internal" href="#available-rules" id="id28">Available Rules</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rules-for-file-uploads" id="id29">Rules for File Uploads</a></p></li>
 </ul>
 </li>
 </ul>
@@ -390,26 +399,26 @@ helps minimize the amount of code you’ll write.</p>
 <p>Before explaining CodeIgniter’s approach to data validation, let’s
 describe the ideal scenario:</p>
 <ol class="arabic simple">
-<li>A form is displayed.</li>
-<li>You fill it in and submit it.</li>
-<li>If you submitted something invalid, or perhaps missed a required
+<li><p>A form is displayed.</p></li>
+<li><p>You fill it in and submit it.</p></li>
+<li><p>If you submitted something invalid, or perhaps missed a required
 item, the form is redisplayed containing your data along with an
-error message describing the problem.</li>
-<li>This process continues until you have submitted a valid form.</li>
+error message describing the problem.</p></li>
+<li><p>This process continues until you have submitted a valid form.</p></li>
 </ol>
 <p>On the receiving end, the script must:</p>
 <ol class="arabic simple">
-<li>Check for required data.</li>
-<li>Verify that the data is of the correct type, and meets the correct
+<li><p>Check for required data.</p></li>
+<li><p>Verify that the data is of the correct type, and meets the correct
 criteria. For example, if a username is submitted it must be
 validated to contain only permitted characters. It must be of a
 minimum length, and not exceed a maximum length. The username can’t
 be someone else’s existing username, or perhaps even a reserved word.
-Etc.</li>
-<li>Sanitize the data for security.</li>
-<li>Pre-format the data if needed (Does the data need to be trimmed? HTML
-encoded? Etc.)</li>
-<li>Prep the data for insertion in the database.</li>
+Etc.</p></li>
+<li><p>Sanitize the data for security.</p></li>
+<li><p>Pre-format the data if needed (Does the data need to be trimmed? HTML
+encoded? Etc.)</p></li>
+<li><p>Prep the data for insertion in the database.</p></li>
 </ol>
 <p>Although there is nothing terribly complex about the above process, it
 usually requires a significant amount of code, and to display error
@@ -423,11 +432,11 @@ and tedious to implement.</p>
 Validation.</p>
 <p>In order to implement form validation you’ll need three things:</p>
 <ol class="arabic simple">
-<li>A <a class="reference internal" href="../outgoing/views.html"><span class="doc">View</span></a> file containing a form.</li>
-<li>A View file containing a “success” message to be displayed upon
-successful submission.</li>
-<li>A <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> method to receive and
-process the submitted data.</li>
+<li><p>A <a class="reference internal" href="../outgoing/views.html"><span class="doc">View</span></a> file containing a form.</p></li>
+<li><p>A View file containing a “success” message to be displayed upon
+successful submission.</p></li>
+<li><p>A <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> method to receive and
+process the submitted data.</p></li>
 </ol>
 <p>Let’s create those three things, using a member sign-up form as the
 example.</p>
@@ -523,8 +532,8 @@ this code and save it to your <strong>app/Controllers/</strong> folder:</p>
 <p>If you submit the form you should simply see the form reload. That’s
 because you haven’t set up any validation rules yet.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since you haven’t told the <strong>Validation class</strong> to validate anything
+<p class="admonition-title">Note</p>
+<p>Since you haven’t told the <strong>Validation class</strong> to validate anything
 yet, it <strong>returns false</strong> (boolean false) <strong>by default</strong>. The <code class="docutils literal notranslate"><span class="pre">validate()</span></code>
 method only returns true if it has successfully applied your rules without
 any of them failing.</p>
@@ -535,13 +544,12 @@ any of them failing.</p>
 <p>You’ll notice several things about the above pages:</p>
 <p>The form (Signup.php) is a standard web form with a couple of exceptions:</p>
 <ol class="arabic">
-<li><p class="first">It uses a form helper to create the form opening. Technically, this
+<li><p>It uses a form helper to create the form opening. Technically, this
 isn’t necessary. You could create the form using standard HTML.
 However, the benefit of using the helper is that it generates the
 action URL for you, based on the URL in your config file. This makes
-your application more portable in the event your URLs change.</p>
-</li>
-<li><p class="first">At the top of the form you’ll notice the following function call:</p>
+your application more portable in the event your URLs change.</p></li>
+<li><p>At the top of the form you’ll notice the following function call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -564,8 +572,8 @@ form or the success page.</p>
 <p>This automatically loads the <code class="docutils literal notranslate"><span class="pre">Config\Validation</span></code> file which contains settings
 for including multiple Rulesets, and collections of rules that can be easily reused.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and
+<p class="admonition-title">Note</p>
+<p>You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and
 the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> provide methods to make validation even easier.</p>
 </div>
 </div>
@@ -764,8 +772,8 @@ be used for any errors when this group is used:</p>
 <div class="section" id="running-multiple-validations">
 <h3><a class="toc-backref" href="#id14">Running Multiple Validations</a><a class="headerlink" href="#running-multiple-validations" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">run()</span></code> method will not reset error state. Should a previous run fail,
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">run()</span></code> method will not reset error state. Should a previous run fail,
 <code class="docutils literal notranslate"><span class="pre">run()</span></code> will always return false and <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> will return
 all previous errors until explicitly reset.</p>
 </div>
@@ -870,8 +878,8 @@ or the value that was validated you can add the <code class="docutils literal no
 <p>On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you pass the last parameter the labeled style error messages will be ignored.</p>
+<p class="admonition-title">Note</p>
+<p>If you pass the last parameter the labeled style error messages will be ignored.</p>
 </div>
 </div>
 <div class="section" id="translation-of-messages-and-validation-labels">
@@ -1088,8 +1096,8 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 <h2><a class="toc-backref" href="#id28">Available Rules</a><a class="headerlink" href="#available-rules" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of all the native rules that are available to use:</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Rule is a string; there must be <strong>no spaces</strong> between the parameters, especially the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule.
+<p class="admonition-title">Note</p>
+<p>Rule is a string; there must be <strong>no spaces</strong> between the parameters, especially the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule.
 There can be no spaces before and after <code class="docutils literal notranslate"><span class="pre">ignore_value</span></code>.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// is_unique[table.field,ignore_field,ignore_value]</span>
@@ -1102,241 +1110,241 @@ There can be no spaces before and after <code class="docutils literal notranslat
 <span class="p">]);</span>
 </pre></div>
 </div>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="13%" />
-<col width="6%" />
-<col width="52%" />
-<col width="30%" />
+<col style="width: 13%" />
+<col style="width: 6%" />
+<col style="width: 52%" />
+<col style="width: 30%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Rule</th>
-<th class="head">Parameter</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rule</p></th>
+<th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>alpha</td>
-<td>No</td>
-<td>Fails if field has anything other than alphabetic characters.</td>
-<td>&#160;</td>
+<tbody>
+<tr class="row-even"><td><p>alpha</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field has anything other than alphabetic characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>alpha_space</td>
-<td>No</td>
-<td>Fails if field contains anything other than alphabetic characters or spaces.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>alpha_space</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than alphabetic characters or spaces.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>alpha_dash</td>
-<td>No</td>
-<td>Fails if field contains anything other than alphanumeric characters, underscores or dashes.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>alpha_dash</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than alphanumeric characters, underscores or dashes.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>alpha_numeric</td>
-<td>No</td>
-<td>Fails if field contains anything other than alphanumeric characters.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>alpha_numeric</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than alphanumeric characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>alpha_numeric_space</td>
-<td>No</td>
-<td>Fails if field contains anything other than alphanumeric or space characters.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>alpha_numeric_space</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than alphanumeric or space characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>alpha_numeric_punct</td>
-<td>No</td>
-<td>Fails if field contains anything other than alphanumeric, space, or this limited set of
+<tr class="row-odd"><td><p>alpha_numeric_punct</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than alphanumeric, space, or this limited set of
 punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent),
 &amp; (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals),
-| (vertical bar), : (colon), . (period).</td>
-<td>&#160;</td>
+| (vertical bar), : (colon), . (period).</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>decimal</td>
-<td>No</td>
-<td>Fails if field contains anything other than a decimal number.
-Also accepts a + or  - sign for the number.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>decimal</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than a decimal number.
+Also accepts a + or  - sign for the number.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>differs</td>
-<td>Yes</td>
-<td>Fails if field does not differ from the one in the parameter.</td>
-<td>differs[field_name]</td>
+<tr class="row-odd"><td><p>differs</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not differ from the one in the parameter.</p></td>
+<td><p>differs[field_name]</p></td>
 </tr>
-<tr class="row-even"><td>exact_length</td>
-<td>Yes</td>
-<td>Fails if field is not exactly the parameter value. One or more comma-separated values.</td>
-<td>exact_length[5] or exact_length[5,8,12]</td>
+<tr class="row-even"><td><p>exact_length</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is not exactly the parameter value. One or more comma-separated values.</p></td>
+<td><p>exact_length[5] or exact_length[5,8,12]</p></td>
 </tr>
-<tr class="row-odd"><td>greater_than</td>
-<td>Yes</td>
-<td>Fails if field is less than or equal to the parameter value or not numeric.</td>
-<td>greater_than[8]</td>
+<tr class="row-odd"><td><p>greater_than</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is less than or equal to the parameter value or not numeric.</p></td>
+<td><p>greater_than[8]</p></td>
 </tr>
-<tr class="row-even"><td>greater_than_equal_to</td>
-<td>Yes</td>
-<td>Fails if field is less than the parameter value, or not numeric.</td>
-<td>greater_than_equal_to[5]</td>
+<tr class="row-even"><td><p>greater_than_equal_to</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is less than the parameter value, or not numeric.</p></td>
+<td><p>greater_than_equal_to[5]</p></td>
 </tr>
-<tr class="row-odd"><td>hex</td>
-<td>No</td>
-<td>Fails if field contains anything other than hexadecimal characters.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>hex</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than hexadecimal characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>if_exist</td>
-<td>No</td>
-<td>If this rule is present, validation will only return possible errors if the field key exists,
-regardless of its value.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>if_exist</p></td>
+<td><p>No</p></td>
+<td><p>If this rule is present, validation will only return possible errors if the field key exists,
+regardless of its value.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>in_list</td>
-<td>Yes</td>
-<td>Fails if field is not within a predetermined list.</td>
-<td>in_list[red,blue,green]</td>
+<tr class="row-odd"><td><p>in_list</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is not within a predetermined list.</p></td>
+<td><p>in_list[red,blue,green]</p></td>
 </tr>
-<tr class="row-even"><td>integer</td>
-<td>No</td>
-<td>Fails if field contains anything other than an integer.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>integer</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than an integer.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>is_natural</td>
-<td>No</td>
-<td>Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>is_natural</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>is_natural_no_zero</td>
-<td>No</td>
-<td>Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>is_natural_no_zero</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>is_not_unique</td>
-<td>Yes</td>
-<td>Checks the database to see if the given value exist. Can ignore records by field/value to
-filter (currently accept only one filter).</td>
-<td>is_not_unique[table.field,where_field,where_value]</td>
+<tr class="row-odd"><td><p>is_not_unique</p></td>
+<td><p>Yes</p></td>
+<td><p>Checks the database to see if the given value exist. Can ignore records by field/value to
+filter (currently accept only one filter).</p></td>
+<td><p>is_not_unique[table.field,where_field,where_value]</p></td>
 </tr>
-<tr class="row-even"><td>is_unique</td>
-<td>Yes</td>
-<td>Checks if this field value exists in the database. Optionally set a
-column and value to ignore, useful when updating records to ignore itself.</td>
-<td>is_unique[table.field,ignore_field,ignore_value]</td>
+<tr class="row-even"><td><p>is_unique</p></td>
+<td><p>Yes</p></td>
+<td><p>Checks if this field value exists in the database. Optionally set a
+column and value to ignore, useful when updating records to ignore itself.</p></td>
+<td><p>is_unique[table.field,ignore_field,ignore_value]</p></td>
 </tr>
-<tr class="row-odd"><td>less_than</td>
-<td>Yes</td>
-<td>Fails if field is greater than or equal to the parameter value or not numeric.</td>
-<td>less_than[8]</td>
+<tr class="row-odd"><td><p>less_than</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is greater than or equal to the parameter value or not numeric.</p></td>
+<td><p>less_than[8]</p></td>
 </tr>
-<tr class="row-even"><td>less_than_equal_to</td>
-<td>Yes</td>
-<td>Fails if field is greater than the parameter value or not numeric.</td>
-<td>less_than_equal_to[8]</td>
+<tr class="row-even"><td><p>less_than_equal_to</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is greater than the parameter value or not numeric.</p></td>
+<td><p>less_than_equal_to[8]</p></td>
 </tr>
-<tr class="row-odd"><td>matches</td>
-<td>Yes</td>
-<td>The value must match the value of the field in the parameter.</td>
-<td>matches[field]</td>
+<tr class="row-odd"><td><p>matches</p></td>
+<td><p>Yes</p></td>
+<td><p>The value must match the value of the field in the parameter.</p></td>
+<td><p>matches[field]</p></td>
 </tr>
-<tr class="row-even"><td>max_length</td>
-<td>Yes</td>
-<td>Fails if field is longer than the parameter value.</td>
-<td>max_length[8]</td>
+<tr class="row-even"><td><p>max_length</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is longer than the parameter value.</p></td>
+<td><p>max_length[8]</p></td>
 </tr>
-<tr class="row-odd"><td>min_length</td>
-<td>Yes</td>
-<td>Fails if field is shorter than the parameter value.</td>
-<td>min_length[3]</td>
+<tr class="row-odd"><td><p>min_length</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is shorter than the parameter value.</p></td>
+<td><p>min_length[3]</p></td>
 </tr>
-<tr class="row-even"><td>not_in_list</td>
-<td>Yes</td>
-<td>Fails if field is within a predetermined list.</td>
-<td>not_in_list[red,blue,green]</td>
+<tr class="row-even"><td><p>not_in_list</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field is within a predetermined list.</p></td>
+<td><p>not_in_list[red,blue,green]</p></td>
 </tr>
-<tr class="row-odd"><td>numeric</td>
-<td>No</td>
-<td>Fails if field contains anything other than numeric characters.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>numeric</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than numeric characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>regex_match</td>
-<td>Yes</td>
-<td>Fails if field does not match the regular expression.</td>
-<td>regex_match[/regex/]</td>
+<tr class="row-even"><td><p>regex_match</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not match the regular expression.</p></td>
+<td><p>regex_match[/regex/]</p></td>
 </tr>
-<tr class="row-odd"><td>permit_empty</td>
-<td>No</td>
-<td>Allows the field to receive an empty array, empty string, null or false.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>permit_empty</p></td>
+<td><p>No</p></td>
+<td><p>Allows the field to receive an empty array, empty string, null or false.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>required</td>
-<td>No</td>
-<td>Fails if the field is an empty array, empty string, null or false.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>required</p></td>
+<td><p>No</p></td>
+<td><p>Fails if the field is an empty array, empty string, null or false.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>required_with</td>
-<td>Yes</td>
-<td>The field is required when any of the other required fields are present in the data.</td>
-<td>required_with[field1,field2]</td>
+<tr class="row-odd"><td><p>required_with</p></td>
+<td><p>Yes</p></td>
+<td><p>The field is required when any of the other required fields are present in the data.</p></td>
+<td><p>required_with[field1,field2]</p></td>
 </tr>
-<tr class="row-even"><td>required_without</td>
-<td>Yes</td>
-<td>The field is required when all of the other fields are present in the data but not required.</td>
-<td>required_without[field1,field2]</td>
+<tr class="row-even"><td><p>required_without</p></td>
+<td><p>Yes</p></td>
+<td><p>The field is required when all of the other fields are present in the data but not required.</p></td>
+<td><p>required_without[field1,field2]</p></td>
 </tr>
-<tr class="row-odd"><td>string</td>
-<td>No</td>
-<td>A generic alternative to the alpha* rules that confirms the element is a string</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>string</p></td>
+<td><p>No</p></td>
+<td><p>A generic alternative to the alpha* rules that confirms the element is a string</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>timezone</td>
-<td>No</td>
-<td>Fails if field does match a timezone per <code class="docutils literal notranslate"><span class="pre">timezone_identifiers_list</span></code></td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>timezone</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does match a timezone per <code class="docutils literal notranslate"><span class="pre">timezone_identifiers_list</span></code></p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>valid_base64</td>
-<td>No</td>
-<td>Fails if field contains anything other than valid Base64 characters.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>valid_base64</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than valid Base64 characters.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>valid_json</td>
-<td>No</td>
-<td>Fails if field does not contain a valid JSON string.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>valid_json</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid JSON string.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>valid_email</td>
-<td>No</td>
-<td>Fails if field does not contain a valid email address.</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>valid_email</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid email address.</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>valid_emails</td>
-<td>No</td>
-<td>Fails if any value provided in a comma separated list is not a valid email.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>valid_emails</p></td>
+<td><p>No</p></td>
+<td><p>Fails if any value provided in a comma separated list is not a valid email.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>valid_ip</td>
-<td>No</td>
-<td>Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or
-‘ipv6’ to specify an IP format.</td>
-<td>valid_ip[ipv6]</td>
+<tr class="row-odd"><td><p>valid_ip</p></td>
+<td><p>No</p></td>
+<td><p>Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or
+‘ipv6’ to specify an IP format.</p></td>
+<td><p>valid_ip[ipv6]</p></td>
 </tr>
-<tr class="row-even"><td>valid_url</td>
-<td>No</td>
-<td>Fails if field does not contain a valid URL.</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>valid_url</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid URL.</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>valid_date</td>
-<td>No</td>
-<td>Fails if field does not contain a valid date. Accepts an optional parameter
-to matches a date format.</td>
-<td>valid_date[d/m/Y]</td>
+<tr class="row-odd"><td><p>valid_date</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid date. Accepts an optional parameter
+to matches a date format.</p></td>
+<td><p>valid_date[d/m/Y]</p></td>
 </tr>
-<tr class="row-even"><td>valid_cc_number</td>
-<td>Yes</td>
-<td>Verifies that the credit card number matches the format used by the specified provider.
+<tr class="row-even"><td><p>valid_cc_number</p></td>
+<td><p>Yes</p></td>
+<td><p>Verifies that the credit card number matches the format used by the specified provider.
 Current supported providers are: American Express (amex), China Unionpay (unionpay),
 Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
 Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
 Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
 CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
 TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
-HSBC Canada Card (hsbc)</td>
-<td>valid_cc_number[amex]</td>
+HSBC Canada Card (hsbc)</p></td>
+<td><p>valid_cc_number[amex]</p></td>
 </tr>
 </tbody>
 </table>
@@ -1355,61 +1363,61 @@ file upload related rules:</p>
 <span class="p">]);</span>
 </pre></div>
 </div>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="14%" />
-<col width="7%" />
-<col width="56%" />
-<col width="24%" />
+<col style="width: 14%" />
+<col style="width: 7%" />
+<col style="width: 56%" />
+<col style="width: 24%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Rule</th>
-<th class="head">Parameter</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rule</p></th>
+<th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>uploaded</td>
-<td>Yes</td>
-<td>Fails if the name of the parameter does not match the name of any uploaded files.</td>
-<td>uploaded[field_name]</td>
+<tbody>
+<tr class="row-even"><td><p>uploaded</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the name of the parameter does not match the name of any uploaded files.</p></td>
+<td><p>uploaded[field_name]</p></td>
 </tr>
-<tr class="row-odd"><td>max_size</td>
-<td>Yes</td>
-<td>Fails if the uploaded file named in the parameter is larger than the second parameter in
+<tr class="row-odd"><td><p>max_size</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the uploaded file named in the parameter is larger than the second parameter in
 kilobytes (kb). Or if the file is larger than allowed maximum size declared in
-php.ini config file - <code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive.</td>
-<td>max_size[field_name,2048]</td>
+php.ini config file - <code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive.</p></td>
+<td><p>max_size[field_name,2048]</p></td>
 </tr>
-<tr class="row-even"><td>max_dims</td>
-<td>Yes</td>
-<td>Fails if the maximum width and height of an uploaded image exceed values. The first parameter
+<tr class="row-even"><td><p>max_dims</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the maximum width and height of an uploaded image exceed values. The first parameter
 is the field name. The second is the width, and the third is the height. Will also fail if
-the file cannot be determined to be an image.</td>
-<td>max_dims[field_name,300,150]</td>
+the file cannot be determined to be an image.</p></td>
+<td><p>max_dims[field_name,300,150]</p></td>
 </tr>
-<tr class="row-odd"><td>mime_in</td>
-<td>Yes</td>
-<td>Fails if the file’s mime type is not one listed in the parameters.</td>
-<td>mime_in[field_name,image/png,image/jpg]</td>
+<tr class="row-odd"><td><p>mime_in</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the file’s mime type is not one listed in the parameters.</p></td>
+<td><p>mime_in[field_name,image/png,image/jpg]</p></td>
 </tr>
-<tr class="row-even"><td>ext_in</td>
-<td>Yes</td>
-<td>Fails if the file’s extension is not one listed in the parameters.</td>
-<td>ext_in[field_name,png,jpg,gif]</td>
+<tr class="row-even"><td><p>ext_in</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the file’s extension is not one listed in the parameters.</p></td>
+<td><p>ext_in[field_name,png,jpg,gif]</p></td>
 </tr>
-<tr class="row-odd"><td>is_image</td>
-<td>Yes</td>
-<td>Fails if the file cannot be determined to be an image based on the mime type.</td>
-<td>is_image[field_name]</td>
+<tr class="row-odd"><td><p>is_image</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the file cannot be determined to be an image based on the mime type.</p></td>
+<td><p>is_image[field_name]</p></td>
 </tr>
 </tbody>
 </table>
 <p>The file validation rules apply for both single and multiple file uploads.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can also use any native PHP functions that permit up
+<p class="admonition-title">Note</p>
+<p>You can also use any native PHP functions that permit up
 to two parameters, where at least one is required (to pass
 the field data).</p>
 </div>

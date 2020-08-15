@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -340,17 +343,17 @@
 <h1>CLI Library<a class="headerlink" href="#cli-library" title="Permalink to this headline">¶</a></h1>
 <p>CodeIgniter’s CLI library makes creating interactive command-line scripts simple, including:</p>
 <ul class="simple">
-<li>Prompting the user for more information</li>
-<li>Writing multi-colored text the terminal</li>
-<li>Beeping (be nice!)</li>
-<li>Showing progress bars during long tasks</li>
-<li>Wrapping long text lines to fit the window.</li>
+<li><p>Prompting the user for more information</p></li>
+<li><p>Writing multi-colored text the terminal</p></li>
+<li><p>Beeping (be nice!)</p></li>
+<li><p>Showing progress bars during long tasks</p></li>
+<li><p>Wrapping long text lines to fit the window.</p></li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#initializing-the-class" id="id1">Initializing the Class</a></li>
-<li><a class="reference internal" href="#getting-input-from-the-user" id="id2">Getting Input from the User</a></li>
-<li><a class="reference internal" href="#providing-feedback" id="id3">Providing Feedback</a></li>
+<li><p><a class="reference internal" href="#initializing-the-class" id="id1">Initializing the Class</a></p></li>
+<li><p><a class="reference internal" href="#getting-input-from-the-user" id="id2">Getting Input from the User</a></p></li>
+<li><p><a class="reference internal" href="#providing-feedback" id="id3">Providing Feedback</a></p></li>
 </ul>
 </div>
 <div class="section" id="initializing-the-class">
@@ -412,34 +415,34 @@ even set background colors by passing the color name in as the third parameter:<
 </div>
 <p>The following foreground colors are available:</p>
 <ul class="simple">
-<li>black</li>
-<li>dark_gray</li>
-<li>blue</li>
-<li>dark_blue</li>
-<li>light_blue</li>
-<li>green</li>
-<li>light_green</li>
-<li>cyan</li>
-<li>light_cyan</li>
-<li>red</li>
-<li>light_red</li>
-<li>purple</li>
-<li>light_purple</li>
-<li>light_yellow</li>
-<li>yellow</li>
-<li>light_gray</li>
-<li>white</li>
+<li><p>black</p></li>
+<li><p>dark_gray</p></li>
+<li><p>blue</p></li>
+<li><p>dark_blue</p></li>
+<li><p>light_blue</p></li>
+<li><p>green</p></li>
+<li><p>light_green</p></li>
+<li><p>cyan</p></li>
+<li><p>light_cyan</p></li>
+<li><p>red</p></li>
+<li><p>light_red</p></li>
+<li><p>purple</p></li>
+<li><p>light_purple</p></li>
+<li><p>light_yellow</p></li>
+<li><p>yellow</p></li>
+<li><p>light_gray</p></li>
+<li><p>white</p></li>
 </ul>
 <p>And a smaller number are available as background colors:</p>
 <ul class="simple">
-<li>black</li>
-<li>blue</li>
-<li>green</li>
-<li>cyan</li>
-<li>red</li>
-<li>yellow</li>
-<li>light_gray</li>
-<li>magenta</li>
+<li><p>black</p></li>
+<li><p>blue</p></li>
+<li><p>green</p></li>
+<li><p>cyan</p></li>
+<li><p>red</p></li>
+<li><p>yellow</p></li>
+<li><p>light_gray</p></li>
+<li><p>magenta</p></li>
 </ul>
 <p><strong>print()</strong></p>
 <p>Print functions identically to the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method, except that it does not force a newline either before or after.

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,32 +345,34 @@
 database.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#initializing-the-forge-class" id="id1">Initializing the Forge Class</a></li>
-<li><a class="reference internal" href="#creating-and-dropping-databases" id="id2">Creating and Dropping Databases</a></li>
-<li><a class="reference internal" href="#creating-and-dropping-tables" id="id3">Creating and Dropping Tables</a><ul>
-<li><a class="reference internal" href="#adding-fields" id="id4">Adding fields</a></li>
-<li><a class="reference internal" href="#adding-keys" id="id5">Adding Keys</a></li>
-<li><a class="reference internal" href="#adding-foreign-keys" id="id6">Adding Foreign Keys</a></li>
-<li><a class="reference internal" href="#creating-a-table" id="id7">Creating a table</a></li>
-<li><a class="reference internal" href="#dropping-a-table" id="id8">Dropping a table</a></li>
-<li><a class="reference internal" href="#dropping-a-foreign-key" id="id9">Dropping a Foreign Key</a></li>
-<li><a class="reference internal" href="#renaming-a-table" id="id10">Renaming a table</a></li>
+<li><p><a class="reference internal" href="#initializing-the-forge-class" id="id1">Initializing the Forge Class</a></p></li>
+<li><p><a class="reference internal" href="#creating-and-dropping-databases" id="id2">Creating and Dropping Databases</a></p></li>
+<li><p><a class="reference internal" href="#creating-and-dropping-tables" id="id3">Creating and Dropping Tables</a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-fields" id="id4">Adding fields</a></p></li>
+<li><p><a class="reference internal" href="#adding-keys" id="id5">Adding Keys</a></p></li>
+<li><p><a class="reference internal" href="#adding-foreign-keys" id="id6">Adding Foreign Keys</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-table" id="id7">Creating a table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-table" id="id8">Dropping a table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-foreign-key" id="id9">Dropping a Foreign Key</a></p></li>
+<li><p><a class="reference internal" href="#renaming-a-table" id="id10">Renaming a table</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#modifying-tables" id="id11">Modifying Tables</a><ul>
-<li><a class="reference internal" href="#adding-a-column-to-a-table" id="id12">Adding a Column to a Table</a></li>
-<li><a class="reference internal" href="#dropping-columns-from-a-table" id="id13">Dropping Columns From a Table</a></li>
-<li><a class="reference internal" href="#modifying-a-column-in-a-table" id="id14">Modifying a Column in a Table</a></li>
+<li><p><a class="reference internal" href="#modifying-tables" id="id11">Modifying Tables</a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-a-column-to-a-table" id="id12">Adding a Column to a Table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-columns-from-a-table" id="id13">Dropping Columns From a Table</a></p></li>
+<li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id14">Modifying a Column in a Table</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#class-reference" id="id15">Class Reference</a></li>
+<li><p><a class="reference internal" href="#class-reference" id="id15">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="initializing-the-forge-class">
 <h2><a class="toc-backref" href="#id1">Initializing the Forge Class</a><a class="headerlink" href="#initializing-the-forge-class" title="Permalink to this headline">¶</a></h2>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">In order to initialize the Forge class, your database
+<p class="admonition-title">Important</p>
+<p>In order to initialize the Forge class, your database
 driver must already be running, since the forge class relies on it.</p>
 </div>
 <p>Load the Forge Class as follows:</p>
@@ -432,14 +437,14 @@ also require a ‘constraint’ key.</p>
 </div>
 <p>Additionally, the following key/values can be used:</p>
 <ul class="simple">
-<li>unsigned/true : to generate “UNSIGNED” in the field definition.</li>
-<li>default/value : to generate a default value in the field definition.</li>
-<li>null/true : to generate “NULL” in the field definition. Without this,
-the field will default to “NOT NULL”.</li>
-<li>auto_increment/true : generates an auto_increment flag on the
+<li><p>unsigned/true : to generate “UNSIGNED” in the field definition.</p></li>
+<li><p>default/value : to generate a default value in the field definition.</p></li>
+<li><p>null/true : to generate “NULL” in the field definition. Without this,
+the field will default to “NOT NULL”.</p></li>
+<li><p>auto_increment/true : generates an auto_increment flag on the
 field. Note that the field type must be a type that supports this,
-such as integer.</li>
-<li>unique/true : to generate a unique key for the field definition.</li>
+such as integer.</p></li>
+<li><p>unique/true : to generate a unique key for the field definition.</p></li>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
@@ -483,12 +488,12 @@ string into the field definitions with addField()</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Passing raw strings as fields cannot be followed by <code class="docutils literal notranslate"><span class="pre">addKey()</span></code> calls on those fields.</p>
+<p class="admonition-title">Note</p>
+<p>Passing raw strings as fields cannot be followed by <code class="docutils literal notranslate"><span class="pre">addKey()</span></code> calls on those fields.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Multiple calls to addField() are cumulative.</p>
+<p class="admonition-title">Note</p>
+<p>Multiple calls to addField() are cumulative.</p>
 </div>
 </div>
 <div class="section" id="creating-an-id-field">
@@ -573,8 +578,8 @@ into the definition</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Unless you specify the <code class="docutils literal notranslate"><span class="pre">CHARACTER</span> <span class="pre">SET</span></code> and/or <code class="docutils literal notranslate"><span class="pre">COLLATE</span></code> attributes,
+<p class="admonition-title">Note</p>
+<p>Unless you specify the <code class="docutils literal notranslate"><span class="pre">CHARACTER</span> <span class="pre">SET</span></code> and/or <code class="docutils literal notranslate"><span class="pre">COLLATE</span></code> attributes,
 <code class="docutils literal notranslate"><span class="pre">createTable()</span></code> will always add them with your configured <em>charset</em>
 and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 </div>
@@ -672,290 +677,242 @@ change the name, you can add a “name” key into the field defining array.</p>
 <h2><a class="toc-backref" href="#id15">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\Database\Forge</code></dt>
+<code class="sig-name descname">CodeIgniter\Database\Forge</code></dt>
 <dd><dl class="method">
 <dt id="addColumn">
-<code class="descname">addColumn</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Table name to add the column to</li>
-<li><strong>$field</strong> (<em>array</em>) – Column definition(s)</li>
+<code class="sig-name descname">addColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Table name to add the column to</p></li>
+<li><p><strong>$field</strong> (<em>array</em>) – Column definition(s)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Adds a column to a table. Usage:  See <a class="reference internal" href="#adding-a-column-to-a-table">Adding a Column to a Table</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="addField">
-<code class="descname">addField</code><span class="sig-paren">(</span><em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>array</em>) – Field definition to add</li>
+<code class="sig-name descname">addField</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<em>array</em>) – Field definition to add</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseForge instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseForge</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+</dd>
+</dl>
 <p>Adds a field to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-fields">Adding fields</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="addKey">
-<code class="descname">addKey</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$primary = FALSE</em><span class="optional">[</span>, <em>$unique = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
-<li><strong>$primary</strong> (<em>bool</em>) – Set to TRUE if it should be a primary key or a regular one</li>
-<li><strong>$unique</strong> (<em>bool</em>) – Set to TRUE if it should be a unique key or a regular one</li>
+<code class="sig-name descname">addKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$primary = FALSE</em><span class="optional">[</span>, <em class="sig-param">$unique = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$primary</strong> (<em>bool</em>) – Set to TRUE if it should be a primary key or a regular one</p></li>
+<li><p><strong>$unique</strong> (<em>bool</em>) – Set to TRUE if it should be a unique key or a regular one</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseForge instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseForge</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+</dd>
+</dl>
 <p>Adds a key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="addPrimaryKey">
-<code class="descname">addPrimaryKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
+<code class="sig-name descname">addPrimaryKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseForge instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseForge</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+</dd>
+</dl>
 <p>Adds a primary key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="addUniqueKey">
-<code class="descname">addUniqueKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
+<code class="sig-name descname">addUniqueKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseForge instance (method chaining)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseForge</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+</dd>
+</dl>
 <p>Adds a unique key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="createDatabase">
-<code class="descname">createDatabase</code><span class="sig-paren">(</span><em>$dbName</em><span class="optional">[</span>, <em>$ifNotExists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$db_name</strong> (<em>string</em>) – Name of the database to create</li>
-<li><strong>$ifNotExists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause or check if database exists</li>
+<code class="sig-name descname">createDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="optional">[</span>, <em class="sig-param">$ifNotExists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$db_name</strong> (<em>string</em>) – Name of the database to create</p></li>
+<li><p><strong>$ifNotExists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause or check if database exists</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Creates a new database. Usage:  See <a class="reference internal" href="#creating-and-dropping-databases">Creating and Dropping Databases</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="createTable">
-<code class="descname">createTable</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$if_not_exists = FALSE</em><span class="optional">[</span>, <em>array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Name of the table to create</li>
-<li><strong>$if_not_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause</li>
-<li><strong>$attributes</strong> (<em>string</em>) – An associative array of table attributes</li>
+<code class="sig-name descname">createTable</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$if_not_exists = FALSE</em><span class="optional">[</span>, <em class="sig-param">array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Name of the table to create</p></li>
+<li><p><strong>$if_not_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause</p></li>
+<li><p><strong>$attributes</strong> (<em>string</em>) – An associative array of table attributes</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Query object on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Query object on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Creates a new table. Usage:  See <a class="reference internal" href="#creating-a-table">Creating a table</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="dropColumn">
-<code class="descname">dropColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$column_name</em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Table name</li>
-<li><strong>$column_names</strong> (<em>mixed</em>) – Comma-delimited string or an array of column names</li>
+<code class="sig-name descname">dropColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em>, <em class="sig-param">$column_name</em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Table name</p></li>
+<li><p><strong>$column_names</strong> (<em>mixed</em>) – Comma-delimited string or an array of column names</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Drops single or multiple columns from a table. Usage:  See <a class="reference internal" href="#dropping-columns-from-a-table">Dropping Columns From a Table</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="dropDatabase">
-<code class="descname">dropDatabase</code><span class="sig-paren">(</span><em>$dbName</em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$dbName</strong> (<em>string</em>) – Name of the database to drop</li>
+<code class="sig-name descname">dropDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$dbName</strong> (<em>string</em>) – Name of the database to drop</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Drops a database. Usage:  See <a class="reference internal" href="#creating-and-dropping-databases">Creating and Dropping Databases</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="dropTable">
-<code class="descname">dropTable</code><span class="sig-paren">(</span><em>$table_name</em><span class="optional">[</span>, <em>$if_exists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Name of the table to drop</li>
-<li><strong>$if_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF EXISTS’ clause</li>
+<code class="sig-name descname">dropTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em><span class="optional">[</span>, <em class="sig-param">$if_exists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Name of the table to drop</p></li>
+<li><p><strong>$if_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF EXISTS’ clause</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Drops a table. Usage:  See <a class="reference internal" href="#dropping-a-table">Dropping a table</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modifyColumn">
-<code class="descname">modifyColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Table name</li>
-<li><strong>$field</strong> (<em>array</em>) – Column definition(s)</li>
+<code class="sig-name descname">modifyColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em>, <em class="sig-param">$field</em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Table name</p></li>
+<li><p><strong>$field</strong> (<em>array</em>) – Column definition(s)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Modifies a table column. Usage:  See <a class="reference internal" href="#modifying-a-column-in-a-table">Modifying a Column in a Table</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="renameTable">
-<code class="descname">renameTable</code><span class="sig-paren">(</span><em>$table_name</em>, <em>$new_table_name</em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) – Current of the table</li>
-<li><strong>$new_table_name</strong> (<em>string</em>) – New name of the table</li>
+<code class="sig-name descname">renameTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em>, <em class="sig-param">$new_table_name</em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$table</strong> (<em>string</em>) – Current of the table</p></li>
+<li><p><strong>$new_table_name</strong> (<em>string</em>) – New name of the table</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Query object on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Query object on success, FALSE on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
 <p>Renames a table. Usage:  See <a class="reference internal" href="#renaming-a-table">Renaming a table</a>.</p>
 </dd></dl>
 

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -350,17 +353,18 @@ state. You can also use <code class="docutils literal notranslate"><span class="
 include migrations from all namespaces.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#migration-file-names" id="id1">Migration file names</a></li>
-<li><a class="reference internal" href="#create-a-migration" id="id2">Create a Migration</a><ul>
-<li><a class="reference internal" href="#foreign-keys" id="id3">Foreign Keys</a></li>
-<li><a class="reference internal" href="#database-groups" id="id4">Database Groups</a></li>
-<li><a class="reference internal" href="#namespaces" id="id5">Namespaces</a></li>
+<li><p><a class="reference internal" href="#migration-file-names" id="id1">Migration file names</a></p></li>
+<li><p><a class="reference internal" href="#create-a-migration" id="id2">Create a Migration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#foreign-keys" id="id3">Foreign Keys</a></p></li>
+<li><p><a class="reference internal" href="#database-groups" id="id4">Database Groups</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id5">Namespaces</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#usage-example" id="id6">Usage Example</a></li>
-<li><a class="reference internal" href="#command-line-tools" id="id7">Command-Line Tools</a></li>
-<li><a class="reference internal" href="#migration-preferences" id="id8">Migration Preferences</a></li>
-<li><a class="reference internal" href="#class-reference" id="id9">Class Reference</a></li>
+<li><p><a class="reference internal" href="#usage-example" id="id6">Usage Example</a></p></li>
+<li><p><a class="reference internal" href="#command-line-tools" id="id7">Command-Line Tools</a></p></li>
+<li><p><a class="reference internal" href="#migration-preferences" id="id8">Migration Preferences</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id9">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="migration-file-names">
@@ -373,9 +377,9 @@ helps prevent numbering conflicts when working in a team environment.</p>
 and a descriptive name for the migration. The year, month, and date can be separated
 from each other by dashes, underscores, or not at all. For example:</p>
 <ul class="simple">
-<li>20121031100537_add_blog.php</li>
-<li>2012-10-31-100538_alter_blog_track_views.php</li>
-<li>2012_10_31_100539_alter_blog_add_translations.php</li>
+<li><p>20121031100537_add_blog.php</p></li>
+<li><p>2012-10-31-100538_alter_blog_track_views.php</p></li>
+<li><p>2012_10_31_100539_alter_blog_add_translations.php</p></li>
 </ul>
 </div>
 <div class="section" id="create-a-migration">
@@ -522,9 +526,9 @@ that wish to use them. The tools primarily provide access to the same methods th
 </div>
 <p>You can use (migrate) with the following options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to chose database group, otherwise default database group will be used.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to migrate all namespaces to the latest migration</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to chose database group, otherwise default database group will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to migrate all namespaces to the latest migration</p></li>
 </ul>
 <p>This example will migrate Blog namespace with any new migrations on the test database group:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Blog</span>
@@ -540,9 +544,9 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (rollback) with the following options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-b</span></code> - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch</li>
-<li><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-b</span></code> - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</p></li>
 </ul>
 <p><strong>refresh</strong></p>
 <p>Refreshes the database state by first rolling back all migrations, and then migrating all:</p>
@@ -551,10 +555,10 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (refresh) with the following options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to refresh all namespaces</li>
-<li><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to refresh all namespaces</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</p></li>
 </ul>
 <p><strong>status</strong></p>
 <p>Displays a list of all migrations and the date and time they ran, or ‘–’ if they have not been run:</p>
@@ -565,7 +569,7 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (status) with the following options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
 </ul>
 <p><strong>create</strong></p>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
@@ -576,41 +580,41 @@ creates is the Pascal case version of the filename.</p>
 </div>
 <p>You can use (create) with the following options:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
 </ul>
 </div>
 <div class="section" id="migration-preferences">
 <h2><a class="toc-backref" href="#id8">Migration Preferences</a><a class="headerlink" href="#migration-preferences" title="Permalink to this headline">¶</a></h2>
 <p>The following is a table of all the config options for migrations, available in <strong>app/Config/Migrations.php</strong>.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="16%" />
-<col width="19%" />
-<col width="45%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 19%" />
+<col style="width: 45%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Preference</th>
-<th class="head">Default</th>
-<th class="head">Options</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Preference</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Options</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><strong>enabled</strong></td>
-<td>true</td>
-<td>true / false</td>
-<td>Enable or disable migrations.</td>
+<tbody>
+<tr class="row-even"><td><p><strong>enabled</strong></p></td>
+<td><p>true</p></td>
+<td><p>true / false</p></td>
+<td><p>Enable or disable migrations.</p></td>
 </tr>
-<tr class="row-odd"><td><strong>table</strong></td>
-<td>migrations</td>
-<td>None</td>
-<td>The table name for storing the schema version number.</td>
+<tr class="row-odd"><td><p><strong>table</strong></p></td>
+<td><p>migrations</p></td>
+<td><p>None</p></td>
+<td><p>The table name for storing the schema version number.</p></td>
 </tr>
-<tr class="row-even"><td><strong>timestampFormat</strong></td>
-<td>Y-m-d-His_</td>
-<td>&#160;</td>
-<td>The format to use for timestamps when creating a migration.</td>
+<tr class="row-even"><td><p><strong>timestampFormat</strong></p></td>
+<td><p>Y-m-d-His_</p></td>
+<td></td>
+<td><p>The format to use for timestamps when creating a migration.</p></td>
 </tr>
 </tbody>
 </table>
@@ -619,68 +623,58 @@ creates is the Pascal case version of the filename.</p>
 <h2><a class="toc-backref" href="#id9">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<code class="descname">CodeIgniter\Database\MigrationRunner</code></dt>
+<code class="sig-name descname">CodeIgniter\Database\MigrationRunner</code></dt>
 <dd><dl class="method">
 <dt id="findMigrations">
-<code class="descname">findMigrations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findMigrations" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array of migration files</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">findMigrations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findMigrations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An array of migration files</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
 <p>An array of migration filenames are returned that are found in the <strong>path</strong> property.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="latest">
-<code class="descname">latest</code><span class="sig-paren">(</span><em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#latest" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</li>
+<code class="sig-name descname">latest</code><span class="sig-paren">(</span><em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#latest" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>This locates migrations for a namespace (or all namespaces), determines which migrations
 have not yet been run, and runs them in order of their version (namespaces intermingled).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="regress">
-<code class="descname">regress</code><span class="sig-paren">(</span><em>$batch</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$batch</strong> (<em>mixed</em>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means “three batches back”)</li>
-<li><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</li>
+<code class="sig-name descname">regress</code><span class="sig-paren">(</span><em class="sig-param">$batch</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$batch</strong> (<em>mixed</em>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means “three batches back”)</p></li>
+<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or no migrations are found</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or no migrations are found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Regress can be used to roll back changes to a previous state, batch by batch.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
@@ -690,49 +684,41 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="method">
 <dt id="force">
-<code class="descname">force</code><span class="sig-paren">(</span><em>$path</em>, <em>$namespace</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#force" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>mixed</em>) – path to a valid migration file.</li>
-<li><strong>$namespace</strong> (<em>mixed</em>) – namespace of the provided migration.</li>
-<li><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</li>
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">$path</em>, <em class="sig-param">$namespace</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#force" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$path</strong> (<em>mixed</em>) – path to a valid migration file.</p></li>
+<li><p><strong>$namespace</strong> (<em>mixed</em>) – namespace of the provided migration.</p></li>
+<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>This forces a single file to migrate regardless of order or batches. Method “up” or “down” is detected based on whether it has already been migrated. <strong>Note</strong>: This method is recommended only for testing and could cause data consistency issues.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="setNamespace">
-<code class="descname">setNamespace</code><span class="sig-paren">(</span><em>$namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#setNamespace" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$namespace</strong> (<em>string</em>) – application namespace.</li>
+<code class="sig-name descname">setNamespace</code><span class="sig-paren">(</span><em class="sig-param">$namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#setNamespace" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$namespace</strong> (<em>string</em>) – application namespace.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current MigrationRunner instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Database\MigrationRunner</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current MigrationRunner instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\Database\MigrationRunner</p>
+</dd>
+</dl>
 <p>Sets the path the library should look for migration files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$path</span><span class="p">)</span>
           <span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
@@ -742,24 +728,20 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="method">
 <dt id="setGroup">
-<code class="descname">setGroup</code><span class="sig-paren">(</span><em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#setGroup" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$group</strong> (<em>string</em>) – database group name.</li>
+<code class="sig-name descname">setGroup</code><span class="sig-paren">(</span><em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#setGroup" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$group</strong> (<em>string</em>) – database group name.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current MigrationRunner instance</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Database\MigrationRunner</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The current MigrationRunner instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CodeIgniter\Database\MigrationRunner</p>
+</dd>
+</dl>
 <p>Sets the path the library should look for migration files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$path</span><span class="p">)</span>
           <span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>

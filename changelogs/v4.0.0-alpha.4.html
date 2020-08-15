@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,58 +345,53 @@
 <p><strong>Next alpha release of CodeIgniter4</strong></p>
 <p>Highlights:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Refactor for consistency: folder application renamed to app;</dt>
-<dd>constant BASEPATH renamed to SYSTEMPATH</dd>
+<li><dl class="simple">
+<dt>Refactor for consistency: folder application renamed to app;</dt><dd><p>constant BASEPATH renamed to SYSTEMPATH</p>
+</dd>
 </dl>
 </li>
-<li>Debug toolbar gets its own config, history collector</li>
-<li>Numerous corrections and enhancements</li>
+<li><p>Debug toolbar gets its own config, history collector</p></li>
+<li><p>Numerous corrections and enhancements</p></li>
 </ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>admin/</dt>
-<dd><ul class="first last">
-<li>docbot #1573</li>
-<li>framework/composer.json #1555</li>
-<li>release #1573</li>
-<li>release-deploy #1573</li>
-<li>starter/composer.json #1573, #1600</li>
+<li><dl class="simple">
+<dt>admin/</dt><dd><ul>
+<li><p>docbot #1573</p></li>
+<li><p>framework/composer.json #1555</p></li>
+<li><p>release #1573</p></li>
+<li><p>release-deploy #1573</p></li>
+<li><p>starter/composer.json #1573, #1600</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>app/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>App #1571</li>
-<li>Autoload #1579</li>
-<li>ContentSecurityPolicy #1581</li>
-<li>Events #1571, #1595</li>
-<li>Paths #1579</li>
-<li>Routes #1579</li>
-<li>Services #1579</li>
-<li>Toolbar #1571, #1579</li>
+<li><dl class="simple">
+<dt>app/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>App #1571</p></li>
+<li><p>Autoload #1579</p></li>
+<li><p>ContentSecurityPolicy #1581</p></li>
+<li><p>Events #1571, #1595</p></li>
+<li><p>Paths #1579</p></li>
+<li><p>Routes #1579</p></li>
+<li><p>Services #1579</p></li>
+<li><p>Toolbar #1571, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Filters/</dt>
-<dd><ul class="first last">
-<li>Toolbar #1571</li>
+<li><dl class="simple">
+<dt>Filters/</dt><dd><ul>
+<li><p>Toolbar #1571</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Views/</dt>
-<dd><ul class="first last">
-<li>errors/* #1579</li>
+<li><dl class="simple">
+<dt>Views/</dt><dd><ul>
+<li><p>errors/* #1579</p></li>
 </ul>
 </dd>
 </dl>
@@ -402,101 +400,89 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>public/</dt>
-<dd><ul class="first last">
-<li>index #1579</li>
+<li><dl class="simple">
+<dt>public/</dt><dd><ul>
+<li><p>index #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>system/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>Autoloader #1562</li>
-<li>FileLocator #1562, #1579</li>
+<li><dl class="simple">
+<dt>system/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>Autoloader #1562</p></li>
+<li><p>FileLocator #1562, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>CLI/</dt>
-<dd><ul class="first last">
-<li>CommandRunner #1562</li>
+<li><dl class="simple">
+<dt>CLI/</dt><dd><ul>
+<li><p>CommandRunner #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>AutoloadConfig #1555, #1579</li>
-<li>BaseConfig #1562</li>
-<li>Services #1571, #1562</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>AutoloadConfig #1555, #1579</p></li>
+<li><p>BaseConfig #1562</p></li>
+<li><p>Services #1571, #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilder #a0fc68</li>
-<li>MigrationRunner #1585</li>
-<li>MySQLi/Connection #1561, #8f205a</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>BaseBuilder #a0fc68</p></li>
+<li><p>MigrationRunner #1585</p></li>
+<li><p>MySQLi/Connection #1561, #8f205a</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Debug/</dt>
-<dd><ul class="first last">
-<li>Collectors/* #1571, #1589, #1579</li>
-<li>Exceptions #1579</li>
-<li>Toolbar #1571</li>
-<li>Views/toolbar.tpl #1571</li>
-<li>Views/toolbarloader.js #1594</li>
+<li><dl class="simple">
+<dt>Debug/</dt><dd><ul>
+<li><p>Collectors/* #1571, #1589, #1579</p></li>
+<li><p>Exceptions #1579</p></li>
+<li><p>Toolbar #1571</p></li>
+<li><p>Views/toolbar.tpl #1571</p></li>
+<li><p>Views/toolbarloader.js #1594</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>form_helper #1548</li>
-<li>url_helper #1588</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>form_helper #1548</p></li>
+<li><p>url_helper #1588</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>ContentSecurityPolicy #1581</li>
-<li>DownloadResponse</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>ContentSecurityPolicy #1581</p></li>
+<li><p>DownloadResponse</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>I18n/</dt>
-<dd><ul class="first last">
-<li>Time #1603</li>
+<li><dl class="simple">
+<dt>I18n/</dt><dd><ul>
+<li><p>Time #1603</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/</dt>
-<dd><ul class="first last">
-<li>Language #1587, #1562, #1610</li>
-<li><dl class="first docutils">
-<dt>en/</dt>
-<dd><ul class="first last">
-<li>CLI #1562</li>
-<li>HTTP #d7dfc5</li>
+<li><dl class="simple">
+<dt>Language/</dt><dd><ul>
+<li><p>Language #1587, #1562, #1610</p></li>
+<li><dl class="simple">
+<dt>en/</dt><dd><ul>
+<li><p>CLI #1562</p></li>
+<li><p>HTTP #d7dfc5</p></li>
 </ul>
 </dd>
 </dl>
@@ -505,264 +491,236 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Log/</dt>
-<dd><ul class="first last">
-<li>Handlers/FileHandler #1579</li>
-<li>Logger #1562, #1579</li>
+<li><dl class="simple">
+<dt>Log/</dt><dd><ul>
+<li><p>Handlers/FileHandler #1579</p></li>
+<li><p>Logger #1562, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Session/</dt>
-<dd><ul class="first last">
-<li>Handlers/DatabaseHandler #1598</li>
+<li><dl class="simple">
+<dt>Session/</dt><dd><ul>
+<li><p>Handlers/DatabaseHandler #1598</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>CIUnitTest #1581, #1593, #1579</li>
-<li>FeatureResponse #1593</li>
-<li>FeatureTestCase #1593</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>CIUnitTest #1581, #1593, #1579</p></li>
+<li><p>FeatureResponse #1593</p></li>
+<li><p>FeatureTestCase #1593</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>View #1571, #1579</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>View #1571, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>bootstrap #1579</li>
-<li>CodeIgniter #ab8b5b, #1579</li>
-<li>Common #1569, #1563, #1562, #1601, #1579</li>
-<li>Entity #4c7bfe, #1575</li>
-<li>Model #1602, #a0fc68</li>
+<li><p>bootstrap #1579</p></li>
+<li><p>CodeIgniter #ab8b5b, #1579</p></li>
+<li><p>Common #1569, #1563, #1562, #1601, #1579</p></li>
+<li><p>Entity #4c7bfe, #1575</p></li>
+<li><p>Model #1602, #a0fc68</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tests/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Autoloader/</dt>
-<dd><ul class="first last">
-<li>AutolaoderTest #1562, #1579</li>
-<li>FileLocatorTest #1562, #1579</li>
+<li><dl class="simple">
+<dt>tests/</dt><dd><ul>
+<li><dl class="simple">
+<dt>Autoloader/</dt><dd><ul>
+<li><p>AutolaoderTest #1562, #1579</p></li>
+<li><p>FileLocatorTest #1562, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Config/</dt>
-<dd><ul class="first last">
-<li>ServicesTest #1562</li>
+<li><dl class="simple">
+<dt>Config/</dt><dd><ul>
+<li><p>ServicesTest #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>Live/ModelTest #1602, #a0fc68</li>
+<li><dl class="simple">
+<dt>Database/</dt><dd><ul>
+<li><p>Live/ModelTest #1602, #a0fc68</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>FileTest #1579</li>
+<li><dl class="simple">
+<dt>Files/</dt><dd><ul>
+<li><p>FileTest #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Helpers/</dt>
-<dd><ul class="first last">
-<li>FormHelperTest #1548</li>
-<li>URLHelperTest #1588</li>
+<li><dl class="simple">
+<dt>Helpers/</dt><dd><ul>
+<li><p>FormHelperTest #1548</p></li>
+<li><p>URLHelperTest #1588</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>HTTP/</dt>
-<dd><ul class="first last">
-<li>ContentSecurityPolicyTest #1581</li>
-<li>DownloadResponseTest #1576, #1579</li>
-<li>IncomingRequestDetectingTest #1576</li>
-<li>IncomingRequestTest #1576</li>
-<li>RedirectResponseTest #1562</li>
-<li>ResponseTest #1576</li>
+<li><dl class="simple">
+<dt>HTTP/</dt><dd><ul>
+<li><p>ContentSecurityPolicyTest #1581</p></li>
+<li><p>DownloadResponseTest #1576, #1579</p></li>
+<li><p>IncomingRequestDetectingTest #1576</p></li>
+<li><p>IncomingRequestTest #1576</p></li>
+<li><p>RedirectResponseTest #1562</p></li>
+<li><p>ResponseTest #1576</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>I18n/</dt>
-<dd><ul class="first last">
-<li>TimeDifferenceTest #1603</li>
-<li>TimeTest #1603</li>
+<li><dl class="simple">
+<dt>I18n/</dt><dd><ul>
+<li><p>TimeDifferenceTest #1603</p></li>
+<li><p>TimeTest #1603</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Language/</dt>
-<dd>-LanguageTest #1587, #1610</dd>
+<li><dl class="simple">
+<dt>Language/</dt><dd><p>-LanguageTest #1587, #1610</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Log/</dt>
-<dd><ul class="first last">
-<li>FileHandlerTest #1579</li>
+<li><dl class="simple">
+<dt>Log/</dt><dd><ul>
+<li><p>FileHandlerTest #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Router/</dt>
-<dd><ul class="first last">
-<li>RouterCollectionTest #1562</li>
-<li>RouterTest #1562</li>
+<li><dl class="simple">
+<dt>Router/</dt><dd><ul>
+<li><p>RouterCollectionTest #1562</p></li>
+<li><p>RouterTest #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>FeatureResponseTest #1593</li>
-<li>FeatureTestCaseTest #1593</li>
-<li>TestCaseTest #1593</li>
+<li><dl class="simple">
+<dt>Test/</dt><dd><ul>
+<li><p>FeatureResponseTest #1593</p></li>
+<li><p>FeatureTestCaseTest #1593</p></li>
+<li><p>TestCaseTest #1593</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Validation/</dt>
-<dd><ul class="first last">
-<li>ValidationTest #1562</li>
+<li><dl class="simple">
+<dt>Validation/</dt><dd><ul>
+<li><p>ValidationTest #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>ParserPluginTest #1562</li>
-<li>ParserTest #1562</li>
-<li>ViewTest #1562</li>
+<li><dl class="simple">
+<dt>View/</dt><dd><ul>
+<li><p>ParserPluginTest #1562</p></li>
+<li><p>ParserTest #1562</p></li>
+<li><p>ViewTest #1562</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>CodeIgniterTest #1562</li>
-<li>CommonFunctionsTest #1569, #1562</li>
-<li>EntityTest #4c7bfe, #1575</li>
+<li><p>CodeIgniterTest #1562</p></li>
+<li><p>CommonFunctionsTest #1569, #1562</p></li>
+<li><p>EntityTest #4c7bfe, #1575</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>user_guide_src/source/</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>cli/</dt>
-<dd><ul class="first last">
-<li>cli #1579</li>
-<li>cli_commands #1579</li>
+<li><dl class="simple">
+<dt>user_guide_src/source/</dt><dd><ul>
+<li><dl class="simple">
+<dt>cli/</dt><dd><ul>
+<li><p>cli #1579</p></li>
+<li><p>cli_commands #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>concepts/</dt>
-<dd><ul class="first last">
-<li>autoloader #1579</li>
-<li>mvc #1579</li>
-<li>services #1579</li>
-<li>structure #1579</li>
+<li><dl class="simple">
+<dt>concepts/</dt><dd><ul>
+<li><p>autoloader #1579</p></li>
+<li><p>mvc #1579</p></li>
+<li><p>services #1579</p></li>
+<li><p>structure #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>database/</dt>
-<dd><ul class="first last">
-<li>configuration #1579</li>
+<li><dl class="simple">
+<dt>database/</dt><dd><ul>
+<li><p>configuration #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>dbmgt/</dt>
-<dd><ul class="first last">
-<li>migration #1579</li>
-<li>seeds #1579</li>
+<li><dl class="simple">
+<dt>dbmgt/</dt><dd><ul>
+<li><p>migration #1579</p></li>
+<li><p>seeds #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>general/</dt>
-<dd><ul class="first last">
-<li>common_functions #d7dfc5, #1579</li>
-<li>configuration #1608</li>
-<li>errors #1579</li>
+<li><dl class="simple">
+<dt>general/</dt><dd><ul>
+<li><p>common_functions #d7dfc5, #1579</p></li>
+<li><p>configuration #1608</p></li>
+<li><p>errors #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>installation/</dt>
-<dd><ul class="first last">
-<li>downloads #1579</li>
+<li><dl class="simple">
+<dt>installation/</dt><dd><ul>
+<li><p>downloads #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>models/</dt>
-<dd><ul class="first last">
-<li>entities #547792, #1575</li>
+<li><dl class="simple">
+<dt>models/</dt><dd><ul>
+<li><p>entities #547792, #1575</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>outgoing/</dt>
-<dd><ul class="first last">
-<li>localization #1610</li>
-<li>response #1581, #1579</li>
-<li>view_parser #1579</li>
+<li><dl class="simple">
+<dt>outgoing/</dt><dd><ul>
+<li><p>localization #1610</p></li>
+<li><p>response #1581, #1579</p></li>
+<li><p>view_parser #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>testing/</dt>
-<dd><ul class="first last">
-<li>debugging #1579</li>
-<li>overview #1593, #1579</li>
+<li><dl class="simple">
+<dt>testing/</dt><dd><ul>
+<li><p>debugging #1579</p></li>
+<li><p>overview #1593, #1579</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>tutorial/</dt>
-<dd><ul class="first last">
-<li>news_section #1586</li>
-<li>static_pages #1579</li>
+<li><dl class="simple">
+<dt>tutorial/</dt><dd><ul>
+<li><p>news_section #1586</p></li>
+<li><p>static_pages #1579</p></li>
 </ul>
 </dd>
 </dl>
@@ -771,53 +729,53 @@
 </dd>
 </dl>
 </li>
-<li>composer.json #1555</li>
-<li>ComposerScripts #1551</li>
-<li>spark #1579</li>
-<li>Vagrantfile.dist #1459</li>
+<li><p>composer.json #1555</p></li>
+<li><p>ComposerScripts #1551</p></li>
+<li><p>spark #1579</p></li>
+<li><p>Vagrantfile.dist #1459</p></li>
 </ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#1610 Test, fix &amp; enhance Language</li>
-<li>#a0fc68 Clear binds after inserts, updates, and find queries</li>
-<li>#1608 Note about environment configuration in UG</li>
-<li>#1606 release framework script clean up</li>
-<li>#1603 Flesh out I18n testing</li>
-<li>#8f305a Catch mysql connection errors and sanitize username and password</li>
-<li>#1602 Model’s first and update didn’t work primary key-less tables</li>
-<li>#1601 clean up ConfigServices in Common.php</li>
-<li>#1600 admin/starter/composer.json clean up</li>
-<li>#1598 use $defaultGroup as default value for database session DBGroup</li>
-<li>#1595 handle fatal error via pre_system</li>
-<li>#1594 Fix Toolbar invalid css</li>
-<li>#1593 Flesh out the Test package testing</li>
-<li>#1589 Fix Toolbar file loading throw exception</li>
-<li>#1588 Fix site_url generate invalid url</li>
-<li>#1587 Add Language fallback</li>
-<li>#1586 Fix model namespace in tutorial</li>
-<li>#1585 Type hint MigrationRunner methods</li>
-<li>#4c7bfe Entity fill() now respects mapped properties</li>
-<li>#547792 Add _get and _set notes for Entity class</li>
-<li>#1582 Fix changelog index &amp; common functions UG indent</li>
-<li>#1581 ContentSecurityPolicy testing &amp; enhancement</li>
-<li>#1579 Use Absolute Paths</li>
-<li>#1576 Testing13/http</li>
-<li>#1575 Adds ?integer, ?double, ?string, etc. cast types</li>
-<li>#ab8b5b Set baseURL to example.com during testing by default.</li>
-<li>#d7dfc5 Doc tweaks for redirects</li>
-<li>#1573 Lessons learned</li>
-<li>#1571 Toolbar updates</li>
-<li>#1569 Test esc() with different encodings and ignore app-only helpers</li>
-<li>#1563 id attribute support added for csrf_field</li>
-<li>#1562 Integrates Autoloader and FileLocator</li>
-<li>#1561 Update Connection.php</li>
-<li>#1557 remove prefix on use statements</li>
-<li>#1556 using protected intead of public modifier for setUp() function in tests</li>
-<li>#1555 autoload clean up: remove PsrLog namespace from composer.json</li>
-<li>#1551 remove manual define “system/” directory prefix at ComposerScripts</li>
-<li>#1548 allows to set empty html attr</li>
-<li>#1459 Add Vagrantfile</li>
+<li><p>#1610 Test, fix &amp; enhance Language</p></li>
+<li><p>#a0fc68 Clear binds after inserts, updates, and find queries</p></li>
+<li><p>#1608 Note about environment configuration in UG</p></li>
+<li><p>#1606 release framework script clean up</p></li>
+<li><p>#1603 Flesh out I18n testing</p></li>
+<li><p>#8f305a Catch mysql connection errors and sanitize username and password</p></li>
+<li><p>#1602 Model’s first and update didn’t work primary key-less tables</p></li>
+<li><p>#1601 clean up ConfigServices in Common.php</p></li>
+<li><p>#1600 admin/starter/composer.json clean up</p></li>
+<li><p>#1598 use $defaultGroup as default value for database session DBGroup</p></li>
+<li><p>#1595 handle fatal error via pre_system</p></li>
+<li><p>#1594 Fix Toolbar invalid css</p></li>
+<li><p>#1593 Flesh out the Test package testing</p></li>
+<li><p>#1589 Fix Toolbar file loading throw exception</p></li>
+<li><p>#1588 Fix site_url generate invalid url</p></li>
+<li><p>#1587 Add Language fallback</p></li>
+<li><p>#1586 Fix model namespace in tutorial</p></li>
+<li><p>#1585 Type hint MigrationRunner methods</p></li>
+<li><p>#4c7bfe Entity fill() now respects mapped properties</p></li>
+<li><p>#547792 Add _get and _set notes for Entity class</p></li>
+<li><p>#1582 Fix changelog index &amp; common functions UG indent</p></li>
+<li><p>#1581 ContentSecurityPolicy testing &amp; enhancement</p></li>
+<li><p>#1579 Use Absolute Paths</p></li>
+<li><p>#1576 Testing13/http</p></li>
+<li><p>#1575 Adds ?integer, ?double, ?string, etc. cast types</p></li>
+<li><p>#ab8b5b Set baseURL to example.com during testing by default.</p></li>
+<li><p>#d7dfc5 Doc tweaks for redirects</p></li>
+<li><p>#1573 Lessons learned</p></li>
+<li><p>#1571 Toolbar updates</p></li>
+<li><p>#1569 Test esc() with different encodings and ignore app-only helpers</p></li>
+<li><p>#1563 id attribute support added for csrf_field</p></li>
+<li><p>#1562 Integrates Autoloader and FileLocator</p></li>
+<li><p>#1561 Update Connection.php</p></li>
+<li><p>#1557 remove prefix on use statements</p></li>
+<li><p>#1556 using protected intead of public modifier for setUp() function in tests</p></li>
+<li><p>#1555 autoload clean up: remove PsrLog namespace from composer.json</p></li>
+<li><p>#1551 remove manual define “system/” directory prefix at ComposerScripts</p></li>
+<li><p>#1548 allows to set empty html attr</p></li>
+<li><p>#1459 Add Vagrantfile</p></li>
 </ul>
 </div>
 </div>

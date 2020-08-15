@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,54 +345,54 @@
 <p><strong>4.0.4 release of CodeIgniter4</strong></p>
 <p>Enhancements:</p>
 <ul class="simple">
-<li>The location for the SQLite3 database has changed and by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</li>
-<li>New CLI command: <code class="docutils literal notranslate"><span class="pre">cache:clear</span></code> that will destroy all data within the current cache engine.</li>
-<li>Thanks to samsonasik, we have several libraries brought up to 100% test coverage.</li>
-<li>A few small performance increases. Every ounce matters!</li>
-<li><code class="docutils literal notranslate"><span class="pre">getFieldData()</span></code> in the database results class now returns column type and length.</li>
-<li>Default .htaccess file updated to work better with extended characters.</li>
-<li>New Testing Feature: <a class="reference internal" href="../testing/fabricator.html"><span class="doc">Fabricator</span></a> makes creating mock classes simple and repeatable in your tests.</li>
-<li>Model class can now have the callbacks overridden at runtime. Useful for testing.</li>
-<li>A number of improvements to <a class="reference internal" href="../testing/feature.html"><span class="doc">Feature Tests</span></a> in general.</li>
-<li>New <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">command() helper function</span></a> to programatically run your CLI commands. Useful for testing and cron jobs.</li>
-<li>New command, <code class="docutils literal notranslate"><span class="pre">make:seeder</span></code> to generate a <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Database Seed class</span></a> skeleton file.</li>
-<li>Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.</li>
-<li>New helper <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">mb_url_title</span></a> that functions like <code class="docutils literal notranslate"><span class="pre">url_title</span></code> but automatically escapes and extended URL characters.</li>
-<li><a class="reference internal" href="../libraries/images.html"><span class="doc">Image library</span></a> now supports <code class="docutils literal notranslate"><span class="pre">webp</span></code> images.</li>
-<li>Added Unicode support for regular expressions in the Router.</li>
-<li>Added support for removing hidden folders in the <a class="reference internal" href="../helpers/filesystem_helper.html"><span class="doc">delete_files</span></a> helper</li>
-<li><code class="docutils literal notranslate"><span class="pre">fetchGlobal</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.</li>
-<li><code class="docutils literal notranslate"><span class="pre">file</span></code> validation now works with arrays of files.</li>
-<li>URI class now supports a <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method that will disable the throwing of Exceptions.</li>
-<li>New argument to <code class="docutils literal notranslate"><span class="pre">URI::getSegment()</span></code> that allows us to change the default value returned if nothing exists.</li>
-<li>Implemented a <code class="docutils literal notranslate"><span class="pre">withResource()</span></code> in Image so that you can use method chaining instead of using the provided getResource() (used in tests). To just compress your image.</li>
-<li>Cookies and headers can be copied from the global Response object when doing a redirect using the new <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> and <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> methods.</li>
-<li>Support for special prefix “hex2bin:” which can be used with <code class="docutils literal notranslate"><span class="pre">$key</span></code> parameter in <a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption class</span></a> or in .env file.</li>
+<li><p>The location for the SQLite3 database has changed and by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
+<li><p>New CLI command: <code class="docutils literal notranslate"><span class="pre">cache:clear</span></code> that will destroy all data within the current cache engine.</p></li>
+<li><p>Thanks to samsonasik, we have several libraries brought up to 100% test coverage.</p></li>
+<li><p>A few small performance increases. Every ounce matters!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getFieldData()</span></code> in the database results class now returns column type and length.</p></li>
+<li><p>Default .htaccess file updated to work better with extended characters.</p></li>
+<li><p>New Testing Feature: <a class="reference internal" href="../testing/fabricator.html"><span class="doc">Fabricator</span></a> makes creating mock classes simple and repeatable in your tests.</p></li>
+<li><p>Model class can now have the callbacks overridden at runtime. Useful for testing.</p></li>
+<li><p>A number of improvements to <a class="reference internal" href="../testing/feature.html"><span class="doc">Feature Tests</span></a> in general.</p></li>
+<li><p>New <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">command() helper function</span></a> to programatically run your CLI commands. Useful for testing and cron jobs.</p></li>
+<li><p>New command, <code class="docutils literal notranslate"><span class="pre">make:seeder</span></code> to generate a <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Database Seed class</span></a> skeleton file.</p></li>
+<li><p>Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.</p></li>
+<li><p>New helper <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">mb_url_title</span></a> that functions like <code class="docutils literal notranslate"><span class="pre">url_title</span></code> but automatically escapes and extended URL characters.</p></li>
+<li><p><a class="reference internal" href="../libraries/images.html"><span class="doc">Image library</span></a> now supports <code class="docutils literal notranslate"><span class="pre">webp</span></code> images.</p></li>
+<li><p>Added Unicode support for regular expressions in the Router.</p></li>
+<li><p>Added support for removing hidden folders in the <a class="reference internal" href="../helpers/filesystem_helper.html"><span class="doc">delete_files</span></a> helper</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetchGlobal</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span></code> validation now works with arrays of files.</p></li>
+<li><p>URI class now supports a <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method that will disable the throwing of Exceptions.</p></li>
+<li><p>New argument to <code class="docutils literal notranslate"><span class="pre">URI::getSegment()</span></code> that allows us to change the default value returned if nothing exists.</p></li>
+<li><p>Implemented a <code class="docutils literal notranslate"><span class="pre">withResource()</span></code> in Image so that you can use method chaining instead of using the provided getResource() (used in tests). To just compress your image.</p></li>
+<li><p>Cookies and headers can be copied from the global Response object when doing a redirect using the new <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> and <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> methods.</p></li>
+<li><p>Support for special prefix “hex2bin:” which can be used with <code class="docutils literal notranslate"><span class="pre">$key</span></code> parameter in <a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption class</span></a> or in .env file.</p></li>
 </ul>
 <p>Bugs Fixed:</p>
 <ul class="simple">
-<li>Fixed location for the SQLite3 database which by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</li>
-<li>Fixed bug where <code class="docutils literal notranslate"><span class="pre">force_https</span></code> could add <code class="docutils literal notranslate"><span class="pre">https://</span></code> a second time.</li>
-<li>Fixed a bug with CurlRequest that could result in incorrect “100 Continue” headers.</li>
-<li>Image::save() bug fixed when <code class="docutils literal notranslate"><span class="pre">$target</span></code> parameter was <code class="docutils literal notranslate"><span class="pre">null</span></code></li>
-<li>fixes for <code class="docutils literal notranslate"><span class="pre">set_checkbox()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_radio()</span></code> when the $default parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
-<li>fix for result object handling in Model class .</li>
-<li>fixed escape character SQLite database</li>
-<li>fix for inserts on Postgres and Entities when the primary key was null</li>
-<li>CLI scripts can now correctly recognize dashes within arguments.</li>
-<li>CURLRequest now properly sets content length with multipart data</li>
-<li>Misc. stability improvements for the ImageMagick handler</li>
-<li>setting validation errors within a config file should now work</li>
-<li>Unicode characters are not escaped when saving JSON from Entities.</li>
-<li>redirecting with a custom HTTP code should work correctly now</li>
-<li>Time::setTimezone now working correctly</li>
-<li>added full outer join support for Postgres</li>
-<li>some cast items in the Entity (like array, json) were not being set correctly during a <code class="docutils literal notranslate"><span class="pre">fill()</span></code> process.</li>
-<li>Fixed bug in Image GD handler that would try to compress images twice in certain cases</li>
-<li>Ensure get translation output logic work on selected locale, dashed locale, and fallback “en”</li>
-<li>Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql</li>
-<li>Added <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated</li>
-<li>Fixed a bug where filter arguments were not passed to after()</li>
+<li><p>Fixed location for the SQLite3 database which by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
+<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">force_https</span></code> could add <code class="docutils literal notranslate"><span class="pre">https://</span></code> a second time.</p></li>
+<li><p>Fixed a bug with CurlRequest that could result in incorrect “100 Continue” headers.</p></li>
+<li><p>Image::save() bug fixed when <code class="docutils literal notranslate"><span class="pre">$target</span></code> parameter was <code class="docutils literal notranslate"><span class="pre">null</span></code></p></li>
+<li><p>fixes for <code class="docutils literal notranslate"><span class="pre">set_checkbox()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_radio()</span></code> when the $default parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p>fix for result object handling in Model class .</p></li>
+<li><p>fixed escape character SQLite database</p></li>
+<li><p>fix for inserts on Postgres and Entities when the primary key was null</p></li>
+<li><p>CLI scripts can now correctly recognize dashes within arguments.</p></li>
+<li><p>CURLRequest now properly sets content length with multipart data</p></li>
+<li><p>Misc. stability improvements for the ImageMagick handler</p></li>
+<li><p>setting validation errors within a config file should now work</p></li>
+<li><p>Unicode characters are not escaped when saving JSON from Entities.</p></li>
+<li><p>redirecting with a custom HTTP code should work correctly now</p></li>
+<li><p>Time::setTimezone now working correctly</p></li>
+<li><p>added full outer join support for Postgres</p></li>
+<li><p>some cast items in the Entity (like array, json) were not being set correctly during a <code class="docutils literal notranslate"><span class="pre">fill()</span></code> process.</p></li>
+<li><p>Fixed bug in Image GD handler that would try to compress images twice in certain cases</p></li>
+<li><p>Ensure get translation output logic work on selected locale, dashed locale, and fallback “en”</p></li>
+<li><p>Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated</p></li>
+<li><p>Fixed a bug where filter arguments were not passed to after()</p></li>
 </ul>
 </div>
 

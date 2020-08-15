@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,90 +345,90 @@
 <p><strong>RC.4 release of CodeIgniter4</strong></p>
 <p>Enhancements:</p>
 <ul class="simple">
-<li>Fixed url systems so that it would work when system is served out of subfolders.</li>
-<li>Added required insert ignore support for sqlite3 and mysql.</li>
-<li>Add validation function <cite>is_not_unique</cite></li>
-<li>Various improvements and cleanup to the Email class</li>
+<li><p>Fixed url systems so that it would work when system is served out of subfolders.</p></li>
+<li><p>Added required insert ignore support for sqlite3 and mysql.</p></li>
+<li><p>Add validation function <cite>is_not_unique</cite></p></li>
+<li><p>Various improvements and cleanup to the Email class</p></li>
 </ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#2527 Update manual.rst</li>
-<li>#2454 Page in the official documentation on ajax requests with iSAJAX() fixes</li>
-<li>#2525 Remove incorrect inline doc type</li>
-<li>#2524 Restore namespace after regress.</li>
-<li>#2523 Replace legacy CI3 constant.</li>
-<li>#2522 Adding Events information in the ‘Upgrading from 3.x to 4.x’ section</li>
-<li>#2518 Fix pager URI to work in subfolders.</li>
-<li>#2516 HTML Helper - Fix attribute type for lists</li>
-<li>#2515 Layout Renderer Fix</li>
-<li>#2513 Typo in userguide “Entity Classes - Business Logic”</li>
-<li>#2511 Database add highlight</li>
-<li>#2509 Revert Renderer section reset</li>
-<li>#2507 Update ordering of search locations for better prioritization.</li>
-<li>#2506 HTTP Response - Fix crash on CSP methods CSP is disabled</li>
-<li>#2504 BaseConnection - Nullable return type in getConnectStart()</li>
-<li>#2502 View Renderer - Reset sections after generating the ouput</li>
-<li>#2501 view_cell call controller on initController method.</li>
-<li>#2499 View Parser - Fix ParsePair() with filter</li>
-<li>#2497 Fix splitQueryPart()</li>
-<li>#2496 Use site_url for RedirectResponse.</li>
-<li>#2495 update toolbar userguide</li>
-<li>#2494 Debug Toolbar - Fix Debugbar-Time header, Render in &lt;head&gt;</li>
-<li>#2493 fix sphinx version.</li>
-<li>#2490 fix. Toolbar init view Error</li>
-<li>#2489 Fix pager</li>
-<li>#2486 Update current_url and previous_url in the docs for View Parser.</li>
-<li>#2485 Typo in user guide “Running via the Command Line”</li>
-<li>#2482 Services request add URI Core System extend support</li>
-<li>#2481 Priority Redirection.</li>
-<li>#2472 ControllerTest should work without URI specified. Fixes #2470</li>
-<li>#2471 Transition from Zend Escaper to Laminas Escaper</li>
-<li>#2462 Fix impossible length for migration table id.</li>
-<li>#2458 Replace <cite>composer install</cite> by <cite>composer require</cite></li>
-<li>#2450 CRITICAL when $_SESSION is null / Argument 2 passed to dot_array_search() must be []</li>
-<li>#2449 User Guide: Query Builder selectCount - error correction in example</li>
-<li>#2447 Existing File checks (Nowackipawel/patch-69)</li>
-<li>#2446 DB Insert Ignore (Tada5hi/database-feature)</li>
-<li>#2438 Nice array view in debug toolbar</li>
-<li>#2436 Fix Message method reference</li>
-<li>#2433 Inserting through a model should respect all validation rules. Fixes #2384</li>
-<li>#2432 Fix curly brace deprecation in php 7.4</li>
-<li>#2429 fix. safe_mailto multi-byte safe</li>
-<li>#2427 Add $recipients property to ConfigEmail</li>
-<li>#2426 Add hex validation rule, test, Guide</li>
-<li>#2425 fix: Router setDefaultNameSpace can’t worker</li>
-<li>#2422 Don’t show duplicate Date headers when running under PHPs server.</li>
-<li>#2420 Change current_url() to use cloned URI</li>
-<li>#2417 Revise Encryption Service Documentation</li>
-<li>#2416 Add missing closing braces of condition ‘hasError()’</li>
-<li>#2415 Add ‘nullable’ to MySQL field data</li>
-<li>#2413 fix. toolbar file 301</li>
-<li>#2411 fix parse params of plugin</li>
-<li>#2408 Ensure previous_url() gets accurate URI.</li>
-<li>#2407 Fix url helper functions to work when site hosted in subfolders.</li>
-<li>#2406 Fix issue #2391 CodeIgniter::display404errors()</li>
-<li>#2402 Removed pointless isset() check</li>
-<li>#2401 Remove pointless check from conditional</li>
-<li>#2400 Remove redundant check in conditionals</li>
-<li>#2399 Revise Controllers Documentation</li>
-<li>#2398 Edit .htaccess</li>
-<li>#2392 Add validation function <cite>is_not_unique</cite></li>
-<li>#2389 Confer silent status to nested seeders</li>
-<li>#2388 Fix copypaste command comment</li>
-<li>#2387 Use only digits for migrations order</li>
-<li>#2382 quick fix postgresql insert id</li>
-<li>#2381 Fix: Use of CodeIgniterConfigServices prevents Service overriding</li>
-<li>#2379 Replace null log file extension check</li>
-<li>#2377 Docs Rev: Replacing Core Classes</li>
-<li>#2369 Remove LoggerAwareTrait from Email class</li>
-<li>#2368 Remove log_message from Email::__construct</li>
-<li>#2364 Email config doesn’t incorporate .env items</li>
-<li>#2362 Fix SMTP protocol problem</li>
-<li>#2359 Bugfix Model after event data</li>
-<li>#2358 Fix Logger config</li>
-<li>#2356 Fix typo in comments of Services.php</li>
-<li>#2352 Fix method name to ‘toDateString()’ in Date and Times user guide</li>
+<li><p>#2527 Update manual.rst</p></li>
+<li><p>#2454 Page in the official documentation on ajax requests with iSAJAX() fixes</p></li>
+<li><p>#2525 Remove incorrect inline doc type</p></li>
+<li><p>#2524 Restore namespace after regress.</p></li>
+<li><p>#2523 Replace legacy CI3 constant.</p></li>
+<li><p>#2522 Adding Events information in the ‘Upgrading from 3.x to 4.x’ section</p></li>
+<li><p>#2518 Fix pager URI to work in subfolders.</p></li>
+<li><p>#2516 HTML Helper - Fix attribute type for lists</p></li>
+<li><p>#2515 Layout Renderer Fix</p></li>
+<li><p>#2513 Typo in userguide “Entity Classes - Business Logic”</p></li>
+<li><p>#2511 Database add highlight</p></li>
+<li><p>#2509 Revert Renderer section reset</p></li>
+<li><p>#2507 Update ordering of search locations for better prioritization.</p></li>
+<li><p>#2506 HTTP Response - Fix crash on CSP methods CSP is disabled</p></li>
+<li><p>#2504 BaseConnection - Nullable return type in getConnectStart()</p></li>
+<li><p>#2502 View Renderer - Reset sections after generating the ouput</p></li>
+<li><p>#2501 view_cell call controller on initController method.</p></li>
+<li><p>#2499 View Parser - Fix ParsePair() with filter</p></li>
+<li><p>#2497 Fix splitQueryPart()</p></li>
+<li><p>#2496 Use site_url for RedirectResponse.</p></li>
+<li><p>#2495 update toolbar userguide</p></li>
+<li><p>#2494 Debug Toolbar - Fix Debugbar-Time header, Render in &lt;head&gt;</p></li>
+<li><p>#2493 fix sphinx version.</p></li>
+<li><p>#2490 fix. Toolbar init view Error</p></li>
+<li><p>#2489 Fix pager</p></li>
+<li><p>#2486 Update current_url and previous_url in the docs for View Parser.</p></li>
+<li><p>#2485 Typo in user guide “Running via the Command Line”</p></li>
+<li><p>#2482 Services request add URI Core System extend support</p></li>
+<li><p>#2481 Priority Redirection.</p></li>
+<li><p>#2472 ControllerTest should work without URI specified. Fixes #2470</p></li>
+<li><p>#2471 Transition from Zend Escaper to Laminas Escaper</p></li>
+<li><p>#2462 Fix impossible length for migration table id.</p></li>
+<li><p>#2458 Replace <cite>composer install</cite> by <cite>composer require</cite></p></li>
+<li><p>#2450 CRITICAL when $_SESSION is null / Argument 2 passed to dot_array_search() must be []</p></li>
+<li><p>#2449 User Guide: Query Builder selectCount - error correction in example</p></li>
+<li><p>#2447 Existing File checks (Nowackipawel/patch-69)</p></li>
+<li><p>#2446 DB Insert Ignore (Tada5hi/database-feature)</p></li>
+<li><p>#2438 Nice array view in debug toolbar</p></li>
+<li><p>#2436 Fix Message method reference</p></li>
+<li><p>#2433 Inserting through a model should respect all validation rules. Fixes #2384</p></li>
+<li><p>#2432 Fix curly brace deprecation in php 7.4</p></li>
+<li><p>#2429 fix. safe_mailto multi-byte safe</p></li>
+<li><p>#2427 Add $recipients property to ConfigEmail</p></li>
+<li><p>#2426 Add hex validation rule, test, Guide</p></li>
+<li><p>#2425 fix: Router setDefaultNameSpace can’t worker</p></li>
+<li><p>#2422 Don’t show duplicate Date headers when running under PHPs server.</p></li>
+<li><p>#2420 Change current_url() to use cloned URI</p></li>
+<li><p>#2417 Revise Encryption Service Documentation</p></li>
+<li><p>#2416 Add missing closing braces of condition ‘hasError()’</p></li>
+<li><p>#2415 Add ‘nullable’ to MySQL field data</p></li>
+<li><p>#2413 fix. toolbar file 301</p></li>
+<li><p>#2411 fix parse params of plugin</p></li>
+<li><p>#2408 Ensure previous_url() gets accurate URI.</p></li>
+<li><p>#2407 Fix url helper functions to work when site hosted in subfolders.</p></li>
+<li><p>#2406 Fix issue #2391 CodeIgniter::display404errors()</p></li>
+<li><p>#2402 Removed pointless isset() check</p></li>
+<li><p>#2401 Remove pointless check from conditional</p></li>
+<li><p>#2400 Remove redundant check in conditionals</p></li>
+<li><p>#2399 Revise Controllers Documentation</p></li>
+<li><p>#2398 Edit .htaccess</p></li>
+<li><p>#2392 Add validation function <cite>is_not_unique</cite></p></li>
+<li><p>#2389 Confer silent status to nested seeders</p></li>
+<li><p>#2388 Fix copypaste command comment</p></li>
+<li><p>#2387 Use only digits for migrations order</p></li>
+<li><p>#2382 quick fix postgresql insert id</p></li>
+<li><p>#2381 Fix: Use of CodeIgniterConfigServices prevents Service overriding</p></li>
+<li><p>#2379 Replace null log file extension check</p></li>
+<li><p>#2377 Docs Rev: Replacing Core Classes</p></li>
+<li><p>#2369 Remove LoggerAwareTrait from Email class</p></li>
+<li><p>#2368 Remove log_message from Email::__construct</p></li>
+<li><p>#2364 Email config doesn’t incorporate .env items</p></li>
+<li><p>#2362 Fix SMTP protocol problem</p></li>
+<li><p>#2359 Bugfix Model after event data</p></li>
+<li><p>#2358 Fix Logger config</p></li>
+<li><p>#2356 Fix typo in comments of Services.php</p></li>
+<li><p>#2352 Fix method name to ‘toDateString()’ in Date and Times user guide</p></li>
 </ul>
 </div>
 </div>

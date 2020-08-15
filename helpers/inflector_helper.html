@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
@@ -19,20 +22,18 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/js/citheme.js"></script>
-        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -277,6 +279,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -342,8 +345,8 @@
 <strong>English</strong> words to plural, singular, camel case, etc.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
@@ -358,24 +361,20 @@
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="singular">
-<code class="descname">singular</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#singular" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">singular</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#singular" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A singular word</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A singular word</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Changes a plural word to singular. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">singular</span><span class="p">(</span><span class="s1">&#39;dogs&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dog&#39;</span>
 </pre></div>
@@ -384,24 +383,20 @@
 
 <dl class="function">
 <dt id="plural">
-<code class="descname">plural</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#plural" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">plural</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#plural" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A plural word</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A plural word</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Changes a singular word to plural. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">plural</span><span class="p">(</span><span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dogs&#39;</span>
 </pre></div>
@@ -410,25 +405,21 @@
 
 <dl class="function">
 <dt id="counted">
-<code class="descname">counted</code><span class="sig-paren">(</span><em>$count</em>, <em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#counted" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$count</strong> (<em>int</em>) – Number of items</li>
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">counted</code><span class="sig-paren">(</span><em class="sig-param">$count</em>, <em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#counted" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$count</strong> (<em>int</em>) – Number of items</p></li>
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A singular or plural phrase</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A singular or plural phrase</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Changes a word and its count to a phrase. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">counted</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;3 dogs&#39;</span>
 </pre></div>
@@ -437,24 +428,20 @@
 
 <dl class="function">
 <dt id="camelize">
-<code class="descname">camelize</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#camelize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">camelize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#camelize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Camel case string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Camel case string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Changes a string of words separated by spaces or underscores to camel
 case. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">camelize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;myDogSpot&#39;</span>
@@ -464,24 +451,20 @@ case. Example:</p>
 
 <dl class="function">
 <dt id="pascalize">
-<code class="descname">pascalize</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#pascalize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">pascalize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#pascalize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pascal case string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pascal case string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Changes a string of words separated by spaces or underscores to Pascal
 case, which is camel case with the first letter capitalized. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">pascalize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;MyDogSpot&#39;</span>
@@ -491,24 +474,20 @@ case, which is camel case with the first letter capitalized. Example:</p>
 
 <dl class="function">
 <dt id="underscore">
-<code class="descname">underscore</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#underscore" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">underscore</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#underscore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String containing underscores instead of spaces</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String containing underscores instead of spaces</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Takes multiple words separated by spaces and underscores them.
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">underscore</span><span class="p">(</span><span class="s1">&#39;my dog spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;my_dog_spot&#39;</span>
@@ -518,25 +497,21 @@ Example:</p>
 
 <dl class="function">
 <dt id="humanize">
-<code class="descname">humanize</code><span class="sig-paren">(</span><em>$string</em><span class="optional">[</span>, <em>$separator = '_'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#humanize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
-<li><strong>$separator</strong> (<em>string</em>) – Input separator</li>
+<code class="sig-name descname">humanize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="optional">[</span>, <em class="sig-param">$separator = '_'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#humanize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$separator</strong> (<em>string</em>) – Input separator</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Humanized string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Humanized string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Takes multiple words separated by underscores and adds spaces between
 them. Each word is capitalized.</p>
 <p>Example:</p>
@@ -551,24 +526,20 @@ them. Each word is capitalized.</p>
 
 <dl class="function">
 <dt id="is_pluralizable">
-<code class="descname">is_pluralizable</code><span class="sig-paren">(</span><em>$word</em><span class="sig-paren">)</span><a class="headerlink" href="#is_pluralizable" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$word</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">is_pluralizable</code><span class="sig-paren">(</span><em class="sig-param">$word</em><span class="sig-paren">)</span><a class="headerlink" href="#is_pluralizable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$word</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE if the word is countable or FALSE if not</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TRUE if the word is countable or FALSE if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 <p>Checks if the given word has a plural version. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">is_pluralizable</span><span class="p">(</span><span class="s1">&#39;equipment&#39;</span><span class="p">);</span> <span class="c1">// Returns FALSE</span>
 </pre></div>
@@ -577,24 +548,20 @@ them. Each word is capitalized.</p>
 
 <dl class="function">
 <dt id="dasherize">
-<code class="descname">dasherize</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#dasherize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<code class="sig-name descname">dasherize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#dasherize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dasherized string</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dasherized string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Replaces underscores with dashes in the string. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">dasherize</span><span class="p">(</span><span class="s1">&#39;hello_world&#39;</span><span class="p">);</span> <span class="c1">// Returns &#39;hello-world&#39;</span>
 </pre></div>
@@ -603,24 +570,20 @@ them. Each word is capitalized.</p>
 
 <dl class="function">
 <dt id="ordinal">
-<code class="descname">ordinal</code><span class="sig-paren">(</span><em>$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinal" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$integer</strong> (<em>int</em>) – The integer to determine the suffix</li>
+<code class="sig-name descname">ordinal</code><span class="sig-paren">(</span><em class="sig-param">$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$integer</strong> (<em>int</em>) – The integer to determine the suffix</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Ordinal suffix</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Ordinal suffix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Returns the suffix that should be added to a
 number to denote the position such as
 1st, 2nd, 3rd, 4th. Example:</p>
@@ -631,24 +594,20 @@ number to denote the position such as
 
 <dl class="function">
 <dt id="ordinalize">
-<code class="descname">ordinalize</code><span class="sig-paren">(</span><em>$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinalize" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$integer</strong> (<em>int</em>) – The integer to ordinalize</li>
+<code class="sig-name descname">ordinalize</code><span class="sig-paren">(</span><em class="sig-param">$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinalize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$integer</strong> (<em>int</em>) – The integer to ordinalize</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Ordinalized integer</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Ordinalized integer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 <p>Turns a number into an ordinal string used
 to denote the position such as 1st, 2nd, 3rd, 4th.
 Example:</p>
