@@ -15,3 +15,4 @@ parameters:
         - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$psr4#'
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$classmap#'
+        - '#Call to protected method renderTimeline\(\) of class CodeIgniter\\Debug\\Toolbar#'
