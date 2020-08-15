@@ -140,11 +140,12 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
 	 * @param boolean $cast        If true, properties will be casted.
+	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
 	 * @throws \Exception
 	 */
-	public function toArray(bool $onlyChanged = false, bool $cast = true): array
+	public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 	{
 		$this->_cast = $cast;
 		$return      = [];
@@ -164,6 +165,18 @@ class Entity implements \JsonSerializable
 			}
 
 			$return[$key] = $this->__get($key);
+
+			if ($recursive)
+			{
+				if ($return[$key] instanceof Entity)
+				{
+					$return[$key] = $return[$key]->toArray($onlyChanged, $cast, $recursive);
+				}
+				elseif (is_callable([$return[$key], 'toArray']))
+				{
+					$return[$key] = $return[$key]->toArray();
+				}
+			}
 		}
 
 		// Loop over our mapped properties and add them to the list...
@@ -174,6 +187,18 @@ class Entity implements \JsonSerializable
 				if (array_key_exists($to, $return))
 				{
 					$return[$from] = $this->__get($to);
+
+					if ($recursive)
+					{
+						if ($return[$from] instanceof Entity)
+						{
+							$return[$from] = $return[$from]->toArray($onlyChanged, $cast, $recursive);
+						}
+						elseif (is_callable([$return[$from], 'toArray']))
+						{
+							$return[$from] = $return[$from]->toArray();
+						}
+					}
 				}
 			}
 		}
@@ -187,16 +212,32 @@ class Entity implements \JsonSerializable
 	/**
 	 * Returns the raw values of the current attributes.
 	 *
-	 * @param boolean $onlyChanged
+	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
+	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
 	 */
-	public function toRawArray(bool $onlyChanged = false): array
+	public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
 	{
 		$return = [];
 
 		if (! $onlyChanged)
 		{
+			if ($recursive)
+			{
+				return array_map(function ($value) use ($onlyChanged, $recursive) {
+					if ($value instanceof Entity)
+					{
+						$value = $value->toRawArray($onlyChanged, $recursive);
+					}
+					elseif (is_callable([$value, 'toRawArray']))
+					{
+						$value = $value->toRawArray();
+					}
+					return $value;
+				}, $this->attributes);
+			}
+
 			return $this->attributes;
 		}
 
@@ -207,7 +248,19 @@ class Entity implements \JsonSerializable
 				continue;
 			}
 
-			$return[$key] = $this->attributes[$key];
+			if ($recursive)
+			{
+				if ($value instanceof Entity)
+				{
+					$value = $value->toRawArray($onlyChanged, $recursive);
+				}
+				elseif (is_callable([$value, 'toRawArray']))
+				{
+					$value = $value->toRawArray();
+				}
+			}
+
+			$return[$key] = $value;
 		}
 
 		return $return;
