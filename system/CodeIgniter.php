@@ -931,7 +931,7 @@ class CodeIgniter
 	 */
 	protected function createController()
 	{
-		$class = new $this->controller();
+		$class = new $this->controller(); // @phpstan-ignore-line
 		$class->initController($this->request, $this->response, Services::logger());
 
 		$this->benchmark->stop('controller_constructor');

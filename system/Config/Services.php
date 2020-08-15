@@ -379,7 +379,7 @@ class Services extends BaseService
 
 		$class = $config->handlers[$handler];
 
-		return new $class($config);
+		return new $class($config); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
