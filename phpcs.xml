@@ -22,6 +22,14 @@
         <exclude name="Squiz.Commenting.VariableComment"/>
     </rule>
 
+    <rule ref="Squiz.NamingConventions.ValidFunctionName">
+        <exclude name="Squiz.NamingConventions.ValidFunctionName"/>
+    </rule>
+
+    <rule ref="CodeIgniter4.NamingConventions.ValidMethodName">
+        <exclude name="CodeIgniter4.NamingConventions.ValidMethodName"/>
+    </rule>
+
     <rule ref="Generic.Commenting.DocComment">
         <exclude name="Generic.Commenting.DocComment"/>
     </rule>
