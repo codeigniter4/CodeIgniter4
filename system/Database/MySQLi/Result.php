@@ -94,7 +94,6 @@ class Result extends BaseResult implements ResultInterface
 			MYSQLI_TYPE_DOUBLE      => 'double',
 
 			MYSQLI_TYPE_BIT         => 'bit',
-			MYSQLI_TYPE_TINY        => 'tiny',
 			MYSQLI_TYPE_SHORT       => 'short',
 			MYSQLI_TYPE_LONG        => 'long',
 			MYSQLI_TYPE_LONGLONG    => 'longlong',
@@ -108,13 +107,10 @@ class Result extends BaseResult implements ResultInterface
 			MYSQLI_TYPE_DATETIME    => 'datetime',
 			MYSQLI_TYPE_NEWDATE     => 'newdate',
 
-			MYSQLI_TYPE_INTERVAL    => 'interval',
 			MYSQLI_TYPE_SET         => 'set',
-			MYSQLI_TYPE_ENUM        => 'enum',
 
 			MYSQLI_TYPE_VAR_STRING  => 'var_string',
 			MYSQLI_TYPE_STRING      => 'string',
-			MYSQLI_TYPE_CHAR        => 'char',
 
 			MYSQLI_TYPE_GEOMETRY    => 'geometry',
 			MYSQLI_TYPE_TINY_BLOB   => 'tiny_blob',
@@ -131,7 +127,8 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]              = new \stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->type_name   = isset($data_types[$data->type]) ? $data_types[$data->type] : null;
+			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true)
+				? $data->name : (isset($data_types[$data->type]) ? $data_types[$data->type] : null);
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;
