@@ -50,7 +50,7 @@ class ClearLogsTest extends CIUnitTestCase
 		$this->createDummyLogFiles();
 		$this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
-		command('logs:clear');
+		command('logs:clear -force');
 		$result = CITestStreamFilter::$buffer;
 
 		$this->assertFileNotExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
