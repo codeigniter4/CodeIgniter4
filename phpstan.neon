@@ -13,7 +13,7 @@ parameters:
     ignoreErrors:
         - '#Unsafe usage of new static\(\)*#'
         - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
-        - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$psr4#'
-        - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$classmap#'
+        - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::(\$psr4|\$classmap)#'
         - '#Call to protected method renderTimeline\(\) of class CodeIgniter\\Debug\\Toolbar#'
         - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
+        - '#Access to an undefined property CodeIgniter\\Config\\View::(\$filters|\$plugins)#'
