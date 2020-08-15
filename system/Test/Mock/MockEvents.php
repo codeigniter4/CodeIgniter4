@@ -43,7 +43,6 @@ use CodeIgniter\Events\Events;
  */
 class MockEvents extends Events
 {
-
 	public function getListeners()
 	{
 		return self::$listeners;
@@ -51,7 +50,7 @@ class MockEvents extends Events
 
 	public function getEventsFile()
 	{
-		return self::$eventsFile;
+		return self::$files;
 	}
 
 	public function getSimulate()

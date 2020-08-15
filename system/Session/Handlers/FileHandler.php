@@ -83,6 +83,13 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $matchIP = false;
 
+	/**
+	 * Regex of session ID
+	 *
+	 * @var string
+	 */
+	protected $sessionIDRegex = '';
+
 	//--------------------------------------------------------------------
 
 	/**
