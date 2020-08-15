@@ -102,13 +102,6 @@ trait ResponseTrait
 	 */
 	protected $format = 'json';
 
-	/**
-	 * Formatter instance
-	 *
-	 * @var null|\CodeIgniter\Format\FormatterInterface
-	 */
-	protected $formatter = null;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -408,7 +401,7 @@ trait ResponseTrait
 		if (! isset($this->formatter))
 		{
 			// if no formatter, use the default
-			$this->formatter = $config->getFormatter($format);
+			$this->formatter = $config->getFormatter($format); // @phpstan-ignore-line
 		}
 
 		if ($format !== 'application/json')
