@@ -12,3 +12,4 @@ parameters:
         - app/Views/*
     ignoreErrors:
         - '#Unsafe usage of new static\(\)*#'
+        - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
