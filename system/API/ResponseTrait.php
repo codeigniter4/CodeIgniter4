@@ -102,6 +102,13 @@ trait ResponseTrait
 	 */
 	protected $format = 'json';
 
+	/**
+	 * Formatter instance
+	 *
+	 * @var null|\CodeIgniter\Format\FormatterInterface
+	 */
+	protected $formatter = null;
+
 	//--------------------------------------------------------------------
 
 	/**
