@@ -288,7 +288,6 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'-opt-in',
 			'sure',
 		];
-		$_SERVER['argc'] = 11;
 		CLI::init();
 		$this->assertEquals(null, CLI::getSegment(7));
 		$this->assertEquals('b', CLI::getSegment(1));
@@ -308,7 +307,6 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'pvalue',
 			'd',
 		];
-		$_SERVER['argc'] = 6;
 		CLI::init();
 		$this->assertEquals(['parm' => 'pvalue'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
@@ -330,7 +328,6 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'-p3',
 			'value 3',
 		];
-		$_SERVER['argc'] = 9;
 		CLI::init();
 		$this->assertEquals(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));

@@ -1319,8 +1319,9 @@ class RulesTest extends CIDatabaseTestCase
 	/**
 	 * @dataProvider inListProvider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param string  $first
+	 * @param string  $second
+	 * @param boolean $expected
 	 */
 	public function testInList($first, $second, $expected)
 	{
@@ -1330,6 +1331,30 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->validation->setRules([
 			'foo' => "in_list[{$second}]",
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider inListProvider
+	 *
+	 * @param string  $first
+	 * @param string  $second
+	 * @param boolean $expected
+	 */
+	public function testNotInList($first, $second, $expected)
+	{
+		$expected = ! $expected;
+
+		$data = [
+			'foo' => $first,
+		];
+
+		$this->validation->setRules([
+			'foo' => "not_in_list[{$second}]",
 		]);
 
 		$this->assertEquals($expected, $this->validation->run($data));

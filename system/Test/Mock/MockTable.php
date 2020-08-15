@@ -10,7 +10,7 @@ class MockTable extends \CodeIgniter\View\Table {
 			return call_user_func_array([$this, '_' . $method], $params);
 		}
 
-		throw new BadMethodCallException('Method ' . $method . ' was not found');
+		throw new \BadMethodCallException('Method ' . $method . ' was not found');
 	}
 
 }

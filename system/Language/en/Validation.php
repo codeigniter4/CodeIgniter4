@@ -48,6 +48,7 @@ return [
    'max_length'            => 'The {field} field cannot exceed {param} characters in length.',
    'min_length'            => 'The {field} field must be at least {param} characters in length.',
    'not_equals'            => 'The {field} field cannot be: {param}.',
+   'not_in_list'           => 'The {field} field must not be one of: {param}.',
    'numeric'               => 'The {field} field must contain only numbers.',
    'regex_match'           => 'The {field} field is not in the correct format.',
    'required'              => 'The {field} field is required.',

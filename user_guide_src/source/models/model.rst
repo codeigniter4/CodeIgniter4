@@ -789,10 +789,10 @@ beforeInsert      **data** = the key/value pairs that are being inserted. If an 
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
-beforeUpdate      **id** = the primary key of the row being updated.
+beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
-afterUpdate       **id** = the primary key of the row being updated.
+afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
 afterFind         Varies by find* method. See the following:
