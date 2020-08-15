@@ -5,6 +5,7 @@
     <!-- Paths to check -->
     <file>app/Config</file>
     <file>app/Controllers</file>
+    <file>system</file>
 
     <rule ref="Squiz.Commenting.PostStatementComment.Found">
         <exclude name="Squiz.Commenting.PostStatementComment.Found"/>

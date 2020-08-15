@@ -132,7 +132,7 @@ class ListCommands extends BaseCommand
 			CLI::write($group, 'yellow');
 			foreach ($commands as $name => $command)
 			{
-				$name 	= $this->setPad($name, $length, 2, 2);
+				$name   = $this->setPad($name, $length, 2, 2);
 				$output = CLI::color($name, 'green');
 				if (isset($command['description']))
 				{
@@ -140,7 +140,7 @@ class ListCommands extends BaseCommand
 				}
 				CLI::write($output);
 			}
-			
+
 			end($groups);
 
 			if ($group !== key($groups))
