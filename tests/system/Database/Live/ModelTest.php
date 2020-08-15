@@ -19,6 +19,7 @@ use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
+use Tests\Support\Models\WithoutAutoincrementModel;
 
 /**
  * @group DatabaseLive
@@ -2299,6 +2300,75 @@ class ModelTest extends CIDatabaseTestCase
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUseAutoIncrementSetToFalseInsertException()
+	{
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no primary key defined when trying to make insert');
+
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseInsert()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseUpdate()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$key    = 'key';
+		$update = [
+			'value' => 'some different value',
+		];
+
+		$model->update($key, $update);
+
+		$this->seeInDatabase('without_auto_increment', ['key' => $key, 'value' => $update['value']]);
+	}
+
+	public function testUseAutoIncrementSetToFalseSave()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some value',
+		];
+
+		$model->save($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+
+		$update = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+		$model->save($update);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $update);
 	}
 
 	//--------------------------------------------------------------------
