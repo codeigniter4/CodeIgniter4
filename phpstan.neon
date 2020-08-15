@@ -16,3 +16,4 @@ parameters:
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$psr4#'
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::\$classmap#'
         - '#Call to protected method renderTimeline\(\) of class CodeIgniter\\Debug\\Toolbar#'
+        - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
