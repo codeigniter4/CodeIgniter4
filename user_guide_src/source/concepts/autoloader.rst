@@ -76,15 +76,6 @@ third-party libraries that are not namespaced::
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
-Legacy Support
-==============
-
-If neither of the above methods finds the class, and the class is not namespaced, the autoloader will look in the
-**/app/Libraries** and **/app/Models** directories to attempt to locate the files. This provides
-a measure to help ease the transition from previous versions.
-
-There are no configuration options for legacy support.
-
 Composer Support
 ================
 
