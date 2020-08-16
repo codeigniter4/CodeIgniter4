@@ -86,7 +86,6 @@ use Config\Exceptions as ExceptionsConfig;
 use Config\Filters as FiltersConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images;
-use Config\Logger as LoggerConfig;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -112,7 +111,6 @@ use Config\View as ViewConfig;
  */
 class Services extends BaseService
 {
-
 	/**
 	 * The cache class provides a simple way to store and retrieve
 	 * complex data for later.
@@ -222,7 +220,7 @@ class Services extends BaseService
 			return static::getSharedInstance('email', $config);
 		}
 
-		if (! is_array($config) && ! $config instanceof EmailConfig)
+		if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig))
 		{
 			$config = config('Email');
 		}
