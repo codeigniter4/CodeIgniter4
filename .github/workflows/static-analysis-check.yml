@@ -2,6 +2,12 @@ name: "Static Analysis Check"
 
 on:
   pull_request:
+    branches:
+      - 'develop'
+      - '4.1'
+    paths:
+      - 'app/**'
+      - 'system/**'
   push:
     branches:
       - 'develop'
@@ -20,9 +26,12 @@ jobs:
         with:
           extensions: intl
           php-version: "7.4"
+
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: "Install dependencies"
         run: "composer install"
+
       - name: "Static analysis Check"
         run: "vendor/bin/phpstan analyze --level=1 app system"
