@@ -8,6 +8,7 @@ class {class} extends Model
 {
 	protected $table      = '{table}';
 	protected $primaryKey = 'id';
+	protected $useAutoIncrement = true;
 
 	protected $insertID = 0;
 	protected $DBGroup  = '{dbgroup}';
