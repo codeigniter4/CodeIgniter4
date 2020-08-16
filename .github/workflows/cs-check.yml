@@ -7,8 +7,8 @@ on:
       - 'develop'
       - '4.1'
     paths:
-      - 'app'
-      - 'system'
+      - 'app/**'
+      - 'system/**'
 
 jobs:
   build:
