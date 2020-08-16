@@ -87,6 +87,13 @@ class Encryption
 		'OpenSSL',
 	];
 
+	/**
+	 * Handlers that are to be installed
+	 *
+	 * @var array
+	 */
+	protected $handlers = [];
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -115,7 +122,7 @@ class Encryption
 		{
 			// this should never happen in travis-ci
 			// @codeCoverageIgnoreStart
-			throw EncryptionException::forNoHandlerAvailable($this->driver);
+			throw EncryptionException::forNoHandlerAvailable('OpenSSL');
 			// @codeCoverageIgnoreEnd
 		}
 	}
