@@ -125,8 +125,10 @@ class RedirectResponse extends Response
 		$session = $this->ensureSession();
 
 		$input = [
-			'get'  => $_GET,
-			'post' => $_POST,
+			// @phpstan-ignore-next-line
+			'get'  => $_GET ?? [],
+			// @phpstan-ignore-next-line
+			'post' => $_POST ?? [],
 		];
 
 		$session->setFlashdata('_ci_old_input', $input);
