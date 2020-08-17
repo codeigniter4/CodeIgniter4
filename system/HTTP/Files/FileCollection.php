@@ -310,23 +310,16 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax(array $index, array $value)
 	{
-		if (empty($index))
+		if (! empty($index))
 		{
-			return null;
+			$current_index = array_shift($index);
 		}
-
-		$current_index = array_shift($index);
-		if (! isset($value[$current_index]))
-		{
-			return null;
-		}
-
-		if (is_array($value[$current_index]) && $value[$current_index])
+		if (isset($current_index) && is_array($index) && $index && is_array($value[$current_index]) && $value[$current_index])
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
 		}
 
-		return $value[$current_index];
+		return (isset($current_index) && isset($value[$current_index])) ? $value[$current_index] : null;
 	}
 
 }
