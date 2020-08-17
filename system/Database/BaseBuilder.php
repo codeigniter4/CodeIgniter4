@@ -1958,7 +1958,7 @@ class BaseBuilder
 		// If we've previously reset the QBOrderBy values, get them back
 		elseif (! isset($this->QBOrderBy))
 		{
-			$this->QBOrderBy = $orderBy ?: [];
+			$this->QBOrderBy = $orderBy;
 		}
 
 		// Restore the LIMIT setting
