@@ -174,4 +174,11 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
+
+	public function testConnectionInstances()
+	{
+		$this->assertEquals(4, count(Config::getConnections()));
+		$this->setPrivateProperty(Config::class, 'instances', []);
+		$this->assertEquals(0, count(Config::getConnections()));
+	}
 }
