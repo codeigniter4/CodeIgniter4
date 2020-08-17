@@ -25,4 +25,4 @@ jobs:
       - name: "Install dependencies"
         run: "composer install"
       - name: "Static analysis Check"
-        run: "vendor/bin/phpstan analyze --level=0 app system"
+        run: "vendor/bin/phpstan analyze --level=1 app system"

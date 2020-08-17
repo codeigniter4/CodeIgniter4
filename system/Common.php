@@ -134,7 +134,8 @@ if (! function_exists('clean_path'))
 				return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
 			case strpos($path, SYSTEMPATH) === 0:
 				return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
-			case strpos($path, FCPATH) === 0:
+			case strpos($path, FCPATH) === 0: // @phpstan-ignore-line
+				// @phpstan-ignore-next-line
 				return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
 			case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
 				return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));

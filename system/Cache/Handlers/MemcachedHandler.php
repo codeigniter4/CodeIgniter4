@@ -215,7 +215,7 @@ class MemcachedHandler implements CacheInterface
 			}
 		}
 
-		return is_array($data) ? $data[0] : $data;
+		return is_array($data) ? $data[0] : $data; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

@@ -292,7 +292,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		return $this->_resize($maintainRatio);
+		return $this->_resize($maintainRatio); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -324,7 +324,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		$result = $this->_crop();
+		$result = $this->_crop(); // @phpstan-ignore-line
 
 		$this->xAxis = null;
 		$this->yAxis = null;
@@ -858,6 +858,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getWidth()
 	{
+		// @phpstan-ignore-next-line
 		return ($this->resource !== null) ? $this->_getWidth() : $this->width;
 	}
 
@@ -870,6 +871,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getHeight()
 	{
+		// @phpstan-ignore-next-line
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;
 	}
 

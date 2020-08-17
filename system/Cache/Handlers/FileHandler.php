@@ -528,7 +528,7 @@ class FileHandler implements CacheInterface
 			}
 		}
 
-		return $fileInfo;
+		return $fileInfo; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

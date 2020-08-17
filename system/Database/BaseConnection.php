@@ -1679,7 +1679,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$fields = $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 
-		return $fields ?? false;
+		return $fields ?: false;
 	}
 
 	//--------------------------------------------------------------------
@@ -1694,7 +1694,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
 
-		return $fields ?? false;
+		return $fields ?: false;
 	}
 
 	//--------------------------------------------------------------------
@@ -1709,7 +1709,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 
-		return $fields ?? false;
+		return $fields ?: false;
 	}
 
 	//--------------------------------------------------------------------

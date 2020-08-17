@@ -157,7 +157,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 			chmod($filepath, $this->filePermissions);
 		}
 
-		return is_int($result);
+		return is_int($result); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
