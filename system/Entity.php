@@ -179,14 +179,23 @@ class Entity implements \JsonSerializable
 			}
 		}
 
+		//Filter processing already mapped properties
+		$datamap = array_filter($this->datamap, function ($key) {
+			return ! in_array($key, array_keys($this->attributes));
+		}, ARRAY_FILTER_USE_KEY);
+
 		// Loop over our mapped properties and add them to the list...
-		if (is_array($this->datamap))
+		if (is_array($datamap))
 		{
-			foreach ($this->datamap as $from => $to)
+			foreach ($datamap as $from => $to)
 			{
 				if (array_key_exists($to, $return))
 				{
-					$return[$from] = $this->__get($to);
+					$return[$from] = $this->__get($from);
+					if (! in_array($to, array_keys($this->datamap)))
+					{
+						unset($return[$to]);
+					}
 
 					if ($recursive)
 					{
