@@ -173,7 +173,7 @@ class Parser extends View
 		// Should we cache?
 		if (isset($options['cache']))
 		{
-			cache()->save($cacheName, $output, (int) $options['cache']);
+			cache()->save($cacheName, $output, (int) $options['cache']); // @phpstan-ignore-line
 		}
 		$this->tempData = null;
 		return $output;

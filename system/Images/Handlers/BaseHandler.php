@@ -511,6 +511,44 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Handles the actual resizing of the image.
+	 *
+	 * @param boolean $maintainRatio
+	 *
+	 * @return $this
+	 */
+	public abstract function _resize(bool $maintainRatio = false);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Crops the image.
+	 *
+	 * @return $this
+	 */
+	public abstract function _crop();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getWidth();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the height of an image.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getHeight();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser. This is especially an issue
 	 * with images taken by smartphones who always store the image up-right,

@@ -331,7 +331,7 @@ class Builder extends BaseBuilder
 		}
 
 		$cases = '';
-		foreach ($final as $k => $v)
+		foreach ($final as $k => $v) // @phpstan-ignore-line
 		{
 			$cases .= "{$k} = (CASE {$index}\n"
 					. implode("\n", $v)

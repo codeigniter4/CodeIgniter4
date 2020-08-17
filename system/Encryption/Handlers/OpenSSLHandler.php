@@ -57,6 +57,13 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	protected $cipher = 'AES-256-CTR';
 
+	/**
+	 * Starter key
+	 *
+	 * @var string
+	 */
+	protected $key = '';
+
 	// --------------------------------------------------------------------
 
 	/**

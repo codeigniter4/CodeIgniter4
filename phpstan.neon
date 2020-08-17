@@ -10,10 +10,13 @@ parameters:
         - app/Config/*
         - app/Database/*
         - app/Views/*
+        - system/Commands/Generators/Views/migration.tpl.php
+        - system/Config/Routes.php
+        - system/Debug/Toolbar/Views/toolbar.tpl.php
+        - system/Validation/Views/single.php
     ignoreErrors:
         - '#Unsafe usage of new static\(\)*#'
         - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::(\$psr4|\$classmap)#'
-        - '#Call to protected method renderTimeline\(\) of class CodeIgniter\\Debug\\Toolbar#'
         - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
         - '#Access to an undefined property CodeIgniter\\Config\\View::(\$filters|\$plugins)#'

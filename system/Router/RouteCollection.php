@@ -529,7 +529,8 @@ class RouteCollection implements RouteCollectionInterface
 		// we might need to do.
 		$this->discoverRoutes();
 
-		$routes = [];
+		$routes     = [];
+		$collection = [];
 
 		if (isset($this->routes[$verb]))
 		{
@@ -806,7 +807,7 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$new_name = implode("\\", array_map('ucfirst', explode('/', $name)));
+		$new_name = implode('\\', array_map('ucfirst', explode('/', $name)));
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
@@ -919,7 +920,7 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$newName = implode("\\", array_map('ucfirst', explode('/', $name)));
+		$newName = implode('\\', array_map('ucfirst', explode('/', $name)));
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))

@@ -314,12 +314,12 @@ class FileCollection
 		{
 			$current_index = array_shift($index);
 		}
-		if (is_array($index) && $index && is_array($value[$current_index]) && $value[$current_index])
+		if (isset($current_index) && is_array($index) && $index && is_array($value[$current_index]) && $value[$current_index])
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
 		}
 
-		return (isset($value[$current_index])) ? $value[$current_index] : null;
+		return (isset($current_index) && isset($value[$current_index])) ? $value[$current_index] : null;
 	}
 
 }

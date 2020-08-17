@@ -275,7 +275,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				}
 			}
 
-			if (! is_int($result))
+			if (! is_int($result)) // @phpstan-ignore-line
 			{
 				$this->fingerprint = md5(substr($sessionData, 0, $written));
 				$this->logger->error('Session: Unable to write data.');

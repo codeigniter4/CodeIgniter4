@@ -86,7 +86,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function connect(bool $persistent = false)
 	{
-		if ($persistent && $this->db->DBDebug)
+		if ($persistent && $this->DBDebug)
 		{
 			throw new DatabaseException('SQLite3 doesn\'t support persistent connections.');
 		}

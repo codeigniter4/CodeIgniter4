@@ -1136,7 +1136,7 @@ class CLI
 			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
-			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $total_rows))
 			{
 				$table .= $cols . PHP_EOL;
 			}

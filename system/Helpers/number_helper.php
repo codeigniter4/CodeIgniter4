@@ -323,12 +323,12 @@ if (! function_exists('number_to_roman'))
 					$return = $key2 . str_repeat($key1, $n - 5);
 					break;
 				case 9:
-					$return = $key1 . $key_f;
+					$return = $key1 . $key_f; // @phpstan-ignore-line
 					break;
 			}
 			switch ($num) {
 				case 10:
-					$return = $key_f;
+					$return = $key_f; // @phpstan-ignore-line
 					break;
 			}
 			if ($num > 10)
