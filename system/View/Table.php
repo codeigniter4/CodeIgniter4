@@ -529,12 +529,12 @@ class Table
 			return;
 		}
 
-		$this->temp = $this->_defaultTemplate();
+		$temp = $this->_defaultTemplate();
 		foreach (['table_open', 'thead_open', 'thead_close', 'heading_row_start', 'heading_row_end', 'heading_cell_start', 'heading_cell_end', 'tbody_open', 'tbody_close', 'row_start', 'row_end', 'cell_start', 'cell_end', 'row_alt_start', 'row_alt_end', 'cell_alt_start', 'cell_alt_end', 'table_close'] as $val)
 		{
 			if (! isset($this->template[$val]))
 			{
-				$this->template[$val] = $this->temp[$val];
+				$this->template[$val] = $temp[$val];
 			}
 		}
 	}

@@ -58,6 +58,13 @@ class File extends SplFileInfo
 	 */
 	protected $size;
 
+	/**
+	 * Original MimeType
+	 *
+	 * @var null|string
+	 */
+	protected $originalMimeType = null;
+
 	//--------------------------------------------------------------------
 
 	/**

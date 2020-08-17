@@ -135,7 +135,7 @@ class Time extends DateTime
 			}
 		}
 
-		return parent::__construct($time, $this->timezone);
+		parent::__construct($time, $this->timezone);
 	}
 
 	//--------------------------------------------------------------------

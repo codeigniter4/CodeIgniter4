@@ -252,6 +252,18 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('stringifypkey', true);
+
+		// Table without auto increment field
+		$this->forge->addField([
+			'key'   => [
+				'type'       => 'VARCHAR',
+				'constraint' => 40,
+				'unique'     => true,
+			],
+			'value' => ['type' => 'TEXT'],
+		]);
+		$this->forge->addKey('key', true);
+		$this->forge->createTable('without_auto_increment', true);
 	}
 
 	//--------------------------------------------------------------------
@@ -265,6 +277,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->dropTable('empty', true);
 		$this->forge->dropTable('secondary', true);
 		$this->forge->dropTable('stringifypkey', true);
+		$this->forge->dropTable('without_auto_increment', true);
 	}
 
 	//--------------------------------------------------------------------

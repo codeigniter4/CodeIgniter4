@@ -99,6 +99,13 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * Whether primary key uses auto increment.
+	 *
+	 * @var boolean
+	 */
+	protected $useAutoIncrement = true;
+
+	/**
 	 * Last insert ID
 	 *
 	 * @var integer
@@ -619,11 +626,32 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		// When useAutoIncrement feature is disabled check
+		// in the database if given record already exists
+		if (! $makeUpdate = $this->useAutoIncrement)
+		{
+			$count = 0;
+
+			if (is_object($data) && isset($data->{$this->primaryKey}))
+			{
+				$count = $this->where($this->primaryKey, $data->{$this->primaryKey})->countAllResults();
+			}
+			elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+			{
+				$count = $this->where($this->primaryKey, $data[$this->primaryKey])->countAllResults();
+			}
+
+			if ($count === 1)
+			{
+				$makeUpdate = true;
+			}
+		}
+
+		if ($makeUpdate && is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		elseif ($makeUpdate && is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
@@ -721,11 +749,11 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	public function getInsertID(): int
+	public function getInsertID()
 	{
-		return $this->insertID;
+		return is_numeric($this->insertID) ? (int) $this->insertID : $this->insertID;
 	}
 
 	//--------------------------------------------------------------------
@@ -811,6 +839,13 @@ class Model
 			$eventData = $this->trigger('beforeInsert', $eventData);
 		}
 
+		// Require non empty primaryKey when
+		// not using auto-increment feature
+		if (! $this->useAutoIncrement && empty($eventData['data'][$this->primaryKey]))
+		{
+			throw DataException::forEmptyPrimaryKey('insert');
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
 				->set($eventData['data'], '', $escape)
@@ -819,7 +854,14 @@ class Model
 		// If insertion succeeded then save the insert ID
 		if ($result->resultID)
 		{
-			$this->insertID = $this->db->insertID();
+			if (! $this->useAutoIncrement)
+			{
+				$this->insertID = $eventData['data'][$this->primaryKey];
+			}
+			else
+			{
+				$this->insertID = $this->db->insertID();
+			}
 		}
 
 		$eventData = [
@@ -887,6 +929,13 @@ class Model
 				// Must be called first so we don't
 				// strip out created_at values.
 				$row = $this->doProtectFields($row);
+
+				// Require non empty primaryKey when
+				// not using auto-increment feature
+				if (! $this->useAutoIncrement && empty($row[$this->primaryKey]))
+				{
+					throw DataException::forEmptyPrimaryKey('insertBatch');
+				}
 
 				// Set created_at and updated_at with same time
 				$date = $this->setDate();

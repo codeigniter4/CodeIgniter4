@@ -268,12 +268,10 @@ class DotEnv
 	{
 		if (strpos($value, '$') !== false)
 		{
-			$loader = $this;
-
 			$value = preg_replace_callback(
 				'/\${([a-zA-Z0-9_]+)}/',
-				function ($matchedPatterns) use ($loader) {
-					$nestedVariable = $loader->getVariable($matchedPatterns[1]);
+				function ($matchedPatterns) {
+					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 
 					if (is_null($nestedVariable))
 					{

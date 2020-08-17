@@ -1313,4 +1313,59 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
+	public function urlIsProvider()
+	{
+		return [
+			[
+				'foo/bar',
+				'foo/bar',
+				true,
+			],
+			[
+				'foo/bar',
+				'foo*',
+				true,
+			],
+			[
+				'foo/bar',
+				'foo',
+				false,
+			],
+			[
+				'foo/bar',
+				'baz/foo/bar',
+				false,
+			],
+			[
+				'',
+				'foo*',
+				false,
+			],
+			[
+				'foo/',
+				'foo*',
+				true,
+			],
+			[
+				'foo/',
+				'foo',
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider urlIsProvider
+	 */
+	public function testUrlIs(string $currentPath, string $testPath, bool $expected)
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$url          = new URI('http://example.com/' . $currentPath);
+		$request      = service('request');
+		$request->uri = $url;
+		Services::injectMock('request', $request);
+
+		$this->assertEquals($expected, url_is($testPath));
+	}
 }

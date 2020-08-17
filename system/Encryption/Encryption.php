@@ -105,13 +105,8 @@ class Encryption
 		$this->driver = $config->driver;
 		$this->digest = $config->digest ?? 'SHA512';
 
-		// determine what is installed
-		$this->handlers = [
-			'OpenSSL' => extension_loaded('openssl'),
-		];
-
 		// if any aren't there, bomb
-		if (in_array(false, $this->handlers))
+		if ($this->driver === 'OpenSSL' && ! extension_loaded('openssl'))
 		{
 			// this should never happen in travis-ci
 			// @codeCoverageIgnoreStart

@@ -37,49 +37,38 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands;
+namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * CI Help command for the spark script.
- *
- * Lists the basic usage information for the spark script,
- * and provides a way to list help for other commands.
+ * Creates a new seeder file
  *
  * @package CodeIgniter\Commands
  */
-class Help extends BaseCommand
+class CreateSeeder extends GeneratorCommand
 {
-
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'CodeIgniter';
-
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'help';
+	protected $name = 'make:seeder';
 
 	/**
 	 * the Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Displays basic usage information.';
+	protected $description = 'Creates a new seeder file.';
 
 	/**
 	 * the Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'help command_name';
+	protected $usage = 'make:seeder <name> [options]';
 
 	/**
 	 * the Command's Arguments
@@ -87,36 +76,62 @@ class Help extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'command_name' => 'The command name [default: "help"]',
+		'name' => 'The seeder file name',
 	];
 
 	/**
-	 * the Command's Options
+	 * Gets the class name from input.
 	 *
-	 * @var array
+	 * @return string
 	 */
-	protected $options = [];
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Displays the help for spark commands.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
+	protected function getClassName(): string
 	{
-		$command  = array_shift($params);
-		$command  = $command ?? 'help';
-		$commands = $this->commands->getCommands();
-
-		if (! $this->commands->verifyCommand($command, $commands))
+		$class = parent::getClassName();
+		if (empty($class))
 		{
-			return;
+			// @codeCoverageIgnoreStart
+			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required');
+			// @codeCoverageIgnoreEnd
 		}
 
-		$class = new $commands[$command]['class']($this->logger, $this->commands);
-		$class->showHelp();
+		return $class;
 	}
 
+	/**
+	 * Gets the qualified class name.
+	 *
+	 * @param string $rootNamespace
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function getNamespacedClass(string $rootNamespace, string $class): string
+	{
+		return $rootNamespace . '\\Database\\Seeds\\' . $class;
+	}
+
+	/**
+	 * Gets the template for this class.
+	 *
+	 * @return string
+	 */
+	protected function getTemplate(): string
+	{
+		return <<<EOD
+<?php
+
+namespace {namespace};
+
+use CodeIgniter\Database\Seeder;
+
+class {class} extends Seeder
+{
+	public function run()
+	{
+		//
+	}
+}
+
+EOD;
+	}
 }

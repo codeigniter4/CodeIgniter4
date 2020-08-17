@@ -61,6 +61,11 @@ class Rules
 	 */
 	public function differs(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str !== dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str !== $data[$field];
 	}
 
@@ -174,8 +179,7 @@ class Rules
 			}
 		}
 
-		return (bool) ($row->get()
-						->getRow() !== null);
+		return (bool) ($row->get()->getRow() !== null);
 	}
 
 	//--------------------------------------------------------------------
@@ -190,10 +194,7 @@ class Rules
 	 */
 	public function in_list(string $value = null, string $list): bool
 	{
-		$list = explode(',', $list);
-		$list = array_map(function ($value) {
-			return trim($value);
-		}, $list);
+		$list = array_map('trim', explode(',', $list));
 		return in_array($value, $list, true);
 	}
 
@@ -237,8 +238,7 @@ class Rules
 			}
 		}
 
-		return (bool) ($row->get()
-						->getRow() === null);
+		return (bool) ($row->get()->getRow() === null);
 	}
 
 	//--------------------------------------------------------------------
@@ -284,6 +284,11 @@ class Rules
 	 */
 	public function matches(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str === dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str === $data[$field];
 	}
 
@@ -330,6 +335,21 @@ class Rules
 	public function not_equals(string $str = null, string $val): bool
 	{
 		return $str !== $val;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Value should not be within an array of values.
+	 *
+	 * @param string $value
+	 * @param string $list
+	 *
+	 * @return boolean
+	 */
+	public function not_in_list(string $value = null, string $list): bool
+	{
+		return ! $this->in_list($value, $list);
 	}
 
 	//--------------------------------------------------------------------

@@ -37,74 +37,85 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Sessions;
+namespace CodeIgniter\Commands\Housekeeping;
 
+use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * Creates a migration file for database sessions.
- *
- * @package CodeIgniter\Commands
+ * ClearLogs command.
  */
-class CreateSessionMigration extends GeneratorCommand
+class ClearLogs extends BaseCommand
 {
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
+	protected $group = 'Housekeeping';
+
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'session:migration';
+	protected $name = 'logs:clear';
 
 	/**
-	 * the Command's short description
+	 * The Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Generates the migration file for database sessions.';
+	protected $description = 'Clears all log files.';
 
 	/**
 	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'session:migration [options]';
+	protected $usage = 'logs:clear [option';
 
 	/**
-	 * The Command's Options
+	 * The Command's options
 	 *
 	 * @var array
 	 */
 	protected $options = [
-		'-g' => 'Set database group',
-		'-t' => 'Set table name',
+		'-force' => 'Force delete of all logs files without prompting.',
 	];
 
-	protected function getClassName(): string
+	/**
+	 * Actually execute a command.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
 	{
-		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
-		return "Migration_create_{$tableName}_table";
-	}
+		$force = array_key_exists('force', $params) || CLI::getOption('force');
 
-	protected function getNamespacedClass(string $rootNamespace, string $class): string
-	{
-		return $rootNamespace . '\\Database\\Migrations\\' . $class;
-	}
+		if (! $force && CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n')
+		{
+			// @codeCoverageIgnoreStart
+			CLI::error('Deleting logs aborted.', 'light_gray', 'red');
+			CLI::error('If you want, use the "-force" option to force delete all log files.', 'light_gray', 'red');
+			CLI::newLine();
+			return;
+			// @codeCoverageIgnoreEnd
+		}
 
-	protected function modifyBasename(string $filename): string
-	{
-		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
-	}
+		helper('filesystem');
 
-	protected function getTemplate(): string
-	{
-		$data = [
-			'DBGroup'   => $this->params['g'] ?? CLI::getOption('g'),
-			'tableName' => $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions',
-			'matchIP'   => config('App')->sessionMatchIP ?? false,
-		];
+		if (! delete_files(WRITEPATH . 'logs', false, true))
+		{
+			// @codeCoverageIgnoreStart
+			CLI::error('Error in deleting the logs files.', 'light_gray', 'red');
+			CLI::newLine();
+			return;
+			// @codeCoverageIgnoreEnd
+		}
 
-		$string = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
-		return str_replace('@php', '?php', $string);
+		CLI::write('Logs cleared.', 'green');
+		CLI::newLine();
 	}
 }

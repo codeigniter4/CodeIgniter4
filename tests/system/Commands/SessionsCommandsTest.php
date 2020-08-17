@@ -55,12 +55,12 @@ class SessionsCommandsTest extends CIUnitTestCase
 			$this->markTestSkipped('chmod does not work as expected on Windows');
 		}
 
-		chmod(APPPATH . 'Database/Migrations/', 0444);
+		chmod(APPPATH . 'Database/Migrations', 0444);
 
 		command('session:migration');
 		$this->assertStringContainsString('Error in creating file:', CITestStreamFilter::$buffer);
 
-		chmod(APPPATH . 'Database/Migrations/', 0755);
+		chmod(APPPATH . 'Database/Migrations', 0755);
 	}
 
 }

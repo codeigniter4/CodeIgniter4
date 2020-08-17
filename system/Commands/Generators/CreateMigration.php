@@ -37,46 +37,46 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * Creates a new seeder file
+ * Creates a new migration file.
  *
  * @package CodeIgniter\Commands
  */
-class CreateSeeder extends GeneratorCommand
+class CreateMigration extends GeneratorCommand
 {
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:seeder';
+	protected $name = 'migrate:create';
 
 	/**
-	 * the Command's short description
+	 * The Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a new seeder file.';
+	protected $description = 'Creates a new migration file.';
 
 	/**
-	 * the Command's usage
+	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:seeder [name] [options]';
+	protected $usage = 'migrate:create <name> [options]';
 
 	/**
-	 * the Command's Arguments
+	 * The Command's Arguments
 	 *
 	 * @var array
 	 */
 	protected $arguments = [
-		'name' => 'The seeder file name',
+		'name' => 'The migration file name',
 	];
 
 	/**
@@ -90,7 +90,7 @@ class CreateSeeder extends GeneratorCommand
 		if (empty($class))
 		{
 			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required');
+			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -107,7 +107,12 @@ class CreateSeeder extends GeneratorCommand
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
-		return $rootNamespace . '\\Database\\Seeds\\' . $class;
+		return $rootNamespace . '\\Database\\Migrations\\' . $class;
+	}
+
+	protected function modifyBasename(string $filename): string
+	{
+		return gmdate(config('Migrations')->timestampFormat) . $filename;
 	}
 
 	/**
@@ -122,11 +127,18 @@ class CreateSeeder extends GeneratorCommand
 
 namespace {namespace};
 
-use CodeIgniter\Database\Seeder;
+use CodeIgniter\Database\Migration;
 
-class {class} extends Seeder
+class {class} extends Migration
 {
-	public function run()
+	public function up()
+	{
+		//
+	}
+
+	//--------------------------------------------------------------------
+
+	public function down()
 	{
 		//
 	}
