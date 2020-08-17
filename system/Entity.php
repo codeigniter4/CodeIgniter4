@@ -150,15 +150,21 @@ class Entity implements \JsonSerializable
 		$this->_cast = $cast;
 		$return      = [];
 
+		$keys = array_keys($this->attributes);
+		$keys = array_filter($keys, function ($key) {
+			return strpos($key, '_') !== 0;
+		});
+
+		if (is_array($this->datamap))
+		{
+			$keys = array_diff($keys, $this->datamap);
+			$keys = array_unique(array_merge($keys, array_keys($this->datamap)));
+		}
+
 		// we need to loop over our properties so that we
 		// allow our magic methods a chance to do their thing.
-		foreach ($this->attributes as $key => $value)
+		foreach ($keys as $key)
 		{
-			if (strpos($key, '_') === 0)
-			{
-				continue;
-			}
-
 			if ($onlyChanged && ! $this->hasChanged($key))
 			{
 				continue;
@@ -175,39 +181,6 @@ class Entity implements \JsonSerializable
 				elseif (is_callable([$return[$key], 'toArray']))
 				{
 					$return[$key] = $return[$key]->toArray();
-				}
-			}
-		}
-
-		//Filter processing already mapped properties
-		$datamap = array_filter($this->datamap, function ($key) {
-			return ! in_array($key, array_keys($this->attributes));
-		}, ARRAY_FILTER_USE_KEY);
-
-		// Loop over our mapped properties and add them to the list...
-		if (is_array($datamap))
-		{
-			foreach ($datamap as $from => $to)
-			{
-				if (array_key_exists($to, $return))
-				{
-					$return[$from] = $this->__get($from);
-					if (! in_array($to, array_keys($this->datamap)))
-					{
-						unset($return[$to]);
-					}
-
-					if ($recursive)
-					{
-						if ($return[$from] instanceof Entity)
-						{
-							$return[$from] = $return[$from]->toArray($onlyChanged, $cast, $recursive);
-						}
-						elseif (is_callable([$return[$from], 'toArray']))
-						{
-							$return[$from] = $return[$from]->toArray();
-						}
-					}
 				}
 			}
 		}
