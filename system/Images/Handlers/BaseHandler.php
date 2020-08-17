@@ -292,7 +292,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		return $this->_resize($maintainRatio); // @phpstan-ignore-line
+		return $this->_resize($maintainRatio);
 	}
 
 	//--------------------------------------------------------------------
@@ -324,7 +324,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		$result = $this->_crop(); // @phpstan-ignore-line
+		$result = $this->_crop();
 
 		$this->xAxis = null;
 		$this->yAxis = null;
@@ -507,6 +507,44 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param array  $options
 	 */
 	protected abstract function _text(string $text, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles the actual resizing of the image.
+	 *
+	 * @param boolean $maintainRatio
+	 *
+	 * @return $this
+	 */
+	public abstract function _resize(bool $maintainRatio = false);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Crops the image.
+	 *
+	 * @return $this
+	 */
+	public abstract function _crop();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getWidth();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the height of an image.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getHeight();
 
 	//--------------------------------------------------------------------
 
@@ -858,7 +896,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getWidth()
 	{
-		// @phpstan-ignore-next-line
 		return ($this->resource !== null) ? $this->_getWidth() : $this->width;
 	}
 
@@ -871,7 +908,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getHeight()
 	{
-		// @phpstan-ignore-next-line
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;
 	}
 
