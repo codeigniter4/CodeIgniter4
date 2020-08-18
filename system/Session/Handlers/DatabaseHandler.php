@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\App as AppConfig;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 use Config\Database;
 
 /**

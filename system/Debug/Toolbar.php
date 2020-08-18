@@ -38,7 +38,6 @@
 
 namespace CodeIgniter\Debug;
 
-use Config\Toolbar as ToolbarConfig;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
@@ -46,6 +45,7 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Config\Toolbar as ToolbarConfig;
 
 /**
  * Debug Toolbar

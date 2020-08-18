@@ -41,7 +41,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
-use Config\App;
 use Config\Format;
 
 /**

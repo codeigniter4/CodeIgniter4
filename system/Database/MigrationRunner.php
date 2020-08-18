@@ -39,8 +39,8 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
-use Config\Migrations as MigrationsConfig;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Migrations as MigrationsConfig;
 use Config\Services;
 
 /**

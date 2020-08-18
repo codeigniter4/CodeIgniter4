@@ -38,10 +38,10 @@
 
 namespace CodeIgniter\Honeypot;
 
-use Config\Honeypot as HoneypotConfig;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Honeypot as HoneypotConfig;
 
 /**
  * class Honeypot

@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\App as AppConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 
 /**
  * Session handler using Redis for persistence

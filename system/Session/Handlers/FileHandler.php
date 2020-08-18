@@ -39,9 +39,8 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\App as AppConfig;
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 
 /**
  * Session handler using file system for storage

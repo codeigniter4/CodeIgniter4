@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Commands\Encryption;
 
-use CodeIgniter\Config\DotEnv;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Encryption\Encryption;
 
 /**
