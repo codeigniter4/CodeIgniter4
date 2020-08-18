@@ -56,6 +56,23 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
+	
+	//--------------------------------------------------------------------
+
+	public function testRunCustomFilterRoute()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'testingfilter',
+		];
+		$_SERVER['argc'] = 2;
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString('Hello', $output);
+	}	
 
 	//--------------------------------------------------------------------
 
