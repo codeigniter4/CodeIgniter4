@@ -93,6 +93,11 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'failover' => [],
 	];
 
+	protected function tearDown(): void
+	{
+		$this->setPrivateProperty(Config::class, 'instances', []);
+	}
+
 	public function testConnectionGroup()
 	{
 		$conn = Config::connect($this->group, false);
@@ -175,10 +180,4 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
 
-	public function testConnectionInstances()
-	{
-		$this->assertEquals(4, count(Config::getConnections()));
-		$this->setPrivateProperty(Config::class, 'instances', []);
-		$this->assertEquals(0, count(Config::getConnections()));
-	}
 }
