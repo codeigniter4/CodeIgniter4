@@ -38,7 +38,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\App as AppConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
 
 /**
@@ -80,11 +80,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param  BaseConfig $config
-	 * @param  string     $ipAddress
+	 * @param  AppConfig $config
+	 * @param  string    $ipAddress
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -103,7 +103,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			ini_set('memcached.sess_prefix', $this->keyPrefix);
 		}
 
-		$this->sessionExpiration = $config->sessionExpiration; // @phpstan-ignore-line
+		$this->sessionExpiration = $config->sessionExpiration;
 	}
 
 	//--------------------------------------------------------------------

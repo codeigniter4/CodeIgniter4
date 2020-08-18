@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\App as AppConfig;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Database;
@@ -90,15 +90,15 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
 		// Determine Table
-		$this->table = $config->sessionSavePath; // @phpstan-ignore-line
+		$this->table = $config->sessionSavePath;
 
 		if (empty($this->table))
 		{

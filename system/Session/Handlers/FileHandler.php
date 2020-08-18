@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use Config\App as AppConfig;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
 
@@ -95,10 +96,10 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 */
-	public function __construct($config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -119,7 +120,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->savePath = $sessionPath;
 		}
 
-		$this->matchIP = $config->sessionMatchIP; // @phpstan-ignore-line
+		$this->matchIP = $config->sessionMatchIP;
 
 		$this->configureSessionIDRegex();
 	}
