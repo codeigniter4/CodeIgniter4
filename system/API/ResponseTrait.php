@@ -144,7 +144,7 @@ trait ResponseTrait
 	 * Used for generic failures that no custom methods exist for.
 	 *
 	 * @param string|array $messages
-	 * @param integer|null $status        HTTP status code
+	 * @param integer      $status        HTTP status code
 	 * @param string|null  $code          Custom, API-specific, error code
 	 * @param string       $customMessage
 	 *

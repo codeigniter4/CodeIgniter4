@@ -14,9 +14,22 @@ parameters:
         - system/Config/Routes.php
         - system/Debug/Toolbar/Views/toolbar.tpl.php
         - system/Validation/Views/single.php
+        - system/ThirdParty/*
     ignoreErrors:
         - '#Unsafe usage of new static\(\)*#'
         - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
         - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::(\$psr4|\$classmap)#'
         - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
         - '#Access to an undefined property CodeIgniter\\Config\\View::(\$filters|\$plugins)#'
+        - '#Access to protected property CodeIgniter\\Database\\BaseConnection::(\$DBDebug|\$DBPrefix|\$swapPre|\$charset|\$DBCollat)#'
+        - '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli#'
+        - '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID)#'
+        - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::supportsForeignKeys\(\)#'
+        - '#Cannot call method [a-zA-Z_]+\(\) on object\|resource#'
+        - '#Cannot access property [\$a-z_]+ on object\|resource#'
+        - '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
+        - '#Access to an undefined property CodeIgniter\\HTTP\\Request::\$uri#'
+        - '#Call to an undefined method CodeIgniter\\HTTP\\Message::setStatusCode\(\)#'
+        - '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::tableExists\(\)#'
+    scanDirectories:
+      - system/Helpers

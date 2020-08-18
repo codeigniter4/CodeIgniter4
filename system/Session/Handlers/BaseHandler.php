@@ -138,13 +138,13 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct($config, string $ipAddress)
 	{
-		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath   = $config->cookiePath;
-		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieName   = $config->sessionCookieName;
-		$this->matchIP      = $config->sessionMatchIP;
-		$this->savePath     = $config->sessionSavePath;
+		$this->cookiePrefix = $config->cookiePrefix; // @phpstan-ignore-line
+		$this->cookieDomain = $config->cookieDomain; // @phpstan-ignore-line
+		$this->cookiePath   = $config->cookiePath; // @phpstan-ignore-line
+		$this->cookieSecure = $config->cookieSecure; // @phpstan-ignore-line
+		$this->cookieName   = $config->sessionCookieName; // @phpstan-ignore-line
+		$this->matchIP      = $config->sessionMatchIP; // @phpstan-ignore-line
+		$this->savePath     = $config->sessionSavePath; // @phpstan-ignore-line
 		$this->ipAddress    = $ipAddress;
 	}
 

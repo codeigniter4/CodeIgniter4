@@ -406,7 +406,7 @@ class Exceptions
 	 * Describes memory usage in real-world units. Intended for use
 	 * with memory_get_usage, etc.
 	 *
-	 * @param $bytes
+	 * @param integer $bytes
 	 *
 	 * @return string
 	 */

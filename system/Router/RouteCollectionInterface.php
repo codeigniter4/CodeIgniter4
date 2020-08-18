@@ -88,7 +88,7 @@ interface RouteCollectionInterface
 	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */
@@ -100,7 +100,7 @@ interface RouteCollectionInterface
 	 * Sets the default controller to use when no other controller has been
 	 * specified.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */
@@ -112,7 +112,7 @@ interface RouteCollectionInterface
 	 * Sets the default method to call on the controller when no other
 	 * method has been set in the route.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */

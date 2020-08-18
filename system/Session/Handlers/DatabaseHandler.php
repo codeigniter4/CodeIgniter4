@@ -98,7 +98,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		parent::__construct($config, $ipAddress);
 
 		// Determine Table
-		$this->table = $config->sessionSavePath;
+		$this->table = $config->sessionSavePath; // @phpstan-ignore-line
 
 		if (empty($this->table))
 		{
@@ -106,6 +106,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// Get DB Connection
+		// @phpstan-ignore-next-line
 		$this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
 		$this->db = Database::connect($this->DBGroup);

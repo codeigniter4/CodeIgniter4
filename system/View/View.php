@@ -503,7 +503,7 @@ class View implements RendererInterface
 	 *
 	 * @param string     $view
 	 * @param array|null $options
-	 * @param null       $saveData
+	 * @param boolean    $saveData
 	 *
 	 * @return string
 	 */

@@ -356,7 +356,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * Attempts to determine the best file extension.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function guessExtension(): string
 	{

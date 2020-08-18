@@ -582,22 +582,26 @@ class Forge
 			: 'CREATE TABLE';
 
 		$columns = $this->_processFields(true);
-		for ($i = 0, $c = count($columns); $i < $c; $i++)
+		foreach ($columns as &$column)
 		{
-			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
-				: "\n\t" . $this->_processColumn($columns[$i]);
+			$column = ($column['_literal'] !== false) ? "\n\t" . $column['_literal']
+				: "\n\t" . $this->_processColumn($column);
+		}
+
+		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
+		if ($this->createTableKeys === true)
+		{
+			$indexes = $this->_processIndexes($table);
+			foreach ($indexes as $index)
+			{
+				$columns[] = "\n\t" . $index;
+			}
 		}
 
 		$columns = implode(',', $columns);
 
 		$columns .= $this->_processPrimaryKeys($table);
 		$columns .= $this->_processForeignKeys($table);
-
-		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
-		if ($this->createTableKeys === true)
-		{
-			$columns .= $this->_processIndexes($table);
-		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
 		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns,
@@ -1057,7 +1061,7 @@ class Forge
 	 *
 	 * Performs a data type mapping between different databases.
 	 *
-	 * @param array &$attributes
+	 * @param array $attributes
 	 *
 	 * @return void
 	 */
@@ -1080,8 +1084,8 @@ class Forge
 	 *    - array(TYPE => UTYPE) will change $field['type'],
 	 *        from TYPE to UTYPE in case of a match
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return null|void
 	 */
@@ -1124,8 +1128,8 @@ class Forge
 	/**
 	 * Field attribute DEFAULT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return null|void
 	 */
@@ -1158,8 +1162,8 @@ class Forge
 	/**
 	 * Field attribute UNIQUE
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */
@@ -1176,8 +1180,8 @@ class Forge
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */

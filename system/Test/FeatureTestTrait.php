@@ -91,7 +91,7 @@ trait FeatureTestTrait
 	/**
 	 * Sets any values that should exist during this session.
 	 *
-	 * @param array|null Array of values, or null to use the current $_SESSION
+	 * @param array|null $values Array of values, or null to use the current $_SESSION
 	 *
 	 * @return $this
 	 */
@@ -110,7 +110,7 @@ trait FeatureTestTrait
 	 *  'Authorization' => 'Token'
 	 * ])
 	 *
-	 * @param array Array of headers
+	 * @param array $headers Array of headers
 	 *
 	 * @return $this
 	 */
@@ -362,7 +362,7 @@ trait FeatureTestTrait
 		// otherwise set it from the URL.
 		$get = ! empty($params) && $method === 'get'
 			? $params
-			: $this->getPrivateProperty($request->uri, 'query');
+			: $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
 
 		$request->setGlobal('get', $get);
 		if ($method !== 'get')

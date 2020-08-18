@@ -38,7 +38,7 @@
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\Encryption as EncryptionConfig;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 
 /**
@@ -92,12 +92,12 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param  BaseConfig $config Configuration parameters
+	 * @param  EncryptionConfig $config Configuration parameters
 	 * @return void
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function __construct(BaseConfig $config = null)
+	public function __construct(EncryptionConfig $config = null)
 	{
 		$config = $config ?? new \Config\Encryption();
 
@@ -118,12 +118,12 @@ class Encryption
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param  BaseConfig $config Configuration parameters
+	 * @param  EncryptionConfig $config Configuration parameters
 	 * @return \CodeIgniter\Encryption\EncrypterInterface
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function initialize(BaseConfig $config = null)
+	public function initialize(EncryptionConfig $config = null)
 	{
 		// override config?
 		if ($config)

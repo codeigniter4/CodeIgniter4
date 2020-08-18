@@ -119,7 +119,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->savePath = $sessionPath;
 		}
 
-		$this->matchIP = $config->sessionMatchIP;
+		$this->matchIP = $config->sessionMatchIP; // @phpstan-ignore-line
 
 		$this->configureSessionIDRegex();
 	}

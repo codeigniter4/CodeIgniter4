@@ -526,7 +526,7 @@ class Entity implements \JsonSerializable
 	 * Converts the given string|timestamp|DateTime|Time instance
 	 * into a \CodeIgniter\I18n\Time object.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 * @throws \Exception
@@ -562,7 +562,7 @@ class Entity implements \JsonSerializable
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
-	 * @param $value
+	 * @param mixed  $value
 	 * @param string $type
 	 *
 	 * @return mixed

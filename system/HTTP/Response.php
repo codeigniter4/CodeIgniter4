@@ -441,7 +441,7 @@ class Response extends Message implements ResponseInterface
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
 	 * @param array|string $body
-	 * @param boolean      $name
+	 * @param boolean      $unencoded
 	 *
 	 * @return $this
 	 */
@@ -875,7 +875,7 @@ class Response extends Message implements ResponseInterface
 		}
 		else
 		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
+			$expire = ($expire > 0) ? time() + $expire : 0; // @phpstan-ignore-line
 		}
 
 		$this->cookies[] = [

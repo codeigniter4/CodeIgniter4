@@ -60,7 +60,7 @@ if (! function_exists('number_to_size'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
 		catch (\ErrorException $ee)
 		{
@@ -129,7 +129,7 @@ if (! function_exists('number_to_amount'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
 		catch (\ErrorException $ee)
 		{

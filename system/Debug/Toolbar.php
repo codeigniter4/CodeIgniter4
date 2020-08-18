@@ -38,7 +38,7 @@
 
 namespace CodeIgniter\Debug;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\Toolbar as ToolbarConfig;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
@@ -62,7 +62,7 @@ class Toolbar
 	/**
 	 * Toolbar configuration settings.
 	 *
-	 * @var BaseConfig
+	 * @var ToolbarConfig
 	 */
 	protected $config;
 
@@ -78,9 +78,9 @@ class Toolbar
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
+	 * @param ToolbarConfig $config
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(ToolbarConfig $config)
 	{
 		$this->config = $config;
 
@@ -329,8 +329,8 @@ class Toolbar
 	 *
 	 * @param  RequestInterface  $request
 	 * @param  ResponseInterface $response
-	 * @global type $app
-	 * @return type
+	 * @global \CodeIgniter\CodeIgniter $app
+	 * @return void
 	 */
 	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
 	{

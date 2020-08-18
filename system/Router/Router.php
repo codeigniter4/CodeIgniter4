@@ -146,6 +146,7 @@ class Router implements RouterInterface
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
 
+		// @phpstan-ignore-next-line
 		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
@@ -229,7 +230,7 @@ class Router implements RouterInterface
 	 * Returns the name of the method to run in the
 	 * chosen container.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function methodName(): string
 	{
@@ -273,7 +274,7 @@ class Router implements RouterInterface
 	 * during the parsing process as an array, ready to send to
 	 * instance->method(...$params).
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function params(): array
 	{
@@ -328,9 +329,9 @@ class Router implements RouterInterface
 	 * something like mod_rewrite to remove the page. This allows you to set
 	 * it a blank.
 	 *
-	 * @param $page
+	 * @param string $page
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function setIndexPage($page): self
 	{

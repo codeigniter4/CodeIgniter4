@@ -290,6 +290,7 @@ class MemcachedHandler implements CacheInterface
 
 		$key = $this->prefix . $key;
 
+		// @phpstan-ignore-next-line
 		return $this->memcached->increment($key, $offset, $offset, 60);
 	}
 
@@ -313,6 +314,7 @@ class MemcachedHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		//FIXME: third parameter isn't other handler actions.
+		// @phpstan-ignore-next-line
 		return $this->memcached->decrement($key, $offset, $offset, 60);
 	}
 

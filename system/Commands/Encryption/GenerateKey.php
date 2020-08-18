@@ -200,7 +200,8 @@ class GenerateKey extends BaseCommand
 	/**
 	 * Writes the new encryption key to .env file.
 	 *
-	 * @param string $key
+	 * @param string $oldKey
+	 * @param string $newKey
 	 *
 	 * @return boolean
 	 */

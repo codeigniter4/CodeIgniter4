@@ -795,7 +795,8 @@ if (! function_exists('alternator'))
 	 *
 	 * Allows strings to be alternated. See docs...
 	 *
-	 * @param string (as many parameters as needed)
+	 * @phpstan-ignore-next-line
+	 * @param                    string (as many parameters as needed)
 	 *
 	 * @return string
 	 */

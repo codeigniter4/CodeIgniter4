@@ -682,7 +682,7 @@ class URI
 	 *
 	 * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 	 *
-	 * @param $str
+	 * @param string $str
 	 *
 	 * @return $this
 	 */
@@ -783,8 +783,6 @@ class URI
 
 	/**
 	 * Sets the path portion of the URI based on segments.
-	 *
-	 * @param string $path
 	 *
 	 * @return $this
 	 */
@@ -946,7 +944,7 @@ class URI
 	 * While dot segments have valid uses according to the spec,
 	 * this URI class does not allow them.
 	 *
-	 * @param $path
+	 * @param string|null $path
 	 *
 	 * @return string
 	 */

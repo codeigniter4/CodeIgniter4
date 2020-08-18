@@ -57,7 +57,7 @@ class ComposerScripts
 	/**
 	 * Base path to use.
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected static $basePath = 'ThirdParty/';
 
@@ -125,7 +125,7 @@ class ComposerScripts
 	/**
 	 * A recursive remove directory method.
 	 *
-	 * @param $dir
+	 * @param string $dir
 	 */
 	protected static function removeDir($dir)
 	{

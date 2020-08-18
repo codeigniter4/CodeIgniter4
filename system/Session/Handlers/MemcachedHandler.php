@@ -103,7 +103,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			ini_set('memcached.sess_prefix', $this->keyPrefix);
 		}
 
-		$this->sessionExpiration = $config->sessionExpiration;
+		$this->sessionExpiration = $config->sessionExpiration; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
