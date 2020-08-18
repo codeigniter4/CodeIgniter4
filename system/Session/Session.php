@@ -218,12 +218,6 @@ class Session implements SessionInterface
 			return;
 		}
 
-		if (! $this->driver instanceof \SessionHandlerInterface)
-		{
-			$this->logger->error("Session: Handler '" . get_class($this->driver) .
-					"' doesn't implement SessionHandlerInterface. Aborting.");
-		}
-
 		$this->configure();
 
 		$this->setSaveHandler();
