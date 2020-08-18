@@ -66,6 +66,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 			'testingfilter',
 		];
 		$_SERVER['argc'] = 2;
+		$_SERVER['REQUEST_URI'] = 'testingfilter';
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
