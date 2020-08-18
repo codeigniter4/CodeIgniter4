@@ -582,26 +582,22 @@ class Forge
 			: 'CREATE TABLE';
 
 		$columns = $this->_processFields(true);
-		foreach ($columns as &$column)
+		for ($i = 0, $c = count($columns); $i < $c; $i++)
 		{
-			$column = ($column['_literal'] !== false) ? "\n\t" . $column['_literal']
-				: "\n\t" . $this->_processColumn($column);
-		}
-
-		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
-		if ($this->createTableKeys === true)
-		{
-			$indexes = $this->_processIndexes($table);
-			foreach ($indexes as $index)
-			{
-				$columns[] = "\n\t" . $index;
-			}
+			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
+				: "\n\t" . $this->_processColumn($columns[$i]);
 		}
 
 		$columns = implode(',', $columns);
 
 		$columns .= $this->_processPrimaryKeys($table);
 		$columns .= $this->_processForeignKeys($table);
+
+		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
+		if ($this->createTableKeys === true)
+		{
+			$columns .= $this->_processIndexes($table); // @phpstan-ignore-line
+		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
 		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns,
