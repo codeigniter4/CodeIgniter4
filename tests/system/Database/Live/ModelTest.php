@@ -1376,9 +1376,6 @@ class ModelTest extends CIDatabaseTestCase
 			'name'    => 'Ahmadinejad',
 			'country' => 'Greece',
 		]);
-
-		$expected = ['UPDATE `db_user` SET `country` = CASE  WHEN `name` = :name1: THEN :country1: WHEN `name` = :name2: THEN :country2: ELSE `country` END WHERE `name` IN(:name1:,:name2:)'];
-		$this->assertEquals($expected, str_replace("\n", ' ', $model->updateBatch($data, 'name', 100, true)));
 	}
 
 	//--------------------------------------------------------------------
@@ -2003,9 +2000,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model->replace($data);
 
 		$this->seeInDatabase('job', ['id' => 1, 'name' => 'my name']);
-
-		$expected = 'INSERT OR REPLACE INTO `db_job` (`id`, `name`, `description`) VALUES (:id0:, :name0:, :description0:)';
-		$this->assertEquals($expected, $model->replace($data, true));
 	}
 
 	//--------------------------------------------------------------------
