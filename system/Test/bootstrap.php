@@ -9,7 +9,7 @@ $_SERVER['CI_ENVIRONMENT'] = 'testing';
 define('ENVIRONMENT', 'testing');
 
 // Load framework paths from their config file
-require CONFIGPATH . 'Paths.php';
+require CONFIGPATH . 'Paths.php'; // @phpstan-ignore-line
 $paths = new Config\Paths();
 
 // Define necessary framework path constants
@@ -18,10 +18,14 @@ defined('WRITEPATH')     || define('WRITEPATH', realpath($paths->writableDirecto
 defined('SYSTEMPATH')    || define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 defined('ROOTPATH')      || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 defined('CIPATH')        || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
+// @phpstan-ignore-next-line
 defined('FCPATH')        || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
+// @phpstan-ignore-next-line
 defined('TESTPATH')      || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
+// @phpstan-ignore-next-line
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/autoload.php'));
+// @phpstan-ignore-next-line
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
@@ -64,4 +68,4 @@ $loader->initialize(new Config\Autoload(), new Config\Modules());
 $loader->register();
 
 require_once APPPATH . 'Config/Routes.php';
-$routes->getRoutes('*');
+$routes->getRoutes('*'); // @phpstan-ignore-line

@@ -109,6 +109,8 @@ what table to use and how we can find the required records::
         protected $table      = 'users';
         protected $primaryKey = 'id';
 
+        protected $useAutoIncrement = true;
+
         protected $returnType     = 'array';
         protected $useSoftDeletes = true;
 
@@ -138,6 +140,16 @@ is used with methods like ``find()`` to know what column to match the specified 
 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
+
+**$useAutoIncrement**
+
+Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
+then you are responsible for providing primary key value for every record in the table. This 
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
+
+.. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
+    key in the database to ``unique``. This way you will make sure that all of Model's features
+    will still work the same as before.
 
 **$returnType**
 
@@ -777,10 +789,10 @@ beforeInsert      **data** = the key/value pairs that are being inserted. If an 
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
-beforeUpdate      **id** = the primary key of the row being updated.
+beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
-afterUpdate       **id** = the primary key of the row being updated.
+afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
 afterFind         Varies by find* method. See the following:

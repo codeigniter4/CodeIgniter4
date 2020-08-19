@@ -312,7 +312,10 @@ abstract class BaseUtils
 		}
 
 		// Create variables for convenience
-		extract($params);
+		$root    = $params['root'];
+		$newline = $params['newline'];
+		$tab     = $params['tab'];
+		$element = $params['element'];
 
 		// Load the xml helper
 		helper('xml');

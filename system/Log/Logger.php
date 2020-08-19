@@ -458,7 +458,7 @@ class Logger implements LoggerInterface
 			}
 		}
 
-		if (isset($_SESSION))
+		if (isset($_SESSION)) // @phpstan-ignore-line
 		{
 			$replace['{session_vars}'] = '$_SESSION: ' . print_r($_SESSION, true);
 		}
@@ -534,7 +534,7 @@ class Logger implements LoggerInterface
 		$file = str_replace(APPPATH, 'APPPATH/', $file);
 		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
 
-		return str_replace(FCPATH, 'FCPATH/', $file);
+		return str_replace(FCPATH, 'FCPATH/', $file); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

@@ -40,20 +40,13 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Encryption\EncrypterInterface;
 
 /**
  * Base class for encryption handling
  */
-abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
+abstract class BaseHandler implements EncrypterInterface
 {
-
-	/**
-	 * Configuraiton passed from encryption manager
-	 *
-	 * @var string
-	 */
-	protected $config;
-
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
@@ -66,14 +59,11 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
+	 * @param \CodeIgniter\Config\BaseConfig|null $config
 	 */
 	public function __construct(BaseConfig $config = null)
 	{
-		if (empty($config))
-		{
-			$config = new \Config\Encryption();
-		}
+		$config = $config ?? new \Config\Encryption();
 
 		// make the parameters conveniently accessible
 		foreach ($config as $pkey => $value)

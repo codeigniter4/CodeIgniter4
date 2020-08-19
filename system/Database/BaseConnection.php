@@ -1493,7 +1493,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function callFunction(string $functionName, ...$params): bool
 	{
-		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)) . '_';
+		$driver = strtolower($this->DBDriver);
+		$driver = ($driver === 'postgre' ? 'pg' : $driver) . '_';
 
 		if (false === strpos($driver, $functionName))
 		{
@@ -1672,13 +1673,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with field data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getFieldData(string $table)
 	{
-		$fields = $this->_fieldData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1687,13 +1686,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getIndexData(string $table)
 	{
-		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_indexData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1702,13 +1699,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with foreign key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getForeignKeyData(string $table)
 	{
-		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------

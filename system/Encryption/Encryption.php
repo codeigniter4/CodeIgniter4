@@ -99,20 +99,14 @@ class Encryption
 	 */
 	public function __construct(BaseConfig $config = null)
 	{
-		if (empty($config))
-		{
-			$config = new \Config\Encryption();
-		}
-		$this->driver = $config->driver;
-		$this->key    = $config->key;
+		$config = $config ?? new \Config\Encryption();
 
-		// determine what is installed
-		$this->handlers = [
-			'OpenSSL' => extension_loaded('openssl'),
-		];
+		$this->key    = $config->key;
+		$this->driver = $config->driver;
+		$this->digest = $config->digest ?? 'SHA512';
 
 		// if any aren't there, bomb
-		if (in_array(false, $this->handlers))
+		if ($this->driver === 'OpenSSL' && ! extension_loaded('openssl'))
 		{
 			// this should never happen in travis-ci
 			// @codeCoverageIgnoreStart
@@ -132,10 +126,11 @@ class Encryption
 	public function initialize(BaseConfig $config = null)
 	{
 		// override config?
-		if (! empty($config))
+		if ($config)
 		{
-			$this->driver = $config->driver;
 			$this->key    = $config->key;
+			$this->driver = $config->driver;
+			$this->digest = $config->digest ?? 'SHA512';
 		}
 
 		// Insist on a driver

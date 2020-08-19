@@ -57,12 +57,19 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	protected $cipher = 'AES-256-CTR';
 
+	/**
+	 * Starter key
+	 *
+	 * @var string
+	 */
+	protected $key = '';
+
 	// --------------------------------------------------------------------
 
 	/**
 	 * Initialize OpenSSL, remembering parameters
 	 *
-	 * @param BaseConfig $config
+	 * @param \CodeIgniter\Config\BaseConfig|null $config
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
@@ -74,15 +81,16 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
-	 * @param  string $data   Input data
-	 * @param  array  $params Over-ridden parameters, specifically the key
+	 * @param string $data   Input data
+	 * @param array  $params Over-ridden parameters, specifically the key
+	 *
 	 * @return string
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public function encrypt($data, $params = null)
 	{
-		// Allow key over-ride
-		if (! empty($params))
+		// Allow key override
+		if ($params)
 		{
 			if (isset($params['key']))
 			{
@@ -93,6 +101,7 @@ class OpenSSLHandler extends BaseHandler
 				$this->key = $params;
 			}
 		}
+
 		if (empty($this->key))
 		{
 			throw EncryptionException::forNeedsStarterKey();
@@ -123,15 +132,16 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
-	 * @param  string $data   Encrypted data
-	 * @param  array  $params Over-ridden parameters, specifically the key
+	 * @param string $data   Encrypted data
+	 * @param array  $params Over-ridden parameters, specifically the key
+	 *
 	 * @return string
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public function decrypt($data, $params = null)
 	{
-		// Allow key over-ride
-		if (! empty($params))
+		// Allow key override
+		if ($params)
 		{
 			if (isset($params['key']))
 			{
@@ -142,6 +152,7 @@ class OpenSSLHandler extends BaseHandler
 				$this->key = $params;
 			}
 		}
+
 		if (empty($this->key))
 		{
 			throw EncryptionException::forNeedsStarterKey();

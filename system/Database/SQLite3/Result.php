@@ -95,8 +95,8 @@ class Result extends BaseResult implements ResultInterface
 		];
 
 		$retVal = [];
-		$this->resultID->fetchArray(SQLITE3_NUM);  
-		
+		$this->resultID->fetchArray(SQLITE3_NUM);
+
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
 			$retVal[$i]             = new \stdClass();
@@ -108,7 +108,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]->length     = null;
 		}
 		$this->resultID->reset();
-		
+
 		return $retVal;
 	}
 

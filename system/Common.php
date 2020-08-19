@@ -134,7 +134,8 @@ if (! function_exists('clean_path'))
 				return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
 			case strpos($path, SYSTEMPATH) === 0:
 				return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
-			case strpos($path, FCPATH) === 0:
+			case strpos($path, FCPATH) === 0: // @phpstan-ignore-line
+				// @phpstan-ignore-next-line
 				return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
 			case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
 				return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
@@ -161,30 +162,64 @@ if (! function_exists('command'))
 	 */
 	function command(string $command)
 	{
-		$runner = service('commands');
+		$runner      = service('commands');
+		$regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
+		$regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
 
-		$args    = explode(' ', $command);
-		$command = array_shift($args);
+		$args   = [];
+		$length = strlen($command);
+		$cursor = 0;
 
+		/**
+		 * Adopted from Symfony's `StringInput::tokenize()` with few changes.
+		 *
+		 * @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
+		 */
+		while ($cursor < $length)
+		{
+			if (preg_match('/\s+/A', $command, $match, null, $cursor))
+			{
+				// nothing to do
+			}
+			elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, null, $cursor))
+			{
+				$args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
+			}
+			elseif (preg_match('/' . $regexString . '/A', $command, $match, null, $cursor))
+			{
+				$args[] = stripcslashes($match[1]);
+			}
+			else
+			{
+				// @codeCoverageIgnoreStart
+				throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)));
+				// @codeCoverageIgnoreEnd
+			}
+
+			$cursor += strlen($match[0]);
+		}
+
+		$command     = array_shift($args);
 		$params      = [];
 		$optionValue = false;
 
 		foreach ($args as $i => $arg)
 		{
-			// add to segments if not starting with '-'
-			// and not an option value
-			if (mb_strpos($arg, '-') !== 0 && ! $optionValue)
-			{
-				$params[] = $arg;
-				continue;
-			}
-
-			// if this was an option value, it was already
-			// included in the previous iteration, so
-			// reset the process
 			if (mb_strpos($arg, '-') !== 0)
 			{
-				$optionValue = false;
+				if ($optionValue)
+				{
+					// if this was an option value, it was already
+					// included in the previous iteration
+					$optionValue = false;
+				}
+				else
+				{
+					// add to segments if not starting with '-'
+					// and not an option value
+					$params[] = $arg;
+				}
+
 				continue;
 			}
 

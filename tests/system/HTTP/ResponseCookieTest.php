@@ -199,7 +199,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong prefix?
 		$config->cookiePrefix = 'mine';
@@ -210,7 +210,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '', '', 'mine');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong domain?
 		$config->cookieDomain = '.mine.com';
@@ -221,7 +221,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '.mine.com', '', '');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong path?
 		$config->cookiePath = '/whoknowswhere';
@@ -232,7 +232,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '', '/whoknowswhere', '');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 	}
 
 }

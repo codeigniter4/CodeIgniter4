@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -36,18 +37,12 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 
-/**
- * Creates a new seeder file.
- *
- * @package CodeIgniter\Commands
- */
-class CreateSeeder extends BaseCommand
+class CreateScaffold extends BaseCommand
 {
 	/**
 	 * The group the command is lumped under
@@ -62,108 +57,83 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:seeder';
+	protected $name = 'make:scaffold';
 
 	/**
-	 * the Command's short description
+	 * The Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a new seeder file.';
+	protected $description = 'Creates a complete set of scaffold files.';
 
 	/**
-	 * the Command's usage
+	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:seeder [seeder_name] [options]';
+	protected $usage = 'make:scaffold <name> [options]';
 
 	/**
-	 * the Command's Arguments
+	 * The Command's arguments
 	 *
 	 * @var array
 	 */
 	protected $arguments = [
-		'seeder_name' => 'The seeder file name',
+		'name' => 'The class name',
 	];
 
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
 	protected $options = [
-		'-n' => 'Set seeder namespace',
+		'-bare'    => 'Add the \'-bare\' option to controller scaffold.',
+		'-restful' => 'Add the \'-restful\' option to controller scaffold.',
+		'-dbgroup' => 'Add the \'-dbgroup\' option to model scaffold.',
+		'-table'   => 'Add the \'-table\' option to the model scaffold.',
+		'-n'       => 'Set root namespace. Defaults to APP_NAMESPACE.',
+		'-force'   => 'Force overwrite existing files.',
 	];
 
-	/**
-	 * Creates a new seeder file.
-	 *
-	 * @param array $params
-	 */
 	public function run(array $params)
 	{
-		helper('inflector');
+		// Resolve options
+		$bare       = array_key_exists('bare', $params) || CLI::getOption('bare');
+		$rest       = array_key_exists('restful', $params)
+						? ($params['restful'] ?? true)
+						: CLI::getOption('restful');
+		$group      = array_key_exists('dbgroup', $params)
+						? ($params['dbgroup'] ?? 'default')
+						: CLI::getOption('dbgroup');
+		$tableModel = $params['table'] ?? CLI::getOption('table');
+		$namespace  = $params['n'] ?? CLI::getOption('n');
+		$force      = array_key_exists('force', $params) || CLI::getOption('force');
 
-		$name = array_shift($params);
-
-		if (empty($name))
+		// Sets additional options
+		$genOptions = ['n' => $namespace];
+		if ($force)
 		{
-			$name = CLI::prompt(lang('Seed.nameFile'), null, 'required');
+			$genOptions['force'] = null;
 		}
 
-		$ns       = $params['-n'] ?? CLI::getOption('n');
-		$homepath = APPPATH;
-
-		if (! empty($ns))
+		$controllerOpts = [];
+		if ($bare)
 		{
-			// Get all namespaces
-			$namespaces = Services::autoloader()->getNamespace();
-
-			foreach ($namespaces as $namespace => $path)
-			{
-				if ($namespace === $ns)
-				{
-					$homepath = realpath(reset($path)) . DIRECTORY_SEPARATOR;
-					break;
-				}
-			}
+			$controllerOpts['bare'] = null;
 		}
-		else
+		elseif ($rest)
 		{
-			$ns = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
+			$controllerOpts['restful'] = $rest;
 		}
 
-		// full path
-		$path = $homepath . 'Database/Seeds/' . $name . '.php';
+		$modelOpts = [
+			'dbgroup' => $group,
+			'entity'  => null,
+			'table'   => $tableModel,
+		];
 
-		// Class name should be pascal case now (camel case with upper first letter)
-		$name = pascalize($name);
-
-		$template = <<<EOD
-<?php namespace $ns\Database\Seeds;
-
-use CodeIgniter\Database\Seeder;
-
-class {name} extends Seeder
-{
-	public function run()
-	{
-		//
-	}
-}
-
-EOD;
-		$template = str_replace('{name}', $name, $template);
-
-		helper('filesystem');
-		if (! write_file($path, $template))
-		{
-			CLI::error(lang('Seed.writeError', [$path]));
-			return;
-		}
-
-		$ns = rtrim(str_replace('\\', DIRECTORY_SEPARATOR, $ns), '\\') . DIRECTORY_SEPARATOR;
-		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
+		// Call those commands!
+		$class = $params[0] ?? CLI::getOption(0);
+		$this->call('make:controller', array_merge([$class], $controllerOpts, $genOptions));
+		$this->call('make:model', array_merge([$class], $modelOpts, $genOptions));
+		$this->call('make:entity', array_merge([$class], $genOptions));
+		$this->call('migrate:create', array_merge([$class], $genOptions));
+		$this->call('make:seeder', array_merge([$class], $genOptions));
 	}
 }

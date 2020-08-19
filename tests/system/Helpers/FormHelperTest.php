@@ -314,7 +314,7 @@ EOH;
 	public function testFormTextarea()
 	{
 		$expected = <<<EOH
-<textarea name="notes" cols="40" rows="10" >Notes</textarea>\n
+<textarea name="notes" cols="40" rows="10">Notes</textarea>\n
 EOH;
 		$this->assertEquals($expected, form_textarea('notes', 'Notes'));
 	}
@@ -327,10 +327,33 @@ EOH;
 			'value' => 'bar',
 		];
 		$expected = <<<EOH
-<textarea name="foo" cols="40" rows="10" >bar</textarea>
+<textarea name="foo" cols="40" rows="10">bar</textarea>
 
 EOH;
 		$this->assertEquals($expected, form_textarea($data));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsArray()
+	{
+		$extra    = [
+			'cols' => '30',
+			'rows' => '5',
+		];
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5">Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsString()
+	{
+		$extra    = 'cols="30" rows="5"';
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5">Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
 	}
 
 	// ------------------------------------------------------------------------

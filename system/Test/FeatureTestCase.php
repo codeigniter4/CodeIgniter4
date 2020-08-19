@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -75,7 +76,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 
 	/**
 	 * Custom request's headers
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $headers = [];

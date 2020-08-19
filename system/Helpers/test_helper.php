@@ -1,7 +1,5 @@
 <?php
 
-use CodeIgniter\Test\Fabricator;
-
 /**
  * CodeIgniter
  *
@@ -39,6 +37,8 @@ use CodeIgniter\Test\Fabricator;
  * @since      Version 1.0.0
  * @filesource
  */
+
+use CodeIgniter\Test\Fabricator;
 
 /**
  * CodeIgniter Test Helpers

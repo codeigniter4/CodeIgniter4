@@ -4,6 +4,7 @@ use CodeIgniter\RESTful\ResourcePresenter;
 
 class MockResourcePresenter extends ResourcePresenter
 {
+	use \CodeIgniter\API\ResponseTrait;
 
 	public function getModel()
 	{

@@ -984,12 +984,12 @@ class Response extends Message implements ResponseInterface
 			$prefix = $this->cookiePrefix;
 		}
 
-		$name = $prefix . $name;
+		$prefixedName = $prefix . $name;
 
 		$cookieHasFlag = false;
 		foreach ($this->cookies as &$cookie)
 		{
-			if ($cookie['name'] === $name)
+			if ($cookie['name'] === $prefixedName)
 			{
 				if (! empty($domain) && $cookie['domain'] !== $domain)
 				{

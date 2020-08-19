@@ -499,6 +499,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
+		// @phpstan-ignore-next-line
 		if (! empty($key) && (! is_null($value = isset($_SESSION[$key]) ? $_SESSION[$key] : null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
 		{
 			return $value;

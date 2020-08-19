@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -84,9 +85,10 @@ if (! function_exists('get_cookie'))
 	 * @param string  $index
 	 * @param boolean $xssClean
 	 *
-	 * @see    (\Config\Services::request())->getCookie()
-	 * @see    \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 * @return mixed
+	 *
+	 * @see (\Config\Services::request())->getCookie()
+	 * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
@@ -108,13 +110,15 @@ if (! function_exists('delete_cookie'))
 	/**
 	 * Delete a COOKIE
 	 *
-	 * @param  mixed  $name
-	 * @param  string $domain the cookie domain. Usually: .yourdomain.com
-	 * @param  string $path   the cookie path
-	 * @param  string $prefix the cookie prefix
-	 * @see    (\Config\Services::response())->setCookie()
-	 * @see    \CodeIgniter\HTTP\Response::setcookie()
+	 * @param mixed  $name
+	 * @param string $domain the cookie domain. Usually: .yourdomain.com
+	 * @param string $path   the cookie path
+	 * @param string $prefix the cookie prefix
+	 *
 	 * @return void
+	 *
+	 * @see (\Config\Services::response())->setCookie()
+	 * @see \CodeIgniter\HTTP\Response::setcookie()
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{
