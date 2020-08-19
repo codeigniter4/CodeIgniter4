@@ -210,16 +210,21 @@ class Database extends BaseCollector
 		{
 			$sql = $query->getQuery();
 
-			foreach ($highlight as $term)
+			if( !class_exists('Highlight\Highlighter') )
 			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+				foreach ($highlight as $term)
+				{
+					$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+				}
 			}
 
 			$data['queries'][] = [
 				'duration' => ($query->getDuration(5) * 1000) . ' ms',
-				'sql'      => $sql,
+				'sql'      => $this->_hljs($sql),
 			];
 		}
+
+		$data['hljsCss'] = $this->_hljsCss();
 
 		return $data;
 	}
@@ -273,6 +278,60 @@ class Database extends BaseCollector
 	public function icon(): string
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns highlight.js style if Highlight.php exists.
+	 *
+	 * @return string
+	 */
+	protected function _hljsCss(): string
+	{
+		if( !class_exists("Highlight\Highlighter") ) return "";
+
+		$style = @file_get_contents(VENDORPATH . 'scrivo/highlight.php/styles/github.css') ?? '';
+		$darkStyle = @file_get_contents(VENDORPATH . 'scrivo/highlight.php/styles/dracula.css') ?? '';
+		$style .= str_replace('.hljs', '#toolbarContainer.dark .hljs', $darkStyle);
+
+		return <<<STYLE
+		<style>
+		.hljs-pre-line{white-space:pre-line;margin-bottom:4px}
+		{$style}
+		</style>
+		STYLE;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns pretty highlight SQL syntax if Highlight.php exists.
+	 *
+	 * @param string $code
+	 * 
+	 * @return string
+	 */
+	protected function _hljs(string $code = ""): string
+	{
+		if( !class_exists('Highlight\Highlighter') ) return $code;
+		// Instantiate the Highlighter.
+		$hl = new \Highlight\Highlighter;
+		$out = '';
+
+		try {
+			// Highlight some code.
+			$highlighted = $hl->highlight('sql', $code);
+
+			$out = "<code class=\"hljs hljs-pre-line {$highlighted->language}\">";
+			$out .= $highlighted->value;
+			$out .= "</code>";
+		}
+		catch (\DomainException $e) {
+			$out .= "<code>{$code}</code>";
+		}
+
+		return $out;
 	}
 
 }

@@ -1,3 +1,4 @@
+{! hljsCss !}
 <table>
     <thead>
         <tr>
