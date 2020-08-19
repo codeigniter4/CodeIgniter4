@@ -129,7 +129,7 @@ class Table
 
 		// Remove the prefix, if any, since it's
 		// already been added by the time we get here...
-		$prefix = $this->db->DBPrefix;
+		$prefix = $this->db->DBPrefix; // @phpstan-ignore-line
 		if (! empty($prefix))
 		{
 			if (strpos($table, $prefix) === 0)
@@ -346,6 +346,7 @@ class Table
 		$exFields  = implode(', ', $exFields);
 		$newFields = implode(', ', $newFields);
 
+		// @phpstan-ignore-next-line
 		$this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
 	}
 

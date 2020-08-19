@@ -155,7 +155,7 @@ class Session implements SessionInterface
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \PSR\Log\LoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
 
@@ -216,12 +216,6 @@ class Session implements SessionInterface
 			$this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
 
 			return;
-		}
-
-		if (! $this->driver instanceof \SessionHandlerInterface)
-		{
-			$this->logger->error("Session: Handler '" . $this->driver .
-					"' doesn't implement SessionHandlerInterface. Aborting.");
 		}
 
 		$this->configure();

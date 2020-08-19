@@ -1277,11 +1277,11 @@ class Email
 	/**
 	 * Prepares attachment string
 	 *
-	 * @param string      &$body     Message body to append to
+	 * @param string      $body      Message body to append to
 	 * @param string      $boundary  Multipart boundary
 	 * @param string|null $multipart When provided, only attachments of this type will be processed
 	 *
-	 * @return string
+	 * @return void
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
@@ -1705,7 +1705,7 @@ class Email
 	 *
 	 * Credits for the base concept go to Paul Buonopane <paul@namepros.com>
 	 *
-	 * @param string &$email
+	 * @param string $email
 	 *
 	 * @return boolean
 	 */

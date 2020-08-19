@@ -82,7 +82,7 @@ abstract class BaseUtils
 	/**
 	 * Class constructor
 	 *
-	 * @param ConnectionInterface|object $db
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface &$db)
 	{

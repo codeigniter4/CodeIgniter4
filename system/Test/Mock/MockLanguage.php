@@ -41,7 +41,7 @@ class MockLanguage extends Language
 	 *
 	 * @param string $path
 	 *
-	 * @return array|mixed
+	 * @return array
 	 */
 	protected function requireFile(string $path): array
 	{

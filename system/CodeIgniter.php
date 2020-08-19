@@ -759,11 +759,11 @@ class CodeIgniter
 	/**
 	 * Generates the cache name to use for our full-page caching.
 	 *
-	 * @param $config
+	 * @param Cache $config
 	 *
 	 * @return string
 	 */
-	protected function generateCacheName($config): string
+	protected function generateCacheName(Cache $config): string
 	{
 		if (get_class($this->request) === CLIRequest::class)
 		{
@@ -862,6 +862,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
+		// @phpstan-ignore-next-line
 		return (is_cli() && ! (ENVIRONMENT === 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
@@ -1160,7 +1161,7 @@ class CodeIgniter
 	 * Made into a separate method so that it can be mocked during testing
 	 * without actually stopping script execution.
 	 *
-	 * @param $code
+	 * @param integer $code
 	 */
 	protected function callExit($code)
 	{

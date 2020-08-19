@@ -557,7 +557,7 @@ class Time extends DateTime
 		$time = $this->getTimestamp();
 
 		// future dates have no age
-		return max(0, date('Y', $now) - date('Y', $time));
+		return max(0, date('Y', $now) - date('Y', $time)); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -1111,7 +1111,7 @@ class Time extends DateTime
 	 * Determines if the current instance's time is before $testTime,
 	 * after converting to UTC.
 	 *
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return boolean
@@ -1131,7 +1131,7 @@ class Time extends DateTime
 	 * Determines if the current instance's time is after $testTime,
 	 * after converting in UTC.
 	 *
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return boolean
@@ -1221,7 +1221,7 @@ class Time extends DateTime
 	}
 
 	/**
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return \CodeIgniter\I18n\TimeDifference
@@ -1242,7 +1242,7 @@ class Time extends DateTime
 	/**
 	 * Returns a Time instance with the timezone converted to UTC.
 	 *
-	 * @param $time
+	 * @param mixed       $time
 	 * @param string|null $timezone
 	 *
 	 * @return \DateTime|static

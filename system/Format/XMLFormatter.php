@@ -51,7 +51,7 @@ class XMLFormatter implements FormatterInterface
 	/**
 	 * Takes the given data and formats it.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return string|boolean (XML string | false)
 	 */

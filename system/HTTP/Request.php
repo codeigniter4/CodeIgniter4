@@ -319,7 +319,7 @@ class Request extends Message implements RequestInterface
 	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
 	 *
 	 * @param string $method
-	 * @param $value
+	 * @param mixed  $value
 	 *
 	 * @return $this
 	 */
