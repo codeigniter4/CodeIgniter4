@@ -4,10 +4,10 @@ includes:
 parameters:
     bootstrapFiles:
         - qa-bootstrap.php
-    inferPrivatePropertyTypeFromConstructor: true
-    checkMissingIterableValueType: false
     excludes_analyse:
-        - app/Views/*
+        - app/Views/errors/cli/error_404.php
+        - app/Views/errors/cli/error_exception.php
+        - app/Views/errors/html/error_exception.php
         - system/Commands/Generators/Views/migration.tpl.php
         - system/Config/Routes.php
         - system/Debug/Toolbar/Views/toolbar.tpl.php
