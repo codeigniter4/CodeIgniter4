@@ -7,8 +7,6 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
     excludes_analyse:
-        - app/Config/*
-        - app/Database/*
         - app/Views/*
         - system/Commands/Generators/Views/migration.tpl.php
         - system/Config/Routes.php
