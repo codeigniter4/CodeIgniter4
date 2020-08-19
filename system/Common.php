@@ -803,9 +803,9 @@ if (! function_exists('lang'))
 	 * A convenience method to translate a string or array of them and format
 	 * the result with the intl extension's MessageFormatter.
 	 *
-	 * @param string|[] $line
-	 * @param array     $args
-	 * @param string    $locale
+	 * @param string      $line
+	 * @param array       $args
+	 * @param string|null $locale
 	 *
 	 * @return string
 	 */
@@ -832,9 +832,9 @@ if (! function_exists('log_message'))
 	 *  - info
 	 *  - debug
 	 *
-	 * @param string     $level
-	 * @param string     $message
-	 * @param array|null $context
+	 * @param string $level
+	 * @param string $message
+	 * @param array  $context
 	 *
 	 * @return mixed
 	 */
@@ -941,7 +941,7 @@ if (! function_exists('redirect'))
 
 		if (! empty($uri))
 		{
-			return $response->route($uri);
+			return $response->route($uri); // @phpstan-ignore-line
 		}
 
 		return $response;

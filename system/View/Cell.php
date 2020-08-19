@@ -194,7 +194,7 @@ class Cell
 	 * If a string, it should be in the format "key1=value key2=value".
 	 * It will be split and returned as an array.
 	 *
-	 * @param $params
+	 * @param mixed $params
 	 *
 	 * @return array|null
 	 */

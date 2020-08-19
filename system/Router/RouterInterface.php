@@ -105,7 +105,7 @@ interface RouterInterface
 	 * something like mod_rewrite to remove the page. This allows you to set
 	 * it a blank.
 	 *
-	 * @param $page
+	 * @param string $page
 	 *
 	 * @return mixed
 	 */

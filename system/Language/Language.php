@@ -286,7 +286,7 @@ class Language
 	 * @param string  $locale
 	 * @param boolean $return
 	 *
-	 * @return array|null
+	 * @return void|array
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{

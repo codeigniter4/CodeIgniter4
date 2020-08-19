@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Commands\Encryption;
 
-use CodeIgniter\Config\DotEnv;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Encryption\Encryption;
 
 /**
@@ -200,7 +200,8 @@ class GenerateKey extends BaseCommand
 	/**
 	 * Writes the new encryption key to .env file.
 	 *
-	 * @param string $key
+	 * @param string $oldKey
+	 * @param string $newKey
 	 *
 	 * @return boolean
 	 */

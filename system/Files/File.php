@@ -145,7 +145,7 @@ class File extends SplFileInfo
 	 * the $_FILES array, but should use other methods to more accurately
 	 * determine the type of file, like finfo, or mime_content_type().
 	 *
-	 * @return string|null The media type we determined it to be.
+	 * @return string The media type we determined it to be.
 	 */
 	public function getMimeType(): string
 	{

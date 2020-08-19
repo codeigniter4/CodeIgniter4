@@ -50,7 +50,7 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \PSR\Log\LoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
 

@@ -141,7 +141,7 @@ class CURLRequest extends Request
 	 * Sends an HTTP request to the specified $url. If this is a relative
 	 * URL, it will be merged with $this->baseURI to form a complete URL.
 	 *
-	 * @param $method
+	 * @param string $method
 	 * @param string $url
 	 * @param array  $options
 	 *

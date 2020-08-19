@@ -45,10 +45,6 @@ use Throwable;
 /**
  * Class BaseCommand
  *
- * @property $group
- * @property $name
- * @property $description
- *
  * @package CodeIgniter\CLI
  */
 abstract class BaseCommand

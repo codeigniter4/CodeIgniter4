@@ -77,7 +77,7 @@ abstract class BaseHandler implements HandlerInterface
 	 * Checks whether the Handler will handle logging items of this
 	 * log Level.
 	 *
-	 * @param $level
+	 * @param string $level
 	 *
 	 * @return boolean
 	 */
@@ -94,8 +94,8 @@ abstract class BaseHandler implements HandlerInterface
 	 * will stop. Any handlers that have not run, yet, will not
 	 * be run.
 	 *
-	 * @param $level
-	 * @param $message
+	 * @param string $level
+	 * @param string $message
 	 *
 	 * @return boolean
 	 */

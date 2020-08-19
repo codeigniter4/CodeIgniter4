@@ -52,7 +52,7 @@ interface ResultInterface
 	 *
 	 * @param string $type The row type. Either 'array', 'object', or a class name to use
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getResult(string $type = 'object'): array;
 
@@ -149,8 +149,8 @@ interface ResultInterface
 	/**
 	 * Assigns an item into a particular column slot.
 	 *
-	 * @param $key
-	 * @param null $value
+	 * @param string $key
+	 * @param null   $value
 	 *
 	 * @return mixed
 	 */

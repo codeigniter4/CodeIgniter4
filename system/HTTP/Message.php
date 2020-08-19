@@ -124,7 +124,7 @@ class Message
 	/**
 	 * Appends data to the body of the current message.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return Message|Response
 	 */

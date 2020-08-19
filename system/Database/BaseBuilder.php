@@ -1002,7 +1002,7 @@ class BaseBuilder
 	 * @param  string        $type
 	 * @param  boolean       $escape
 	 * @param  string        $clause (Internal use only)
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 *
 	 * @return BaseBuilder
 	 */

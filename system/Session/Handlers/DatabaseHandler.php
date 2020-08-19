@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 use Config\Database;
 
 /**
@@ -90,10 +90,10 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -106,6 +106,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// Get DB Connection
+		// @phpstan-ignore-next-line
 		$this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
 		$this->db = Database::connect($this->DBGroup);

@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 
 /**
  * Session handler using Redis for persistence
@@ -88,12 +88,12 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -180,7 +180,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string|false	Serialized session data
+	 * @return string	Serialized session data
 	 */
 	public function read($sessionID): string
 	{
@@ -192,6 +192,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 				$this->sessionID = $sessionID;
 			}
 
+			// @phpstan-ignore-next-line
 			$session_data                               = $this->redis->get($this->keyPrefix . $sessionID);
 			is_string($session_data) ? $this->keyExists = true : $session_data = '';
 
@@ -235,10 +236,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (isset($this->lockKey))
 		{
-			$this->redis->expire($this->lockKey, 300);
+			$this->redis->expire($this->lockKey, 300); // @phpstan-ignore-line
 
 			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === false)
 			{
+				// @phpstan-ignore-next-line
 				if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
 					$this->fingerprint = $fingerprint;
@@ -270,12 +272,13 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			try
 			{
-				$ping_reply = $this->redis->ping();
+				$ping_reply = $this->redis->ping(); // @phpstan-ignore-line
 				if (($ping_reply === true) || ($ping_reply === '+PONG'))
 				{
+					// @phpstan-ignore-next-line
 					isset($this->lockKey) && $this->redis->del($this->lockKey);
 
-					if (! $this->redis->close())
+					if (! $this->redis->close()) // @phpstan-ignore-line
 					{
 						return false;
 					}
@@ -309,6 +312,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->redis, $this->lockKey))
 		{
+			// @phpstan-ignore-next-line
 			if (($result = $this->redis->del($this->keyPrefix . $sessionID)) !== 1)
 			{
 				$this->logger->debug('Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.');
@@ -354,6 +358,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		// correct session ID.
 		if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock')
 		{
+			// @phpstan-ignore-next-line
 			return $this->redis->expire($this->lockKey, 300);
 		}
 
@@ -363,12 +368,14 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		do
 		{
+			// @phpstan-ignore-next-line
 			if (($ttl = $this->redis->ttl($lock_key)) > 0)
 			{
 				sleep(1);
 				continue;
 			}
 
+			// @phpstan-ignore-next-line
 			if (! $this->redis->setex($lock_key, 300, time()))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
@@ -407,6 +414,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->redis, $this->lockKey) && $this->lock)
 		{
+			// @phpstan-ignore-next-line
 			if (! $this->redis->del($this->lockKey))
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);

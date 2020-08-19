@@ -525,7 +525,7 @@ class Logger implements LoggerInterface
 	 *      becomes:
 	 *  APPPATH/Controllers/Home.php
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
 	 * @return string
 	 */

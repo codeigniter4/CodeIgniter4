@@ -260,7 +260,7 @@ class DotEnv
 	 * This was borrowed from the excellent phpdotenv with very few changes.
 	 * https://github.com/vlucas/phpdotenv
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return string
 	 */

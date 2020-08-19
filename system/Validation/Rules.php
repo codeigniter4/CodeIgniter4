@@ -381,9 +381,9 @@ class Rules
 	 *
 	 *     required_with[password]
 	 *
-	 * @param $str
-	 * @param string $fields List of fields that we should check if present
-	 * @param array  $data   Complete list of fields from the form
+	 * @param string|null $str
+	 * @param string      $fields List of fields that we should check if present
+	 * @param array       $data   Complete list of fields from the form
 	 *
 	 * @return boolean
 	 */
@@ -433,9 +433,9 @@ class Rules
 	 *
 	 *     required_without[id,email]
 	 *
-	 * @param $str
-	 * @param string $fields
-	 * @param array  $data
+	 * @param string|null $str
+	 * @param string      $fields
+	 * @param array       $data
 	 *
 	 * @return boolean
 	 */

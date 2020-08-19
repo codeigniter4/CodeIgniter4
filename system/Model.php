@@ -860,7 +860,7 @@ class Model
 			}
 			else
 			{
-				$this->insertID = $this->db->insertID();
+				$this->insertID = $this->db->insertID(); // @phpstan-ignore-line
 			}
 		}
 
