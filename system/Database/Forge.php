@@ -596,7 +596,11 @@ class Forge
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
 		{
-			$columns .= $this->_processIndexes($table); // @phpstan-ignore-line
+			$indexes = $this->_processIndexes($table);
+			if (is_string($indexes))
+			{
+				$columns .= $indexes;
+			}
 		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
