@@ -73,6 +73,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize()->getFilters());
 	}
 
+	
 	//--------------------------------------------------------------------
 
 	public function testProcessMethodRespectsMethod()
@@ -350,6 +351,29 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filters->run($uri);
 	}
+	
+	//--------------------------------------------------------------------
+
+	public function testCustomFiltersLoad()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'discoverFilters' => true,
+			'globals' => [
+				'before' => ['test-customfilter'],
+				'after'  => [],
+			],
+		];
+
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$request = $filters->run($uri, 'before');
+
+		$this->assertEquals('http://hellowworld.com', $request->url);
+	}	
+	
 
 	//--------------------------------------------------------------------
 
