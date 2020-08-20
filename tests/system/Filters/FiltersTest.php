@@ -360,6 +360,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$config = [
 			'discoverFilters' => true,
+			'aliases' => [],
 			'globals' => [
 				'before' => ['test-customfilter'],
 				'after'  => [],
