@@ -32,7 +32,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 	];
 
 	protected $dsnGroup = [
-              'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
+		'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
 		'hostname' => '',
 		'username' => '',
 		'password' => '',
@@ -54,7 +54,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 	];
 
 	protected $dsnGroupPostgre = [
-              'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
+		'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
 		'hostname' => '',
 		'username' => '',
 		'password' => '',
@@ -81,7 +81,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'username' => '',
 		'password' => '',
 		'database' => '',
-              'DBDriver' => 'Postgres',
+		'DBDriver' => 'Postgre',
 		'DBPrefix' => 't_',
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
