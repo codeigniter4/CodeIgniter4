@@ -59,24 +59,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	
 	//--------------------------------------------------------------------
 
-	public function testRunCustomFilterRoute()
-	{
-		$_SERVER['argv'] = [
-			'index.php',
-			'testingfilter',
-		];
-		$_SERVER['argc'] = 2;
-		$_SERVER['REQUEST_URI'] = 'testingfilter';
-
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run();
-		$output = ob_get_clean();
-
-		$this->assertStringContainsString('Hello', $output);
-	}	
-
-	//--------------------------------------------------------------------
-
 	public function testRunClosureRoute()
 	{
 		$_SERVER['argv']        = [
