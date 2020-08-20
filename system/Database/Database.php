@@ -148,7 +148,7 @@ class Database
 	 * @param array $params
 	 *
 	 * @return array
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	protected function parseDSN(array $params): array
 	{
