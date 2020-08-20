@@ -57,7 +57,7 @@ driver's underlying native PHP extension, like this::
 
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 	
-	$default['DSN'] = 'DBDriver://username:password@hostname/database';
+      $default['DSN'] = 'DBDriver://username:password@hostname:port/database';
 
 To override default config values when connecting with a universal version of the DSN string, 
 add the config variables as a query string:
