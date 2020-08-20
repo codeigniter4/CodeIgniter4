@@ -344,7 +344,7 @@ class ImageMagickHandler extends BaseHandler
 	 * To ensure we can use all features, like transparency,
 	 * during the process, we'll use a PNG as the temp file type.
 	 *
-	 * @return resource|boolean
+	 * @return string
 	 * @throws \Exception
 	 */
 	protected function getResourcePath()

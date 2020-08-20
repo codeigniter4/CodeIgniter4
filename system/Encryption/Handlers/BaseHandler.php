@@ -66,7 +66,7 @@ abstract class BaseHandler implements EncrypterInterface
 		$config = $config ?? new \Config\Encryption();
 
 		// make the parameters conveniently accessible
-		foreach ($config as $pkey => $value)
+		foreach ($config as $pkey => $value) // @phpstan-ignore-line
 		{
 			$this->$pkey = $value;
 		}

@@ -196,7 +196,7 @@ class Message
 	 *
 	 * @param string $name
 	 *
-	 * @return array|\CodeIgniter\HTTP\Header
+	 * @return array|\CodeIgniter\HTTP\Header|null
 	 */
 	public function getHeader(string $name)
 	{

@@ -85,7 +85,7 @@ class Table
 	/**
 	 * Table caption
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	public $caption;
 
@@ -113,7 +113,7 @@ class Table
 	/**
 	 * Callback for custom table layout
 	 *
-	 * @var callable
+	 * @var callable|null
 	 */
 	public $function;
 
@@ -189,7 +189,7 @@ class Table
 	 *
 	 * @param  array   $array
 	 * @param  integer $columnLimit
-	 * @return array
+	 * @return array|false
 	 */
 	public function makeColumns($array = [], $columnLimit = 0)
 	{

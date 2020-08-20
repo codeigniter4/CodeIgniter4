@@ -528,7 +528,7 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param mixed $value
 	 *
-	 * @return \CodeIgniter\I18n\Time
+	 * @return \CodeIgniter\I18n\Time|mixed
 	 * @throws \Exception
 	 */
 	protected function mutateDate($value)

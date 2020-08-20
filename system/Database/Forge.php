@@ -136,7 +136,7 @@ class Forge
 	/**
 	 * CREATE TABLE IF statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
 
@@ -153,7 +153,7 @@ class Forge
 	/**
 	 * DROP TABLE IF EXISTS statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $dropTableIfStr = 'DROP TABLE IF EXISTS';
 
@@ -700,9 +700,9 @@ class Forge
 	 * @param boolean $if_exists Whether to add an IF EXISTS condition
 	 * @param boolean $cascade   Whether to add an CASCADE condition
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
+	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -1232,7 +1232,7 @@ class Forge
 	 *
 	 * @param string $table
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	protected function _processIndexes(string $table)
 	{

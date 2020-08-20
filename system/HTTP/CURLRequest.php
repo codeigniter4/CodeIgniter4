@@ -57,7 +57,7 @@ class CURLRequest extends Request
 	/**
 	 * The response object associated with this request
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var ResponseInterface|null
 	 */
 	protected $response;
 

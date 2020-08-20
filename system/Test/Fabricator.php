@@ -81,7 +81,7 @@ class Fabricator
 	/**
 	 * Map of properties and their formatter to use
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	protected $formatters;
 

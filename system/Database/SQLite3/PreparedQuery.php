@@ -52,7 +52,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The SQLite3Result resource, or false.
 	 *
-	 * @var Result
+	 * @var Result|boolean
 	 */
 	protected $result;
 

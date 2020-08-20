@@ -50,7 +50,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Memcached instance
 	 *
-	 * @var \Memcached
+	 * @var \Memcached|null
 	 */
 	protected $memcached;
 
@@ -64,7 +64,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Lock key
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $lockKey;
 

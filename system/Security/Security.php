@@ -53,7 +53,7 @@ class Security
 	 *
 	 * Random hash for Cross Site Request Forgery protection cookie
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $CSRFHash;
 
@@ -297,9 +297,9 @@ class Security
 	/**
 	 * Returns the current CSRF Hash.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCSRFHash(): string
+	public function getCSRFHash(): ?string
 	{
 		return $this->CSRFHash;
 	}

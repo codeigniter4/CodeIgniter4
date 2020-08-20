@@ -89,7 +89,7 @@ class View implements RendererInterface
 	/**
 	 * Logger instance.
 	 *
-	 * @var \CodeIgniter\Log\Logger
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -131,7 +131,7 @@ class View implements RendererInterface
 	 * The name of the layout being used, if any.
 	 * Set by the `extend` method used within views.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $layout;
 
@@ -146,7 +146,7 @@ class View implements RendererInterface
 	 * The name of the current section being rendered,
 	 * if any.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $currentSection;
 

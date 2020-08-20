@@ -59,21 +59,21 @@ abstract class BaseUtils
 	/**
 	 * List databases statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $listDatabases = false;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $optimizeTable = false;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $repairTable = false;
 

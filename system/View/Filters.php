@@ -91,10 +91,10 @@ class Filters
 	 * @param string $value
 	 * @param string $adjustment
 	 *
-	 * @return   string
+	 * @return   integer|false
 	 * @internal param string $format
 	 */
-	public static function date_modify($value, string $adjustment): string
+	public static function date_modify($value, string $adjustment)
 	{
 		$value = static::date($value, 'Y-m-d H:i:s');
 
@@ -318,9 +318,9 @@ class Filters
 	 * @param mixed  $precision
 	 * @param string $type
 	 *
-	 * @return string
+	 * @return string|float
 	 */
-	public static function round(string $value, $precision = 2, string $type = 'common'): string
+	public static function round(string $value, $precision = 2, string $type = 'common')
 	{
 		if (! is_numeric($precision))
 		{
