@@ -112,7 +112,7 @@ class Filters
 	 * @param \Config\Filters   $config
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
-	 * @param $moduleConfig
+	 * @param \Config\Modules	$moduleConfig
 	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response,$moduleConfig = null)
 	{
