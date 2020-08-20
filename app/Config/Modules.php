@@ -41,5 +41,6 @@ class Modules extends CoreModules
 		'registrars',
 		'routes',
 		'services',
+		'filters',
 	];
 }

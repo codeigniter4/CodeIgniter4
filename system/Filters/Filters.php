@@ -96,6 +96,13 @@ class Filters
 	 * @var array
 	 */
 	protected $arguments = [];
+	
+	/**
+	 * Handle to the modules config.
+	 *
+	 * @var \Config\Modules
+	 */
+	protected $moduleConfig;
 
 	//--------------------------------------------------------------------
 
@@ -105,13 +112,19 @@ class Filters
 	 * @param \Config\Filters   $config
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
+	 * @param $moduleConfig
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response,$moduleConfig = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
-		if (isset($this->config->discoverFilters) && $this->config->discoverFilters)
+		$this->moduleConfig = $moduleConfig;
+		if ($this->moduleConfig == null)
+		{
+			$this->moduleConfig = config('Modules');
+		}
+		if ($this->moduleConfig->shouldDiscover('filters'))
 		{
 			$this->discoverFilters();
 		}		
