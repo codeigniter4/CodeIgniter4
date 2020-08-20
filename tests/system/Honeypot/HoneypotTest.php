@@ -103,7 +103,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testHoneypotFilterBefore()
 	{
 		$config = [
-			'discoverFilters' => false, 		
 			'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
 			'globals' => [
 				'before' => ['trap'],
@@ -121,7 +120,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testHoneypotFilterAfter()
 	{
 		$config = [
-			'discoverFilters' => false, 		
 			'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
 			'globals' => [
 				'before' => [],
