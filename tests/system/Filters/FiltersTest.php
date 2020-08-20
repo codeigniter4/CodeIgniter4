@@ -27,9 +27,19 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 		Services::reset();
+		
+		$defaults = [
+			'Config' => APPPATH . 'Config',
+			'App'    => APPPATH,
+			'Tests\Support' => TESTPATH . '_support',
+		];
 
+		Services::autoloader()->addNamespace($defaults);
+		$loader = Services::locator();
+		
 		$this->request  = Services::request();
 		$this->response = Services::response();
+		
 	}
 
 	//--------------------------------------------------------------------
