@@ -255,7 +255,7 @@ class Response extends Message implements ResponseInterface
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-		if (! in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict']))
 		{
 			throw HTTPException::forInvalidSameSiteSetting($this->cookieSameSite);
 		}
@@ -830,7 +830,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $prefix   Cookie name prefix
 	 * @param boolean      $secure   Whether to only transfer cookies via SSL
 	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
-	 * @param string       $samesite SameSite setting for the cookie
+	 * @param string       $sameSite SameSite setting for the cookie
 	 *
 	 * @return $this
 	 */
@@ -883,12 +883,12 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if (is_null($samesite) && $this->cookieSameSite !== '')
+		if (is_null($samesite))
 		{
-			$samesite = $this->cookieSameSite;
+			$samesite = $this->cookieSameSite ?? '';
 		}
 
-		if (! in_array(strtolower($samesite), ['none', 'lax', 'strict']))
+		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict']))
 		{
 			throw HTTPException::forInvalidSameSiteSetting($samesite);
 		}
@@ -910,8 +910,12 @@ class Response extends Message implements ResponseInterface
 			'domain'   => $domain,
 			'secure'   => $secure,
 			'httponly' => $httponly,
-			'samesite' => $samesite,
 		];
+
+		if ($samesite !== '')
+		{
+			$cookie['samesite'] = $samesite;
+		}
 
 		$this->cookies[] = $cookie;
 
@@ -1083,6 +1087,12 @@ class Response extends Message implements ResponseInterface
 				$name  = $params['name'];
 				$value = $params['value'];
 				unset($params['name'], $params['value']);
+
+				// If samesite is blank string, skip setting the attribute on the cookie
+				if (isset($params['samesite']) && ($params['samesite'] === ''))
+				{
+					unset($params['samesite']);
+				}
 
 				setcookie($name, $value, $params);
 			}

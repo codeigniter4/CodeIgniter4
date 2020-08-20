@@ -198,9 +198,9 @@ class Security
 			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
 		}
 
-		if (! in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
+		if (! in_array(strtolower($this->CSRFSameSite), ['', 'none', 'lax', 'strict']))
 		{
-			throw SecurityException::forInvalidSameSiteSetting($this->cookieSameSite);
+			throw SecurityException::forInvalidSameSiteSetting($this->CSRFSameSite);
 		}
 
 		// Store cookie-related settings
@@ -299,14 +299,17 @@ class Security
 		if (PHP_VERSION_ID < 70300)
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
-
-			$sameSite = '; samesite=' . $this->CSRFSameSite;
+			$samesite = '';
+			if ($this->CSRFSameSite !== '')
+			{
+				$samesite = '; samesite=' . $this->CSRFSameSite;
+			}
 
 			setcookie(
 				$this->CSRFCookieName,
 				$this->CSRFHash,
 				$expire,
-				$this->cookiePath . $sameSite,
+				$this->cookiePath . $samesite,
 				$this->cookieDomain,
 				$secure_cookie,
 				true                // Enforce HTTP only cookie for security
@@ -321,8 +324,12 @@ class Security
 				'domain'   => $this->cookieDomain,
 				'secure'   => $secure_cookie,
 				'httponly' => true,// Enforce HTTP only cookie for security
-				'samesite' => $this->CSRFSameSite,
 			];
+
+			if ($this->CSRFSameSite !== '')
+			{
+				$params['samesite'] = $this->CSRFSameSite;
+			}
 
 			setcookie(
 				$this->CSRFCookieName,

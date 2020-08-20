@@ -269,6 +269,22 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Strict', $allCookies[0]['samesite']);
 	}
 
+	public function testCookieBlankSetSameSite()
+	{
+		$config                 = new App();
+		$config->cookieSameSite = '';
+		$response               = new Response($config);
+		$response->setCookie([
+			'name'  => 'bar',
+			'value' => 'foo',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayNotHasKey('samesite', $allCookies[0]);
+	}
+
 	public function testCookieStrictSameSite()
 	{
 		$config   = new App();

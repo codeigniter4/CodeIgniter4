@@ -52,15 +52,17 @@ class MockSession extends Session
 	{
 		if (PHP_VERSION_ID < 70300)
 		{
-			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
-
-			$sameSite = '; samesite=' . $this->cookieSameSite;
+			$sameSite = '';
+			if ($this->cookieSameSite !== '')
+			{
+				$sameSite = '; samesite=' . $this->cookieSameSite;
+			}
 
 			$this->cookies[] = [
 				$this->sessionCookieName,
 				session_id(),
 				(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
-				$this->cookiePath . $sameSite,
+				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
 				$this->cookieDomain,
 				$this->cookieSecure,
 				true,
@@ -75,8 +77,12 @@ class MockSession extends Session
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
 				'httponly' => true,
-				'samesite' => $this->cookieSameSite,
 			];
+
+			if ($this->cookieSameSite !== '')
+			{
+				$params['samesite'] = $this->cookieSameSite;
+			}
 
 			$this->cookies[] = [
 				$this->sessionCookieName,

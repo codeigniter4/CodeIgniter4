@@ -406,7 +406,7 @@ The methods provided by the parent class that are available are:
 		:param	string	$prefix: Cookie name prefix
 		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
-		:param	string	$samesite: The value for the SameSite cookie parameter. If set to `null`, the default value from `config/App.php` will be used
+		:param	string	$samesite: The value for the SameSite cookie parameter. If set to `''`, no SameSite attribute will be set on the cookie. If set to `null`, the default value from `config/App.php` will be used
 
 		:rtype:	void
 
@@ -456,7 +456,9 @@ The methods provided by the parent class that are available are:
 		by setting it to TRUE.
 
 		The SameSite value controls how cookies are shared between domains and sub-domains.
-		Allowed values are 'None', 'Lax' and 'Strict'. If set to `null`, the default from `config/App.php` is used.
+		Allowed values are 'None', 'Lax', 'Strict' or a blank string `''`.
+        If set to blank string, no SameSite attribute will be set on the cookie sent to the client.
+        If set to `null`, the default from `config/App.php` is used.
 
 		**Discrete Parameters**
 

@@ -195,7 +195,7 @@ class Session implements SessionInterface
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieSameSite = $config->cookieSameSite;
 
-		if (! in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict']))
 		{
 			throw SessionException::forInvalidSameSiteSetting($this->cookieSameSite);
 		}
@@ -320,8 +320,11 @@ class Session implements SessionInterface
 
 		if (PHP_VERSION_ID < 70300)
 		{
-			// In PHP < 7.3.0, there is a "hacky" way to set the SameSite parameter
-			$sameSite = '; samesite=' . $this->cookieSameSite;
+			$sameSite = '';
+			if ($this->cookieSameSite !== '')
+			{
+				$sameSite = '; samesite=' . $this->cookieSameSite;
+			}
 
 			session_set_cookie_params(
 				$this->sessionExpiration,
@@ -340,10 +343,14 @@ class Session implements SessionInterface
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
 				'httponly' => true, // HTTP only; Yes, this is intentional and not configurable for security reasons.
-				'samesite' => $this->cookieSameSite,
 			];
 
-			ini_set('session.cookie_samesite', $this->cookieSameSite);
+			if ($this->cookieSameSite !== '')
+			{
+				$params['samesite'] = $this->cookieSameSite;
+				ini_set('session.cookie_samesite', $this->cookieSameSite);
+			}
+
 			session_set_cookie_params($params);
 		}
 
@@ -1056,15 +1063,17 @@ class Session implements SessionInterface
 	{
 		if (PHP_VERSION_ID < 70300)
 		{
-			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
-
-			$sameSite = '; samesite=' . $this->cookieSameSite;
+			$sameSite = '';
+			if ($this->cookieSameSite !== '')
+			{
+				$sameSite = '; samesite=' . $this->cookieSameSite;
+			}
 
 			setcookie(
 				$this->sessionCookieName,
 				session_id(),
 				(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
-				$this->cookiePath . $sameSite,
+				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
 				$this->cookieDomain,
 				$this->cookieSecure,
 				true
@@ -1079,8 +1088,12 @@ class Session implements SessionInterface
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
 				'httponly' => true,
-				'samesite' => $this->cookieSameSite,
 			];
+
+			if ($this->cookieSameSite !== '')
+			{
+				$params['samesite'] = $this->cookieSameSite;
+			}
 
 			setcookie(
 				$this->sessionCookieName,
