@@ -570,7 +570,7 @@ class Forge
 	 */
 	protected function _postDropTableStatements(string $table)
 	{
-		  return array();
+		  return [];
 	}
 
 	//--------------------------------------------------------------------
@@ -584,7 +584,7 @@ class Forge
 	 */
 	protected function _preCreateAlterStatements(string $table,array $fields)
 	{
-		  return array();
+		  return [];
 	}
 
 	//--------------------------------------------------------------------
