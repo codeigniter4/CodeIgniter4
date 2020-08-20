@@ -57,7 +57,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Result ID
 	 *
-	 * @var resource|object
+	 * @var resource|object|boolean
 	 */
 	public $resultID;
 
@@ -78,7 +78,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Custom Result Object
 	 *
-	 * @var object[]
+	 * @var array
 	 */
 	public $customResultObject = [];
 

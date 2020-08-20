@@ -941,7 +941,7 @@ if (! function_exists('redirect'))
 
 		if (! empty($uri))
 		{
-			return $response->route($uri); // @phpstan-ignore-line
+			return $response->route($uri);
 		}
 
 		return $response;

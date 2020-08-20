@@ -53,13 +53,13 @@ class ResourcePresenter extends Controller
 
 	/**
 	 *
-	 * @var string Name of the model class managing this resource's data
+	 * @var string|null Name of the model class managing this resource's data
 	 */
 	protected $modelName;
 
 	/**
 	 *
-	 * @var \CodeIgniter\Model the model holding this resource's data
+	 * @var \CodeIgniter\Model|null the model holding this resource's data
 	 */
 	protected $model;
 

@@ -326,11 +326,11 @@ trait FeatureTestTrait
 	/**
 	 * Setup the custom request's headers
 	 *
-	 * @param \CodeIgniter\HTTP\Request $request
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected function setupHeaders(Request $request)
+	protected function setupHeaders(IncomingRequest $request)
 	{
 		if (! empty($this->headers))
 		{

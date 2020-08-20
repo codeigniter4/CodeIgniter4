@@ -260,7 +260,7 @@ class Model
 	/**
 	 * Our validator instance.
 	 *
-	 * @var \CodeIgniter\Validation\Validation
+	 * @var ValidationInterface
 	 */
 	protected $validation;
 

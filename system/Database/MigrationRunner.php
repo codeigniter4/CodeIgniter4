@@ -66,7 +66,7 @@ class MigrationRunner
 	/**
 	 * The Namespace  where migrations can be found.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $namespace;
 

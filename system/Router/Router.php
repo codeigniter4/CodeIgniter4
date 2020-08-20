@@ -53,7 +53,7 @@ class Router implements RouterInterface
 	/**
 	 * A RouteCollection instance.
 	 *
-	 * @var RouteCollection
+	 * @var RouteCollectionInterface
 	 */
 	protected $collection;
 
@@ -61,7 +61,7 @@ class Router implements RouterInterface
 	 * Sub-directory that contains the requested controller class.
 	 * Primarily used by 'autoRoute'.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $directory;
 

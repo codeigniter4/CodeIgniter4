@@ -54,7 +54,7 @@ class File extends SplFileInfo
 	/**
 	 * The files size in bytes
 	 *
-	 * @var float
+	 * @var integer
 	 */
 	protected $size;
 

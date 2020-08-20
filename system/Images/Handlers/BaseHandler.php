@@ -94,14 +94,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * X-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $xAxis = 0;
 
 	/**
 	 * Y-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $yAxis = 0;
 
@@ -135,7 +135,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Temporary image used by the different engines.
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $resource;
 
@@ -644,7 +644,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $height
 	 * @param string  $position
 	 *
-	 * @return $this
+	 * @return BaseHandler
 	 */
 	public function fit(int $width, int $height = null, string $position = 'center')
 	{

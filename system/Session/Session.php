@@ -54,7 +54,7 @@ class Session implements SessionInterface
 	/**
 	 * Instance of the driver to use.
 	 *
-	 * @var \CodeIgniter\Log\Handlers\HandlerInterface
+	 * @var \SessionHandlerInterface
 	 */
 	protected $driver;
 

@@ -85,7 +85,7 @@ class Time extends DateTime
 	protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
 	/**
-	 * @var \CodeIgniter\I18n\Time
+	 * @var \CodeIgniter\I18n\Time|null
 	 */
 	protected static $testNow;
 

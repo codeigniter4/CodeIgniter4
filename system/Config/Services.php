@@ -600,7 +600,7 @@ class Services extends BaseService
 	 * @param \Config\App|null $config
 	 * @param boolean          $getShared
 	 *
-	 * @return \CodeIgniter\HTTP\Response
+	 * @return RedirectResponse
 	 */
 	public static function redirectResponse(App $config = null, bool $getShared = true)
 	{

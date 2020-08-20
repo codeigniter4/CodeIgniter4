@@ -58,14 +58,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The file handle
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $fileHandle;
 
 	/**
 	 * File Name
 	 *
-	 * @var resource
+	 * @var string
 	 */
 	protected $filePath;
 
@@ -168,9 +168,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string    Serialized session data
+	 * @return string|boolean    Serialized session data
 	 */
-	public function read($sessionID): string
+	public function read($sessionID)
 	{
 		// This might seem weird, but PHP 5.6 introduced session_reset(),
 		// which re-reads session data
@@ -305,7 +305,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			flock($this->fileHandle, LOCK_UN);
 			fclose($this->fileHandle);
 
-			$this->fileHandle = $this->fileNew = null;
+			$this->fileHandle = null;
+			$this->fileNew    = false;
 
 			return true;
 		}

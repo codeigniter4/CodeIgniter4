@@ -59,7 +59,7 @@ class Header
 	 * The value of the header. May have more than one
 	 * value. If so, will be an array of strings.
 	 *
-	 * @var string|array
+	 * @var string|array|null
 	 */
 	protected $value;
 

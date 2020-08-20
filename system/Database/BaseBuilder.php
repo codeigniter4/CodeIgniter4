@@ -122,21 +122,21 @@ class BaseBuilder
 	/**
 	 * QB LIMIT data
 	 *
-	 * @var integer
+	 * @var integer|boolean
 	 */
 	protected $QBLimit = false;
 
 	/**
 	 * QB OFFSET data
 	 *
-	 * @var integer
+	 * @var integer|boolean
 	 */
 	protected $QBOffset = false;
 
 	/**
 	 * QB ORDER BY data
 	 *
-	 * @var array
+	 * @var array|null|string
 	 */
 	public $QBOrderBy = [];
 
@@ -180,7 +180,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var BaseConnection
+	 * @var ConnectionInterface
 	 */
 	protected $db;
 
@@ -1982,7 +1982,7 @@ class BaseBuilder
 	 *
 	 * Compiles the set conditions and returns the sql statement
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function getCompiledQBWhere()
 	{
@@ -2187,9 +2187,9 @@ class BaseBuilder
 	 *
 	 * @throws DatabaseException
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	public function getCompiledInsert(bool $reset = true): string
+	public function getCompiledInsert(bool $reset = true)
 	{
 		if ($this->validateInsert() === false)
 		{
@@ -2386,9 +2386,9 @@ class BaseBuilder
 	 *
 	 * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	public function getCompiledUpdate(bool $reset = true): string
+	public function getCompiledUpdate(bool $reset = true)
 	{
 		if ($this->validateUpdate() === false)
 		{
@@ -2710,7 +2710,7 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs "DELETE FROM table"
 	 *
-	 * @return boolean    TRUE on success, FALSE on failure
+	 * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
 	 */
 	public function emptyTable()
 	{
@@ -2737,7 +2737,7 @@ class BaseBuilder
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
-	 * @return boolean    TRUE on success, FALSE on failure
+	 * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
 	 */
 	public function truncate()
 	{

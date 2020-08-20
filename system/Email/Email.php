@@ -222,7 +222,7 @@ class Email
 	 * BCC Batch max number size.
 	 *
 	 * @see Email::$BCCBatchMode
-	 * @var integer
+	 * @var integer|string
 	 */
 	public $BCCBatchSize = 200;
 	//--------------------------------------------------------------------
@@ -255,7 +255,7 @@ class Email
 	 *
 	 * @var resource
 	 */
-	protected $SMTPConnect = '';
+	protected $SMTPConnect;
 	/**
 	 * Mail encoding
 	 *
@@ -646,7 +646,7 @@ class Email
 	 * @param string|null $newname
 	 * @param string      $mime
 	 *
-	 * @return Email
+	 * @return Email|boolean
 	 */
 	public function attach($file, $disposition = '', $newname = null, $mime = '')
 	{
@@ -693,7 +693,7 @@ class Email
 	 *
 	 * @param string $filename
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
 	public function setAttachmentCID($filename)
 	{
@@ -963,9 +963,9 @@ class Email
 	/**
 	 * Clean Extended Email Address: Joe Smith <joe@smith.com>
 	 *
-	 * @param string $email
+	 * @param string|array $email
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function cleanEmail($email)
 	{
@@ -1854,7 +1854,7 @@ class Email
 	/**
 	 * SMTP Connect
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
 	protected function SMTPConnect()
 	{

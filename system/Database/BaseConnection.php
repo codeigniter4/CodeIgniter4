@@ -58,7 +58,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Database port
 	 *
-	 * @var integer
+	 * @var integer|string
 	 */
 	protected $port = '';
 
@@ -206,14 +206,14 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Connection ID
 	 *
-	 * @var object|resource
+	 * @var object|resource|boolean
 	 */
 	public $connID = false;
 
 	/**
 	 * Result ID
 	 *
-	 * @var object|resource
+	 * @var object|resource|boolean
 	 */
 	public $resultID = false;
 
@@ -1782,9 +1782,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Insert ID
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	abstract public function insertID(): int;
+	abstract public function insertID();
 
 	//--------------------------------------------------------------------
 

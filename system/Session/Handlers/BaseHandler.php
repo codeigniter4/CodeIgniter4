@@ -53,7 +53,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The Data fingerprint.
 	 *
-	 * @var boolean
+	 * @var string
 	 */
 	protected $fingerprint;
 
@@ -117,7 +117,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * The 'save path' for the session
 	 * varies between
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	protected $savePath;
 

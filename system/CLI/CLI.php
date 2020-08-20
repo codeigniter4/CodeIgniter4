@@ -143,7 +143,7 @@ class CLI
 	 * output was a "write" or a "print" to
 	 * keep the output clean and as expected.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected static $lastWrite;
 

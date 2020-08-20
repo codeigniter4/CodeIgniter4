@@ -52,7 +52,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * Stores the name this query can be
 	 * used under by postgres. Only used internally.
 	 *
-	 * @var string
+	 * @var integer
 	 */
 	protected $name;
 
@@ -60,7 +60,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * The result resource from a successful
 	 * pg_exec. Or false.
 	 *
-	 * @var Result
+	 * @var Result|boolean
 	 */
 	protected $result;
 

@@ -884,7 +884,7 @@ class URI
 	{
 		foreach ($params as $param)
 		{
-			unset($this->query[$param]);
+			unset($this->query[$param]); // @phpstan-ignore-line
 		}
 
 		return $this;
