@@ -28,6 +28,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'compress' => false,
 		'strictOn' => true,
 		'failover' => [],
+		'port'     => 3306,
 	];
 
 	protected $dsnGroup = [
@@ -49,6 +50,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'compress' => false,
 		'strictOn' => true,
 		'failover' => [],
+		'port'     => 3306,
 	];
 
 	protected $dsnGroupPostgre = [
@@ -70,6 +72,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'compress' => false,
 		'strictOn' => true,
 		'failover' => [],
+		'port'     => 5432,
 	];
 
 	protected $dsnGroupPostgreNative = [
@@ -91,6 +94,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'compress' => false,
 		'strictOn' => true,
 		'failover' => [],
+		'port'     => 5432,
 	];
 
 	protected function tearDown(): void
@@ -108,6 +112,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($this->group['username'], $this->getPrivateProperty($conn, 'username'));
 		$this->assertEquals($this->group['password'], $this->getPrivateProperty($conn, 'password'));
 		$this->assertEquals($this->group['database'], $this->getPrivateProperty($conn, 'database'));
+		$this->assertEquals($this->group['port'], $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals($this->group['DBDriver'], $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals($this->group['DBPrefix'], $this->getPrivateProperty($conn, 'DBPrefix'));
 		$this->assertEquals($this->group['pConnect'], $this->getPrivateProperty($conn, 'pConnect'));
@@ -125,6 +130,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('user', $this->getPrivateProperty($conn, 'username'));
 		$this->assertEquals('pass', $this->getPrivateProperty($conn, 'password'));
 		$this->assertEquals('dbname', $this->getPrivateProperty($conn, 'database'));
+		$this->assertEquals('3306', $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals('MySQLi', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('test_', $this->getPrivateProperty($conn, 'DBPrefix'));
 		$this->assertEquals(true, $this->getPrivateProperty($conn, 'pConnect'));
@@ -144,6 +150,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('user', $this->getPrivateProperty($conn, 'username'));
 		$this->assertEquals('pass', $this->getPrivateProperty($conn, 'password'));
 		$this->assertEquals('dbname', $this->getPrivateProperty($conn, 'database'));
+		$this->assertEquals('5432', $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('test_', $this->getPrivateProperty($conn, 'DBPrefix'));
 		$this->assertEquals(false, $this->getPrivateProperty($conn, 'pConnect'));
@@ -157,7 +164,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$method = $this->getPrivateMethodInvoker($conn, 'buildDSN');
 		$method();
 
-		$expected = "host=localhost user=user password='pass' dbname=dbname connect_timeout='5' sslmode='1'";
+		$expected = "host=localhost port=5432 user=user password='pass' dbname=dbname connect_timeout='5' sslmode='1'";
 		$this->assertEquals($expected, $this->getPrivateProperty($conn, 'DSN'));
 	}
 
@@ -171,7 +178,8 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $this->getPrivateProperty($conn, 'username'));
 		$this->assertEquals('', $this->getPrivateProperty($conn, 'password'));
 		$this->assertEquals('', $this->getPrivateProperty($conn, 'database'));
-		$this->assertEquals('SQLite3', $this->getPrivateProperty($conn, 'DBDriver'));
+		$this->assertEquals('5432', $this->getPrivateProperty($conn, 'port'));
+		$this->assertEquals('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('t_', $this->getPrivateProperty($conn, 'DBPrefix'));
 		$this->assertEquals(false, $this->getPrivateProperty($conn, 'pConnect'));
 		$this->assertEquals('utf8', $this->getPrivateProperty($conn, 'charset'));

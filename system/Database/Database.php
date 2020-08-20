@@ -150,7 +150,7 @@ class Database
 	 * @return array
 	 * @throws InvalidArgumentException
 	 */
-	protected function parseDSN($params): array
+	protected function parseDSN(array $params): array
 	{
 		if (($dsn = parse_url($params['DSN'])) === false)
 		{
