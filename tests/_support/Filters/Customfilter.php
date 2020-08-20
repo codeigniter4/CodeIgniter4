@@ -1,6 +1,10 @@
 <?php
 namespace Tests\Support\Filters;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\Services;
 
 class Customfilter implements \CodeIgniter\Filters\FilterInterface
 {
