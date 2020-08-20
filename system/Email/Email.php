@@ -1187,7 +1187,7 @@ class Email
 				}
 				if ($this->sendMultipart !== false)
 				{
-					$this->finalBody .= '--' . $boundary . '--';
+					$this->finalBody .= '--' . $boundary . '--'; // @phpstan-ignore-line
 				}
 			return;
 			case 'plain-attach':
@@ -1277,11 +1277,11 @@ class Email
 	/**
 	 * Prepares attachment string
 	 *
-	 * @param string      &$body     Message body to append to
+	 * @param string      $body      Message body to append to
 	 * @param string      $boundary  Multipart boundary
 	 * @param string|null $multipart When provided, only attachments of this type will be processed
 	 *
-	 * @return string
+	 * @return void
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
@@ -1515,7 +1515,7 @@ class Email
 		// We might already have this set for UTF-8
 		isset($chars) || $chars = static::strlen($str);
 		$output                 = '=?' . $this->charset . '?Q?';
-		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
+		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++) // @phpstan-ignore-line
 		{
 			$chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 			// RFC 2045 sets a limit of 76 characters per line.
@@ -1705,7 +1705,7 @@ class Email
 	 *
 	 * Credits for the base concept go to Paul Buonopane <paul@namepros.com>
 	 *
-	 * @param string &$email
+	 * @param string $email
 	 *
 	 * @return boolean
 	 */
@@ -1955,7 +1955,7 @@ class Email
 		}
 		$reply                = $this->getSMTPData();
 		$this->debugMessage[] = '<pre>' . $cmd . ': ' . $reply . '</pre>';
-		if ((int) static::substr($reply, 0, 3) !== $resp)
+		if ((int) static::substr($reply, 0, 3) !== $resp) // @phpstan-ignore-line
 		{
 			$this->setErrorMessage(lang('Email.SMTPError', [$reply]));
 			return false;
@@ -2051,7 +2051,7 @@ class Email
 				$timestamp = 0;
 			}
 		}
-		if ($result === false)
+		if ($result === false) // @phpstan-ignore-line
 		{
 			$this->setErrorMessage(lang('Email.SMTPDataFailure', $data));
 			return false;

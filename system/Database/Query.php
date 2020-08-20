@@ -119,7 +119,7 @@ class Query implements QueryInterface
 	/**
 	 * BaseQuery constructor.
 	 *
-	 * @param $db ConnectionInterface
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(&$db)
 	{

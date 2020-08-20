@@ -45,10 +45,6 @@ use Throwable;
 /**
  * Class BaseCommand
  *
- * @property $group
- * @property $name
- * @property $description
- *
  * @package CodeIgniter\CLI
  */
 abstract class BaseCommand
@@ -105,8 +101,8 @@ abstract class BaseCommand
 	protected $logger;
 
 	/**
-	 * Instance of the CommandRunner controller
-	 * so commands can call other commands.
+	 * Instance of Commands so
+	 * commands can call other commands.
 	 *
 	 * @var \CodeIgniter\CLI\Commands
 	 */
@@ -149,10 +145,6 @@ abstract class BaseCommand
 	 */
 	protected function call(string $command, array $params = [])
 	{
-		// The CommandRunner will grab the first element
-		// for the command name.
-		array_unshift($params, $command);
-
 		return $this->commands->run($command, $params);
 	}
 

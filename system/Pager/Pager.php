@@ -95,7 +95,7 @@ class Pager implements PagerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param type              $config
+	 * @param \Config\Pager     $config
 	 * @param RendererInterface $view
 	 */
 	public function __construct($config, RendererInterface $view)
@@ -265,7 +265,7 @@ class Pager implements PagerInterface
 	/**
 	 * Returns the total number of pages.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return integer
 	 */
@@ -281,7 +281,7 @@ class Pager implements PagerInterface
 	/**
 	 * Returns the number of the current page of results.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return integer
 	 */
@@ -297,7 +297,7 @@ class Pager implements PagerInterface
 	/**
 	 * Tells whether this group of results has any more pages of results.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return boolean
 	 */

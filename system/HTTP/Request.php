@@ -157,7 +157,7 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxy_ip, $separator) === false)
+					if (strpos($proxy_ip, $separator) === false) // @phpstan-ignore-line
 					{
 						continue;
 					}
@@ -165,7 +165,7 @@ class Request extends Message implements RequestInterface
 					// Convert the REMOTE_ADDR IP address to binary, if needed
 					if (! isset($ip, $sprintf))
 					{
-						if ($separator === ':')
+						if ($separator === ':') // @phpstan-ignore-line
 						{
 							// Make sure we're have the "full" IPv6 format
 							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress
@@ -192,7 +192,7 @@ class Request extends Message implements RequestInterface
 					sscanf($proxy_ip, '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
-					if ($separator === ':')
+					if ($separator === ':') // @phpstan-ignore-line
 					{
 						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
 						for ($i = 0; $i < 8; $i ++)
@@ -319,7 +319,7 @@ class Request extends Message implements RequestInterface
 	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
 	 *
 	 * @param string $method
-	 * @param $value
+	 * @param mixed  $value
 	 *
 	 * @return $this
 	 */

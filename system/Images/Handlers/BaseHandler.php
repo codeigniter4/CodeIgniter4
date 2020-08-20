@@ -338,7 +338,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer|null $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param integer $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */
@@ -507,6 +507,44 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param array  $options
 	 */
 	protected abstract function _text(string $text, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles the actual resizing of the image.
+	 *
+	 * @param boolean $maintainRatio
+	 *
+	 * @return $this
+	 */
+	public abstract function _resize(bool $maintainRatio = false);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Crops the image.
+	 *
+	 * @return $this
+	 */
+	public abstract function _crop();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getWidth();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the height of an image.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getHeight();
 
 	//--------------------------------------------------------------------
 

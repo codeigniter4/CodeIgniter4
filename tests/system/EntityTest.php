@@ -636,6 +636,29 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 	}
 
+	public function testAsArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toArray(false, true, true);
+
+		$this->assertEquals($result, [
+			'foo'        => null,
+			'bar'        => ':bar',
+			'default'    => 'sumfin',
+			'created_at' => null,
+			'createdAt'  => null,
+			'entity'     => [
+				'foo'        => null,
+				'bar'        => ':bar',
+				'default'    => 'sumfin',
+				'created_at' => null,
+				'createdAt'  => null,
+			],
+		]);
+	}
+
 	public function testAsArrayMapped()
 	{
 		$entity = $this->getMappedEntity();
@@ -691,6 +714,27 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar'        => null,
 			'default'    => 'sumfin',
 			'created_at' => null,
+		]);
+	}
+
+	public function testToRawArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toRawArray(false, true);
+
+		$this->assertEquals($result, [
+			'foo'        => null,
+			'bar'        => null,
+			'default'    => 'sumfin',
+			'created_at' => null,
+			'entity'     => [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			],
 		]);
 	}
 
@@ -799,7 +843,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
 	}
 
-	protected function getEntity()
+	protected function getEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -840,7 +884,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getMappedEntity()
+	protected function getMappedEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -872,7 +916,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastEntity($data = null)
+	protected function getCastEntity($data = null) : Entity
 	{
 		return new class($data) extends Entity
 		{
@@ -926,7 +970,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastNullableEntity()
+	protected function getCastNullableEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -937,7 +981,8 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'integer_0'             => null,
 				'string_value_not_null' => 'value',
 			];
-			protected $_original  = [
+
+			protected $_original = [
 				'string_null'           => null,
 				'string_empty'          => null,
 				'integer_null'          => null,

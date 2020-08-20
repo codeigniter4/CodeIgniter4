@@ -164,7 +164,7 @@ class Session implements SessionInterface
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \PSR\Log\LoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
 
@@ -231,12 +231,6 @@ class Session implements SessionInterface
 			$this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
 
 			return;
-		}
-
-		if (! $this->driver instanceof \SessionHandlerInterface)
-		{
-			$this->logger->error("Session: Handler '" . $this->driver .
-					"' doesn't implement SessionHandlerInterface. Aborting.");
 		}
 
 		$this->configure();
@@ -546,6 +540,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
+		// @phpstan-ignore-next-line
 		if (! empty($key) && (! is_null($value = isset($_SESSION[$key]) ? $_SESSION[$key] : null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
 		{
 			return $value;

@@ -4,6 +4,7 @@ use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
+use Config\App as AppConfig;
 use Config\Logger;
 
 /**
@@ -41,10 +42,14 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSameSite'           => 'Lax',
 		];
 
-		$config = array_merge($defaults, $options);
-		$config = (object) $config;
+		$config    = array_merge($defaults, $options);
+		$appConfig = new AppConfig();
+		foreach ($config as $key => $c)
+		{
+			$appConfig->$key = $c;
+		}
 
-		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
+		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
 		$session->setLogger(new TestLogger(new Logger()));
 
 		return $session;

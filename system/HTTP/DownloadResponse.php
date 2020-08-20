@@ -244,7 +244,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		$result = sprintf('attachment; filename="%s"', $download_filename);
 
-		if (isset($utf8_filename))
+		if ($utf8_filename)
 		{
 			$result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8_filename);
 		}

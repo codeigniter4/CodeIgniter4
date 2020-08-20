@@ -60,7 +60,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * The result resource from a successful
 	 * pg_exec. Or false.
 	 *
-	 * @var
+	 * @var Result
 	 */
 	protected $result;
 

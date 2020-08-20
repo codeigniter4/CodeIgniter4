@@ -17,7 +17,10 @@ class ClearLogsTest extends CIUnitTestCase
 		CITestStreamFilter::$buffer = '';
 		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
 		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-		$this->date                 = date('Y-m-d');
+
+		// test runs on other tests may log errors since default threshold
+		// is now 4, so set this to a safe distance
+		$this->date = date('Y-m-d', strtotime('+1 year'));
 	}
 
 	protected function tearDown(): void
@@ -33,7 +36,7 @@ class ClearLogsTest extends CIUnitTestCase
 		// create 10 dummy log files
 		for ($i = 0; $i < 10; $i++)
 		{
-			$newDate = date('Y-m-d', strtotime("-{$i} day"));
+			$newDate = date('Y-m-d', strtotime("+1 year -{$i} day"));
 			$path    = str_replace($date, $newDate, $path);
 			file_put_contents($path, 'Lorem ipsum');
 

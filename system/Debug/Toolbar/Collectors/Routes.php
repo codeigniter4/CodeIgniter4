@@ -127,7 +127,7 @@ class Routes extends BaseCollector
 				'method'     => $router->methodName(),
 				'paramCount' => count($router->params()),
 				'truePCount' => count($params),
-				'params'     => $params ?? [],
+				'params'     => $params,
 			],
 		];
 

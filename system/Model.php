@@ -860,7 +860,7 @@ class Model
 			}
 			else
 			{
-				$this->insertID = $this->db->insertID();
+				$this->insertID = $this->db->insertID(); // @phpstan-ignore-line
 			}
 		}
 
@@ -1282,7 +1282,7 @@ class Model
 			}
 		}
 
-		return $this->builder()->replace($data, $returnSQL);
+		return $this->builder()->testMode($returnSQL)->replace($data);
 	}
 
 	//--------------------------------------------------------------------

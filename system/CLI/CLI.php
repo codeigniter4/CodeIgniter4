@@ -384,9 +384,9 @@ class CLI
 	/**
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
-	 * @param string|array $text       The text to output, or array of errors
-	 * @param string       $foreground
-	 * @param string       $background
+	 * @param string      $text       The text to output, or array of errors
+	 * @param string      $foreground
+	 * @param string|null $background
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
@@ -1136,7 +1136,7 @@ class CLI
 			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
-			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $total_rows))
 			{
 				$table .= $cols . PHP_EOL;
 			}

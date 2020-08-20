@@ -57,6 +57,7 @@ use Config;
  */
 if (! defined('APPPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -73,6 +74,7 @@ if (! defined('ROOTPATH'))
  */
 if (! defined('SYSTEMPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -81,6 +83,7 @@ if (! defined('SYSTEMPATH'))
  */
 if (! defined('WRITEPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -89,6 +92,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 

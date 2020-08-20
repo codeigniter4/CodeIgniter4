@@ -136,9 +136,9 @@ class Events
 	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
 	 *  Events::on('create', function() {});              // Closure
 	 *
-	 * @param $event_name
-	 * @param callable   $callback
-	 * @param integer    $priority
+	 * @param string   $event_name
+	 * @param callable $callback
+	 * @param integer  $priority
 	 */
 	public static function on($event_name, $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
@@ -166,8 +166,8 @@ class Events
 	 *  a) All subscribers have finished or
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
-	 * @param $eventName
-	 * @param $arguments
+	 * @param string $eventName
+	 * @param mixed  $arguments
 	 *
 	 * @return boolean
 	 */
@@ -214,7 +214,7 @@ class Events
 	 * If the listener could not be found, returns FALSE, or TRUE if
 	 * it was removed.
 	 *
-	 * @param $event_name
+	 * @param string $event_name
 	 *
 	 * @return array
 	 */
@@ -246,8 +246,8 @@ class Events
 	 * If the listener couldn't be found, returns FALSE, else TRUE if
 	 * it was removed.
 	 *
-	 * @param $event_name
-	 * @param callable   $listener
+	 * @param string   $event_name
+	 * @param callable $listener
 	 *
 	 * @return boolean
 	 */
@@ -280,7 +280,7 @@ class Events
 	 * If the event_name is specified, only listeners for that event will be
 	 * removed, otherwise all listeners for all events are removed.
 	 *
-	 * @param null $event_name
+	 * @param string|null $event_name
 	 */
 	public static function removeAllListeners($event_name = null)
 	{

@@ -1002,7 +1002,7 @@ class BaseBuilder
 	 * @param  string        $type
 	 * @param  boolean       $escape
 	 * @param  string        $clause (Internal use only)
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1958,7 +1958,7 @@ class BaseBuilder
 		// If we've previously reset the QBOrderBy values, get them back
 		elseif (! isset($this->QBOrderBy))
 		{
-			$this->QBOrderBy = $orderBy ?? [];
+			$this->QBOrderBy = $orderBy;
 		}
 
 		// Restore the LIMIT setting
@@ -2789,7 +2789,7 @@ class BaseBuilder
 	{
 		$table = $this->QBFrom[0];
 
-		$sql = $this->delete($table, null, $reset, true);
+		$sql = $this->delete($table, null, $reset);
 
 		return $this->compileFinalQuery($sql);
 	}

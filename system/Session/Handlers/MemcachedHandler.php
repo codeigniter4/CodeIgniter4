@@ -38,8 +38,8 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 
 /**
  * Session handler using Memcache for persistence
@@ -80,11 +80,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param  BaseConfig $config
-	 * @param  string     $ipAddress
+	 * @param  AppConfig $config
+	 * @param  string    $ipAddress
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 

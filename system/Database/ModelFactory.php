@@ -45,8 +45,8 @@ class ModelFactory
 	/**
 	 * Helper method for injecting mock instances while testing.
 	 *
-	 * @param string   $class
-	 * @param $instance
+	 * @param string $class
+	 * @param object $instance
 	 */
 	public static function injectMock(string $class, $instance)
 	{

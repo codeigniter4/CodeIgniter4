@@ -758,6 +758,7 @@ class Validation implements ValidationInterface
 		// passed along from a redirect_with_input request.
 		if (empty($this->errors) && ! is_cli())
 		{
+			// @phpstan-ignore-next-line
 			if (isset($_SESSION, $_SESSION['_ci_validation_errors']))
 			{
 				$this->errors = unserialize($_SESSION['_ci_validation_errors']);

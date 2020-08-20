@@ -194,7 +194,7 @@ class IncomingRequest extends Request
 	 * Handles setting up the locale, perhaps auto-detecting through
 	 * content negotiation.
 	 *
-	 * @param $config
+	 * @param \Config\App $config
 	 */
 	public function detectLocale($config)
 	{

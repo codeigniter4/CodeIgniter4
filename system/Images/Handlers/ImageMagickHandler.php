@@ -278,7 +278,7 @@ class ImageMagickHandler extends BaseHandler
 			throw ImageException::forImageProcessFailed();
 		}
 
-		return $output;
+		return $output; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -468,10 +468,10 @@ class ImageMagickHandler extends BaseHandler
 					break;
 			}
 
-			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis;
-			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis;
+			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis; // @phpstan-ignore-line
+			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis; // @phpstan-ignore-line
 
-			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}";
+			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}"; // @phpstan-ignore-line
 		}
 
 		// Color

@@ -134,7 +134,8 @@ if (! function_exists('clean_path'))
 				return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
 			case strpos($path, SYSTEMPATH) === 0:
 				return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
-			case strpos($path, FCPATH) === 0:
+			case strpos($path, FCPATH) === 0: // @phpstan-ignore-line
+				// @phpstan-ignore-next-line
 				return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
 			case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
 				return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
@@ -802,9 +803,9 @@ if (! function_exists('lang'))
 	 * A convenience method to translate a string or array of them and format
 	 * the result with the intl extension's MessageFormatter.
 	 *
-	 * @param string|[] $line
-	 * @param array     $args
-	 * @param string    $locale
+	 * @param string      $line
+	 * @param array       $args
+	 * @param string|null $locale
 	 *
 	 * @return string
 	 */
@@ -831,9 +832,9 @@ if (! function_exists('log_message'))
 	 *  - info
 	 *  - debug
 	 *
-	 * @param string     $level
-	 * @param string     $message
-	 * @param array|null $context
+	 * @param string $level
+	 * @param string $message
+	 * @param array  $context
 	 *
 	 * @return mixed
 	 */
@@ -940,7 +941,7 @@ if (! function_exists('redirect'))
 
 		if (! empty($uri))
 		{
-			return $response->route($uri);
+			return $response->route($uri); // @phpstan-ignore-line
 		}
 
 		return $response;

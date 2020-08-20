@@ -393,9 +393,13 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSameSite'           => 'Lax',
 		];
 
-		$config = (object) $defaults;
+		$appConfig = new App();
+		foreach ($defaults as $key => $config)
+		{
+			$appConfig->$key = $config;
+		}
 
-		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
+		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
 		$session->setLogger(new TestLogger(new Logger()));
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}

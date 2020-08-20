@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -62,7 +63,6 @@ use Config\Modules;
  */
 class BaseService
 {
-
 	/**
 	 * Cache for instance of any services that
 	 * have been requested as a "shared" instance.
@@ -70,28 +70,28 @@ class BaseService
 	 *
 	 * @var array
 	 */
-	static protected $instances = [];
+	protected static $instances = [];
 
 	/**
 	 * Mock objects for testing which are returned if exist.
 	 *
 	 * @var array
 	 */
-	static protected $mocks = [];
+	protected static $mocks = [];
 
 	/**
 	 * Have we already discovered other Services?
 	 *
 	 * @var boolean
 	 */
-	static protected $discovered = false;
+	protected static $discovered = false;
 
 	/**
 	 * A cache of other service classes we've found.
 	 *
 	 * @var array
 	 */
-	static protected $services = [];
+	protected static $services = [];
 
 	//--------------------------------------------------------------------
 
@@ -168,9 +168,7 @@ class BaseService
 		{
 			if (empty(static::$instances['locator']))
 			{
-				static::$instances['locator'] = new FileLocator(
-					static::autoloader()
-				);
+				static::$instances['locator'] = new FileLocator(static::autoloader());
 			}
 
 			return static::$instances['locator'];
@@ -227,12 +225,11 @@ class BaseService
 	 * Inject mock object for testing.
 	 *
 	 * @param string $name
-	 * @param $mock
+	 * @param mixed  $mock
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name                 = strtolower($name);
-		static::$mocks[$name] = $mock;
+		static::$mocks[strtolower($name)] = $mock;
 	}
 
 	//--------------------------------------------------------------------

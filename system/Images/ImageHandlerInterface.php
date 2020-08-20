@@ -81,7 +81,7 @@ interface ImageHandlerInterface
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer|null $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param integer $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */

@@ -751,6 +751,7 @@ if (! function_exists('random_string'))
 						break;
 				}
 
+				// @phpstan-ignore-next-line
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
 				return md5(uniqid(mt_rand(), true));
@@ -794,7 +795,8 @@ if (! function_exists('alternator'))
 	 *
 	 * Allows strings to be alternated. See docs...
 	 *
-	 * @param string (as many parameters as needed)
+	 * @phpstan-ignore-next-line
+	 * @param                    string (as many parameters as needed)
 	 *
 	 * @return string
 	 */
@@ -847,8 +849,8 @@ if (! function_exists('excerpt'))
 			$phraseLen = 1;
 		}
 
-		$pre = explode(' ', substr($text, 0, $phrasePos));
-		$pos = explode(' ', substr($text, $phrasePos + $phraseLen));
+		$pre = explode(' ', substr($text, 0, $phrasePos)); // @phpstan-ignore-line
+		$pos = explode(' ', substr($text, $phrasePos + $phraseLen)); // @phpstan-ignore-line
 
 		$prev  = ' ';
 		$post  = ' ';

@@ -111,7 +111,7 @@ abstract class GeneratorCommand extends BaseCommand
 		// pascalizing it if not yet done. Then we will try to get the file
 		// path from this.
 		helper('inflector');
-		$class = $this->qualifyClassName(pascalize($this->getClassName()));
+		$class = $this->qualifyClassName($this->sanitizeClassName($this->getClassName()));
 		$path  = $this->buildPath($class);
 
 		// Next, overwriting files unknowingly is a serious annoyance. So we'll check
@@ -154,6 +154,23 @@ abstract class GeneratorCommand extends BaseCommand
 	{
 		$name = $this->params[0] ?? CLI::getSegment(0);
 		return $name ?? '';
+	}
+
+	/**
+	 * Trims input, normalize separators, and ensures
+	 * all paths are in Pascal case.
+	 *
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function sanitizeClassName(string $class): string
+	{
+		$class = trim($class);
+		$class = str_replace('/', '\\', $class);
+		$class = implode('\\', array_map('pascalize', explode('\\', $class)));
+
+		return $class;
 	}
 
 	/**
@@ -248,8 +265,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function buildClassContents(string $class): string
 	{
-		$template = $this->getTemplate();
-		return $this->replaceNamespace($template, $class)->replaceClass($template, $class);
+		return $this->setReplacements($this->getTemplate(), $class);
 	}
 
 	/**
@@ -272,43 +288,29 @@ abstract class GeneratorCommand extends BaseCommand
 	}
 
 	/**
-	 * Replaces the namespace for a given template.
-	 *
-	 * @param string $template
-	 * @param string $class
-	 *
-	 * @return $this
-	 */
-	protected function replaceNamespace(string &$template, string $class)
-	{
-		$search = [
-			'DummyNamespace',
-			'{ namespace }',
-			'{namespace}',
-		];
-
-		$template = str_replace($search, $this->getNamespace($class), $template);
-		return $this;
-	}
-
-	/**
-	 * Replaces the class name for a given template.
+	 * Performs the necessary replacements.
 	 *
 	 * @param string $template
 	 * @param string $class
 	 *
 	 * @return string
 	 */
-	protected function replaceClass(string $template, string $class): string
+	protected function setReplacements(string $template, string $class): string
 	{
-		$class  = str_replace($this->getNamespace($class) . '\\', '', $class);
-		$search = [
+		$namespaces = [
+			'DummyNamespace',
+			'{ namespace }',
+			'{namespace}',
+		];
+		$classes    = [
 			'DummyClass',
 			'{ class }',
 			'{class}',
 		];
 
-		return str_replace($search, $class, $template);
+		$template = str_replace($namespaces, $this->getNamespace($class), $template);
+		$class    = str_replace($this->getNamespace($class) . '\\', '', $class);
+		return str_replace($classes, $class, $template);
 	}
 
 	/**

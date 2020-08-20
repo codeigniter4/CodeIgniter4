@@ -199,7 +199,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * The last query object that was executed
 	 * on this connection.
 	 *
-	 * @var array
+	 * @var mixed
 	 */
 	protected $lastQuery;
 
@@ -616,7 +616,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
@@ -1013,6 +1013,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if ($sql instanceof QueryInterface)
 		{
+			// @phpstan-ignore-next-line
 			$sql = $sql->getOriginalQuery();
 		}
 
@@ -1364,7 +1365,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	abstract public function affectedRows(): int;
 
@@ -1455,7 +1456,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Calls the individual driver for platform
 	 * specific escaping for LIKE conditions
 	 *
-	 * @param  string|string[]
+	 * @param  string|string[] $str
 	 * @return string|string[]
 	 */
 	public function escapeLikeString($str)
@@ -1673,13 +1674,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with field data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getFieldData(string $table)
 	{
-		$fields = $this->_fieldData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1688,13 +1687,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getIndexData(string $table)
 	{
-		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_indexData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1703,13 +1700,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with foreign key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getForeignKeyData(string $table)
 	{
-		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
