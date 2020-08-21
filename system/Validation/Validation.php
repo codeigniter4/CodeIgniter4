@@ -452,7 +452,7 @@ class Validation implements ValidationInterface
 			}
 		}
 
-		$this->rules = $rules;
+		$this->rules = array_merge($this->rules, $rules);
 
 		return $this;
 	}
