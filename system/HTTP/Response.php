@@ -830,7 +830,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $prefix   Cookie name prefix
 	 * @param boolean      $secure   Whether to only transfer cookies via SSL
 	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
-	 * @param null         $samesite
+       * @param string|null  $samesite
 	 *
 	 * @return $this
 	 */
