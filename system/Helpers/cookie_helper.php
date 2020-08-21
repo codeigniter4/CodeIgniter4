@@ -62,7 +62,7 @@ if (! function_exists('set_cookie'))
 	 * @param boolean      $secure   True makes the cookie secure
 	 * @param boolean      $httpOnly True makes the cookie accessible via
 	 *                                 http(s) only (no javascript)
-	 * @param string       $sameSite The cookie SameSite value
+       * @param string|null  $sameSite The cookie SameSite value
 	 *
 	 * @see (\Config\Services::response())->setCookie()
 	 * @see \CodeIgniter\HTTP\Response::setCookie()
