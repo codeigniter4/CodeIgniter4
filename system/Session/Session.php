@@ -193,7 +193,7 @@ class Session implements SessionInterface
 		$this->cookieDomain   = $config->cookieDomain;
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
-		$this->cookieSameSite = $config->cookieSameSite;
+              $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
 		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict']))
 		{
