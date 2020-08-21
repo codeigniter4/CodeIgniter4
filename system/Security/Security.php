@@ -198,7 +198,7 @@ class Security
 			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
 		}
 
-		if (! in_array(strtolower($this->CSRFSameSite), ['', 'none', 'lax', 'strict']))
+		if (! in_array(strtolower($this->CSRFSameSite), ['', 'none', 'lax', 'strict'], true))
 		{
 			throw SecurityException::forInvalidSameSiteSetting($this->CSRFSameSite);
 		}
