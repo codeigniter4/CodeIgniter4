@@ -43,6 +43,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Services;
+use Config\Modules;
 
 /**
  * Class RouteCollection
@@ -233,7 +234,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param \CodeIgniter\Autoloader\FileLocator $locator
 	 * @param \Config\Modules                     $moduleConfig
 	 */
-	public function __construct(FileLocator $locator, $moduleConfig)
+	public function __construct(FileLocator $locator, Modules $moduleConfig)
 	{
 		$this->fileLocator  = $locator;
 		$this->moduleConfig = $moduleConfig;
