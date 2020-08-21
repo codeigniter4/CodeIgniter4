@@ -195,7 +195,7 @@ class Session implements SessionInterface
 		$this->cookieSecure   = $config->cookieSecure;
               $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict']))
+		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
 		{
 			throw SessionException::forInvalidSameSiteSetting($this->cookieSameSite);
 		}
