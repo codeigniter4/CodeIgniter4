@@ -119,11 +119,10 @@ class Filters
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
+
 		$this->moduleConfig = $moduleConfig;
-		if ($this->moduleConfig == null)
-		{
-			$this->moduleConfig = config('Modules');
-		}
+		$this->moduleConfig = $moduleConfig ?? config('Modules');
+
 		if ($this->moduleConfig->shouldDiscover('filters'))
 		{
 			$this->discoverFilters();
