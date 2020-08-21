@@ -43,6 +43,7 @@ use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Config\Modules;
 
 /**
  * Filters
@@ -114,7 +115,7 @@ class Filters
 	 * @param ResponseInterface $response
 	 * @param \Config\Modules|null $moduleConfig
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response,$moduleConfig = null)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response,Modules $moduleConfig = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
