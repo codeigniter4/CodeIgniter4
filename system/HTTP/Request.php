@@ -60,6 +60,13 @@ class Request extends Message implements RequestInterface
 	protected $proxyIPs;
 
 	/**
+	 * Proxy Headers
+	 *
+	 * @var string|array
+	 */
+	protected $proxyHeaders = ['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'];
+
+	/**
 	 * Request method.
 	 *
 	 * @var string
@@ -84,6 +91,7 @@ class Request extends Message implements RequestInterface
 	public function __construct($config)
 	{
 		$this->proxyIPs = $config->proxyIPs;
+		$this->proxyHeaders = $config->proxyHeaders;
 
 		if (empty($this->method))
 		{
@@ -111,28 +119,40 @@ class Request extends Message implements RequestInterface
 			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
 		}
 
+		$proxy_headers = $this->proxyHeaders;
+		if (! empty($this->proxyHeaders) && ! is_array($this->proxyHeaders))
+		{
+			$proxy_headers = explode(',', str_replace(' ', '', $this->proxyHeaders));
+		}
+
 		$this->ipAddress = $this->getServer('REMOTE_ADDR');
 
 		if ($proxy_ips)
 		{
-			foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header)
-			{
-				if (($spoof = $this->getServer($header)) !== null)
-				{
-					// Some proxies typically list the whole chain of IP
-					// addresses through which the client has reached us.
-					// e.g. client_ip, proxy_ip1, proxy_ip2, etc.
-					sscanf($spoof, '%[^,]', $spoof);
 
-					if (! $this->isValidIP($spoof))
+			if (!empty($this->proxyHeaders) && is_array($this->proxyHeaders))
+			{
+
+				foreach ($proxy_headers as $header)
+				{
+					if (($spoof = $this->getServer($header)) !== null)
 					{
-						$spoof = null;
-					}
-					else
-					{
-						break;
+						// Some proxies typically list the whole chain of IP
+						// addresses through which the client has reached us.
+						// e.g. client_ip, proxy_ip1, proxy_ip2, etc.
+						sscanf($spoof, '%[^,]', $spoof);
+
+						if (! $this->isValidIP($spoof))
+						{
+							$spoof = null;
+						}
+						else
+						{
+							break;
+						}
 					}
 				}
+
 			}
 
 			if ($spoof)

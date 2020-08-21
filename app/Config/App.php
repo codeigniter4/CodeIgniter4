@@ -229,6 +229,12 @@ class App extends BaseConfig
 	public $proxyIPs = '';
 
 	/*
+	Reverse Proxy Headers
+	*/
+
+	public $proxyHeaders = ['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'];
+
+	/*
 	|--------------------------------------------------------------------------
 	| Cross Site Request Forgery
 	|--------------------------------------------------------------------------
