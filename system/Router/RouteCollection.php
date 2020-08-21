@@ -234,7 +234,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param \CodeIgniter\Autoloader\FileLocator $locator
 	 * @param \Config\Modules                     $moduleConfig
 	 */
-	public function __construct(FileLocator $locator,Modules $moduleConfig)
+	public function __construct(FileLocator $locator, Modules $moduleConfig)
 	{
 		$this->fileLocator  = $locator;
 		$this->moduleConfig = $moduleConfig;
