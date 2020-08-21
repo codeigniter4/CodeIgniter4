@@ -888,7 +888,7 @@ class Response extends Message implements ResponseInterface
 			$samesite = $this->cookieSameSite ?? '';
 		}
 
-		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict']))
+		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict'], true))
 		{
 			throw HTTPException::forInvalidSameSiteSetting($samesite);
 		}
