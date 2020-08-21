@@ -1089,7 +1089,7 @@ class Response extends Message implements ResponseInterface
 				unset($params['name'], $params['value']);
 
 				// If samesite is blank string, skip setting the attribute on the cookie
-				if (isset($params['samesite']) && ($params['samesite'] === ''))
+				if (isset($params['samesite']) && $params['samesite'] === '')
 				{
 					unset($params['samesite']);
 				}
