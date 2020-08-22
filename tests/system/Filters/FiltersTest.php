@@ -35,7 +35,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		Services::autoloader()->addNamespace($defaults);
-		$loader = Services::locator();
 		
 		$this->request  = Services::request();
 		$this->response = Services::response();
@@ -634,8 +633,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config = [
-		];
+		$config = [];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
 
@@ -650,8 +648,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config = [
-		];
+		$config = [];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
 

@@ -123,11 +123,6 @@ class Filters
 
 		$this->moduleConfig = $moduleConfig;
 		$this->moduleConfig = $moduleConfig ?? config('Modules');
-
-		if ($this->moduleConfig->shouldDiscover('filters'))
-		{
-			$this->discoverFilters();
-		}		
 	}
 	
 	//--------------------------------------------------------------------
@@ -143,7 +138,7 @@ class Filters
 	{
 		$locater = Services::locator();
 		
-		$customfilters = $this->config;
+		$filters = $this->config;
 		
 		$files = $locater->search('Config/Filters.php');
 
@@ -282,7 +277,11 @@ class Filters
 		{
 			return $this;
 		}
-
+		if ($this->moduleConfig->shouldDiscover('filters'))
+		{
+			$this->discoverFilters();
+		}	
+		
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);
