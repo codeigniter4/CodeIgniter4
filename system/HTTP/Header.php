@@ -95,7 +95,7 @@ class Header
 	 * Gets the raw value of the header. This may return either a string
 	 * of an array, depending on whether the header has multiple values or not.
 	 *
-	 * @return array|null|string
+	 * @return array|string
 	 */
 	public function getValue()
 	{
