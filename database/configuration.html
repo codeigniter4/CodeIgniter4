@@ -399,6 +399,18 @@ driver’s underlying native PHP extension, like this:</p>
 <p>If you do not specify a DSN string for a driver that requires it, CodeIgniter
 will try to build it with the rest of the provided settings.</p>
 </div>
+<p>You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:</p>
+<blockquote>
+<div><p>$default[‘DSN’] = ‘DBDriver://username:password&#64;hostname:port/database’;</p>
+</div></blockquote>
+<p>To override default config values when connecting with a universal version of the DSN string,
+add the config variables as a query string:</p>
+<blockquote>
+<div><p>// MySQLi
+$default[‘DSN’] = ‘MySQLi://username:password&#64;hostname:3306/database?charset=utf8&amp;DBCollat=utf8_general_ci’;
+// Postgre
+$default[‘DSN’] = ‘Postgre://username:password&#64;hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=1’;</p>
+</div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you provide a DSN string and it is missing some valid settings (e.g. the
@@ -651,7 +663,7 @@ you are using MySQL.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 18, 2020.
+        Last updated on Aug 22, 2020.
       </span>
 
     </p>
