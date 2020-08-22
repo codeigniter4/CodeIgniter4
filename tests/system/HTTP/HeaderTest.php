@@ -148,6 +148,19 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $header->getValueLine());
 	}
 
+	public function testHeaderLineValueNotStringOrArray()
+	{
+		$name  = 'foo';
+		$value = new \stdClass;
+
+		$expected = '';
+
+		$header = new \CodeIgniter\HTTP\Header($name, $value);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals($expected, $header->getValueLine());
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testHeaderSetValueWithNullWillMarkAsEmptyString()
