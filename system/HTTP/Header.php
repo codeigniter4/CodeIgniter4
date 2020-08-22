@@ -151,7 +151,10 @@ class Header
 			$this->value = [$this->value];
 		}
 
-		$this->value[] = $value;
+		if (! in_array($value, $this->value, true))
+		{
+			$this->value[] = $value;
+		}
 
 		return $this;
 	}

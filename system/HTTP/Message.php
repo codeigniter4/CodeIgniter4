@@ -269,7 +269,7 @@ class Message
 	{
 		$origName = $this->getHeaderName($name);
 
-		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]))
+		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue()) && is_string($value))
 		{
 			$this->appendHeader($origName, $value);
 		}
