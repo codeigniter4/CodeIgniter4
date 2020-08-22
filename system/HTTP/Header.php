@@ -129,13 +129,7 @@ class Header
 	 */
 	public function setValue($value = null)
 	{
-		if ($value === null)
-		{
-			$this->value = '';
-			return $this;
-		}
-
-		$this->value = $value;
+		$this->value = $value ?? '';
 
 		return $this;
 	}
