@@ -239,6 +239,17 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
 
+	/**
+	 * @dataProvider provideArrayHeaderValue
+	 */
+	public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue)
+	{
+		$this->message->setHeader('Accept', $arrayHeaderValue);
+		$this->message->setHeader('Accept', ['xml']);
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutContentType()
