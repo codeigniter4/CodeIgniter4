@@ -30,7 +30,7 @@ if (strpos(php_sapi_name(), 'cgi') === 0)
 }
 
 // Path to the front controller
-define('FCPATH', realpath(__DIR__ . '/public' . DIRECTORY_SEPARATOR) ?: __DIR__ . '/public' . DIRECTORY_SEPARATOR);
+define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
 
 // Load our paths config file
 require realpath('app/Config/Paths.php') ?: 'app/Config/Paths.php';
