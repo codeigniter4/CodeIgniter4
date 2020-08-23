@@ -59,7 +59,7 @@ class Header
 	 * The value of the header. May have more than one
 	 * value. If so, will be an array of strings.
 	 *
-	 * @var string|array|null
+	 * @var string|array
 	 */
 	protected $value;
 
@@ -73,8 +73,8 @@ class Header
 	 */
 	public function __construct(string $name, $value = null)
 	{
-		$this->name  = $name;
-		$this->value = $value;
+		$this->name = $name;
+		$this->setValue($value);
 	}
 
 	//--------------------------------------------------------------------
@@ -95,7 +95,7 @@ class Header
 	 * Gets the raw value of the header. This may return either a string
 	 * of an array, depending on whether the header has multiple values or not.
 	 *
-	 * @return array|null|string
+	 * @return array|string
 	 */
 	public function getValue()
 	{
@@ -123,13 +123,13 @@ class Header
 	/**
 	 * Sets the value of the header, overwriting any previous value(s).
 	 *
-	 * @param null $value
+	 * @param string|array|null $value
 	 *
 	 * @return $this
 	 */
 	public function setValue($value = null)
 	{
-		$this->value = $value;
+		$this->value = $value ?? '';
 
 		return $this;
 	}
@@ -140,12 +140,17 @@ class Header
 	 * Appends a value to the list of values for this header. If the
 	 * header is a single value string, it will be converted to an array.
 	 *
-	 * @param null $value
+	 * @param string|array|null $value
 	 *
 	 * @return $this
 	 */
 	public function appendValue($value = null)
 	{
+		if ($value === null)
+		{
+			return $this;
+		}
+
 		if (! is_array($this->value))
 		{
 			$this->value = [$this->value];
@@ -165,12 +170,17 @@ class Header
 	 * Prepends a value to the list of values for this header. If the
 	 * header is a single value string, it will be converted to an array.
 	 *
-	 * @param null $value
+	 * @param string|array|null $value
 	 *
 	 * @return $this
 	 */
 	public function prependValue($value = null)
 	{
+		if ($value === null)
+		{
+			return $this;
+		}
+
 		if (! is_array($this->value))
 		{
 			$this->value = [$this->value];

@@ -271,7 +271,7 @@ class Message
 
 		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue()))
 		{
-			if (is_string($value))
+			if (! is_array($value))
 			{
 				$value = [$value];
 			}
@@ -315,12 +315,12 @@ class Message
 	 * Adds an additional header value to any headers that accept
 	 * multiple values (i.e. are an array or implement ArrayAccess)
 	 *
-	 * @param string $name
-	 * @param string $value
+	 * @param string      $name
+	 * @param string|null $value
 	 *
 	 * @return Message
 	 */
-	public function appendHeader(string $name, string $value)
+	public function appendHeader(string $name, ?string $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
