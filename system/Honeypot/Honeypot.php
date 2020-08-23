@@ -64,7 +64,7 @@ class Honeypot
 	 * @param  HoneypotConfig $config
 	 * @throws HoneypotException
 	 */
-	function __construct(HoneypotConfig $config)
+	public function __construct(HoneypotConfig $config)
 	{
 		$this->config = $config;
 
