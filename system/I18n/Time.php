@@ -1092,7 +1092,7 @@ class Time extends DateTime
 		{
 			$testTime = $testTime->format('Y-m-d H:i:s');
 		}
-		else if (is_string($testTime))
+		elseif (is_string($testTime))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
@@ -1179,18 +1179,18 @@ class Time extends DateTime
 			$phrase = lang('Time.years', [abs($years)]);
 			$before = $years < 0;
 		}
-		else if ($months !== 0)
+		elseif ($months !== 0)
 		{
 			$phrase = lang('Time.months', [abs($months)]);
 			$before = $months < 0;
 		}
-		else if ($days !== 0 && (abs($days) >= 7))
+		elseif ($days !== 0 && (abs($days) >= 7))
 		{
 			$weeks  = ceil($days / 7);
 			$phrase = lang('Time.weeks', [abs($weeks)]);
 			$before = $days < 0;
 		}
-		else if ($days !== 0)
+		elseif ($days !== 0)
 		{
 			$before = $days < 0;
 
@@ -1202,12 +1202,12 @@ class Time extends DateTime
 
 			$phrase = lang('Time.days', [abs($days)]);
 		}
-		else if ($hours !== 0)
+		elseif ($hours !== 0)
 		{
-			// Display the actual time instead of a regular phrase.
-			return $this->format('g:i a');
+			$phrase = lang('Time.hours', [abs($hours)]);
+			$before = $hours < 0;
 		}
-		else if ($minutes !== 0)
+		elseif ($minutes !== 0)
 		{
 			$phrase = lang('Time.minutes', [abs($minutes)]);
 			$before = $minutes < 0;
