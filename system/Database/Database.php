@@ -174,7 +174,7 @@ class Database
 
 			foreach ($extra as $key => $val)
 			{
-                              if (is_string($val) && in_array(strtolower($val), ['true', 'false', 'null'], true))
+				if (is_string($val) && in_array(strtolower($val), ['true', 'false', 'null'], true))
 				{
 					$val = $val === 'null' ? null : filter_var($val, FILTER_VALIDATE_BOOLEAN);
 				}
