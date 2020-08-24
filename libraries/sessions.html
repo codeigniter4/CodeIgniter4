@@ -784,8 +784,8 @@ all of the options and their effects.</p>
 <colgroup>
 <col style="width: 14%" />
 <col style="width: 20%" />
-<col style="width: 22%" />
-<col style="width: 44%" />
+<col style="width: 23%" />
+<col style="width: 43%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -796,12 +796,12 @@ all of the options and their effects.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>sessionDriver</strong></p></td>
-<td><p>CodeIgniterSessionHandlersFileHandler</p></td>
-<td><p>CodeIgniterSessionHandlersFileHandler
-CodeIgniterSessionHandlersDatabaseHandler
-CodeIgniterSessionHandlersMemcachedHandler
-CodeIgniterSessionHandlersRedisHandler
-CodeIgniterSessionHandlersArrayHandler</p></td>
+<td><p>CodeIgniter\Session\Handlers\FileHandler</p></td>
+<td><p>CodeIgniter\Session\Handlers\FileHandler
+CodeIgniter\Session\Handlers\DatabaseHandler
+CodeIgniter\Session\Handlers\MemcachedHandler
+CodeIgniter\Session\Handlers\RedisHandler
+CodeIgniter\Session\Handlers\ArrayHandler</p></td>
 <td><p>The session storage driver to use.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>sessionCookieName</strong></p></td>
@@ -855,9 +855,9 @@ following configuration values shared by the <a class="reference internal" href=
 <a class="reference internal" href="security.html"><span class="doc">Security</span></a> classes:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 17%" />
+<col style="width: 18%" />
 <col style="width: 14%" />
-<col style="width: 69%" />
+<col style="width: 68%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -878,6 +878,10 @@ following configuration values shared by the <a class="reference internal" href=
 <td><p>FALSE</p></td>
 <td><p>Whether to create the session cookie only on encrypted (HTTPS) connections</p></td>
 </tr>
+<tr class="row-odd"><td><p><strong>cookieSameSite</strong></p></td>
+<td><p>Lax</p></td>
+<td><p>The SameSite setting for the session cookie</p></td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
@@ -894,11 +898,11 @@ ignored.</p>
 engines, that you can use:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>CodeIgniterSessionHandlersFileHandler</p></li>
-<li><p>CodeIgniterSessionHandlersDatabaseHandler</p></li>
-<li><p>CodeIgniterSessionHandlersMemcachedHandler</p></li>
-<li><p>CodeIgniterSessionHandlersRedisHandler</p></li>
-<li><p>CodeIgniterSessionHandlersArrayHandler</p></li>
+<li><p>CodeIgniter\Session\Handlers\FileHandler</p></li>
+<li><p>CodeIgniter\Session\Handlers\DatabaseHandler</p></li>
+<li><p>CodeIgniter\Session\Handlers\MemcachedHandler</p></li>
+<li><p>CodeIgniter\Session\Handlers\RedisHandler</p></li>
+<li><p>CodeIgniter\Session\Handlers\ArrayHandler</p></li>
 </ul>
 </div></blockquote>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> Driver will be used when a session is initialized,
@@ -1140,7 +1144,7 @@ separate the multiple server paths with commas:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 23, 2020.
+        Last updated on Aug 24, 2020.
       </span>
 
     </p>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Application Structure &mdash; CodeIgniter 4.0.4 documentation</title>
+  <title>Upgrading from 4.0.4 to 4.0.5 &mdash; CodeIgniter 4.0.4 documentation</title>
   
 
   
@@ -40,8 +40,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Models, Views, and Controllers" href="mvc.html" />
-    <link rel="prev" title="CodeIgniter4 Overview" href="index.html" /> 
+    <link rel="next" title="Upgrading from 4.0.x to 4.0.4" href="upgrade_404.html" />
+    <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,14 +95,14 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -115,14 +115,14 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">CodeIgniter4 Overview</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Application Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mvc.html">Models, Views, and Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoloader.html">Autoloading Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
-<li class="toctree-l2"><a class="reference internal" href="http.html">Working With HTTP Requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
 </ul>
 </li>
 </ul>
@@ -321,9 +321,11 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">CodeIgniter4 Overview</a> &raquo;</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Application Structure</li>
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+      <li>Upgrading from 4.0.4 to 4.0.5</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -340,86 +342,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="application-structure">
-<h1>Application Structure<a class="headerlink" href="#application-structure" title="Permalink to this headline">¶</a></h1>
-<p>To get the most out of CodeIgniter, you need to understand how the application is structured, by default, and what you
-can change to meet the needs of your application.</p>
-<div class="section" id="default-directories">
-<h2>Default Directories<a class="headerlink" href="#default-directories" title="Permalink to this headline">¶</a></h2>
-<p>A fresh install has six directories: <code class="docutils literal notranslate"><span class="pre">/app</span></code>, <code class="docutils literal notranslate"><span class="pre">/system</span></code>, <code class="docutils literal notranslate"><span class="pre">/public</span></code>,
-<code class="docutils literal notranslate"><span class="pre">/writable</span></code>, <code class="docutils literal notranslate"><span class="pre">/tests</span></code> and possibly <code class="docutils literal notranslate"><span class="pre">/docs</span></code>.
-Each of these directories has a very specific part to play.</p>
-<div class="section" id="app">
-<h3>app<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is where all of your application code lives. This comes with a default directory
-structure that works well for many applications. The following folders make up the basic contents:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app
-        /Config         Stores the configuration files
-        /Controllers    Controllers determine the program flow
-        /Database       Stores the database migrations and seeds files
-        /Filters        Stores filter classes that can run before and after controller
-        /Helpers        Helpers store collections of standalone functions
-        /Language       Multiple language support reads the language strings from here
-        /Libraries      Useful classes that don&#39;t fit in another category
-        /Models         Models work with the database to represent the business entities.
-        /ThirdParty     ThirdParty libraries that can be used in application
-        /Views          Views make up the HTML that is displayed to the client.
-</pre></div>
-</div>
-<p>Because the <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is already namespaced, you should feel free to modify the structure
-of this directory to suit your application’s needs. For example, you might decide to start using the Repository
-pattern and Entity Models to work with your data. In this case, you could rename the <code class="docutils literal notranslate"><span class="pre">Models</span></code> directory to
-<code class="docutils literal notranslate"><span class="pre">Repositories</span></code>, and add a new <code class="docutils literal notranslate"><span class="pre">Entities</span></code> directory.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you rename the <code class="docutils literal notranslate"><span class="pre">Controllers</span></code> directory, though, you will not be able to use the automatic method of
-routing to controllers, and will need to define all of your routes in the routes file.</p>
-</div>
-<p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, though you are free to change that in
-<strong>app/Config/Constants.php</strong>.</p>
-</div>
-<div class="section" id="system">
-<h3>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h3>
-<p>This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
-use the application directory, the files in the system directory should never be modified. Instead, you should
-extend the classes, or create new classes, to provide the desired functionality.</p>
-<p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> namespace.</p>
-</div>
-<div class="section" id="public">
-<h3>public<a class="headerlink" href="#public" title="Permalink to this headline">¶</a></h3>
-<p>The <strong>public</strong> folder holds the browser-accessible portion of your web application,
-preventing direct access to your source code.
-It contains the main <strong>.htaccess</strong> file, <strong>index.php</strong>, and any application
-assets that you add, like CSS, javascript, or
-images.</p>
-<p>This folder is meant to be the “web root” of your site, and your web server
-would be configured to point to it.</p>
-</div>
-<div class="section" id="writable">
-<h3>writable<a class="headerlink" href="#writable" title="Permalink to this headline">¶</a></h3>
-<p>This directory holds any directories that might need to be written to in the course of an application’s life.
-This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
-directories that your application will need to write to here. This allows you to keep your other primary directories
-non-writable as an added security measure.</p>
-</div>
-<div class="section" id="tests">
-<h3>tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
-<p>This directory is set up to hold your test files. The <code class="docutils literal notranslate"><span class="pre">_support</span></code> directory holds various mock classes and other
-utilities that you can use while writing your tests. This directory does not need to be transferred to your
-production servers.</p>
-</div>
-<div class="section" id="docs">
-<h3>docs<a class="headerlink" href="#docs" title="Permalink to this headline">¶</a></h3>
-<p>If this directory is part of your project, it holds a local copy of the CodeIgniter4
-User Guide.</p>
-</div>
-<div class="section" id="modifying-directory-locations">
-<h3>Modifying Directory Locations<a class="headerlink" href="#modifying-directory-locations" title="Permalink to this headline">¶</a></h3>
-<p>If you’ve relocated any of the main directories, you can change the configuration
-settings inside <code class="docutils literal notranslate"><span class="pre">app/Config/Paths</span></code>.</p>
-<p>Please read <a class="reference external" href="../general/managing_apps.html">Managing your Applications</a></p>
-</div>
-</div>
+  <div class="section" id="upgrading-from-4-0-4-to-4-0-5">
+<h1>Upgrading from 4.0.4 to 4.0.5<a class="headerlink" href="#upgrading-from-4-0-4-to-4-0-5" title="Permalink to this headline">¶</a></h1>
+<p><strong>Cookie SameSite support</strong></p>
+<p>CodeIgniter 4.0.5 introduces a setting for the cookie SameSite attribute. Prior versions did not set this
+attribute at all. The default setting for cookies is now <cite>Lax</cite>. This will affect how cookies are handled in
+cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in <cite>config/App.php</cite>
+exists for Response cookies and for CSRF cookies.</p>
+<p>For additional information, see <a class="reference external" href="https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite">MDN Web Docs</a>.
+The SameSite specifications are described in <a class="reference external" href="https://tools.ietf.org/html/rfc6265">RFC 6265</a>
+and the <a class="reference external" href="https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/?include_text=1">RFC 6265bis revision</a>.</p>
 </div>
 
 
@@ -430,10 +362,10 @@ settings inside <code class="docutils literal notranslate"><span class="pre">app
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mvc.html" class="btn btn-neutral float-right" title="Models, Views, and Controllers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="upgrade_404.html" class="btn btn-neutral float-right" title="Upgrading from 4.0.x to 4.0.4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="CodeIgniter4 Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="upgrading.html" class="btn btn-neutral float-left" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

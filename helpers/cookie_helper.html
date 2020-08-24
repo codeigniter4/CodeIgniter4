@@ -362,7 +362,7 @@ cookies.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="set_cookie">
-<code class="sig-name descname">set_cookie</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httpOnly = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_cookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_cookie</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httpOnly = false</em><span class="optional">[</span>, <em class="sig-param">$sameSite = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_cookie" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -374,6 +374,7 @@ cookies.</p>
 <li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
 <li><p><strong>$secure</strong> (<em>bool</em>) – Whether to only send the cookie through HTTPS</p></li>
 <li><p><strong>$httpOnly</strong> (<em>bool</em>) – Whether to hide the cookie from JavaScript</p></li>
+<li><p><strong>$sameSite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If null, the default from <cite>config/App.php</cite> is used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -467,7 +468,7 @@ parameters.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 23, 2020.
+        Last updated on Aug 24, 2020.
       </span>
 
     </p>
