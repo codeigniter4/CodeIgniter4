@@ -199,6 +199,10 @@ class App extends BaseConfig
 	| 'cookiePath'     = Typically will be a forward slash
 	| 'cookieSecure'   = Cookie will only be set if a secure HTTPS connection exists.
 	| 'cookieHTTPOnly' = Cookie will only be accessible via HTTP(S) (no javascript)
+	| 'cookieSameSite' = Configure cookie SameSite setting. Allowed values are 'None',
+	|                    'Strict', 'Lax' or ''. Defaults to 'Lax' for compatibility
+	|                    with modern browsers. '' means no SameSite attribute is set on
+	|                    cookies. If set to 'None', cookieSecure must also be set.
 	|
 	| Note: These settings (with the exception of 'cookie_prefix' and
 	|       'cookie_httponly') will also affect sessions.
@@ -209,6 +213,7 @@ class App extends BaseConfig
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
+	public $cookieSameSite = 'Lax';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -242,6 +247,10 @@ class App extends BaseConfig
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
+	| CSRFSameSite    = Setting for the SameSite CSRF cookie token. Default setting
+	|                   'Lax' as recommended in:
+	|                   https://portswigger.net/web-security/csrf/samesite-cookies
+	|                   Allowed values are: 'None', 'Strict', 'Lax' or ''.
 	*/
 	public $CSRFTokenName  = 'csrf_test_name';
 	public $CSRFHeaderName = 'X-CSRF-TOKEN';
@@ -249,6 +258,7 @@ class App extends BaseConfig
 	public $CSRFExpire     = 7200;
 	public $CSRFRegenerate = true;
 	public $CSRFRedirect   = true;
+	public $CSRFSameSite   = 'Lax';
 
 	/*
 	|--------------------------------------------------------------------------

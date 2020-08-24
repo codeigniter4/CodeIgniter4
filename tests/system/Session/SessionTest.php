@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Session;
 
+use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
@@ -38,6 +39,7 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookiePrefix'             => '',
 			'cookiePath'               => '/',
 			'cookieSecure'             => false,
+			'cookieSameSite'           => 'Lax',
 		];
 
 		$config    = array_merge($defaults, $options);
@@ -547,4 +549,58 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('value', $session->get('test.1'));
 	}
+
+	public function testLaxSameSite()
+	{
+		$session = $this->getInstance(['cookieSameSite' => 'Lax']);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+
+		if (PHP_VERSION_ID < 70300)
+		{
+			$this->assertCount(7, $cookies[0]);
+			$this->assertStringContainsString('samesite=Lax', $cookies[0][3]);
+		}
+		else
+		{
+			$this->assertCount(3, $cookies[0]);
+			$this->assertIsArray($cookies[0][2]);
+			$this->assertArrayHasKey('samesite', $cookies[0][2]);
+			$this->assertEquals('Lax', $cookies[0][2]['samesite']);
+		}
+	}
+
+	public function testNoneSameSite()
+	{
+		$session = $this->getInstance(['cookieSameSite' => 'None']);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+
+		if (PHP_VERSION_ID < 70300)
+		{
+			$this->assertCount(7, $cookies[0]);
+			$this->assertStringContainsString('samesite=None', $cookies[0][3]);
+		}
+		else
+		{
+			$this->assertCount(3, $cookies[0]);
+			$this->assertIsArray($cookies[0][2]);
+			$this->assertArrayHasKey('samesite', $cookies[0][2]);
+			$this->assertEquals('None', $cookies[0][2]['samesite']);
+		}
+	}
+
+	public function testInvalidSameSite()
+	{
+		$this->expectException(SessionException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+
+		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
+		$session->start();
+	}
+
 }
