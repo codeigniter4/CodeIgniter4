@@ -42,8 +42,8 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
-use Config\Services;
 use Config\Modules;
+use Config\Services;
 
 /**
  * Class RouteCollection

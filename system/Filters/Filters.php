@@ -241,7 +241,7 @@ class Filters
 		$this->processFilters($uri);
 
 		// Set the toolbar filter to the last position to be executed
-              if (in_array('toolbar', $this->filters['after'], true) &&
+		if (in_array('toolbar', $this->filters['after'], true) &&
 			($count = count($this->filters['after'])) > 1 &&
 			$this->filters['after'][$count - 1] !== 'toolbar'
 		)
