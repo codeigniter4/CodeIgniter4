@@ -235,7 +235,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
-		switch (strtolower( (string) $which))
+		switch (strtolower($which))
 		{
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;

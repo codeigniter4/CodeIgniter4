@@ -201,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Stores copy of current options being
 	 * applied during creation.
 	 *
-	 * @var null
+	 * @var array|null
 	 */
 	protected $currentOptions;
 
@@ -1384,7 +1384,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		$options = array_merge((array) $this->currentOptions, (array) $options);
+		$options = array_merge($this->currentOptions ?? [], $options ?? []);
 
 		// Hostname limiting?
 		if (! empty($options['hostname']))

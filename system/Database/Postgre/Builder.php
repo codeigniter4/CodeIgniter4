@@ -106,7 +106,7 @@ class Builder extends BaseBuilder
 		$direction = strtoupper(trim($direction));
 		if ($direction === 'RANDOM')
 		{
-			if (! is_float($orderBy) && ctype_digit((string) $orderBy))
+			if (! is_float($orderBy) && ctype_digit($orderBy))
 			{
 				$orderBy = (float) ($orderBy > 1 ? "0.{$orderBy}" : $orderBy);
 			}

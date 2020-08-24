@@ -162,7 +162,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertStatus(int $code)
 	{
-		$this->assertEquals($code, (int) $this->response->getStatusCode());
+		$this->assertEquals($code, $this->response->getStatusCode());
 	}
 
 	/**
