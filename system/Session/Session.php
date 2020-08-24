@@ -183,17 +183,17 @@ class Session implements SessionInterface
 		$this->driver = $driver;
 
 		$this->sessionDriverName        = $config->sessionDriver;
-		$this->sessionCookieName        = $config->sessionCookieName;
-		$this->sessionExpiration        = $config->sessionExpiration;
+		$this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
+		$this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;
 		$this->sessionSavePath          = $config->sessionSavePath;
-		$this->sessionMatchIP           = $config->sessionMatchIP;
-		$this->sessionTimeToUpdate      = $config->sessionTimeToUpdate;
-		$this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy;
+		$this->sessionMatchIP           = $config->sessionMatchIP ?? $this->sessionMatchIP;
+		$this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
+		$this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
 
-		$this->cookieDomain   = $config->cookieDomain;
-		$this->cookiePath     = $config->cookiePath;
-		$this->cookieSecure   = $config->cookieSecure;
-              $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+		$this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
+		$this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
+		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
+		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
 		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
 		{
