@@ -252,23 +252,7 @@ class IncomingRequest extends Request
 		}
 
 		$this->locale = $locale;
-
-		// If the intl extension is loaded, make sure
-		// that we set the locale for it... if not, though,
-		// don't worry about it.
-		// this should not block code coverage thru unit testing
-		// @codeCoverageIgnoreStart
-		try
-		{
-			if (class_exists('\Locale', false))
-			{
-				\Locale::setDefault($locale);
-			}
-		}
-		catch (\Exception $e)
-		{
-		}
-		// @codeCoverageIgnoreEnd
+		\Locale::setDefault($locale);
 
 		return $this;
 	}
