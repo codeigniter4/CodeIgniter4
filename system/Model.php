@@ -1720,10 +1720,8 @@ class Model
 			return true;
 		}
 
-		$this->validation->setRules($rules, $this->validationMessages);
-		$valid = $this->validation->run($data, null, $this->DBGroup);
-
-		return (bool) $valid;
+		return $this->validation->setRules($rules, $this->validationMessages)
+								->run($data, null, $this->DBGroup);
 	}
 
 	//--------------------------------------------------------------------

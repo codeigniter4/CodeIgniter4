@@ -65,7 +65,7 @@ if (! function_exists('word_limiter'))
 			return $str;
 		}
 
-		preg_match('/^\s*+(?:\S++\s*+){1,' . (int) $limit . '}/', $str, $matches);
+		preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/', $str, $matches);
 
 		if (strlen($str) === strlen($matches[0]))
 		{

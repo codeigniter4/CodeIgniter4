@@ -1621,7 +1621,7 @@ class BaseBuilder
 			$direction = '';
 
 			// Do we have a seed value?
-			$orderBy = ctype_digit((string) $orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
+			$orderBy = ctype_digit($orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
 		}
 		elseif (empty($orderBy))
 		{
