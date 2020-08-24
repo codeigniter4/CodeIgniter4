@@ -13,7 +13,7 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
 // Location of the Paths config file.
 // This is the line that might need to be changed, depending on your folder structure.
-$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
+$pathsPath = realpath(FCPATH . '../app/Config/Paths.php') ?: FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this if you move your application folder
 
 /*
@@ -33,7 +33,7 @@ require $pathsPath;
 $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
-$app = require realpath(rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php');
+$app = require realpath(rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php') ?: rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
 
 /*
  *---------------------------------------------------------------
