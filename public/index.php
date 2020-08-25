@@ -2,9 +2,9 @@
 
 // Valid PHP Version?
 $minPHPVersion = '7.2';
-if (phpversion() < $minPHPVersion)
+if (version_compare(PHP_VERSION, $minPHPVersion, '<'))
 {
-	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
+	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . PHP_VERSION);
 }
 unset($minPHPVersion);
 
@@ -33,7 +33,8 @@ require $pathsPath;
 $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
-$app = require realpath(rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php') ?: rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+$bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+$app       = require realpath($bootstrap) ?: $bootstrap;
 
 /*
  *---------------------------------------------------------------

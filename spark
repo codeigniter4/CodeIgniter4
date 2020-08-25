@@ -24,7 +24,7 @@ define('SPARKED', true);
  */
 
 // Refuse to run when called from php-cgi
-if (strpos(php_sapi_name(), 'cgi') === 0)
+if (strpos(PHP_SAPI, 'cgi') === 0)
 {
 	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
@@ -41,14 +41,15 @@ $paths = new Config\Paths();
 // Ensure the current directory is pointing to the front controller's directory
 chdir(FCPATH);
 
-$app = require realpath(rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php') ?: rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+$bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+$app       = require realpath($bootstrap) ?: $bootstrap;
 
 // Grab our Console
-$console = new \CodeIgniter\CLI\Console($app);
+$console = new CodeIgniter\CLI\Console($app);
 
 // We want errors to be shown when using it from the CLI.
 error_reporting(-1);
-ini_set('display_errors', 1);
+ini_set('display_errors', '1');
 
 // Show basic information before we do anything else.
 $console->showHeader();
