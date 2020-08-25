@@ -125,9 +125,7 @@ class RedirectResponse extends Response
 		$session = $this->ensureSession();
 
 		$input = [
-			// @phpstan-ignore-next-line
 			'get'  => $_GET ?? [],
-			// @phpstan-ignore-next-line
 			'post' => $_POST ?? [],
 		];
 

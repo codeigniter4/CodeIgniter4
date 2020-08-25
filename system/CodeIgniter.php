@@ -602,6 +602,7 @@ class CodeIgniter
 			return;
 		}
 
+		// @phpstan-ignore-next-line
 		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
 			// @codeCoverageIgnoreStart
@@ -814,7 +815,7 @@ class CodeIgniter
 	 * @param RouteCollectionInterface|null $routes An collection interface to use in place
 	 *                                         of the config file.
 	 *
-	 * @return string
+	 * @return string|null
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
@@ -1092,7 +1093,7 @@ class CodeIgniter
 	 *
 	 * This helps provider safer, more reliable previous_url() detection.
 	 *
-	 * @param \CodeIgniter\HTTP\URI $uri
+	 * @param \CodeIgniter\HTTP\URI|string $uri
 	 */
 	public function storePreviousURL($uri)
 	{

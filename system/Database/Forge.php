@@ -101,7 +101,7 @@ class Forge
 	/**
 	 * CREATE DATABASE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s';
 
@@ -122,7 +122,7 @@ class Forge
 	/**
 	 * DROP DATABASE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $dropDatabaseStr = 'DROP DATABASE %s';
 
@@ -160,7 +160,7 @@ class Forge
 	/**
 	 * RENAME TABLE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s;';
 
@@ -181,7 +181,7 @@ class Forge
 	/**
 	 * DEFAULT value representation in CREATE/ALTER TABLE statements
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $default = ' DEFAULT ';
 
@@ -477,7 +477,7 @@ class Forge
 		$sql = sprintf($this->dropConstraintStr, $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
 			$this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName));
 
-		if ($sql === false)
+		if ($sql === false) // @phpstan-ignore-line
 		{
 			if ($this->db->DBDebug)
 			{
@@ -783,7 +783,7 @@ class Forge
 	public function addColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field];
+		is_array($field) || $field = [$field]; // @phpstan-ignore-line
 
 		foreach (array_keys($field) as $k)
 		{
@@ -854,7 +854,7 @@ class Forge
 	public function modifyColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field];
+		is_array($field) || $field = [$field]; // @phpstan-ignore-line
 
 		foreach (array_keys($field) as $k)
 		{
@@ -901,7 +901,7 @@ class Forge
 	 * @param string $table      Table name
 	 * @param mixed  $fields     Column definition
 	 *
-	 * @return string|string[]
+	 * @return string|string[]|false
 	 */
 	protected function _alterTable(string $alter_type, string $table, $fields)
 	{
@@ -962,6 +962,7 @@ class Forge
 				continue;
 			}
 
+			// @phpstan-ignore-next-line
 			isset($attributes['TYPE']) && $this->_attributeType($attributes);
 
 			$field = [
@@ -977,6 +978,7 @@ class Forge
 				'_literal'       => false,
 			];
 
+			// @phpstan-ignore-next-line
 			isset($attributes['TYPE']) && $this->_attributeUnsigned($attributes, $field);
 
 			if ($create_table === false)

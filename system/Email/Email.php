@@ -253,7 +253,7 @@ class Email
 	/**
 	 * SMTP Connection socket placeholder
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $SMTPConnect;
 	/**
@@ -284,7 +284,7 @@ class Email
 	/**
 	 * Recipients
 	 *
-	 * @var array
+	 * @var array|string
 	 */
 	protected $recipients = [];
 	/**
@@ -849,7 +849,7 @@ class Email
 	protected function getProtocol()
 	{
 		$this->protocol                                                      = strtolower($this->protocol);
-		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail';
+		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail'; // @phpstan-ignore-line
 		return $this->protocol;
 	}
 	//--------------------------------------------------------------------
@@ -860,7 +860,7 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit';
+		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit'; // @phpstan-ignore-line
 		foreach ($this->baseCharsets as $charset)
 		{
 			if (strpos($this->charset, $charset) === 0)
@@ -2112,7 +2112,7 @@ class Email
 		$msg = implode('', $this->debugMessage);
 		// Determine which parts of our raw data needs to be printed
 		$raw_data                                         = '';
-		is_array($include) || $include                    = [$include];
+		is_array($include) || $include                    = [$include]; // @phpstan-ignore-line
 		in_array('headers', $include, true) && $raw_data  = htmlspecialchars($this->headerStr) . "\n";
 		in_array('subject', $include, true) && $raw_data .= htmlspecialchars($this->subject) . "\n";
 		in_array('body', $include, true) && $raw_data    .= htmlspecialchars($this->finalBody);

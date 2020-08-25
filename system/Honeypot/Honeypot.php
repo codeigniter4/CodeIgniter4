@@ -68,7 +68,7 @@ class Honeypot
 	{
 		$this->config = $config;
 
-		if ($this->config->hidden === '')
+		if (! $this->config->hidden)
 		{
 			throw HoneypotException::forNoHiddenValue();
 		}

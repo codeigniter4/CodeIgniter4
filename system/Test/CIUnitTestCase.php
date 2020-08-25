@@ -94,7 +94,7 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if (! $this->app)
+		if (! $this->app) // @phpstan-ignore-line
 		{
 			$this->app = $this->createApplication();
 		}

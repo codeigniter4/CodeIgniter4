@@ -132,7 +132,7 @@ class MigrationRunner
 	/**
 	 * The database Group filter.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $groupFilter;
 
@@ -808,7 +808,7 @@ class MigrationRunner
 						  ->orderBy('id', 'ASC')
 						  ->get();
 
-		return $query ? $query->getResultObject() : [];
+		return ! empty($query) ? $query->getResultObject() : [];
 	}
 
 	//--------------------------------------------------------------------
@@ -829,7 +829,7 @@ class MigrationRunner
 						  ->orderBy('id', $order)
 						  ->get();
 
-		return $query ? $query->getResultObject() : [];
+		return ! empty($query) ? $query->getResultObject() : [];
 	}
 
 	//--------------------------------------------------------------------

@@ -1,7 +1,5 @@
-includes:
-        - vendor/phpstan/phpstan/conf/bleedingEdge.neon
-
 parameters:
+    treatPhpDocTypesAsCertain: false
     bootstrapFiles:
         - qa-bootstrap.php
     excludes_analyse:
@@ -37,5 +35,10 @@ parameters:
         - '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
         - '#Return type \(bool\) of method CodeIgniter\\Log\\Logger::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\)#'
         - '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
+        - '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
+        - '#Negated boolean expression is always (true|false)#'
     scanDirectories:
       - system/Helpers
+    dynamicConstantNames:
+        - ENVIRONMENT
+        - CI_DEBUG

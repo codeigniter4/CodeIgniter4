@@ -108,7 +108,7 @@ class Model
 	/**
 	 * Last insert ID
 	 *
-	 * @var integer
+	 * @var integer|string
 	 */
 	protected $insertID = 0;
 
@@ -220,7 +220,7 @@ class Model
 	/**
 	 * Query Builder object
 	 *
-	 * @var BaseBuilder
+	 * @var BaseBuilder|null
 	 */
 	protected $builder;
 
@@ -229,7 +229,7 @@ class Model
 	 * The array must match the format of data passed to the Validation
 	 * library.
 	 *
-	 * @var array
+	 * @var array|string
 	 */
 	protected $validationRules = [];
 
@@ -1700,13 +1700,6 @@ class Model
 		if (is_object($data))
 		{
 			$data = (array) $data;
-		}
-
-		// ValidationRules can be either a string, which is the group name,
-		// or an array of rules.
-		if (is_string($rules))
-		{
-			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
 		$rules = $this->cleanValidationRules

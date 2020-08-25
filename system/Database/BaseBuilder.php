@@ -996,12 +996,12 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param  string        $key    The field to search
-	 * @param  array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param  boolean       $not    If the statement would be IN or NOT IN
-	 * @param  string        $type
-	 * @param  boolean       $escape
-	 * @param  string        $clause (Internal use only)
+	 * @param  string             $key    The field to search
+	 * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
+	 * @param  boolean            $not    If the statement would be IN or NOT IN
+	 * @param  string             $type
+	 * @param  boolean            $escape
+	 * @param  string             $clause (Internal use only)
 	 * @throws \InvalidArgumentException
 	 *
 	 * @return BaseBuilder
@@ -1048,7 +1048,7 @@ class BaseBuilder
 		}
 		else
 		{
-			$whereIn = is_array($values) ? array_values($values) : $values;
+			$whereIn = array_values($values);
 			$ok      = $this->setBind($ok, $whereIn, $escape);
 		}
 
@@ -1846,7 +1846,7 @@ class BaseBuilder
 	 * @param integer $offset The offset clause
 	 * @param boolean $reset  Are we want to clear query builder values?
 	 *
-	 * @return ResultInterface
+	 * @return ResultInterface|false
 	 */
 	public function get(int $limit = null, int $offset = 0, bool $reset = true)
 	{
@@ -2040,7 +2040,7 @@ class BaseBuilder
 	 * @param boolean $escape    Whether to escape values and identifiers
 	 * @param integer $batchSize Batch size
 	 *
-	 * @return integer Number of rows inserted or FALSE on failure
+	 * @return integer|false Number of rows inserted or FALSE on failure
 	 * @throws DatabaseException
 	 */
 	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)

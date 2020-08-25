@@ -150,7 +150,7 @@ class Autoloader
 		spl_autoload_register([$this, 'loadClass'], true, true);
 
 		// Now prepend another loader for the files in our class map.
-		$config = is_array($this->classmap) ? $this->classmap : [];
+		$config = $this->classmap;
 
 		spl_autoload_register(function ($class) use ($config) {
 			if (empty($config[$class]))

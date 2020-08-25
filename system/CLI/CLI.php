@@ -150,14 +150,14 @@ class CLI
 	/**
 	 * Height of the CLI window
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected static $height;
 
 	/**
 	 * Width of the CLI window
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected static $width;
 

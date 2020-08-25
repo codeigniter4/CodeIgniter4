@@ -60,7 +60,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Stores image resource in memory.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $resource;
 
