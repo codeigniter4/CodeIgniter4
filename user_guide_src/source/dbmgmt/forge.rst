@@ -255,7 +255,15 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
 	$forge->dropTable('table_name');
 
 	// Produces: DROP TABLE IF EXISTS table_name
-	$forge->dropTable('table_name',TRUE);
+	$forge->dropTable('table_name', true);
+
+A third parameter can be passed to add a "CASCADE" option, which might be required for some
+drivers to handle removal of tables with foreign keys.
+
+::
+
+	// Produces: DROP TABLE table_name CASCADE
+	$forge->dropTable('table_name', false, true);
 
 Dropping a Foreign Key
 ======================
