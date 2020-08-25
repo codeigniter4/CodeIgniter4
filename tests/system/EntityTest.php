@@ -628,11 +628,10 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'        => null,
-			'bar'        => ':bar',
-			'default'    => 'sumfin',
-			'created_at' => null,
-			'createdAt'  => null,
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
 		]);
 	}
 
@@ -644,17 +643,15 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray(false, true, true);
 
 		$this->assertEquals($result, [
-			'foo'        => null,
-			'bar'        => ':bar',
-			'default'    => 'sumfin',
-			'created_at' => null,
-			'createdAt'  => null,
-			'entity'     => [
-				'foo'        => null,
-				'bar'        => ':bar',
-				'default'    => 'sumfin',
-				'created_at' => null,
-				'createdAt'  => null,
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
+			'entity'    => [
+				'foo'       => null,
+				'bar'       => ':bar',
+				'default'   => 'sumfin',
+				'createdAt' => null,
 			],
 		]);
 	}
@@ -666,10 +663,21 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'    => null,
-			'simple' => ':oo',
-			'bar'    => null,
-			'orig'   => ':oo',
+			'bar'  => null,
+			'orig' => ':oo',
+		]);
+	}
+
+	public function testAsArraySwapped()
+	{
+		$entity = $this->getSwappedEntity();
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'bar'          => 'foo',
+			'foo'          => 'bar',
+			'original_bar' => 'bar',
 		]);
 	}
 
@@ -913,6 +921,28 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 			{
 				return $this->attributes['simple'] . ':oo';
 			}
+		};
+	}
+
+	protected function getSwappedEntity() : Entity
+	{
+		return new class extends Entity
+		{
+			protected $attributes = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $_original = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $datamap = [
+				'bar'          => 'foo',
+				'foo'          => 'bar',
+				'original_bar' => 'bar',
+			];
 		};
 	}
 
