@@ -1360,6 +1360,7 @@ class Forge
 	protected function _addTimestamps()
 	{
 		// Usually overridden by drivers
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
