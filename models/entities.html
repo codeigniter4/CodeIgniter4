@@ -353,16 +353,17 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <li><p><a class="reference internal" href="#create-the-model" id="id3">Create the Model</a></p></li>
 <li><p><a class="reference internal" href="#working-with-the-entity-class" id="id4">Working With the Entity Class</a></p></li>
 <li><p><a class="reference internal" href="#filling-properties-quickly" id="id5">Filling Properties Quickly</a></p></li>
+<li><p><a class="reference internal" href="#bulk-accessing-properties" id="id6">Bulk Accessing Properties</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#handling-business-logic" id="id6">Handling Business Logic</a></p></li>
-<li><p><a class="reference internal" href="#data-mapping" id="id7">Data Mapping</a></p></li>
-<li><p><a class="reference internal" href="#mutators" id="id8">Mutators</a></p>
+<li><p><a class="reference internal" href="#handling-business-logic" id="id7">Handling Business Logic</a></p></li>
+<li><p><a class="reference internal" href="#data-mapping" id="id8">Data Mapping</a></p></li>
+<li><p><a class="reference internal" href="#mutators" id="id9">Mutators</a></p>
 <ul>
-<li><p><a class="reference internal" href="#date-mutators" id="id9">Date Mutators</a></p></li>
-<li><p><a class="reference internal" href="#property-casting" id="id10">Property Casting</a></p></li>
-<li><p><a class="reference internal" href="#array-json-casting" id="id11">Array/Json Casting</a></p></li>
-<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id12">Checking for Changed Attributes</a></p></li>
+<li><p><a class="reference internal" href="#date-mutators" id="id10">Date Mutators</a></p></li>
+<li><p><a class="reference internal" href="#property-casting" id="id11">Property Casting</a></p></li>
+<li><p><a class="reference internal" href="#array-json-casting" id="id12">Array/Json Casting</a></p></li>
+<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id13">Checking for Changed Attributes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -471,7 +472,7 @@ on your entities without worrying much about stray fields getting saved incorrec
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can also pass the data in the constructor and the data will be passed through the <cite>fill()</cite> method during instantiation.</p>
+<p>You can also pass the data in the constructor and the data will be passed through the <code class="docutils literal notranslate"><span class="pre">fill()</span></code> method during instantiation.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -479,9 +480,16 @@ on your entities without worrying much about stray fields getting saved incorrec
 </pre></div>
 </div>
 </div>
+<div class="section" id="bulk-accessing-properties">
+<h3><a class="toc-backref" href="#id6">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Permalink to this headline">¶</a></h3>
+<p>The Entity class has two methods to extract all available properties into an array: <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> and <code class="docutils literal notranslate"><span class="pre">toRawArray()</span></code>.
+Using the raw version will bypass magic “getter” methods and casts. Both methods can take a boolean first parameter
+to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
+make the method recursive, in case of nested Entities.</p>
+</div>
 </div>
 <div class="section" id="handling-business-logic">
-<h2><a class="toc-backref" href="#id6">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this headline">¶</a></h2>
 <p>While the examples above are convenient, they don’t help enforce any business logic. The base Entity class implements
 some smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods that will check for special methods and use those instead of using
 the attributes directly, allowing you to enforce any business logic or data conversion that you need.</p>
@@ -544,7 +552,7 @@ business logic and create objects that are pleasant to use.</p>
 </div>
 </div>
 <div class="section" id="data-mapping">
-<h2><a class="toc-backref" href="#id7">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this headline">¶</a></h2>
 <p>At many points in your career, you will run into situations where the use of an application has changed and the
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
 class properties, but your database schema required snake_case names. These situations can be easily handled
@@ -605,9 +613,9 @@ to the database. However, <code class="docutils literal notranslate"><span class
 <code class="docutils literal notranslate"><span class="pre">full_name</span></code>.</p>
 </div>
 <div class="section" id="mutators">
-<h2><a class="toc-backref" href="#id8">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="date-mutators">
-<h3><a class="toc-backref" href="#id9">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline">¶</a></h3>
 <p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
 <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.</p>
@@ -636,7 +644,7 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 </div>
 </div>
 <div class="section" id="property-casting">
-<h3><a class="toc-backref" href="#id10">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline">¶</a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <strong>casts</strong> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
@@ -659,7 +667,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e. 
 </div>
 </div>
 <div class="section" id="array-json-casting">
-<h3><a class="toc-backref" href="#id11">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline">¶</a></h3>
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
 <li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
@@ -697,7 +705,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 </div>
 </div>
 <div class="section" id="checking-for-changed-attributes">
-<h3><a class="toc-backref" href="#id12">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline">¶</a></h3>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">();</span>
@@ -738,7 +746,7 @@ attribute to check:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 24, 2020.
+        Last updated on Aug 25, 2020.
       </span>
 
     </p>
