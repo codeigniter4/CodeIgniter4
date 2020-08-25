@@ -115,13 +115,12 @@ class Filters
 	 * @param ResponseInterface $response
 	 * @param \Config\Modules|null $moduleConfig
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response,Modules $moduleConfig = null)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
 
-		$this->moduleConfig = $moduleConfig;
 		$this->moduleConfig = $moduleConfig ?? config('Modules');
 	}
 	
@@ -132,7 +131,7 @@ class Filters
 	 * Discovery custom filters files in Namespaces and allow access to 
 	 * The config object via the variable $customfilters as with the routes file
 	 * Sample : 
-	 * $customfilters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
+	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
 	 */	
 	private function discoverFilters()
 	{
