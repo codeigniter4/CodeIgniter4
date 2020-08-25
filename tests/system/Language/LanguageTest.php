@@ -218,10 +218,9 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testPrioritizedLocator()
 	{
-		$language = Services::language('en', false);
 		// this should load the replacement bundle of messages
 		$message = lang('Core.missingExtension', [], 'en');
-		$this->assertEquals('{0} extension is not loaded.', $message);
+		$this->assertEquals('The framework needs the following extension(s) installed and loaded: {0}.', $message);
 		// and we should have our new message too
 		$this->assertEquals('billions and billions', lang('Core.bazillion', [], 'en'));
 	}

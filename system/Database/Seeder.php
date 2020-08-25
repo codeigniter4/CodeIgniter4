@@ -40,7 +40,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Config\BaseConfig;
+use Config\Database as DatabaseConfig;
 
 /**
  * Class Seeder
@@ -65,7 +65,7 @@ class Seeder
 	/**
 	 * An instance of the main Database configuration
 	 *
-	 * @var BaseConfig
+	 * @var DatabaseConfig
 	 */
 	protected $config;
 
@@ -95,10 +95,10 @@ class Seeder
 	/**
 	 * Seeder constructor.
 	 *
-	 * @param BaseConfig     $config
+	 * @param DatabaseConfig $config
 	 * @param BaseConnection $db
 	 */
-	public function __construct(BaseConfig $config, BaseConnection $db = null)
+	public function __construct(DatabaseConfig $config, BaseConnection $db = null)
 	{
 		$this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 

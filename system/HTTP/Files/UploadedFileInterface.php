@@ -136,7 +136,7 @@ interface UploadedFileInterface
 	 * Implementations SHOULD return the value stored in the "name" key of
 	 * the file in the $_FILES array.
 	 *
-	 * @return string|null The filename sent by the client or null if none
+	 * @return string The filename sent by the client or null if none
 	 *     was provided.
 	 */
 	public function getName(): string;
@@ -157,7 +157,7 @@ interface UploadedFileInterface
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getClientExtension(): string;
 
@@ -168,7 +168,7 @@ interface UploadedFileInterface
 	 * This is NOT a trusted value.
 	 * For a trusted version, use getMimeType() instead.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getClientMimeType(): string;
 

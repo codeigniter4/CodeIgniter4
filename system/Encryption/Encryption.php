@@ -38,8 +38,8 @@
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use Config\Encryption as EncryptionConfig;
 
 /**
  * CodeIgniter Encryption Manager
@@ -92,12 +92,12 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param  BaseConfig $config Configuration parameters
+	 * @param  EncryptionConfig $config Configuration parameters
 	 * @return void
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function __construct(BaseConfig $config = null)
+	public function __construct(EncryptionConfig $config = null)
 	{
 		$config = $config ?? new \Config\Encryption();
 
@@ -105,13 +105,8 @@ class Encryption
 		$this->driver = $config->driver;
 		$this->digest = $config->digest ?? 'SHA512';
 
-		// determine what is installed
-		$this->handlers = [
-			'OpenSSL' => extension_loaded('openssl'),
-		];
-
 		// if any aren't there, bomb
-		if (in_array(false, $this->handlers))
+		if ($this->driver === 'OpenSSL' && ! extension_loaded('openssl'))
 		{
 			// this should never happen in travis-ci
 			// @codeCoverageIgnoreStart
@@ -123,12 +118,12 @@ class Encryption
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param  BaseConfig $config Configuration parameters
+	 * @param  EncryptionConfig $config Configuration parameters
 	 * @return \CodeIgniter\Encryption\EncrypterInterface
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function initialize(BaseConfig $config = null)
+	public function initialize(EncryptionConfig $config = null)
 	{
 		// override config?
 		if ($config)

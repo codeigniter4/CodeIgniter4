@@ -140,40 +140,47 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
 	 * @param boolean $cast        If true, properties will be casted.
+	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
 	 * @throws \Exception
 	 */
-	public function toArray(bool $onlyChanged = false, bool $cast = true): array
+	public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 	{
 		$this->_cast = $cast;
 		$return      = [];
 
+		$keys = array_keys($this->attributes);
+		$keys = array_filter($keys, function ($key) {
+			return strpos($key, '_') !== 0;
+		});
+
+		if (is_array($this->datamap))
+		{
+			$keys = array_diff($keys, $this->datamap);
+			$keys = array_unique(array_merge($keys, array_keys($this->datamap)));
+		}
+
 		// we need to loop over our properties so that we
 		// allow our magic methods a chance to do their thing.
-		foreach ($this->attributes as $key => $value)
+		foreach ($keys as $key)
 		{
-			if (strpos($key, '_') === 0)
-			{
-				continue;
-			}
-
 			if ($onlyChanged && ! $this->hasChanged($key))
 			{
 				continue;
 			}
 
 			$return[$key] = $this->__get($key);
-		}
 
-		// Loop over our mapped properties and add them to the list...
-		if (is_array($this->datamap))
-		{
-			foreach ($this->datamap as $from => $to)
+			if ($recursive)
 			{
-				if (array_key_exists($to, $return))
+				if ($return[$key] instanceof Entity)
 				{
-					$return[$from] = $this->__get($to);
+					$return[$key] = $return[$key]->toArray($onlyChanged, $cast, $recursive);
+				}
+				elseif (is_callable([$return[$key], 'toArray']))
+				{
+					$return[$key] = $return[$key]->toArray();
 				}
 			}
 		}
@@ -187,16 +194,32 @@ class Entity implements \JsonSerializable
 	/**
 	 * Returns the raw values of the current attributes.
 	 *
-	 * @param boolean $onlyChanged
+	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
+	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
 	 */
-	public function toRawArray(bool $onlyChanged = false): array
+	public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
 	{
 		$return = [];
 
 		if (! $onlyChanged)
 		{
+			if ($recursive)
+			{
+				return array_map(function ($value) use ($onlyChanged, $recursive) {
+					if ($value instanceof Entity)
+					{
+						$value = $value->toRawArray($onlyChanged, $recursive);
+					}
+					elseif (is_callable([$value, 'toRawArray']))
+					{
+						$value = $value->toRawArray();
+					}
+					return $value;
+				}, $this->attributes);
+			}
+
 			return $this->attributes;
 		}
 
@@ -207,7 +230,19 @@ class Entity implements \JsonSerializable
 				continue;
 			}
 
-			$return[$key] = $this->attributes[$key];
+			if ($recursive)
+			{
+				if ($value instanceof Entity)
+				{
+					$value = $value->toRawArray($onlyChanged, $recursive);
+				}
+				elseif (is_callable([$value, 'toRawArray']))
+				{
+					$value = $value->toRawArray();
+				}
+			}
+
+			$return[$key] = $value;
 		}
 
 		return $return;
@@ -473,9 +508,9 @@ class Entity implements \JsonSerializable
 	 * Converts the given string|timestamp|DateTime|Time instance
 	 * into a \CodeIgniter\I18n\Time object.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
-	 * @return \CodeIgniter\I18n\Time
+	 * @return \CodeIgniter\I18n\Time|mixed
 	 * @throws \Exception
 	 */
 	protected function mutateDate($value)
@@ -509,7 +544,7 @@ class Entity implements \JsonSerializable
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
-	 * @param $value
+	 * @param mixed  $value
 	 * @param string $type
 	 *
 	 * @return mixed

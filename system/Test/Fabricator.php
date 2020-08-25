@@ -60,7 +60,7 @@ class Fabricator
 	/**
 	 * Locale-specific Faker instance
 	 *
-	 * @var \Faker\Generator
+	 * @var Generator
 	 */
 	protected $faker;
 
@@ -81,7 +81,7 @@ class Fabricator
 	/**
 	 * Map of properties and their formatter to use
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	protected $formatters;
 
@@ -249,7 +249,7 @@ class Fabricator
 	/**
 	 * Returns the Faker generator
 	 *
-	 * @return Faker\Generator
+	 * @return Generator
 	 */
 	public function getFaker(): Generator
 	{
@@ -352,7 +352,7 @@ class Fabricator
 	/**
 	 * Guess at the correct formatter to match a field name.
 	 *
-	 * @param $field  Name of the field
+	 * @param string $field Name of the field
 	 *
 	 * @return string  Name of the formatter
 	 */
@@ -376,15 +376,10 @@ class Fabricator
 			{
 				case 'datetime':
 					return 'date';
-				break;
-
 				case 'date':
 					return 'date';
-				break;
-
 				case 'int':
 					return 'unixTime';
-				break;
 			}
 		}
 		elseif ($field === $this->model->primaryKey)
@@ -552,9 +547,8 @@ class Fabricator
 	/**
 	 * Generate new entities from the database
 	 *
-	 * @param integer|null $count    Optional number to create a collection
-	 * @param array        $override Array of data to add/override
-	 * @param boolean      $mock     Whether to execute or mock the insertion
+	 * @param integer|null $count Optional number to create a collection
+	 * @param boolean      $mock  Whether to execute or mock the insertion
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
 	 */
@@ -611,13 +605,13 @@ class Fabricator
 
 		if (! empty($this->model->useTimestamps))
 		{
-			$fields[$this->model->createdField] = $datetime;
-			$fields[$this->model->updatedField] = $datetime;
+			$fields[$this->model->createdField] = $datetime; // @phpstan-ignore-line
+			$fields[$this->model->updatedField] = $datetime; // @phpstan-ignore-line
 		}
 
 		if (! empty($this->model->useSoftDeletes))
 		{
-			$fields[$this->model->deletedField] = null;
+			$fields[$this->model->deletedField] = null; // @phpstan-ignore-line
 		}
 
 		// Iterate over new entities and add the necessary fields

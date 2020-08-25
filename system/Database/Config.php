@@ -59,7 +59,7 @@ class Config extends BaseConfig
 	 * The main instance used to manage all of
 	 * our open database connections.
 	 *
-	 * @var \CodeIgniter\Database\Database
+	 * @var \CodeIgniter\Database\Database|null
 	 */
 	static protected $factory;
 

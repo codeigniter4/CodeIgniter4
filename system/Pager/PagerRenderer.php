@@ -75,16 +75,16 @@ class PagerRenderer
 	 * @var integer
 	 */
 	protected $total;
-		/**
-		 * Page count?
-		 *
-		 * @var integer
-		 */
+	/**
+	 * Page count?
+	 *
+	 * @var integer
+	 */
 	protected $pageCount;
 	/**
 	 * URI base for pagination links
 	 *
-	 * @var integer
+	 * @var \CodeIgniter\HTTP\URI
 	 */
 	protected $uri;
 	/**

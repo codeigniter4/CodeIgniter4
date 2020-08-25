@@ -35,15 +35,6 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 		return CITestStreamFilter::$buffer;
 	}
 
-	public function testHelpCommand()
-	{
-		command('help');
-
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
-		$this->assertStringContainsString('command_name', $this->getBuffer());
-	}
-
 	public function testListCommands()
 	{
 		command('list');
@@ -180,6 +171,23 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 					'qw' => 12,
 					'zx',
 					'cv',
+				],
+			],
+			[
+				'reveal as -df "some stuff" -jk 12 -sd "Some longer stuff" -fg \'using single quotes\'',
+				[
+					'as',
+					'df' => 'some stuff',
+					'jk' => 12,
+					'sd' => 'Some longer stuff',
+					'fg' => 'using single quotes',
+				],
+			],
+			[
+				'reveal as -df "using mixed \'quotes\'\" here\""',
+				[
+					'as',
+					'df' => 'using mixed \'quotes\'" here"'
 				],
 			],
 		];

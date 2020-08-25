@@ -114,7 +114,7 @@ interface PagerInterface
 	/**
 	 * Returns the total number of pages.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return integer
 	 */
@@ -125,7 +125,7 @@ interface PagerInterface
 	/**
 	 * Returns the number of the current page of results.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return integer
 	 */
@@ -149,7 +149,7 @@ interface PagerInterface
 	/**
 	 * Tells whether this group of results has any more pages of results.
 	 *
-	 * @param string|null $group
+	 * @param string $group
 	 *
 	 * @return boolean
 	 */

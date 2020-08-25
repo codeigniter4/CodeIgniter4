@@ -186,7 +186,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return \CodeIgniter\Images\Handlers\GDHandler
 	 */
-	public function _resize()
+	public function _resize(bool $maintainRatio = false)
 	{
 		return $this->process('resize');
 	}

@@ -24,7 +24,7 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false]]]]]]])
+.. php:function:: set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false[, $sameSite = '']]]]]]]])
 
 	:param	mixed	$name: Cookie name *or* associative array of all of the parameters available to this function
 	:param	string	$value: Cookie value
@@ -34,6 +34,7 @@ The following functions are available:
 	:param	string	$prefix: Cookie name prefix
 	:param	bool	$secure: Whether to only send the cookie through HTTPS
 	:param	bool	$httpOnly: Whether to hide the cookie from JavaScript
+	:param	string	$sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
 	:rtype:	void
 
 	This helper function gives you friendlier syntax to set browser

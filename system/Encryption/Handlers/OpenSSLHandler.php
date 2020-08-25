@@ -57,6 +57,13 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	protected $cipher = 'AES-256-CTR';
 
+	/**
+	 * Starter key
+	 *
+	 * @var string
+	 */
+	protected $key = '';
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -74,8 +81,8 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
-	 * @param string $data   Input data
-	 * @param array  $params Over-ridden parameters, specifically the key
+	 * @param string       $data   Input data
+	 * @param array|string $params Over-ridden parameters, specifically the key
 	 *
 	 * @return string
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
@@ -85,7 +92,7 @@ class OpenSSLHandler extends BaseHandler
 		// Allow key override
 		if ($params)
 		{
-			if (isset($params['key']))
+			if (is_array($params) && isset($params['key']))
 			{
 				$this->key = $params['key'];
 			}
@@ -125,8 +132,8 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
-	 * @param string $data   Encrypted data
-	 * @param array  $params Over-ridden parameters, specifically the key
+	 * @param string       $data   Encrypted data
+	 * @param array|string $params Over-ridden parameters, specifically the key
 	 *
 	 * @return string
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
@@ -136,7 +143,7 @@ class OpenSSLHandler extends BaseHandler
 		// Allow key override
 		if ($params)
 		{
-			if (isset($params['key']))
+			if (is_array($params) && isset($params['key']))
 			{
 				$this->key = $params['key'];
 			}

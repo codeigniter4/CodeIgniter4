@@ -51,14 +51,14 @@ class ControllerResponse {
 	/**
 	 * The request.
 	 *
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var RequestInterface
 	 */
 	protected $request;
 
 	/**
 	 * The response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
@@ -150,7 +150,7 @@ class ControllerResponse {
 	/**
 	 * Request accessor.
 	 *
-	 * @return \CodeIgniter\HTTP\IncomingRequest
+	 * @return RequestInterface
 	 */
 	public function request()
 	{
@@ -160,7 +160,7 @@ class ControllerResponse {
 	/**
 	 * Response accessor.
 	 *
-	 * @return \CodeIgniter\HTTP\Response
+	 * @return ResponseInterface
 	 */
 	public function response()
 	{

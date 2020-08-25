@@ -61,6 +61,11 @@ class Rules
 	 */
 	public function differs(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str !== dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str !== $data[$field];
 	}
 
@@ -174,8 +179,7 @@ class Rules
 			}
 		}
 
-		return (bool) ($row->get()
-						->getRow() !== null);
+		return (bool) ($row->get()->getRow() !== null);
 	}
 
 	//--------------------------------------------------------------------
@@ -190,10 +194,7 @@ class Rules
 	 */
 	public function in_list(string $value = null, string $list): bool
 	{
-		$list = explode(',', $list);
-		$list = array_map(function ($value) {
-			return trim($value);
-		}, $list);
+		$list = array_map('trim', explode(',', $list));
 		return in_array($value, $list, true);
 	}
 
@@ -237,8 +238,7 @@ class Rules
 			}
 		}
 
-		return (bool) ($row->get()
-						->getRow() === null);
+		return (bool) ($row->get()->getRow() === null);
 	}
 
 	//--------------------------------------------------------------------
@@ -284,6 +284,11 @@ class Rules
 	 */
 	public function matches(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str === dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str === $data[$field];
 	}
 
@@ -335,6 +340,21 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
+	 * Value should not be within an array of values.
+	 *
+	 * @param string $value
+	 * @param string $list
+	 *
+	 * @return boolean
+	 */
+	public function not_in_list(string $value = null, string $list): bool
+	{
+		return ! $this->in_list($value, $list);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Required
 	 *
 	 * @param mixed $str Value
@@ -361,9 +381,9 @@ class Rules
 	 *
 	 *     required_with[password]
 	 *
-	 * @param $str
-	 * @param string $fields List of fields that we should check if present
-	 * @param array  $data   Complete list of fields from the form
+	 * @param string|null $str
+	 * @param string      $fields List of fields that we should check if present
+	 * @param array       $data   Complete list of fields from the form
 	 *
 	 * @return boolean
 	 */
@@ -413,9 +433,9 @@ class Rules
 	 *
 	 *     required_without[id,email]
 	 *
-	 * @param $str
-	 * @param string $fields
-	 * @param array  $data
+	 * @param string|null $str
+	 * @param string      $fields
+	 * @param array       $data
 	 *
 	 * @return boolean
 	 */

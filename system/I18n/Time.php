@@ -85,7 +85,7 @@ class Time extends DateTime
 	protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
 	/**
-	 * @var \CodeIgniter\I18n\Time
+	 * @var \CodeIgniter\I18n\Time|DateTime|null
 	 */
 	protected static $testNow;
 
@@ -135,7 +135,7 @@ class Time extends DateTime
 			}
 		}
 
-		return parent::__construct($time, $this->timezone);
+		parent::__construct($time, $this->timezone);
 	}
 
 	//--------------------------------------------------------------------
@@ -370,9 +370,9 @@ class Time extends DateTime
 	 * Creates an instance of Time that will be returned during testing
 	 * when calling 'Time::now' instead of the current time.
 	 *
-	 * @param \CodeIgniter\I18n\Time|string|null $datetime
-	 * @param \DateTimeZone|string|null          $timezone
-	 * @param string|null                        $locale
+	 * @param \CodeIgniter\I18n\Time|DateTime|string|null $datetime
+	 * @param \DateTimeZone|string|null                   $timezone
+	 * @param string|null                                 $locale
 	 *
 	 * @throws \Exception
 	 */
@@ -557,7 +557,7 @@ class Time extends DateTime
 		$time = $this->getTimestamp();
 
 		// future dates have no age
-		return max(0, date('Y', $now) - date('Y', $time));
+		return max(0, date('Y', $now) - date('Y', $time)); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -1092,7 +1092,7 @@ class Time extends DateTime
 		{
 			$testTime = $testTime->format('Y-m-d H:i:s');
 		}
-		else if (is_string($testTime))
+		elseif (is_string($testTime))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
@@ -1111,7 +1111,7 @@ class Time extends DateTime
 	 * Determines if the current instance's time is before $testTime,
 	 * after converting to UTC.
 	 *
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return boolean
@@ -1131,7 +1131,7 @@ class Time extends DateTime
 	 * Determines if the current instance's time is after $testTime,
 	 * after converting in UTC.
 	 *
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return boolean
@@ -1179,18 +1179,18 @@ class Time extends DateTime
 			$phrase = lang('Time.years', [abs($years)]);
 			$before = $years < 0;
 		}
-		else if ($months !== 0)
+		elseif ($months !== 0)
 		{
 			$phrase = lang('Time.months', [abs($months)]);
 			$before = $months < 0;
 		}
-		else if ($days !== 0 && (abs($days) >= 7))
+		elseif ($days !== 0 && (abs($days) >= 7))
 		{
 			$weeks  = ceil($days / 7);
 			$phrase = lang('Time.weeks', [abs($weeks)]);
 			$before = $days < 0;
 		}
-		else if ($days !== 0)
+		elseif ($days !== 0)
 		{
 			$before = $days < 0;
 
@@ -1202,12 +1202,12 @@ class Time extends DateTime
 
 			$phrase = lang('Time.days', [abs($days)]);
 		}
-		else if ($hours !== 0)
+		elseif ($hours !== 0)
 		{
-			// Display the actual time instead of a regular phrase.
-			return $this->format('g:i a');
+			$phrase = lang('Time.hours', [abs($hours)]);
+			$before = $hours < 0;
 		}
-		else if ($minutes !== 0)
+		elseif ($minutes !== 0)
 		{
 			$phrase = lang('Time.minutes', [abs($minutes)]);
 			$before = $minutes < 0;
@@ -1221,7 +1221,7 @@ class Time extends DateTime
 	}
 
 	/**
-	 * @param $testTime
+	 * @param mixed       $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return \CodeIgniter\I18n\TimeDifference
@@ -1242,7 +1242,7 @@ class Time extends DateTime
 	/**
 	 * Returns a Time instance with the timezone converted to UTC.
 	 *
-	 * @param $time
+	 * @param mixed       $time
 	 * @param string|null $timezone
 	 *
 	 * @return \DateTime|static

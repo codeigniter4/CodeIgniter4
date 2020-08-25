@@ -65,7 +65,7 @@ if (! function_exists('word_limiter'))
 			return $str;
 		}
 
-		preg_match('/^\s*+(?:\S++\s*+){1,' . (int) $limit . '}/', $str, $matches);
+		preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/', $str, $matches);
 
 		if (strlen($str) === strlen($matches[0]))
 		{
@@ -464,9 +464,6 @@ if (! function_exists('word_wrap'))
 	 */
 	function word_wrap(string $str, int $charlim = 76): string
 	{
-		// Set the character limit
-		is_numeric($charlim) || $charlim = 76;
-
 		// Reduce multiple spaces
 		$str = preg_replace('| +|', ' ', $str);
 
@@ -751,6 +748,7 @@ if (! function_exists('random_string'))
 						break;
 				}
 
+				// @phpstan-ignore-next-line
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
 				return md5(uniqid(mt_rand(), true));
@@ -794,7 +792,8 @@ if (! function_exists('alternator'))
 	 *
 	 * Allows strings to be alternated. See docs...
 	 *
-	 * @param string (as many parameters as needed)
+	 * @phpstan-ignore-next-line
+	 * @param                    string (as many parameters as needed)
 	 *
 	 * @return string
 	 */
@@ -847,8 +846,8 @@ if (! function_exists('excerpt'))
 			$phraseLen = 1;
 		}
 
-		$pre = explode(' ', substr($text, 0, $phrasePos));
-		$pos = explode(' ', substr($text, $phrasePos + $phraseLen));
+		$pre = explode(' ', substr($text, 0, $phrasePos)); // @phpstan-ignore-line
+		$pos = explode(' ', substr($text, $phrasePos + $phraseLen)); // @phpstan-ignore-line
 
 		$prev  = ' ';
 		$post  = ' ';

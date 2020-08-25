@@ -124,7 +124,7 @@ class Message
 	/**
 	 * Appends data to the body of the current message.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return Message|Response
 	 */
@@ -196,7 +196,7 @@ class Message
 	 *
 	 * @param string $name
 	 *
-	 * @return array|\CodeIgniter\HTTP\Header
+	 * @return array|\CodeIgniter\HTTP\Header|null
 	 */
 	public function getHeader(string $name)
 	{
@@ -269,9 +269,17 @@ class Message
 	{
 		$origName = $this->getHeaderName($name);
 
-		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]))
+		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue()))
 		{
-			$this->appendHeader($origName, $value);
+			if (! is_array($value))
+			{
+				$value = [$value];
+			}
+
+			foreach ($value as $v)
+			{
+				$this->appendHeader($origName, $v);
+			}
 		}
 		else
 		{
@@ -307,12 +315,12 @@ class Message
 	 * Adds an additional header value to any headers that accept
 	 * multiple values (i.e. are an array or implement ArrayAccess)
 	 *
-	 * @param string $name
-	 * @param string $value
+	 * @param string      $name
+	 * @param string|null $value
 	 *
 	 * @return Message
 	 */
-	public function appendHeader(string $name, string $value)
+	public function appendHeader(string $name, ?string $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 

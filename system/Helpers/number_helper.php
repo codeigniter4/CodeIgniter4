@@ -60,7 +60,7 @@ if (! function_exists('number_to_size'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
 		catch (\ErrorException $ee)
 		{
@@ -129,7 +129,7 @@ if (! function_exists('number_to_amount'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
 		catch (\ErrorException $ee)
 		{
@@ -323,12 +323,12 @@ if (! function_exists('number_to_roman'))
 					$return = $key2 . str_repeat($key1, $n - 5);
 					break;
 				case 9:
-					$return = $key1 . $key_f;
+					$return = $key1 . $key_f; // @phpstan-ignore-line
 					break;
 			}
 			switch ($num) {
 				case 10:
-					$return = $key_f;
+					$return = $key_f; // @phpstan-ignore-line
 					break;
 			}
 			if ($num > 10)

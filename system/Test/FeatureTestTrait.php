@@ -91,7 +91,7 @@ trait FeatureTestTrait
 	/**
 	 * Sets any values that should exist during this session.
 	 *
-	 * @param array|null Array of values, or null to use the current $_SESSION
+	 * @param array|null $values Array of values, or null to use the current $_SESSION
 	 *
 	 * @return $this
 	 */
@@ -110,7 +110,7 @@ trait FeatureTestTrait
 	 *  'Authorization' => 'Token'
 	 * ])
 	 *
-	 * @param array Array of headers
+	 * @param array $headers Array of headers
 	 *
 	 * @return $this
 	 */
@@ -167,7 +167,7 @@ trait FeatureTestTrait
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure the RouteCollection knows what method we're using...
-		$routes = $this->routes ?: Services::routes();
+		$routes = $this->routes ?: Services::routes(); // @phpstan-ignore-line
 		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
@@ -326,11 +326,11 @@ trait FeatureTestTrait
 	/**
 	 * Setup the custom request's headers
 	 *
-	 * @param \CodeIgniter\HTTP\Request $request
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected function setupHeaders(Request $request)
+	protected function setupHeaders(IncomingRequest $request)
 	{
 		if (! empty($this->headers))
 		{
@@ -362,7 +362,7 @@ trait FeatureTestTrait
 		// otherwise set it from the URL.
 		$get = ! empty($params) && $method === 'get'
 			? $params
-			: $this->getPrivateProperty($request->uri, 'query');
+			: $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
 
 		$request->setGlobal('get', $get);
 		if ($method !== 'get')

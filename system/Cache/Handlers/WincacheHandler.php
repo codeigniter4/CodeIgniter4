@@ -159,7 +159,7 @@ class WincacheHandler implements CacheInterface
 		$success = false;
 		$value   = wincache_ucache_inc($key, $offset, $success);
 
-		return ($success === true) ? $value : false;
+		return ($success === true) ? $value : false; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -181,7 +181,7 @@ class WincacheHandler implements CacheInterface
 		$success = false;
 		$value   = wincache_ucache_dec($key, $offset, $success);
 
-		return ($success === true) ? $value : false;
+		return ($success === true) ? $value : false; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

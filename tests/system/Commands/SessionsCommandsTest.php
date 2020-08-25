@@ -1,121 +1,66 @@
 <?php namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\CommandRunner;
-use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\Test\Mock\MockAppConfig;
-use Config\Services;
 
-class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
+class SessionsCommandsTest extends CIUnitTestCase
 {
-	private $stream_filter;
-	protected $env;
-	protected $config;
-	protected $request;
-	protected $response;
-	protected $logger;
-	protected $runner;
-	private $result;
+	private $streamFilter;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
-
-		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
-		$this->env->load();
-
-		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if (! isset($_SERVER['app.baseURL']))
-		{
-			$_SERVER['app.baseURL'] = 'http://example.com';
-		}
-
-		$_SERVER['argv'] = [
-			'spark',
-			'list',
-		];
-		$_SERVER['argc'] = 2;
-		CLI::init();
-
-		$this->config   = new MockAppConfig();
-		$this->request  = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger   = Services::logger();
-		$this->runner   = new CommandRunner();
-		$this->runner->initController($this->request, $this->response, $this->logger);
+		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 	}
 
 	public function tearDown(): void
 	{
-		if (! $this->result)
-		{
-			return;
-		}
+		stream_filter_remove($this->streamFilter);
 
-		stream_filter_remove($this->stream_filter);
-
-		$result = remove_invisible_characters($this->result);
-		$result = str_replace('[0;32m', '', $result);
-		$result = str_replace('[0m', '', $result);
+		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
 		$file   = trim(substr($result, 14));
-		$file   = str_replace('APPPATH', APPPATH, $file);
-
-		unlink($file);
+		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
+		file_exists($file) && unlink($file);
 	}
 
 	public function testCreateMigrationCommand()
 	{
-		$this->runner->index(['session:migration']);
+		command('session:migration');
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure we end up with a migration class in the right place
 		// or at least that we claim to have done so
 		// separate assertions avoid console color codes
 		$this->assertStringContainsString('Created file:', $result);
-		$this->assertStringContainsString('APPPATH/Database/Migrations/', $result);
-		$this->assertStringContainsString('_create_ci_sessions_table.php', $result);
-
-		$this->result = $result;
+		$this->assertStringContainsString('_CreateCiSessionsTable.php', $result);
 	}
 
 	public function testOverriddenCreateMigrationCommand()
 	{
-		$_SERVER['argv'] = [
-			'spark',
-			'session:migration',
-			'-t',
-			'mygoodies',
-		];
-		$_SERVER['argc'] = 4;
-		CLI::init();
-
-		$this->runner->index(['session:migration']);
+		command('session:migration -t mygoodies');
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure we end up with a migration class in the right place
 		$this->assertStringContainsString('Created file:', $result);
-		$this->assertStringContainsString('APPPATH/Database/Migrations/', $result);
-		$this->assertStringContainsString('_create_mygoodies_table.php', $result);
-
-		$this->result = $result;
+		$this->assertStringContainsString('_CreateMygoodiesTable.php', $result);
 	}
 
 	public function testCannotWriteFileOnCreateMigrationCommand()
 	{
-		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+		if ('\\' === DIRECTORY_SEPARATOR)
+		{
+			$this->markTestSkipped('chmod does not work as expected on Windows');
+		}
 
-		chmod(APPPATH . 'Database/Migrations/', 0444);
+		chmod(APPPATH . 'Database/Migrations', 0444);
 
-		$this->runner->index(['session:migration']);
-		$this->result = '';
+		command('session:migration');
+		$this->assertStringContainsString('Error in creating file:', CITestStreamFilter::$buffer);
 
-		$this->assertRegExp('/Error trying to create .* file, check if the directory is writable/', CITestStreamFilter::$buffer);
-
-		chmod(APPPATH . 'Database/Migrations/', 0755);
+		chmod(APPPATH . 'Database/Migrations', 0755);
 	}
 
 }

@@ -92,8 +92,7 @@ class Throttler implements ThrottlerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $cache
-	 * @throws type
+	 * @param CacheInterface $cache
 	 */
 	public function __construct(CacheInterface $cache)
 	{

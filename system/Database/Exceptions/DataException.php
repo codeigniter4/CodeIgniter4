@@ -30,6 +30,20 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	}
 
 	/**
+	 * Used by Model's insert/update methods when there is no
+	 * primary key defined and Model has option `useAutoIncrement`
+	 * set to false.
+	 *
+	 * @param string $mode
+	 *
+	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 */
+	public static function forEmptyPrimaryKey(string $mode)
+	{
+		return new static(lang('Database.emptyPrimaryKey', [$mode]));
+	}
+
+	/**
 	 * Thrown when an argument for one of the Model's methods
 	 * were empty or otherwise invalid, and they could not be
 	 * to work correctly for that method.

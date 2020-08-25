@@ -11,6 +11,7 @@ class MockCLIConfig extends \Config\App
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
+	public $cookieSameSite = 'Lax';
 
 	public $proxyIPs = '';
 
@@ -20,6 +21,7 @@ class MockCLIConfig extends \Config\App
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
 	public $CSRFExcludeURIs = ['http://example.com'];
+	public $CSRFSameSite    = 'Lax';
 
 	public $CSPEnabled = false;
 

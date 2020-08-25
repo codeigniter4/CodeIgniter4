@@ -53,7 +53,7 @@ class Security
 	 *
 	 * Random hash for Cross Site Request Forgery protection cookie
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $CSRFHash;
 
@@ -126,6 +126,13 @@ class Security
 	protected $cookieSecure = false;
 
 	/**
+	 * SameSite setting of the CSRF cookie
+	 *
+	 * @var string
+	 */
+	protected $CSRFSameSite = 'Lax';
+
+	/**
 	 * List of sanitize filename strings
 	 *
 	 * @var array
@@ -184,10 +191,16 @@ class Security
 		$this->CSRFHeaderName = $config->CSRFHeaderName;
 		$this->CSRFCookieName = $config->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate;
+		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
 
 		if (isset($config->cookiePrefix))
 		{
 			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
+		}
+
+		if (! in_array(strtolower($this->CSRFSameSite), ['', 'none', 'lax', 'strict'], true))
+		{
+			throw SecurityException::forInvalidSameSiteSetting($this->CSRFSameSite);
 		}
 
 		// Store cookie-related settings
@@ -283,9 +296,47 @@ class Security
 			return false;
 		}
 
-		setcookie(
-				$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath, $this->cookieDomain, $secure_cookie, true                // Enforce HTTP only cookie for security
-		);
+		if (PHP_VERSION_ID < 70300)
+		{
+			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
+			$samesite = '';
+			if ($this->CSRFSameSite !== '')
+			{
+				$samesite = '; samesite=' . $this->CSRFSameSite;
+			}
+
+			setcookie(
+				$this->CSRFCookieName,
+				$this->CSRFHash,
+				$expire,
+				$this->cookiePath . $samesite,
+				$this->cookieDomain,
+				$secure_cookie,
+				true                // Enforce HTTP only cookie for security
+			);
+		}
+		else
+		{
+			// PHP 7.3 adds another function signature allowing setting of samesite
+			$params = [
+				'expires'  => $expire,
+				'path'     => $this->cookiePath,
+				'domain'   => $this->cookieDomain,
+				'secure'   => $secure_cookie,
+				'httponly' => true,// Enforce HTTP only cookie for security
+			];
+
+			if ($this->CSRFSameSite !== '')
+			{
+				$params['samesite'] = $this->CSRFSameSite;
+			}
+
+			setcookie(
+				$this->CSRFCookieName,
+				$this->CSRFHash,
+				$params
+			);
+		}
 
 		log_message('info', 'CSRF cookie sent');
 
@@ -297,9 +348,9 @@ class Security
 	/**
 	 * Returns the current CSRF Hash.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCSRFHash(): string
+	public function getCSRFHash(): ?string
 	{
 		return $this->CSRFHash;
 	}

@@ -14,9 +14,9 @@ class EncryptionException extends \RuntimeException implements ExceptionInterfac
 		return new static(lang('Encryption.noDriverRequested'));
 	}
 
-	public static function forNoHandlerAvailable()
+	public static function forNoHandlerAvailable(string $handler)
 	{
-		return new static(lang('Encryption.noHandlerAvailable'));
+		return new static(lang('Encryption.noHandlerAvailable', [$handler]));
 	}
 
 	public static function forUnKnownHandler(string $driver = null)
