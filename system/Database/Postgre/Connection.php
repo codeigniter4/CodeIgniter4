@@ -172,6 +172,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
+		// @phpstan-ignore-next-line
 		if (! $this->connID || ( $pgVersion = pg_version($this->connID)) === false)
 		{
 			$this->initialize();
@@ -530,7 +531,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' || $this->DSN = '';
+		$this->DSN === '' || $this->DSN = ''; // @phpstan-ignore-line
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)

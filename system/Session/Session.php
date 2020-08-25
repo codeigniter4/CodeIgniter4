@@ -540,7 +540,6 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		// @phpstan-ignore-next-line
 		if (! empty($key) && (! is_null($value = isset($_SESSION[$key]) ? $_SESSION[$key] : null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
 		{
 			return $value;
@@ -804,7 +803,7 @@ class Session implements SessionInterface
 			return;
 		}
 
-		is_array($key) || $key = [$key];
+		is_array($key) || $key = [$key]; // @phpstan-ignore-line
 
 		foreach ($key as $k)
 		{
@@ -979,7 +978,7 @@ class Session implements SessionInterface
 			return;
 		}
 
-		is_array($key) || $key = [$key];
+		is_array($key) || $key = [$key]; // @phpstan-ignore-line
 
 		foreach ($key as $k)
 		{

@@ -376,15 +376,10 @@ class Fabricator
 			{
 				case 'datetime':
 					return 'date';
-				break;
-
 				case 'date':
 					return 'date';
-				break;
-
 				case 'int':
 					return 'unixTime';
-				break;
 			}
 		}
 		elseif ($field === $this->model->primaryKey)

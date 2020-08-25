@@ -111,7 +111,7 @@ class MigrateRefresh extends BaseCommand
 
 		if (ENVIRONMENT === 'production')
 		{
-			$force = array_key_exists('f', $params) || CLI::getOption('f');
+			$force = CLI::getOption('f');
 			if (is_null($force) && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
 			{
 				return;

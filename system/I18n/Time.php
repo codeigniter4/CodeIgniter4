@@ -85,7 +85,7 @@ class Time extends DateTime
 	protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
 	/**
-	 * @var \CodeIgniter\I18n\Time|null
+	 * @var \CodeIgniter\I18n\Time|DateTime|null
 	 */
 	protected static $testNow;
 
@@ -370,9 +370,9 @@ class Time extends DateTime
 	 * Creates an instance of Time that will be returned during testing
 	 * when calling 'Time::now' instead of the current time.
 	 *
-	 * @param \CodeIgniter\I18n\Time|string|null $datetime
-	 * @param \DateTimeZone|string|null          $timezone
-	 * @param string|null                        $locale
+	 * @param \CodeIgniter\I18n\Time|DateTime|string|null $datetime
+	 * @param \DateTimeZone|string|null                   $timezone
+	 * @param string|null                                 $locale
 	 *
 	 * @throws \Exception
 	 */

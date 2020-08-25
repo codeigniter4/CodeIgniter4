@@ -366,7 +366,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			270,
 		];
 
-		if ($angle === '' || ! in_array($angle, $degs))
+		if (! in_array($angle, $degs))
 		{
 			throw ImageException::forMissingAngle();
 		}

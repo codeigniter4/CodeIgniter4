@@ -186,14 +186,14 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * The name of the current group, if any.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $group;
 
 	/**
 	 * The current subdomain.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $currentSubdomain;
 

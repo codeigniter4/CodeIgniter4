@@ -606,6 +606,7 @@ class Router implements RouterInterface
 	protected function validateRequest(array $segments): array
 	{
 		$segments = array_filter($segments, function ($segment) {
+			// @phpstan-ignore-next-line
 			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
 		});
 		$segments = array_values($segments);

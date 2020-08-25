@@ -252,6 +252,7 @@ class MemcachedHandler implements CacheInterface
 			return $this->memcached->set($key, $value, 0, $ttl);
 		}
 
+		// @phpstan-ignore-next-line
 		return false;
 	}
 

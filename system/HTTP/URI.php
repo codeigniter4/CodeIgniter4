@@ -442,7 +442,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return (is_null($this->path)) ? '' : $this->path;
+		return $this->path ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -502,7 +502,7 @@ class URI
 	 */
 	public function getFragment(): string
 	{
-		return is_null($this->fragment) ? '' : $this->fragment;
+		return $this->fragment ?? '';
 	}
 
 	//--------------------------------------------------------------------

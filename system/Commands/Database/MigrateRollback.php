@@ -103,6 +103,7 @@ class MigrateRollback extends BaseCommand
 		if (ENVIRONMENT === 'production')
 		{
 			$force = array_key_exists('f', $params) || CLI::getOption('f');
+			// @phpstan-ignore-next-line
 			if (is_null($force) && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n')
 			{
 				return;

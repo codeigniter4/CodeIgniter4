@@ -99,7 +99,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Row data
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	public $rowData;
 
@@ -202,6 +202,7 @@ abstract class BaseResult implements ResultInterface
 			$this->customResultObject[$className][] = $row;
 		}
 
+		// @phpstan-ignore-next-line
 		return $this->customResultObject[$className];
 	}
 
@@ -293,6 +294,7 @@ abstract class BaseResult implements ResultInterface
 			$this->resultObject[] = $row;
 		}
 
+		// @phpstan-ignore-next-line
 		return $this->resultObject;
 	}
 

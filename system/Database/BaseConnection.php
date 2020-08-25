@@ -236,7 +236,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Identifier escape character
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	public $escapeChar = '"';
 
@@ -1790,9 +1790,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param boolean $constrainByPrefix
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	abstract protected function _listTables(bool $constrainByPrefix = false): string;
+	abstract protected function _listTables(bool $constrainByPrefix = false);
 
 	//--------------------------------------------------------------------
 
@@ -1801,9 +1801,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $table
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	abstract protected function _listColumns(string $table = ''): string;
+	abstract protected function _listColumns(string $table = '');
 
 	//--------------------------------------------------------------------
 

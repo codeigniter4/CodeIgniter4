@@ -280,7 +280,7 @@ class Table
 
 		foreach ($args as $key => $val)
 		{
-			is_array($val) || $args[$key] = ['data' => $val];
+			is_array($val) || $args[$key] = ['data' => $val]; // @phpstan-ignore-line
 		}
 
 		return $args;

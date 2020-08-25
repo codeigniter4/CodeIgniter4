@@ -543,7 +543,7 @@ class CURLRequest extends Request
 		$size = strlen($this->body);
 
 		// Have content?
-		if ($size === null || $size > 0)
+		if ($size > 0)
 		{
 			return $this->applyBody($curl_options);
 		}

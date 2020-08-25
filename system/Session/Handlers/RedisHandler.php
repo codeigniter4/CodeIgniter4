@@ -103,6 +103,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		elseif (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
+			// @phpstan-ignore-next-line
 			isset($matches[3]) || $matches[3] = ''; // Just to avoid undefined index notices below
 
 			$this->savePath = [
@@ -187,7 +188,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if (is_null($this->sessionID)) // @phpstan-ignore-line
 			{
 				$this->sessionID = $sessionID;
 			}
@@ -271,6 +272,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			try
 			{
 				$ping_reply = $this->redis->ping();
+				// @phpstan-ignore-next-line
 				if (($ping_reply === true) || ($ping_reply === '+PONG'))
 				{
 					isset($this->lockKey) && $this->redis->del($this->lockKey);

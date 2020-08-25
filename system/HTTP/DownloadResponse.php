@@ -72,7 +72,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * Download for binary
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $binary;
 

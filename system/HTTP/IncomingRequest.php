@@ -93,14 +93,14 @@ class IncomingRequest extends Request
 	/**
 	 * File collection
 	 *
-	 * @var Files\FileCollection
+	 * @var Files\FileCollection|null
 	 */
 	protected $files;
 
 	/**
 	 * Negotiator
 	 *
-	 * @var \CodeIgniter\HTTP\Negotiate
+	 * @var \CodeIgniter\HTTP\Negotiate|null
 	 */
 	protected $negotiator;
 
