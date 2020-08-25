@@ -1,10 +1,11 @@
 <?php
 namespace Config;
 
-use CodeIgniter\Config\BaseConfig;
-
-class Email extends BaseConfig
+class Email
 {
+	//-------------------------------------------------------
+	// Boilerplate properties for a new email
+	//-------------------------------------------------------
 
 	/**
 	 * @var string
@@ -15,81 +16,6 @@ class Email extends BaseConfig
 	 * @var string
 	 */
 	public $fromName;
-
-	/**
-	 * @var string
-	 */
-	public $recipients;
-
-	/**
-	 * The "user agent"
-	 *
-	 * @var string
-	 */
-	public $userAgent = 'CodeIgniter';
-
-	/**
-	 * The mail sending protocol: mail, sendmail, smtp
-	 *
-	 * @var string
-	 */
-	public $protocol = 'mail';
-
-	/**
-	 * The server path to Sendmail.
-	 *
-	 * @var string
-	 */
-	public $mailPath = '/usr/sbin/sendmail';
-
-	/**
-	 * SMTP Server Address
-	 *
-	 * @var string
-	 */
-	public $SMTPHost;
-
-	/**
-	 * SMTP Username
-	 *
-	 * @var string
-	 */
-	public $SMTPUser;
-
-	/**
-	 * SMTP Password
-	 *
-	 * @var string
-	 */
-	public $SMTPPass;
-
-	/**
-	 * SMTP Port
-	 *
-	 * @var integer
-	 */
-	public $SMTPPort = 25;
-
-	/**
-	 * SMTP Timeout (in seconds)
-	 *
-	 * @var integer
-	 */
-	public $SMTPTimeout = 5;
-
-	/**
-	 * Enable persistent SMTP connections
-	 *
-	 * @var boolean
-	 */
-	public $SMTPKeepAlive = false;
-
-	/**
-	 * SMTP Encryption. Either tls or ssl
-	 *
-	 * @var string
-	 */
-	public $SMTPCrypto = 'tls';
 
 	/**
 	 * Enable word-wrap
@@ -167,5 +93,79 @@ class Email extends BaseConfig
 	 * @var boolean
 	 */
 	public $DSN = false;
+
+	//-------------------------------------------------------
+	// Email transporter properties
+	//-------------------------------------------------------
+
+	/**
+	 * The "user agent"
+	 *
+	 * @var string
+	 */
+	public $userAgent = 'CodeIgniter';
+
+	/**
+	 * The mail sending protocol: mail, sendmail, smtp
+	 *
+	 * @var string
+	 */
+	public $protocol = 'mail';
+
+	/**
+	 * The server path to Sendmail.
+	 *
+	 * @var string
+	 */
+	public $mailPath = '/usr/sbin/sendmail';
+
+	/**
+	 * SMTP Server Address
+	 *
+	 * @var string
+	 */
+	public $SMTPHost;
+
+	/**
+	 * SMTP Username
+	 *
+	 * @var string
+	 */
+	public $SMTPUser;
+
+	/**
+	 * SMTP Password
+	 *
+	 * @var string
+	 */
+	public $SMTPPass;
+
+	/**
+	 * SMTP Port
+	 *
+	 * @var integer
+	 */
+	public $SMTPPort = 25;
+
+	/**
+	 * SMTP Timeout (in seconds)
+	 *
+	 * @var integer
+	 */
+	public $SMTPTimeout = 5;
+
+	/**
+	 * Enable persistent SMTP connections
+	 *
+	 * @var boolean
+	 */
+	public $SMTPKeepAlive = false;
+
+	/**
+	 * SMTP Encryption. Either tls or ssl
+	 *
+	 * @var string
+	 */
+	public $SMTPCrypto = 'tls';
 
 }

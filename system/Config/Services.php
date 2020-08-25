@@ -206,26 +206,36 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Email class allows you to send email via mail, sendmail, SMTP.
+	 * The Email Transporter class lets you send email via mail, sendmail, SMTP.
 	 *
-	 * @param \Config\Email|array|null $config
-	 * @param boolean                  $getShared
+	 * @param null    $config
+	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Email\Email|mixed
+	 * @return \CodeIgniter\Email\TransporterInterface
 	 */
-	public static function email($config = null, bool $getShared = true)
+	public static function transporter($config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('email', $config);
+			return static::getSharedInstance('transporter', $config);
 		}
 
-		if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig))
+		if (empty($config))
 		{
-			$config = config('Email');
+			$config = new \Config\Email();
 		}
 
-		return new Email($config);
+		$protocolMap = [
+			'mail'     => 'MailHandler',
+			'sendmail' => 'SendmailHandler',
+			'smtp'     => 'SMTPHandler',
+		];
+
+		$handler     = '\\CodeIgniter\\Email\\Handlers\\' . ($protocolMap[$config->protocol ?? 'mail'] );
+		$transporter = new $handler($config);
+		$transporter->setLogger(static::logger(true));
+
+		return $transporter;
 	}
 
 	/**

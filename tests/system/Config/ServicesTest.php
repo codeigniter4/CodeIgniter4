@@ -57,14 +57,14 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testNewEmail()
 	{
-		$actual = Services::email();
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$actual = Services::transporter();
+		$this->assertInstanceOf(\CodeIgniter\Email\TransporterInterface::class, $actual);
 	}
 
-	public function testNewUnsharedEmailWithEmptyConfig()
+	public function testNewUnsharedEmail()
 	{
-		$actual = Services::email(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$actual = Services::transporter(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Email\TransporterInterface::class, $actual);
 	}
 
 	public function testNewUnsharedEmailWithNonEmptyConfig()
