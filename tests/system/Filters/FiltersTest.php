@@ -1002,7 +1002,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config  = [
 			'aliases' => [
-				'multipeTest' => [
+				'multipleTest' => [
 					'CodeIgniter\Filters\fixtures\Multiple1',
 					'CodeIgniter\Filters\fixtures\Multiple2',
 				],
