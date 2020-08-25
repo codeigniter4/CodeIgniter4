@@ -123,7 +123,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Add Timestamps
 	 *
-	 * @return Forge
+	 * @return \CodeIgniter\Database\Forge
 	 */
 	protected function _addTimestamps()
 	{
