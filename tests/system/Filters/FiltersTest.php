@@ -1009,7 +1009,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 			'globals' => [
 				'after' => [
-					'multipeTest',
+					'multipleTest',
 				],
 			],
 		];
