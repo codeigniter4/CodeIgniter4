@@ -1826,7 +1826,7 @@ class Model
 		// or an array of rules.
 		if (is_string($rules))
 		{
-			$rules = $this->validation->loadRuleGroup($rules);
+			$rules = $this->validation->getRuleGroup($rules);
 		}
 
 		if (isset($options['except']))
