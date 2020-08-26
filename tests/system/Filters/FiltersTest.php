@@ -322,6 +322,49 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testProcessMethodProcessesCombinedAfterForToolbar()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config  = [
+			'aliases' => [
+				'toolbar' => '',
+				'bazg'    => '',
+				'bar'     => '',
+				'foof'    => '',
+			],
+			'globals' => [
+				'after' => [
+					'toolbar',
+					'bazg',
+				],
+			],
+			'methods' => [
+				'get' => ['bar'],
+			],
+			'filters' => [
+				'foof' => [
+					'after' => ['admin/*'],
+				],
+			],
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$expected = [
+			'before' => ['bar'],
+			'after'  => [
+				'toolbar',
+				'bazg',
+				'foof',
+			],
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRunThrowsWithInvalidAlias()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';

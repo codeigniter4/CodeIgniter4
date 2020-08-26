@@ -66,6 +66,11 @@ class Filters
 	];
 
 	/**
+	 * @var array
+	 */
+	protected $argumentsClass = [];
+
+	/**
 	 * The original config file
 	 *
 	 * @var \Config\Filters
@@ -480,7 +485,8 @@ class Filters
 	/**
 	 * filter alias to class
 	 *
-	 * @return type
+	 * @return void
+	 * @throws FilterException
 	 */
 	protected function processAliasesToClass(string $position)
 	{
