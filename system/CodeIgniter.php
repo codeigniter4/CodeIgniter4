@@ -258,6 +258,7 @@ class CodeIgniter
 		// If we have KINT_DIR it means it's already loaded via composer
 		if (! defined('KINT_DIR'))
 		{
+			// @phpstan-ignore-next-line
 			spl_autoload_register(function ($class) {
 				$class = explode('\\', $class);
 
@@ -802,7 +803,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		return str_replace('{elapsed_time}', $this->totalTime, $output);
+		return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
 	}
 
 	//--------------------------------------------------------------------

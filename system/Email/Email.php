@@ -800,7 +800,7 @@ class Email
 	 */
 	public function setPriority($n = 3)
 	{
-		$this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
+		$this->priority = preg_match('/^[1-5]$/', (string) $n) ? (int) $n : 3;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -965,7 +965,7 @@ class Email
 	 *
 	 * @param string|array $email
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	public function cleanEmail($email)
 	{
@@ -1891,7 +1891,7 @@ class Email
 				STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			if ($crypto !== true)
 			{
-				$this->setErrorMessage(lang('Email.SMTPError', $this->getSMTPData()));
+				$this->setErrorMessage(lang('Email.SMTPError', [$this->getSMTPData()]));
 				return false;
 			}
 		}
@@ -2053,7 +2053,7 @@ class Email
 		}
 		if ($result === false) // @phpstan-ignore-line
 		{
-			$this->setErrorMessage(lang('Email.SMTPDataFailure', $data));
+			$this->setErrorMessage(lang('Email.SMTPDataFailure', [$data]));
 			return false;
 		}
 		return true;

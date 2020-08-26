@@ -161,7 +161,7 @@ class Database
 			'DSN'      => '',
 			'DBDriver' => $dsn['scheme'],
 			'hostname' => isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
-			'port'     => isset($dsn['port']) ? rawurldecode($dsn['port']) : '',
+			'port'     => isset($dsn['port']) ? rawurldecode((string) $dsn['port']) : '',
 			'username' => isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
 			'password' => isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',
 			'database' => isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : '',

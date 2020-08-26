@@ -37,6 +37,7 @@ parameters:
         - '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
         - '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
         - '#Negated boolean expression is always (true|false)#'
+        - '#Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given#'
     scanDirectories:
       - system/Helpers
     dynamicConstantNames:
