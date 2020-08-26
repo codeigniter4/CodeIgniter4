@@ -1,5 +1,5 @@
-# When a Pull Request is opened, perform a static
-# analysis check on the code using PHPStan.
+# When a PR is opened or a push is made, perform
+# a static analysis check on the code using PHPStan.
 #
 # @todo Consider removing from Composer and using
 # https://github.com/marketplace/actions/oskar-phpstan
@@ -7,6 +7,13 @@ name: PHPStan
 
 on:
   pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+  push:
     branches:
       - 'develop'
       - '4.*'
