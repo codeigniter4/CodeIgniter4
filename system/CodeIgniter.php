@@ -102,7 +102,7 @@ class CodeIgniter
 	/**
 	 * Current request.
 	 *
-	 * @var HTTP\Request|HTTP\IncomingRequest|CLIRequest
+	 * @var HTTP\Request|HTTP\IncomingRequest|CLIRequest|RequestInterface
 	 */
 	protected $request;
 
