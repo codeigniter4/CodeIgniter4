@@ -1,0 +1,35 @@
+# When a Pull Request is opened, perform a static
+# analysis check on the code using PHPStan.
+#
+# @todo Consider removing from Composer and using
+# https://github.com/marketplace/actions/oskar-phpstan
+name: PHPStan
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+
+jobs:
+  build:
+    name: Analyze code (PHPStan)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: intl
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --no-interaction
+
+      - name: Run static analysis
+        run: vendor/bin/phpstan analyze --level=5 app system
