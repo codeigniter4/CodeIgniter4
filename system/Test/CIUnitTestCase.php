@@ -94,7 +94,7 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if (! $this->app)
+		if (! $this->app) // @phpstan-ignore-line
 		{
 			$this->app = $this->createApplication();
 		}
@@ -287,7 +287,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $message
 	 * @param integer $tolerance
 	 *
-	 * @return boolean
+	 * @return void|boolean
 	 * @throws \Exception
 	 */
 	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)

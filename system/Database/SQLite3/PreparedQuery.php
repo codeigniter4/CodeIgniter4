@@ -52,7 +52,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The SQLite3Result resource, or false.
 	 *
-	 * @var
+	 * @var Result|boolean
 	 */
 	protected $result;
 
@@ -73,10 +73,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
+		// @phpstan-ignore-next-line
 		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{
-			$this->errorCode   = $this->db->connID->lastErrorCode();
-			$this->errorString = $this->db->connID->lastErrorMsg();
+			$this->errorCode   = $this->db->connID->lastErrorCode(); // @phpstan-ignore-line
+			$this->errorString = $this->db->connID->lastErrorMsg(); // @phpstan-ignore-line
 		}
 
 		return $this;
@@ -118,7 +119,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			}
 
 			// Bind it
-			$this->statement->bindValue($key + 1, $item, $bindType);
+			$this->statement->bindValue($key + 1, $item, $bindType); // @phpstan-ignore-line
 		}
 
 		$this->result = $this->statement->execute();

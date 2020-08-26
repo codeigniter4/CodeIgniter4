@@ -230,6 +230,16 @@ class Filters
 		$this->processAliasesToClass('before');
 		$this->processAliasesToClass('after');
 
+		// Set the toolbar filter to the last position to be executed
+		if (in_array('toolbar', $this->filters['after'], true) &&
+			($count = count($this->filters['after'])) > 1 &&
+			$this->filters['after'][$count - 1] !== 'toolbar'
+		)
+		{
+			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after']), 1);
+			$this->filters['after'][] = 'toolbar';
+		}
+
 		$this->initialized = true;
 
 		return $this;

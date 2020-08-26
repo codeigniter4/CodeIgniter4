@@ -60,7 +60,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Stores image resource in memory.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $resource;
 
@@ -278,7 +278,7 @@ class ImageMagickHandler extends BaseHandler
 			throw ImageException::forImageProcessFailed();
 		}
 
-		return $output;
+		return $output; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -344,7 +344,7 @@ class ImageMagickHandler extends BaseHandler
 	 * To ensure we can use all features, like transparency,
 	 * during the process, we'll use a PNG as the temp file type.
 	 *
-	 * @return resource|boolean
+	 * @return string
 	 * @throws \Exception
 	 */
 	protected function getResourcePath()
@@ -468,10 +468,10 @@ class ImageMagickHandler extends BaseHandler
 					break;
 			}
 
-			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis;
-			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis;
+			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis; // @phpstan-ignore-line
+			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis; // @phpstan-ignore-line
 
-			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}";
+			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}"; // @phpstan-ignore-line
 		}
 
 		// Color

@@ -74,8 +74,8 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 5. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
 6. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 7. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
-8. [Push](https://help.github.com/en/articles/pushing-to-a-remote) your contribution branch to your fork.
-9. Send a [pull request](http://help.github.com/send-pull-requests/).
+8. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
+9. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
 The codebase maintainers will now be alerted to the submission and someone from the team will respond. If your change fails to meet the guidelines, it will be rejected or feedback will be provided to help you improve it.
 

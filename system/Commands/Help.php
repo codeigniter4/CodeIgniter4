@@ -100,21 +100,22 @@ class Help extends BaseCommand
 	//--------------------------------------------------------------------
 
 	/**
-	 * Displays the help for the spark cli script itself.
+	 * Displays the help for spark commands.
 	 *
 	 * @param array $params
 	 */
 	public function run(array $params)
 	{
-		$command = array_shift($params);
-		if (is_null($command))
+		$command  = array_shift($params);
+		$command  = $command ?? 'help';
+		$commands = $this->commands->getCommands();
+
+		if (! $this->commands->verifyCommand($command, $commands))
 		{
-			$command = 'help';
+			return;
 		}
 
-		$commands = $this->commands->getCommands();
-		$class    = new $commands[$command]['class']($this->logger, $this->commands);
-
+		$class = new $commands[$command]['class']($this->logger, $this->commands);
 		$class->showHelp();
 	}
 

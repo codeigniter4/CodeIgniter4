@@ -628,11 +628,31 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'        => null,
-			'bar'        => ':bar',
-			'default'    => 'sumfin',
-			'created_at' => null,
-			'createdAt'  => null,
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
+		]);
+	}
+
+	public function testAsArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toArray(false, true, true);
+
+		$this->assertEquals($result, [
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
+			'entity'    => [
+				'foo'       => null,
+				'bar'       => ':bar',
+				'default'   => 'sumfin',
+				'createdAt' => null,
+			],
 		]);
 	}
 
@@ -643,10 +663,21 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'    => null,
-			'simple' => ':oo',
-			'bar'    => null,
-			'orig'   => ':oo',
+			'bar'  => null,
+			'orig' => ':oo',
+		]);
+	}
+
+	public function testAsArraySwapped()
+	{
+		$entity = $this->getSwappedEntity();
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'bar'          => 'foo',
+			'foo'          => 'bar',
+			'original_bar' => 'bar',
 		]);
 	}
 
@@ -691,6 +722,27 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar'        => null,
 			'default'    => 'sumfin',
 			'created_at' => null,
+		]);
+	}
+
+	public function testToRawArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toRawArray(false, true);
+
+		$this->assertEquals($result, [
+			'foo'        => null,
+			'bar'        => null,
+			'default'    => 'sumfin',
+			'created_at' => null,
+			'entity'     => [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			],
 		]);
 	}
 
@@ -799,7 +851,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
 	}
 
-	protected function getEntity()
+	protected function getEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -840,7 +892,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getMappedEntity()
+	protected function getMappedEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -872,7 +924,29 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastEntity($data = null)
+	protected function getSwappedEntity() : Entity
+	{
+		return new class extends Entity
+		{
+			protected $attributes = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $_original = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $datamap = [
+				'bar'          => 'foo',
+				'foo'          => 'bar',
+				'original_bar' => 'bar',
+			];
+		};
+	}
+
+	protected function getCastEntity($data = null) : Entity
 	{
 		return new class($data) extends Entity
 		{
@@ -926,7 +1000,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastNullableEntity()
+	protected function getCastNullableEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -937,7 +1011,8 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'integer_0'             => null,
 				'string_value_not_null' => 'value',
 			];
-			protected $_original  = [
+
+			protected $_original = [
 				'string_null'           => null,
 				'string_empty'          => null,
 				'integer_null'          => null,

@@ -150,7 +150,7 @@ class Autoloader
 		spl_autoload_register([$this, 'loadClass'], true, true);
 
 		// Now prepend another loader for the files in our class map.
-		$config = is_array($this->classmap) ? $this->classmap : [];
+		$config = $this->classmap;
 
 		spl_autoload_register(function ($class) use ($config) {
 			if (empty($config[$class]))
@@ -280,6 +280,15 @@ class Autoloader
 	{
 		if (strpos($class, '\\') === false)
 		{
+			$class    = 'Config\\' . $class;
+			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+			$filename = $this->requireFile($filePath);
+
+			if ($filename)
+			{
+				return $filename;
+			}
+
 			return false;
 		}
 
@@ -332,7 +341,7 @@ class Autoloader
 			APPPATH . 'Models/',
 		];
 
-		$class = str_replace('\\', '/', $class) . '.php';
+		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
 		foreach ($paths as $path)
 		{

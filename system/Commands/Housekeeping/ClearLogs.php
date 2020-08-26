@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -36,18 +37,15 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 /**
- * Creates a new seeder file.
- *
- * @package CodeIgniter\Commands
+ * ClearLogs command.
  */
-class CreateSeeder extends BaseCommand
+class ClearLogs extends BaseCommand
 {
 	/**
 	 * The group the command is lumped under
@@ -55,115 +53,69 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $group = 'Generators';
+	protected $group = 'Housekeeping';
 
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:seeder';
+	protected $name = 'logs:clear';
 
 	/**
-	 * the Command's short description
+	 * The Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a new seeder file.';
+	protected $description = 'Clears all log files.';
 
 	/**
-	 * the Command's usage
+	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:seeder [seeder_name] [options]';
+	protected $usage = 'logs:clear [option';
 
 	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [
-		'seeder_name' => 'The seeder file name',
-	];
-
-	/**
-	 * the Command's Options
+	 * The Command's options
 	 *
 	 * @var array
 	 */
 	protected $options = [
-		'-n' => 'Set seeder namespace',
+		'-force' => 'Force delete of all logs files without prompting.',
 	];
 
 	/**
-	 * Creates a new migration file with the current timestamp.
+	 * Actually execute a command.
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
-		helper('inflector');
-		
-		$name = array_shift($params);
+		$force = array_key_exists('force', $params) || CLI::getOption('force');
 
-		if (empty($name))
+		if (! $force && CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n')
 		{
-			$name = CLI::prompt(lang('Seed.nameFile'), null, 'required');
+			// @codeCoverageIgnoreStart
+			CLI::error('Deleting logs aborted.', 'light_gray', 'red');
+			CLI::error('If you want, use the "-force" option to force delete all log files.', 'light_gray', 'red');
+			CLI::newLine();
+			return;
+			// @codeCoverageIgnoreEnd
 		}
-
-		$ns       = $params['-n'] ?? CLI::getOption('n');
-		$homepath = APPPATH;
-
-		if (! empty($ns))
-		{
-			// Get all namespaces
-			$namespaces = Services::autoloader()->getNamespace();
-
-			foreach ($namespaces as $namespace => $path)
-			{
-				if ($namespace === $ns)
-				{
-					$homepath = realpath(reset($path)) . DIRECTORY_SEPARATOR;
-					break;
-				}
-			}
-		}
-		else
-		{
-			$ns = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
-		}
-
-		// full path
-		$path = $homepath . 'Database/Seeds/' . $name . '.php';
-
-		// Class name should be pascal case now (camel case with upper first letter)
-		$name = pascalize($name);
-
-		$template = <<<EOD
-<?php namespace $ns\Database\Seeds;
-
-use CodeIgniter\Database\Seeder;
-
-class {name} extends Seeder
-{
-	public function run()
-	{
-		//
-	}
-}
-
-EOD;
-		$template = str_replace('{name}', $name, $template);
 
 		helper('filesystem');
-		if (! write_file($path, $template))
+
+		if (! delete_files(WRITEPATH . 'logs', false, true))
 		{
-			CLI::error(lang('Seed.writeError', [$path]));
+			// @codeCoverageIgnoreStart
+			CLI::error('Error in deleting the logs files.', 'light_gray', 'red');
+			CLI::newLine();
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
-		$ns = rtrim(str_replace('\\', DIRECTORY_SEPARATOR, $ns), '\\') . DIRECTORY_SEPARATOR;
-		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
+		CLI::write('Logs cleared.', 'green');
+		CLI::newLine();
 	}
 }

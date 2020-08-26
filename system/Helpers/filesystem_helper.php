@@ -386,7 +386,7 @@ if (! function_exists('get_file_info'))
 			}
 		}
 
-		return $fileInfo;
+		return $fileInfo; // @phpstan-ignore-line
 	}
 }
 

@@ -51,8 +51,8 @@ interface HandlerInterface
 	 * will stop. Any handlers that have not run, yet, will not
 	 * be run.
 	 *
-	 * @param $level
-	 * @param $message
+	 * @param string $level
+	 * @param string $message
 	 *
 	 * @return boolean
 	 */

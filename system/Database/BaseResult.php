@@ -57,7 +57,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Result ID
 	 *
-	 * @var resource|object
+	 * @var resource|object|boolean
 	 */
 	public $resultID;
 
@@ -78,7 +78,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Custom Result Object
 	 *
-	 * @var object[]
+	 * @var array
 	 */
 	public $customResultObject = [];
 
@@ -99,7 +99,7 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Row data
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	public $rowData;
 
@@ -202,6 +202,7 @@ abstract class BaseResult implements ResultInterface
 			$this->customResultObject[$className][] = $row;
 		}
 
+		// @phpstan-ignore-next-line
 		return $this->customResultObject[$className];
 	}
 
@@ -293,6 +294,7 @@ abstract class BaseResult implements ResultInterface
 			$this->resultObject[] = $row;
 		}
 
+		// @phpstan-ignore-next-line
 		return $this->resultObject;
 	}
 

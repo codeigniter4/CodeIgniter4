@@ -160,6 +160,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
+		$targetPath = rtrim($targetPath, '/') . '/';
 		$targetPath = $this->setPath($targetPath); //set the target path
 
 		if ($this->hasMoved)
@@ -172,7 +173,6 @@ class UploadedFile extends File implements UploadedFileInterface
 			throw HTTPException::forInvalidFile();
 		}
 
-		$targetPath  = rtrim($targetPath, '/') . '/';
 		$name        = is_null($name) ? $this->getName() : $name;
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
@@ -252,12 +252,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getError(): int
 	{
-		if (is_null($this->error))
-		{
-			return UPLOAD_ERR_OK;
-		}
-
-		return $this->error;
+		return $this->error ?? UPLOAD_ERR_OK;
 	}
 
 	//--------------------------------------------------------------------
@@ -280,7 +275,7 @@ class UploadedFile extends File implements UploadedFileInterface
 			UPLOAD_ERR_EXTENSION  => lang('HTTP.uploadErrExtension'),
 		];
 
-		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+		$error = $this->error ?? UPLOAD_ERR_OK;
 
 		return sprintf($errors[$error] ?? lang('HTTP.uploadErrUnknown'), $this->getName());
 	}
@@ -356,7 +351,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * Attempts to determine the best file extension.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function guessExtension(): string
 	{

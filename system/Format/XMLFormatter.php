@@ -51,14 +51,14 @@ class XMLFormatter implements FormatterInterface
 	/**
 	 * Takes the given data and formats it.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return string|boolean (XML string | false)
 	 */
 	public function format($data)
 	{
-		$config  = new Format();
-		
+		$config = new Format();
+
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
 		if (! extension_loaded('simplexml'))
@@ -70,7 +70,7 @@ class XMLFormatter implements FormatterInterface
 		}
 
 		$options = $config->formatterOptions['application/xml'] ?? 0;
-		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>', $options);
+		$output  = new \SimpleXMLElement('<?xml version="1.0"?><response></response>', $options);
 
 		$this->arrayToXML((array)$data, $output);
 

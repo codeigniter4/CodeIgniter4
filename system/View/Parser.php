@@ -173,7 +173,7 @@ class Parser extends View
 		// Should we cache?
 		if (isset($options['cache']))
 		{
-			cache()->save($cacheName, $output, (int) $options['cache']);
+			cache()->save($cacheName, $output, (int) $options['cache']); // @phpstan-ignore-line
 		}
 		$this->tempData = null;
 		return $output;
@@ -589,10 +589,10 @@ class Parser extends View
 	 * Handles replacing a pseudo-variable with the actual content. Will double-check
 	 * for escaping brackets.
 	 *
-	 * @param $pattern
-	 * @param $content
-	 * @param $template
-	 * @param boolean  $escape
+	 * @param mixed   $pattern
+	 * @param string  $content
+	 * @param string  $template
+	 * @param boolean $escape
 	 *
 	 * @return string
 	 */
@@ -842,7 +842,7 @@ class Parser extends View
 	 * Converts an object to an array, respecting any
 	 * toArray() methods on an object.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return mixed
 	 */

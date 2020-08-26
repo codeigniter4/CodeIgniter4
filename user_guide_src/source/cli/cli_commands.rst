@@ -2,8 +2,8 @@
 Custom CLI Commands
 ###################
 
-While the ability to use cli commands like any other route is convenient, you might find times where you
-need a little something different. That's where CLI Commands come in. They are simple classes that do not
+While the ability to use CLI commands like any other route is convenient, you might find times where you
+need a little something different. That's where CLI commands come in. They are simple classes that do not
 need to have routes defined for, making them perfect for building tools that developers can use to make
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.
@@ -18,7 +18,7 @@ Running Commands
 
 Commands are run from the command line, in the root directory. The same one that holds the **/app**
 and **/system** directories. A custom script, **spark** has been provided that is used to run any of the
-cli commands::
+CLI commands::
 
     > php spark
 
@@ -70,12 +70,12 @@ and must extend ``CodeIgniter\CLI\BaseCommand``, and implement the ``run()`` met
 
 The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:
 
-* ($group): a string to describe the group the command is lumped under when listing commands. For example (Database)
-* ($name): a string to describe the command's name. For example (migrate:create)
-* ($description): a string to describe the command. For example (Creates a new migration file.)
-* ($usage): a string to describe the command usage. For example (migrate:create [migration_name] [Options])
-* ($arguments): an array of strings to describe each command argument. For example ('migration_name' => 'The migration file name')
-* ($options): an array of strings to describe each command option. For example ('-n' => 'Set migration namespace')
+* ``$group``: a string to describe the group the command is lumped under when listing commands. For example: ``Database``
+* ``$name``: a string to describe the command's name. For example: ``migrate:create``
+* ``$description``: a string to describe the command. For example: ``Creates a new migration file.``
+* ``$usage``: a string to describe the command usage. For example: ``migrate:create [name] [options]``
+* ``$arguments``: an array of strings to describe each command argument. For example: ``'name' => 'The migration file name'``
+* ``$options``: an array of strings to describe each command option. For example: ``'-n' => 'Set migration namespace'``
 
 **Help description will be automatically generated according to the above parameters.**
 
@@ -86,7 +86,7 @@ Commands must be stored within a directory named **Commands**. However, that dir
 that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
-.. note:: When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
+.. note:: When the commands are executed, the full CodeIgniter CLI environment has been loaded, making it
  possible to get environment information, path information, and to use any of the tools you would use when making a Controller.
 
 An Example Command
@@ -129,7 +129,7 @@ run()
 -----
 
 The ``run()`` method is the method that is called when the command is being run. The ``$params`` array is a list of
-any cli arguments after the command name for your use. If the cli string was::
+any CLI arguments after the command name for your use. If the CLI string was::
 
     > php spark foo bar baz
 
@@ -162,21 +162,21 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
 .. php:class:: CodeIgniter\\CLI\\BaseCommand
 
-    .. php:method:: call(string $command[, array $params=[] ])
+    .. php:method:: call(string $command[, array $params = []])
 
         :param string $command: The name of another command to call.
-        :param array $params: Additional cli arguments to make available to that command.
+        :param array $params: Additional CLI arguments to make available to that command.
 
         This method allows you to run other commands during the execution of your current command::
 
         $this->call('command_one');
         $this->call('command_two', $params);
 
-    .. php:method:: showError(\Exception $e)
+    .. php:method:: showError(Throwable $e)
 
-        :param Exception $e: The exception to use for error reporting.
+        :param Throwable $e: The exception to use for error reporting.
 
-        A convenience method to maintain a consistent and clear error output to the cli::
+        A convenience method to maintain a consistent and clear error output to the CLI::
 
             try
             {

@@ -106,7 +106,7 @@ class Builder extends BaseBuilder
 		$direction = strtoupper(trim($direction));
 		if ($direction === 'RANDOM')
 		{
-			if (! is_float($orderBy) && ctype_digit((string) $orderBy))
+			if (ctype_digit($orderBy))
 			{
 				$orderBy = (float) ($orderBy > 1 ? "0.{$orderBy}" : $orderBy);
 			}
@@ -331,7 +331,7 @@ class Builder extends BaseBuilder
 		}
 
 		$cases = '';
-		foreach ($final as $k => $v)
+		foreach ($final as $k => $v) // @phpstan-ignore-line
 		{
 			$cases .= "{$k} = (CASE {$index}\n"
 					. implode("\n", $v)

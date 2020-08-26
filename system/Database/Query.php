@@ -80,7 +80,7 @@ class Query implements QueryInterface
 	 * The start time in seconds with microseconds
 	 * for when this query was executed.
 	 *
-	 * @var float
+	 * @var string|float
 	 */
 	protected $startTime;
 
@@ -110,7 +110,7 @@ class Query implements QueryInterface
 	 * Pointer to database connection.
 	 * Mainly for escaping features.
 	 *
-	 * @var BaseConnection
+	 * @var ConnectionInterface
 	 */
 	public $db;
 
@@ -119,9 +119,9 @@ class Query implements QueryInterface
 	/**
 	 * BaseQuery constructor.
 	 *
-	 * @param $db ConnectionInterface
+	 * @param ConnectionInterface $db
 	 */
-	public function __construct(&$db)
+	public function __construct(ConnectionInterface &$db)
 	{
 		$this->db = $db;
 	}
@@ -233,9 +233,9 @@ class Query implements QueryInterface
 	 * @param boolean $returnRaw
 	 * @param integer $decimals
 	 *
-	 * @return string
+	 * @return string|float
 	 */
-	public function getStartTime(bool $returnRaw = false, int $decimals = 6): string
+	public function getStartTime(bool $returnRaw = false, int $decimals = 6)
 	{
 		if ($returnRaw)
 		{

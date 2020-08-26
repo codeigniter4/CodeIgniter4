@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -445,7 +446,7 @@ if (! function_exists('safe_mailto'))
 				}
 
 				$temp[] = $ordinal;
-				if (count($temp) === $count)
+				if (count($temp) === $count) // @phpstan-ignore-line
 				{
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[]    = '|' . $number;
@@ -589,7 +590,7 @@ if (! function_exists('url_title'))
 
 		$trans = [
 			'&.+?;'                   => '',
-			'[^\w\d _-]'              => '',
+			'[^\w\d\pL\pM _-]'        => '',
 			'\s+'                     => $separator,
 			'(' . $q_separator . ')+' => $separator,
 		];
@@ -634,3 +635,58 @@ if (! function_exists('mb_url_title'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('url_to'))
+{
+	/**
+	 * Get the full, absolute URL to a controller method
+	 * (with additional arguments)
+	 *
+	 * @param string $controller
+	 * @param mixed  ...$args
+	 *
+	 * @throws \CodeIgniter\Router\Exceptions\RouterException
+	 *
+	 * @return string
+	 */
+	function url_to(string $controller, ...$args): string
+	{
+		if (! $route = route_to($controller, ...$args))
+		{
+			$explode = explode('::', $controller);
+
+			if (isset($explode[1]))
+			{
+				throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
+			}
+
+			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
+		}
+
+		return site_url($route);
+	}
+}
+
+if (! function_exists('url_is'))
+{
+	/**
+	 * Determines if current url path contains
+	 * the given path. It may contain a wildcard (*)
+	 * which will allow any valid character.
+	 *
+	 * Example:
+	 *   if (url_is('admin*)) ...
+	 *
+	 * @param string $path
+	 *
+	 * @return boolean
+	 */
+	function url_is(string $path): bool
+	{
+		// Setup our regex to allow wildcards
+		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
+		$currentPath = rtrim(service('request')->uri->getPath(), '/ ');
+
+		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
+	}
+}

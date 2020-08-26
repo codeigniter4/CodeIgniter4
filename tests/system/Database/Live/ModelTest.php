@@ -19,6 +19,7 @@ use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
+use Tests\Support\Models\WithoutAutoincrementModel;
 
 /**
  * @group DatabaseLive
@@ -1399,6 +1400,66 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUpdateBatchWithEntity()
+	{
+		$entity1 = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+
+		$entity2   = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+		$testModel = new UserModel();
+
+		$entity1->id      = 1;
+		$entity1->name    = 'Jones Martin';
+		$entity1->country = 'India';
+		$entity1->deleted = 0;
+
+		$entity2->id      = 4;
+		$entity2->name    = 'Jones Martin';
+		$entity2->country = 'India';
+		$entity2->deleted = 0;
+
+		$this->assertEquals(2, $testModel->updateBatch([$entity1, $entity2], 'id'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSelectAndEntitiesSaveOnlyChangedValues()
 	{
 		// Insert value in job table
@@ -1962,6 +2023,42 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testInsertBatchNewEntityWithDateTime()
+	{
+		$entity    = new class extends Entity{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+		$testModel = new UserModel();
+
+		$entity->name       = 'Mark';
+		$entity->email      = 'mark@example.com';
+		$entity->country    = 'India';
+		$entity->deleted    = 0;
+		$entity->created_at = new Time('now');
+
+		$this->setPrivateProperty($testModel, 'useTimestamps', true);
+
+		$this->assertEquals(2, $testModel->insertBatch([$entity, $entity]));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSaveNewEntityWithDateTime()
 	{
 		$entity    = new class extends Entity{
@@ -2203,6 +2300,75 @@ class ModelTest extends CIDatabaseTestCase
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUseAutoIncrementSetToFalseInsertException()
+	{
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no primary key defined when trying to make insert');
+
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseInsert()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseUpdate()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$key    = 'key';
+		$update = [
+			'value' => 'some different value',
+		];
+
+		$model->update($key, $update);
+
+		$this->seeInDatabase('without_auto_increment', ['key' => $key, 'value' => $update['value']]);
+	}
+
+	public function testUseAutoIncrementSetToFalseSave()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some value',
+		];
+
+		$model->save($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+
+		$update = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+		$model->save($update);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $update);
 	}
 
 	//--------------------------------------------------------------------

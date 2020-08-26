@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -90,13 +91,32 @@ trait FeatureTestTrait
 	/**
 	 * Sets any values that should exist during this session.
 	 *
-	 * @param array|null Array of values, or null to use the current $_SESSION
+	 * @param array|null $values Array of values, or null to use the current $_SESSION
 	 *
 	 * @return $this
 	 */
 	public function withSession(array $values = null)
 	{
 		$this->session = is_null($values) ? $_SESSION : $values;
+
+		return $this;
+	}
+
+	/**
+	 * Set request's headers
+	 *
+	 * Example of use
+	 * withHeaders([
+	 *  'Authorization' => 'Token'
+	 * ])
+	 *
+	 * @param array $headers Array of headers
+	 *
+	 * @return $this
+	 */
+	public function withHeaders(array $headers = [])
+	{
+		$this->headers = $headers;
 
 		return $this;
 	}
@@ -143,10 +163,11 @@ trait FeatureTestTrait
 		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$request = $this->setupRequest($method, $path);
+		$request = $this->setupHeaders($request);
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure the RouteCollection knows what method we're using...
-		$routes = $this->routes ?: Services::routes();
+		$routes = $this->routes ?: Services::routes(); // @phpstan-ignore-line
 		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
@@ -303,6 +324,26 @@ trait FeatureTestTrait
 	}
 
 	/**
+	 * Setup the custom request's headers
+	 *
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 *
+	 * @return \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected function setupHeaders(IncomingRequest $request)
+	{
+		if (! empty($this->headers))
+		{
+			foreach ($this->headers as $name => $value)
+			{
+				$request->setHeader($name, $value);
+			}
+		}
+
+		return $request;
+	}
+
+	/**
 	 * Populates the data of our Request with "global" data
 	 * relevant to the request, like $_POST data.
 	 *
@@ -321,7 +362,7 @@ trait FeatureTestTrait
 		// otherwise set it from the URL.
 		$get = ! empty($params) && $method === 'get'
 			? $params
-			: $this->getPrivateProperty($request->uri, 'query');
+			: $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
 
 		$request->setGlobal('get', $get);
 		if ($method !== 'get')

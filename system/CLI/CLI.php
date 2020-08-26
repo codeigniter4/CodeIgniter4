@@ -143,21 +143,21 @@ class CLI
 	 * output was a "write" or a "print" to
 	 * keep the output clean and as expected.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected static $lastWrite;
 
 	/**
 	 * Height of the CLI window
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected static $height;
 
 	/**
 	 * Width of the CLI window
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected static $width;
 
@@ -384,9 +384,9 @@ class CLI
 	/**
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
-	 * @param string|array $text       The text to output, or array of errors
-	 * @param string       $foreground
-	 * @param string       $background
+	 * @param string      $text       The text to output, or array of errors
+	 * @param string      $foreground
+	 * @param string|null $background
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
@@ -881,32 +881,41 @@ class CLI
 	/**
 	 * Parses the command line it was called from and collects all
 	 * options and valid segments.
-	 *
-	 * I tried to use getopt but had it fail occasionally to find any
-	 * options but argc has always had our back. We don't have all of the power
-	 * of getopt but this does us just fine.
 	 */
 	protected static function parseCommandLine()
 	{
-		// start picking segments off from #1, ignoring the invoking program
-		for ($i = 1; $i < $_SERVER['argc']; $i ++)
+		$args = $_SERVER['argv'];
+		array_shift($args); // scrap invoking program
+		$optionValue = false;
+
+		foreach ($args as $i => $arg)
 		{
-			// If there's no '-' at the beginning of the argument
-			// then add it to our segments.
-			if (mb_strpos($_SERVER['argv'][$i], '-') !== 0)
+			// If there's no "-" at the beginning, then
+			// this is probably an argument or an option value
+			if (mb_strpos($arg, '-') !== 0)
 			{
-				static::$segments[] = $_SERVER['argv'][$i];
+				if ($optionValue)
+				{
+					// We have already included this in the previous
+					// iteration, so reset this flag
+					$optionValue = false;
+				}
+				else
+				{
+					// Yup, it's a segment
+					static::$segments[] = $arg;
+				}
+
 				continue;
 			}
 
-			$arg   = str_replace('-', '', $_SERVER['argv'][$i]);
+			$arg   = ltrim($arg, '-');
 			$value = null;
 
-			// if there is a following segment, and it doesn't start with a dash, it's a value.
-			if (isset($_SERVER['argv'][$i + 1]) && mb_strpos($_SERVER['argv'][$i + 1], '-') !== 0)
+			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
 			{
-				$value = $_SERVER['argv'][$i + 1];
-				$i ++;
+				$value       = $args[$i + 1];
+				$optionValue = true;
 			}
 
 			static::$options[$arg] = $value;
@@ -1127,7 +1136,7 @@ class CLI
 			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
-			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $total_rows))
 			{
 				$table .= $cols . PHP_EOL;
 			}

@@ -9,4 +9,9 @@ class SecurityException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.disallowedAction'), 403);
 	}
+
+	public static function forInvalidSameSiteSetting(string $samesite)
+	{
+		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
+	}
 }

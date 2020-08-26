@@ -56,7 +56,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldCount(): int
 	{
-		return $this->resultID->numColumns();
+		return $this->resultID->numColumns(); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -71,7 +71,7 @@ class Result extends BaseResult implements ResultInterface
 		$fieldNames = [];
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$fieldNames[] = $this->resultID->columnName($i);
+			$fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
 		}
 
 		return $fieldNames;
@@ -95,20 +95,20 @@ class Result extends BaseResult implements ResultInterface
 		];
 
 		$retVal = [];
-		$this->resultID->fetchArray(SQLITE3_NUM);  
-		
+		$this->resultID->fetchArray(SQLITE3_NUM); // @phpstan-ignore-line
+
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
 			$retVal[$i]             = new \stdClass();
-			$retVal[$i]->name       = $this->resultID->columnName($i);
-			$type                   = $this->resultID->columnType($i);
+			$retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
+			$type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
 			$retVal[$i]->type       = $type;
 			$retVal[$i]->type_name  = isset($data_types[$type]) ? $data_types[$type] : null;
 			$retVal[$i]->max_length = null;
 			$retVal[$i]->length     = null;
 		}
-		$this->resultID->reset();
-		
+		$this->resultID->reset(); // @phpstan-ignore-line
+
 		return $retVal;
 	}
 
@@ -147,7 +147,7 @@ class Result extends BaseResult implements ResultInterface
 			throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
 		}
 
-		return $this->resultID->reset();
+		return $this->resultID->reset(); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -161,7 +161,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchAssoc()
 	{
-		return $this->resultID->fetchArray(SQLITE3_ASSOC);
+		return $this->resultID->fetchArray(SQLITE3_ASSOC); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

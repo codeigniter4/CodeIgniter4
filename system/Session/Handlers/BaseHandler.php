@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\App as AppConfig;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -53,7 +53,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The Data fingerprint.
 	 *
-	 * @var boolean
+	 * @var string
 	 */
 	protected $fingerprint;
 
@@ -117,7 +117,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * The 'save path' for the session
 	 * varies between
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	protected $savePath;
 
@@ -133,10 +133,10 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 */
-	public function __construct($config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;

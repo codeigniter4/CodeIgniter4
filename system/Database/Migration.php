@@ -55,7 +55,7 @@ abstract class Migration
 	/**
 	 * Database Connection instance
 	 *
-	 * @var BaseConnection
+	 * @var ConnectionInterface
 	 */
 	protected $db;
 

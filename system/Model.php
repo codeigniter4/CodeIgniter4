@@ -99,9 +99,16 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * Whether primary key uses auto increment.
+	 *
+	 * @var boolean
+	 */
+	protected $useAutoIncrement = true;
+
+	/**
 	 * Last insert ID
 	 *
-	 * @var integer
+	 * @var integer|string
 	 */
 	protected $insertID = 0;
 
@@ -213,7 +220,7 @@ class Model
 	/**
 	 * Query Builder object
 	 *
-	 * @var BaseBuilder
+	 * @var BaseBuilder|null
 	 */
 	protected $builder;
 
@@ -222,7 +229,7 @@ class Model
 	 * The array must match the format of data passed to the Validation
 	 * library.
 	 *
-	 * @var array
+	 * @var array|string
 	 */
 	protected $validationRules = [];
 
@@ -253,7 +260,7 @@ class Model
 	/**
 	 * Our validator instance.
 	 *
-	 * @var \CodeIgniter\Validation\Validation
+	 * @var ValidationInterface
 	 */
 	protected $validation;
 
@@ -619,11 +626,32 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		// When useAutoIncrement feature is disabled check
+		// in the database if given record already exists
+		if (! $makeUpdate = $this->useAutoIncrement)
+		{
+			$count = 0;
+
+			if (is_object($data) && isset($data->{$this->primaryKey}))
+			{
+				$count = $this->where($this->primaryKey, $data->{$this->primaryKey})->countAllResults();
+			}
+			elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+			{
+				$count = $this->where($this->primaryKey, $data[$this->primaryKey])->countAllResults();
+			}
+
+			if ($count === 1)
+			{
+				$makeUpdate = true;
+			}
+		}
+
+		if ($makeUpdate && is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		elseif ($makeUpdate && is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
@@ -721,11 +749,11 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	public function getInsertID(): int
+	public function getInsertID()
 	{
-		return $this->insertID;
+		return is_numeric($this->insertID) ? (int) $this->insertID : $this->insertID;
 	}
 
 	//--------------------------------------------------------------------
@@ -811,6 +839,13 @@ class Model
 			$eventData = $this->trigger('beforeInsert', $eventData);
 		}
 
+		// Require non empty primaryKey when
+		// not using auto-increment feature
+		if (! $this->useAutoIncrement && empty($eventData['data'][$this->primaryKey]))
+		{
+			throw DataException::forEmptyPrimaryKey('insert');
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
 				->set($eventData['data'], '', $escape)
@@ -819,7 +854,14 @@ class Model
 		// If insertion succeeded then save the insert ID
 		if ($result->resultID)
 		{
-			$this->insertID = $this->db->insertID();
+			if (! $this->useAutoIncrement)
+			{
+				$this->insertID = $eventData['data'][$this->primaryKey];
+			}
+			else
+			{
+				$this->insertID = $this->db->insertID(); // @phpstan-ignore-line
+			}
 		}
 
 		$eventData = [
@@ -858,13 +900,54 @@ class Model
 	 */
 	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
-		if (is_array($set) && $this->skipValidation === false)
+		if (is_array($set))
 		{
-			foreach ($set as $row)
+			foreach ($set as &$row)
 			{
-				if ($this->cleanRules()->validate($row) === false)
+				// If $data is using a custom class with public or protected
+				// properties representing the table elements, we need to grab
+				// them as an array.
+				if (is_object($row) && ! $row instanceof stdClass)
+				{
+					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat, false);
+				}
+
+				// If it's still a stdClass, go ahead and convert to
+				// an array so doProtectFields and other model methods
+				// don't have to do special checks.
+				if (is_object($row))
+				{
+					$row = (array) $row;
+				}
+
+				// Validate every row..
+				if ($this->skipValidation === false && $this->cleanRules()->validate($row) === false)
 				{
 					return false;
+				}
+
+				// Must be called first so we don't
+				// strip out created_at values.
+				$row = $this->doProtectFields($row);
+
+				// Require non empty primaryKey when
+				// not using auto-increment feature
+				if (! $this->useAutoIncrement && empty($row[$this->primaryKey]))
+				{
+					throw DataException::forEmptyPrimaryKey('insertBatch');
+				}
+
+				// Set created_at and updated_at with same time
+				$date = $this->setDate();
+
+				if ($this->useTimestamps && ! empty($this->createdField) && ! array_key_exists($this->createdField, $row))
+				{
+					$row[$this->createdField] = $date;
+				}
+
+				if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $row))
+				{
+					$row[$this->updatedField] = $date;
 				}
 			}
 		}
@@ -997,13 +1080,48 @@ class Model
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
-		if (is_array($set) && $this->skipValidation === false)
+		if (is_array($set))
 		{
-			foreach ($set as $row)
+			foreach ($set as &$row)
 			{
-				if ($this->cleanRules(true)->validate($row) === false)
+				// If $data is using a custom class with public or protected
+				// properties representing the table elements, we need to grab
+				// them as an array.
+				if (is_object($row) && ! $row instanceof stdClass)
+				{
+					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat);
+				}
+
+				// If it's still a stdClass, go ahead and convert to
+				// an array so doProtectFields and other model methods
+				// don't have to do special checks.
+				if (is_object($row))
+				{
+					$row = (array) $row;
+				}
+
+				// Validate data before saving.
+				if ($this->skipValidation === false && $this->cleanRules(true)->validate($row) === false)
 				{
 					return false;
+				}
+
+				// Save updateIndex for later
+				$updateIndex = $row[$index] ?? null;
+
+				// Must be called first so we don't
+				// strip out updated_at values.
+				$row = $this->doProtectFields($row);
+
+				// Restore updateIndex value in case it was wiped out
+				if ($updateIndex !== null)
+				{
+					$row[$index] = $updateIndex;
+				}
+
+				if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $row))
+				{
+					$row[$this->updatedField] = $this->setDate();
 				}
 			}
 		}
@@ -1164,7 +1282,7 @@ class Model
 			}
 		}
 
-		return $this->builder()->replace($data, $returnSQL);
+		return $this->builder()->testMode($returnSQL)->replace($data);
 	}
 
 	//--------------------------------------------------------------------
@@ -1584,13 +1702,6 @@ class Model
 			$data = (array) $data;
 		}
 
-		// ValidationRules can be either a string, which is the group name,
-		// or an array of rules.
-		if (is_string($rules))
-		{
-			$rules = $this->validation->loadRuleGroup($rules);
-		}
-
 		$rules = $this->cleanValidationRules
 			? $this->cleanValidationRules($rules, $data)
 			: $rules;
@@ -1602,10 +1713,8 @@ class Model
 			return true;
 		}
 
-		$this->validation->setRules($rules, $this->validationMessages);
-		$valid = $this->validation->run($data, null, $this->DBGroup);
-
-		return (bool) $valid;
+		return $this->validation->setRules($rules, $this->validationMessages)
+								->run($data, null, $this->DBGroup);
 	}
 
 	//--------------------------------------------------------------------

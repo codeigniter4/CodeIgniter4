@@ -58,7 +58,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Database port
 	 *
-	 * @var integer
+	 * @var integer|string
 	 */
 	protected $port = '';
 
@@ -199,21 +199,21 @@ abstract class BaseConnection implements ConnectionInterface
 	 * The last query object that was executed
 	 * on this connection.
 	 *
-	 * @var array
+	 * @var mixed
 	 */
 	protected $lastQuery;
 
 	/**
 	 * Connection ID
 	 *
-	 * @var object|resource
+	 * @var object|resource|boolean
 	 */
 	public $connID = false;
 
 	/**
 	 * Result ID
 	 *
-	 * @var object|resource
+	 * @var object|resource|boolean
 	 */
 	public $resultID = false;
 
@@ -236,7 +236,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Identifier escape character
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	public $escapeChar = '"';
 
@@ -341,10 +341,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		foreach ($params as $key => $value)
 		{
-			if (property_exists($this, $key))
-			{
-				$this->$key = $value;
-			}
+			$this->$key = $value;
 		}
 	}
 
@@ -616,7 +613,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
@@ -1013,6 +1010,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if ($sql instanceof QueryInterface)
 		{
+			// @phpstan-ignore-next-line
 			$sql = $sql->getOriginalQuery();
 		}
 
@@ -1364,7 +1362,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	abstract public function affectedRows(): int;
 
@@ -1455,7 +1453,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Calls the individual driver for platform
 	 * specific escaping for LIKE conditions
 	 *
-	 * @param  string|string[]
+	 * @param  string|string[] $str
 	 * @return string|string[]
 	 */
 	public function escapeLikeString($str)
@@ -1493,7 +1491,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function callFunction(string $functionName, ...$params): bool
 	{
-		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)) . '_';
+		$driver = strtolower($this->DBDriver);
+		$driver = ($driver === 'postgre' ? 'pg' : $driver) . '_';
 
 		if (false === strpos($driver, $functionName))
 		{
@@ -1672,13 +1671,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with field data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getFieldData(string $table)
 	{
-		$fields = $this->_fieldData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1687,13 +1684,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getIndexData(string $table)
 	{
-		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_indexData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1702,13 +1697,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with foreign key data
 	 *
 	 * @param  string $table the table name
-	 * @return array|false
+	 * @return array
 	 */
 	public function getForeignKeyData(string $table)
 	{
-		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
-
-		return $fields ?? false;
+		return $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1786,9 +1779,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Insert ID
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	abstract public function insertID(): int;
+	abstract public function insertID();
 
 	//--------------------------------------------------------------------
 
@@ -1797,9 +1790,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param boolean $constrainByPrefix
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	abstract protected function _listTables(bool $constrainByPrefix = false): string;
+	abstract protected function _listTables(bool $constrainByPrefix = false);
 
 	//--------------------------------------------------------------------
 
@@ -1808,9 +1801,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $table
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	abstract protected function _listColumns(string $table = ''): string;
+	abstract protected function _listColumns(string $table = '');
 
 	//--------------------------------------------------------------------
 

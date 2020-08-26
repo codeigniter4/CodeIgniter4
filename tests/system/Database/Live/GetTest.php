@@ -99,7 +99,7 @@ class GetTest extends CIDatabaseTestCase
 		$type_test = $this->db->table('type_test')
 							  ->get()
 							  ->getFieldData();
-		
+
 		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
@@ -128,7 +128,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('long', $type_test[0]->type_name); //INTEGER AUTOINC
 			$this->assertEquals('var_string', $type_test[1]->type_name);  //VARCHAR
 			$this->assertEquals('string', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('blob', $type_test[3]->type_name);  //TEXT		
+			$this->assertEquals('blob', $type_test[3]->type_name);  //TEXT
 			$this->assertEquals('short', $type_test[4]->type_name);  //SMALLINT
 			$this->assertEquals('long', $type_test[5]->type_name);  //INTEGER
 			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
@@ -145,7 +145,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('double', $type_test[17]->type_name);  //DOUBLE
 			$this->assertEquals('newdecimal', $type_test[18]->type_name);  //DECIMAL
 			$this->assertEquals('blob', $type_test[19]->type_name);  //BLOB
-		}	
+		}
 		if ($this->db->DBDriver === 'Postgre')
 		{
 			$this->assertEquals('int4', $type_test[0]->type_name); //INTEGER AUTOINC

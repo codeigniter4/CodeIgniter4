@@ -320,6 +320,7 @@ class FileHandler implements CacheInterface
 
 		$data = unserialize(file_get_contents($this->path . $key));
 
+		// @phpstan-ignore-next-line
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
 			// If the file is still there then remove it
@@ -528,7 +529,7 @@ class FileHandler implements CacheInterface
 			}
 		}
 
-		return $fileInfo;
+		return $fileInfo; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

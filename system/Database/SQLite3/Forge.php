@@ -67,7 +67,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Constructor.
 	 *
-	 * @param $db ConnectionInterface
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface $db)
 	{
@@ -153,7 +153,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $table      Table name
 	 * @param mixed  $field      Column definition
 	 *
-	 * @return string|array
+	 * @return string|array|null
 	 */
 	protected function _alterTable(string $alter_type, string $table, $field)
 	{
@@ -256,7 +256,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * Performs a data type mapping between different databases.
 	 *
-	 * @param array &$attributes
+	 * @param array $attributes
 	 *
 	 * @return void
 	 */
@@ -278,8 +278,8 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */

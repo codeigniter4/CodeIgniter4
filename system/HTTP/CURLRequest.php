@@ -57,7 +57,7 @@ class CURLRequest extends Request
 	/**
 	 * The response object associated with this request
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var ResponseInterface|null
 	 */
 	protected $response;
 
@@ -141,7 +141,7 @@ class CURLRequest extends Request
 	 * Sends an HTTP request to the specified $url. If this is a relative
 	 * URL, it will be merged with $this->baseURI to form a complete URL.
 	 *
-	 * @param $method
+	 * @param string $method
 	 * @param string $url
 	 * @param array  $options
 	 *
@@ -447,7 +447,7 @@ class CURLRequest extends Request
 		}
 
 		$output = $this->sendRequest($curl_options);
-		
+
 		// Set the string we want to break our response from
 		$breakString = "\r\n\r\n";
 
@@ -455,25 +455,23 @@ class CURLRequest extends Request
 		{
 			$output = substr($output, strpos($output, $breakString) + 4);
 		}
-		
+
 		 // If request and response have Digest
 		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
 				$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
-
 		// Split out our headers and body
 		$break = strpos($output, $breakString);
 
-		
 		if ($break !== false)
 		{
 			// Our headers
 			$headers = explode("\n", substr($output, 0, $break));
-			
+
 			$this->setResponseHeaders($headers);
-			
+
 			// Our body
 			$body = substr($output, $break + 4);
 			$this->response->setBody($body);
@@ -545,7 +543,7 @@ class CURLRequest extends Request
 		$size = strlen($this->body);
 
 		// Have content?
-		if ($size === null || $size > 0)
+		if ($size > 0)
 		{
 			return $this->applyBody($curl_options);
 		}

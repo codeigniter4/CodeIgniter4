@@ -83,7 +83,7 @@ class ClearDebugbar extends BaseCommand
 	 *
 	 * @return void
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		helper('filesystem');
 

@@ -131,8 +131,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 * will stop. Any handlers that have not run, yet, will not
 	 * be run.
 	 *
-	 * @param $level
-	 * @param $message
+	 * @param string $level
+	 * @param string $message
 	 *
 	 * @return boolean
 	 */
@@ -175,7 +175,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	/**
 	 * Converts the object to display nicely in the Chrome Logger UI.
 	 *
-	 * @param $object
+	 * @param mixed $object
 	 *
 	 * @return array
 	 */
