@@ -42,6 +42,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\Modules;
 use Config\Services;
 
 /**
@@ -185,14 +186,14 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * The name of the current group, if any.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $group;
 
 	/**
 	 * The current subdomain.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $currentSubdomain;
 
@@ -200,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Stores copy of current options being
 	 * applied during creation.
 	 *
-	 * @var null
+	 * @var array|null
 	 */
 	protected $currentOptions;
 
@@ -233,7 +234,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param \CodeIgniter\Autoloader\FileLocator $locator
 	 * @param \Config\Modules                     $moduleConfig
 	 */
-	public function __construct(FileLocator $locator, $moduleConfig)
+	public function __construct(FileLocator $locator, Modules $moduleConfig)
 	{
 		$this->fileLocator  = $locator;
 		$this->moduleConfig = $moduleConfig;
@@ -529,7 +530,8 @@ class RouteCollection implements RouteCollectionInterface
 		// we might need to do.
 		$this->discoverRoutes();
 
-		$routes = [];
+		$routes     = [];
+		$collection = [];
 
 		if (isset($this->routes[$verb]))
 		{
@@ -806,8 +808,7 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$new_name = ucfirst($name);
-
+		$new_name = implode('\\', array_map('ucfirst', explode('/', $name)));
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
@@ -920,8 +921,7 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$newName = ucfirst($name);
-
+		$newName = implode('\\', array_map('ucfirst', explode('/', $name)));
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
@@ -1384,7 +1384,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		$options = array_merge((array) $this->currentOptions, (array) $options);
+		$options = array_merge($this->currentOptions ?? [], $options ?? []);
 
 		// Hostname limiting?
 		if (! empty($options['hostname']))
@@ -1439,17 +1439,17 @@ class RouteCollection implements RouteCollectionInterface
 		//If is redirect, No processing
 		if (! isset($options['redirect']))
 		{
-			// If no namespace found, add the default namespace
-			if (is_string($to) && (strpos($to, '\\') === false || strpos($to, '\\') > 0))
-			{
-				$namespace = $options['namespace'] ?? $this->defaultNamespace;
-				$to        = trim($namespace, '\\') . '\\' . $to;
-			}
-
-			// Always ensure that we escape our namespace so we're not pointing to
-			// \CodeIgniter\Routes\Controller::method.
 			if (is_string($to))
 			{
+				// If no namespace found, add the default namespace
+				if (strpos($to, '\\') === false || strpos($to, '\\') > 0)
+				{
+					$namespace = $options['namespace'] ?? $this->defaultNamespace;
+					$to        = trim($namespace, '\\') . '\\' . $to;
+				}
+
+				// Always ensure that we escape our namespace so we're not pointing to
+				// \CodeIgniter\Routes\Controller::method.
 				$to = '\\' . ltrim($to, '\\');
 			}
 		}

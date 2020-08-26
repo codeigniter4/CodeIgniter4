@@ -162,7 +162,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertStatus(int $code)
 	{
-		$this->assertEquals($code, (int) $this->response->getStatusCode());
+		$this->assertEquals($code, $this->response->getStatusCode());
 	}
 
 	/**
@@ -182,8 +182,8 @@ class FeatureResponse extends TestCase
 	/**
 	 * Asserts that an SESSION key has been set and, optionally, test it's value.
 	 *
-	 * @param string $key
-	 * @param null   $value
+	 * @param string      $key
+	 * @param string|null $value
 	 *
 	 * @throws \Exception
 	 */
@@ -216,8 +216,8 @@ class FeatureResponse extends TestCase
 	/**
 	 * Asserts that the Response contains a specific header.
 	 *
-	 * @param string $key
-	 * @param null   $value
+	 * @param string      $key
+	 * @param string|null $value
 	 *
 	 * @throws \Exception
 	 */
@@ -251,8 +251,8 @@ class FeatureResponse extends TestCase
 	 * Asserts that the response has the specified cookie.
 	 *
 	 * @param string      $key
-	 * @param null        $value
-	 * @param string|null $prefix
+	 * @param string|null $value
+	 * @param string      $prefix
 	 *
 	 * @throws \Exception
 	 */

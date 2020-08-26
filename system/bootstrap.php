@@ -37,6 +37,11 @@
  * @filesource
  */
 
+namespace CodeIgniter;
+
+use CodeIgniter;
+use Config;
+
 /*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
@@ -52,6 +57,7 @@
  */
 if (! defined('APPPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -68,6 +74,7 @@ if (! defined('ROOTPATH'))
  */
 if (! defined('SYSTEMPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -76,6 +83,7 @@ if (! defined('SYSTEMPATH'))
  */
 if (! defined('WRITEPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -84,6 +92,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
+	// @phpstan-ignore-next-line
 	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
@@ -159,7 +168,7 @@ if (is_file(COMPOSER_PATH))
 // into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
-$env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
+$env = new CodeIgniter\Config\DotEnv(ROOTPATH);
 $env->load();
 
 // Always load the URL helper -
@@ -176,8 +185,8 @@ helper('url');
  * the pieces all working together.
  */
 
-$appConfig = config(\Config\App::class);
-$app       = new \CodeIgniter\CodeIgniter($appConfig);
+$appConfig = config(Config\App::class);
+$app       = new CodeIgniter\CodeIgniter($appConfig);
 $app->initialize();
 
 return $app;

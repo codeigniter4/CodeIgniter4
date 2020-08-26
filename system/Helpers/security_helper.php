@@ -67,7 +67,8 @@ if (! function_exists('strip_image_tags'))
 	/**
 	 * Strip Image Tags
 	 *
-	 * @param  string $str
+	 * @param string $str
+	 *
 	 * @return string
 	 */
 	function strip_image_tags(string $str): string
@@ -87,7 +88,8 @@ if (! function_exists('encode_php_tags'))
 	/**
 	 * Convert PHP tags to entities
 	 *
-	 * @param  string $str
+	 * @param string $str
+	 *
 	 * @return string
 	 */
 	function encode_php_tags(string $str): string

@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 
 class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -199,7 +200,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong prefix?
 		$config->cookiePrefix = 'mine';
@@ -210,7 +211,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '', '', 'mine');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong domain?
 		$config->cookieDomain = '.mine.com';
@@ -221,7 +222,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '.mine.com', '', '');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 
 		// delete cookie with wrong path?
 		$config->cookiePath = '/whoknowswhere';
@@ -232,7 +233,88 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
 		$response->deleteCookie('bee', '', '/whoknowswhere', '');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie['expires'] <= time(), $cookie['expires'] . ' should be less than ' . time());
+		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
+	}
+
+	public function testCookieDefaultSetSameSite()
+	{
+		$config   = new App();
+		$response = new Response($config);
+		$response->setCookie([
+			'name'  => 'bar',
+			'value' => 'foo',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayHasKey('samesite', $allCookies[0]);
+		$this->assertEquals('Lax', $allCookies[0]['samesite']);
+	}
+
+	public function testCookieStrictSetSameSite()
+	{
+		$config                 = new App();
+		$config->cookieSameSite = 'Strict';
+		$response               = new Response($config);
+		$response->setCookie([
+			'name'  => 'bar',
+			'value' => 'foo',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayHasKey('samesite', $allCookies[0]);
+		$this->assertEquals('Strict', $allCookies[0]['samesite']);
+	}
+
+	public function testCookieBlankSetSameSite()
+	{
+		$config                 = new App();
+		$config->cookieSameSite = '';
+		$response               = new Response($config);
+		$response->setCookie([
+			'name'  => 'bar',
+			'value' => 'foo',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayNotHasKey('samesite', $allCookies[0]);
+	}
+
+	public function testCookieStrictSameSite()
+	{
+		$config   = new App();
+		$response = new Response($config);
+		$response->setCookie([
+			'name'     => 'bar',
+			'value'    => 'foo',
+			'samesite' => 'Strict',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayHasKey('samesite', $allCookies[0]);
+		$this->assertEquals('Strict', $allCookies[0]['samesite']);
+	}
+
+	public function testCookieInvalidSameSite()
+	{
+		$config   = new App();
+		$response = new Response($config);
+
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+
+		$response->setCookie([
+			'name'     => 'bar',
+			'value'    => 'foo',
+			'samesite' => 'Invalid',
+		]);
 	}
 
 }

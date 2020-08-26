@@ -51,14 +51,14 @@ class JSONFormatter implements FormatterInterface
 	/**
 	 * Takes the given data and formats it.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return string|boolean (JSON string | false)
 	 */
 	public function format($data)
 	{
-		$config  = new Format();
-		
+		$config = new Format();
+
 		$options = $config->formatterOptions['application/json'] ?? JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 		$options = $options | JSON_PARTIAL_OUTPUT_ON_ERROR;
 

@@ -102,7 +102,7 @@ class Seed extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$seeder = new Seeder(new \Config\Database());
 
@@ -110,23 +110,16 @@ class Seed extends BaseCommand
 
 		if (empty($seedName))
 		{
-			$seedName = CLI::prompt(lang('Migrations.migSeeder'), 'DatabaseSeeder');
-		}
-
-		if (empty($seedName))
-		{
-			CLI::error(lang('Migrations.migMissingSeeder'));
-			return;
+			$seedName = CLI::prompt(lang('Migrations.migSeeder'), null, 'required');
 		}
 
 		try
 		{
 			$seeder->call($seedName);
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			$this->showError($e);
 		}
 	}
-
 }

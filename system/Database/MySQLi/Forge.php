@@ -262,6 +262,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
+			// @phpstan-ignore-next-line
 			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
 			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -36,28 +37,18 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
+use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a new migration file.
  *
  * @package CodeIgniter\Commands
  */
-class CreateMigration extends BaseCommand
+class CreateMigration extends GeneratorCommand
 {
-
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Database';
-
 	/**
 	 * The Command's name
 	 *
@@ -66,96 +57,79 @@ class CreateMigration extends BaseCommand
 	protected $name = 'migrate:create';
 
 	/**
-	 * the Command's short description
+	 * The Command's short description
 	 *
 	 * @var string
 	 */
 	protected $description = 'Creates a new migration file.';
 
 	/**
-	 * the Command's usage
+	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:create [migration_name] [Options]';
+	protected $usage = 'migrate:create <name> [options]';
 
 	/**
-	 * the Command's Arguments
+	 * The Command's Arguments
 	 *
 	 * @var array
 	 */
 	protected $arguments = [
-		'migration_name' => 'The migration file name',
+		'name' => 'The migration file name',
 	];
 
 	/**
-	 * the Command's Options
+	 * Gets the class name from input.
 	 *
-	 * @var array
+	 * @return string
 	 */
-	protected $options = [
-		'-n' => 'Set migration namespace',
-	];
-
-	/**
-	 * Creates a new migration file with the current timestamp.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params = [])
+	protected function getClassName(): string
 	{
-		helper('inflector');
-		$name = array_shift($params);
-
-		if (empty($name))
+		$class = parent::getClassName();
+		if (empty($class))
 		{
-			$name = CLI::prompt(lang('Migrations.nameMigration'));
+			// @codeCoverageIgnoreStart
+			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
+			// @codeCoverageIgnoreEnd
 		}
 
-		if (empty($name))
-		{
-			CLI::error(lang('Migrations.badCreateName'));
-			return;
-		}
+		return $class;
+	}
 
-		$ns       = $params['-n'] ?? CLI::getOption('n');
-		$homepath = APPPATH;
+	/**
+	 * Gets the qualified class name.
+	 *
+	 * @param string $rootNamespace
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function getNamespacedClass(string $rootNamespace, string $class): string
+	{
+		return $rootNamespace . '\\Database\\Migrations\\' . $class;
+	}
 
-		if (! empty($ns))
-		{
-			// Get all namespaces
-			$namespaces = Services::autoloader()->getNamespace();
+	protected function modifyBasename(string $filename): string
+	{
+		return gmdate(config('Migrations')->timestampFormat) . $filename;
+	}
 
-			foreach ($namespaces as $namespace => $path)
-			{
-				if ($namespace === $ns)
-				{
-					$homepath = realpath(reset($path));
-					break;
-				}
-			}
-		}
-		else
-		{
-			$ns = 'App';
-		}
+	/**
+	 * Gets the template for this class.
+	 *
+	 * @return string
+	 */
+	protected function getTemplate(): string
+	{
+		return <<<EOD
+<?php
 
-		// Always use UTC/GMT so global teams can work together
-		$config   = config('Migrations');
-		$fileName = gmdate($config->timestampFormat) . $name;
-
-		// full path
-		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';
-
-		// Class name should be pascal case now (camel case with upper first letter)
-		$name = pascalize($name);
-
-		$template = <<<EOD
-<?php namespace $ns\Database\Migrations;
+namespace {namespace};
 
 use CodeIgniter\Database\Migration;
 
-class {name} extends Migration
+class {class} extends Migration
 {
 	public function up()
 	{
@@ -171,16 +145,5 @@ class {name} extends Migration
 }
 
 EOD;
-		$template = str_replace('{name}', $name, $template);
-
-		helper('filesystem');
-		if (! write_file($path, $template))
-		{
-			CLI::error(lang('Migrations.writeError', [$path]));
-			return;
-		}
-
-		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
 	}
-
 }

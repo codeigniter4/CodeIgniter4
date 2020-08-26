@@ -157,7 +157,7 @@ You can check that a file was actually uploaded via HTTP with no errors by calli
 
 	if (! $file->isValid())
 	{
-		throw new RuntimeException($file->getErrorString().'('.$file->getError().')');
+		throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
 	}
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error

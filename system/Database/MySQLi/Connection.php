@@ -386,11 +386,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		if (is_bool($str))
-		{
-			return $str;
-		}
-
 		if (! $this->connID)
 		{
 			$this->initialize();

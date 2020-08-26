@@ -48,7 +48,7 @@ class View extends BaseConfig
 	/**
 	 * Built-in View filters.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $coreFilters = [
 		'abs'            => '\abs',
@@ -77,7 +77,7 @@ class View extends BaseConfig
 	/**
 	 * Built-in View plugins.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $corePlugins = [
 		'current_url'       => '\CodeIgniter\View\Plugins::currentURL',

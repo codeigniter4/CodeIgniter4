@@ -53,13 +53,13 @@ class ResourcePresenter extends Controller
 
 	/**
 	 *
-	 * @var string Name of the model class managing this resource's data
+	 * @var string|null Name of the model class managing this resource's data
 	 */
 	protected $modelName;
 
 	/**
 	 *
-	 * @var \CodeIgniter\Model the model holding this resource's data
+	 * @var \CodeIgniter\Model|null the model holding this resource's data
 	 */
 	protected $model;
 
@@ -88,7 +88,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a specific resource object
 	 *
-	 * @param  type $id
+	 * @param  mixed $id
 	 * @return string
 	 */
 	public function show($id = null)
@@ -120,7 +120,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
-	 * @param  type $id
+	 * @param  mixed $id
 	 * @return string
 	 */
 	public function remove($id = null)
@@ -131,7 +131,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Process the deletion of a specific resource object
 	 *
-	 * @param  type $id
+	 * @param  mixed $id
 	 * @return string
 	 */
 	public function delete($id = null)
@@ -142,7 +142,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
-	 * @param  type $id
+	 * @param  mixed $id
 	 * @return string
 	 */
 	public function edit($id = null)
@@ -154,7 +154,7 @@ class ResourcePresenter extends Controller
 	 * Process the updating, full or partial, of a specific resource object.
 	 * This should be a POST.
 	 *
-	 * @param  type $id
+	 * @param  mixed $id
 	 * @return string
 	 */
 	public function update($id = null)

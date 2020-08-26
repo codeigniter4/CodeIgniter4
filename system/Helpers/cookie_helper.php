@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -61,16 +62,27 @@ if (! function_exists('set_cookie'))
 	 * @param boolean      $secure   True makes the cookie secure
 	 * @param boolean      $httpOnly True makes the cookie accessible via
 	 *                                 http(s) only (no javascript)
+       * @param string|null  $sameSite The cookie SameSite value
 	 *
 	 * @see (\Config\Services::response())->setCookie()
 	 * @see \CodeIgniter\HTTP\Response::setCookie()
 	 */
-	function set_cookie($name, string $value = '', string $expire = '', string $domain = '', string $path = '/', string $prefix = '', bool $secure = false, bool $httpOnly = false)
+	function set_cookie(
+		$name,
+		string $value = '',
+		string $expire = '',
+		string $domain = '',
+		string $path = '/',
+		string $prefix = '',
+		bool $secure = false,
+		bool $httpOnly = false,
+		string $sameSite = null
+	)
 	{
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
 		$response = \Config\Services::response();
-		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly);
+		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
 	}
 }
 
@@ -84,9 +96,10 @@ if (! function_exists('get_cookie'))
 	 * @param string  $index
 	 * @param boolean $xssClean
 	 *
-	 * @see    (\Config\Services::request())->getCookie()
-	 * @see    \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 * @return mixed
+	 *
+	 * @see (\Config\Services::request())->getCookie()
+	 * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
@@ -108,13 +121,15 @@ if (! function_exists('delete_cookie'))
 	/**
 	 * Delete a COOKIE
 	 *
-	 * @param  mixed  $name
-	 * @param  string $domain the cookie domain. Usually: .yourdomain.com
-	 * @param  string $path   the cookie path
-	 * @param  string $prefix the cookie prefix
-	 * @see    (\Config\Services::response())->setCookie()
-	 * @see    \CodeIgniter\HTTP\Response::setcookie()
+	 * @param mixed  $name
+	 * @param string $domain the cookie domain. Usually: .yourdomain.com
+	 * @param string $path   the cookie path
+	 * @param string $prefix the cookie prefix
+	 *
 	 * @return void
+	 *
+	 * @see (\Config\Services::response())->setCookie()
+	 * @see \CodeIgniter\HTTP\Response::setcookie()
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{

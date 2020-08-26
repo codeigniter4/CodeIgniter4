@@ -86,7 +86,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function connect(bool $persistent = false)
 	{
-		if ($persistent && $this->db->DBDebug)
+		if ($persistent && $this->DBDebug)
 		{
 			throw new DatabaseException('SQLite3 doesn\'t support persistent connections.');
 		}
@@ -274,15 +274,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (false === ($sql = $this->_listColumns($table)))
-		{
-			if ($this->DBDebug)
-			{
-				throw new DatabaseException(lang('Database.featureUnavailable'));
-			}
-
-			return false;
-		}
+		$sql = $this->_listColumns($table);
 
 		$query                                  = $this->query($sql);
 		$this->dataCache['field_names'][$table] = [];

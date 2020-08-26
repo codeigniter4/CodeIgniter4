@@ -1,0 +1,8 @@
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/env export-ignore
+/phpunit.xml.dist export-ignore
+/spark export-ignore
+/app export-ignore
+/public export-ignore
+/writable export-ignore

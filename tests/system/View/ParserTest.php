@@ -256,7 +256,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$power = new class extends \CodeIgniter\Entity {
 			public $foo    = 'bar';
 			protected $bar = 'baz';
-			public function toArray(bool $onlyChanged = false, bool $cast = true): array
+			public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 			{
 				return [
 					'foo'     => $this->foo,

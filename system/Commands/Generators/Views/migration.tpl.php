@@ -1,8 +1,10 @@
-@php namespace <?= $namespace ?>\Database\Migrations;
+<@php
+
+namespace {namespace};
 
 use CodeIgniter\Database\Migration;
 
-class Migration_create_<?= $tableName ?>_table extends Migration
+class {class} extends Migration
 {
 <?php if (isset($DBGroup)) : ?>
 	protected $DBGroup = '<?= $DBGroup ?>';
@@ -14,24 +16,24 @@ class Migration_create_<?= $tableName ?>_table extends Migration
 			'id'         => [
 				'type'       => 'VARCHAR',
 				'constraint' => 128,
-				'null'       => false
+				'null'       => false,
 			],
 			'ip_address' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 45,
-				'null'       => false
+				'null'       => false,
 			],
 			'timestamp'  => [
 				'type'       => 'INT',
 				'constraint' => 10,
 				'unsigned'   => true,
 				'null'       => false,
-				'default'    => 0
+				'default'    => 0,
 			],
 			'data'       => [
 				'type'       => 'TEXT',
 				'null'       => false,
-				'default'    => ''
+				'default'    => '',
 			],
 		]);
 	<?php if ($matchIP === true) : ?>

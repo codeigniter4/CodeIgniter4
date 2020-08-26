@@ -40,7 +40,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -62,13 +61,17 @@ class CLIRequestTest extends CIUnitTestCase
 			'profile',
 			'-foo',
 			'bar',
+			'-foo-bar',
+			'yes',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$options = ['foo' => 'bar'];
+		$options = [
+			'foo'     => 'bar',
+			'foo-bar' => 'yes',
+		];
 		$this->assertEquals($options, $this->request->getOptions());
 	}
 
@@ -82,7 +85,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -103,7 +105,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -120,7 +121,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'21',
 			'profile',
 		];
-		$_SERVER['argc'] = 4;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -139,7 +139,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -160,7 +159,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -183,7 +181,6 @@ class CLIRequestTest extends CIUnitTestCase
 			'-baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -207,13 +204,12 @@ class CLIRequestTest extends CIUnitTestCase
 			'-baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 9;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
 		$expectedOptions = '-foo oops -baz "queue some stuff"';
-		$expectedPath    = 'users/21/profile';
+		$expectedPath    = 'users/21/profile/bar';
 		$this->assertEquals($expectedOptions, $this->request->getOptionString());
 		$this->assertEquals($expectedPath, $this->request->getPath());
 	}

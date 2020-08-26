@@ -226,7 +226,7 @@ class ContentSecurityPolicy
 	 */
 	public function __construct(\Config\ContentSecurityPolicy $config)
 	{
-		foreach ($config as $setting => $value)
+		foreach ($config as $setting => $value) // @phpstan-ignore-line
 		{
 			if (isset($this->{$setting}))
 			{

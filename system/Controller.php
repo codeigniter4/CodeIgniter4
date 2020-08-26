@@ -67,21 +67,21 @@ class Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var HTTP\IncomingRequest
+	 * @var RequestInterface
 	 */
 	protected $request;
 
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var HTTP\Response
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
 	/**
 	 * Instance of logger to use.
 	 *
-	 * @var Log\Logger
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 

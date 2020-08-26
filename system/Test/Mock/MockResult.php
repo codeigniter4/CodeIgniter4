@@ -11,6 +11,7 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldCount(): int
 	{
+		return 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -22,6 +23,7 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldNames(): array
 	{
+		return [];
 	}
 
 	//--------------------------------------------------------------------
@@ -33,6 +35,7 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldData(): array
 	{
+		return [];
 	}
 
 	//--------------------------------------------------------------------
@@ -87,6 +90,7 @@ class MockResult extends BaseResult
 	 */
 	protected function fetchObject($className = 'stdClass')
 	{
+		return new $className;
 	}
 
 	//--------------------------------------------------------------------

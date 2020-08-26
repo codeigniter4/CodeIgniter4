@@ -126,7 +126,7 @@ on your entities without worrying much about stray fields getting saved incorrec
     $user->fill($data);
     $userModel->save($user);
 
-You can also pass the data in the constructor and the data will be passed through the `fill()` method during instantiation.
+You can also pass the data in the constructor and the data will be passed through the ``fill()`` method during instantiation.
 
 ::
 
@@ -134,6 +134,14 @@ You can also pass the data in the constructor and the data will be passed throug
 
     $user = new \App\Entities\User($data);
     $userModel->save($user);
+
+Bulk Accessing Properties
+-------------------------
+
+The Entity class has two methods to extract all available properties into an array: ``toArray()`` and ``toRawArray()``.
+Using the raw version will bypass magic "getter" methods and casts. Both methods can take a boolean first parameter
+to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
+make the method recursive, in case of nested Entities.
 
 Handling Business Logic
 =======================

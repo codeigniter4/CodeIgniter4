@@ -475,7 +475,7 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Checks the application folder to see if the file can be found.
+	 * Checks the app folder to see if the file can be found.
 	 * Only for use with filenames that DO NOT include namespacing.
 	 *
 	 * @param string      $file
@@ -485,19 +485,11 @@ class FileLocator
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{
-		$paths = [
-			APPPATH,
-			SYSTEMPATH,
-		];
+		$path = realpath(APPPATH . (empty($folder) ? $file : $folder . '/' . $file));
 
-		foreach ($paths as $path)
+		if (is_file($path))
 		{
-			$path .= empty($folder) ? $file : $folder . '/' . $file;
-
-			if (is_file($path))
-			{
-				return $path;
-			}
+			return $path;
 		}
 
 		return false;

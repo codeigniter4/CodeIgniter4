@@ -54,9 +54,16 @@ class File extends SplFileInfo
 	/**
 	 * The files size in bytes
 	 *
-	 * @var float
+	 * @var integer
 	 */
 	protected $size;
+
+	/**
+	 * Original MimeType
+	 *
+	 * @var null|string
+	 */
+	protected $originalMimeType = null;
 
 	//--------------------------------------------------------------------
 
@@ -90,12 +97,7 @@ class File extends SplFileInfo
 	 */
 	public function getSize()
 	{
-		if (is_null($this->size))
-		{
-			$this->size = parent::getSize();
-		}
-
-		return $this->size;
+		return $this->size ?? ($this->size = parent::getSize());
 	}
 
 	/**
@@ -138,7 +140,7 @@ class File extends SplFileInfo
 	 * the $_FILES array, but should use other methods to more accurately
 	 * determine the type of file, like finfo, or mime_content_type().
 	 *
-	 * @return string|null The media type we determined it to be.
+	 * @return string The media type we determined it to be.
 	 */
 	public function getMimeType(): string
 	{

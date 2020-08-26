@@ -101,7 +101,7 @@ class Forge
 	/**
 	 * CREATE DATABASE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s';
 
@@ -122,7 +122,7 @@ class Forge
 	/**
 	 * DROP DATABASE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $dropDatabaseStr = 'DROP DATABASE %s';
 
@@ -136,7 +136,7 @@ class Forge
 	/**
 	 * CREATE TABLE IF statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
 
@@ -153,14 +153,14 @@ class Forge
 	/**
 	 * DROP TABLE IF EXISTS statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $dropTableIfStr = 'DROP TABLE IF EXISTS';
 
 	/**
 	 * RENAME TABLE statement
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s;';
 
@@ -181,7 +181,7 @@ class Forge
 	/**
 	 * DEFAULT value representation in CREATE/ALTER TABLE statements
 	 *
-	 * @var string
+	 * @var string|false
 	 */
 	protected $default = ' DEFAULT ';
 
@@ -477,7 +477,7 @@ class Forge
 		$sql = sprintf($this->dropConstraintStr, $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
 			$this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName));
 
-		if ($sql === false)
+		if ($sql === false) // @phpstan-ignore-line
 		{
 			if ($this->db->DBDebug)
 			{
@@ -596,7 +596,11 @@ class Forge
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
 		{
-			$columns .= $this->_processIndexes($table);
+			$indexes = $this->_processIndexes($table);
+			if (is_string($indexes))
+			{
+				$columns .= $indexes;
+			}
 		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
@@ -696,9 +700,9 @@ class Forge
 	 * @param boolean $if_exists Whether to add an IF EXISTS condition
 	 * @param boolean $cascade   Whether to add an CASCADE condition
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
+	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -779,7 +783,7 @@ class Forge
 	public function addColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field];
+		is_array($field) || $field = [$field]; // @phpstan-ignore-line
 
 		foreach (array_keys($field) as $k)
 		{
@@ -850,7 +854,7 @@ class Forge
 	public function modifyColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field];
+		is_array($field) || $field = [$field]; // @phpstan-ignore-line
 
 		foreach (array_keys($field) as $k)
 		{
@@ -897,7 +901,7 @@ class Forge
 	 * @param string $table      Table name
 	 * @param mixed  $fields     Column definition
 	 *
-	 * @return string|string[]
+	 * @return string|string[]|false
 	 */
 	protected function _alterTable(string $alter_type, string $table, $fields)
 	{
@@ -958,6 +962,7 @@ class Forge
 				continue;
 			}
 
+			// @phpstan-ignore-next-line
 			isset($attributes['TYPE']) && $this->_attributeType($attributes);
 
 			$field = [
@@ -973,6 +978,7 @@ class Forge
 				'_literal'       => false,
 			];
 
+			// @phpstan-ignore-next-line
 			isset($attributes['TYPE']) && $this->_attributeUnsigned($attributes, $field);
 
 			if ($create_table === false)
@@ -1057,7 +1063,7 @@ class Forge
 	 *
 	 * Performs a data type mapping between different databases.
 	 *
-	 * @param array &$attributes
+	 * @param array $attributes
 	 *
 	 * @return void
 	 */
@@ -1080,8 +1086,8 @@ class Forge
 	 *    - array(TYPE => UTYPE) will change $field['type'],
 	 *        from TYPE to UTYPE in case of a match
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return null|void
 	 */
@@ -1124,8 +1130,8 @@ class Forge
 	/**
 	 * Field attribute DEFAULT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return null|void
 	 */
@@ -1158,8 +1164,8 @@ class Forge
 	/**
 	 * Field attribute UNIQUE
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */
@@ -1176,8 +1182,8 @@ class Forge
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */
@@ -1228,7 +1234,7 @@ class Forge
 	 *
 	 * @param string $table
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	protected function _processIndexes(string $table)
 	{

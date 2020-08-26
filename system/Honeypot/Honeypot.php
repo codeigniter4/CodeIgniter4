@@ -38,10 +38,10 @@
 
 namespace CodeIgniter\Honeypot;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Honeypot as HoneypotConfig;
 
 /**
  * class Honeypot
@@ -52,7 +52,7 @@ class Honeypot
 	/**
 	 * Our configuration.
 	 *
-	 * @var BaseConfig
+	 * @var HoneypotConfig
 	 */
 	protected $config;
 
@@ -61,14 +61,14 @@ class Honeypot
 	/**
 	 * Constructor.
 	 *
-	 * @param  BaseConfig $config
-	 * @throws type
+	 * @param  HoneypotConfig $config
+	 * @throws HoneypotException
 	 */
-	function __construct(BaseConfig $config)
+	public function __construct(HoneypotConfig $config)
 	{
 		$this->config = $config;
 
-		if ($this->config->hidden === '')
+		if (! $this->config->hidden)
 		{
 			throw HoneypotException::forNoHiddenValue();
 		}

@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
 
 /**
  * Session handler using file system for storage
@@ -58,14 +58,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The file handle
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $fileHandle;
 
 	/**
 	 * File Name
 	 *
-	 * @var resource
+	 * @var string
 	 */
 	protected $filePath;
 
@@ -83,15 +83,22 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $matchIP = false;
 
+	/**
+	 * Regex of session ID
+	 *
+	 * @var string
+	 */
+	protected $sessionIDRegex = '';
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
+	 * @param AppConfig $config
+	 * @param string    $ipAddress
 	 */
-	public function __construct($config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -161,9 +168,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string    Serialized session data
+	 * @return string|boolean    Serialized session data
 	 */
-	public function read($sessionID): string
+	public function read($sessionID)
 	{
 		// This might seem weird, but PHP 5.6 introduced session_reset(),
 		// which re-reads session data
@@ -188,7 +195,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if (is_null($this->sessionID)) // @phpstan-ignore-line
 			{
 				$this->sessionID = $sessionID;
 			}
@@ -268,7 +275,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				}
 			}
 
-			if (! is_int($result))
+			if (! is_int($result)) // @phpstan-ignore-line
 			{
 				$this->fingerprint = md5(substr($sessionData, 0, $written));
 				$this->logger->error('Session: Unable to write data.');
@@ -298,7 +305,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			flock($this->fileHandle, LOCK_UN);
 			fclose($this->fileHandle);
 
-			$this->fileHandle = $this->fileNew = null;
+			$this->fileHandle = null;
+			$this->fileNew    = false;
 
 			return true;
 		}

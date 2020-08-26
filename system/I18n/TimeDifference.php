@@ -59,7 +59,7 @@ class TimeDifference
 	/**
 	 * The timestamp to compare the current time to.
 	 *
-	 * @var integer
+	 * @var float
 	 */
 	protected $testTime;
 
