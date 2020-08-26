@@ -434,6 +434,11 @@ class CodeIgniter
 			{
 				return $possibleRedirect->send();
 			}
+			// If a Request instance is returned, set the current request to the one that was returned
+			if ($possibleRedirect instanceof RequestInterface)
+			{
+    				$this->request = $possibleRedirect;
+			}    
 		}
 
 		$returned = $this->startController();
