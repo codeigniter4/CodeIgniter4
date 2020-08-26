@@ -186,11 +186,11 @@ class Security
 	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFExpire     = $config->CSRFExpire;
-		$this->CSRFTokenName  = $config->CSRFTokenName;
-		$this->CSRFHeaderName = $config->CSRFHeaderName;
-		$this->CSRFCookieName = $config->CSRFCookieName;
-		$this->CSRFRegenerate = $config->CSRFRegenerate;
+		$this->CSRFExpire     = $config->CSRFExpire ?? $this->CSRFExpire;
+		$this->CSRFTokenName  = $config->CSRFTokenName ?? $this->CSRFTokenName;
+		$this->CSRFHeaderName = $config->CSRFHeaderName ?? $this->CSRFHeaderName;
+		$this->CSRFCookieName = $config->CSRFCookieName ?? $this->CSRFCookieName;
+		$this->CSRFRegenerate = $config->CSRFRegenerate ?? $this->CSRFRegenerate;
 		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
 
 		if (isset($config->cookiePrefix))
@@ -204,9 +204,9 @@ class Security
 		}
 
 		// Store cookie-related settings
-		$this->cookiePath   = $config->cookiePath;
-		$this->cookieDomain = $config->cookieDomain;
-		$this->cookieSecure = $config->cookieSecure;
+		$this->cookiePath   = $config->cookiePath ?? $this->cookiePath;
+		$this->cookieDomain = $config->cookieDomain ?? $this->cookieDomain;
+		$this->cookieSecure = $config->cookieSecure ?? $this->cookieSecure;
 
 		$this->CSRFSetHash();
 
