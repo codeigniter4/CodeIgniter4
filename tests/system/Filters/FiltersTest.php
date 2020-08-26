@@ -354,9 +354,9 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = [
 			'before' => ['bar'],
 			'after'  => [
-				'toolbar',
 				'bazg',
 				'foof',
+				'toolbar',
 			],
 		];
 
