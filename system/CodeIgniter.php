@@ -47,6 +47,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
