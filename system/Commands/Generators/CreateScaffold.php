@@ -129,7 +129,7 @@ class CreateScaffold extends BaseCommand
 		];
 
 		// Call those commands!
-		$class = $params[0] ?? CLI::getOption(0);
+		$class = $params[0];
 		$this->call('make:controller', array_merge([$class], $controllerOpts, $genOptions));
 		$this->call('make:model', array_merge([$class], $modelOpts, $genOptions));
 		$this->call('make:entity', array_merge([$class], $genOptions));

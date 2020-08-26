@@ -573,7 +573,7 @@ if (! function_exists('ellipsize'))
 			return $str;
 		}
 
-		$beg      = mb_substr($str, 0, floor($max_length * $position));
+		$beg      = mb_substr($str, 0, (int) floor($max_length * $position));
 		$position = ($position > 1) ? 1 : $position;
 
 		if ($position === 1)
@@ -751,9 +751,9 @@ if (! function_exists('random_string'))
 				// @phpstan-ignore-next-line
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
-				return md5(uniqid(mt_rand(), true));
+				return md5(uniqid((string) mt_rand(), true));
 			case 'sha1':
-				return sha1(uniqid(mt_rand(), true));
+				return sha1(uniqid((string) mt_rand(), true));
 			case 'crypto':
 				return bin2hex(random_bytes($len / 2));
 		}

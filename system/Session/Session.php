@@ -355,7 +355,7 @@ class Session implements SessionInterface
 		}
 		else
 		{
-			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
+			ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
 		}
 
 		if (! empty($this->sessionSavePath))
@@ -364,10 +364,10 @@ class Session implements SessionInterface
 		}
 
 		// Security is king
-		ini_set('session.use_trans_sid', 0);
-		ini_set('session.use_strict_mode', 1);
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
+		ini_set('session.use_trans_sid', '0');
+		ini_set('session.use_strict_mode', '1');
+		ini_set('session.use_cookies', '1');
+		ini_set('session.use_only_cookies', '1');
 
 		$this->configureSidLength();
 	}
@@ -402,7 +402,7 @@ class Session implements SessionInterface
 			$bits = ($sid_length * $bits_per_character);
 			// Add as many more characters as necessary to reach at least 160 bits
 			$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
-			ini_set('session.sid_length', $sid_length);
+			ini_set('session.sid_length', (string) $sid_length);
 		}
 
 		// Yes, 4,5,6 are the only known possible values as of 2016-10-27

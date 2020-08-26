@@ -96,7 +96,7 @@ class PagerRenderer
 	/**
 	 * Name of $_GET parameter
 	 *
-	 * @var integer
+	 * @var string
 	 */
 	protected $pageSelector;
 

@@ -356,7 +356,7 @@ class Time extends DateTime
 	 */
 	public function toDateTime()
 	{
-		$dateTime = new DateTime(null, $this->getTimezone());
+		$dateTime = new DateTime('', $this->getTimezone());
 		$dateTime->setTimestamp(parent::getTimestamp());
 
 		return $dateTime;
@@ -769,7 +769,16 @@ class Time extends DateTime
 		list($year, $month, $day, $hour, $minute, $second) = explode('-', $this->format('Y-n-j-G-i-s'));
 		$$name                                             = $value;
 
-		return Time::create($year, $month, $day, $hour, $minute, $second, $this->getTimezoneName(), $this->locale);
+		return Time::create(
+			(int) $year,
+			(int) $month,
+			(int) $day,
+			(int) $hour,
+			(int) $minute,
+			(int) $second,
+			$this->getTimezoneName(),
+			$this->locale
+		);
 	}
 
 	/**

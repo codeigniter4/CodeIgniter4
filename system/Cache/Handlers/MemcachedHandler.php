@@ -206,7 +206,7 @@ class MemcachedHandler implements CacheInterface
 		elseif ($this->memcached instanceof \Memcache)
 		{
 			$flags = false;
-			$data  = $this->memcached->get($key, $flags);
+			$data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
 
 			// check for unmatched key (i.e. $flags is untouched)
 			if ($flags === false)
