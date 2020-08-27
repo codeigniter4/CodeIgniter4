@@ -35,8 +35,5 @@ jobs:
 
       - name: PHPStan
         uses: docker://oskarstark/phpstan-ga
-        env:
-          REQUIRE_DEV: true
-          CHECK_PLATFORM_REQUIREMENTS: false
         with:
           args: analyse --level=5 app system
