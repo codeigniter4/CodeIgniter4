@@ -47,7 +47,7 @@ jobs:
           git commit -m "Update User Guide" -a || true
 
       - name: Push changes
-        uses: ad-m/github-push-action@v0.6
+        uses: ad-m/github-push-action@v0.6.0
         with:
           branch: gh-pages
           directory: gh-pages
