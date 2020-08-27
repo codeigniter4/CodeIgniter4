@@ -23,7 +23,7 @@ jobs:
 
       # Build the latest User Guide
       - name: Build with Sphinx
-        uses: ammaraskar/sphinx-action@v0.4
+        uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src/
 
