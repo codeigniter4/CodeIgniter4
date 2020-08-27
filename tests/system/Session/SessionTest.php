@@ -641,7 +641,7 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			$this->assertCount(3, $cookies[0]);
 			$this->assertIsArray($cookies[0][2]);
-			$this->assertEquals(8000, $cookies[0][2]['expires']);
+			$this->assertGreaterThan(8000, $cookies[0][2]['expires']);
 		}
 	}
 
