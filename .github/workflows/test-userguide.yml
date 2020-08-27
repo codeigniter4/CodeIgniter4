@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ammaraskar/sphinx-action@master
+      - uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src
