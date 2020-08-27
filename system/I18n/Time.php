@@ -557,7 +557,7 @@ class Time extends DateTime
 		$time = $this->getTimestamp();
 
 		// future dates have no age
-		return max(0, date('Y', $now) - date('Y', $time)); // @phpstan-ignore-line
+		return max(0, date('Y', $now) - date('Y', $time));
 	}
 
 	//--------------------------------------------------------------------
