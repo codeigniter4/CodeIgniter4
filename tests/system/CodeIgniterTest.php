@@ -56,7 +56,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testRunClosureRoute()

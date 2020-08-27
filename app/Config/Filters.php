@@ -4,7 +4,6 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
 	public $aliases = [
