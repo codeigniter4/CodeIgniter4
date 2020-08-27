@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
       - name: PHPStan
         uses: docker://oskarstark/phpstan-ga
         env:
