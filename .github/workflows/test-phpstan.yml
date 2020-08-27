@@ -33,6 +33,9 @@ jobs:
           php-version: '7.4'
           extensions: intl
 
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --no-interaction
+
       - name: PHPStan
         uses: docker://oskarstark/phpstan-ga
         with:
