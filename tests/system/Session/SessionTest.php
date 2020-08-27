@@ -594,6 +594,27 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
+	public function testNoSameSite()
+	{
+		$session = $this->getInstance(['cookieSameSite' => '']);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+
+		if (PHP_VERSION_ID < 70300)
+		{
+			$this->assertCount(7, $cookies[0]);
+			$this->assertStringNotContainsString('samesite', $cookies[0][3]);
+		}
+		else
+		{
+			$this->assertCount(3, $cookies[0]);
+			$this->assertIsArray($cookies[0][2]);
+			$this->assertArrayNotHasKey('samesite', $cookies[0][2]);
+		}
+	}
+
 	public function testInvalidSameSite()
 	{
 		$this->expectException(SessionException::class);
@@ -601,6 +622,48 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
 		$session->start();
+	}
+
+	public function testExpires()
+	{
+		$session = $this->getInstance(['sessionExpiration' => 8000]);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+
+		if (PHP_VERSION_ID < 70300)
+		{
+			$this->assertCount(7, $cookies[0]);
+			$this->assertGreaterThan(8000, $cookies[0][2]);
+		}
+		else
+		{
+			$this->assertCount(3, $cookies[0]);
+			$this->assertIsArray($cookies[0][2]);
+			$this->assertEquals(8000, $cookies[0][2]['expires']);
+		}
+	}
+
+	public function testExpiresOnClose()
+	{
+		$session = $this->getInstance(['sessionExpiration' => 0]);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+
+		if (PHP_VERSION_ID < 70300)
+		{
+			$this->assertCount(7, $cookies[0]);
+			$this->assertEquals(0, $cookies[0][2]);
+		}
+		else
+		{
+			$this->assertCount(3, $cookies[0]);
+			$this->assertIsArray($cookies[0][2]);
+			$this->assertEquals(0, $cookies[0][2]['expires']);
+		}
 	}
 
 }
