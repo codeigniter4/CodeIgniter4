@@ -579,7 +579,7 @@ var ciDebugBar = {
 			var expires = "";
 		}
 
-		document.cookie = name + "=" + value + expires + "; path=/";
+		document.cookie = name + "=" + value + expires + "; path=/; samesite=Lax";
 	},
 
 	//--------------------------------------------------------------------
