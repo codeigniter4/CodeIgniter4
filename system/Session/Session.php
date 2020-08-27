@@ -1077,7 +1077,7 @@ class Session implements SessionInterface
 		{
 			// PHP 7.3 adds another function signature allowing setting of samesite
 			$params = [
-				'expires'  => $this->sessionExpiration,
+				'expires'  => (empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
