@@ -1,8 +1,5 @@
 # When a PR is opened or a push is made, perform
 # a static analysis check on the code using PHPStan.
-#
-# @todo Consider removing from Composer and using
-# https://github.com/marketplace/actions/oskar-phpstan
 name: PHPStan
 
 on:
