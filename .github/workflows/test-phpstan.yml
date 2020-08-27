@@ -1,8 +1,5 @@
 # When a PR is opened or a push is made, perform
 # a static analysis check on the code using PHPStan.
-#
-# @todo Consider removing from Composer and using
-# https://github.com/marketplace/actions/oskar-phpstan
 name: PHPStan
 
 on:
@@ -13,6 +10,7 @@ on:
     paths:
       - 'app/**'
       - 'system/**'
+      - '.github/workflows/test-phpstan.yml'
   push:
     branches:
       - 'develop'
@@ -28,15 +26,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: PHPStan
+        uses: docker://oskarstark/phpstan-ga
+        env:
+          REQUIRE_DEV: true
+          CHECK_PLATFORM_REQUIREMENTS: false
         with:
-          php-version: '7.4'
-          extensions: intl
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-suggest --no-interaction
-
-      - name: Run static analysis
-        run: vendor/bin/phpstan analyze --level=5 app system
+          args: analyse --level=5 app system
