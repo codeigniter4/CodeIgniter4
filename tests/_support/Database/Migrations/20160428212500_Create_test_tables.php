@@ -158,7 +158,20 @@ class Migration_Create_test_tables extends Migration
 		];
 		if ($this->db->DBDriver !== 'Postgre')
 		{
-			$extra_fields     = [
+			$extra_fields = [
+
+				'type_real' => [
+					'type' => 'REAL',
+					'null' => true,
+				],
+
+			];
+			$data_type_fields = array_merge($data_type_fields, $extra_fields);
+		}
+
+		if ($this->db->DBDriver !== 'Postgre' && $this->db->DBDriver !== 'Sqlsrv')
+		{
+			$extra_fields = [
 				'type_enum'       => [
 					'type'       => 'ENUM',
 					'constraint' => [
@@ -180,19 +193,11 @@ class Migration_Create_test_tables extends Migration
 					'type' => 'MEDIUMTEXT',
 					'null' => true,
 				],
-				'type_real'       => [
-					'type' => 'REAL',
-					'null' => true,
-				],
 				'type_double'     => [
 					'type' => 'DOUBLE',
 					'null' => true,
 				],
-				'type_decimal'    => [
-					'type'       => 'DECIMAL',
-					'constraint' => '18,4',
-					'null'       => true,
-				],
+
 				'type_blob'       => [
 					'type' => 'BLOB',
 					'null' => true,
