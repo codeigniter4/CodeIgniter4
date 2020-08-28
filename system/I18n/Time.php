@@ -1371,4 +1371,14 @@ class Time extends DateTime
 		return method_exists($this, $method);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * This is called when we unserialize the Time object.
+	 */
+	public function __wakeup()
+	{
+		$this->timezone = new DateTimeZone($this->timezone);
+		parent::__construct($this->date, $this->timezone);
+	}
 }
