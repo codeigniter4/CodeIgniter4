@@ -222,7 +222,7 @@ class Email
 	 * BCC Batch max number size.
 	 *
 	 * @see Email::$BCCBatchMode
-	 * @var integer
+	 * @var integer|string
 	 */
 	public $BCCBatchSize = 200;
 	//--------------------------------------------------------------------
@@ -253,9 +253,9 @@ class Email
 	/**
 	 * SMTP Connection socket placeholder
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
-	protected $SMTPConnect = '';
+	protected $SMTPConnect;
 	/**
 	 * Mail encoding
 	 *
@@ -284,7 +284,7 @@ class Email
 	/**
 	 * Recipients
 	 *
-	 * @var array
+	 * @var array|string
 	 */
 	protected $recipients = [];
 	/**
@@ -646,7 +646,7 @@ class Email
 	 * @param string|null $newname
 	 * @param string      $mime
 	 *
-	 * @return Email
+	 * @return Email|boolean
 	 */
 	public function attach($file, $disposition = '', $newname = null, $mime = '')
 	{
@@ -693,7 +693,7 @@ class Email
 	 *
 	 * @param string $filename
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
 	public function setAttachmentCID($filename)
 	{
@@ -800,7 +800,7 @@ class Email
 	 */
 	public function setPriority($n = 3)
 	{
-		$this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
+		$this->priority = preg_match('/^[1-5]$/', (string) $n) ? (int) $n : 3;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -849,7 +849,7 @@ class Email
 	protected function getProtocol()
 	{
 		$this->protocol                                                      = strtolower($this->protocol);
-		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail';
+		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail'; // @phpstan-ignore-line
 		return $this->protocol;
 	}
 	//--------------------------------------------------------------------
@@ -860,7 +860,7 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit';
+		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit'; // @phpstan-ignore-line
 		foreach ($this->baseCharsets as $charset)
 		{
 			if (strpos($this->charset, $charset) === 0)
@@ -963,9 +963,9 @@ class Email
 	/**
 	 * Clean Extended Email Address: Joe Smith <joe@smith.com>
 	 *
-	 * @param string $email
+	 * @param string|array $email
 	 *
-	 * @return string
+	 * @return array|string
 	 */
 	public function cleanEmail($email)
 	{
@@ -1277,11 +1277,11 @@ class Email
 	/**
 	 * Prepares attachment string
 	 *
-	 * @param string      &$body     Message body to append to
+	 * @param string      $body      Message body to append to
 	 * @param string      $boundary  Multipart boundary
 	 * @param string|null $multipart When provided, only attachments of this type will be processed
 	 *
-	 * @return string
+	 * @return void
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
@@ -1705,7 +1705,7 @@ class Email
 	 *
 	 * Credits for the base concept go to Paul Buonopane <paul@namepros.com>
 	 *
-	 * @param string &$email
+	 * @param string $email
 	 *
 	 * @return boolean
 	 */
@@ -1854,7 +1854,7 @@ class Email
 	/**
 	 * SMTP Connect
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
 	protected function SMTPConnect()
 	{
@@ -1891,7 +1891,7 @@ class Email
 				STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			if ($crypto !== true)
 			{
-				$this->setErrorMessage(lang('Email.SMTPError', $this->getSMTPData()));
+				$this->setErrorMessage(lang('Email.SMTPError', [$this->getSMTPData()]));
 				return false;
 			}
 		}
@@ -2053,7 +2053,7 @@ class Email
 		}
 		if ($result === false) // @phpstan-ignore-line
 		{
-			$this->setErrorMessage(lang('Email.SMTPDataFailure', $data));
+			$this->setErrorMessage(lang('Email.SMTPDataFailure', [$data]));
 			return false;
 		}
 		return true;
@@ -2112,7 +2112,7 @@ class Email
 		$msg = implode('', $this->debugMessage);
 		// Determine which parts of our raw data needs to be printed
 		$raw_data                                         = '';
-		is_array($include) || $include                    = [$include];
+		is_array($include) || $include                    = [$include]; // @phpstan-ignore-line
 		in_array('headers', $include, true) && $raw_data  = htmlspecialchars($this->headerStr) . "\n";
 		in_array('subject', $include, true) && $raw_data .= htmlspecialchars($this->subject) . "\n";
 		in_array('body', $include, true) && $raw_data    .= htmlspecialchars($this->finalBody);

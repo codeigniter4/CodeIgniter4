@@ -41,7 +41,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
-use Config\App;
 use Config\Format;
 
 /**
@@ -204,6 +203,13 @@ class Response extends Message implements ResponseInterface
 	protected $cookieHTTPOnly = false;
 
 	/**
+	 * Cookie SameSite setting
+	 *
+	 * @var string
+	 */
+	protected $cookieSameSite = 'Lax';
+
+	/**
 	 * Stores all cookies that were set in the response.
 	 *
 	 * @var array
@@ -247,6 +253,12 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
+		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+
+		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($this->cookieSameSite);
+		}
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -441,7 +453,7 @@ class Response extends Message implements ResponseInterface
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
 	 * @param array|string $body
-	 * @param boolean      $name
+	 * @param boolean      $unencoded
 	 *
 	 * @return $this
 	 */
@@ -818,6 +830,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $prefix   Cookie name prefix
 	 * @param boolean      $secure   Whether to only transfer cookies via SSL
 	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string|null  $samesite
 	 *
 	 * @return $this
 	 */
@@ -829,13 +842,14 @@ class Response extends Message implements ResponseInterface
 		$path = '/',
 		$prefix = '',
 		$secure = false,
-		$httponly = false
+		$httponly = false,
+		$samesite = null
 	)
 	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
+			foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
 			{
 				if (isset($name[$item]))
 				{
@@ -869,6 +883,16 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
+		if (is_null($samesite))
+		{
+			$samesite = $this->cookieSameSite ?? '';
+		}
+
+		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict'], true))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($samesite);
+		}
+
 		if (! is_numeric($expire))
 		{
 			$expire = time() - 86500;
@@ -878,7 +902,7 @@ class Response extends Message implements ResponseInterface
 			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
-		$this->cookies[] = [
+		$cookie = [
 			'name'     => $prefix . $name,
 			'value'    => $value,
 			'expires'  => $expire,
@@ -887,6 +911,13 @@ class Response extends Message implements ResponseInterface
 			'secure'   => $secure,
 			'httponly' => $httponly,
 		];
+
+		if ($samesite !== '')
+		{
+			$cookie['samesite'] = $samesite;
+		}
+
+		$this->cookies[] = $cookie;
 
 		return $this;
 	}
@@ -1036,10 +1067,35 @@ class Response extends Message implements ResponseInterface
 
 		foreach ($this->cookies as $params)
 		{
-			// PHP cannot unpack array with string keys
-			$params = array_values($params);
+			if (PHP_VERSION_ID < 70300)
+			{
+				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
+				if (isset($params['samesite']) && in_array(strtolower($params['samesite']), ['none', 'lax', 'strict'], true))
+				{
+					$params['path'] .= '; samesite=' . $params['samesite'];
+					unset($params['samesite']);
+				}
 
-			setcookie(...$params);
+				// PHP cannot unpack array with string keys
+				$params = array_values($params);
+				setcookie(...$params);
+			}
+			else
+			{
+				// PHP 7.3 and later have a signature for setcookie() with options array as third argument
+				// and SameSite is possible to set there
+				$name  = $params['name'];
+				$value = $params['value'];
+				unset($params['name'], $params['value']);
+
+				// If samesite is blank string, skip setting the attribute on the cookie
+				if (isset($params['samesite']) && $params['samesite'] === '')
+				{
+					unset($params['samesite']);
+				}
+
+				setcookie($name, $value, $params);
+			}
 		}
 	}
 

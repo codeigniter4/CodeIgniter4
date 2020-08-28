@@ -94,7 +94,7 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if (! $this->app)
+		if (! $this->app) // @phpstan-ignore-line
 		{
 			$this->app = $this->createApplication();
 		}
@@ -148,8 +148,8 @@ class CIUnitTestCase extends TestCase
 	 * Custom function to hook into CodeIgniter's Logging mechanism
 	 * to check if certain messages were logged during code execution.
 	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
+	 * @param string      $level
+	 * @param string|null $expectedMessage
 	 *
 	 * @return boolean
 	 * @throws \Exception
@@ -287,7 +287,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $message
 	 * @param integer $tolerance
 	 *
-	 * @return boolean
+	 * @return void|boolean
 	 * @throws \Exception
 	 */
 	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)

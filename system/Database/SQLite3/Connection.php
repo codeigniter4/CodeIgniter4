@@ -274,15 +274,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (false === ($sql = $this->_listColumns($table)))
-		{
-			if ($this->DBDebug)
-			{
-				throw new DatabaseException(lang('Database.featureUnavailable'));
-			}
-
-			return false;
-		}
+		$sql = $this->_listColumns($table);
 
 		$query                                  = $this->query($sql);
 		$this->dataCache['field_names'][$table] = [];

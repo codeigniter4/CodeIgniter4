@@ -42,6 +42,8 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
+use Config\Modules;
 
 /**
  * Filters
@@ -95,6 +97,13 @@ class Filters
 	 * @var array
 	 */
 	protected $arguments = [];
+	
+	/**
+	 * Handle to the modules config.
+	 *
+	 * @var \Config\Modules
+	 */
+	protected $moduleConfig;
 
 	//--------------------------------------------------------------------
 
@@ -104,13 +113,45 @@ class Filters
 	 * @param \Config\Filters   $config
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
+	 * @param \Config\Modules|null $moduleConfig
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
+
+		$this->moduleConfig = $moduleConfig ?? config('Modules');
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * If discoverFilters is enabled in Config then system will try to auto
+	 * Discovery custom filters files in Namespaces and allow access to 
+	 * The config object via the variable $customfilters as with the routes file
+	 * Sample : 
+	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
+	 */	
+	private function discoverFilters()
+	{
+		$locater = Services::locator();
+		
+		$filters = $this->config;
+		
+		$files = $locater->search('Config/Filters.php');
+
+		foreach ($files as $file)
+		{
+			// Don't include our main file again...
+			if ($file === APPPATH . 'Config/Filters.php')
+			{
+				continue;
+			}
+
+			include $file;
+		}
+	}	
 
 	/**
 	 * Set the response explicity.
@@ -235,13 +276,17 @@ class Filters
 		{
 			return $this;
 		}
-
+		if ($this->moduleConfig->shouldDiscover('filters'))
+		{
+			$this->discoverFilters();
+		}	
+		
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);
 
 		// Set the toolbar filter to the last position to be executed
-              if (in_array('toolbar', $this->filters['after'], true) &&
+		if (in_array('toolbar', $this->filters['after'], true) &&
 			($count = count($this->filters['after'])) > 1 &&
 			$this->filters['after'][$count - 1] !== 'toolbar'
 		)

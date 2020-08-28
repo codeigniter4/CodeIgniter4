@@ -150,15 +150,21 @@ class Entity implements \JsonSerializable
 		$this->_cast = $cast;
 		$return      = [];
 
+		$keys = array_keys($this->attributes);
+		$keys = array_filter($keys, function ($key) {
+			return strpos($key, '_') !== 0;
+		});
+
+		if (is_array($this->datamap))
+		{
+			$keys = array_diff($keys, $this->datamap);
+			$keys = array_unique(array_merge($keys, array_keys($this->datamap)));
+		}
+
 		// we need to loop over our properties so that we
 		// allow our magic methods a chance to do their thing.
-		foreach ($this->attributes as $key => $value)
+		foreach ($keys as $key)
 		{
-			if (strpos($key, '_') === 0)
-			{
-				continue;
-			}
-
 			if ($onlyChanged && ! $this->hasChanged($key))
 			{
 				continue;
@@ -175,30 +181,6 @@ class Entity implements \JsonSerializable
 				elseif (is_callable([$return[$key], 'toArray']))
 				{
 					$return[$key] = $return[$key]->toArray();
-				}
-			}
-		}
-
-		// Loop over our mapped properties and add them to the list...
-		if (is_array($this->datamap))
-		{
-			foreach ($this->datamap as $from => $to)
-			{
-				if (array_key_exists($to, $return))
-				{
-					$return[$from] = $this->__get($to);
-
-					if ($recursive)
-					{
-						if ($return[$from] instanceof Entity)
-						{
-							$return[$from] = $return[$from]->toArray($onlyChanged, $cast, $recursive);
-						}
-						elseif (is_callable([$return[$from], 'toArray']))
-						{
-							$return[$from] = $return[$from]->toArray();
-						}
-					}
 				}
 			}
 		}
@@ -526,9 +508,9 @@ class Entity implements \JsonSerializable
 	 * Converts the given string|timestamp|DateTime|Time instance
 	 * into a \CodeIgniter\I18n\Time object.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
-	 * @return \CodeIgniter\I18n\Time
+	 * @return \CodeIgniter\I18n\Time|mixed
 	 * @throws \Exception
 	 */
 	protected function mutateDate($value)
@@ -562,7 +544,7 @@ class Entity implements \JsonSerializable
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
-	 * @param $value
+	 * @param mixed  $value
 	 * @param string $type
 	 *
 	 * @return mixed

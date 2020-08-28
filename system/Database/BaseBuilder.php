@@ -122,21 +122,21 @@ class BaseBuilder
 	/**
 	 * QB LIMIT data
 	 *
-	 * @var integer
+	 * @var integer|boolean
 	 */
 	protected $QBLimit = false;
 
 	/**
 	 * QB OFFSET data
 	 *
-	 * @var integer
+	 * @var integer|boolean
 	 */
 	protected $QBOffset = false;
 
 	/**
 	 * QB ORDER BY data
 	 *
-	 * @var array
+	 * @var array|null|string
 	 */
 	public $QBOrderBy = [];
 
@@ -180,7 +180,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var BaseConnection
+	 * @var ConnectionInterface
 	 */
 	protected $db;
 
@@ -996,13 +996,13 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param  string        $key    The field to search
-	 * @param  array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param  boolean       $not    If the statement would be IN or NOT IN
-	 * @param  string        $type
-	 * @param  boolean       $escape
-	 * @param  string        $clause (Internal use only)
-	 * @throws InvalidArgumentException
+	 * @param  string             $key    The field to search
+	 * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
+	 * @param  boolean            $not    If the statement would be IN or NOT IN
+	 * @param  string             $type
+	 * @param  boolean            $escape
+	 * @param  string             $clause (Internal use only)
+	 * @throws \InvalidArgumentException
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1048,7 +1048,7 @@ class BaseBuilder
 		}
 		else
 		{
-			$whereIn = is_array($values) ? array_values($values) : $values;
+			$whereIn = array_values($values);
 			$ok      = $this->setBind($ok, $whereIn, $escape);
 		}
 
@@ -1621,7 +1621,7 @@ class BaseBuilder
 			$direction = '';
 
 			// Do we have a seed value?
-			$orderBy = ctype_digit((string) $orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
+			$orderBy = ctype_digit($orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
 		}
 		elseif (empty($orderBy))
 		{
@@ -1846,7 +1846,7 @@ class BaseBuilder
 	 * @param integer $offset The offset clause
 	 * @param boolean $reset  Are we want to clear query builder values?
 	 *
-	 * @return ResultInterface
+	 * @return ResultInterface|false
 	 */
 	public function get(int $limit = null, int $offset = 0, bool $reset = true)
 	{
@@ -1982,7 +1982,7 @@ class BaseBuilder
 	 *
 	 * Compiles the set conditions and returns the sql statement
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function getCompiledQBWhere()
 	{
@@ -2040,7 +2040,7 @@ class BaseBuilder
 	 * @param boolean $escape    Whether to escape values and identifiers
 	 * @param integer $batchSize Batch size
 	 *
-	 * @return integer Number of rows inserted or FALSE on failure
+	 * @return integer|false Number of rows inserted or FALSE on failure
 	 * @throws DatabaseException
 	 */
 	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
@@ -2187,9 +2187,9 @@ class BaseBuilder
 	 *
 	 * @throws DatabaseException
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	public function getCompiledInsert(bool $reset = true): string
+	public function getCompiledInsert(bool $reset = true)
 	{
 		if ($this->validateInsert() === false)
 		{
@@ -2386,9 +2386,9 @@ class BaseBuilder
 	 *
 	 * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	public function getCompiledUpdate(bool $reset = true): string
+	public function getCompiledUpdate(bool $reset = true)
 	{
 		if ($this->validateUpdate() === false)
 		{
@@ -2710,7 +2710,7 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs "DELETE FROM table"
 	 *
-	 * @return boolean    TRUE on success, FALSE on failure
+	 * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
 	 */
 	public function emptyTable()
 	{
@@ -2737,7 +2737,7 @@ class BaseBuilder
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
-	 * @return boolean    TRUE on success, FALSE on failure
+	 * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
 	 */
 	public function truncate()
 	{

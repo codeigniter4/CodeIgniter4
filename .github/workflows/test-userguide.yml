@@ -1,0 +1,23 @@
+# When a Pull Request is opened that modifies
+# the User Guide source, build the User Guide
+# with Sphinx and let the contributor know of
+# any errors.
+name: Test User Guide
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'user_guide_src/**'
+
+jobs:
+  syntax_check:
+    name: Check User Guide syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ammaraskar/sphinx-action@0.4
+        with:
+          docs-folder: user_guide_src

@@ -200,8 +200,6 @@ class BaseCollector
 	 *          'bar' => 'baz'
 	 *      ],
 	 *  ];
-	 *
-	 * @return null
 	 */
 	public function getVarData()
 	{
@@ -260,8 +258,6 @@ class BaseCollector
 
 	/**
 	 * Gets the "badge" value for the button.
-	 *
-	 * @return null
 	 */
 	public function getBadgeValue()
 	{

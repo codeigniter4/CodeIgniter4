@@ -206,7 +206,7 @@ class MemcachedHandler implements CacheInterface
 		elseif ($this->memcached instanceof \Memcache)
 		{
 			$flags = false;
-			$data  = $this->memcached->get($key, $flags);
+			$data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
 
 			// check for unmatched key (i.e. $flags is untouched)
 			if ($flags === false)
@@ -252,6 +252,7 @@ class MemcachedHandler implements CacheInterface
 			return $this->memcached->set($key, $value, 0, $ttl);
 		}
 
+		// @phpstan-ignore-next-line
 		return false;
 	}
 
@@ -290,6 +291,7 @@ class MemcachedHandler implements CacheInterface
 
 		$key = $this->prefix . $key;
 
+		// @phpstan-ignore-next-line
 		return $this->memcached->increment($key, $offset, $offset, 60);
 	}
 
@@ -313,6 +315,7 @@ class MemcachedHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		//FIXME: third parameter isn't other handler actions.
+		// @phpstan-ignore-next-line
 		return $this->memcached->decrement($key, $offset, $offset, 60);
 	}
 

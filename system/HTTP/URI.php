@@ -442,7 +442,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return (is_null($this->path)) ? '' : $this->path;
+		return $this->path ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -502,7 +502,7 @@ class URI
 	 */
 	public function getFragment(): string
 	{
-		return is_null($this->fragment) ? '' : $this->fragment;
+		return $this->fragment ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -682,7 +682,7 @@ class URI
 	 *
 	 * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 	 *
-	 * @param $str
+	 * @param string $str
 	 *
 	 * @return $this
 	 */
@@ -784,8 +784,6 @@ class URI
 	/**
 	 * Sets the path portion of the URI based on segments.
 	 *
-	 * @param string $path
-	 *
 	 * @return $this
 	 */
 	public function refreshPath()
@@ -886,7 +884,7 @@ class URI
 	{
 		foreach ($params as $param)
 		{
-			unset($this->query[$param]);
+			unset($this->query[$param]); // @phpstan-ignore-line
 		}
 
 		return $this;
@@ -946,7 +944,7 @@ class URI
 	 * While dot segments have valid uses according to the spec,
 	 * this URI class does not allow them.
 	 *
-	 * @param $path
+	 * @param string|null $path
 	 *
 	 * @return string
 	 */

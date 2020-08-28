@@ -94,14 +94,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * X-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $xAxis = 0;
 
 	/**
 	 * Y-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $yAxis = 0;
 
@@ -135,7 +135,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Temporary image used by the different engines.
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $resource;
 
@@ -338,7 +338,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer|null $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param integer $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */
@@ -366,7 +366,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			270,
 		];
 
-		if ($angle === '' || ! in_array($angle, $degs))
+		if (! in_array($angle, $degs))
 		{
 			throw ImageException::forMissingAngle();
 		}
@@ -644,7 +644,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $height
 	 * @param string  $position
 	 *
-	 * @return $this
+	 * @return BaseHandler
 	 */
 	public function fit(int $width, int $height = null, string $position = 'center')
 	{

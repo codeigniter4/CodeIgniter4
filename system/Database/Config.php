@@ -59,7 +59,7 @@ class Config extends BaseConfig
 	 * The main instance used to manage all of
 	 * our open database connections.
 	 *
-	 * @var \CodeIgniter\Database\Database
+	 * @var \CodeIgniter\Database\Database|null
 	 */
 	static protected $factory;
 
@@ -137,7 +137,7 @@ class Config extends BaseConfig
 	 * Loads and returns an instance of the Forge for the specified
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
-	 * @param string|array|null $group
+	 * @param ConnectionInterface|string|array|null $group
 	 *
 	 * @return Forge
 	 */

@@ -52,7 +52,6 @@ use CodeIgniter\Encryption\EncrypterInterface;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Honeypot;
-use CodeIgniter\Log\Logger;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -65,6 +64,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Language\Language;
+use CodeIgniter\Log\Logger;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -600,7 +600,7 @@ class Services extends BaseService
 	 * @param \Config\App|null $config
 	 * @param boolean          $getShared
 	 *
-	 * @return \CodeIgniter\HTTP\Response
+	 * @return RedirectResponse
 	 */
 	public static function redirectResponse(App $config = null, bool $getShared = true)
 	{

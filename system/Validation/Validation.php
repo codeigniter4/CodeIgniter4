@@ -344,7 +344,7 @@ class Validation implements ValidationInterface
 				}
 
 				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param, $value)
-					: $error;
+					: $error; // @phpstan-ignore-line
 
 				return false;
 			}

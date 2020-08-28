@@ -177,15 +177,15 @@ if (! function_exists('command'))
 		 */
 		while ($cursor < $length)
 		{
-			if (preg_match('/\s+/A', $command, $match, null, $cursor))
+			if (preg_match('/\s+/A', $command, $match, 0, $cursor))
 			{
 				// nothing to do
 			}
-			elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, null, $cursor))
+			elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, 0, $cursor))
 			{
 				$args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
 			}
-			elseif (preg_match('/' . $regexString . '/A', $command, $match, null, $cursor))
+			elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor))
 			{
 				$args[] = stripcslashes($match[1]);
 			}
@@ -394,8 +394,8 @@ if (! function_exists('env'))
 	 * retrieving values set from the .env file for
 	 * use in config files.
 	 *
-	 * @param string $key
-	 * @param null   $default
+	 * @param string      $key
+	 * @param string|null $default
 	 *
 	 * @return mixed
 	 */
@@ -803,9 +803,9 @@ if (! function_exists('lang'))
 	 * A convenience method to translate a string or array of them and format
 	 * the result with the intl extension's MessageFormatter.
 	 *
-	 * @param string|[] $line
-	 * @param array     $args
-	 * @param string    $locale
+	 * @param string      $line
+	 * @param array       $args
+	 * @param string|null $locale
 	 *
 	 * @return string
 	 */
@@ -832,9 +832,9 @@ if (! function_exists('log_message'))
 	 *  - info
 	 *  - debug
 	 *
-	 * @param string     $level
-	 * @param string     $message
-	 * @param array|null $context
+	 * @param string $level
+	 * @param string $message
+	 * @param array  $context
 	 *
 	 * @return mixed
 	 */

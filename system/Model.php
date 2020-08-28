@@ -108,7 +108,7 @@ class Model
 	/**
 	 * Last insert ID
 	 *
-	 * @var integer
+	 * @var integer|string
 	 */
 	protected $insertID = 0;
 
@@ -220,7 +220,7 @@ class Model
 	/**
 	 * Query Builder object
 	 *
-	 * @var BaseBuilder
+	 * @var BaseBuilder|null
 	 */
 	protected $builder;
 
@@ -229,7 +229,7 @@ class Model
 	 * The array must match the format of data passed to the Validation
 	 * library.
 	 *
-	 * @var array
+	 * @var array|string
 	 */
 	protected $validationRules = [];
 
@@ -260,7 +260,7 @@ class Model
 	/**
 	 * Our validator instance.
 	 *
-	 * @var \CodeIgniter\Validation\Validation
+	 * @var ValidationInterface
 	 */
 	protected $validation;
 
@@ -860,7 +860,7 @@ class Model
 			}
 			else
 			{
-				$this->insertID = $this->db->insertID();
+				$this->insertID = $this->db->insertID(); // @phpstan-ignore-line
 			}
 		}
 
@@ -1282,7 +1282,7 @@ class Model
 			}
 		}
 
-		return $this->builder()->replace($data, $returnSQL);
+		return $this->builder()->testMode($returnSQL)->replace($data);
 	}
 
 	//--------------------------------------------------------------------
@@ -1702,13 +1702,6 @@ class Model
 			$data = (array) $data;
 		}
 
-		// ValidationRules can be either a string, which is the group name,
-		// or an array of rules.
-		if (is_string($rules))
-		{
-			$rules = $this->validation->loadRuleGroup($rules);
-		}
-
 		$rules = $this->cleanValidationRules
 			? $this->cleanValidationRules($rules, $data)
 			: $rules;
@@ -1720,10 +1713,8 @@ class Model
 			return true;
 		}
 
-		$this->validation->setRules($rules, $this->validationMessages);
-		$valid = $this->validation->run($data, null, $this->DBGroup);
-
-		return (bool) $valid;
+		return $this->validation->setRules($rules, $this->validationMessages)
+								->run($data, null, $this->DBGroup);
 	}
 
 	//--------------------------------------------------------------------

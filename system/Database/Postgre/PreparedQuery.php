@@ -60,7 +60,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * The result resource from a successful
 	 * pg_exec. Or false.
 	 *
-	 * @var
+	 * @var Result|boolean
 	 */
 	protected $result;
 
@@ -82,7 +82,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = random_int(1, 10000000000000000);
+		$this->name = (string) random_int(1, 10000000000000000);
 
 		$sql = $this->parameterize($sql);
 

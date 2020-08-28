@@ -11,6 +11,7 @@ class MockAppConfig
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
+	public $cookieSameSite = 'Lax';
 
 	public $proxyIPs = '';
 
@@ -22,6 +23,7 @@ class MockAppConfig
 	public $CSRFRegenerate  = true;
 	public $CSRFExcludeURIs = ['http://example.com'];
 	public $CSRFRedirect    = false;
+	public $CSRFSameSite    = 'Lax';
 
 	public $CSPEnabled = false;
 

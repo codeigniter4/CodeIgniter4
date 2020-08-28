@@ -72,6 +72,12 @@ class Database
 	 */
 	public function load(array $params = [], string $alias)
 	{
+		// Handle universal DSN connection string
+		if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false)
+		{
+			$params = $this->parseDSN($params);
+		}
+
 		// No DB specified? Beat them senseless...
 		if (empty($params['DBDriver']))
 		{
@@ -132,6 +138,52 @@ class Database
 		}
 
 		return new $className($db);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Parse universal DSN string
+	 *
+	 * @param array $params
+	 *
+	 * @return array
+	 * @throws \InvalidArgumentException
+	 */
+	protected function parseDSN(array $params): array
+	{
+		if (($dsn = parse_url($params['DSN'])) === false)
+		{
+			throw new \InvalidArgumentException('Your DSN connection string is invalid.');
+		}
+
+		$dsnParams = [
+			'DSN'      => '',
+			'DBDriver' => $dsn['scheme'],
+			'hostname' => isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
+			'port'     => isset($dsn['port']) ? rawurldecode((string) $dsn['port']) : '',
+			'username' => isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
+			'password' => isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',
+			'database' => isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : '',
+		];
+
+		// Do we have additional config items set?
+		if (! empty($dsn['query']))
+		{
+			parse_str($dsn['query'], $extra);
+
+			foreach ($extra as $key => $val)
+			{
+				if (is_string($val) && in_array(strtolower($val), ['true', 'false', 'null'], true))
+				{
+					$val = $val === 'null' ? null : filter_var($val, FILTER_VALIDATE_BOOLEAN);
+				}
+
+				$dsnParams[$key] = $val;
+			}
+		}
+
+		return array_merge($params, $dsnParams);
 	}
 
 	//--------------------------------------------------------------------

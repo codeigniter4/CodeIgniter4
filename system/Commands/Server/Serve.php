@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -129,18 +130,18 @@ class Serve extends BaseCommand
 	public function run(array $params)
 	{
 		// Valid PHP Version?
-		if (phpversion() < $this->minPHPVersion)
+		if (version_compare(PHP_VERSION, $this->minPHPVersion, '<'))
 		{
 			// @codeCoverageIgnoreStart
 			die('Your PHP version must be ' . $this->minPHPVersion .
-				' or higher to run CodeIgniter. Current version: ' . phpversion());
+				' or higher to run CodeIgniter. Current version: ' . PHP_VERSION);
 			// @codeCoverageIgnoreEnd
 		}
 
 		// Collect any user-supplied options and apply them.
 		$php  = escapeshellarg(CLI::getOption('php') ?? PHP_BINARY);
 		$host = CLI::getOption('host') ?? 'localhost';
-		$port = (int) (CLI::getOption('port') ?? '8080') + $this->portOffset;
+		$port = (int) (CLI::getOption('port') ?? 8080) + $this->portOffset;
 
 		// Get the party started.
 		CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
@@ -159,7 +160,7 @@ class Serve extends BaseCommand
 
 		if ($status && $this->portOffset < $this->tries)
 		{
-			$this->portOffset += 1;
+			$this->portOffset++;
 
 			$this->run($params);
 		}

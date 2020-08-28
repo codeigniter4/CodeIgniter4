@@ -57,7 +57,7 @@ class CURLRequest extends Request
 	/**
 	 * The response object associated with this request
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var ResponseInterface|null
 	 */
 	protected $response;
 
@@ -141,7 +141,7 @@ class CURLRequest extends Request
 	 * Sends an HTTP request to the specified $url. If this is a relative
 	 * URL, it will be merged with $this->baseURI to form a complete URL.
 	 *
-	 * @param $method
+	 * @param string $method
 	 * @param string $url
 	 * @param array  $options
 	 *
@@ -443,7 +443,7 @@ class CURLRequest extends Request
 		// Do we need to delay this request?
 		if ($this->delay > 0)
 		{
-			sleep($this->delay);
+			sleep($this->delay); // @phpstan-ignore-line
 		}
 
 		$output = $this->sendRequest($curl_options);
@@ -543,7 +543,7 @@ class CURLRequest extends Request
 		$size = strlen($this->body);
 
 		// Have content?
-		if ($size === null || $size > 0)
+		if ($size > 0)
 		{
 			return $this->applyBody($curl_options);
 		}
@@ -827,7 +827,7 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
 		}
 
 		curl_close($ch);

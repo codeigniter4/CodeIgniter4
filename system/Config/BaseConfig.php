@@ -121,7 +121,7 @@ class BaseConfig
 	/**
 	 * Initialization an environment-specific configuration setting
 	 *
-	 * @param mixed  &$property
+	 * @param mixed  $property
 	 * @param string $name
 	 * @param string $prefix
 	 * @param string $shortPrefix

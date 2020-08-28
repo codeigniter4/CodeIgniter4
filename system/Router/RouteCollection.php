@@ -42,6 +42,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\Modules;
 use Config\Services;
 
 /**
@@ -185,14 +186,14 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * The name of the current group, if any.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $group;
 
 	/**
 	 * The current subdomain.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $currentSubdomain;
 
@@ -200,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Stores copy of current options being
 	 * applied during creation.
 	 *
-	 * @var null
+	 * @var array|null
 	 */
 	protected $currentOptions;
 
@@ -233,7 +234,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param \CodeIgniter\Autoloader\FileLocator $locator
 	 * @param \Config\Modules                     $moduleConfig
 	 */
-	public function __construct(FileLocator $locator, $moduleConfig)
+	public function __construct(FileLocator $locator, Modules $moduleConfig)
 	{
 		$this->fileLocator  = $locator;
 		$this->moduleConfig = $moduleConfig;
@@ -1383,7 +1384,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		$options = array_merge((array) $this->currentOptions, (array) $options);
+		$options = array_merge($this->currentOptions ?? [], $options ?? []);
 
 		// Hostname limiting?
 		if (! empty($options['hostname']))

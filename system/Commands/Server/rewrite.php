@@ -10,10 +10,11 @@
 
 // @codeCoverageIgnoreStart
 // Avoid this file run when listing commands
-if (php_sapi_name() === 'cli')
+if (PHP_SAPI === 'cli')
 {
 	return;
 }
+
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Front Controller path - expected to be in the default folder

@@ -147,11 +147,12 @@ class Autoloader
 		spl_autoload_extensions('.php,.inc');
 
 		// Prepend the PSR4  autoloader for maximum performance.
-		spl_autoload_register([$this, 'loadClass'], true, true);
+		spl_autoload_register([$this, 'loadClass'], true, true); // @phpstan-ignore-line
 
 		// Now prepend another loader for the files in our class map.
-		$config = is_array($this->classmap) ? $this->classmap : [];
+		$config = $this->classmap;
 
+		// @phpstan-ignore-next-line
 		spl_autoload_register(function ($class) use ($config) {
 			if (empty($config[$class]))
 			{

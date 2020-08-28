@@ -242,7 +242,7 @@ class DOMParser
 	 * @param  string $search
 	 * @param  string $element
 	 * @param  array  $paths
-	 * @return type
+	 * @return \DOMNodeList
 	 */
 
 	protected function doXPath(string $search = null, string $element, array $paths = [])
@@ -305,7 +305,7 @@ class DOMParser
 	 * Look for the a selector  in the passed text.
 	 *
 	 * @param  string $selector
-	 * @return type
+	 * @return array
 	 */
 	public function parseSelector(string $selector)
 	{

@@ -127,7 +127,7 @@ class Logs extends BaseCollector
 	 */
 	protected function collectLogs()
 	{
-		if (! is_null($this->data))
+		if (! empty($this->data))
 		{
 			return $this->data;
 		}

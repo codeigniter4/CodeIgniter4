@@ -85,7 +85,7 @@ class Table
 	/**
 	 * Table caption
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	public $caption;
 
@@ -113,7 +113,7 @@ class Table
 	/**
 	 * Callback for custom table layout
 	 *
-	 * @var function
+	 * @var callable|null
 	 */
 	public $function;
 
@@ -189,7 +189,7 @@ class Table
 	 *
 	 * @param  array   $array
 	 * @param  integer $columnLimit
-	 * @return array
+	 * @return array|false
 	 */
 	public function makeColumns($array = [], $columnLimit = 0)
 	{
@@ -265,10 +265,10 @@ class Table
 	 *
 	 * Ensures a standard associative array format for all cell data
 	 *
-	 * @param  array
+	 * @param  array $args
 	 * @return array
 	 */
-	protected function _prepArgs($args)
+	protected function _prepArgs(array $args)
 	{
 		// If there is no $args[0], skip this and treat as an associative array
 		// This can happen if there is only a single key, for example this is passed to table->generate
@@ -280,7 +280,7 @@ class Table
 
 		foreach ($args as $key => $val)
 		{
-			is_array($val) || $args[$key] = ['data' => $val];
+			is_array($val) || $args[$key] = ['data' => $val]; // @phpstan-ignore-line
 		}
 
 		return $args;

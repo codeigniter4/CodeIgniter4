@@ -65,7 +65,7 @@ if (! function_exists('word_limiter'))
 			return $str;
 		}
 
-		preg_match('/^\s*+(?:\S++\s*+){1,' . (int) $limit . '}/', $str, $matches);
+		preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/', $str, $matches);
 
 		if (strlen($str) === strlen($matches[0]))
 		{
@@ -464,9 +464,6 @@ if (! function_exists('word_wrap'))
 	 */
 	function word_wrap(string $str, int $charlim = 76): string
 	{
-		// Set the character limit
-		is_numeric($charlim) || $charlim = 76;
-
 		// Reduce multiple spaces
 		$str = preg_replace('| +|', ' ', $str);
 
@@ -576,7 +573,7 @@ if (! function_exists('ellipsize'))
 			return $str;
 		}
 
-		$beg      = mb_substr($str, 0, floor($max_length * $position));
+		$beg      = mb_substr($str, 0, (int) floor($max_length * $position));
 		$position = ($position > 1) ? 1 : $position;
 
 		if ($position === 1)
@@ -754,9 +751,9 @@ if (! function_exists('random_string'))
 				// @phpstan-ignore-next-line
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
-				return md5(uniqid(mt_rand(), true));
+				return md5(uniqid((string) mt_rand(), true));
 			case 'sha1':
-				return sha1(uniqid(mt_rand(), true));
+				return sha1(uniqid((string) mt_rand(), true));
 			case 'crypto':
 				return bin2hex(random_bytes($len / 2));
 		}
@@ -795,7 +792,8 @@ if (! function_exists('alternator'))
 	 *
 	 * Allows strings to be alternated. See docs...
 	 *
-	 * @param string (as many parameters as needed)
+	 * @phpstan-ignore-next-line
+	 * @param                    string (as many parameters as needed)
 	 *
 	 * @return string
 	 */

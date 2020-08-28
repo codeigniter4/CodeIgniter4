@@ -59,21 +59,21 @@ abstract class BaseUtils
 	/**
 	 * List databases statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $listDatabases = false;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $optimizeTable = false;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
-	 * @var string
+	 * @var string|boolean
 	 */
 	protected $repairTable = false;
 
@@ -82,7 +82,7 @@ abstract class BaseUtils
 	/**
 	 * Class constructor
 	 *
-	 * @param ConnectionInterface|object $db
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface &$db)
 	{

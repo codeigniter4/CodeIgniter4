@@ -154,6 +154,7 @@ class Request extends Message implements RequestInterface
 					}
 
 					// We have a subnet ... now the heavy lifting begins
+					// // @phpstan-ignore-next-line
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
@@ -235,7 +236,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
-		switch (strtolower( (string) $which))
+		switch (strtolower($which))
 		{
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;
@@ -319,7 +320,7 @@ class Request extends Message implements RequestInterface
 	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
 	 *
 	 * @param string $method
-	 * @param $value
+	 * @param mixed  $value
 	 *
 	 * @return $this
 	 */
@@ -420,6 +421,7 @@ class Request extends Message implements RequestInterface
 			$value = $this->globals[$method][$index] ?? null;
 		}
 
+		// @phpstan-ignore-next-line
 		if (is_array($value) && ($filter !== null || $flags !== null))
 		{
 			// Iterate over array and append filter and flags

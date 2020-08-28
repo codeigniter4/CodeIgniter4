@@ -258,6 +258,7 @@ class CodeIgniter
 		// If we have KINT_DIR it means it's already loaded via composer
 		if (! defined('KINT_DIR'))
 		{
+			// @phpstan-ignore-next-line
 			spl_autoload_register(function ($class) {
 				$class = explode('\\', $class);
 
@@ -602,6 +603,7 @@ class CodeIgniter
 			return;
 		}
 
+		// @phpstan-ignore-next-line
 		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
 			// @codeCoverageIgnoreStart
@@ -759,11 +761,11 @@ class CodeIgniter
 	/**
 	 * Generates the cache name to use for our full-page caching.
 	 *
-	 * @param $config
+	 * @param Cache $config
 	 *
 	 * @return string
 	 */
-	protected function generateCacheName($config): string
+	protected function generateCacheName(Cache $config): string
 	{
 		if (get_class($this->request) === CLIRequest::class)
 		{
@@ -801,7 +803,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		return str_replace('{elapsed_time}', $this->totalTime, $output);
+		return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -814,7 +816,7 @@ class CodeIgniter
 	 * @param RouteCollectionInterface|null $routes An collection interface to use in place
 	 *                                         of the config file.
 	 *
-	 * @return string
+	 * @return string|null
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
@@ -862,6 +864,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
+		// @phpstan-ignore-next-line
 		return (is_cli() && ! (ENVIRONMENT === 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
@@ -1091,7 +1094,7 @@ class CodeIgniter
 	 *
 	 * This helps provider safer, more reliable previous_url() detection.
 	 *
-	 * @param \CodeIgniter\HTTP\URI $uri
+	 * @param \CodeIgniter\HTTP\URI|string $uri
 	 */
 	public function storePreviousURL($uri)
 	{
@@ -1160,7 +1163,7 @@ class CodeIgniter
 	 * Made into a separate method so that it can be mocked during testing
 	 * without actually stopping script execution.
 	 *
-	 * @param $code
+	 * @param integer $code
 	 */
 	protected function callExit($code)
 	{

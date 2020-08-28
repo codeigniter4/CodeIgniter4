@@ -74,10 +74,10 @@ class RedirectResponse extends Response
 	 * Sets the URI to redirect to but as a reverse-routed or named route
 	 * instead of a raw URI.
 	 *
-	 * @param string       $route
-	 * @param array        $params
-	 * @param integer|null $code
-	 * @param string       $method
+	 * @param string  $route
+	 * @param array   $params
+	 * @param integer $code
+	 * @param string  $method
 	 *
 	 * @return $this
 	 */
@@ -125,9 +125,7 @@ class RedirectResponse extends Response
 		$session = $this->ensureSession();
 
 		$input = [
-			// @phpstan-ignore-next-line
 			'get'  => $_GET ?? [],
-			// @phpstan-ignore-next-line
 			'post' => $_POST ?? [],
 		];
 
