@@ -36,4 +36,4 @@ jobs:
         run: composer install --no-progress --no-suggest --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/phpstan analyze --level=5 app system
+        run: vendor/bin/phpstan analyse

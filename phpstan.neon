@@ -1,45 +1,48 @@
 parameters:
-    treatPhpDocTypesAsCertain: false
-    bootstrapFiles:
-        - qa-bootstrap.php
-    excludes_analyse:
-        - app/Views/errors/cli/error_404.php
-        - app/Views/errors/cli/error_exception.php
-        - app/Views/errors/html/error_exception.php
-        - system/Commands/Generators/Views/migration.tpl.php
-        - system/Config/Routes.php
-        - system/Debug/Toolbar/Views/toolbar.tpl.php
-        - system/Validation/Views/single.php
-        - system/ThirdParty/*
-    ignoreErrors:
-        - '#Unsafe usage of new static\(\)*#'
-        - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
-        - '#Access to an undefined property CodeIgniter\\Config\\AutoloadConfig::(\$psr4|\$classmap)#'
-        - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
-        - '#Access to an undefined property CodeIgniter\\Config\\View::(\$filters|\$plugins)#'
-        - '#Access to protected property CodeIgniter\\Database\\BaseConnection::(\$DBDebug|\$DBPrefix|\$swapPre|\$charset|\$DBCollat)#'
-        - '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli#'
-        - '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers)#'
-        - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::supportsForeignKeys\(\)#'
-        - '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'
-        - '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
-        - '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
-        - '#Access to an undefined property CodeIgniter\\HTTP\\Request::\$uri#'
-        - '#Call to an undefined method CodeIgniter\\HTTP\\Message::setStatusCode\(\)#'
-        - '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::(tableExists|protectIdentifiers|setAliasedTables|escapeIdentifiers|affectedRows|addTableAlias)\(\)#'
-        - '#Method CodeIgniter\\Database\\ConnectionInterface::query\(\) invoked with 3 parameters, 1-2 required#'
-        - '#Return type \(bool\) of method CodeIgniter\\Test\\TestLogger::log\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::log\(\)#'
-        - '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getRoutesOptions)\(\)#'
-        - '#Method CodeIgniter\\Router\\RouteCollectionInterface::getRoutes\(\) invoked with 1 parameter, 0 required#'
-        - '#Call to an undefined method CodeIgniter\\Validation\\ValidationInterface::loadRuleGroup\(\)#'
-        - '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
-        - '#Return type \(bool\) of method CodeIgniter\\Log\\Logger::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\)#'
-        - '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
-        - '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
-        - '#Negated boolean expression is always (true|false)#'
-        - '#Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given#'
-    scanDirectories:
-      - system/Helpers
-    dynamicConstantNames:
-        - ENVIRONMENT
-        - CI_DEBUG
+  level: 5
+  paths:
+    - app
+    - system
+  treatPhpDocTypesAsCertain: false
+  bootstrapFiles:
+    - qa-bootstrap.php
+  excludes_analyse:
+    - app/Views/errors/cli/*
+    - app/Views/errors/html/*
+    - system/Commands/Generators/Views/*
+    - system/Config/Routes.php
+    - system/Debug/Toolbar/Views/toolbar.tpl.php
+    - system/Validation/Views/single.php
+    - system/ThirdParty/*
+  ignoreErrors:
+    - '#Unsafe usage of new static\(\)*#'
+    - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
+    - '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
+    - '#Access to protected property CodeIgniter\\Database\\BaseConnection::(\$DBDebug|\$DBPrefix|\$swapPre|\$charset|\$DBCollat)#'
+    - '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli#'
+    - '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers)#'
+    - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::supportsForeignKeys\(\)#'
+    - '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'
+    - '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
+    - '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
+    - '#Access to an undefined property CodeIgniter\\HTTP\\Request::\$uri#'
+    - '#Call to an undefined method CodeIgniter\\HTTP\\Message::setStatusCode\(\)#'
+    - '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::(tableExists|protectIdentifiers|setAliasedTables|escapeIdentifiers|affectedRows|addTableAlias)\(\)#'
+    - '#Method CodeIgniter\\Database\\ConnectionInterface::query\(\) invoked with 3 parameters, 1-2 required#'
+    - '#Return type \(bool\) of method CodeIgniter\\Test\\TestLogger::log\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::log\(\)#'
+    - '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getRoutesOptions)\(\)#'
+    - '#Method CodeIgniter\\Router\\RouteCollectionInterface::getRoutes\(\) invoked with 1 parameter, 0 required#'
+    - '#Call to an undefined method CodeIgniter\\Validation\\ValidationInterface::loadRuleGroup\(\)#'
+    - '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
+    - '#Return type \(bool\) of method CodeIgniter\\Log\\Logger::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\)#'
+    - '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
+    - '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
+    - '#Negated boolean expression is always (true|false)#'
+    - '#Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given#'
+  parallel:
+    processTimeout: 300.0
+  scanDirectories:
+    - system/Helpers
+  dynamicConstantNames:
+    - ENVIRONMENT
+    - CI_DEBUG
