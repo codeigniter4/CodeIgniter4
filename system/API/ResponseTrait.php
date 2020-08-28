@@ -136,12 +136,12 @@ trait ResponseTrait
 
 		if (! is_null($output) && $this->format === 'json')
 		{
-					return $this->response->setJSON($output)
-						->setStatusCode($status, $message);
+			return $this->response->setJSON($output)
+				->setStatusCode($status, $message);
 		}
 
-			return $this->response->setBody($output)
-					->setStatusCode($status, $message);
+		return $this->response->setBody($output)
+			->setStatusCode($status, $message);
 	}
 
 	//--------------------------------------------------------------------
