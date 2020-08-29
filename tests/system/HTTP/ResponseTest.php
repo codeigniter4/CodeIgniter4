@@ -553,5 +553,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+		new Response($config);
 	}
 }
