@@ -293,7 +293,7 @@ class MigrationRunner
 		}
 
 		// Make sure $targetBatch is found
-		if ($targetBatch !== 0 && ! in_array($targetBatch, $batches))
+		if ($targetBatch !== 0 && ! in_array($targetBatch, $batches, true))
 		{
 			$message = lang('Migrations.batchNotFound') . $targetBatch;
 

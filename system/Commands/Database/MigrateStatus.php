@@ -136,7 +136,7 @@ class MigrateStatus extends BaseCommand
 		// Loop for all $namespaces
 		foreach ($namespaces as $namespace => $path)
 		{
-			if (in_array($namespace, $this->ignoredNamespaces))
+			if (in_array($namespace, $this->ignoredNamespaces, true))
 			{
 				continue;
 			}

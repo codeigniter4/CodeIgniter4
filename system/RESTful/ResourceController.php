@@ -194,7 +194,7 @@ class ResourceController extends Controller
 	 */
 	public function setFormat(string $format = 'json')
 	{
-		if (in_array($format, ['json', 'xml']))
+		if (in_array($format, ['json', 'xml'], true))
 		{
 			$this->format = $format;
 		}

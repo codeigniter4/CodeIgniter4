@@ -295,7 +295,7 @@ class Language
 			$this->loadedFiles[$locale] = [];
 		}
 
-		if (in_array($file, $this->loadedFiles[$locale]))
+		if (in_array($file, $this->loadedFiles[$locale], true))
 		{
 			// Don't load it more than once.
 			return [];

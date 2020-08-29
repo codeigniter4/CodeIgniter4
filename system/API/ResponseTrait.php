@@ -390,7 +390,7 @@ trait ResponseTrait
 		$format = "application/$this->format";
 
 		// Determine correct response type through content negotiation if not explicitly declared
-		if (empty($this->format) || ! in_array($this->format, ['json', 'xml']))
+		if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
 		{
 			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
 		}

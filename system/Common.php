@@ -467,7 +467,7 @@ if (! function_exists('esc'))
 				return $data;
 			}
 
-			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
+			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr'], true))
 			{
 				throw new InvalidArgumentException('Invalid escape context provided.');
 			}

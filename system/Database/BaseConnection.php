@@ -602,7 +602,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function addTableAlias(string $table)
 	{
-		if (! in_array($table, $this->aliasedTables))
+		if (! in_array($table, $this->aliasedTables, true))
 		{
 			$this->aliasedTables[] = $table;
 		}
@@ -1171,13 +1171,13 @@ abstract class BaseConnection implements ConnectionInterface
 			//
 			// NOTE: The ! empty() condition prevents this method
 			//       from breaking when QB isn't enabled.
-			if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables))
+			if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true))
 			{
 				if ($protectIdentifiers === true)
 				{
 					foreach ($parts as $key => $val)
 					{
-						if (! in_array($val, $this->reservedIdentifiers))
+						if (! in_array($val, $this->reservedIdentifiers, true))
 						{
 							$parts[$key] = $this->escapeIdentifiers($val);
 						}
@@ -1262,7 +1262,7 @@ abstract class BaseConnection implements ConnectionInterface
 			}
 		}
 
-		if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers))
+		if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers, true))
 		{
 			$item = $this->escapeIdentifiers($item);
 		}
@@ -1283,7 +1283,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escapeIdentifiers($item)
 	{
-		if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers))
+		if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers, true))
 		{
 			return $item;
 		}
@@ -1587,7 +1587,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function tableExists(string $tableName): bool
 	{
-		return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables());
+		return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
 	}
 
 	//--------------------------------------------------------------------
@@ -1662,7 +1662,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function fieldExists(string $fieldName, string $tableName): bool
 	{
-		return in_array($fieldName, $this->getFieldNames($tableName));
+		return in_array($fieldName, $this->getFieldNames($tableName), true);
 	}
 
 	//--------------------------------------------------------------------
