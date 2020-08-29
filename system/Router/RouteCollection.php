@@ -1206,7 +1206,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return string|false
 	 */
