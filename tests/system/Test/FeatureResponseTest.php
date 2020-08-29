@@ -2,11 +2,13 @@
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureResponse;
+use Config\App;
+use Config\Services;
 
-class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class FeatureResponseTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var FeatureResponse
 	 */
@@ -115,7 +117,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testAssertRedirectSuccess()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->feature->response = new RedirectResponse(new Config\App());
+		$this->feature->response = new RedirectResponse(new App());
 
 		$this->assertTrue($this->feature->response instanceof RedirectResponse);
 		$this->assertTrue($this->feature->isRedirect());
@@ -125,7 +127,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetRedirectUrlReturnsUrl()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->feature->response = new RedirectResponse(new Config\App());
+		$this->feature->response = new RedirectResponse(new App());
 		$this->feature->response->redirect('foo/bar');
 
 		$this->assertEquals('foo/bar', $this->feature->getRedirectUrl());
@@ -221,8 +223,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetJSON()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
+		$formatter = Services::format()->getFormatter('application/json');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
 	}
@@ -231,8 +232,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON('', true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be "" - json_encode('');
 		$this->assertEquals('""', $this->feature->getJSON());
@@ -242,8 +241,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON(false, true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be FALSE - json_encode(false)
 		$this->assertEquals('false', $this->feature->getJSON());
@@ -253,8 +250,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON(true, true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be TRUE - json_encode(true)
 		$this->assertEquals('true', $this->feature->getJSON());
@@ -273,8 +268,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetXML()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/xml');
+		$formatter = Services::format()->getFormatter('application/xml');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getXML());
 	}
@@ -315,41 +309,31 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->getFeatureResponse($data);
+		$formatter = Services::format()->getFormatter('application/json');
 
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
-		$expected  = $formatter->format($data);
-
-		$this->feature->assertJSONExact($expected);
+		$this->feature->assertJSONExact($formatter->format($data));
 	}
 
 	protected function getFeatureResponse($body = null, array $responseOptions = [], array $headers = [])
 	{
-		$this->response = new Response(new \Config\App());
+		$this->response = new Response(new App());
 		$this->response->setBody($body);
 
-		if (count($responseOptions))
+		foreach ($responseOptions as $key => $value)
 		{
-			foreach ($responseOptions as $key => $value)
-			{
-				$method = 'set' . ucfirst($key);
+			$method = 'set' . ucfirst($key);
 
-				if (method_exists($this->response, $method))
-				{
-					$this->response = $this->response->$method($value);
-				}
+			if (method_exists($this->response, $method))
+			{
+				$this->response = $this->response->$method($value);
 			}
 		}
 
-		if (count($headers))
+		foreach ($headers as $key => $value)
 		{
-			foreach ($headers as $key => $value)
-			{
-				$this->response = $this->response->setHeader($key, $value);
-			}
+			$this->response = $this->response->setHeader($key, $value);
 		}
 
 		$this->feature = new FeatureResponse($this->response);
 	}
-
 }
