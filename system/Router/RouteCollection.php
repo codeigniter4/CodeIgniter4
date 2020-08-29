@@ -835,39 +835,39 @@ class RouteCollection implements RouteCollectionInterface
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
 			foreach ($methods as $i => $method)
 			{
-				if (in_array($method, $options['except']))
+				if (in_array($method, $options['except'], true))
 				{
 					unset($methods[$i]);
 				}
 			}
 		}
 
-		if (in_array('index', $methods))
+		if (in_array('index', $methods, true))
 		{
 			$this->get($name, $new_name . '::index', $options);
 		}
-		if (in_array('new', $methods))
+		if (in_array('new', $methods, true))
 		{
 			$this->get($name . '/new', $new_name . '::new', $options);
 		}
-		if (in_array('edit', $methods))
+		if (in_array('edit', $methods, true))
 		{
 			$this->get($name . '/' . $id . '/edit', $new_name . '::edit/$1', $options);
 		}
-		if (in_array('show', $methods))
+		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
 		}
-		if (in_array('create', $methods))
+		if (in_array('create', $methods, true))
 		{
 			$this->post($name, $new_name . '::create', $options);
 		}
-		if (in_array('update', $methods))
+		if (in_array('update', $methods, true))
 		{
 			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
 			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		}
-		if (in_array('delete', $methods))
+		if (in_array('delete', $methods, true))
 		{
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 		}
@@ -875,11 +875,11 @@ class RouteCollection implements RouteCollectionInterface
 		// Web Safe? delete needs checking before update because of method name
 		if (isset($options['websafe']))
 		{
-			if (in_array('delete', $methods))
+			if (in_array('delete', $methods, true))
 			{
 				$this->post($name . '/' . $id . '/delete', $new_name . '::delete/$1', $options);
 			}
-			if (in_array('update', $methods))
+			if (in_array('update', $methods, true))
 			{
 				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
 			}
@@ -948,50 +948,50 @@ class RouteCollection implements RouteCollectionInterface
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
 			foreach ($methods as $i => $method)
 			{
-				if (in_array($method, $options['except']))
+				if (in_array($method, $options['except'], true))
 				{
 					unset($methods[$i]);
 				}
 			}
 		}
 
-		if (in_array('index', $methods))
+		if (in_array('index', $methods, true))
 		{
 			$this->get($name, $newName . '::index', $options);
 		}
-		if (in_array('show', $methods))
+		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/show/' . $id, $newName . '::show/$1', $options);
 		}
-		if (in_array('new', $methods))
+		if (in_array('new', $methods, true))
 		{
 			$this->get($name . '/new', $newName . '::new', $options);
 		}
-		if (in_array('create', $methods))
+		if (in_array('create', $methods, true))
 		{
 			$this->post($name . '/create', $newName . '::create', $options);
 		}
-		if (in_array('edit', $methods))
+		if (in_array('edit', $methods, true))
 		{
 			$this->get($name . '/edit/' . $id, $newName . '::edit/$1', $options);
 		}
-		if (in_array('update', $methods))
+		if (in_array('update', $methods, true))
 		{
 			$this->post($name . '/update/' . $id, $newName . '::update/$1', $options);
 		}
-		if (in_array('remove', $methods))
+		if (in_array('remove', $methods, true))
 		{
 			$this->get($name . '/remove/' . $id, $newName . '::remove/$1', $options);
 		}
-		if (in_array('delete', $methods))
+		if (in_array('delete', $methods, true))
 		{
 			$this->post($name . '/delete/' . $id, $newName . '::delete/$1', $options);
 		}
-		if (in_array('show', $methods))
+		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
 		}
-		if (in_array('create', $methods))
+		if (in_array('create', $methods, true))
 		{
 			$this->post($name, $newName . '::create', $options);
 		}

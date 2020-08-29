@@ -370,7 +370,7 @@ class Fabricator
 		}
 
 		// Next look for known model fields
-		if (in_array($field, $this->dateFields))
+		if (in_array($field, $this->dateFields, true))
 		{
 			switch ($this->model->dateFormat)
 			{

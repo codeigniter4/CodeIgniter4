@@ -819,7 +819,7 @@ class ContentSecurityPolicy
 
 			if ($reportOnly === true)
 			{
-				$reportSources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+				$reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 			}
 			else
 			{
@@ -829,7 +829,7 @@ class ContentSecurityPolicy
 				}
 				else
 				{
-					$sources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+					$sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 				}
 			}
 		}

@@ -234,7 +234,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			if (in_array($i, $this->uniqueKeys))
+			if (in_array($i, $this->uniqueKeys, true))
 			{
 				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
 						  . ' ON ' . $this->db->escapeIdentifiers($table)

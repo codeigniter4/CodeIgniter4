@@ -32,7 +32,7 @@ class TestLogger extends Logger
 
 		foreach ($trace as $row)
 		{
-			if (! in_array($row['function'], ['log', 'log_message']))
+			if (! in_array($row['function'], ['log', 'log_message'], true))
 			{
 				$file = basename($row['file'] ?? '');
 				break;

@@ -513,7 +513,7 @@ class BaseBuilder
 
 		$type = strtoupper($type);
 
-		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT']))
+		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT'], true))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}

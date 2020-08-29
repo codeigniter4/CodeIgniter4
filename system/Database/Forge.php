@@ -1256,7 +1256,7 @@ class Forge
 				continue;
 			}
 
-			if (in_array($i, $this->uniqueKeys))
+			if (in_array($i, $this->uniqueKeys, true))
 			{
 				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
 						  . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
@@ -1302,12 +1302,12 @@ class Forge
 				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
 					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
+				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))
 				{
 					$sql .= ' ON DELETE ' . $fkey['onDelete'];
 				}
 
-				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions))
+				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true))
 				{
 					$sql .= ' ON UPDATE ' . $fkey['onUpdate'];
 				}

@@ -265,7 +265,7 @@ class View implements RendererInterface
 		{
 			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
 
-			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
+			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors, true))
 			{
 				// Clean up our path names to make them a little cleaner
 				$this->renderVars['file'] = clean_path($this->renderVars['file']);

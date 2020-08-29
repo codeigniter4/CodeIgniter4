@@ -338,7 +338,7 @@ class Logger implements LoggerInterface
 		}
 
 		// Does the app want to log this right now?
-		if (! in_array($level, $this->loggableLevels))
+		if (! in_array($level, $this->loggableLevels, true))
 		{
 			return false;
 		}
@@ -498,7 +498,7 @@ class Logger implements LoggerInterface
 		// Find the first reference to a Logger class method
 		foreach ($stackFrames as $frame)
 		{
-			if (\in_array($frame['function'], $logFunctions))
+			if (\in_array($frame['function'], $logFunctions, true))
 			{
 				$file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
 				$line = $frame['line'] ?? 'unknown';

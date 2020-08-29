@@ -339,7 +339,7 @@ if (! function_exists('is_pluralizable'))
 						   'weather',
 						   'wisdom',
 						   'work',
-					   ]);
+					   ], true);
 
 		return ! $uncountables;
 	}

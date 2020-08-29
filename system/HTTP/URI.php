@@ -896,7 +896,7 @@ class URI
 	 * Filters the query variables so that only the keys passed in
 	 * are kept. The rest are removed from the object.
 	 *
-	 * @param array ...$params
+	 * @param string ...$params
 	 *
 	 * @return $this
 	 */
@@ -906,7 +906,7 @@ class URI
 
 		foreach ($this->query as $key => $value)
 		{
-			if (! in_array($key, $params))
+			if (! in_array($key, $params, true))
 			{
 				continue;
 			}

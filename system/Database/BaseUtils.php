@@ -139,7 +139,7 @@ abstract class BaseUtils
 	 */
 	public function databaseExists(string $database_name): bool
 	{
-		return in_array($database_name, $this->listDatabases());
+		return in_array($database_name, $this->listDatabases(), true);
 	}
 
 	//--------------------------------------------------------------------
