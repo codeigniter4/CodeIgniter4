@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use BadMethodCallException;
 use CodeIgniter\Config\Config;
@@ -2579,4 +2581,27 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
+	public function testSetAllowedFields()
+	{
+		$allowed1 = [
+			'id',
+			'created_at',
+		];
+		$allowed2 = [
+			'id',
+			'updated_at',
+		];
+
+		$model = new class extends Model {
+			protected $allowedFields = [
+				'id',
+				'created_at',
+			];
+		};
+
+		$this->assertSame($allowed1, $this->getPrivateProperty($model, 'allowedFields'));
+
+		$model->setAllowedFields($allowed2);
+		$this->assertSame($allowed2, $this->getPrivateProperty($model, 'allowedFields'));
+	}
 }
