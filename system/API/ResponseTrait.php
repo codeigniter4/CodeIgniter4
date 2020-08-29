@@ -102,6 +102,13 @@ trait ResponseTrait
 	 */
 	protected $format = 'json';
 
+	/**
+	 * Current Formatter instance. This is usually set by ResponseTrait::format
+	 *
+	 * @var \CodeIgniter\Format\FormatterInterface
+	 */
+	protected $formatter;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -159,7 +166,7 @@ trait ResponseTrait
 
 		$response = [
 			'status'   => $status,
-			'error'    => $code === null ? $status : $code,
+			'error'    => $code ?? $status,
 			'messages' => $messages,
 		];
 
