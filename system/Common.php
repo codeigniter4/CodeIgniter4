@@ -996,7 +996,7 @@ if (! function_exists('route_to'))
 	 * have a route defined in the routes Config file.
 	 *
 	 * @param string $method
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return false|string
 	 */
