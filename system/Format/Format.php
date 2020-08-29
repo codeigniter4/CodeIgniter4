@@ -37,64 +37,73 @@
  * @filesource
  */
 
-namespace CodeIgniter\Format\Exceptions;
+namespace CodeIgniter\Format;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
-use RuntimeException;
+use CodeIgniter\Format\Exceptions\FormatException;
+use Config\Format as FormatConfig;
 
 /**
- * FormatException
+ * The Format class is a convenient place to create Formatters.
  */
-class FormatException extends RuntimeException implements ExceptionInterface
+class Format
 {
 	/**
-	 * Thrown when the instantiated class does not exist.
+	 * Configuration instance
 	 *
-	 * @param string $class
-	 *
-	 * @return FormatException
+	 * @var \Config\Format
 	 */
-	public static function forInvalidFormatter(string $class)
+	protected $config;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \Config\Format $config
+	 */
+	public function __construct(FormatConfig $config)
 	{
-		return new static(lang('Format.invalidFormatter', [$class]));
+		$this->config = $config;
 	}
 
 	/**
-	 * Thrown in JSONFormatter when the json_encode produces
-	 * an error code other than JSON_ERROR_NONE and JSON_ERROR_RECURSION.
+	 * Returns the current configuration instance.
 	 *
-	 * @param string $error
-	 *
-	 * @return FormatException
+	 * @return \Config\Format
 	 */
-	public static function forInvalidJSON(string $error = null)
+	public function getConfig()
 	{
-		return new static(lang('Format.invalidJSON', [$error]));
+		return $this->config;
 	}
 
 	/**
-	 * Thrown when the supplied MIME type has no
-	 * defined Formatter class.
+	 * A Factory method to return the appropriate formatter for the given mime type.
 	 *
 	 * @param string $mime
 	 *
-	 * @return FormatException
+	 * @throws \CodeIgniter\Format\FormatException
+	 *
+	 * @return \CodeIgniter\Format\FormatterInterface
 	 */
-	public static function forInvalidMime(string $mime)
+	public function getFormatter(string $mime): FormatterInterface
 	{
-		return new static(lang('Format.invalidMime', [$mime]));
-	}
+		if (! array_key_exists($mime, $this->config->formatters))
+		{
+			throw FormatException::forInvalidMime($mime);
+		}
 
-	/**
-	 * Thrown on XMLFormatter when the `simplexml` extension
-	 * is not installed.
-	 *
-	 * @return FormatException
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public static function forMissingExtension()
-	{
-		return new static(lang('Format.missingExtension'));
+		$className = $this->config->formatters[$mime];
+
+		if (! class_exists($className))
+		{
+			throw FormatException::forInvalidFormatter($className);
+		}
+
+		$class = new $className();
+
+		if (! $class instanceof FormatterInterface)
+		{
+			throw FormatException::forInvalidFormatter($className);
+		}
+
+		return $class;
 	}
 }
