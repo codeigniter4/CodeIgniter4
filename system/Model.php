@@ -1578,9 +1578,10 @@ class Model
 
 		return $error['message'] ?? null;
 	}
-	
+
+	//--------------------------------------------------------------------
+
 	/**
-	 * Allows to set allowed fields.
 	 * It could be used when you have to change default or override current allowed fields.
 	 *
 	 * @param array $allowedFields
@@ -1589,7 +1590,7 @@ class Model
 	 */
 	public function setAllowedFields(array $allowedFields)
 	{
-		$this->$allowedFields = $allowedFields;
+		$this->allowedFields = $allowedFields;
 	}
 
 	//--------------------------------------------------------------------
