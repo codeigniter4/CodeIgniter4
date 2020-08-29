@@ -21,3 +21,4 @@ Bugs Fixed:
 Deprecations:
 
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
+- Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
