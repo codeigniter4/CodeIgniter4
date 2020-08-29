@@ -37,6 +37,12 @@ class HelpCommandTest extends CIUnitTestCase
 		$this->assertStringContainsString('command_name', $this->getBuffer());
 	}
 
+	public function testHelpCommandWithMissingUsage()
+	{
+		command('help app:info');
+		$this->assertStringContainsString('app:info [arguments]', $this->getBuffer());
+	}
+
 	public function testHelpCommandOnSpecificCommand()
 	{
 		command('help cache:clear');
