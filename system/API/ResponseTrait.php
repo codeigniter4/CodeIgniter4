@@ -40,7 +40,7 @@
 namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\Response;
-use Config\Format;
+use Config\Services;
 
 /**
  * Response trait.
@@ -123,7 +123,8 @@ trait ResponseTrait
 
 			// Create the output var here in case of $this->response([]);
 			$output = null;
-		} // If data is null but status provided, keep the output empty.
+		}
+		// If data is null but status provided, keep the output empty.
 		elseif ($data === null && is_numeric($status))
 		{
 			$output = null;
@@ -134,8 +135,7 @@ trait ResponseTrait
 			$output = $this->format($data);
 		}
 
-		return $this->response->setBody($output)
-						->setStatusCode($status, $message);
+		return $this->response->setBody($output)->setStatusCode($status, $message);
 	}
 
 	//--------------------------------------------------------------------
@@ -386,25 +386,25 @@ trait ResponseTrait
 			return $data;
 		}
 
-		$config = new Format();
-		$format = "application/$this->format";
+		$format = Services::format();
+		$mime   = "application/{$this->format}";
 
 		// Determine correct response type through content negotiation if not explicitly declared
 		if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
 		{
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+			$mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
 		}
 
-		$this->response->setContentType($format);
+		$this->response->setContentType($mime);
 
 		// if we don't have a formatter, make one
 		if (! isset($this->formatter))
 		{
 			// if no formatter, use the default
-			$this->formatter = $config->getFormatter($format); // @phpstan-ignore-line
+			$this->formatter = $format->getFormatter($mime);
 		}
 
-		if ($format !== 'application/json')
+		if ($mime !== 'application/json')
 		{
 			// Recursively convert objects into associative arrays
 			// Conversion not required for JSONFormatter
