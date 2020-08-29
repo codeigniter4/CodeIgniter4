@@ -56,10 +56,11 @@ use Locale;
  * Requires the intl PHP extension.
  *
  * @package CodeIgniter\I18n
+ *
+ * @property string $date
  */
 class Time extends DateTime
 {
-
 	/**
 	 * @var \DateTimeZone
 	 */
@@ -1371,4 +1372,21 @@ class Time extends DateTime
 		return method_exists($this, $method);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * This is called when we unserialize the Time object.
+	 */
+	public function __wakeup()
+	{
+		/**
+		 * Prior to unserialization, this is a string.
+		 *
+		 * @var string $timezone
+		 */
+		$timezone = $this->timezone;
+
+		$this->timezone = new DateTimeZone($timezone);
+		parent::__construct($this->date, $this->timezone);
+	}
 }
