@@ -361,9 +361,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		// Allowed rotation values
 		$degs = [
-			(float) 90,
-			(float) 180,
-			(float) 270,
+			90.0,
+			180.0,
+			270.0,
 		];
 
 		if (! in_array($angle, $degs, true))
