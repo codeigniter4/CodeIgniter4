@@ -597,6 +597,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 * @param boolean     $silent If true, will not throw our own exceptions.
 	 *
+	 * @throws \CodeIgniter\Images\Exceptions\ImageException
+	 *
 	 * @return mixed
 	 */
 	public function getEXIF(string $key = null, bool $silent = false)
@@ -607,6 +609,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 			{
 				return null;
 			}
+
+			throw ImageException::forEXIFUnsupported(); // @codeCoverageIgnore
 		}
 
 		$exif = null; // default
@@ -614,7 +618,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		{
 			case IMAGETYPE_JPEG:
 			case IMAGETYPE_TIFF_II:
-				$exif = exif_read_data($this->image()->getPathname());
+				$exif = @exif_read_data($this->image()->getPathname());
 				if (! is_null($key) && is_array($exif))
 				{
 					$exif = $exif[$key] ?? false;
