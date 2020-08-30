@@ -286,7 +286,7 @@ class BaseService
 		// Try to find the desired service method
 		foreach (static::$services as $class)
 		{
-			if (method_exists(get_class($class), $name))
+			if (method_exists($class, $name))
 			{
 				return $class::$name(...$arguments);
 			}
