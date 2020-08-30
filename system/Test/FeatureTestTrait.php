@@ -167,7 +167,7 @@ trait FeatureTestTrait
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure the RouteCollection knows what method we're using...
-		$routes = $this->routes ?: Services::routes(); // @phpstan-ignore-line
+		$routes = $this->routes ?? Services::routes();
 		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
