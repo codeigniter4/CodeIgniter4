@@ -1,4 +1,5 @@
 parameters:
+  tmpDir: build/phpstan
   level: 5
   paths:
     - app
