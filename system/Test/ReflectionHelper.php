@@ -72,8 +72,8 @@ trait ReflectionHelper
 	/**
 	 * Find an accessible property.
 	 *
-	 * @param object $obj
-	 * @param string $property
+	 * @param object|string $obj
+	 * @param string        $property
 	 *
 	 * @return \ReflectionProperty
 	 * @throws \ReflectionException
