@@ -136,7 +136,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			{
 				$sql .= ' ' . strtoupper($key) . ' = ';
 
-				if (in_array(strtoupper($key), $this->_quoted_table_options))
+				if (in_array(strtoupper($key), $this->_quoted_table_options, true))
 				{
 					$sql .= $this->db->escape($attributes[$key]);
 				}
@@ -265,7 +265,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			// @phpstan-ignore-next-line
 			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
-			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+			$unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 
 			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
 				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';

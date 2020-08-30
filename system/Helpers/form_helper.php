@@ -102,7 +102,7 @@ if (! function_exists('form_open'))
 		$before = Services::filters()
 						  ->getFilters()['before'];
 
-		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
+		if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{
 			$form .= csrf_field($csrfId ?? null);
 		}
@@ -423,7 +423,7 @@ if (! function_exists('form_dropdown'))
 				$form .= '<optgroup label="' . $key . "\">\n";
 				foreach ($val as $optgroup_key => $optgroup_val)
 				{
-					$sel   = in_array($optgroup_key, $selected) ? ' selected="selected"' : '';
+					$sel   = in_array($optgroup_key, $selected, true) ? ' selected="selected"' : '';
 					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
 							. $optgroup_val . "</option>\n";
 				}
@@ -432,7 +432,7 @@ if (! function_exists('form_dropdown'))
 			else
 			{
 				$form .= '<option value="' . htmlspecialchars($key) . '"'
-						. (in_array($key, $selected) ? ' selected="selected"' : '') . '>'
+						. (in_array($key, $selected, true) ? ' selected="selected"' : '') . '>'
 						. $val . "</option>\n";
 			}
 		}

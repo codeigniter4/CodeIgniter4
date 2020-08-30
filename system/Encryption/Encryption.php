@@ -140,7 +140,7 @@ class Encryption
 		}
 
 		// Check for an unknown driver
-		if (! in_array($this->driver, $this->drivers))
+		if (! in_array($this->driver, $this->drivers, true))
 		{
 			throw EncryptionException::forUnKnownHandler($this->driver);
 		}

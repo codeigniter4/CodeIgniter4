@@ -247,7 +247,7 @@ class CreditCardRules
 		// Make sure it's a valid length for this card
 		$lengths = explode(',', $info['length']);
 
-		if (! in_array(strlen($ccNumber), $lengths))
+		if (! in_array((string) strlen($ccNumber), $lengths, true))
 		{
 			return false;
 		}

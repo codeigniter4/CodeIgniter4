@@ -691,7 +691,7 @@ class Model
 			$properties = $data->toRawArray($onlyChanged);
 
 			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties) && ! empty($data->{$primaryKey}))
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey}))
 			{
 				$properties[$primaryKey] = $data->{$primaryKey};
 			}
@@ -1489,7 +1489,7 @@ class Model
 
 		foreach ($data as $key => $val)
 		{
-			if (! in_array($key, $this->allowedFields))
+			if (! in_array($key, $this->allowedFields, true))
 			{
 				unset($data[$key]);
 			}

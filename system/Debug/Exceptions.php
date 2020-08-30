@@ -150,7 +150,7 @@ class Exceptions
 		] = $this->determineCodes($exception);
 
 		// Log it
-		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
+		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
 		{
 			log_message('critical', $exception->getMessage() . "\n{trace}", [
 							'trace' => $exception->getTraceAsString(),
@@ -219,7 +219,7 @@ class Exceptions
 		if (! is_null($error))
 		{
 			// Fatal Error?
-			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
+			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
 			{
 				$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 			}

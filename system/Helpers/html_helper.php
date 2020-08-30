@@ -323,7 +323,7 @@ if (! function_exists('link_tag'))
 
 		$link .= 'rel="' . $rel . '" ';
 
-		if (! in_array($rel, ['alternate', 'canonical']))
+		if (! in_array($rel, ['alternate', 'canonical'], true))
 		{
 			$link .= 'type="' . $type . '" ';
 		}

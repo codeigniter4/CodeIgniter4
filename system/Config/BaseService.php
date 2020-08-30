@@ -267,7 +267,7 @@ class BaseService
 				{
 					$classname = $locator->getClassname($file);
 
-					if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
+					if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true))
 					{
 						static::$services[] = new $classname();
 					}

@@ -243,7 +243,7 @@ class FormatRules
 	 */
 	public function timezone(string $str = null): bool
 	{
-		return in_array($str, timezone_identifiers_list());
+		return in_array($str, timezone_identifiers_list(), true);
 	}
 
 	/**

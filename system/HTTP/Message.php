@@ -78,7 +78,7 @@ class Message
 	protected $validProtocolVersions = [
 		'1.0',
 		'1.1',
-		'2',
+		'2.0',
 	];
 
 	/**
@@ -379,7 +379,7 @@ class Message
 			$version = substr($version, strpos($version, '/') + 1);
 		}
 
-		if (! in_array($version, $this->validProtocolVersions))
+		if (! in_array($version, $this->validProtocolVersions, true))
 		{
 			throw HTTPException::forInvalidHTTPProtocol(implode(', ', $this->validProtocolVersions));
 		}
