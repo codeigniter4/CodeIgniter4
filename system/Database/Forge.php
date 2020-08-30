@@ -96,20 +96,6 @@ class Forge
 	 */
 	protected $charset = '';
 
-	/**
-	 * Timestamps added.
-	 *
-	 * @var bool
-	 */
-	protected $timestamps = false;
-
-	/**
-	 * ID field name.
-	 *
-	 * @var string
-	 */
-	protected $idField = '';
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -350,11 +336,12 @@ class Forge
 	 *
 	 * @return Forge
 	 */
-	public function addTimestamps($id = 'id')
+	public function addTimestamps()
 	{
-		$this->timestamps = true;
-		$this->idField = $id;
-		return $this->_addTimestamps();
+		return $this->addField([
+			'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+			'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+		]);
 	}
 
 	//--------------------------------------------------------------------
@@ -576,11 +563,6 @@ class Forge
 				{
 					$this->db->query($sqls[$i]);
 				}
-			}
-
-			// Adding Triggers for updating updated_at field in SQLite3 and PostgreSQL
-			if ($this->timestamps) {
-				$this->_onUpdateTimestamp($table, $this->idField);
 			}
 		}
 
@@ -1348,34 +1330,6 @@ class Forge
 		}
 
 		return $sql;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Add Timestamps
-	 *
-	 * @return Forge
-	 */
-	protected function _addTimestamps()
-	{
-		// Usually overridden by drivers
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Add timestamp update trigger
-	 * 
-	 * @param string $table
-	 * @param string $id
-	 *
-	 * @return void
-	 */
-	protected function _onUpdateTimestamp($table, $id)
-	{
-		// Usually overridden by drivers
 	}
 
 	//--------------------------------------------------------------------

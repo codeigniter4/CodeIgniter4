@@ -86,36 +86,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
-	 * Add Timestamps
-	 *
-	 * @return \CodeIgniter\Database\Forge
-	 */
-	protected function _addTimestamps()
-	{
-		return $this->addField([
-			'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-			'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-		]);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Add timestamp update trigger
-	 * 
-	 * @param string $table
-	 * @param string $id
-	 *
-	 * @return void
-	 */
-	protected function _onUpdateTimestamp($table, $id)
-	{
-		$this->db->query("CREATE OR REPLACE FUNCTION update_updated_at_trigger() RETURNS TRIGGER AS $$ BEGIN NEW.updated_at = NOW(); RETURN NEW; END $$ LANGUAGE plpgsql; CREATE TRIGGER update_updated_at BEFORE UPDATE ON ${table} FOR EACH ROW EXECUTE PROCEDURE update_updated_at_trigger();");
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * CREATE TABLE attributes
 	 *
 	 * @param  array $attributes Associative array of table attributes

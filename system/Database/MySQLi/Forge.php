@@ -121,21 +121,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
-	 * Add Timestamps
-	 *
-	 * @return \CodeIgniter\Database\Forge
-	 */
-	protected function _addTimestamps()
-	{
-		return $this->addField([
-			'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-			'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-		]);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * CREATE TABLE attributes
 	 *
 	 * @param  array $attributes Associative array of table attributes
