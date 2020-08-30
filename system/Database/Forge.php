@@ -332,8 +332,6 @@ class Forge
 	/**
 	 * Add Timestamps
 	 * 
-	 * @param string $id ID field name
-	 *
 	 * @return Forge
 	 */
 	public function addTimestamps()
