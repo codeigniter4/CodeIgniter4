@@ -51,15 +51,16 @@ class RedirectResponse extends Response
 	 * Sets the URI to redirect to and, optionally, the HTTP status code to use.
 	 * If no code is provided it will be automatically determined.
 	 *
-	 * @param string       $uri
-	 * @param integer|null $code
+	 * @param string       $uri    The URI to redirect to
+	 * @param integer|null $code   HTTP status code
 	 * @param string       $method
 	 *
 	 * @return $this
 	 */
 	public function to(string $uri, int $code = null, string $method = 'auto')
 	{
-		// If its a relative URL, convert to full URL for a better security.
+		// If it appears to be a relative URL, then convert to full URL
+		// for better security.
 		if (strpos($uri, 'http') !== 0)
 		{
 			$uri = (string) current_url(true)->resolveRelativeURI($uri);
@@ -78,6 +79,8 @@ class RedirectResponse extends Response
 	 * @param array   $params
 	 * @param integer $code
 	 * @param string  $method
+	 *
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 *
 	 * @return $this
 	 */
@@ -109,7 +112,7 @@ class RedirectResponse extends Response
 	public function back(int $code = null, string $method = 'auto')
 	{
 		Services::session();
-		
+
 		return $this->redirect(previous_url(), $method, $code);
 	}
 
@@ -118,6 +121,7 @@ class RedirectResponse extends Response
 	/**
 	 * Specifies that the current $_GET and $_POST arrays should be
 	 * packaged up with the response.
+	 *
 	 * It will then be available via the 'old()' helper function.
 	 *
 	 * @return $this
@@ -128,14 +132,15 @@ class RedirectResponse extends Response
 
 		$session->setFlashdata('_ci_old_input', [
 			'get'  => $_GET ?? [],
-			'post' => $_POST ?? []
+			'post' => $_POST ?? [],
 		]);
 
-		// If the validator has any errors, transmit those back
+		// If the validation has any errors, transmit those back
 		// so they can be displayed when the validation is handled
 		// within a method different than displaying the form.
 		$validation = Services::validation();
-		if (! empty($validation->getErrors()))
+
+		if ($validation->getErrors())
 		{
 			$session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
 		}
@@ -174,11 +179,6 @@ class RedirectResponse extends Response
 	{
 		$cookies = Services::response()->getCookies();
 
-		if (empty($cookies))
-		{
-			return $this;
-		}
-
 		foreach ($cookies as $cookie)
 		{
 			$this->cookies[] = $cookie;
@@ -200,11 +200,6 @@ class RedirectResponse extends Response
 	public function withHeaders()
 	{
 		$headers = Services::response()->getHeaders();
-
-		if (empty($headers))
-		{
-			return $this;
-		}
 
 		foreach ($headers as $name => $header)
 		{
