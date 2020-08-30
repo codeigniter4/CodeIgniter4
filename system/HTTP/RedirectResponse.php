@@ -69,8 +69,6 @@ class RedirectResponse extends Response
 		return $this->redirect($uri, $method, $code);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the URI to redirect to but as a reverse-routed or named route
 	 * instead of a raw URI.
@@ -96,8 +94,6 @@ class RedirectResponse extends Response
 		return $this->redirect(site_url($route), $method, $code);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Helper function to return to previous page.
 	 *
@@ -115,8 +111,6 @@ class RedirectResponse extends Response
 
 		return $this->redirect(previous_url(), $method, $code);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Specifies that the current $_GET and $_POST arrays should be
@@ -148,8 +142,6 @@ class RedirectResponse extends Response
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a key and message to the session as Flashdata.
 	 *
@@ -165,8 +157,6 @@ class RedirectResponse extends Response
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Copies any cookies from the global Response instance
 	 * into this RedirectResponse. Useful when you've just
@@ -177,17 +167,13 @@ class RedirectResponse extends Response
 	 */
 	public function withCookies()
 	{
-		$cookies = Services::response()->getCookies();
-
-		foreach ($cookies as $cookie)
+		foreach (Services::response()->getCookies() as $cookie)
 		{
 			$this->cookies[] = $cookie;
 		}
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Copies any headers from the global Response instance
@@ -199,9 +185,7 @@ class RedirectResponse extends Response
 	 */
 	public function withHeaders()
 	{
-		$headers = Services::response()->getHeaders();
-
-		foreach ($headers as $name => $header)
+		foreach (Services::response()->getHeaders() as $name => $header)
 		{
 			$this->setHeader($name, $header->getValue());
 		}
