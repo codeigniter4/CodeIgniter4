@@ -79,6 +79,8 @@ class Format
 	 *
 	 * @param string $mime
 	 *
+	 * @throws \CodeIgniter\Format\Exceptions\FormatException
+	 *
 	 * @return \CodeIgniter\Format\FormatterInterface
 	 */
 	public function getFormatter(string $mime): FormatterInterface
