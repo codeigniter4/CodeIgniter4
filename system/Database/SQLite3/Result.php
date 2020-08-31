@@ -182,7 +182,8 @@ class Result extends BaseResult implements ResultInterface
 		{
 			return false;
 		}
-		elseif ($className === 'stdClass')
+
+		if ($className === 'stdClass')
 		{
 			return (object) $row;
 		}

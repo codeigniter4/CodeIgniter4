@@ -362,7 +362,8 @@ class FormatRules
 		{
 			return false;
 		}
-		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
+
+		if (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
 			if (! in_array($matches[1], ['http', 'https'], true))
 			{

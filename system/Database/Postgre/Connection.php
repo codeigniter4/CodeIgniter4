@@ -240,7 +240,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return pg_escape_literal($this->connID, $str);
 		}
-		elseif (is_bool($str))
+
+		if (is_bool($str))
 		{
 			return $str ? 'TRUE' : 'FALSE';
 		}

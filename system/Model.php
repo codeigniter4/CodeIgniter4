@@ -1973,11 +1973,13 @@ class Model
 		{
 			return $this->{$name};
 		}
-		elseif (isset($this->db->$name))
+
+		if (isset($this->db->$name))
 		{
 			return $this->db->$name;
 		}
-		elseif (isset($this->builder()->$name))
+
+		if (isset($this->builder()->$name))
 		{
 			return $this->builder()->$name;
 		}
@@ -1998,11 +2000,13 @@ class Model
 		{
 			return true;
 		}
-		elseif (isset($this->db->$name))
+
+		if (isset($this->db->$name))
 		{
 			return true;
 		}
-		elseif (isset($this->builder()->$name))
+
+		if (isset($this->builder()->$name))
 		{
 			return true;
 		}

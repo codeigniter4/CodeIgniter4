@@ -220,13 +220,15 @@ class Session implements SessionInterface
 			return;
 			// @codeCoverageIgnoreEnd
 		}
-		elseif ((bool) ini_get('session.auto_start'))
+
+		if ((bool) ini_get('session.auto_start'))
 		{
 			$this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
 			return;
 		}
-		elseif (session_status() === PHP_SESSION_ACTIVE)
+
+		if (session_status() === PHP_SESSION_ACTIVE)
 		{
 			$this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
 
@@ -544,7 +546,8 @@ class Session implements SessionInterface
 		{
 			return $value;
 		}
-		elseif (empty($_SESSION))
+
+		if (empty($_SESSION))
 		{
 			return $key === null ? [] : null;
 		}
@@ -661,7 +664,8 @@ class Session implements SessionInterface
 		{
 			return $_SESSION[$key];
 		}
-		elseif ($key === 'session_id')
+
+		if ($key === 'session_id')
 		{
 			return session_id();
 		}
