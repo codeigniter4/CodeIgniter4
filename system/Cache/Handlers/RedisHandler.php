@@ -223,7 +223,8 @@ class RedisHandler implements CacheInterface
 		{
 			return false;
 		}
-		elseif ($ttl)
+
+		if ($ttl)
 		{
 			$this->redis->expireAt($key, time() + $ttl);
 		}

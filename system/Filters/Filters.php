@@ -97,7 +97,7 @@ class Filters
 	 * @var array
 	 */
 	protected $arguments = [];
-	
+
 	/**
 	 * Handle to the modules config.
 	 *
@@ -110,9 +110,9 @@ class Filters
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Filters   $config
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
+	 * @param \Config\Filters      $config
+	 * @param RequestInterface     $request
+	 * @param ResponseInterface    $response
 	 * @param \Config\Modules|null $moduleConfig
 	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
@@ -123,22 +123,22 @@ class Filters
 
 		$this->moduleConfig = $moduleConfig ?? config('Modules');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * If discoverFilters is enabled in Config then system will try to auto
-	 * Discovery custom filters files in Namespaces and allow access to 
+	 * Discovery custom filters files in Namespaces and allow access to
 	 * The config object via the variable $customfilters as with the routes file
-	 * Sample : 
+	 * Sample :
 	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
-	 */	
+	 */
 	private function discoverFilters()
 	{
 		$locater = Services::locator();
-		
+
 		$filters = $this->config;
-		
+
 		$files = $locater->search('Config/Filters.php');
 
 		foreach ($files as $file)
@@ -151,7 +151,7 @@ class Filters
 
 			include $file;
 		}
-	}	
+	}
 
 	/**
 	 * Set the response explicity.
@@ -235,7 +235,8 @@ class Filters
 
 					return $result;
 				}
-				elseif ($position === 'after')
+
+				if ($position === 'after')
 				{
 					$result = $class->after($this->request, $this->response, $this->arguments[$alias] ?? null);
 
@@ -279,8 +280,8 @@ class Filters
 		if ($this->moduleConfig->shouldDiscover('filters'))
 		{
 			$this->discoverFilters();
-		}	
-		
+		}
+
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);

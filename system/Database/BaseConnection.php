@@ -853,8 +853,9 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return false;
 		}
+
 		// When transactions are nested we only begin/commit/rollback the outermost ones
-		elseif ($this->transDepth > 0)
+		if ($this->transDepth > 0)
 		{
 			$this->transDepth ++;
 			return true;
@@ -892,8 +893,9 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return false;
 		}
+
 		// When transactions are nested we only begin/commit/rollback the outermost ones
-		elseif ($this->transDepth > 1 || $this->_transCommit())
+		if ($this->transDepth > 1 || $this->_transCommit())
 		{
 			$this->transDepth --;
 			return true;
@@ -915,8 +917,9 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return false;
 		}
+
 		// When transactions are nested we only begin/commit/rollback the outermost ones
-		elseif ($this->transDepth > 1 || $this->_transRollback())
+		if ($this->transDepth > 1 || $this->_transRollback())
 		{
 			$this->transDepth --;
 			return true;
@@ -1287,7 +1290,8 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return $item;
 		}
-		elseif (is_array($item))
+
+		if (is_array($item))
 		{
 			foreach ($item as $key => $value)
 			{
@@ -1296,10 +1300,12 @@ abstract class BaseConnection implements ConnectionInterface
 
 			return $item;
 		}
+
 		// Avoid breaking functions and literal values inside queries
-		elseif (ctype_digit($item) || $item[0] === "'" || ( $this->escapeChar !== '"' && $item[0] === '"') ||
-				strpos($item, '(') !== false
-		)
+		if (ctype_digit($item)
+			|| $item[0] === "'"
+			|| ( $this->escapeChar !== '"' && $item[0] === '"')
+			|| strpos($item, '(') !== false)
 		{
 			return $item;
 		}

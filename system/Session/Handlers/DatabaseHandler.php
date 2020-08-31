@@ -231,7 +231,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// Was the ID regenerated?
-		elseif ($sessionID !== $this->sessionID)
+		if ($sessionID !== $this->sessionID)
 		{
 			$this->rowExists = false;
 			$this->sessionID = $sessionID;
@@ -372,7 +372,8 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 			return $this->fail();
 		}
-		elseif ($this->platform === 'postgre')
+
+		if ($this->platform === 'postgre')
 		{
 			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
 			if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
@@ -412,7 +413,8 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 			return $this->fail();
 		}
-		elseif ($this->platform === 'postgre')
+
+		if ($this->platform === 'postgre')
 		{
 			if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})"))
 			{

@@ -134,7 +134,8 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->getResultArray();
 		}
-		elseif ($type === 'object')
+
+		if ($type === 'object')
 		{
 			return $this->getResultObject();
 		}
@@ -331,7 +332,8 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->getRowObject($n);
 		}
-		elseif ($type === 'array')
+
+		if ($type === 'array')
 		{
 			return $this->getRowArray($n);
 		}
@@ -548,7 +550,8 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->fetchAssoc();
 		}
-		elseif ($type === 'object')
+
+		if ($type === 'object')
 		{
 			return $this->fetchObject();
 		}

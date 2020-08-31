@@ -101,7 +101,8 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			throw SessionException::forEmptySavepath();
 		}
-		elseif (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
+
+		if (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
 			// @phpstan-ignore-next-line
 			isset($matches[3]) || $matches[3] = ''; // Just to avoid undefined index notices below
@@ -222,8 +223,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			return false;
 		}
+
 		// Was the ID regenerated?
-		elseif ($sessionID !== $this->sessionID)
+		if ($sessionID !== $this->sessionID)
 		{
 			if (! $this->releaseLock() || ! $this->lockSession($sessionID))
 			{
@@ -387,7 +389,8 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			log_message('error', 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
 			return false;
 		}
-		elseif ($ttl === -1)
+
+		if ($ttl === -1)
 		{
 			log_message('debug', 'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.');
 		}

@@ -883,7 +883,8 @@ class Email
 		{
 			return empty($this->attachments) ? 'html' : 'html-attach';
 		}
-		elseif ($this->mailType === 'text' && ! empty($this->attachments))
+
+		if ($this->mailType === 'text' && ! empty($this->attachments))
 		{
 			return 'plain-attach';
 		}
@@ -1989,7 +1990,8 @@ class Email
 		{
 			return true;
 		}
-		elseif (strpos($reply, '334') !== 0)
+
+		if (strpos($reply, '334') !== 0)
 		{
 			$this->setErrorMessage(lang('Email.failedSMTPLogin', [$reply]));
 			return false;

@@ -254,7 +254,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			return false;
 		}
-		elseif ($this->fingerprint === md5($sessionData))
+
+		if ($this->fingerprint === md5($sessionData))
 		{
 			return ($this->fileNew) ? true : touch($this->filePath . $sessionID);
 		}
@@ -332,7 +333,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			return is_file($this->filePath . $session_id)
 				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
-		elseif ($this->filePath !== null)
+
+		if ($this->filePath !== null)
 		{
 			clearstatcache();
 

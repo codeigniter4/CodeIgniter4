@@ -216,8 +216,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			return false;
 		}
+
 		// Was the ID regenerated?
-		elseif ($sessionID !== $this->sessionID)
+		if ($sessionID !== $this->sessionID)
 		{
 			if (! $this->releaseLock() || ! $this->lockSession($sessionID))
 			{

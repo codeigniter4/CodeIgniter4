@@ -145,7 +145,8 @@ class FeatureResponse extends TestCase
 		{
 			return $this->response->getHeaderLine('Location');
 		}
-		elseif ($this->response->hasHeader('Refresh'))
+
+		if ($this->response->hasHeader('Refresh'))
 		{
 			return str_replace('0;url=', '', $this->response->getHeaderLine('Refresh'));
 		}
