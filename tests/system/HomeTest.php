@@ -11,7 +11,16 @@ class HomeTest extends CIUnitTestCase
 
 	public function testPageLoadsSuccessfully()
 	{
-		$response = $this->get('/');
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'\App\Controllers\Home::index',
+			],
+		]);
+
+		$response = $this->get('home');
+		$this->assertInstanceOf('CodeIgniter\Test\FeatureResponse', $response);
 		$this->assertTrue($response->isOK());
 	}
 }
