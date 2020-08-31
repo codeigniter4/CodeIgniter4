@@ -60,12 +60,20 @@ class Filters
 		'after'  => [],
 	];
 
+	/**
+	 * The filterClass that will
+	 * be used to execute against.
+	 *
+	 * @var array
+	 */
 	protected $filtersClass = [
 		'before' => [],
 		'after'  => [],
 	];
 
 	/**
+	 * Any arguments to be passed to filtersClass.
+	 *
 	 * @var array
 	 */
 	protected $argumentsClass = [];
@@ -227,8 +235,6 @@ class Filters
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);
-		$this->processAliasesToClass('before');
-		$this->processAliasesToClass('after');
 
 		// Set the toolbar filter to the last position to be executed
 		if (in_array('toolbar', $this->filters['after'], true) &&
@@ -239,6 +245,9 @@ class Filters
 			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after']), 1);
 			$this->filters['after'][] = 'toolbar';
 		}
+
+		$this->processAliasesToClass('before');
+		$this->processAliasesToClass('after');
 
 		$this->initialized = true;
 
@@ -257,7 +266,12 @@ class Filters
 		return $this->filters;
 	}
 
-	public function getFiltersClass() :array
+	/**
+	 * Returns the filtersClass array.
+	 *
+	 * @return array
+	 */
+	public function getFiltersClass(): array
 	{
 		return $this->filtersClass;
 	}
