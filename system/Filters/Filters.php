@@ -507,10 +507,11 @@ class Filters
 	}
 
 	/**
-	 * filter alias to class
+	 * Maps filter aliases to the equivalent filter classes
+	 *
+	 * @throws FilterException
 	 *
 	 * @return void
-	 * @throws FilterException
 	 */
 	protected function processAliasesToClass(string $position)
 	{
