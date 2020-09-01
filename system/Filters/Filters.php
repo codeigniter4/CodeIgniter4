@@ -343,14 +343,7 @@ class Filters
 			throw FilterException::forNoAlias($name);
 		}
 
-		if (is_array($this->config->aliases[$name]))
-		{
-			$classNames = $this->config->aliases[$name];
-		}
-		else
-		{
-			$classNames = [$this->config->aliases[$name]];
-		}
+		$classNames = (array) $this->config->aliases[$name];
 
 		foreach ($classNames as $className)
 		{
