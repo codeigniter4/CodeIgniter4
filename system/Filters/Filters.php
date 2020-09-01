@@ -61,8 +61,8 @@ class Filters
 	];
 
 	/**
-	 * The filterClass that will
-	 * be used to execute against.
+	 * The collection of filters' class names that will
+	 * be used to execute in each position.
 	 *
 	 * @var array
 	 */
