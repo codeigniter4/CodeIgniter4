@@ -283,6 +283,17 @@ class FeatureResponseTest extends CIUnitTestCase
 		]);
 
 		$this->feature->assertJSONFragment(['config' => ['key-a']]);
+		$this->feature->assertJSONFragment(['config' => ['key-a']], true);
+	}
+
+	public function testAssertJSONFragmentFollowingAssertArraySubset()
+	{
+		$this->getFeatureResponse([
+			'config' => '124',
+		]);
+
+		$this->feature->assertJSONFragment(['config' => 124]); // must fail on strict
+		$this->feature->assertJSONFragment(['config' => '124'], true);
 	}
 
 	public function testJsonExact()

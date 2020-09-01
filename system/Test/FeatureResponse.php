@@ -389,15 +389,24 @@ class FeatureResponse extends TestCase
 	/**
 	 * Test that the response contains a matching JSON fragment.
 	 *
-	 * @param array $fragment
+	 * @param array   $fragment
+	 * @param boolean $strict
 	 *
 	 * @throws \Exception
 	 */
-	public function assertJSONFragment(array $fragment)
+	public function assertJSONFragment(array $fragment, bool $strict = false)
 	{
-		$json = json_decode($this->getJSON(), true);
+		$json    = json_decode($this->getJSON(), true);
+		$patched = array_replace_recursive($json, $fragment);
 
-		$this->assertArraySubset($fragment, $json, false, 'Response does not contain a matching JSON fragment.');
+		if ($strict)
+		{
+			$this->assertSame($json, $patched, 'Response does not contain a matching JSON fragment.');
+		}
+		else
+		{
+			$this->assertEquals($json, $patched, 'Response does not contain a matching JSON fragment.');
+		}
 	}
 
 	/**
