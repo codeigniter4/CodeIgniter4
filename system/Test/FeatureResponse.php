@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -40,7 +41,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Format;
+use Config\Services;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -48,7 +49,6 @@ use PHPUnit\Framework\TestCase;
  */
 class FeatureResponse extends TestCase
 {
-
 	/**
 	 * The response.
 	 *
@@ -414,9 +414,7 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$config    = new Format();
-			$formatter = $config->getFormatter('application/json');
-			$test      = $formatter->format($test);
+			$test = Services::format()->getFormatter('application/json')->format($test);
 		}
 
 		$this->assertJsonStringEqualsJsonString($test, $json, 'Response does not contain matching JSON.');

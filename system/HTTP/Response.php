@@ -41,7 +41,9 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
-use Config\Format;
+use Config\Services;
+use DateTime;
+use DateTimeZone;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -376,9 +378,9 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date)
+	public function setDate(DateTime $date)
 	{
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new DateTimeZone('UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
 
@@ -479,13 +481,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/json');
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter('application/json')->format($body);
 		}
 
 		return $body ?: null;
@@ -521,13 +517,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/xml');
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter('application/xml')->format($body);
 		}
 
 		return $body;
@@ -554,13 +544,7 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body) || $format === 'json-unencoded')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter($mime);
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter($mime)->format($body);
 		}
 
 		return $body;
