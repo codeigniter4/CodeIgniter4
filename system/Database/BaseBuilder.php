@@ -3069,7 +3069,8 @@ class BaseBuilder
 				{
 					continue;
 				}
-				elseif ($qbkey['escape'] === false)
+
+				if ($qbkey['escape'] === false)
 				{
 					$qbkey = $qbkey['condition'];
 					continue;
@@ -3191,7 +3192,8 @@ class BaseBuilder
 
 			return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
 		}
-		elseif (is_string($this->QBOrderBy))
+
+		if (is_string($this->QBOrderBy))
 		{
 			return $this->QBOrderBy;
 		}

@@ -240,8 +240,8 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat))
-		)
+
+		if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat)))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -305,7 +305,8 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName)))
+
+		if (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName)))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -741,7 +742,8 @@ class Forge
 		{
 			throw new \InvalidArgumentException('A table name is required for that operation.');
 		}
-		elseif ($this->renameTableStr === false)
+
+		if ($this->renameTableStr === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -1111,7 +1113,8 @@ class Forge
 
 					return;
 				}
-				elseif (is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0)
+
+				if (is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0)
 				{
 					$field['type'] = $key;
 

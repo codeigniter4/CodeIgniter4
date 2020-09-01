@@ -104,7 +104,8 @@ abstract class BaseUtils
 		{
 			return $this->db->dataCache['db_names'];
 		}
-		elseif ($this->listDatabases === false)
+
+		if ($this->listDatabases === false)
 		{
 			if ($this->db->DBDebug)
 			{

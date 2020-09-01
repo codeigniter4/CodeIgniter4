@@ -295,11 +295,13 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-		elseif ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
+
+		if ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
 		{
 			return true;
 		}
-		elseif ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
+
+		if ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
 		{
 			return true;
 		}
@@ -763,7 +765,8 @@ class IncomingRequest extends Request
 		{
 			return '';
 		}
-		elseif (strncmp($uri, '/', 1) === 0)
+
+		if (strncmp($uri, '/', 1) === 0)
 		{
 			$uri                     = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
