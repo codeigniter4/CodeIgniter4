@@ -175,6 +175,9 @@ class Router implements RouterInterface
 		// Decode URL-encoded string
 		$uri = urldecode($uri);
 
+		// Restart filterInfo
+		$this->filterInfo = null;
+
 		if ($this->checkRoutes($uri))
 		{
 			if ($this->collection->isFiltered($this->matchedRoute[0]))
