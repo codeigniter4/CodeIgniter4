@@ -947,6 +947,8 @@ class CLI
 	 *  // segment(3) is 'three', not '-f' or 'anOption'
 	 *  > php spark one two -f anOption three
 	 *
+	 * **IMPORTANT:** The index here is one-based instead of zero-based.
+	 *
 	 * @param integer $index
 	 *
 	 * @return mixed|null
