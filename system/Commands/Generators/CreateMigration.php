@@ -87,11 +87,10 @@ class CreateMigration extends GeneratorCommand
 	protected function getClassName(): string
 	{
 		$class = parent::getClassName();
+
 		if (empty($class))
 		{
-			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
-			// @codeCoverageIgnoreEnd
+			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required'); // @codeCoverageIgnore
 		}
 
 		return $class;
@@ -122,28 +121,8 @@ class CreateMigration extends GeneratorCommand
 	 */
 	protected function getTemplate(): string
 	{
-		return <<<EOD
-<?php
+		$template = view('CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php', [], ['debug' => false]);
 
-namespace {namespace};
-
-use CodeIgniter\Database\Migration;
-
-class {class} extends Migration
-{
-	public function up()
-	{
-		//
-	}
-
-	//--------------------------------------------------------------------
-
-	public function down()
-	{
-		//
-	}
-}
-
-EOD;
+		return str_replace('<@php', '<?php', $template);
 	}
 }
