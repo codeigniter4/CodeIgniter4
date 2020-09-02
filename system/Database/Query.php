@@ -168,12 +168,23 @@ class Query implements QueryInterface
 	/**
 	 * Will store the variables to bind into the query later.
 	 *
-	 * @param array $binds
+	 * @param array   $binds
+	 * @param boolean $setEscape
 	 *
 	 * @return $this
 	 */
-	public function setBinds(array $binds)
+	public function setBinds(array $binds, bool $setEscape = true)
 	{
+		if ($setEscape)
+		{
+			array_walk($binds, function (&$item) {
+				$item = [
+					$item,
+					true,
+				];
+			});
+		}
+
 		$this->binds = $binds;
 
 		return $this;
