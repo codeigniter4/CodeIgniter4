@@ -87,11 +87,10 @@ class CreateSeeder extends GeneratorCommand
 	protected function getClassName(): string
 	{
 		$class = parent::getClassName();
+
 		if (empty($class))
 		{
-			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required');
-			// @codeCoverageIgnoreEnd
+			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required'); // @codeCoverageIgnore
 		}
 
 		return $class;
@@ -117,21 +116,8 @@ class CreateSeeder extends GeneratorCommand
 	 */
 	protected function getTemplate(): string
 	{
-		return <<<EOD
-<?php
+		$template = view('CodeIgniter\\Commands\\Generators\\Views\\seed.tpl.php', [], ['debug' => false]);
 
-namespace {namespace};
-
-use CodeIgniter\Database\Seeder;
-
-class {class} extends Seeder
-{
-	public function run()
-	{
-		//
-	}
-}
-
-EOD;
+		return str_replace('<@php', '<?php', $template);
 	}
 }
