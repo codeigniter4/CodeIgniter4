@@ -127,7 +127,7 @@ class Router implements RouterInterface
 	 * The filter info from Route Collection
 	 * if the matched route should be filtered.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $filterInfo;
 
