@@ -331,11 +331,11 @@ class Filters
 		switch ($type)
 		{
 			case 'common':
-				return round($value, $precision);
+				return round((float) $value, $precision);
 			case 'ceil':
-				return ceil($value);
+				return ceil((float) $value);
 			case 'floor':
-				return floor($value);
+				return floor((float) $value);
 		}
 
 		// Still here, just return the value.

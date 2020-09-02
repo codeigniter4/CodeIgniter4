@@ -159,7 +159,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	protected function destroyCookie(): bool
 	{
 		return setcookie(
-				$this->cookieName, null, 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
+				$this->cookieName, '', 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
 		);
 	}
 

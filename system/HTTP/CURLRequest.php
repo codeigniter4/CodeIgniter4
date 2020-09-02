@@ -443,7 +443,7 @@ class CURLRequest extends Request
 		// Do we need to delay this request?
 		if ($this->delay > 0)
 		{
-			sleep($this->delay);
+			sleep($this->delay); // @phpstan-ignore-line
 		}
 
 		$output = $this->sendRequest($curl_options);
@@ -827,7 +827,7 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
 		}
 
 		curl_close($ch);

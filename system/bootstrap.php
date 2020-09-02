@@ -37,11 +37,6 @@
  * @filesource
  */
 
-namespace CodeIgniter;
-
-use CodeIgniter;
-use Config;
-
 /*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
@@ -52,48 +47,46 @@ use Config;
  * so they are available in the config files that are loaded.
  */
 
-/**
- * The path to the application directory.
- */
+// The path to the application directory.
 if (! defined('APPPATH'))
 {
-	// @phpstan-ignore-next-line
-	define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
+	/**
+	 * @var \Config\Paths $paths
+	 */
+	define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
-/**
- * The path to the project root directory. Just above APPPATH.
- */
+// The path to the project root directory. Just above APPPATH.
 if (! defined('ROOTPATH'))
 {
 	define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 }
 
-/**
- * The path to the system directory.
- */
+// The path to the system directory.
 if (! defined('SYSTEMPATH'))
 {
-	// @phpstan-ignore-next-line
-	define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
+	/**
+	 * @var \Config\Paths $paths
+	 */
+	define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
-/**
- * The path to the writable directory.
- */
+// The path to the writable directory.
 if (! defined('WRITEPATH'))
 {
-	// @phpstan-ignore-next-line
-	define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
+	/**
+	 * @var \Config\Paths $paths
+	 */
+	define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
-/**
- * The path to the tests directory
- */
+// The path to the tests directory
 if (! defined('TESTPATH'))
 {
-	// @phpstan-ignore-next-line
-	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
+	/**
+	 * @var \Config\Paths $paths
+	 */
+	define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -125,7 +118,7 @@ require_once SYSTEMPATH . 'Common.php';
  * that the config files can use the path constants.
  */
 
-if (! class_exists(Config\Autoload::class, false))
+if (! class_exists('Config\Autoload', false))
 {
 	require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 	require_once APPPATH . 'Config/Autoload.php';
@@ -146,12 +139,12 @@ if (! class_exists('CodeIgniter\Services', false))
 
 $loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload(), new Config\Modules());
-$loader->register();    // Register the loader with the SPL autoloader stack.
+$loader->register(); // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
 {
-	/**
+	/*
 	 * The path to the vendor directory.
 	 *
 	 * We do not want to enforce this, so set the constant if Composer was used.
@@ -185,7 +178,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$appConfig = config(Config\App::class);
+$appConfig = config('Config\App');
 $app       = new CodeIgniter\CodeIgniter($appConfig);
 $app->initialize();
 

@@ -61,7 +61,7 @@ class MockSession extends Session
 			$this->cookies[] = [
 				$this->sessionCookieName,
 				session_id(),
-				(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
+				empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
 				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
 				$this->cookieDomain,
 				$this->cookieSecure,
@@ -72,7 +72,7 @@ class MockSession extends Session
 		{
 			// PHP 7.3 adds another function signature allowing setting of samesite
 			$params = [
-				'lifetime' => $this->sessionExpiration,
+				'expires'  => empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,

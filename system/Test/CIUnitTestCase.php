@@ -148,8 +148,8 @@ class CIUnitTestCase extends TestCase
 	 * Custom function to hook into CodeIgniter's Logging mechanism
 	 * to check if certain messages were logged during code execution.
 	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
+	 * @param string      $level
+	 * @param string|null $expectedMessage
 	 *
 	 * @return boolean
 	 * @throws \Exception

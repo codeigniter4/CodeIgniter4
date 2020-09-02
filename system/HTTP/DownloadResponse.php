@@ -58,7 +58,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * Download for file
 	 *
-	 * @var File
+	 * @var File|null
 	 */
 	private $file;
 
@@ -163,7 +163,8 @@ class DownloadResponse extends Message implements ResponseInterface
 		{
 			return strlen($this->binary);
 		}
-		elseif ($this->file instanceof File)
+
+		if ($this->file instanceof File)
 		{
 			return $this->file->getSize();
 		}
@@ -480,7 +481,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']))
 		{
-			$this->setDate(\DateTime::createFromFormat('U', time()));
+			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status
@@ -509,7 +510,8 @@ class DownloadResponse extends Message implements ResponseInterface
 		{
 			return $this->sendBodyByBinary();
 		}
-		elseif ($this->file !== null)
+
+		if ($this->file !== null)
 		{
 			return $this->sendBodyByFilePath();
 		}

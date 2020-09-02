@@ -339,7 +339,7 @@ class Typography
 	 */
 	protected function formatNewLines(string $str): string
 	{
-		if ($str === '' || ( strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired)))
+		if ($str === '' || ( strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true)))
 		{
 			return $str;
 		}

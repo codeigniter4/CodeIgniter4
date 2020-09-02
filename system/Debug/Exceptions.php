@@ -121,7 +121,7 @@ class Exceptions
 	public function initialize()
 	{
 		//Set the Exception Handler
-		set_exception_handler([$this, 'exceptionHandler']);
+		set_exception_handler([$this, 'exceptionHandler']); // @phpstan-ignore-line
 
 		// Set the Error Handler
 		set_error_handler([$this, 'errorHandler']);
@@ -150,7 +150,7 @@ class Exceptions
 		] = $this->determineCodes($exception);
 
 		// Log it
-		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
+		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
 		{
 			log_message('critical', $exception->getMessage() . "\n{trace}", [
 							'trace' => $exception->getTraceAsString(),
@@ -219,7 +219,7 @@ class Exceptions
 		if (! is_null($error))
 		{
 			// Fatal Error?
-			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
+			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
 			{
 				$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 			}
@@ -472,7 +472,7 @@ class Exceptions
 		$start = $start < 0 ? 0 : $start;
 
 		// Get just the lines we need to display, while keeping line numbers...
-		$source = array_splice($source, $start, $lines, true);
+		$source = array_splice($source, $start, $lines, true); // @phpstan-ignore-line
 
 		// Used to format the line number in the source
 		$format = '% ' . strlen(sprintf('%s', $start + $lines)) . 'd';

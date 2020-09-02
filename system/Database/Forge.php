@@ -240,8 +240,8 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat))
-		)
+
+		if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat)))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -305,7 +305,8 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName)))
+
+		if (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName)))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -741,7 +742,8 @@ class Forge
 		{
 			throw new \InvalidArgumentException('A table name is required for that operation.');
 		}
-		elseif ($this->renameTableStr === false)
+
+		if ($this->renameTableStr === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -1111,7 +1113,8 @@ class Forge
 
 					return;
 				}
-				elseif (is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0)
+
+				if (is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0)
 				{
 					$field['type'] = $key;
 
@@ -1256,7 +1259,7 @@ class Forge
 				continue;
 			}
 
-			if (in_array($i, $this->uniqueKeys))
+			if (in_array($i, $this->uniqueKeys, true))
 			{
 				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
 						  . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
@@ -1302,12 +1305,12 @@ class Forge
 				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
 					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
+				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))
 				{
 					$sql .= ' ON DELETE ' . $fkey['onDelete'];
 				}
 
-				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions))
+				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true))
 				{
 					$sql .= ' ON UPDATE ' . $fkey['onUpdate'];
 				}

@@ -104,7 +104,8 @@ abstract class BaseUtils
 		{
 			return $this->db->dataCache['db_names'];
 		}
-		elseif ($this->listDatabases === false)
+
+		if ($this->listDatabases === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -139,7 +140,7 @@ abstract class BaseUtils
 	 */
 	public function databaseExists(string $database_name): bool
 	{
-		return in_array($database_name, $this->listDatabases());
+		return in_array($database_name, $this->listDatabases(), true);
 	}
 
 	//--------------------------------------------------------------------

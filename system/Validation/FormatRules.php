@@ -243,7 +243,7 @@ class FormatRules
 	 */
 	public function timezone(string $str = null): bool
 	{
-		return in_array($str, timezone_identifiers_list());
+		return in_array($str, timezone_identifiers_list(), true);
 	}
 
 	/**
@@ -362,7 +362,8 @@ class FormatRules
 		{
 			return false;
 		}
-		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
+
+		if (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
 			if (! in_array($matches[1], ['http', 'https'], true))
 			{

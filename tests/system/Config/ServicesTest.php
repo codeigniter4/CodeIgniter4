@@ -1,9 +1,12 @@
 <?php
+
 namespace Config;
 
+use CodeIgniter\Format\Format;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 
-class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
+class ServicesTest extends CIUnitTestCase
 {
 
 	protected $config;
@@ -279,6 +282,16 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$result = Services::filters();
 		$this->assertInstanceOf(\CodeIgniter\Filters\Filters::class, $result);
+	}
+
+	public function testFormat()
+	{
+		$this->assertInstanceOf(Format::class, Services::format());
+	}
+
+	public function testUnsharedFormat()
+	{
+		$this->assertInstanceOf(Format::class, Services::format(null, false));
 	}
 
 	public function testHoneypot()

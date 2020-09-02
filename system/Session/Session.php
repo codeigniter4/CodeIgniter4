@@ -220,13 +220,15 @@ class Session implements SessionInterface
 			return;
 			// @codeCoverageIgnoreEnd
 		}
-		elseif ((bool) ini_get('session.auto_start'))
+
+		if ((bool) ini_get('session.auto_start'))
 		{
 			$this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
 			return;
 		}
-		elseif (session_status() === PHP_SESSION_ACTIVE)
+
+		if (session_status() === PHP_SESSION_ACTIVE)
 		{
 			$this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
 
@@ -355,7 +357,7 @@ class Session implements SessionInterface
 		}
 		else
 		{
-			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
+			ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
 		}
 
 		if (! empty($this->sessionSavePath))
@@ -364,10 +366,10 @@ class Session implements SessionInterface
 		}
 
 		// Security is king
-		ini_set('session.use_trans_sid', 0);
-		ini_set('session.use_strict_mode', 1);
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
+		ini_set('session.use_trans_sid', '0');
+		ini_set('session.use_strict_mode', '1');
+		ini_set('session.use_cookies', '1');
+		ini_set('session.use_only_cookies', '1');
 
 		$this->configureSidLength();
 	}
@@ -402,7 +404,7 @@ class Session implements SessionInterface
 			$bits = ($sid_length * $bits_per_character);
 			// Add as many more characters as necessary to reach at least 160 bits
 			$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
-			ini_set('session.sid_length', $sid_length);
+			ini_set('session.sid_length', (string) $sid_length);
 		}
 
 		// Yes, 4,5,6 are the only known possible values as of 2016-10-27
@@ -544,7 +546,8 @@ class Session implements SessionInterface
 		{
 			return $value;
 		}
-		elseif (empty($_SESSION))
+
+		if (empty($_SESSION))
 		{
 			return $key === null ? [] : null;
 		}
@@ -661,7 +664,8 @@ class Session implements SessionInterface
 		{
 			return $_SESSION[$key];
 		}
-		elseif ($key === 'session_id')
+
+		if ($key === 'session_id')
 		{
 			return session_id();
 		}
@@ -1066,7 +1070,7 @@ class Session implements SessionInterface
 			setcookie(
 				$this->sessionCookieName,
 				session_id(),
-				(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
+				empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
 				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
 				$this->cookieDomain,
 				$this->cookieSecure,
@@ -1077,7 +1081,7 @@ class Session implements SessionInterface
 		{
 			// PHP 7.3 adds another function signature allowing setting of samesite
 			$params = [
-				'expires'  => $this->sessionExpiration,
+				'expires'  => empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,

@@ -42,6 +42,8 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
+use Config\Modules;
 
 /**
  * Filters
@@ -114,20 +116,59 @@ class Filters
 	 */
 	protected $arguments = [];
 
+	/**
+	 * Handle to the modules config.
+	 *
+	 * @var \Config\Modules
+	 */
+	protected $moduleConfig;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Filters   $config
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
+	 * @param \Config\Filters      $config
+	 * @param RequestInterface     $request
+	 * @param ResponseInterface    $response
+	 * @param \Config\Modules|null $moduleConfig
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
+
+		$this->moduleConfig = $moduleConfig ?? config('Modules');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * If discoverFilters is enabled in Config then system will try to auto
+	 * Discovery custom filters files in Namespaces and allow access to
+	 * The config object via the variable $customfilters as with the routes file
+	 * Sample :
+	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
+	 */
+	private function discoverFilters()
+	{
+		$locater = Services::locator();
+
+		$filters = $this->config;
+
+		$files = $locater->search('Config/Filters.php');
+
+		foreach ($files as $file)
+		{
+			// Don't include our main file again...
+			if ($file === APPPATH . 'Config/Filters.php')
+			{
+				continue;
+			}
+
+			include $file;
+		}
 	}
 
 	/**
@@ -182,7 +223,6 @@ class Filters
 					// short circuit - bypass any other filters
 					return $result;
 				}
-
 				// Ignore an empty result
 				if (empty($result))
 				{
@@ -191,7 +231,8 @@ class Filters
 
 				return $result;
 			}
-			elseif ($position === 'after')
+      
+			if ($position === 'after')
 			{
 				$result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
 
@@ -230,6 +271,10 @@ class Filters
 		if ($this->initialized === true)
 		{
 			return $this;
+		}
+		if ($this->moduleConfig->shouldDiscover('filters'))
+		{
+			$this->discoverFilters();
 		}
 
 		$this->processGlobals($uri);

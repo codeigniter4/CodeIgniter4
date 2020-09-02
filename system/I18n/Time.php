@@ -56,10 +56,11 @@ use Locale;
  * Requires the intl PHP extension.
  *
  * @package CodeIgniter\I18n
+ *
+ * @property string $date
  */
 class Time extends DateTime
 {
-
 	/**
 	 * @var \DateTimeZone
 	 */
@@ -356,7 +357,7 @@ class Time extends DateTime
 	 */
 	public function toDateTime()
 	{
-		$dateTime = new DateTime(null, $this->getTimezone());
+		$dateTime = new DateTime('', $this->getTimezone());
 		$dateTime->setTimestamp(parent::getTimestamp());
 
 		return $dateTime;
@@ -557,7 +558,7 @@ class Time extends DateTime
 		$time = $this->getTimestamp();
 
 		// future dates have no age
-		return max(0, date('Y', $now) - date('Y', $time)); // @phpstan-ignore-line
+		return max(0, date('Y', $now) - date('Y', $time));
 	}
 
 	//--------------------------------------------------------------------
@@ -769,7 +770,16 @@ class Time extends DateTime
 		list($year, $month, $day, $hour, $minute, $second) = explode('-', $this->format('Y-n-j-G-i-s'));
 		$$name                                             = $value;
 
-		return Time::create($year, $month, $day, $hour, $minute, $second, $this->getTimezoneName(), $this->locale);
+		return Time::create(
+			(int) $year,
+			(int) $month,
+			(int) $day,
+			(int) $hour,
+			(int) $minute,
+			(int) $second,
+			$this->getTimezoneName(),
+			$this->locale
+		);
 	}
 
 	/**
@@ -1362,4 +1372,21 @@ class Time extends DateTime
 		return method_exists($this, $method);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * This is called when we unserialize the Time object.
+	 */
+	public function __wakeup()
+	{
+		/**
+		 * Prior to unserialization, this is a string.
+		 *
+		 * @var string $timezone
+		 */
+		$timezone = $this->timezone;
+
+		$this->timezone = new DateTimeZone($timezone);
+		parent::__construct($this->date, $this->timezone);
+	}
 }

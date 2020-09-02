@@ -248,7 +248,7 @@ class FileRules
 				return true;
 			}
 
-			if (! in_array($file->getMimeType(), $params))
+			if (! in_array($file->getMimeType(), $params, true))
 			{
 				return false;
 			}
@@ -291,7 +291,7 @@ class FileRules
 				return true;
 			}
 
-			if (! in_array($file->getExtension(), $params))
+			if (! in_array($file->getExtension(), $params, true))
 			{
 				return false;
 			}

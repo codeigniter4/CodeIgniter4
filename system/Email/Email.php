@@ -800,7 +800,7 @@ class Email
 	 */
 	public function setPriority($n = 3)
 	{
-		$this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
+		$this->priority = preg_match('/^[1-5]$/', (string) $n) ? (int) $n : 3;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -813,7 +813,7 @@ class Email
 	 */
 	public function setNewline($newline = "\n")
 	{
-		$this->newline = in_array($newline, ["\n", "\r\n", "\r"]) ? $newline : "\n";
+		$this->newline = in_array($newline, ["\n", "\r\n", "\r"], true) ? $newline : "\n";
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -860,7 +860,7 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit'; // @phpstan-ignore-line
+		in_array($this->encoding, $this->bitDepths, true) || $this->encoding = '8bit'; // @phpstan-ignore-line
 		foreach ($this->baseCharsets as $charset)
 		{
 			if (strpos($this->charset, $charset) === 0)
@@ -883,7 +883,8 @@ class Email
 		{
 			return empty($this->attachments) ? 'html' : 'html-attach';
 		}
-		elseif ($this->mailType === 'text' && ! empty($this->attachments))
+
+		if ($this->mailType === 'text' && ! empty($this->attachments))
 		{
 			return 'plain-attach';
 		}
@@ -965,7 +966,7 @@ class Email
 	 *
 	 * @param string|array $email
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	public function cleanEmail($email)
 	{
@@ -1891,7 +1892,7 @@ class Email
 				STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			if ($crypto !== true)
 			{
-				$this->setErrorMessage(lang('Email.SMTPError', $this->getSMTPData()));
+				$this->setErrorMessage(lang('Email.SMTPError', [$this->getSMTPData()]));
 				return false;
 			}
 		}
@@ -1989,7 +1990,8 @@ class Email
 		{
 			return true;
 		}
-		elseif (strpos($reply, '334') !== 0)
+
+		if (strpos($reply, '334') !== 0)
 		{
 			$this->setErrorMessage(lang('Email.failedSMTPLogin', [$reply]));
 			return false;
@@ -2053,7 +2055,7 @@ class Email
 		}
 		if ($result === false) // @phpstan-ignore-line
 		{
-			$this->setErrorMessage(lang('Email.SMTPDataFailure', $data));
+			$this->setErrorMessage(lang('Email.SMTPDataFailure', [$data]));
 			return false;
 		}
 		return true;

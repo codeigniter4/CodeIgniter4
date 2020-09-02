@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -51,18 +52,19 @@ use Psr\Log\LoggerInterface;
  */
 class ResourceController extends Controller
 {
-
 	use ResponseTrait;
 
 	/**
+	 * Name of the model class managing this resource's data
 	 *
-	 * @var string Name of the model class managing this resource's data
+	 * @var string
 	 */
 	protected $modelName;
 
 	/**
+	 * The model holding this resource's data
 	 *
-	 * @var \CodeIgniter\Model the model holding this resource's data
+	 * @var \CodeIgniter\Model
 	 */
 	protected $model;
 
@@ -194,10 +196,9 @@ class ResourceController extends Controller
 	 */
 	public function setFormat(string $format = 'json')
 	{
-		if (in_array($format, ['json', 'xml']))
+		if (in_array($format, ['json', 'xml'], true))
 		{
 			$this->format = $format;
 		}
 	}
-
 }

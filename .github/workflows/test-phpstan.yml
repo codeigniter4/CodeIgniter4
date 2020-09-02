@@ -1,0 +1,49 @@
+# When a PR is opened or a push is made, perform
+# a static analysis check on the code using PHPStan.
+name: PHPStan
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+  push:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+
+jobs:
+  build:
+    name: Analyze code (PHPStan)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: intl
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --no-interaction
+
+      - name: Create PHPStan result cache directory
+        run: mkdir -p build/phpstan
+
+      - name: Cache PHPStan result cache directory
+        uses: actions/cache@v2
+        with:
+          path: build/phpstan
+          key: ${{ runner.os }}-phpstan-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-phpstan-
+
+      - name: Run static analysis
+        run: vendor/bin/phpstan analyse

@@ -177,15 +177,15 @@ if (! function_exists('command'))
 		 */
 		while ($cursor < $length)
 		{
-			if (preg_match('/\s+/A', $command, $match, null, $cursor))
+			if (preg_match('/\s+/A', $command, $match, 0, $cursor))
 			{
 				// nothing to do
 			}
-			elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, null, $cursor))
+			elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, 0, $cursor))
 			{
 				$args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
 			}
-			elseif (preg_match('/' . $regexString . '/A', $command, $match, null, $cursor))
+			elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor))
 			{
 				$args[] = stripcslashes($match[1]);
 			}
@@ -394,8 +394,8 @@ if (! function_exists('env'))
 	 * retrieving values set from the .env file for
 	 * use in config files.
 	 *
-	 * @param string $key
-	 * @param null   $default
+	 * @param string      $key
+	 * @param string|null $default
 	 *
 	 * @return mixed
 	 */
@@ -467,7 +467,7 @@ if (! function_exists('esc'))
 				return $data;
 			}
 
-			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
+			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr'], true))
 			{
 				throw new InvalidArgumentException('Invalid escape context provided.');
 			}
@@ -786,7 +786,8 @@ if (! function_exists('is_really_writable'))
 
 			return true;
 		}
-		elseif (! is_file($file) || ( $fp = @fopen($file, 'ab')) === false)
+
+		if (! is_file($file) || ( $fp = @fopen($file, 'ab')) === false)
 		{
 			return false;
 		}
@@ -996,7 +997,7 @@ if (! function_exists('route_to'))
 	 * have a route defined in the routes Config file.
 	 *
 	 * @param string $method
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return false|string
 	 */

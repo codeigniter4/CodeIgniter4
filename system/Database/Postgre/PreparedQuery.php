@@ -52,7 +52,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * Stores the name this query can be
 	 * used under by postgres. Only used internally.
 	 *
-	 * @var integer
+	 * @var string
 	 */
 	protected $name;
 
@@ -82,7 +82,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = random_int(1, 10000000000000000);
+		$this->name = (string) random_int(1, 10000000000000000);
 
 		$sql = $this->parameterize($sql);
 

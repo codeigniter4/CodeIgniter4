@@ -51,6 +51,7 @@ use CodeIgniter\Email\Email;
 use CodeIgniter\Encryption\EncrypterInterface;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Filters\Filters;
+use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\CURLRequest;
@@ -83,6 +84,7 @@ use Config\Cache;
 use Config\Email as EmailConfig;
 use Config\Encryption as EncryptionConfig;
 use Config\Exceptions as ExceptionsConfig;
+use Config\Format as FormatConfig;
 use Config\Filters as FiltersConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images;
@@ -307,6 +309,28 @@ class Services extends BaseService
 		$config = $config ?? config('Filters');
 
 		return new Filters($config, static::request(), static::response());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Format class is a convenient place to create Formatters.
+	 *
+	 * @param \Config\Format|null $config
+	 * @param boolean             $getShared
+	 *
+	 * @return \CodeIgniter\Format\Format
+	 */
+	public static function format(FormatConfig $config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('format', $config);
+		}
+
+		$config = $config ?? config('Format');
+
+		return new Format($config);
 	}
 
 	//--------------------------------------------------------------------
