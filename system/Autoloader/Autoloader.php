@@ -39,6 +39,9 @@
 
 namespace CodeIgniter\Autoloader;
 
+use Config\Autoload;
+use Config\Modules;
+
 /**
  * CodeIgniter Autoloader
  *
@@ -100,11 +103,11 @@ class Autoloader
 	 * the valid parts that we'll need.
 	 *
 	 * @param \Config\Autoload $config
-	 * @param \Config\Modules  $moduleConfig
+	 * @param \Config\Modules  $modules
 	 *
 	 * @return $this
 	 */
-	public function initialize(\Config\Autoload $config, \Config\Modules $moduleConfig)
+	public function initialize(Autoload $config, Modules $modules)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
@@ -124,7 +127,7 @@ class Autoloader
 		}
 
 		// Should we load through Composer's namespaces, also?
-		if ($moduleConfig->discoverInComposer)
+		if ($modules->discoverInComposer)
 		{
 			$this->discoverComposerNamespaces();
 		}
@@ -173,7 +176,7 @@ class Autoloader
 	 * @param array|string $namespace
 	 * @param string       $path
 	 *
-	 * @return Autoloader
+	 * @return $this
 	 */
 	public function addNamespace($namespace, string $path = null)
 	{
@@ -187,18 +190,18 @@ class Autoloader
 				{
 					foreach ($path as $dir)
 					{
-						$this->prefixes[$prefix][] = rtrim($dir, '/') . '/';
+						$this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
 					}
 
 					continue;
 				}
 
-				$this->prefixes[$prefix][] = rtrim($path, '/') . '/';
+				$this->prefixes[$prefix][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
 			}
 		}
 		else
 		{
-			$this->prefixes[trim($namespace, '\\')][] = rtrim($path, '/') . '/';
+			$this->prefixes[trim($namespace, '\\')][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
 		}
 
 		return $this;
@@ -232,11 +235,14 @@ class Autoloader
 	 *
 	 * @param string $namespace
 	 *
-	 * @return Autoloader
+	 * @return $this
 	 */
 	public function removeNamespace(string $namespace)
 	{
-		unset($this->prefixes[trim($namespace, '\\')]);
+		if (isset($this->prefixes[trim($namespace, '\\')]))
+		{
+			unset($this->prefixes[trim($namespace, '\\')]);
+		}
 
 		return $this;
 	}
