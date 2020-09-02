@@ -66,4 +66,66 @@ EOH;
 
 		$this->assertEquals($expected, $this->xmlFormatter->format($data));
 	}
+
+	public function testValidatingXmlTags()
+	{
+		$data     = [
+			'BBB096630BD' => 'foo',
+			'096630FR'    => 'bar',
+		];
+		$expected = <<<EOH
+<?xml version="1.0"?>
+<response><BBB096630BD>foo</BBB096630BD><item096630FR>bar</item096630FR></response>
+
+EOH;
+
+		$this->assertEquals($expected, $this->xmlFormatter->format($data));
+	}
+
+	/**
+	 * @param string $expected
+	 * @param array  $input
+	 *
+	 * @dataProvider invalidTagsProvider
+	 */
+	public function testValidatingInvalidTags(string $expected, array $input)
+	{
+		$expectedXML = <<<EOH
+<?xml version="1.0"?>
+<response><{$expected}>bar</{$expected}></response>
+
+EOH;
+
+		$this->assertEquals($expectedXML, $this->xmlFormatter->format($input));
+	}
+
+	public function invalidTagsProvider()
+	{
+		return [
+			[
+				'foo',
+				[' foo ' => 'bar'],
+			],
+			[
+				'foobar',
+				['foo:bar' => 'bar'],
+			],
+			[
+				'foobar',
+				['foo bar' => 'bar'],
+			],
+			[
+				'itemxml',
+				['xml' => 'bar'],
+			],
+			[
+				'itemXML',
+				['XML' => 'bar'],
+			],
+			[
+				'itemXml',
+				['Xml' => 'bar'],
+			],
+		];
+	}
 }
