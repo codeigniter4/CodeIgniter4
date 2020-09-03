@@ -323,9 +323,9 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-	  Sets the path the library should look for migration files::
+	  Sets the namespace the library should look for migration files::
 
-	    $migration->setNamespace($path)
+	    $migration->setNamespace($namespace)
 	              ->latest();
 	.. php:method:: setGroup($group)
 
@@ -333,7 +333,7 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-	  Sets the path the library should look for migration files::
+	  Sets the group the library should look for migration files::
 
-	    $migration->setNamespace($path)
+	    $migration->setGroup($group)
 	              ->latest();
