@@ -380,7 +380,7 @@ class Message
 		}
 
 		// Make sure that version is in the correct format
-		$version = number_format($version, 1);
+		$version = number_format((float) $version, 1);
 
 		if (! in_array($version, $this->validProtocolVersions, true))
 		{
