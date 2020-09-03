@@ -170,7 +170,7 @@ if (! function_exists('current_url'))
 
 		if (! empty($baseUri->getPath()))
 		{
-			$uri->setHost($baseUri->getHost() . $baseUri->getPath());
+			$uri->setHost($baseUri->getHost() . rtrim($baseUri->getPath(), '/ ') . '/');
 		}
 
 		// Since we're basing off of the IncomingRequest URI,
