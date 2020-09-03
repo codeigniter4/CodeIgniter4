@@ -261,7 +261,7 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
+              if (($this->debug && (! isset($options['debug']) || $options['debug'] === true)) && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true))
 		{
 			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
 

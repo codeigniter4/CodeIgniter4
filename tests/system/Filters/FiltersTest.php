@@ -45,6 +45,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testProcessMethodDetectsCLI()
 	{
 		$config  = [
+			'aliases' => ['foo' => ''],
 			'methods' => [
 				'cli' => ['foo'],
 			],
@@ -66,6 +67,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => ['foo' => ''],
 			'methods' => [
 				'get' => ['foo'],
 			],
@@ -88,6 +90,10 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+			],
 			'methods' => [
 				'post' => ['foo'],
 				'get'  => ['bar'],
@@ -108,6 +114,10 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+			],
 			'methods' => [
 				'post' => ['foo'],
 				'get'  => ['bar'],
@@ -130,6 +140,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['bar'], // not excluded
@@ -175,6 +190,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => $except],
@@ -205,6 +225,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'filters' => [
 				'foo' => [
 					'before' => ['admin/*'],
@@ -230,6 +255,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'filters' => [
 				'foo' => [
 					'before' => ['admin/*'],
@@ -257,6 +287,14 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foog' => '',
+				'barg' => '',
+				'bazg' => '',
+				'foo'  => '',
+				'bar'  => '',
+				'foof' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foog' => ['except' => ['admin/*']],
@@ -299,6 +337,12 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'toolbar' => '',
+				'bazg'    => '',
+				'bar'     => '',
+				'foof'    => '',
+			],
 			'globals' => [
 				'after' => [
 					'toolbar',
@@ -495,6 +539,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin/*'],
@@ -523,6 +572,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'george/*'],
@@ -552,6 +606,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'bar'
@@ -580,6 +639,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo' => '',
+				'bar' => '',
+				'baz' => '',
+			],
 			'globals' => [
 				'before' => [
 					'bar'
@@ -774,6 +838,12 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'aliases' => [
+				'foo'  => '',
+				'bar'  => '',
+				'frak' => '',
+				'baz'  => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'Admin/*'],
@@ -816,6 +886,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'aliases' => [
+				'foo'  => '',
+				'bar'  => '',
+				'frak' => '',
+			],
 			'filters' => [
 				'frak' => [
 					'before' => ['admin*'],
@@ -846,6 +921,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'aliases' => [
+				'foo' => '',
+				'one' => '',
+				'two' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -883,6 +963,12 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'aliases' => [
+				'foo'  => '',
+				'one'  => '',
+				'frak' => '',
+				'two'  => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -926,6 +1012,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'aliases' => [
+				'foo'  => '',
+				'one'  => '',
+				'frak' => '',
+			],
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -981,6 +1072,35 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $filters->run($uri, 'before');
 		$this->assertEquals('http://exampleMultipleURL.com', $request->url);
 		$this->assertEquals('http://exampleMultipleCSP.com', $request->csp);
+	}
+
+	public function testFilterClass()
+	{
+		$config  = [
+			'aliases' => [
+				'multipleTest' => [
+					'CodeIgniter\Filters\fixtures\Multiple1',
+					'CodeIgniter\Filters\fixtures\Multiple2',
+				],
+			],
+			'globals' => [
+				'after' => [
+					'multipleTest',
+				],
+			],
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$filters->run($uri, 'before');
+		$expected = [
+			'after'  => [
+				'CodeIgniter\Filters\fixtures\Multiple1',
+				'CodeIgniter\Filters\fixtures\Multiple2',
+			],
+			'before' => [],
+		];
+		$this->assertEquals($expected, $filters->getFiltersClass());
 	}
 
 }
