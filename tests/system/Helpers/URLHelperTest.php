@@ -183,11 +183,17 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config          = new App();
 		$config->baseURL = 'http://example.com/foo/public';
 		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/foo/public/bar');
+		$request->uri    = (new URI())->setScheme('http://')->setHost('example.com/foo/public/')->setPath('bar');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/foo/public/bar', current_url());
+
+		$uri = current_url(true);
+		$this->assertEquals(['bar'], $uri->getSegments());
+		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('example.com/foo/public/', $uri->getHost());
+		$this->assertEquals('http', $uri->getScheme());
 	}
 
 	/**
