@@ -1,11 +1,15 @@
-<?php namespace Tests\Support\Database\Migrations;
+<?php
 
-class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
+namespace Tests\Support\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class Migration_Create_test_tables extends Migration
 {
 	public function up()
 	{
 		// SQLite3 uses auto increment different
-		$unique_or_auto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
+		$unique_or_auto = $this->db->DBDriver === 'SQLite' ? 'unique' : 'auto_increment';
 
 		// User Table
 		$this->forge->addField([
@@ -97,7 +101,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
 		$data_type_fields = [
 			'id'             => [
-				'type'          => 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field
+				'type'          => 'INTEGER', //must be interger else SQLite error on not null for autoinc field
 				'constraint'    => 20,
 				$unique_or_auto => true,
 			],
@@ -279,7 +283,4 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->dropTable('stringifypkey', true);
 		$this->forge->dropTable('without_auto_increment', true);
 	}
-
-	//--------------------------------------------------------------------
-
 }
