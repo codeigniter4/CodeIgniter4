@@ -604,7 +604,7 @@ class CURLRequest extends Request
 			}
 			else if (strpos($header, 'HTTP') === 0)
 			{
-				preg_match('#^HTTP\/([12]\.[01]) ([0-9]+) (.+)#', $header, $matches);
+				preg_match('#^HTTP\/([12](?:\.[01])?) ([0-9]+) (.+)#', $header, $matches);
 
 				if (isset($matches[1]))
 				{
