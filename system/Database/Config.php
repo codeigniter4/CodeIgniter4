@@ -39,17 +39,17 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Config\BaseConfig;
+use InvalidArgumentException;
 
 /**
- * Class Config
+ * Class Database
  */
-class Config extends BaseConfig
+class Database
 {
 
 	/**
-	 * Cache for instance of any connections that
-	 * have been requested as a "shared" instance.
+	 * Cache for instance of any connections that have been requested
+	 * as a "shared" instance.
 	 *
 	 * @var array
 	 */
@@ -59,7 +59,7 @@ class Config extends BaseConfig
 	 * The main instance used to manage all of
 	 * our open database connections.
 	 *
-	 * @var \CodeIgniter\Database\Database|null
+	 * @var \CodeIgniter\Database\DatabaseFactory|null
 	 */
 	static protected $factory;
 
@@ -97,7 +97,7 @@ class Config extends BaseConfig
 
 		if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0)
 		{
-			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
+			throw new InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
 		if ($getShared && isset(static::$instances[$group]))
@@ -105,14 +105,18 @@ class Config extends BaseConfig
 			return static::$instances[$group];
 		}
 
-		static::ensureFactory();
+		// Ensures the database connection factory is loaded and ready to use.
+		if (! static::$factory instanceof DatabaseFactory)
+		{
+			static::$factory = new DatabaseFactory();
+		}
 
 		if (isset($config->$group))
 		{
 			$config = $config->$group;
 		}
 
-		$connection = static::$factory->load($config, $group);
+		$connection = static::$factory->connection($config, $group);
 
 		static::$instances[$group] = & $connection;
 
@@ -145,7 +149,7 @@ class Config extends BaseConfig
 	{
 		$db = static::connect($group);
 
-		return static::$factory->loadForge($db);
+		return static::$factory->forge($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -161,7 +165,7 @@ class Config extends BaseConfig
 	{
 		$db = static::connect($group);
 
-		return static::$factory->loadUtils($db);
+		return static::$factory->utils($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -175,25 +179,6 @@ class Config extends BaseConfig
 	 */
 	public static function seeder(string $group = null)
 	{
-		$config = config('Database');
-
-		return new Seeder($config, static::connect($group));
+		return new Seeder(new \Config\Database, static::connect($group));
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
-	 */
-	protected static function ensureFactory()
-	{
-		if (static::$factory instanceof Database)
-		{
-			return;
-		}
-
-		static::$factory = new Database();
-	}
-
-	//--------------------------------------------------------------------
 }
