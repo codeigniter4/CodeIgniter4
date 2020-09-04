@@ -36,7 +36,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
