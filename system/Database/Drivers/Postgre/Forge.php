@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 /**
  * Forge for Postgre
