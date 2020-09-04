@@ -1,6 +1,8 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Database\Database;
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Database\DatabaseFactory;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -17,7 +19,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsBackup()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -29,7 +31,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsBackupWithParamsArray()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$params = [
 			'format' => 'json',
@@ -44,7 +46,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsBackupWithParamsString()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -56,7 +58,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsListDatabases()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
@@ -70,7 +72,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 			$this->assertTrue(in_array('test', $databases));
 		}
-		elseif ($this->db->DBDriver === 'SQLite3')
+		elseif ($this->db->DBDriver === 'SQLite')
 		{
 			$this->expectException(DatabaseException::class);
 			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -83,7 +85,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsDatabaseExist()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
@@ -97,7 +99,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 			$this->assertTrue($exist);
 		}
-		elseif ($this->db->DBDriver === 'SQLite3')
+		elseif ($this->db->DBDriver === 'SQLite')
 		{
 			$this->expectException(DatabaseException::class);
 			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -110,7 +112,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsOptimizeDatabase()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$d = $util->optimizeDatabase();
 
@@ -121,7 +123,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsOptimizeTableFalseOptimizeDatabase()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$this->setPrivateProperty($util, 'optimizeTable', false);
 
@@ -135,11 +137,11 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsOptimizeTable()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$d = $util->optimizeTable('db_job');
 
-		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite')
 		{
 			$this->assertFalse((bool)$d);
 		}
@@ -153,7 +155,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsOptimizeTableFalseOptimizeTable()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$this->setPrivateProperty($util, 'optimizeTable', false);
 
@@ -167,7 +169,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsRepairTable()
 	{
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -179,10 +181,9 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsCSVFromResult()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$data = $util->getCSVFromResult($data);
 
@@ -195,11 +196,9 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	public function testUtilsXMLFromResult()
 	{
-		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+		$data = $this->db->table('job')->where('id', 4)->get();
 
-		$util = (new Database())->loadUtils($this->db);
+		$util = (new DatabaseFactory())->utils($this->db);
 
 		$data = $util->getXMLFromResult($data);
 
