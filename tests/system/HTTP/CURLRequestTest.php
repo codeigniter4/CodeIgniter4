@@ -814,6 +814,20 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals(234, $response->getStatusCode());
 	}
 
+	public function testResponseHeadersShortProtocol()
+	{
+		$request = $this->getRequest([
+			'base_uri' => 'http://www.foo.com/api/v1/',
+			'delay'    => 1000,
+		]);
+
+		$request->setOutput("HTTP/2 235 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there shortie");
+		$response = $request->get('bogus');
+
+		$this->assertEquals('2.0', $response->getProtocolVersion());
+		$this->assertEquals(235, $response->getStatusCode());
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testPostFormEncoded()
