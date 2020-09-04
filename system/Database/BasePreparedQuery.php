@@ -38,7 +38,7 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Database\MySQLi\Connection;
+use CodeIgniter\Database\Drivers\MySQLi\Connection;
 use CodeIgniter\Events\Events;
 
 /**
@@ -79,7 +79,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * A reference to the db connection to use.
 	 *
-	 * @var BaseConnection|MySQLi\Connection
+	 * @var BaseConnection|Drivers\MySQLi\Connection
 	 */
 	protected $db;
 
