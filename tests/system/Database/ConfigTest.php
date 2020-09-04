@@ -3,7 +3,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\Config;
+use CodeIgniter\Database\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
@@ -101,12 +101,12 @@ class DatabaseConfig extends CIUnitTestCase
 
 	protected function tearDown(): void
 	{
-		$this->setPrivateProperty(Config::class, 'instances', []);
+		$this->setPrivateProperty(Database::class, 'instances', []);
 	}
 
 	public function testConnectionGroup()
 	{
-		$conn = Config::connect($this->group, false);
+		$conn = Database::connect($this->group, false);
 		$this->assertInstanceOf(BaseConnection::class, $conn);
 
 		$this->assertEquals($this->group['DSN'], $this->getPrivateProperty($conn, 'DSN'));
@@ -124,7 +124,7 @@ class DatabaseConfig extends CIUnitTestCase
 
 	public function testConnectionGroupWithDSN()
 	{
-		$conn = Config::connect($this->dsnGroup, false);
+		$conn = Database::connect($this->dsnGroup, false);
 		$this->assertInstanceOf(BaseConnection::class, $conn);
 
 		$this->assertEquals('', $this->getPrivateProperty($conn, 'DSN'));
@@ -144,7 +144,7 @@ class DatabaseConfig extends CIUnitTestCase
 
 	public function testConnectionGroupWithDSNPostgre()
 	{
-		$conn = Config::connect($this->dsnGroupPostgre, false);
+		$conn = Database::connect($this->dsnGroupPostgre, false);
 		$this->assertInstanceOf(BaseConnection::class, $conn);
 
 		$this->assertEquals('', $this->getPrivateProperty($conn, 'DSN'));
@@ -172,7 +172,7 @@ class DatabaseConfig extends CIUnitTestCase
 
 	public function testConnectionGroupWithDSNPostgreNative()
 	{
-		$conn = Config::connect($this->dsnGroupPostgreNative, false);
+		$conn = Database::connect($this->dsnGroupPostgreNative, false);
 		$this->assertInstanceOf(BaseConnection::class, $conn);
 
 		$this->assertEquals('pgsql:host=localhost;port=5432;dbname=database_name', $this->getPrivateProperty($conn, 'DSN'));
@@ -189,5 +189,4 @@ class DatabaseConfig extends CIUnitTestCase
 		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
-
 }
