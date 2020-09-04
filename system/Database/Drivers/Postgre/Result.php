@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
