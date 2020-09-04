@@ -1,11 +1,13 @@
 <?php
+
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Config;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
-class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
+class DatabaseConfig extends CIUnitTestCase
 {
 	use ReflectionHelper;
 
@@ -37,7 +39,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'username' => '',
 		'password' => '',
 		'database' => '',
-		'DBDriver' => 'SQLite3',
+		'DBDriver' => 'SQLite',
 		'DBPrefix' => 't_',
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -59,7 +61,7 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		'username' => '',
 		'password' => '',
 		'database' => '',
-		'DBDriver' => 'SQLite3',
+		'DBDriver' => 'SQLite',
 		'DBPrefix' => 't_',
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
