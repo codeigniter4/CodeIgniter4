@@ -50,7 +50,7 @@ use CodeIgniter\Database\Exceptions\DataException;
  * when another database is used as the primary engine, but
  * SQLite in memory databases are used for faster test execution.
  *
- * @package CodeIgniter\Database\SQLite3
+ * @package CodeIgniter\Database\Drivers\SQLite
  */
 class Table
 {
