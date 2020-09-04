@@ -50,7 +50,7 @@ $dbconfig = [
 	   'username' => '',
 	   'password' => '',
 	   'database' => 'database.db',
-	   'DBDriver' => 'SQLite3',
+	   'DBDriver' => 'SQLite',
 	   'DBPrefix' => 'db_',
 	   'pConnect' => false,
 	   'DBDebug'  => (ENVIRONMENT !== 'production'),
