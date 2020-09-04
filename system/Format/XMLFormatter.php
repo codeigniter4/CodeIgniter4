@@ -71,7 +71,7 @@ class XMLFormatter implements FormatterInterface
 		$options = $config->formatterOptions['application/xml'] ?? 0;
 		$output  = new \SimpleXMLElement('<?xml version="1.0"?><response></response>', $options);
 
-		$this->arrayToXML((array)$data, $output);
+		$this->arrayToXML((array) $data, $output);
 
 		return $output->asXML();
 	}
@@ -126,7 +126,7 @@ class XMLFormatter implements FormatterInterface
 		$key = trim($key);
 		$key = preg_replace("/[^{$validName}-]+/u", '', $key);
 		$key = preg_replace("/^[^{$startChar}]+/u", 'item$0', $key);
-		$key = preg_replace('/^[xml]+/iu', 'item$0', $key);
+		$key = preg_replace('/^(xml).*/iu', 'item$0', $key); // XML is a reserved starting word
 
 		return $key;
 	}
