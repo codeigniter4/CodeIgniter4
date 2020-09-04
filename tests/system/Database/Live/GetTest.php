@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -14,9 +16,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGet()
 	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getResult();
+		$jobs = $this->db->table('job')->get()->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -29,9 +29,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetWitLimit()
 	{
-		$jobs = $this->db->table('job')
-						 ->get(2, 2)
-						 ->getResult();
+		$jobs = $this->db->table('job')->get(2, 2)->getResult();
 
 		$this->assertCount(2, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
@@ -42,9 +40,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetWhereArray()
 	{
-		$jobs = $this->db->table('job')
-						 ->getWhere(['id' => 1])
-						 ->getResult();
+		$jobs = $this->db->table('job')->getWhere(['id' => 1])->getResult();
 
 		$this->assertCount(1, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -54,9 +50,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetWhereWithLimits()
 	{
-		$jobs = $this->db->table('job')
-						 ->getWhere('id > 1', 1, 1)
-						 ->getResult();
+		$jobs = $this->db->table('job')->getWhere('id > 1', 1, 1)->getResult();
 
 		$this->assertCount(1, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
@@ -66,9 +60,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetFieldCount()
 	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldCount();
+		$jobs = $this->db->table('job')->get()->getFieldCount();
 
 		$this->assertEquals(6, $jobs);
 	}
@@ -77,9 +69,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetFieldNames()
 	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldNames();
+		$jobs = $this->db->table('job')->get()->getFieldNames();
 
 		$this->assertTrue(in_array('name', $jobs));
 		$this->assertTrue(in_array('description', $jobs));
@@ -89,18 +79,14 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetFieldData()
 	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldData();
+		$jobs = $this->db->table('job')->get()->getFieldData();
 
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
 
-		$type_test = $this->db->table('type_test')
-							  ->get()
-							  ->getFieldData();
+		$type_test = $this->db->table('type_test')->get()->getFieldData();
 
-		if ($this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite')
 		{
 			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
 			$this->assertEquals('text', $type_test[1]->type_name);  //VARCHAR
@@ -168,13 +154,12 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetDataSeek()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
-		if ($this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite')
 		{
 			$this->expectException(DatabaseException::class);
-			$this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
+			$this->expectExceptionMessage('SQLite doesn\'t support seeking to other offset.');
 		}
 
 		$data->dataSeek(3);
@@ -186,8 +171,7 @@ class GetTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 	public function testGetAnotherDataSeek()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
 		$data->dataSeek(0);
 
@@ -203,9 +187,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testFreeResult()
 	{
-		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+		$data = $this->db->table('job')->where('id', 4)->get();
 
 		$details = $data->getResult();
 
@@ -220,9 +202,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetRowWithColumnName()
 	{
-		$name = $this->db->table('user')
-						 ->get()
-						 ->getRow('name', 'array');
+		$name = $this->db->table('user')->get()->getRow('name', 'array');
 
 		$this->assertEquals('Derek Jones', $name);
 	}
@@ -231,9 +211,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetRowWithReturnType()
 	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, 'array');
+		$user = $this->db->table('user')->get()->getRow(0, 'array');
 
 		$this->assertEquals('Derek Jones', $user['name']);
 	}
@@ -244,9 +222,7 @@ class GetTest extends CIDatabaseTestCase
 	{
 		$testClass = new class { };
 
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, get_class($testClass));
+		$user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
 
 		$this->assertEquals('Derek Jones', $user->name);
 	}
@@ -255,9 +231,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetFirstRow()
 	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getFirstRow();
+		$user = $this->db->table('user')->get()->getFirstRow();
 
 		$this->assertEquals('Derek Jones', $user->name);
 	}
@@ -266,9 +240,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetLastRow()
 	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getLastRow();
+		$user = $this->db->table('user')->get()->getLastRow();
 
 		$this->assertEquals('Chris Martin', $user->name);
 	}
@@ -277,9 +249,7 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetNextRow()
 	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getNextRow();
+		$user = $this->db->table('user')->get()->getNextRow();
 
 		$this->assertEquals('Ahmadinejad', $user->name);
 	}
@@ -288,14 +258,11 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetPreviousRow()
 	{
-		$user = $this->db->table('user')
-						 ->get();
+		$user = $this->db->table('user')->get();
 
 		$user->currentRow = 3;
 		$user             = $user->getPreviousRow();
 
 		$this->assertEquals('Richard A Causey', $user->name);
 	}
-
-	//--------------------------------------------------------------------
 }
