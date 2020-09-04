@@ -1,12 +1,15 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
+
+use CodeIgniter\Database\Database as CoreDatabase;
 
 /**
  * Database Configuration
  *
  * @package Config
  */
-
-class Database extends \CodeIgniter\Database\Config
+class Database extends CoreDatabase
 {
 	/**
 	 * The directory that holds the Migrations
@@ -108,7 +111,4 @@ class Database extends \CodeIgniter\Database\Config
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }
