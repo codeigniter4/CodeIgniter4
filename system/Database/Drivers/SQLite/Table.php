@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -38,6 +39,7 @@
 
 namespace CodeIgniter\Database\Drivers\SQLite;
 
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DataException;
 
 /**
@@ -108,7 +110,7 @@ class Table
 	 * @param Connection $db
 	 * @param Forge      $forge
 	 */
-	public function __construct(Connection $db, Forge $forge)
+	public function __construct($db, $forge)
 	{
 		$this->db    = $db;
 		$this->forge = $forge;
