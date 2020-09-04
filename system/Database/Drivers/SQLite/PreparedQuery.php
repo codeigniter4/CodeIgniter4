@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\PreparedQueryInterface;
