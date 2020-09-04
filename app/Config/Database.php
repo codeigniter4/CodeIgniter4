@@ -66,7 +66,7 @@ class Database extends CoreDatabase
 		'username' => '',
 		'password' => '',
 		'database' => ':memory:',
-		'DBDriver' => 'SQLite3',
+		'DBDriver' => 'SQLite',
 		'DBPrefix' => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
