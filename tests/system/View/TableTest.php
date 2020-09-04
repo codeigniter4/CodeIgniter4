@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\View;
 
-use CodeIgniter\Database\MySQLi\Result;
+use CodeIgniter\Database\Drivers\MySQLi\Result;
 use CodeIgniter\Test\Mock\MockTable;
 
 class TableTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -53,9 +53,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 			['data' => 'name'],
 			['data' => 'color'],
 			['data' => 'size'],
-		],
-				$this->table->heading
-		);
+		], $this->table->heading);
 	}
 
 	public function testSetFooting()
@@ -71,9 +69,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([
 			['data' => 'Subtotal'],
 			['data' => $subtotal],
-		],
-				$this->table->footing
-		);
+		], $this->table->footing);
 	}
 
 	/*
@@ -96,9 +92,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 			['data' => 'your'],
 			['data' => 'pony'],
 			['data' => 'stinks'],
-		],
-				$this->table->rows[1]
-		);
+		], $this->table->rows[1]);
 	}
 
 	// Uility Methods
@@ -112,10 +106,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 			['data' => 'size'],
 		];
 
-		$this->assertEquals(
-				$expected,
-				$this->table->prepArgs(['name', 'color', 'size'])
-		);
+		$this->assertEquals($expected, $this->table->prepArgs(['name', 'color', 'size']));
 
 		// with cell attributes
 		// need to add that new argument row to our expected outcome
@@ -124,10 +115,10 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 			'class' => 'awesome',
 		];
 
-		$this->assertEquals(
-				$expected,
-				$this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
-		);
+		$this->assertEquals($expected, $this->table->prepArgs(['name', 'color', 'size', [
+			'data' => 'weight',
+			'class' => 'awesome',
+		]]));
 	}
 
 	public function testDefaultTemplateKeys()
@@ -196,10 +187,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		// No column count - no changes to the array
-		$this->assertEquals(
-				$five_values,
-				$this->table->makeColumns($five_values)
-		);
+		$this->assertEquals($five_values, $this->table->makeColumns($five_values));
 
 		// Column count of 3 leaves us with one &nbsp;
 		$this->assertEquals([
