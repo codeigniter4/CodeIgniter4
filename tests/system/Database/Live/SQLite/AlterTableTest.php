@@ -1,6 +1,8 @@
-<?php namespace CodeIgniter\Database\Live\SQLite;
+<?php
 
-use CodeIgniter\Database\SQLite3\Table;
+namespace CodeIgniter\Database\Live\SQLite;
+
+use CodeIgniter\Database\Drivers\SQLite\Table;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
 
@@ -17,12 +19,12 @@ class AlterTableTest extends CIDatabaseTestCase
 	protected $table;
 
 	/**
-	 * @var \CodeIgniter\Database\SQLite3\Connection
+	 * @var \CodeIgniter\Database\Drivers\SQLite\Connection
 	 */
 	protected $db;
 
 	/**
-	 * @var \CodeIgniter\Database\SQLite3\Forge
+	 * @var \CodeIgniter\Database\Drivers\SQLite\Forge
 	 */
 	protected $forge;
 
@@ -31,7 +33,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		parent::setUp();
 
 		$config = [
-			'DBDriver' => 'SQLite3',
+			'DBDriver' => 'SQLite',
 			'database' => 'database.db',
 		];
 
@@ -97,10 +99,7 @@ class AlterTableTest extends CIDatabaseTestCase
 	{
 		$this->createTable('foo');
 
-		$result = $this->table
-			->fromTable('foo')
-			->dropColumn('name')
-			->run();
+		$result = $this->table->fromTable('foo')->dropColumn('name')->run();
 
 		$this->assertTrue($result);
 
@@ -120,10 +119,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->assertTrue(array_key_exists('foo_name', $oldKeys));
 		$this->assertTrue(array_key_exists('foo_email', $oldKeys));
 
-		$result = $this->table
-			->fromTable('foo')
-			->dropColumn('name')
-			->run();
+		$result = $this->table->fromTable('foo')->dropColumn('name')->run();
 
 		$newKeys = $this->db->getIndexData('foo');
 
@@ -137,18 +133,15 @@ class AlterTableTest extends CIDatabaseTestCase
 	{
 		$this->createTable('janky');
 
-		$result = $this->table
-			->fromTable('janky')
-			->modifyColumn([
-				[
-					'name'       => 'name',
-					'new_name'   => 'serial',
-					'type'       => 'int',
-					'constraint' => 11,
-					'null'       => true,
-				],
-			])
-			->run();
+		$result = $this->table->fromTable('janky')->modifyColumn([
+			[
+				'name'       => 'name',
+				'new_name'   => 'serial',
+				'type'       => 'int',
+				'constraint' => 11,
+				'null'       => true,
+			],
+		])->run();
 
 		$this->assertTrue($result);
 
@@ -163,10 +156,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		$keys = $this->db->getForeignKeyData('aliens');
 		$this->assertEquals('key_id to aliens_fk.id', $keys[0]->constraint_name);
 
-		$result = $this->table
-			->fromTable('aliens')
-			->dropForeignKey('key_id')
-			->run();
+		$result = $this->table->fromTable('aliens')->dropForeignKey('key_id')->run();
 
 		$this->assertTrue($result);
 
@@ -192,10 +182,7 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('foo', ['name' => 'George Clinton']);
 
-		$result = $this->table
-			->fromTable('foo')
-			->dropColumn('name')
-			->run();
+		$result = $this->table->fromTable('foo')->dropColumn('name')->run();
 
 		$this->dontSeeInDatabase('foo', ['name' => 'George Clinton']);
 		$this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
