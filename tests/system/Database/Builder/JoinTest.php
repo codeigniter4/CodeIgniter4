@@ -4,7 +4,7 @@ namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Drivers\Postgre\Builder as PostgreBuilder;
-use CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class JoinTest extends CIUnitTestCase
