@@ -1,5 +1,8 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Database\Database;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Migrations;
@@ -38,7 +41,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertInstanceOf(BaseConnection::class, $db);
 		$this->assertEquals(
-			($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
+			($dbConfig->tests['DBDriver'] === 'SQLite' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
 			$this->getPrivateProperty($db, 'database')
 		);
 		$this->assertEquals($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
@@ -339,8 +342,8 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	protected function resetTables()
 	{
-		$db    = db_connect();
-		$forge = Config::forge();
+		$db    = Database::connect();
+		$forge = Database::forge();
 
 		$tables = $db->listTables();
 		foreach ($tables as $table)
