@@ -593,8 +593,20 @@ class URI
 	 */
 	public function __toString(): string
 	{
+		// If hosted in a sub-folder, we will have additional
+		// segments that show up prior to the URI path we just
+		// grabbed from the request, so add it on if necessary.
+		$baseUri  = new URI(config(\Config\App::class)->baseURL);
+		$basePath = trim($baseUri->getPath(), '/') . '/';
+		$path     = $this->getPath();
+
+		if ($basePath !== '/' && strpos($path, $basePath) !== 0)
+		{
+			$path = $basePath . $path;
+		}
+
 		return static::createURIString(
-						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
+						$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
 						$this->getQuery(), $this->getFragment()
 		);
 	}

@@ -163,16 +163,6 @@ if (! function_exists('current_url'))
 	{
 		$uri = clone \Config\Services::request()->uri;
 
-		// If hosted in a sub-folder, we will have additional
-		// segments that show up prior to the URI path we just
-		// grabbed from the request, so add it on if necessary.
-		$baseUri = new \CodeIgniter\HTTP\URI(config(\Config\App::class)->baseURL);
-
-		if (! empty($baseUri->getPath()))
-		{
-			$uri->setHost($baseUri->getHost() . rtrim($baseUri->getPath(), '/ ') . '/');
-		}
-
 		// Since we're basing off of the IncomingRequest URI,
 		// we are guaranteed to have a host based on our own configs.
 		return $returnObject ? $uri : (string) $uri->setQuery('');
