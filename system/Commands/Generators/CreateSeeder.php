@@ -116,7 +116,7 @@ class CreateSeeder extends GeneratorCommand
 	 */
 	protected function getTemplate(): string
 	{
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\seed.tpl.php', [], ['debug' => false]);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\seed.tpl.php');
 
 		return str_replace('<@php', '<?php', $template);
 	}

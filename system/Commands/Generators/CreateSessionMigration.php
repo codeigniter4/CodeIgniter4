@@ -80,22 +80,35 @@ class CreateSessionMigration extends GeneratorCommand
 		'-t' => 'Set table name',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getClassName(): string
 	{
 		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
+
 		return "Migration_create_{$tableName}_table";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Database\\Migrations\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function modifyBasename(string $filename): string
 	{
 		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getTemplate(): string
 	{
 		$data = [
@@ -104,7 +117,7 @@ class CreateSessionMigration extends GeneratorCommand
 			'matchIP'   => config('App')->sessionMatchIP ?? false,
 		];
 
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\session_migration.tpl.php', $data, ['debug' => false]);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\session_migration.tpl.php', $data);
 
 		return str_replace('<@php', '<?php', $template);
 	}

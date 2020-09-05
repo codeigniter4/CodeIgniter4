@@ -85,6 +85,9 @@ class CreateCommand extends GeneratorCommand
 		'-type'    => 'Type of command. Whether a basic command or a generator command. Defaults to "basic".',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getClassName(): string
 	{
 		$className = parent::getClassName();
@@ -97,18 +100,27 @@ class CreateCommand extends GeneratorCommand
 		return $className;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Commands\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getTemplate(): string
 	{
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\command.tpl.php', [], ['debug' => false]);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\command.tpl.php');
 
 		return str_replace('<@php', '<?php', $template);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function setReplacements(string $template, string $class): string
 	{
 		// Get options

@@ -85,6 +85,13 @@ abstract class GeneratorCommand extends BaseCommand
 	protected $params = [];
 
 	/**
+	 * Instance of Config\Generators
+	 *
+	 * @var \Config\Generators
+	 */
+	protected $config;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \Psr\Log\LoggerInterface  $logger
@@ -94,6 +101,7 @@ abstract class GeneratorCommand extends BaseCommand
 	{
 		$this->arguments = array_merge($this->defaultArguments, $this->arguments);
 		$this->options   = array_merge($this->options, $this->defaultOptions);
+		$this->config    = config('Config\Generators');
 
 		parent::__construct($logger, $commands);
 	}
@@ -120,11 +128,13 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			CLI::error(lang('CLI.generateFileExists', [clean_path($path)]), 'light_gray', 'red');
 			CLI::newLine();
+
 			return;
 		}
 
 		// Next, check if the directory to save the file is existing.
 		$dir = dirname($path);
+
 		if (! is_dir($dir))
 		{
 			mkdir($dir, 0755, true);
@@ -137,6 +147,7 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			CLI::error(lang('CLI.generateFileError') . clean_path($path), 'light_gray', 'red');
 			CLI::newLine();
+
 			return;
 		}
 
@@ -232,12 +243,13 @@ abstract class GeneratorCommand extends BaseCommand
 
 		// Check if the namespace is actually defined and we are not just typing gibberish.
 		$base = Services::autoloader()->getNamespace($root);
+
 		if (! $base = reset($base))
 		{
 			throw new \RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
 		}
-		$base = realpath($base) ?: $base;
 
+		$base     = realpath($base) ?: $base;
 		$path     = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
 		$filename = $this->modifyBasename(basename($path));
 
@@ -335,5 +347,28 @@ abstract class GeneratorCommand extends BaseCommand
 		}
 
 		return $template; // @codeCoverageIgnore
+	}
+
+	/**
+	 * Gets a generator view as defined in the `Config\Generators::$views`,
+	 * with fallback to `$default` when the defined view does not exist.
+	 *
+	 * @param string $default Path to the fallback view.
+	 * @param array  $data    Data to be passed to the view.
+	 *
+	 * @return string
+	 */
+	protected function getGeneratorViewFile(string $default, array $data = []): string
+	{
+		try
+		{
+			return view($this->config->views[$this->name], $data, ['debug' => false]);
+		}
+		catch (\Throwable $e)
+		{
+			log_message('error', $e->getMessage());
+
+			return view($default, $data, ['debug' => false]);
+		}
 	}
 }

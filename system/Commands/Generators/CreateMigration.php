@@ -44,8 +44,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a new migration file.
- *
- * @package CodeIgniter\Commands
  */
 class CreateMigration extends GeneratorCommand
 {
@@ -80,9 +78,7 @@ class CreateMigration extends GeneratorCommand
 	];
 
 	/**
-	 * Gets the class name from input.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -97,31 +93,27 @@ class CreateMigration extends GeneratorCommand
 	}
 
 	/**
-	 * Gets the qualified class name.
-	 *
-	 * @param string $rootNamespace
-	 * @param string $class
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Database\\Migrations\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function modifyBasename(string $filename): string
 	{
 		return gmdate(config('Migrations')->timestampFormat) . $filename;
 	}
 
 	/**
-	 * Gets the template for this class.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getTemplate(): string
 	{
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php', [], ['debug' => false]);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php');
 
 		return str_replace('<@php', '<?php', $template);
 	}
