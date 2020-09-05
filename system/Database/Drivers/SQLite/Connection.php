@@ -88,7 +88,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		if ($persistent && $this->DBDebug)
 		{
-			throw new DatabaseException('SQLite3 doesn\'t support persistent connections.');
+			throw new DatabaseException('SQLite doesn\'t support persistent connections.');
 		}
 		try
 		{
@@ -103,7 +103,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		catch (\Exception $e)
 		{
-			throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
+			throw new DatabaseException('SQLite error: ' . $e->getMessage());
 		}
 	}
 
