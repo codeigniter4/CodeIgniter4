@@ -42,6 +42,9 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
+/**
+ * Creates a skeleton Model file.
+ */
 class CreateModel extends GeneratorCommand
 {
 	/**
@@ -85,6 +88,9 @@ class CreateModel extends GeneratorCommand
 		'-table'   => 'Supply a different table name. Defaults to the pluralized name.',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getClassName(): string
 	{
 		$className = parent::getClassName();
@@ -97,30 +103,39 @@ class CreateModel extends GeneratorCommand
 		return $className;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Models\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getTemplate(): string
 	{
 		$dbgroup = $this->params['dbgroup'] ?? CLI::getOption('dbgroup');
+
 		if (! is_string($dbgroup))
 		{
 			$dbgroup = 'default';
 		}
 
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\model.tpl.php', [], ['debug' => false]);
-		$template = str_replace(['<@php', '{dbgroup}'], ['<?php', $dbgroup], $template);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\model.tpl.php');
 
-		return $template;
+		return str_replace(['<@php', '{dbgroup}'], ['<?php', $dbgroup], $template);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function setReplacements(string $template, string $class): string
 	{
 		$template = parent::setReplacements($template, $class);
+		$entity   = array_key_exists('entity', $this->params) || CLI::getOption('entity');
 
-		$entity = array_key_exists('entity', $this->params) || CLI::getOption('entity');
 		if (! $entity)
 		{
 			$entity = 'array'; // default to array return
@@ -128,15 +143,17 @@ class CreateModel extends GeneratorCommand
 		else
 		{
 			$entity = str_replace('\\Models', '\\Entities', $class);
+
 			if ($pos = strripos($entity, 'Model'))
 			{
 				// Strip 'Model' from name
 				$entity = substr($entity, 0, $pos);
 			}
 		}
-		$template = str_replace('{return}', $entity, $template);
 
-		$table = $this->params['table'] ?? CLI::getOption('table');
+		$template = str_replace('{return}', $entity, $template);
+		$table    = $this->params['table'] ?? CLI::getOption('table');
+
 		if (! is_string($table))
 		{
 			$table = str_replace($this->getNamespace($class) . '\\', '', $class);

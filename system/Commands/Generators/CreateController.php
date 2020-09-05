@@ -87,6 +87,9 @@ class CreateController extends GeneratorCommand
 		'-restful' => 'Extends from a RESTful resource. Options are \'controller\' or \'presenter\'.',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getClassName(): string
 	{
 		$className = parent::getClassName();
@@ -99,19 +102,27 @@ class CreateController extends GeneratorCommand
 		return $className;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Controllers\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getTemplate(): string
 	{
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php', [], ['debug' => false]);
-		$template = str_replace('<@php', '<?php', $template);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php');
 
-		return $template;
+		return str_replace('<@php', '<?php', $template);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function setReplacements(string $template, string $class): string
 	{
 		$bare = array_key_exists('bare', $this->params) || CLI::getOption('bare');
@@ -193,6 +204,12 @@ class CreateController extends GeneratorCommand
 		];
 	}
 
+	/**
+	 * If the controller extends any RESTful controller, this will provide
+	 * the additional REST API methods.
+	 *
+	 * @return string
+	 */
 	protected function getAdditionalRestfulMethods(): string
 	{
 		return <<<'EOF'

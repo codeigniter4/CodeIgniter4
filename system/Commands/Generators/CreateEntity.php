@@ -42,6 +42,9 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
+/**
+ * Creates a skeleton Entity file.
+ */
 class CreateEntity extends GeneratorCommand
 {
 	/**
@@ -74,6 +77,9 @@ class CreateEntity extends GeneratorCommand
 		'name' => 'The model class name',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getClassName(): string
 	{
 		$className = parent::getClassName();
@@ -86,14 +92,20 @@ class CreateEntity extends GeneratorCommand
 		return $className;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Entities\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function getTemplate(): string
 	{
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\entity.tpl.php', [], ['debug' => false]);
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\entity.tpl.php');
 
 		return str_replace('<@php', '<?php', $template);
 	}
