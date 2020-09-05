@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use CodeIgniter\View\View as BaseView;
+use CodeIgniter\Config\View as BaseView;
 
 class View extends BaseView
 {
