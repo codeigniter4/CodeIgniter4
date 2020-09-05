@@ -24,8 +24,6 @@ prototype::
 		'DBPrefix' => '',
 		'pConnect' => TRUE,
 		'DBDebug'  => TRUE,
-		'cacheOn'  => FALSE,
-		'cacheDir' => '',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -84,8 +82,6 @@ These failovers can be specified by setting the failover for a connection like t
 				'DBPrefix' => '',
 				'pConnect' => TRUE,
 				'DBDebug'  => TRUE,
-				'cacheOn'  => FALSE,
-				'cacheDir' => '',
 				'charset'  => 'utf8',
 				'DBCollat' => 'utf8_general_ci',
 				'swapPre'  => '',
@@ -102,8 +98,6 @@ These failovers can be specified by setting the failover for a connection like t
 				'DBPrefix' => '',
 				'pConnect' => TRUE,
 				'DBDebug'  => TRUE,
-				'cacheOn'  => FALSE,
-				'cacheDir' => '',
 				'charset'  => 'utf8',
 				'DBCollat' => 'utf8_general_ci',
 				'swapPre'  => '',
@@ -131,8 +125,6 @@ example, to set up a "test" environment you would do this::
 		'DBPrefix' => '',
 		'pConnect' => TRUE,
 		'DBDebug'  => TRUE,
-		'cacheOn'  => FALSE,
-		'cacheDir' => '',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -198,8 +190,6 @@ Explanation of Values:
 			installations to share one database.
 **pConnect**		TRUE/FALSE (boolean) - Whether to use a persistent connection.
 **DBDebug**		TRUE/FALSE (boolean) - Whether database errors should be displayed.
-**cacheOn**		TRUE/FALSE (boolean) - Whether database query caching is enabled.
-**cacheDir**		The absolute server path to your database query cache directory.
 **charset**	    	The character set used in communicating with the database.
 **DBCollat**		The character collation used in communicating with the database
 

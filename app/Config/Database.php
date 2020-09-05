@@ -39,8 +39,6 @@ class Database extends \CodeIgniter\Database\Config
 		'DBPrefix' => '',
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => '',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -67,8 +65,6 @@ class Database extends \CodeIgniter\Database\Config
 		'DBPrefix' => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => '',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
