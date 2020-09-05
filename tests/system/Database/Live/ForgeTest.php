@@ -61,9 +61,9 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testDropDatabase()
 	{
-		if ($this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite')
 		{
-			$this->markTestSkipped('SQLite3 requires file path to drop database');
+			$this->markTestSkipped('SQLite requires file path to drop database');
 		}
 
 		$database_dropped = $this->forge->dropDatabase('test_forge_database');
