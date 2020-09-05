@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -11,8 +13,6 @@ use CodeIgniter\Config\BaseConfig;
  *
  * Suggested reference for explanations:
  *    https://www.html5rocks.com/en/tutorials/security/content-security-policy/
- *
- * @package Config
  */
 class ContentSecurityPolicy extends BaseConfig
 {
