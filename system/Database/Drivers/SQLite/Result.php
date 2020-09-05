@@ -144,7 +144,7 @@ class Result extends BaseResult implements ResultInterface
 	{
 		if ($n !== 0)
 		{
-			throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
+			throw new DatabaseException('SQLite doesn\'t support seeking to other offset.');
 		}
 
 		return $this->resultID->reset(); // @phpstan-ignore-line
