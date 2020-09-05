@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -22,7 +24,7 @@ class Images extends BaseConfig
 	/**
 	 * The available handler classes.
 	 *
-	 * @var array<string, class-string>
+	 * @var array<string, string>
 	 */
 	public $handlers = [
 		'gd'      => \CodeIgniter\Images\Handlers\GDHandler::class,

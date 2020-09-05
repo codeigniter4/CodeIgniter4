@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 class Validation
 {
@@ -10,7 +12,7 @@ class Validation
 	 * Stores the classes that contain the
 	 * rules that are available.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	public $ruleSets = [
 		\CodeIgniter\Validation\Rules::class,
@@ -23,7 +25,7 @@ class Validation
 	 * Specifies the views that are used to display the
 	 * errors.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	public $templates = [
 		'list'   => 'CodeIgniter\Validation\Views\list',
