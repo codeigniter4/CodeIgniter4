@@ -364,8 +364,6 @@ prototype:</p>
         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-        <span class="s1">&#39;cacheOn&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
-        <span class="s1">&#39;cacheDir&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
         <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -429,8 +427,6 @@ These failovers can be specified by setting the failover for a connection like t
                         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
                         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-                        <span class="s1">&#39;cacheOn&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
-                        <span class="s1">&#39;cacheDir&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -447,8 +443,6 @@ These failovers can be specified by setting the failover for a connection like t
                         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
                         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-                        <span class="s1">&#39;cacheOn&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
-                        <span class="s1">&#39;cacheDir&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -475,8 +469,6 @@ example, to set up a “test” environment you would do this:</p>
         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-        <span class="s1">&#39;cacheOn&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
-        <span class="s1">&#39;cacheDir&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
         <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -569,12 +561,6 @@ installations to share one database.</p></td>
 <tr class="row-even"><td><p><strong>DBDebug</strong></p></td>
 <td><p>TRUE/FALSE (boolean) - Whether database errors should be displayed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>cacheOn</strong></p></td>
-<td><p>TRUE/FALSE (boolean) - Whether database query caching is enabled.</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>cacheDir</strong></p></td>
-<td><p>The absolute server path to your database query cache directory.</p></td>
-</tr>
 <tr class="row-odd"><td><p><strong>charset</strong></p></td>
 <td><p>The character set used in communicating with the database.</p></td>
 </tr>
@@ -663,7 +649,7 @@ you are using MySQL.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Sep 03, 2020.
+        Last updated on Sep 06, 2020.
       </span>
 
     </p>
