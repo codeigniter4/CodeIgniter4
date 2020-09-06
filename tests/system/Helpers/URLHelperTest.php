@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
 use Config\App;
@@ -17,6 +18,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		helper('url');
 		Services::reset(true);
+		Config::reset();
 	}
 
 	public function tearDown(): void
@@ -172,28 +174,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/index.php/news/local/123', site_url(['news', 'local', '123'], null, $config));
-	}
-
-	public function testSiteURLInSubfolder()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
-
-		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/foo/public';
-		$request         = Services::request($config);
-		$request->uri    = (new URI())->setScheme('http://')->setHost('example.com/foo/public/')->setPath('bar');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/foo/public/bar', current_url());
-
-		$uri = current_url(true);
-		$this->assertEquals(['bar'], $uri->getSegments());
-		$this->assertEquals('bar', $uri->getSegment(1));
-		$this->assertEquals('example.com/foo/public/', $uri->getHost());
-		$this->assertEquals('http', $uri->getScheme());
 	}
 
 	/**
@@ -420,16 +400,50 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+		$_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
 		$config          = new App();
 		$config->baseURL = 'http://example.com/foo/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/foo/public/bar');
+		Config::injectMock('App', $config);
 
+		$request = Services::request($config);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/foo/public/bar', current_url());
+		$this->assertEquals('http://example.com/foo/public/bar?baz=quip', (string) current_url(true));
+
+		$uri = current_url(true);
+		$this->assertEquals(['bar'], $uri->getSegments());
+		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('example.com', $uri->getHost());
+		$this->assertEquals('http', $uri->getScheme());
+	}
+
+	public function testCurrentURLWithPortInSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['SERVER_PORT'] = '8080';
+		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+		$_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config          = new App();
+		$config->baseURL = 'http://example.com:8080/foo/public';
+		Config::injectMock('App', $config);
+
+		$request = Services::request($config);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com:8080/foo/public/bar', current_url());
+		$this->assertEquals('http://example.com:8080/foo/public/bar?baz=quip', (string) current_url(true));
+
+		$uri = current_url(true);
+		$this->assertEquals(['bar'], $uri->getSegments());
+		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('example.com', $uri->getHost());
+		$this->assertEquals('http', $uri->getScheme());
+		$this->assertEquals('8080', $uri->getPort());
 	}
 
 	//--------------------------------------------------------------------
