@@ -431,7 +431,10 @@ class Builder extends BaseBuilder {
 	{
 		if (empty($this->QBLimit) || $select_override !== false)
 		{
-			return parent::compileSelect($select_override);
+			if (empty($this->QBSelect) && empty($this->QBGroupBy))
+			{
+				return parent::compileSelect($select_override);
+			}
 		}
 
 		$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
