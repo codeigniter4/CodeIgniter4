@@ -876,7 +876,7 @@ class URI
 	/**
 	 * Removes one or more query vars from the URI.
 	 *
-	 * @param array ...$params
+	 * @param string ...$params
 	 *
 	 * @return $this
 	 */
@@ -884,7 +884,7 @@ class URI
 	{
 		foreach ($params as $param)
 		{
-			unset($this->query[$param]); // @phpstan-ignore-line
+			unset($this->query[$param]);
 		}
 
 		return $this;
