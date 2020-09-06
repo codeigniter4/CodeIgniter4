@@ -568,7 +568,6 @@ an application - it is just another table in your database.
 However, there are some conditions that must be met:
 
   - You can NOT use a persistent connection.
-  - You can NOT use a connection with the *cacheOn* setting enabled.
 
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your

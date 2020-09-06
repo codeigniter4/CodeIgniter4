@@ -129,20 +129,6 @@ abstract class BaseConnection implements ConnectionInterface
 	protected $DBDebug = false;
 
 	/**
-	 * Should we cache results?
-	 *
-	 * @var boolean
-	 */
-	protected $cacheOn = false;
-
-	/**
-	 * Path to store cache files.
-	 *
-	 * @var string
-	 */
-	protected $cacheDir;
-
-	/**
 	 * Character set
 	 *
 	 * @var string
