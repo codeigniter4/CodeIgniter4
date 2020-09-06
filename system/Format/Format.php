@@ -37,85 +37,73 @@
  * @filesource
  */
 
-namespace CodeIgniter\Log\Handlers;
+namespace CodeIgniter\Format;
+
+use CodeIgniter\Format\Exceptions\FormatException;
+use Config\Format as FormatConfig;
 
 /**
- * Base class for logging
+ * The Format class is a convenient place to create Formatters.
  */
-abstract class BaseHandler implements HandlerInterface
+class Format
 {
+	/**
+	 * Configuration instance
+	 *
+	 * @var \Config\Format
+	 */
+	protected $config;
 
 	/**
-	 * Handles
+	 * Constructor.
 	 *
-	 * @var array
+	 * @param \Config\Format $config
 	 */
-	protected $handles;
-
-	/**
-	 * Date format for logging
-	 *
-	 * @var string
-	 */
-	protected $dateFormat = 'Y-m-d H:i:s';
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Constructor
-	 *
-	 * @param array $config
-	 */
-	public function __construct(array $config)
+	public function __construct(FormatConfig $config)
 	{
-		$this->handles = $config['handles'] ?? [];
+		$this->config = $config;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Checks whether the Handler will handle logging items of this
-	 * log Level.
+	 * Returns the current configuration instance.
 	 *
-	 * @param string $level
-	 *
-	 * @return boolean
+	 * @return \Config\Format
 	 */
-	public function canHandle(string $level): bool
+	public function getConfig()
 	{
-		return in_array($level, $this->handles, true);
+		return $this->config;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
+	 * A Factory method to return the appropriate formatter for the given mime type.
 	 *
-	 * @param string $level
-	 * @param string $message
+	 * @param string $mime
 	 *
-	 * @return boolean
+	 * @throws \CodeIgniter\Format\Exceptions\FormatException
+	 *
+	 * @return \CodeIgniter\Format\FormatterInterface
 	 */
-	abstract public function handle($level, $message): bool;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Stores the date format to use while logging messages.
-	 *
-	 * @param string $format
-	 *
-	 * @return HandlerInterface
-	 */
-	public function setDateFormat(string $format): HandlerInterface
+	public function getFormatter(string $mime): FormatterInterface
 	{
-		$this->dateFormat = $format;
+		if (! array_key_exists($mime, $this->config->formatters))
+		{
+			throw FormatException::forInvalidMime($mime);
+		}
 
-		return $this;
+		$className = $this->config->formatters[$mime];
+
+		if (! class_exists($className))
+		{
+			throw FormatException::forInvalidFormatter($className);
+		}
+
+		$class = new $className();
+
+		if (! $class instanceof FormatterInterface)
+		{
+			throw FormatException::forInvalidFormatter($className);
+		}
+
+		return $class;
 	}
-
-	//--------------------------------------------------------------------
 }

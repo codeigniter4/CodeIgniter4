@@ -152,7 +152,8 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function getClassName(): string
 	{
-		$name = $this->params[0] ?? CLI::getSegment(0);
+		$name = $this->params[0] ?? CLI::getSegment(2);
+
 		return $name ?? '';
 	}
 
@@ -203,6 +204,7 @@ abstract class GeneratorCommand extends BaseCommand
 	protected function getRootNamespace(): string
 	{
 		$rootNamespace = $this->params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
+
 		return trim(str_replace('/', '\\', $rootNamespace), '\\');
 	}
 
@@ -238,6 +240,7 @@ abstract class GeneratorCommand extends BaseCommand
 
 		$path     = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
 		$filename = $this->modifyBasename(basename($path));
+
 		return implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $path), 0, -1)) . DIRECTORY_SEPARATOR . $filename;
 	}
 
@@ -310,6 +313,7 @@ abstract class GeneratorCommand extends BaseCommand
 
 		$template = str_replace($namespaces, $this->getNamespace($class), $template);
 		$class    = str_replace($this->getNamespace($class) . '\\', '', $class);
+
 		return str_replace($classes, $class, $template);
 	}
 
@@ -326,11 +330,10 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			$imports = explode("\n", trim($match['imports']));
 			sort($imports);
+
 			return str_replace(trim($match['imports']), implode("\n", $imports), $template);
 		}
 
-		// @codeCoverageIgnoreStart
-		return $template;
-		// @codeCoverageIgnoreEnd
+		return $template; // @codeCoverageIgnore
 	}
 }

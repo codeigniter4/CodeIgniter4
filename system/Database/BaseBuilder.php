@@ -513,7 +513,7 @@ class BaseBuilder
 
 		$type = strtoupper($type);
 
-		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT']))
+		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT'], true))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}
@@ -3069,7 +3069,8 @@ class BaseBuilder
 				{
 					continue;
 				}
-				elseif ($qbkey['escape'] === false)
+
+				if ($qbkey['escape'] === false)
 				{
 					$qbkey = $qbkey['condition'];
 					continue;
@@ -3191,7 +3192,8 @@ class BaseBuilder
 
 			return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
 		}
-		elseif (is_string($this->QBOrderBy))
+
+		if (is_string($this->QBOrderBy))
 		{
 			return $this->QBOrderBy;
 		}

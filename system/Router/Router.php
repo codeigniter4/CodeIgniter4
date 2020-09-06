@@ -127,7 +127,7 @@ class Router implements RouterInterface
 	 * The filter info from Route Collection
 	 * if the matched route should be filtered.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $filterInfo;
 
@@ -174,6 +174,9 @@ class Router implements RouterInterface
 
 		// Decode URL-encoded string
 		$uri = urldecode($uri);
+
+		// Restart filterInfo
+		$this->filterInfo = null;
 
 		if ($this->checkRoutes($uri))
 		{

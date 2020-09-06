@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -40,7 +41,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Format;
+use Config\Services;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -48,7 +49,6 @@ use PHPUnit\Framework\TestCase;
  */
 class FeatureResponse extends TestCase
 {
-
 	/**
 	 * The response.
 	 *
@@ -145,7 +145,8 @@ class FeatureResponse extends TestCase
 		{
 			return $this->response->getHeaderLine('Location');
 		}
-		elseif ($this->response->hasHeader('Refresh'))
+
+		if ($this->response->hasHeader('Refresh'))
 		{
 			return str_replace('0;url=', '', $this->response->getHeaderLine('Refresh'));
 		}
@@ -389,15 +390,24 @@ class FeatureResponse extends TestCase
 	/**
 	 * Test that the response contains a matching JSON fragment.
 	 *
-	 * @param array $fragment
+	 * @param array   $fragment
+	 * @param boolean $strict
 	 *
 	 * @throws \Exception
 	 */
-	public function assertJSONFragment(array $fragment)
+	public function assertJSONFragment(array $fragment, bool $strict = false)
 	{
-		$json = json_decode($this->getJSON(), true);
+		$json    = json_decode($this->getJSON(), true);
+		$patched = array_replace_recursive($json, $fragment);
 
-		$this->assertArraySubset($fragment, $json, false, 'Response does not contain a matching JSON fragment.');
+		if ($strict)
+		{
+			$this->assertSame($json, $patched, 'Response does not contain a matching JSON fragment.');
+		}
+		else
+		{
+			$this->assertEquals($json, $patched, 'Response does not contain a matching JSON fragment.');
+		}
 	}
 
 	/**
@@ -414,9 +424,7 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$config    = new Format();
-			$formatter = $config->getFormatter('application/json');
-			$test      = $formatter->format($test);
+			$test = Services::format()->getFormatter('application/json')->format($test);
 		}
 
 		$this->assertJsonStringEqualsJsonString($test, $json, 'Response does not contain matching JSON.');

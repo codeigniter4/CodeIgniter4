@@ -63,6 +63,24 @@ class Filters
 	];
 
 	/**
+	 * The collection of filters' class names that will
+	 * be used to execute in each position.
+	 *
+	 * @var array
+	 */
+	protected $filtersClass = [
+		'before' => [],
+		'after'  => [],
+	];
+
+	/**
+	 * Any arguments to be passed to filtersClass.
+	 *
+	 * @var array
+	 */
+	protected $argumentsClass = [];
+
+	/**
 	 * The original config file
 	 *
 	 * @var \Config\Filters
@@ -97,7 +115,7 @@ class Filters
 	 * @var array
 	 */
 	protected $arguments = [];
-	
+
 	/**
 	 * Handle to the modules config.
 	 *
@@ -110,9 +128,9 @@ class Filters
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Filters   $config
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
+	 * @param \Config\Filters      $config
+	 * @param RequestInterface     $request
+	 * @param ResponseInterface    $response
 	 * @param \Config\Modules|null $moduleConfig
 	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
@@ -123,22 +141,22 @@ class Filters
 
 		$this->moduleConfig = $moduleConfig ?? config('Modules');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * If discoverFilters is enabled in Config then system will try to auto
-	 * Discovery custom filters files in Namespaces and allow access to 
+	 * Discovery custom filters files in Namespaces and allow access to
 	 * The config object via the variable $customfilters as with the routes file
-	 * Sample : 
+	 * Sample :
 	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
-	 */	
+	 */
 	private function discoverFilters()
 	{
 		$locater = Services::locator();
-		
+
 		$filters = $this->config;
-		
+
 		$files = $locater->search('Config/Filters.php');
 
 		foreach ($files as $file)
@@ -151,7 +169,7 @@ class Filters
 
 			include $file;
 		}
-	}	
+	}
 
 	/**
 	 * Set the response explicity.
@@ -179,71 +197,49 @@ class Filters
 	{
 		$this->initialize(strtolower($uri));
 
-		foreach ($this->filters[$position] as $alias => $rules)
+		foreach ($this->filtersClass[$position] as $className)
 		{
-			if (is_numeric($alias) && is_string($rules))
+			$class = new $className();
+
+			if (! $class instanceof FilterInterface)
 			{
-				$alias = $rules;
+				throw FilterException::forIncorrectInterface(get_class($class));
 			}
 
-			if (! array_key_exists($alias, $this->config->aliases))
+			if ($position === 'before')
 			{
-				throw FilterException::forNoAlias($alias);
-			}
+				$result = $class->before($this->request, $this->argumentsClass[$className] ?? null);
 
-			if (is_array($this->config->aliases[$alias]))
-			{
-				$classNames = $this->config->aliases[$alias];
-			}
-			else
-			{
-				$classNames = [$this->config->aliases[$alias]];
-			}
-
-			foreach ($classNames as $className)
-			{
-				$class = new $className();
-
-				if (! $class instanceof FilterInterface)
+				if ($result instanceof RequestInterface)
 				{
-					throw FilterException::forIncorrectInterface(get_class($class));
+					$this->request = $result;
+					continue;
 				}
 
-				if ($position === 'before')
+				// If the response object was sent back,
+				// then send it and quit.
+				if ($result instanceof ResponseInterface)
 				{
-					$result = $class->before($this->request, $this->arguments[$alias] ?? null);
-
-					if ($result instanceof RequestInterface)
-					{
-						$this->request = $result;
-						continue;
-					}
-
-					// If the response object was sent back,
-					// then send it and quit.
-					if ($result instanceof ResponseInterface)
-					{
-						// short circuit - bypass any other filters
-						return $result;
-					}
-
-					// Ignore an empty result
-					if (empty($result))
-					{
-						continue;
-					}
-
+					// short circuit - bypass any other filters
 					return $result;
 				}
-				elseif ($position === 'after')
+				// Ignore an empty result
+				if (empty($result))
 				{
-					$result = $class->after($this->request, $this->response, $this->arguments[$alias] ?? null);
+					continue;
+				}
 
-					if ($result instanceof ResponseInterface)
-					{
-						$this->response = $result;
-						continue;
-					}
+				return $result;
+			}
+      
+			if ($position === 'after')
+			{
+				$result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
+
+				if ($result instanceof ResponseInterface)
+				{
+					$this->response = $result;
+					continue;
 				}
 			}
 		}
@@ -279,8 +275,8 @@ class Filters
 		if ($this->moduleConfig->shouldDiscover('filters'))
 		{
 			$this->discoverFilters();
-		}	
-		
+		}
+
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);
@@ -294,6 +290,9 @@ class Filters
 			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after']), 1);
 			$this->filters['after'][] = 'toolbar';
 		}
+
+		$this->processAliasesToClass('before');
+		$this->processAliasesToClass('after');
 
 		$this->initialized = true;
 
@@ -310,6 +309,16 @@ class Filters
 	public function getFilters(): array
 	{
 		return $this->filters;
+	}
+
+	/**
+	 * Returns the filtersClass array.
+	 *
+	 * @return array
+	 */
+	public function getFiltersClass(): array
+	{
+		return $this->filtersClass;
 	}
 
 	/**
@@ -379,15 +388,21 @@ class Filters
 			throw FilterException::forNoAlias($name);
 		}
 
+		$classNames = (array) $this->config->aliases[$name];
+
+		foreach ($classNames as $className)
+		{
+			$this->argumentsClass[$className] = $this->arguments[$name] ?? null;
+		}
+
 		if (! isset($this->filters[$when][$name]))
 		{
-			$this->filters[$when][] = $name;
+			$this->filters[$when][]    = $name;
+			$this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
 		}
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the arguments for a specified key, or all.
@@ -525,6 +540,38 @@ class Filters
 				{
 					$this->filters['after'][] = $alias;
 				}
+			}
+		}
+	}
+
+	/**
+	 * Maps filter aliases to the equivalent filter classes
+	 *
+	 * @throws FilterException
+	 *
+	 * @return void
+	 */
+	protected function processAliasesToClass(string $position)
+	{
+		foreach ($this->filters[$position] as $alias => $rules)
+		{
+			if (is_numeric($alias) && is_string($rules))
+			{
+				$alias = $rules;
+			}
+
+			if (! array_key_exists($alias, $this->config->aliases))
+			{
+				throw FilterException::forNoAlias($alias);
+			}
+
+			if (is_array($this->config->aliases[$alias]))
+			{
+				$this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
+			}
+			else
+			{
+				$this->filtersClass[$position][] = $this->config->aliases[$alias];
 			}
 		}
 	}

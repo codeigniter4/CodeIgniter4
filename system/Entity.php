@@ -331,7 +331,7 @@ class Entity implements \JsonSerializable
 		}
 
 		// Do we need to mutate this into a date?
-		if (in_array($key, $this->dates))
+		if (in_array($key, $this->dates, true))
 		{
 			$result = $this->mutateDate($result);
 		}
@@ -366,7 +366,7 @@ class Entity implements \JsonSerializable
 		$key = $this->mapProperty($key);
 
 		// Check if the field should be mutated into a date
-		if (in_array($key, $this->dates))
+		if (in_array($key, $this->dates, true))
 		{
 			$value = $this->mutateDate($value);
 		}
@@ -623,7 +623,7 @@ class Entity implements \JsonSerializable
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'])) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 

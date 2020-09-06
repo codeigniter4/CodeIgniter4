@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
 
+error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 
@@ -9,23 +9,19 @@ $_SERVER['CI_ENVIRONMENT'] = 'testing';
 define('ENVIRONMENT', 'testing');
 
 // Load framework paths from their config file
-require CONFIGPATH . 'Paths.php'; // @phpstan-ignore-line
+require CONFIGPATH . 'Paths.php';
 $paths = new Config\Paths();
 
 // Define necessary framework path constants
-defined('APPPATH')       || define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
-defined('WRITEPATH')     || define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
-defined('SYSTEMPATH')    || define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
+defined('APPPATH')       || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+defined('WRITEPATH')     || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+defined('SYSTEMPATH')    || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/')) . DIRECTORY_SEPARATOR);
 defined('ROOTPATH')      || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 defined('CIPATH')        || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
-// @phpstan-ignore-next-line
 defined('FCPATH')        || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
-// @phpstan-ignore-next-line
 defined('TESTPATH')      || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
-// @phpstan-ignore-next-line
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/autoload.php'));
-// @phpstan-ignore-next-line
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
@@ -61,11 +57,13 @@ if (! class_exists('CodeIgniter\Services', false))
 }
 
 // Launch the autoloader to gather namespaces (includes composer.json's "autoload-dev")
-$loader = \CodeIgniter\Services::autoloader();
+$loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload(), new Config\Modules());
-
-// Register the loader with the SPL autoloader stack.
-$loader->register();
+$loader->register(); // Register the loader with the SPL autoloader stack.
 
 require_once APPPATH . 'Config/Routes.php';
-$routes->getRoutes('*'); // @phpstan-ignore-line
+
+/**
+ * @var \CodeIgniter\Router\RouteCollection $routes
+ */
+$routes->getRoutes('*');

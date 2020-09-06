@@ -171,6 +171,7 @@ abstract class BaseCommand
 	public function showHelp()
 	{
 		CLI::write(lang('CLI.helpUsage'), 'yellow');
+
 		if (! empty($this->usage))
 		{
 			$usage = $this->usage;
@@ -184,6 +185,7 @@ abstract class BaseCommand
 				$usage .= ' [arguments]';
 			}
 		}
+
 		CLI::write($this->setPad($usage, 0, 0, 2));
 
 		if (! empty($this->description))
@@ -198,6 +200,7 @@ abstract class BaseCommand
 			CLI::newLine();
 			CLI::write(lang('CLI.helpArguments'), 'yellow');
 			$length = max(array_map('strlen', array_keys($this->arguments)));
+
 			foreach ($this->arguments as $argument => $description)
 			{
 				CLI::write(CLI::color($this->setPad($argument, $length, 2, 2), 'green') . $description);
@@ -209,6 +212,7 @@ abstract class BaseCommand
 			CLI::newLine();
 			CLI::write(lang('CLI.helpOptions'), 'yellow');
 			$length = max(array_map('strlen', array_keys($this->options)));
+
 			foreach ($this->options as $option => $description)
 			{
 				CLI::write(CLI::color($this->setPad($option, $length, 2, 2), 'green') . $description);
@@ -223,12 +227,12 @@ abstract class BaseCommand
 	 *
 	 * @param string  $item
 	 * @param integer $max
-	 * @param integer $extra  // How many extra spaces to add at the end
+	 * @param integer $extra  How many extra spaces to add at the end
 	 * @param integer $indent
 	 *
 	 * @return string
 	 */
-	protected function setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
+	public function setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
 	{
 		$max += $extra + $indent;
 
@@ -244,6 +248,10 @@ abstract class BaseCommand
 	 * @param integer $pad
 	 *
 	 * @return integer
+	 *
+	 * @deprecated Use setPad() instead.
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function getPad(array $array, int $pad): int
 	{

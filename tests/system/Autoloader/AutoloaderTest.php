@@ -1,9 +1,13 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
 
+namespace CodeIgniter\Autoloader;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
+use Config\Services;
 
-class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
+class AutoloaderTest extends CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\Autoloader\Autoloader
@@ -12,15 +16,13 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected $filesPath = SUPPORTPATH . 'Autoloader/';
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$config                           = new Autoload();
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
+		$config                      = new Autoload();
+		$modules                     = new Modules();
+		$modules->discoverInComposer = false;
 
 		$config->classmap = [
 			'UnnamespacedClass' => SUPPORTPATH . 'Autoloader/UnnamespacedClass.php',
@@ -33,7 +35,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig)->register();
+		$this->loader->initialize($config, $modules)->register();
 	}
 
 	public function testLoadStoredClass()
@@ -43,15 +45,16 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testInitializeWithInvalidArguments()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage("Config array must contain either the 'psr4' key or the 'classmap' key.");
 
-		$config                           = new Autoload();
-		$config->classmap                 = [];
-		$config->psr4                     = [];
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
+		$config                      = new Autoload();
+		$config->classmap            = [];
+		$config->psr4                = [];
+		$modules                     = new Modules();
+		$modules->discoverInComposer = false;
 
-		(new Autoloader())->initialize($config, $moduleConfig);
+		(new Autoloader())->initialize($config, $modules);
 	}
 
 	//--------------------------------------------------------------------
@@ -60,29 +63,23 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testServiceAutoLoaderFromShareInstances()
 	{
-		$auto_loader = \CodeIgniter\Config\Services::autoloader();
-		// $auto_loader->register();
+		$autoloader = Services::autoloader();
 		// look for Home controller, as that should be in base repo
-		$actual   = $auto_loader->loadClass('App\Controllers\Home');
+		$actual   = $autoloader->loadClass('App\Controllers\Home');
 		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testServiceAutoLoader()
 	{
-		$getShared   = false;
-		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
-		$auto_loader->initialize(new Autoload(), new Modules());
-		$auto_loader->register();
+		$autoloader = Services::autoloader(false);
+		$autoloader->initialize(new Autoload(), new Modules());
+		$autoloader->register();
 		// look for Home controller, as that should be in base repo
-		$actual   = $auto_loader->loadClass('App\Controllers\Home');
+		$actual   = $autoloader->loadClass('App\Controllers\Home');
 		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testExistingFile()
 	{
@@ -95,16 +92,12 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expected, $actual);
 	}
 
-	//--------------------------------------------------------------------
-
-	public function testMatchesWithPreceedingSlash()
+	public function testMatchesWithPrecedingSlash()
 	{
 		$actual   = $this->loader->loadClass('\App\Controllers\Home');
 		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMatchesWithFileExtension()
 	{
@@ -113,28 +106,9 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expected, $actual);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMissingFile()
 	{
 		$this->assertFalse($this->loader->loadClass('\App\Missing\Classname'));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testInitializeException()
-	{
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage("Config array must contain either the 'psr4' key or the 'classmap' key.");
-
-		$config                           = new Autoload();
-		$config->classmap                 = [];
-		$config->psr4                     = [];
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
-
-		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig);
 	}
 
 	public function testAddNamespaceWorks()
@@ -151,8 +125,12 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testAddNamespaceMultiplePathsWorks()
 	{
-		$this->loader->addNamespace('My\App', APPPATH . 'Config');
-		$this->loader->addNamespace('My\App', __DIR__);
+		$this->loader->addNamespace([
+			'My\App' => [
+				APPPATH . 'Config',
+				__DIR__,
+			],
+		]);
 
 		$actual   = $this->loader->loadClass('My\App\App');
 		$expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
@@ -173,7 +151,16 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		);
 	}
 
-	//--------------------------------------------------------------------
+	public function testGetNamespaceGivesArray()
+	{
+		$this->assertSame([
+			'App'         => [APPPATH],
+			'CodeIgniter' => [SYSTEMPATH],
+		], $this->loader->getNamespace());
+
+		$this->assertSame([SYSTEMPATH], $this->loader->getNamespace('CodeIgniter'));
+		$this->assertSame([], $this->loader->getNamespace('Foo'));
+	}
 
 	public function testRemoveNamespace()
 	{
@@ -184,8 +171,6 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse((bool) $this->loader->loadClass('My\App\AutoloaderTest'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testloadClassConfigFound()
 	{
 		$this->loader->addNamespace('Config', APPPATH . 'Config');
@@ -195,15 +180,11 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testloadClassConfigNotFound()
 	{
 		$this->loader->addNamespace('Config', APPPATH . 'Config');
 		$this->assertFalse($this->loader->loadClass('NotFound'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLoadLegacy()
 	{
@@ -218,8 +199,6 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($this->loader->loadClass('Controllers\Home'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSanitizationSimply()
 	{
 		$test     = '${../path}!#/to/some/file.php_';
@@ -227,8 +206,6 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSanitizationAllowUnicodeChars()
 	{
@@ -238,8 +215,6 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSanitizationAllowsWindowsFilepaths()
 	{
 		$test = 'C:\path\to\some/file.php';
@@ -247,16 +222,14 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($test, $this->loader->sanitizeFilename($test));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFindsComposerRoutes()
 	{
-		$config                           = new Autoload();
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = true;
+		$config                      = new Autoload();
+		$modules                     = new Modules();
+		$modules->discoverInComposer = true;
 
 		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig);
+		$this->loader->initialize($config, $modules);
 
 		$namespaces = $this->loader->getNamespace();
 		$this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
@@ -266,14 +239,14 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$composerPath = COMPOSER_PATH;
 
-		$config                           = new Autoload();
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = true;
+		$config                      = new Autoload();
+		$modules                     = new Modules();
+		$modules->discoverInComposer = true;
 
 		$this->loader = new Autoloader();
 
 		rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
-		$this->loader->initialize($config, $moduleConfig);
+		$this->loader->initialize($config, $modules);
 		rename(COMPOSER_PATH . '.backup', $composerPath);
 
 		$namespaces = $this->loader->getNamespace();
