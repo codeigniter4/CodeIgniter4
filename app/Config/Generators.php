@@ -30,7 +30,7 @@ class Generators extends BaseConfig
 		'make:controller'   => 'CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php',
 		'make:entity'       => 'CodeIgniter\\Commands\\Generators\\Views\\entity.tpl.php',
 		'make:filter'       => 'CodeIgniter\\Commands\\Generators\\Views\\filter.tpl.php',
-		'migrate:create'    => 'CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php',
+		'make:migration'    => 'CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php',
 		'make:model'        => 'CodeIgniter\\Commands\\Generators\\Views\\model.tpl.php',
 		'make:seeder'       => 'CodeIgniter\\Commands\\Generators\\Views\\seed.tpl.php',
 		'session:migration' => 'CodeIgniter\\Commands\\Generators\\Views\\session_migration.tpl.php',

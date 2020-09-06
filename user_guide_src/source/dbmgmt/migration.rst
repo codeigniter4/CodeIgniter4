@@ -138,7 +138,7 @@ The migration library can automatically scan all namespaces you have defined wit
 the ``$psr4`` property for matching directory names. It will include all migrations
 it finds in Database/Migrations.
 
-Each namespace has it's own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
+Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
 For example, assume that we have the following namespaces defined in our Autoload
 configuration file::
@@ -203,7 +203,7 @@ This example will migrate Blog namespace with any new migrations on the test dat
 
     > php spark migrate -g test -n Blog
 
-When using the `-all` option, it will scan through all namespaces attempting to find any migrations that have
+When using the ``-all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
@@ -244,7 +244,7 @@ You can use (status) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 
-**create**
+**make:migration**
 
 Creates a skeleton migration file in **app/Database/Migrations**.
 It automatically prepends the current timestamp. The class name it
@@ -252,11 +252,12 @@ creates is the Pascal case version of the filename.
 
 ::
 
-  > php spark migrate:create [filename]
+  > php spark make:migration <class> [options]
 
-You can use (create) with the following options:
+You can use (make:migration) with the following options:
 
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-n`` - to choose namespace, otherwise the value of ``APP_NAMESPACE`` will be used.
+- ``-force`` - If a similarly named migration file is present in destination, this will be overwritten.
 
 *********************
 Migration Preferences
@@ -269,7 +270,7 @@ Preference                 Default                Options                    Des
 ========================== ====================== ========================== =============================================================
 **enabled**                true                   true / false               Enable or disable migrations.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**timestampFormat**        Y-m-d-His\_                                        The format to use for timestamps when creating a migration.
+**timestampFormat**        Y-m-d-His\_                                       The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
 
 ***************

@@ -143,7 +143,7 @@ class CreateScaffold extends BaseCommand
 		$this->call('make:controller', array_merge([$class], $controllerOpts, $genOptions));
 		$this->call('make:model', array_merge([$class], $modelOpts, $genOptions));
 		$this->call('make:entity', array_merge([$class], $genOptions));
-		$this->call('migrate:create', array_merge([$class], $genOptions));
+		$this->call('make:migration', array_merge([$class], $genOptions));
 		$this->call('make:seeder', array_merge([$class], $genOptions));
 	}
 }

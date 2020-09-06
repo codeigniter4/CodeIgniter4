@@ -33,7 +33,7 @@ class CreateMigrationTest extends CIUnitTestCase
 
 	public function testCreateMigration()
 	{
-		command('migrate:create databaseMigrator');
+		command('make:migration databaseMigrator');
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
 		$this->assertStringContainsString('_DatabaseMigrator.php', $this->getBuffer());
 	}
@@ -47,7 +47,7 @@ class CreateMigrationTest extends CIUnitTestCase
 
 		chmod(APPPATH . 'Database/Migrations', 0444);
 
-		command('migrate:create migrateOne');
+		command('make:migration migrateOne');
 		$this->assertStringContainsString('Error in creating file: ', $this->getBuffer());
 
 		chmod(APPPATH . 'Database/Migrations', 0755);
@@ -57,7 +57,7 @@ class CreateMigrationTest extends CIUnitTestCase
 	{
 		try
 		{
-			command('migrate:create migrateTwo -n CodeIgnite');
+			command('make:migration migrateTwo -n CodeIgnite');
 		}
 		catch (\Throwable $e)
 		{
@@ -69,7 +69,7 @@ class CreateMigrationTest extends CIUnitTestCase
 
 	public function testCreateMigrationOnOtherNamespace()
 	{
-		command('migrate:create migrateThree -n CodeIgniter');
+		command('make:migration migrateThree -n CodeIgniter');
 		$this->assertStringContainsString('Created file:', $this->getBuffer());
 		$this->assertStringContainsString('SYSTEMPATH', $this->getBuffer());
 
