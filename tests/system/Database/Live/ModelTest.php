@@ -439,7 +439,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'id'          => 1,
 			'name'        => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
