@@ -154,7 +154,7 @@ Options:
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
 * ``-force``: Set this flag to overwrite existing files on destination.
 
-migrate:create
+make:migration
 --------------
 
 Creates a new migration file.
@@ -163,7 +163,7 @@ Usage:
 ======
 .. code-block:: none
 
-	migrate:create <name> [options]
+	make:migration <name> [options]
 
 Argument:
 =========
@@ -209,6 +209,9 @@ Options:
 	defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload file.
 	Otherwise, a ``RuntimeException`` will be thrown.
 
+.. warning:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
+	future releases. Please use ``make:migration`` as replacement.
+
 ****************************************
 Scaffolding a Complete Set of Stock Code
 ****************************************
@@ -221,7 +224,7 @@ command to rule them all.
 Fret no more! CodeIgniter4 is also shipped with a dedicated ``make:scaffold`` command that is basically a
 wrapper to the controller, model, entity, migration, and seeder generator commands. All you need is the class
 name that will be used to name all the generated classes. Also, **individual options** supported by each
-generator command is recognized by the scaffold command.
+generator command are recognized by the scaffold command.
 
 Running this in your terminal::
 
@@ -232,7 +235,7 @@ will create the following classes:
 (1) ``App\Controllers\User``;
 (2) ``App\Models\User``;
 (3) ``App\Entities\User``;
-(4) ``App\Database\Migrations\User``; and
+(4) ``App\Database\Migrations\<some date here>_User``; and
 (5) ``App\Database\Seeds\User``.
 
 ****************
@@ -341,7 +344,7 @@ which is public and need not be overridden as it is essentially complete.
 	``getNamespacedClass`` and ``getTemplate``, or else you will get a PHP fatal error.
 
 .. note:: ``GeneratorCommand`` has the default argument of ``['name' => 'Class name']``. You can
-	override the description by supplying the name in your ``$options`` property, e.g. ``['name' => 'Module class name']``.
+	override the description by supplying the name in your ``$arguments`` property, e.g. ``['name' => 'Module class name']``.
 
 .. note:: ``GeneratorCommand`` has the default options of ``-n`` and ``-force``. Child classes cannot override
 	these two properties as they are crucial in the implementation of the code generation.
