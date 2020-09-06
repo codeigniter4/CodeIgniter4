@@ -443,7 +443,14 @@ class Builder extends BaseBuilder {
 			{
 				foreach ($this->QBGroupBy as $field)
 				{
-					$this->QBSelect[] = $field['field'];
+					if (is_array($field))
+					{
+						$this->QBSelect[] = $field['field'];
+					}
+					else
+					{
+						$this->QBSelect[] = $field;
+					}
 				}
 			}
 		}
@@ -454,7 +461,7 @@ class Builder extends BaseBuilder {
 		}
 		else
 		{
-				// Cycle through the "select" portion of the query and prep each column name.
+			// Cycle through the "select" portion of the query and prep each column name.
 			// The reason we protect identifiers here rather than in the select() function
 			// is because until the user calls the from() function we don't know if there are aliases
 			foreach ($this->QBSelect as $key => $val)
