@@ -600,7 +600,7 @@ class URI
 		$basePath = rtrim($baseUri->getPath(), '/') . '/';
 		$path     = $this->getPath();
 
-		if (! empty($basePath) && $basePath !== '/' && strpos($path, $basePath) !== 0)
+              if ($basePath !== '/' && strpos($path, $basePath) !== 0)
 		{
 			$path = $basePath . $path;
 		}
