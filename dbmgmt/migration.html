@@ -474,7 +474,7 @@ match the name of the database group exactly:</p>
 <strong>app/Config/Autoload.php</strong> or loaded from an external source like Composer, using
 the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property for matching directory names. It will include all migrations
 it finds in Database/Migrations.</p>
-<p>Each namespace has it’s own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
+<p>Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
 <p>For example, assume that we have the following namespaces defined in our Autoload
 configuration file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
@@ -535,7 +535,7 @@ that wish to use them. The tools primarily provide access to the same methods th
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Blog</span>
 </pre></div>
 </div>
-<p>When using the <cite>-all</cite> option, it will scan through all namespaces attempting to find any migrations that have
+<p>When using the <code class="docutils literal notranslate"><span class="pre">-all</span></code> option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.</p>
 <p><strong>rollback</strong></p>
@@ -572,16 +572,17 @@ to minimize any potential conflicts between the main application and any modules
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
 </ul>
-<p><strong>create</strong></p>
+<p><strong>make:migration</strong></p>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">create</span> <span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">&lt;</span><span class="nx">class</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>You can use (create) with the following options:</p>
+<p>You can use (make:migration) with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code> will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code> - If a similarly named migration file is present in destination, this will be overwritten.</p></li>
 </ul>
 </div>
 <div class="section" id="migration-preferences">
@@ -778,7 +779,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Sep 06, 2020.
+        Last updated on Sep 07, 2020.
       </span>
 
     </p>
