@@ -92,9 +92,9 @@ class Migrate extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set for all namespaces, will ignore (-n) option',
+		'-n'    => 'Set migration namespace',
+		'-g'    => 'Set database group',
+		'--all' => 'Set for all namespaces, will ignore (-n) option',
 	];
 
 	/**

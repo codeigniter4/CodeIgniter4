@@ -88,12 +88,12 @@ class CreateScaffold extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-bare'    => 'Add the \'-bare\' option to controller scaffold.',
-		'-restful' => 'Add the \'-restful\' option to controller scaffold.',
-		'-dbgroup' => 'Add the \'-dbgroup\' option to model scaffold.',
-		'-table'   => 'Add the \'-table\' option to the model scaffold.',
-		'-n'       => 'Set root namespace. Defaults to APP_NAMESPACE.',
-		'-force'   => 'Force overwrite existing files.',
+		'--bare'    => 'Add the \'-bare\' option to controller scaffold.',
+		'--restful' => 'Add the \'-restful\' option to controller scaffold.',
+		'--dbgroup' => 'Add the \'-dbgroup\' option to model scaffold.',
+		'--table'   => 'Add the \'-table\' option to the model scaffold.',
+		'-n'        => 'Set root namespace. Defaults to APP_NAMESPACE.',
+		'--force'   => 'Force overwrite existing files.',
 	];
 
 	/**

@@ -82,7 +82,7 @@ class ClearLogs extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-force' => 'Force delete of all logs files without prompting.',
+		'--force' => 'Force delete of all logs files without prompting.',
 	];
 
 	/**

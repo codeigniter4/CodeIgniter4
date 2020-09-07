@@ -115,9 +115,9 @@ class Serve extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-php'  => 'The PHP Binary [default: "PHP_BINARY"]',
-		'-host' => 'The HTTP Host [default: "localhost"]',
-		'-port' => 'The HTTP Host Port [default: "8080"]',
+		'--php'  => 'The PHP Binary [default: "PHP_BINARY"]',
+		'--host' => 'The HTTP Host [default: "localhost"]',
+		'--port' => 'The HTTP Host Port [default: "8080"]',
 	];
 
 	/**

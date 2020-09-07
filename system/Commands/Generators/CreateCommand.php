@@ -80,9 +80,9 @@ class CreateCommand extends GeneratorCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-command' => 'The command name. Defaults to "command:name"',
-		'-group'   => 'The group of command. Defaults to "CodeIgniter" for basic commands, and "Generators" for generator commands.',
-		'-type'    => 'Type of command. Whether a basic command or a generator command. Defaults to "basic".',
+		'--command' => 'The command name. Defaults to "command:name"',
+		'--group'   => 'The group of command. Defaults to "CodeIgniter" for basic commands, and "Generators" for generator commands.',
+		'--type'    => 'Type of command. Whether a basic command or a generator command. Defaults to "basic".',
 	];
 
 	/**
