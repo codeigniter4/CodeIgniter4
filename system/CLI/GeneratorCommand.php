@@ -78,6 +78,15 @@ abstract class GeneratorCommand extends BaseCommand
 	];
 
 	/**
+	 * Whether to sort class imports.
+	 *
+	 * @internal
+	 *
+	 * @var boolean
+	 */
+	private $sortImports = true;
+
+	/**
 	 * The params array for easy access by other methods.
 	 *
 	 * @var array
@@ -153,6 +162,21 @@ abstract class GeneratorCommand extends BaseCommand
 
 		CLI::write(lang('CLI.generateFileSuccess') . CLI::color(clean_path($path), 'green'));
 		CLI::newLine();
+	}
+
+	/**
+	 * Allows child generators to modify
+	 * the internal `$sortImports` flag.
+	 *
+	 * @param boolean $sort
+	 *
+	 * @return $this
+	 */
+	protected function setSortImports(bool $sort)
+	{
+		$this->sortImports = $sort;
+
+		return $this;
 	}
 
 	/**
@@ -338,7 +362,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function sortImports(string $template): string
 	{
-		if (preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $template, $match))
+		if ($this->sortImports && preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $template, $match))
 		{
 			$imports = explode("\n", trim($match['imports']));
 			sort($imports);
@@ -346,7 +370,7 @@ abstract class GeneratorCommand extends BaseCommand
 			return str_replace(trim($match['imports']), implode("\n", $imports), $template);
 		}
 
-		return $template; // @codeCoverageIgnore
+		return $template;
 	}
 
 	/**
