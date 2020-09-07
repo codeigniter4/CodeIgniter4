@@ -83,9 +83,9 @@ class CreateModel extends GeneratorCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-dbgroup' => 'Database group to use. Defaults to "default".',
-		'-entity'  => 'Use an Entity as return type.',
-		'-table'   => 'Supply a different table name. Defaults to the pluralized name.',
+		'--dbgroup' => 'Database group to use. Defaults to "default".',
+		'--entity'  => 'Use an Entity as return type.',
+		'--table'   => 'Supply a different table name. Defaults to the pluralized name.',
 	];
 
 	/**

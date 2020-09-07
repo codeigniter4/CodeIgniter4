@@ -83,10 +83,10 @@ class GenerateKey extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-force'  => 'Force overwrite existing key in `.env` file.',
-		'-length' => 'The length of the random string that should be returned in bytes. Defaults to 32.',
-		'-prefix' => 'Prefix to prepend to encoded key (either hex2bin or base64). Defaults to hex2bin.',
-		'-show'   => 'Shows the generated key in the terminal instead of storing in the `.env` file.',
+		'--force'  => 'Force overwrite existing key in `.env` file.',
+		'--length' => 'The length of the random string that should be returned in bytes. Defaults to 32.',
+		'--prefix' => 'Prefix to prepend to encoded key (either hex2bin or base64). Defaults to hex2bin.',
+		'--show'   => 'Shows the generated key in the terminal instead of storing in the `.env` file.',
 	];
 
 	/**

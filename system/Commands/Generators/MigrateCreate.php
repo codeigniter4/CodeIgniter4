@@ -96,8 +96,8 @@ class MigrateCreate extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'     => 'Set root namespace. Defaults to APP_NAMESPACE',
-		'-force' => 'Force overwrite existing files.',
+		'-n'      => 'Set root namespace. Defaults to APP_NAMESPACE',
+		'--force' => 'Force overwrite existing files.',
 	];
 
 	/**
