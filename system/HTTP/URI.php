@@ -597,12 +597,13 @@ class URI
 		// segments that show up prior to the URI path we just
 		// grabbed from the request, so add it on if necessary.
 		$baseUri  = new self(config(\Config\App::class)->baseURL);
-		$basePath = rtrim($baseUri->getPath(), '/') . '/';
+		$basePath = trim($baseUri->getPath(), '/') . '/';
 		$path     = $this->getPath();
+		$trimPath = ltrim($path, '/');
 
-              if ($basePath !== '/' && strpos($path, $basePath) !== 0)
+		if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
 		{
-			$path = $basePath . $path;
+			$path = $basePath . $trimPath;
 		}
 
 		return static::createURIString(
