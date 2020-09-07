@@ -328,14 +328,15 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBaseURLHasSubfolder()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/test';
+		$_SERVER['REQUEST_URI'] = '/subfolder/test';
+		$_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
 		$config          = new App();
 		$config->baseURL = 'http://example.com/subfolder';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/subfolder/test');
+		Config::injectMock('App', $config);
 
+		$request = Services::request($config, false);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/subfolder/foo', base_url('foo'));
@@ -383,14 +384,15 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testCurrentURLEquivalence()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['REQUEST_URI'] = '/public';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
 		$config          = new App();
 		$config->baseURL = 'http://example.com/';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		Config::injectMock('App', $config);
 
+		$request = Services::request($config);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals(base_url(uri_string()), current_url());
