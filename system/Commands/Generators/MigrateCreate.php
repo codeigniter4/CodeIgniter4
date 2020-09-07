@@ -39,74 +39,83 @@
 
 namespace CodeIgniter\Commands\Generators;
 
+use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * Creates a skeleton Filter file.
+ * Deprecated class for the migration
+ * creation command.
+ *
+ * @deprecated Use make:command instead.
+ *
+ * @codeCoverageIgnore
  */
-class CreateFilter extends GeneratorCommand
+class MigrateCreate extends BaseCommand
 {
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
+	protected $group = 'Generators';
+
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:filter';
+	protected $name = 'migrate:create';
 
 	/**
 	 * The Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a new filter file.';
+	protected $description = '[DEPRECATED] Creates a new migration file. Please use "make:migration" instead.';
 
 	/**
 	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:filter <name> [options]';
+	protected $usage = 'migrate:create <name> [options]';
 
 	/**
-	 * The Command's arguments
+	 * The Command's arguments.
 	 *
 	 * @var array
 	 */
 	protected $arguments = [
-		'name' => 'The filter class name',
+		'name' => 'The migration file name.',
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * The Command's options.
+	 *
+	 * @var array
 	 */
-	protected function getClassName(): string
-	{
-		$className = parent::getClassName();
+	protected $options = [
+		'-n'     => 'Set root namespace. Defaults to APP_NAMESPACE',
+		'-force' => 'Force overwrite existing files.',
+	];
 
-		if (empty($className))
+	/**
+	 * Actually execute a command.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
+	{
+		// Resolve arguments before passing to make:migration
+		$params[0]   = $params[0] ?? CLI::getSegment(2);
+		$params['n'] = $params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
+
+		if (array_key_exists('force', $params) || CLI::getOption('force'))
 		{
-			$className = CLI::prompt(lang('CLI.generateClassName'), null, 'required'); // @codeCoverageIgnore
+			$params['force'] = null;
 		}
 
-		return $className;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function getNamespacedClass(string $rootNamespace, string $class): string
-	{
-		return $rootNamespace . '\\Filters\\' . $class;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function getTemplate(): string
-	{
-		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\filter.tpl.php');
-
-		return str_replace('<@php', '<?php', $template);
+		$this->call('make:migration', $params);
 	}
 }

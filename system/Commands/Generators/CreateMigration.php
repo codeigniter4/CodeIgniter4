@@ -44,8 +44,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a new migration file.
- *
- * @package CodeIgniter\Commands
  */
 class CreateMigration extends GeneratorCommand
 {
@@ -54,7 +52,7 @@ class CreateMigration extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'migrate:create';
+	protected $name = 'make:migration';
 
 	/**
 	 * The Command's short description
@@ -68,7 +66,7 @@ class CreateMigration extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:create <name> [options]';
+	protected $usage = 'make:migration <name> [options]';
 
 	/**
 	 * The Command's Arguments
@@ -80,70 +78,43 @@ class CreateMigration extends GeneratorCommand
 	];
 
 	/**
-	 * Gets the class name from input.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getClassName(): string
 	{
 		$class = parent::getClassName();
+
 		if (empty($class))
 		{
-			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
-			// @codeCoverageIgnoreEnd
+			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required'); // @codeCoverageIgnore
 		}
 
 		return $class;
 	}
 
 	/**
-	 * Gets the qualified class name.
-	 *
-	 * @param string $rootNamespace
-	 * @param string $class
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Database\\Migrations\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function modifyBasename(string $filename): string
 	{
 		return gmdate(config('Migrations')->timestampFormat) . $filename;
 	}
 
 	/**
-	 * Gets the template for this class.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getTemplate(): string
 	{
-		return <<<EOD
-<?php
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php');
 
-namespace {namespace};
-
-use CodeIgniter\Database\Migration;
-
-class {class} extends Migration
-{
-	public function up()
-	{
-		//
-	}
-
-	//--------------------------------------------------------------------
-
-	public function down()
-	{
-		//
-	}
-}
-
-EOD;
+		return str_replace('<@php', '<?php', $template);
 	}
 }

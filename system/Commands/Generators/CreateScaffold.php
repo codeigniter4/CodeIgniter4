@@ -82,6 +82,11 @@ class CreateScaffold extends BaseCommand
 		'name' => 'The class name',
 	];
 
+	/**
+	 * The Command's options.
+	 *
+	 * @var array
+	 */
 	protected $options = [
 		'-bare'    => 'Add the \'-bare\' option to controller scaffold.',
 		'-restful' => 'Add the \'-restful\' option to controller scaffold.',
@@ -91,6 +96,9 @@ class CreateScaffold extends BaseCommand
 		'-force'   => 'Force overwrite existing files.',
 	];
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function run(array $params)
 	{
 		// Resolve options
@@ -107,12 +115,14 @@ class CreateScaffold extends BaseCommand
 
 		// Sets additional options
 		$genOptions = ['n' => $namespace];
+
 		if ($force)
 		{
 			$genOptions['force'] = null;
 		}
 
 		$controllerOpts = [];
+
 		if ($bare)
 		{
 			$controllerOpts['bare'] = null;
@@ -133,7 +143,7 @@ class CreateScaffold extends BaseCommand
 		$this->call('make:controller', array_merge([$class], $controllerOpts, $genOptions));
 		$this->call('make:model', array_merge([$class], $modelOpts, $genOptions));
 		$this->call('make:entity', array_merge([$class], $genOptions));
-		$this->call('migrate:create', array_merge([$class], $genOptions));
+		$this->call('make:migration', array_merge([$class], $genOptions));
 		$this->call('make:seeder', array_merge([$class], $genOptions));
 	}
 }
