@@ -280,12 +280,12 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'b',
 			'c',
 			'd',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd2',
 			'da-sh',
-			'-fix',
-			'-opt-in',
+			'--fix',
+			'--opt-in',
 			'sure',
 		];
 		CLI::init();
@@ -295,6 +295,10 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('d', CLI::getSegment(3));
 		$this->assertEquals(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
 		$this->assertEquals(['parm' => 'pvalue', 'fix' => null, 'opt-in' => 'sure'], CLI::getOptions());
+		$this->assertEquals('-parm pvalue -fix -opt-in sure ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -fix -opt-in sure', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue --fix --opt-in sure ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue --fix --opt-in sure', CLI::getOptionString(true, true));
 	}
 
 	public function testParseCommandOption()
@@ -303,7 +307,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'ignored',
 			'b',
 			'c',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd',
 		];
@@ -311,6 +315,9 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['parm' => 'pvalue'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
 		$this->assertEquals('-parm pvalue ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue', CLI::getOptionString(true, true));
 		$this->assertNull(CLI::getOption('bogus'));
 		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
 	}
@@ -321,17 +328,20 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'ignored',
 			'b',
 			'c',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd',
-			'-p2',
-			'-p3',
+			'--p2',
+			'--p3',
 			'value 3',
 		];
 		CLI::init();
 		$this->assertEquals(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
-		$this->assertEquals('-parm pvalue -p2  -p3 "value 3" ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -p2 -p3 "value 3"', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue --p2 --p3 "value 3" ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue --p2 --p3 "value 3"', CLI::getOptionString(true, true));
 		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
 	}
 

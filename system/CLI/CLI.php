@@ -1017,9 +1017,12 @@ class CLI
 	 * Returns the options as a string, suitable for passing along on
 	 * the CLI to other commands.
 	 *
+	 * @param boolean $useLongOpts Use '--' for long options?
+	 * @param boolean $trim        Trim final string output?
+	 *
 	 * @return string
 	 */
-	public static function getOptionString(): string
+	public static function getOptionString(bool $useLongOpts = false, bool $trim = false): string
 	{
 		if (empty(static::$options))
 		{
@@ -1030,17 +1033,28 @@ class CLI
 
 		foreach (static::$options as $name => $value)
 		{
+			if ($useLongOpts && mb_strlen($name) > 1)
+			{
+				$out .= "--{$name} ";
+			}
+			else
+			{
+				$out .= "-{$name} ";
+			}
+
 			// If there's a space, we need to group
 			// so it will pass correctly.
 			if (mb_strpos($value, ' ') !== false)
 			{
-				$value = '"' . $value . '"';
+				$out .= '"' . $value . '" ';
 			}
-
-			$out .= "-{$name} $value ";
+			elseif ($value !== null)
+			{
+				$out .= "{$value} ";
+			}
 		}
 
-		return $out;
+		return $trim ? trim($out) : $out;
 	}
 
 	//--------------------------------------------------------------------
