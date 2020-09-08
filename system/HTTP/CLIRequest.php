@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -52,12 +53,9 @@ use Config\App;
  * originally made available under.
  *
  * http://fuelphp.com
- *
- * @package CodeIgniter\HTTP
  */
 class CLIRequest extends Request
 {
-
 	/**
 	 * Stores the segments of our cli "URI" command.
 	 *
@@ -79,8 +77,6 @@ class CLIRequest extends Request
 	 */
 	protected $method = 'cli';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -95,8 +91,6 @@ class CLIRequest extends Request
 
 		$this->parseCommand();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the "path" of the request script so that it can be used
@@ -120,8 +114,6 @@ class CLIRequest extends Request
 		return empty($path) ? '' : $path;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an associative array of all CLI options found, with
 	 * their values.
@@ -133,8 +125,6 @@ class CLIRequest extends Request
 		return $this->options;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the path segments.
 	 *
@@ -144,8 +134,6 @@ class CLIRequest extends Request
 	{
 		return $this->segments;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the value for a single CLI option that was passed in.
@@ -159,8 +147,6 @@ class CLIRequest extends Request
 		return $this->options[$key] ?? null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the options as a string, suitable for passing along on
 	 * the CLI to other commands.
@@ -173,9 +159,11 @@ class CLIRequest extends Request
 	 *
 	 *      getOptionString() = '-foo bar -baz "queue some stuff"'
 	 *
+	 * @param boolean $useLongOpts
+	 *
 	 * @return string
 	 */
-	public function getOptionString(): string
+	public function getOptionString(bool $useLongOpts = false): string
 	{
 		if (empty($this->options))
 		{
@@ -186,14 +174,25 @@ class CLIRequest extends Request
 
 		foreach ($this->options as $name => $value)
 		{
-			// If there's a space, we need to group
-			// so it will pass correctly.
-			if (strpos($value, ' ') !== false)
+			if ($useLongOpts && mb_strlen($name) > 1)
 			{
-				$value = '"' . $value . '"';
+				$out .= "--{$name} ";
+			}
+			else
+			{
+				$out .= "-{$name} ";
 			}
 
-			$out .= "-{$name} $value ";
+			// If there's a space, we need to group
+			// so it will pass correctly.
+			if (mb_strpos($value, ' ') !== false)
+			{
+				$out .= '"' . $value . '" ';
+			}
+			elseif ($value !== null)
+			{
+				$out .= "{$value} ";
+			}
 		}
 
 		return trim($out);
