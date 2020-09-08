@@ -362,7 +362,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function sortImports(string $template): string
 	{
-		if ($this->sortImports && preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $template, $match))
+		if ($this->sortImports && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match))
 		{
 			$imports = explode("\n", trim($match['imports']));
 			sort($imports);
