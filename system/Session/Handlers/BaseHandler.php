@@ -39,13 +39,14 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
+use SessionHandlerInterface;
 
 /**
  * Base class for session handling
  */
-abstract class BaseHandler implements \SessionHandlerInterface
+abstract class BaseHandler implements SessionHandlerInterface
 {
 
 	use LoggerAwareTrait;
@@ -136,7 +137,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * @param AppConfig $config
 	 * @param string    $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(SessionConfig $config, string $ipAddress)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
@@ -177,6 +178,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	protected function lockSession(string $sessionID): bool
 	{
 		$this->lock = true;
+		
 		return true;
 	}
 
