@@ -41,6 +41,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
 use Config\Services;
@@ -65,6 +66,7 @@ class CIUnitTestCase extends TestCase
 	 * @var array of methods
 	 */
 	protected $setUpMethods = [
+		'mockCache',
 		'mockEmail',
 		'mockSession',
 	];
@@ -120,6 +122,22 @@ class CIUnitTestCase extends TestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * Injects the mock Cache driver to prevent filesystem collisions
+	 */
+	protected function mockCache()
+	{
+		Services::injectMock('cache', new MockCache());
+	}
+
+	/**
+	 * Injects the mock email driver so no emails really send
+	 */
+	protected function mockEmail()
+	{
+		Services::injectMock('email', new MockEmail(config('Email')));
+	}
+
+	/**
 	 * Injects the mock session driver into Services
 	 */
 	protected function mockSession()
@@ -130,14 +148,6 @@ class CIUnitTestCase extends TestCase
 		$session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
 
 		Services::injectMock('session', $session);
-	}
-
-	/**
-	 * Injects the mock email driver so no emails really send
-	 */
-	protected function mockEmail()
-	{
-		Services::injectMock('email', new MockEmail(config('Email')));
 	}
 
 	//--------------------------------------------------------------------
