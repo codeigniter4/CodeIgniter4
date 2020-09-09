@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -22,7 +24,7 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 
-/**
+/*
  * --------------------------------------------------------------------
  * Route Definitions
  * --------------------------------------------------------------------
@@ -32,7 +34,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-/**
+/*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------

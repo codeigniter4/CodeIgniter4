@@ -1,12 +1,13 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
+
+use CodeIgniter\Database\Config;
 
 /**
  * Database Configuration
- *
- * @package Config
  */
-
-class Database extends \CodeIgniter\Database\Config
+class Database extends Config
 {
 	/**
 	 * The directory that holds the Migrations
@@ -14,7 +15,7 @@ class Database extends \CodeIgniter\Database\Config
 	 *
 	 * @var string
 	 */
-	public $filesPath = APPPATH . 'Database/';
+	public $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
 
 	/**
 	 * Lets you choose which connection group to

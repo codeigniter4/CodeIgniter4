@@ -1,18 +1,19 @@
-<?php namespace Config;
+<?php
 
-/*
-| -------------------------------------------------------------------
-| MIME TYPES
-| -------------------------------------------------------------------
-| This file contains an array of mime types.  It is used by the
-| Upload class to help identify allowed file types.
-|
-| When more than one variation for an extension exist (like jpg, jpeg, etc)
-| the most common one should be first in the array to aid the guess*
-| methods. The same applies when more than one mime-type exists for a
-| single extension.
-|
-*/
+namespace Config;
+
+/**
+ * Mimes
+ *
+ * This file contains an array of mime types.  It is used by the
+ * Upload class to help identify allowed file types.
+ *
+ * When more than one variation for an extension exist (like jpg, jpeg, etc)
+ * the most common one should be first in the array to aid the guess*
+ * methods. The same applies when more than one mime-type exists for a
+ * single extension.
+ */
+
 class Mimes
 {
 	/**
@@ -473,8 +474,6 @@ class Mimes
 		],
 	];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to determine the best mime type for the given file extension.
 	 *
@@ -494,17 +493,15 @@ class Mimes
 		return is_array(static::$mimes[$extension]) ? static::$mimes[$extension][0] : static::$mimes[$extension];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to determine the best file extension for a given mime type.
 	 *
-	 * @param string $type
-	 * @param string $proposed_extension - default extension (in case there is more than one with the same mime type)
+	 * @param string      $type
+	 * @param string|null $proposed_extension - default extension (in case there is more than one with the same mime type)
 	 *
 	 * @return string|null The extension determined, or null if unable to match.
 	 */
-	public static function guessExtensionFromType(string $type, ?string $proposed_extension = null)
+	public static function guessExtensionFromType(string $type, string $proposed_extension = null)
 	{
 		$type = trim(strtolower($type), '. ');
 
@@ -525,7 +522,4 @@ class Mimes
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
-
 }
