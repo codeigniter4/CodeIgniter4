@@ -238,7 +238,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\App $config
+	 * @param \Config\Session $config
 	 */
 	public function __construct($config)
 	{
