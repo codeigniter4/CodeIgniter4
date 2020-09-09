@@ -89,8 +89,8 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
-	 * @param string    $ipAddress
+	 * @param SessionConfig $config
+	 * @param string        $ipAddress
 	 *
 	 * @throws \Exception
 	 */
