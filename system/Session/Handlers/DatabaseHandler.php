@@ -41,13 +41,14 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Config\Database;
+use SessionHandlerInterface;
 
 /**
  * Session handler using current Database for storage
  */
-class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
+class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
@@ -90,10 +91,10 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
-	 * @param string    $ipAddress
+	 * @param SessionConfig $config
+	 * @param string        $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(SessionConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -171,9 +172,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->sessionID = $sessionID;
 		}
 
-		$builder = $this->db->table($this->table)
-				->select('data')
-				->where('id', $sessionID);
+		$builder = $this->db->table($this->table)->select('data')->where('id', $sessionID);
 
 		if ($this->matchIP)
 		{
@@ -428,6 +427,4 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		// Unsupported DB? Let the parent handle the simple version.
 		return parent::releaseLock();
 	}
-
-	//--------------------------------------------------------------------
 }
