@@ -179,7 +179,7 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param \Config\App $config
+	 * @param \Config\Session $config
 	 *
 	 * @throws \Exception
 	 */
