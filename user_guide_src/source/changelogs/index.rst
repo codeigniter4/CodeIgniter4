@@ -5,17 +5,13 @@ Change Logs
 Version |version|
 ====================================================
 
-Release Date: Not Released
+**List of all CodeIgniter4 releases**
 
-**Next release of CodeIgniter4**
-
-
-:doc:`See all the changes. </changelogs/next>`
+See all the changes.
 
 .. toctree::
         :titlesonly:
 
-        next
         v4.0.5
         v4.0.4
         v4.0.3
