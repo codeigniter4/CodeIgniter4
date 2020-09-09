@@ -393,11 +393,11 @@ To view the full description and usage information on a particular generator, us
 <div class="section" id="options">
 <h4>Options:<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-command</span></code>: The command name to run in spark. Defaults to <code class="docutils literal notranslate"><span class="pre">command:name</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-group</span></code>: The group/namespace of the command. Defaults to <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> for basic commands, and <code class="docutils literal notranslate"><span class="pre">Generators</span></code> for generator commands.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-type</span></code>: The type of command, whether a <code class="docutils literal notranslate"><span class="pre">basic</span></code> command or a <code class="docutils literal notranslate"><span class="pre">generator</span></code> command. Defaults to <code class="docutils literal notranslate"><span class="pre">basic</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--command</span></code>: The command name to run in spark. Defaults to <code class="docutils literal notranslate"><span class="pre">command:name</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--group</span></code>: The group/namespace of the command. Defaults to <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> for basic commands, and <code class="docutils literal notranslate"><span class="pre">Generators</span></code> for generator commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--type</span></code>: The type of command, whether a <code class="docutils literal notranslate"><span class="pre">basic</span></code> command or a <code class="docutils literal notranslate"><span class="pre">generator</span></code> command. Defaults to <code class="docutils literal notranslate"><span class="pre">basic</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -419,10 +419,10 @@ To view the full description and usage information on a particular generator, us
 <div class="section" id="id3">
 <h4>Options:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-bare</span></code>: Extends from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> instead of <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-restful</span></code>: Extends from a RESTful resource. Choices are <code class="docutils literal notranslate"><span class="pre">controller</span></code> and <code class="docutils literal notranslate"><span class="pre">presenter</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">controller</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--bare</span></code>: Extends from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> instead of <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--restful</span></code>: Extends from a RESTful resource. Choices are <code class="docutils literal notranslate"><span class="pre">controller</span></code> and <code class="docutils literal notranslate"><span class="pre">presenter</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">controller</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -468,7 +468,7 @@ To view the full description and usage information on a particular generator, us
 <h4>Options:<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -490,11 +490,11 @@ To view the full description and usage information on a particular generator, us
 <div class="section" id="id12">
 <h4>Options:<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-dbgroup</span></code>: Database group to use. Defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-entity</span></code>: Set this flag to use an entity class as the return type.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-table</span></code>: Supply a different table name. Defaults to the pluralized class name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>: Database group to use. Defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--entity</span></code>: Set this flag to use an entity class as the return type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>: Supply a different table name. Defaults to the pluralized class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -517,7 +517,7 @@ To view the full description and usage information on a particular generator, us
 <h4>Options:<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -540,7 +540,7 @@ To view the full description and usage information on a particular generator, us
 <h4>Options:<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </div>
 </div>
@@ -559,7 +559,7 @@ To view the full description and usage information on a particular generator, us
 <li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code>: Set the database group.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-t</span></code>: Set the table name. Defaults to <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -839,7 +839,7 @@ override the description by supplying the name in your <code class="docutils lit
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">GeneratorCommand</span></code> has the default options of <code class="docutils literal notranslate"><span class="pre">-n</span></code> and <code class="docutils literal notranslate"><span class="pre">-force</span></code>. Child classes cannot override
+<p><code class="docutils literal notranslate"><span class="pre">GeneratorCommand</span></code> has the default options of <code class="docutils literal notranslate"><span class="pre">-n</span></code> and <code class="docutils literal notranslate"><span class="pre">--force</span></code>. Child classes cannot override
 these two properties as they are crucial in the implementation of the code generation.</p>
 </div>
 <div class="admonition note">
@@ -875,7 +875,7 @@ e.g. <code class="docutils literal notranslate"><span class="pre">protected</spa
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Sep 07, 2020.
+        Last updated on Sep 09, 2020.
       </span>
 
     </p>
