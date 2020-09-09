@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -39,12 +40,13 @@
 namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
+use SessionHandlerInterface;
 
 /**
  * Session handler using Memcache for persistence
  */
-class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
+class MemcachedHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
@@ -84,7 +86,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param  string    $ipAddress
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(SessionConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -401,6 +403,4 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }
