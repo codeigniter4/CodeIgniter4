@@ -188,7 +188,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if ($this->sessionID === null)
 			{
 				$this->sessionID = $sessionID;
 			}
