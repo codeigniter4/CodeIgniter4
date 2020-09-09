@@ -199,7 +199,7 @@ class Services extends BaseService
 		$response = $response ?? new Response($config);
 
 		return new CURLRequest(
-			$config,
+			new App(),
 			new URI($options['base_uri'] ?? null),
 			$response,
 			$options
