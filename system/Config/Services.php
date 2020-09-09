@@ -90,6 +90,7 @@ use Config\Honeypot as HoneypotConfig;
 use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
+use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
@@ -713,19 +714,19 @@ class Services extends BaseService
 	/**
 	 * Return the session manager.
 	 *
-	 * @param \Config\App|null $config
-	 * @param boolean          $getShared
+	 * @param \Config\Session|null $config
+	 * @param boolean              $getShared
 	 *
 	 * @return \CodeIgniter\Session\Session
 	 */
-	public static function session(App $config = null, bool $getShared = true)
+	public static function session(SessionConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('session', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new SessionConfig();
 		$logger = static::logger();
 
 		$driverName = $config->sessionDriver;
