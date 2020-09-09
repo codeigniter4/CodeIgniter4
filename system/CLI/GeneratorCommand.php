@@ -73,8 +73,8 @@ abstract class GeneratorCommand extends BaseCommand
 	 * @var array
 	 */
 	private $defaultOptions = [
-		'-n'     => 'Set root namespace. Defaults to APP_NAMESPACE.',
-		'-force' => 'Force overwrite existing files.',
+		'-n'      => 'Set root namespace. Defaults to APP_NAMESPACE.',
+		'--force' => 'Force overwrite existing files.',
 	];
 
 	/**

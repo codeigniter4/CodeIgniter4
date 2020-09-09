@@ -93,10 +93,10 @@ class MigrateRefresh extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
-		'-f'   => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
+		'-n'    => 'Set migration namespace',
+		'-g'    => 'Set database group',
+		'--all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-f'    => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
 	];
 
 	/**

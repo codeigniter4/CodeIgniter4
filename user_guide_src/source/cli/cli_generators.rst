@@ -43,11 +43,11 @@ Argument:
 
 Options:
 ========
-* ``-command``: The command name to run in spark. Defaults to ``command:name``.
-* ``-group``: The group/namespace of the command. Defaults to ``CodeIgniter`` for basic commands, and ``Generators`` for generator commands.
-* ``-type``: The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
+* ``--command``: The command name to run in spark. Defaults to ``command:name``.
+* ``--group``: The group/namespace of the command. Defaults to ``CodeIgniter`` for basic commands, and ``Generators`` for generator commands.
+* ``--type``: The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 make:controller
 ---------------
@@ -66,10 +66,10 @@ Argument:
 
 Options:
 ========
-* ``-bare``: Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
-* ``-restful``: Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to ``controller``.
+* ``--bare``: Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
+* ``--restful``: Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to ``controller``.
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 make:entity
 -----------
@@ -109,7 +109,7 @@ Argument:
 Options:
 ========
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 make:model
 ----------
@@ -128,11 +128,11 @@ Argument:
 
 Options:
 ========
-* ``-dbgroup``: Database group to use. Defaults to ``default``.
-* ``-entity``: Set this flag to use an entity class as the return type.
-* ``-table``: Supply a different table name. Defaults to the pluralized class name.
+* ``--dbgroup``: Database group to use. Defaults to ``default``.
+* ``--entity``: Set this flag to use an entity class as the return type.
+* ``--table``: Supply a different table name. Defaults to the pluralized class name.
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 make:seeder
 -----------
@@ -152,7 +152,7 @@ Argument:
 Options:
 ========
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 make:migration
 --------------
@@ -172,7 +172,7 @@ Argument:
 Options:
 ========
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 session:migration
 -----------------
@@ -190,7 +190,7 @@ Options:
 * ``-g``: Set the database group.
 * ``-t``: Set the table name. Defaults to ``ci_sessions``.
 * ``-n``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``-force``: Set this flag to overwrite existing files on destination.
+* ``--force``: Set this flag to overwrite existing files on destination.
 
 .. note:: When running ``php spark help session:migration``, you will see that it has the argument ``name`` listed.
 	This argument is not used as the class name is derived from the table name passed to the ``-t`` option.
@@ -346,7 +346,7 @@ which is public and need not be overridden as it is essentially complete.
 .. note:: ``GeneratorCommand`` has the default argument of ``['name' => 'Class name']``. You can
 	override the description by supplying the name in your ``$arguments`` property, e.g. ``['name' => 'Module class name']``.
 
-.. note:: ``GeneratorCommand`` has the default options of ``-n`` and ``-force``. Child classes cannot override
+.. note:: ``GeneratorCommand`` has the default options of ``-n`` and ``--force``. Child classes cannot override
 	these two properties as they are crucial in the implementation of the code generation.
 
 .. note:: Generators are default listed under the ``Generators`` namespace because it is the default group

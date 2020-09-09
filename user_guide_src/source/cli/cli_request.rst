@@ -14,28 +14,28 @@ Additional Accessors
 
 Returns an array of the command line arguments deemed to be part of a path::
 
-    // command line: php index.php users 21 profile -foo bar
+    // command line: php index.php users 21 profile --foo bar
     echo $request->getSegments();  // ['users', '21', 'profile']
 
 **getPath()**
 
 Returns the reconstructed path as a string::
 
-    // command line: php index.php users 21 profile -foo bar
+    // command line: php index.php users 21 profile --foo bar
     echo $request->getPath();  // users/21/profile
 
 **getOptions()**
 
 Returns an array of the command line arguments deemed to be options::
 
-    // command line: php index.php users 21 profile -foo bar
+    // command line: php index.php users 21 profile --foo bar
     echo $request->getOptions();  // ['foo' => 'bar']
 
 **getOption($which)**
 
 Returns the value of a specific command line argument deemed to be an option::
 
-    // command line: php index.php users 21 profile -foo bar
+    // command line: php index.php users 21 profile --foo bar
     echo $request->getOption('foo');  // bar
     echo $request->getOption('notthere'); // NULL
 
@@ -43,5 +43,11 @@ Returns the value of a specific command line argument deemed to be an option::
 
 Returns the reconstructed command line string for the options::
 
-    // command line: php index.php users 21 profile -foo bar
-    echo $request->getOptionPath();  // -foo bar
+    // command line: php index.php users 21 profile --foo bar
+    echo $request->getOptionString();  // -foo bar
+
+Passing ``true`` to the first argument will try to write long options using two dashes::
+
+    // php index.php user 21 --foo bar -f
+    echo $request->getOptionString(); // -foo bar -f
+    echo $request->getOptionString(true); // --foo bar -f

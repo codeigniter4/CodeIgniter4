@@ -59,9 +59,9 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
-			'-foo-bar',
+			'--foo-bar',
 			'yes',
 		];
 
@@ -82,7 +82,7 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
 		];
 
@@ -100,17 +100,17 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expected = '-foo bar -baz "queue some stuff"';
-		$this->assertEquals($expected, $this->request->getOptionString());
+		$this->assertEquals('-foo bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo bar --baz "queue some stuff"', $this->request->getOptionString(true));
 	}
 
 	public function testParsingNoOptions()
@@ -136,15 +136,14 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
 		];
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expected = 'users/21/profile';
-		$this->assertEquals($expected, $this->request->getPath());
+		$this->assertEquals('users/21/profile', $this->request->getPath());
 	}
 
 	public function testParsingMalformed()
@@ -154,19 +153,18 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'pro-file',
-			'-foo',
+			'--foo',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21/pro-file';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo bar --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/pro-file', $this->request->getPath());
 	}
 
 	public function testParsingMalformed2()
@@ -176,19 +174,18 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'oops-bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo oops-bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21/profile';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo oops-bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo oops-bar --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/profile', $this->request->getPath());
 	}
 
 	public function testParsingMalformed3()
@@ -198,20 +195,19 @@ class CLIRequestTest extends CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'oops',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo oops -baz "queue some stuff"';
-		$expectedPath    = 'users/21/profile/bar';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo oops -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo oops --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/profile/bar', $this->request->getPath());
 	}
 
 	//--------------------------------------------------------------------

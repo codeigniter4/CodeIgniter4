@@ -83,8 +83,8 @@ class CreateController extends GeneratorCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-bare'    => 'Extends from CodeIgniter\\Controller instead of BaseController',
-		'-restful' => 'Extends from a RESTful resource. Options are \'controller\' or \'presenter\'.',
+		'--bare'    => 'Extends from CodeIgniter\\Controller instead of BaseController',
+		'--restful' => 'Extends from a RESTful resource. Options are \'controller\' or \'presenter\'.',
 	];
 
 	/**
