@@ -55,6 +55,7 @@ use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use Config\Cache;
 use Config\Services;
+use Config\Session as SessionConfig;
 use Exception;
 
 /**
@@ -626,7 +627,7 @@ class CodeIgniter
 	 */
 	protected function getResponseObject()
 	{
-		$this->response = Services::response($this->config);
+		$this->response = Services::response(new SessionConfig);
 
 		if (! is_cli() || ENVIRONMENT === 'testing')
 		{
