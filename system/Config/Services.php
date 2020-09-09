@@ -195,7 +195,7 @@ class Services extends BaseService
 			return static::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		$config   = $config ?? SessionConfig;
+		$config   = $config ?? new SessionConfig();
 		$response = $response ?? new Response($config);
 
 		return new CURLRequest(
@@ -600,19 +600,19 @@ class Services extends BaseService
 	/**
 	 * The Response class models an HTTP response.
 	 *
-	 * @param \Config\App|null $config
-	 * @param boolean          $getShared
+	 * @param \Config\Session|null $config
+	 * @param boolean              $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\Response
 	 */
-	public static function response(App $config = null, bool $getShared = true)
+	public static function response(SessionConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('response', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new SessionConfig();
 
 		return new Response($config);
 	}
@@ -634,7 +634,7 @@ class Services extends BaseService
 			return static::getSharedInstance('redirectResponse', $config);
 		}
 
-		$config   = $config ?? config('App');
+		$config   = $config ?? new SessionConfig();
 		$response = new RedirectResponse($config);
 		$response->setProtocolVersion(static::request()->getProtocolVersion());
 
