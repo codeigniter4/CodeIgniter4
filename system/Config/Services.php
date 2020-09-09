@@ -183,7 +183,7 @@ class Services extends BaseService
 	 *
 	 * @param array                                    $options
 	 * @param \CodeIgniter\HTTP\ResponseInterface|null $response
-	 * @param \Config\App|null                         $config
+	 * @param \Config\Session|null                     $config
 	 * @param boolean                                  $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
