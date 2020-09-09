@@ -188,7 +188,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
 	 */
-	public static function curlrequest(array $options = [], ResponseInterface $response = null, App $config = null, bool $getShared = true)
+	public static function curlrequest(array $options = [], ResponseInterface $response = null, SessionConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared === true)
 		{
