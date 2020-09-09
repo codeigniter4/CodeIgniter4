@@ -195,7 +195,7 @@ class Services extends BaseService
 			return static::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		$config   = $config ?? config('App');
+		$config   = $config ?? SessionConfig;
 		$response = $response ?? new Response($config);
 
 		return new CURLRequest(
