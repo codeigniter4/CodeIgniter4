@@ -40,12 +40,13 @@
 namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
+use SessionHandlerInterface;
 
 /**
  * Session handler using Redis for persistence
  */
-class RedisHandler extends BaseHandler implements \SessionHandlerInterface
+class RedisHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
@@ -93,7 +94,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(SessionConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -127,9 +128,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
-		$this->sessionExpiration = empty($config->sessionExpiration)
-			? (int) ini_get('session.gc_maxlifetime')
-			: (int) $config->sessionExpiration;
+		$this->sessionExpiration = empty($config->sessionExpiration) ? (int) ini_get('session.gc_maxlifetime') : (int) $config->sessionExpiration;
 	}
 
 	//--------------------------------------------------------------------
@@ -424,6 +423,4 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }
