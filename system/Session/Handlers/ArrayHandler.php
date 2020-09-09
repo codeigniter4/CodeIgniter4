@@ -39,13 +39,13 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\Database;
+use SessionHandlerInterface;
 
 /**
  * Session handler using static array for storage.
  * Intended only for use during testing.
  */
-class ArrayHandler extends BaseHandler implements \SessionHandlerInterface
+class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 {
 	protected static $cache = [];
 
@@ -145,6 +145,4 @@ class ArrayHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }
