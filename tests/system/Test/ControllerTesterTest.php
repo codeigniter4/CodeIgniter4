@@ -1,10 +1,12 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
-use Config\App;
 use Config\Services;
+use Config\Session as SessionConfig;
 
 /**
  * Exercise our Controller class.
@@ -12,7 +14,7 @@ use Config\Services;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
+class ControllerTesterTest extends CIUnitTestCase
 {
 
 	use ControllerTester;
@@ -118,7 +120,7 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testPopcornIndexWithSupport()
 	{
 		$logger = new Logger(new LoggerConfig());
-		$config = new App();
+		$config = new SessionConfig();
 		$body   = '';
 
 		$result = $this->withURI('http://example.com')
