@@ -134,8 +134,8 @@ abstract class BaseHandler implements SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
-	 * @param string    $ipAddress
+	 * @param SessionConfig $config
+	 * @param string    	$ipAddress
 	 */
 	public function __construct(SessionConfig $config, string $ipAddress)
 	{
