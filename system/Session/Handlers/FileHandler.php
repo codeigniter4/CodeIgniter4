@@ -40,12 +40,13 @@
 namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
+use SessionHandlerInterface;
 
 /**
  * Session handler using file system for storage
  */
-class FileHandler extends BaseHandler implements \SessionHandlerInterface
+class FileHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
@@ -98,7 +99,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param AppConfig $config
 	 * @param string    $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(SessionConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -330,16 +331,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->close())
 		{
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
-		if ($this->filePath !== null)
+		if (! is_null($this->filePath))
 		{
 			clearstatcache();
 
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
 		return false;
@@ -367,14 +366,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 		$ts = time() - $maxlifetime;
 
-		$pattern = $this->matchIP === true
-			? '[0-9a-f]{32}'
-			: '';
+		$pattern = $this->matchIP === true ? '[0-9a-f]{32}' : '';
 
-		$pattern = sprintf(
-			'#\A%s' . $pattern . $this->sessionIDRegex . '\z#',
-			preg_quote($this->cookieName)
-		);
+		$pattern = sprintf('#\A%s' . $pattern . $this->sessionIDRegex . '\z#', preg_quote($this->cookieName));
 
 		while (($file = readdir($directory)) !== false)
 		{
