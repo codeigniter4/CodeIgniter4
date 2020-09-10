@@ -426,7 +426,7 @@ class Model
 		{
 			$row = $builder->get();
 
-			$row = $row->getResult($this->tempReturnType);
+			$row = $row->getFirstRow($this->tempReturnType);
 		}
 
 		$eventData = [
