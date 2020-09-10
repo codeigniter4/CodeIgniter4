@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
@@ -19,7 +20,6 @@ require_once __DIR__ . '/fixtures/Role.php';
  */
 class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $request;
 	protected $response;
 
@@ -27,21 +27,19 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 		Services::reset();
-		
+
 		$defaults = [
-			'Config' => APPPATH . 'Config',
-			'App'    => APPPATH,
+			'Config'        => APPPATH . 'Config',
+			'App'           => APPPATH,
 			'Tests\Support' => TESTPATH . '_support',
 		];
 
 		Services::autoloader()->addNamespace($defaults);
-		
+
 		$this->request  = Services::request();
 		$this->response = Services::response();
-		
 	}
 
-	//--------------------------------------------------------------------
 	public function testProcessMethodDetectsCLI()
 	{
 		$config  = [
@@ -59,8 +57,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $filters->initialize()->getFilters());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testProcessMethodDetectsGetRequests()
 	{
@@ -81,9 +77,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $filters->initialize()->getFilters());
 	}
-
-	
-	//--------------------------------------------------------------------
 
 	public function testProcessMethodRespectsMethod()
 	{
@@ -133,13 +126,11 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize()->getFilters());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testProcessMethodProcessGlobals()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config  = [
+		$config = [
 			'aliases' => [
 				'foo' => '',
 				'bar' => '',
@@ -155,6 +146,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 				],
 			],
 		];
+
 		$filters = new Filters((object) $config, $this->request, $this->response);
 
 		$expected = [
@@ -167,8 +159,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $filters->initialize()->getFilters());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function provideExcept()
 	{
@@ -218,8 +208,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testProcessMethodProcessesFiltersBefore()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -247,8 +235,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testProcessMethodProcessesFiltersAfter()
 	{
@@ -279,8 +265,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testProcessMethodProcessesCombined()
 	{
@@ -330,8 +314,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testProcessMethodProcessesCombinedAfterForToolbar()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -373,8 +355,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRunThrowsWithInvalidAlias()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -394,8 +374,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filters->run($uri);
 	}
-	
-	//--------------------------------------------------------------------
 
 	public function testCustomFiltersLoad()
 	{
@@ -415,10 +393,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $filters->run($uri, 'before');
 
 		$this->assertEquals('http://hellowworld.com', $request->url);
-	}	
-	
-
-	//--------------------------------------------------------------------
+	}
 
 	public function testRunThrowsWithInvalidClassType()
 	{
@@ -440,8 +415,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$filters->run($uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRunDoesBefore()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -462,8 +435,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://google.com', $request->url);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRunDoesAfter()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -483,8 +454,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('http://google.com', $response->csp);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testShortCircuit()
 	{
@@ -531,8 +500,6 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('This is curious', $response);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBeforeExceptString()
 	{
@@ -1090,9 +1057,8 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 		$filters = new Filters((object) $config, $this->request, $this->response);
-		$uri     = 'admin/foo/bar';
 
-		$filters->run($uri, 'before');
+		$filters->run('admin/foo/bar', 'before');
 		$expected = [
 			'after'  => [
 				'CodeIgniter\Filters\fixtures\Multiple1',
@@ -1102,5 +1068,4 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$this->assertEquals($expected, $filters->getFiltersClass());
 	}
-
 }

@@ -121,9 +121,7 @@ class Filters
 	 *
 	 * @var \Config\Modules
 	 */
-	protected $moduleConfig;
-
-	//--------------------------------------------------------------------
+	protected $modules;
 
 	/**
 	 * Constructor.
@@ -131,38 +129,40 @@ class Filters
 	 * @param \Config\Filters      $config
 	 * @param RequestInterface     $request
 	 * @param ResponseInterface    $response
-	 * @param \Config\Modules|null $moduleConfig
+	 * @param \Config\Modules|null $modules
 	 */
-	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $moduleConfig = null)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $modules = null)
 	{
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
 
-		$this->moduleConfig = $moduleConfig ?? config('Modules');
+		$this->modules = $modules ?? config('Modules');
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * If discoverFilters is enabled in Config then system will try to auto
-	 * Discovery custom filters files in Namespaces and allow access to
-	 * The config object via the variable $customfilters as with the routes file
+	 * If discoverFilters is enabled in Config then system will try to
+	 * auto-discover custom filters files in Namespaces and allow access to
+	 * the config object via the variable $customfilters as with the routes file
+	 *
 	 * Sample :
 	 * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
 	 */
 	private function discoverFilters()
 	{
-		$locater = Services::locator();
+		$locator = Services::locator();
 
+		// for access by custom filters
 		$filters = $this->config;
 
-		$files = $locater->search('Config/Filters.php');
+		$files = $locator->search('Config/Filters.php');
 
 		foreach ($files as $file)
 		{
-			// Don't include our main file again...
-			if ($file === APPPATH . 'Config/Filters.php')
+			$className = $locator->getClassname($file);
+
+			// Don't include our main Filter config again...
+			if ($className === 'Config\\Filters')
 			{
 				continue;
 			}
@@ -180,8 +180,6 @@ class Filters
 	{
 		$this->response = &$response;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Runs through all of the filters for the specified
@@ -231,7 +229,7 @@ class Filters
 
 				return $result;
 			}
-      
+
 			if ($position === 'after')
 			{
 				$result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
@@ -239,6 +237,7 @@ class Filters
 				if ($result instanceof ResponseInterface)
 				{
 					$this->response = $result;
+
 					continue;
 				}
 			}
@@ -246,8 +245,6 @@ class Filters
 
 		return $position === 'before' ? $this->request : $this->response;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Runs through our list of filters provided by the configuration
@@ -272,7 +269,8 @@ class Filters
 		{
 			return $this;
 		}
-		if ($this->moduleConfig->shouldDiscover('filters'))
+
+		if ($this->modules->shouldDiscover('filters'))
 		{
 			$this->discoverFilters();
 		}
@@ -298,8 +296,6 @@ class Filters
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the processed filters array.
@@ -353,8 +349,6 @@ class Filters
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that a specific filter is on and enabled for the current request.
@@ -417,7 +411,6 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Processors
 	//--------------------------------------------------------------------
 
@@ -478,8 +471,6 @@ class Filters
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Add any method-specific flters to the mix.
 	 *
@@ -501,8 +492,6 @@ class Filters
 			return;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Add any applicable configured filters to the mix.
@@ -614,5 +603,4 @@ class Filters
 
 		return false;
 	}
-
 }
