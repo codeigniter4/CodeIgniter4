@@ -26,6 +26,16 @@ defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . 'vendor/autoload.php');
 
 /*
+ | --------------------------------------------------------------------
+ | Environment File
+ | --------------------------------------------------------------------
+ |
+ | This define allows you to control the name of the environment file so that 
+ | you can manipulate more than one environment attached to a single core system.
+ */
+defined('ENVIRONMENT_FILE') || define('ENVIRONMENT_FILE', '.env');
+
+/*
  |--------------------------------------------------------------------------
  | Timing Constants
  |--------------------------------------------------------------------------

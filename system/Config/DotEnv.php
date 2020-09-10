@@ -58,9 +58,9 @@ class DotEnv
 	 * Builds the path to our file.
 	 *
 	 * @param string $path
-	 * @param string $file
+	 * @param string $file The environment file name
 	 */
-	public function __construct(string $path, string $file = '.env')
+	public function __construct(string $path, string $file = ENVIRONMENT_FILE)
 	{
 		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
 	}
