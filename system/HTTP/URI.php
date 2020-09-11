@@ -1075,7 +1075,7 @@ class URI
 		 * NOTE: We don't use removeDotSegments in this
 		 * algorithm since it's already done by this line!
 		 */
-		$relative = new URI();
+		$relative = new self();
 		$relative->setURI($uri);
 
 		if ($relative->getScheme() === $this->getScheme())
