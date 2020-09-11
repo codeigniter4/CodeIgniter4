@@ -304,9 +304,7 @@ if (! function_exists('csrf_hash'))
 	 */
 	function csrf_hash(): string
 	{
-		$security = Services::security(null, true);
-
-		return $security->getCSRFHash();
+		return Services::security(null, null, true)->getCSRFHash();
 	}
 }
 
