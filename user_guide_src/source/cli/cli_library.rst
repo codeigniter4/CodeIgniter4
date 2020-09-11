@@ -170,7 +170,7 @@ every line after the first line, so that you will have a crisp column edge on th
 	{
 		CLI::write(
 			// Display the title on the left of the row
-			$title[$i] . '   ' .
+			$titles[$i] . '   ' .
 			// Wrap the descriptions in a right-hand column
 			// with its left side 3 characters wider than
 			// the longest item on the left.
