@@ -334,7 +334,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 			return is_file($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
-		if (! is_null($this->filePath))
+		if ($this->filePath !== null)
 		{
 			clearstatcache();
 
