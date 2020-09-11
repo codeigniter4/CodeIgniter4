@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Migrations;
