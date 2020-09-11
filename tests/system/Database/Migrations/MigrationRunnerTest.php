@@ -255,7 +255,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertFalse($this->db->tableExists('foo'));
 	}
 
-	public function testProgressSuccess()
+	public function testLatestSuccess()
 	{
 		$config = $this->config;
 		$runner = new MigrationRunner($config);
@@ -292,6 +292,34 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$history = $runner->getHistory();
 		$this->assertEmpty($history);
+	}
+
+	public function testLatestTriggersEvent()
+	{
+		$result = null;
+
+		Events::on('migrate', function ($arg) use (&$result) {
+			$result = $arg;
+		});
+
+		$this->testLatestSuccess();
+
+		$this->assertIsArray($result);
+		$this->assertEquals('latest', $result['method']);
+	}
+
+	public function testRegressTriggersEvent()
+	{
+		$result = null;
+
+		Events::on('migrate', function ($arg) use (&$result) {
+			$result = $arg;
+		});
+
+		$this->testRegressSuccess();
+
+		$this->assertIsArray($result);
+		$this->assertEquals('regress', $result['method']);
 	}
 
 	public function testHistoryRecordsBatches()
