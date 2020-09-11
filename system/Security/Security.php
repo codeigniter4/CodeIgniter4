@@ -41,8 +41,6 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use Config\App;
-use Config\Session as SessionConfig;
 
 /**
  * HTTP security handler.
@@ -186,7 +184,7 @@ class Security
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(App $config, SessionConfig $sessionConfig)
+	public function __construct($config, $sessionConfig)
 	{
 		// Store our CSRF-related settings
 		$this->CSRFExpire     = $config->CSRFExpire ?? $this->CSRFExpire;
@@ -195,6 +193,8 @@ class Security
 		$this->CSRFCookieName = $config->CSRFCookieName ?? $this->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate ?? $this->CSRFRegenerate;
 		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
+		
+		$this->sessionConfig = $sessionConfig;
 
 		if (isset($sessionConfig->cookiePrefix))
 		{
