@@ -41,6 +41,8 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\App;
+use Config\Session as SessionConfig;
 
 /**
  * HTTP security handler.
@@ -179,11 +181,12 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param \Config\Session $config
+	 * @param \Config\App 	  $config
+	 * @param \Config\Session $sessionConfig
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct($config)
+	public function __construct(App $config, SessionConfig $sessionConfig)
 	{
 		// Store our CSRF-related settings
 		$this->CSRFExpire     = $config->CSRFExpire ?? $this->CSRFExpire;
@@ -193,9 +196,9 @@ class Security
 		$this->CSRFRegenerate = $config->CSRFRegenerate ?? $this->CSRFRegenerate;
 		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
 
-		if (isset($config->cookiePrefix))
+		if (isset($sessionConfig->cookiePrefix))
 		{
-			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
+			$this->CSRFCookieName = $sessionConfig->cookiePrefix . $this->CSRFCookieName;
 		}
 
 		if (! in_array(strtolower($this->CSRFSameSite), ['', 'none', 'lax', 'strict'], true))
@@ -204,13 +207,13 @@ class Security
 		}
 
 		// Store cookie-related settings
-		$this->cookiePath   = $config->cookiePath ?? $this->cookiePath;
-		$this->cookieDomain = $config->cookieDomain ?? $this->cookieDomain;
-		$this->cookieSecure = $config->cookieSecure ?? $this->cookieSecure;
+		$this->cookiePath   = $sessionConfig->cookiePath ?? $this->cookiePath;
+		$this->cookieDomain = $sessionConfig->cookieDomain ?? $this->cookieDomain;
+		$this->cookieSecure = $sessionConfig->cookieSecure ?? $this->cookieSecure;
 
 		$this->CSRFSetHash();
 
-		unset($config);
+		unset($config, $sessionConfig);
 	}
 
 	//--------------------------------------------------------------------
