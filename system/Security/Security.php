@@ -194,8 +194,6 @@ class Security
 		$this->CSRFRegenerate = $config->CSRFRegenerate ?? $this->CSRFRegenerate;
 		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
 		
-		$this->sessionConfig = $sessionConfig;
-
 		if (isset($sessionConfig->cookiePrefix))
 		{
 			$this->CSRFCookieName = $sessionConfig->cookiePrefix . $this->CSRFCookieName;
