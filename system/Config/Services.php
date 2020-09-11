@@ -692,9 +692,9 @@ class Services extends BaseService
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 *
-	 * @param \Config\App|null 	     $config
-	 * @param \Config\SessionConfig|null $sessionConfig
-	 * @param boolean 		     $getShared
+	 * @param \Config\App|null     $config
+	 * @param \Config\Session|null $sessionConfig
+	 * @param boolean 	       $getShared
 	 *
 	 * @return \CodeIgniter\Security\Security
 	 */
@@ -888,6 +888,4 @@ class Services extends BaseService
 
 		return new Typography();
 	}
-
-	//--------------------------------------------------------------------
 }
