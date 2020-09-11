@@ -692,21 +692,23 @@ class Services extends BaseService
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 *
-	 * @param \Config\SessionConfig|null $config
+	 * @param \Config\App|null 	     $config
+	 * @param \Config\SessionConfig|null $sessionConfig
 	 * @param boolean 		     $getShared
 	 *
 	 * @return \CodeIgniter\Security\Security
 	 */
-	public static function security(SessionConfig $config = null, bool $getShared = true)
+	public static function security(App $config = null, SessionConfig $sessionConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('security', $config);
+			return static::getSharedInstance('security', $config, $sessionConfig);
 		}
 
-		$config = $config ?? new SessionConfig();
+		$config = $config ?? new App();
+		$sessionConfig = $sessionConfig ?? new SessionConfig();
 
-		return new Security($config);
+		return new Security($config, $sessionConfig);
 	}
 
 	//--------------------------------------------------------------------
