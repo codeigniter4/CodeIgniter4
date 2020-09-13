@@ -47,3 +47,4 @@ parameters:
   dynamicConstantNames:
     - ENVIRONMENT
     - CI_DEBUG
+    - APP_NAMESPACE

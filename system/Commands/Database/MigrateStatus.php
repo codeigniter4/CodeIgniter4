@@ -50,7 +50,6 @@ use Config\Services;
  */
 class MigrateStatus extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -141,6 +140,11 @@ class MigrateStatus extends BaseCommand
 				continue;
 			}
 
+			if (APP_NAMESPACE !== 'App' && $namespace === 'App')
+			{
+				continue; // @codeCoverageIgnore
+			}
+
 			$runner->setNamespace($namespace);
 			$migrations = $runner->findMigrations();
 
@@ -170,6 +174,7 @@ class MigrateStatus extends BaseCommand
 			foreach ($migrations as $uid => $migration)
 			{
 				$date = '';
+
 				foreach ($history as $row)
 				{
 					if ($runner->getObjectUid($row) !== $uid)
@@ -179,8 +184,11 @@ class MigrateStatus extends BaseCommand
 
 					$date = date('Y-m-d H:i:s', $row->time);
 				}
-				CLI::write(str_pad('  ' . $migration->name, $max + 6) . ($date ? $date : '---'));
+
+				CLI::write(str_pad('  ' . $migration->name, $max + 6) . ($date ?: '---'));
 			}
+
+			CLI::newLine();
 		}
 
 		if (! $found)
@@ -188,5 +196,4 @@ class MigrateStatus extends BaseCommand
 			CLI::error(lang('Migrations.noneFound'));
 		}
 	}
-
 }
