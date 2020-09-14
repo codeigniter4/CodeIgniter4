@@ -148,7 +148,7 @@ class Serve extends BaseCommand
 		CLI::write('Press Control-C to stop.');
 
 		// Set the Front Controller path as Document Root.
-		$docroot = escapeshellarg(FCPATH); // @phpstan-ignore-line
+		$docroot = escapeshellarg(FCPATH);
 
 		// Mimic Apache's mod_rewrite functionality with user settings.
 		$rewrite = escapeshellarg(__DIR__ . '/rewrite.php');

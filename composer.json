@@ -34,6 +34,7 @@
 			"CodeIgniter\\ComposerScripts::postUpdate",
 			"bash admin/setup.sh"
 		],
+		"analyze": "phpstan analyze",
 		"test": "phpunit"
 	},
 	"support": {
