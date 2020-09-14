@@ -258,12 +258,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testLatestSuccess()
 	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-		$runner->clearHistory();
-
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
 		$runner->latest();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
@@ -278,14 +276,14 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testRegressSuccess()
 	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 		$runner->latest();
-
 		$runner->regress();
+
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
 		$this->assertEquals(0, $version);
@@ -297,13 +295,17 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testLatestTriggersEvent()
 	{
-		$result = null;
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
+		$result = null;
 		Events::on('migrate', function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
-		$this->testLatestSuccess();
+		$runner->latest();
 
 		$this->assertIsArray($result);
 		$this->assertEquals('latest', $result['method']);
@@ -311,13 +313,18 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testRegressTriggersEvent()
 	{
-		$result = null;
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
+		$result = null;
 		Events::on('migrate', function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
-		$this->testRegressSuccess();
+		$runner->latest();
+		$runner->regress();
 
 		$this->assertIsArray($result);
 		$this->assertEquals('regress', $result['method']);
