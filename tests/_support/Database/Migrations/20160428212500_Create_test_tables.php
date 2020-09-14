@@ -4,15 +4,12 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 {
 	public function up()
 	{
-		// SQLite3 uses auto increment different
-		$unique_or_auto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
-
 		// User Table
 		$this->forge->addField([
 			'id'         => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'name'       => [
 				'type'       => 'VARCHAR',
@@ -47,7 +44,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'id'          => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'name'        => [
 				'type'       => 'VARCHAR',
@@ -81,7 +78,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'id'    => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'key'   => [
 				'type'       => 'VARCHAR',
@@ -99,7 +96,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'id'             => [
 				'type'          => 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field
 				'constraint'    => 20,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'type_varchar'   => [
 				'type'       => 'VARCHAR',
@@ -208,7 +205,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'id'         => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'name'       => [
 				'type'       => 'VARCHAR',
@@ -231,7 +228,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'id'    => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
-				$unique_or_auto => true,
+				'auto_increment'=> true,
 			],
 			'key'   => [
 				'type'       => 'VARCHAR',
