@@ -21,6 +21,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		Events::removeAllListeners();
 	}
 
+	protected function tearDown(): void
+	{
+		Events::simulate(false);
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
