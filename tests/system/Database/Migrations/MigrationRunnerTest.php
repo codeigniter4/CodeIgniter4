@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Migrations;
@@ -255,14 +256,12 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertFalse($this->db->tableExists('foo'));
 	}
 
-	public function testProgressSuccess()
+	public function testLatestSuccess()
 	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-		$runner->clearHistory();
-
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
 		$runner->latest();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
@@ -277,14 +276,14 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testRegressSuccess()
 	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 		$runner->latest();
-
 		$runner->regress();
+
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
 		$this->assertEquals(0, $version);
@@ -292,6 +291,43 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$history = $runner->getHistory();
 		$this->assertEmpty($history);
+	}
+
+	public function testLatestTriggersEvent()
+	{
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
+
+		$result = null;
+		Events::on('migrate', function ($arg) use (&$result) {
+			$result = $arg;
+		});
+
+		$runner->latest();
+
+		$this->assertIsArray($result);
+		$this->assertEquals('latest', $result['method']);
+	}
+
+	public function testRegressTriggersEvent()
+	{
+		$runner = new MigrationRunner($this->config);
+		$runner->setSilent(false)
+			->setNamespace('Tests\Support\MigrationTestMigrations')
+			->clearHistory();
+
+		$result = null;
+		Events::on('migrate', function ($arg) use (&$result) {
+			$result = $arg;
+		});
+
+		$runner->latest();
+		$runner->regress();
+
+		$this->assertIsArray($result);
+		$this->assertEquals('regress', $result['method']);
 	}
 
 	public function testHistoryRecordsBatches()

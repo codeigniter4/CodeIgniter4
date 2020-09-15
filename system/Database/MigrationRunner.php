@@ -39,6 +39,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use Config\Migrations as MigrationsConfig;
 use Config\Services;
@@ -246,6 +247,10 @@ class MigrationRunner
 			}
 		}
 
+		$data           = get_object_vars($this);
+		$data['method'] = 'latest';
+		Events::trigger('migrate', $data);
+
 		return true;
 	}
 
@@ -368,6 +373,10 @@ class MigrationRunner
 				throw new \RuntimeException($message);
 			}
 		}
+
+		$data           = get_object_vars($this);
+		$data['method'] = 'regress';
+		Events::trigger('migrate', $data);
 
 		// Restore the namespace
 		$this->namespace = $tmpNamespace;
