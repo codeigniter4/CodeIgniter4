@@ -13,10 +13,9 @@ class ModelFactory
 	static private $instances = [];
 
 	/**
-	 * Create new configuration instances or return
-	 * a shared instance
+	 * Creates new Model instances or returns a shared instance
 	 *
-	 * @param string              $name       Configuration name
+	 * @param string              $name       Model name, namespace optional
 	 * @param boolean             $getShared  Use shared instance
 	 * @param ConnectionInterface $connection
 	 *
@@ -62,7 +61,7 @@ class ModelFactory
 	}
 
 	/**
-	 * Find configuration class and create instance
+	 * Finds a Model class and creates an instance
 	 *
 	 * @param string                   $name       Classname
 	 * @param ConnectionInterface|null $connection
