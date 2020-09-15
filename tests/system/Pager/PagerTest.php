@@ -205,6 +205,13 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $this->pager->getPageCount());
 	}
 
+	public function testGetTotalCorrectValue()
+	{
+		$this->pager->store('foo', 3, 12, 70);
+
+		$this->assertEquals(70, $this->pager->getTotal('foo'));
+	}
+
 	public function testGetTotalPagesCalcsCorrectValue()
 	{
 		$this->pager->store('foo', 3, 12, 70);
