@@ -240,7 +240,8 @@ class Security
 					null));
 
 		// Do the tokens exist in both the _POST/POSTed JSON and _COOKIE arrays?
-		if (! isset($CSRFTokenValue, $_COOKIE[$this->CSRFCookieName]) || $CSRFTokenValue !== $_COOKIE[$this->CSRFCookieName]
+		if (isset($CSRFTokenValue, $_COOKIE[$this->CSRFCookieName],$json->{$this->CSRFTokenName}) && $CSRFTokenValue == $_COOKIE[$this->CSRFCookieName]
+			&& $json->{$this->CSRFTokenName} == $CSRFTokenValue
 		) // Do the tokens match?
 		{
 			throw SecurityException::forDisallowedAction();
