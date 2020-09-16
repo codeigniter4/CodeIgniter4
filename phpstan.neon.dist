@@ -6,7 +6,7 @@ parameters:
     - system
   treatPhpDocTypesAsCertain: false
   bootstrapFiles:
-    - qa-bootstrap.php
+    - system/Test/bootstrap.php
   excludes_analyse:
     - app/Views/errors/cli/*
     - app/Views/errors/html/*

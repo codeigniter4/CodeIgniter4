@@ -72,7 +72,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = SUPPORTPATH . 'Database'; // @phpstan-ignore-line
+	protected $basePath = SUPPORTPATH . 'Database';
 
 	/**
 	 * The namespace(s) to help us find the migration classes.

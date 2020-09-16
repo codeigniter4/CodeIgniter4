@@ -208,3 +208,15 @@ Once set up, you can then launch your webapp inside a VM, with the command::
 Your webapp will be accessible at ``http://localhost:8080``, with the code coverage
 report for your build at ``http://localhost:8081`` and the user guide for
 it at ``http://localhost:8082``.
+
+Bootstrapping the App
+=================================================
+
+In some scenarios you will want to load the framework without actually running the whole
+application. This is particularly useful for unit testing your project, but may also be
+handy for using third-party tools to analyze and modify your code. The framework comes
+with a separate bootstrap script specifically for this scenario: ``system/Test/bootstrap.php``.
+
+Most of the paths to your project are defined during the bootstrap process. You may use
+pre-defined constants to override these, but when using the defaults be sure that your
+paths align with the expected directory structure for your installation method.
