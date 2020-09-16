@@ -53,12 +53,12 @@ driver's underlying native PHP extension, like this::
 .. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
 	will try to build it with the rest of the provided settings.
 
-You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
+You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype::
 	
-      $default['DSN'] = 'DBDriver://username:password@hostname:port/database';
+	default['DSN'] = 'DBDriver://username:password@hostname:port/database';
 
 To override default config values when connecting with a universal version of the DSN string, 
-add the config variables as a query string:
+add the config variables as a query string::
 
 	// MySQLi
 	$default['DSN'] = 'MySQLi://username:password@hostname:3306/database?charset=utf8&DBCollat=utf8_general_ci';
