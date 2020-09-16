@@ -596,7 +596,8 @@ class URI
 		// If hosted in a sub-folder, we will have additional
 		// segments that show up prior to the URI path we just
 		// grabbed from the request, so add it on if necessary.
-		$baseUri  = new self(config(\Config\App::class)->baseURL);
+		$config   = config(\Config\App::class);
+		$baseUri  = new self($config->baseURL);
 		$basePath = trim($baseUri->getPath(), '/') . '/';
 		$path     = $this->getPath();
 		$trimPath = ltrim($path, '/');
@@ -604,6 +605,12 @@ class URI
 		if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
 		{
 			$path = $basePath . $trimPath;
+		}
+
+		// force https if needed
+		if ($config->forceGlobalSecureRequests)
+		{
+			$this->setScheme('https');
 		}
 
 		return static::createURIString(

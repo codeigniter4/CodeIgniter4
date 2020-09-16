@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
@@ -17,6 +18,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tearDown(): void
 	{
+		Config::reset();
 	}
 
 	//--------------------------------------------------------------------
@@ -958,6 +960,35 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri = new URI('http://example.com/ci/v4/index.php/controller/method');
 		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', (string) $uri);
 		$this->assertEquals('/ci/v4/index.php/controller/method', $uri->getPath());
+
+		$this->assertEquals($uri->getPath(), $request->uri->getPath());
+	}
+
+	public function testForceGlobalSecureRequests()
+	{
+		Services::reset();
+
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+
+		$config                            = new App();
+		$config->baseURL                   = 'http://example.com/ci/v4';
+		$config->indexPage                 = 'index.php';
+		$config->forceGlobalSecureRequests = true;
+
+		Config::injectMock('App', $config);
+
+		$request      = Services::request($config);
+		$request->uri = new URI('http://example.com/ci/v4/controller/method');
+
+		Services::injectMock('request', $request);
+
+		// going through request
+		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $request->uri);
+
+		// standalone
+		$uri = new URI('http://example.com/ci/v4/controller/method');
+		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $uri);
 
 		$this->assertEquals($uri->getPath(), $request->uri->getPath());
 	}
