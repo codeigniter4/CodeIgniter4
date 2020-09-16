@@ -1130,6 +1130,39 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($model->hasToken('afterFind'));
 	}
 
+	public function testFindEventSingletons()
+	{
+		$model = new EventModel();
+
+		// afterFind
+		$model->first();
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find(1);
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		$model->findAll();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		// beforeFind
+		$model->beforeFindReturnData = true;
+
+		$model->first();
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find(1);
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		$model->findAll();
+		$this->assertEquals(false, $model->eventData['singleton']);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testAllowCallbacksFalsePreventsTriggers()
