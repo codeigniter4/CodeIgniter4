@@ -430,8 +430,9 @@ class Model
 		}
 
 		$eventData = [
-			'id'   => $id,
-			'data' => $row,
+			'id'     => $id,
+			'data'   => $row,
+			'method' => 'find',
 		];
 		if ($this->tempAllowCallbacks)
 		{
@@ -508,6 +509,7 @@ class Model
 			'data'   => $row,
 			'limit'  => $limit,
 			'offset' => $offset,
+			'method' => 'findAll',
 		];
 		if ($this->tempAllowCallbacks)
 		{
@@ -567,7 +569,10 @@ class Model
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$eventData = ['data' => $row];
+		$eventData = [
+			'data'   => $row,
+			'method' => 'first',
+		];
 		if ($this->tempAllowCallbacks)
 		{
 			$eventData = $this->trigger('afterFind', $eventData);

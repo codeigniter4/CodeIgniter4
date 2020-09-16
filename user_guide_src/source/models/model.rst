@@ -795,14 +795,12 @@ beforeUpdate      **id** = the array of primary keys of the rows being updated.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
-afterFind         Varies by find* method. See the following:
+beforeFind        The name of the calling **method**, with these additional fields:
+- first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
-                  **data** = The resulting row of data, or null if no result found.
-- findAll()       **data** = the resulting rows of data, or null if no result found.
-                  **limit** = the number of rows to find.
+- findAll()       **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
-- first()         **data** = the resulting row found during the search, or null if none found.
-beforeFind        Same as **afterFind** but with the name of the calling **$method** instead of **$data**.
+afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
