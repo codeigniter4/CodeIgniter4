@@ -795,7 +795,7 @@ beforeUpdate      **id** = the array of primary keys of the rows being updated.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
-beforeFind        The name of the calling **method**, with these additional fields:
+beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
 - first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
 - findAll()       **limit** = the number of rows to find.
