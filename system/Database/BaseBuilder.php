@@ -1938,11 +1938,19 @@ class BaseBuilder
 		$limit         = $this->QBLimit;
 		$this->QBLimit = false;
 
-		$sql = ($this->QBDistinct === true || ! empty($this->QBGroupBy))
-			?
-			$this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results"
-			:
-			$this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
+		if ($this->QBDistinct === true || ! empty($this->QBGroupBy))
+		{
+			// We need to backup the original SELECT in case DBPrefix is used
+			$select = $this->QBSelect;
+			$sql    = $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results";
+			// Restore SELECT part
+			$this->QBSelect = $select;
+			unset($select);
+		}
+		else
+		{
+			$sql = $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
+		}
 
 		if ($this->testMode)
 		{

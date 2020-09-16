@@ -59,6 +59,28 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3651
+	 */
+	public function testCountAllResultsWithGroupByAndPrefix()
+	{
+		$this->db = new MockConnection(['DBPrefix' => 'ci_']);
+
+		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->select('jobs.*')->where('id >', 3)->groupBy('id')->testMode();
+
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT "ci_jobs".* FROM "ci_jobs" WHERE "id" > :id: GROUP BY "id" ) CI_count_all_results';
+
+		$answer1 = $builder->countAllResults(false);
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer1));
+
+		// We run the query one more time to make sure the DBPrefix is added only once
+		$answer2 = $builder->countAllResults(false);
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer2));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCountAllResultsWithGroupByAndHaving()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
