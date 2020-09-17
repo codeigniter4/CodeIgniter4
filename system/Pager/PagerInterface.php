@@ -112,17 +112,6 @@ interface PagerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the total number of items in data store.
-	 *
-	 * @param string $group
-	 *
-	 * @return integer
-	 */
-	public function getTotal(string $group = 'default'): int;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the total number of pages.
 	 *
 	 * @param string $group
