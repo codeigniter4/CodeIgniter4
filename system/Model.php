@@ -393,10 +393,17 @@ class Model
 	 */
 	public function find($id = null)
 	{
+		$singleton = is_numeric($id) || is_string($id);
+
 		if ($this->tempAllowCallbacks)
 		{
 			// Call the before event and check for a return
-			$eventData = $this->trigger('beforeFind', ['id' => $id, 'method' => 'find']);
+			$eventData = $this->trigger('beforeFind', [
+				'id'        => $id,
+				'method'    => 'find',
+				'singleton' => $singleton,
+			]);
+
 			if (! empty($eventData['returnData']))
 			{
 				return $eventData['data'];
@@ -415,7 +422,7 @@ class Model
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
-		elseif (is_numeric($id) || is_string($id))
+		elseif ($singleton)
 		{
 			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
 					->get();
@@ -430,8 +437,10 @@ class Model
 		}
 
 		$eventData = [
-			'id'   => $id,
-			'data' => $row,
+			'id'        => $id,
+			'data'      => $row,
+			'method'    => 'find',
+			'singleton' => $singleton,
 		];
 		if ($this->tempAllowCallbacks)
 		{
@@ -485,7 +494,12 @@ class Model
 		if ($this->tempAllowCallbacks)
 		{
 			// Call the before event and check for a return
-			$eventData = $this->trigger('beforeFind', ['method' => 'findAll', 'limit' => $limit, 'offset' => $offset]);
+			$eventData = $this->trigger('beforeFind', [
+				'method'    => 'findAll',
+				'limit'     => $limit,
+				'offset'    => $offset,
+				'singleton' => false,
+			]);
 			if (! empty($eventData['returnData']))
 			{
 				return $eventData['data'];
@@ -505,9 +519,11 @@ class Model
 		$row = $row->getResult($this->tempReturnType);
 
 		$eventData = [
-			'data'   => $row,
-			'limit'  => $limit,
-			'offset' => $offset,
+			'data'      => $row,
+			'limit'     => $limit,
+			'offset'    => $offset,
+			'method'    => 'findAll',
+			'singleton' => false,
 		];
 		if ($this->tempAllowCallbacks)
 		{
@@ -534,7 +550,11 @@ class Model
 		if ($this->tempAllowCallbacks)
 		{
 			// Call the before event and check for a return
-			$eventData = $this->trigger('beforeFind', ['method' => 'first']);
+			$eventData = $this->trigger('beforeFind', [
+				'method'    => 'first',
+				'singleton' => true,
+			]);
+
 			if (! empty($eventData['returnData']))
 			{
 				return $eventData['data'];
@@ -567,7 +587,11 @@ class Model
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$eventData = ['data' => $row];
+		$eventData = [
+			'data'      => $row,
+			'method'    => 'first',
+			'singleton' => true,
+		];
 		if ($this->tempAllowCallbacks)
 		{
 			$eventData = $this->trigger('afterFind', $eventData);
