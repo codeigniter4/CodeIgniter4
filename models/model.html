@@ -1146,32 +1146,30 @@ insert method, it is first converted to an array.</p></td>
 <strong>data</strong> = the key/value pairs being updated.
 <strong>result</strong> = the results of the update() method used through the Query Builder.</p></td>
 </tr>
-<tr class="row-even"><td><p>afterFind</p></td>
-<td><p>Varies by find* method. See the following:</p></td>
-</tr>
-<tr class="row-odd"><td><ul class="simple">
-<li><p>find()</p></li>
-</ul>
-</td>
-<td><p><strong>id</strong> = the primary key of the row being searched for.
-<strong>data</strong> = The resulting row of data, or null if no result found.</p></td>
-</tr>
-<tr class="row-even"><td><ul class="simple">
-<li><p>findAll()</p></li>
-</ul>
-</td>
-<td><p><strong>data</strong> = the resulting rows of data, or null if no result found.
-<strong>limit</strong> = the number of rows to find.
-<strong>offset</strong> = the number of rows to skip during the search.</p></td>
+<tr class="row-even"><td><p>beforeFind</p></td>
+<td><p>The name of the calling <strong>method</strong>, whether a <strong>singleton</strong> was requested, and these additional fields:</p></td>
 </tr>
 <tr class="row-odd"><td><ul class="simple">
 <li><p>first()</p></li>
 </ul>
 </td>
-<td><p><strong>data</strong> = the resulting row found during the search, or null if none found.</p></td>
+<td><p>No additional fields</p></td>
 </tr>
-<tr class="row-even"><td><p>beforeFind</p></td>
-<td><p>Same as <strong>afterFind</strong> but with the name of the calling <strong>$method</strong> instead of <strong>$data</strong>.</p></td>
+<tr class="row-even"><td><ul class="simple">
+<li><p>find()</p></li>
+</ul>
+</td>
+<td><p><strong>id</strong> = the primary key of the row being searched for.</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>findAll()</p></li>
+</ul>
+</td>
+<td><p><strong>limit</strong> = the number of rows to find.
+<strong>offset</strong> = the number of rows to skip during the search.</p></td>
+</tr>
+<tr class="row-even"><td><p>afterFind</p></td>
+<td><p>Same as <strong>beforeFind</strong> but including the resulting row(s) of data, or null if no result found.</p></td>
 </tr>
 <tr class="row-odd"><td><p>beforeDelete</p></td>
 <td><p>Varies by delete* method. See the following:</p></td>
@@ -1260,7 +1258,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Sep 16, 2020.
+        Last updated on Sep 17, 2020.
       </span>
 
     </p>
