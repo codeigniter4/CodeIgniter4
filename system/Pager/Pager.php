@@ -153,13 +153,13 @@ class Pager implements PagerInterface
 	 * @param  string  $group    optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage = null, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
+	public function makeLinks(int $page, int $perPage = null, int $total, $count = null, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
 	{
 		$group = $group === '' ? 'default' : $group;
 
 		$this->store($group, $page, $perPage ?? $this->config->perPage, $total, $segment);
 
-		return $this->displayLinks($group, $template);
+		return $this->displayLinks($group, $template, $count);
 	}
 
 	//--------------------------------------------------------------------
@@ -173,9 +173,10 @@ class Pager implements PagerInterface
 	 *
 	 * @return string
 	 */
-	protected function displayLinks(string $group, string $template): string
+	protected function displayLinks(string $group, string $template, int $count = null): string
 	{
 		$pager = new PagerRenderer($this->getDetails($group));
+		$pager->setSurroundCount($count);
 
 		if (! array_key_exists($template, $this->config->templates))
 		{
