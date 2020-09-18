@@ -432,7 +432,7 @@ class PagerRenderer
 	/**
 	 * Returns total.
 	 *
-	 * @return int|null
+	 * @return integer|null
 	 */
 	public function getTotal()
 	{
@@ -444,7 +444,7 @@ class PagerRenderer
 	/**
 	 * Returns pageCount.
 	 *
-	 * @return int|null
+	 * @return integer|null
 	 */
 	public function getPageCount()
 	{
