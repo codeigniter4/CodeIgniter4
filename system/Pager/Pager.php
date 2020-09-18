@@ -263,6 +263,22 @@ class Pager implements PagerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the total number of items in data store.
+	 *
+	 * @param string $group
+	 *
+	 * @return integer
+	 */
+	public function getTotal(string $group = 'default'): int
+	{
+		$this->ensureGroup($group);
+
+		return $this->groups[$group]['total'];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the total number of pages.
 	 *
 	 * @param string $group
