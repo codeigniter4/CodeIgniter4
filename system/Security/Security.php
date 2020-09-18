@@ -288,7 +288,11 @@ class Security
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{
-		$expire        = time() + $this->CSRFExpire;
+		if ($this->CSRFExpire !== 0) {
+			$expire        = time() + $this->CSRFExpire;
+		} else {
+			$expire        = $this->CSRFExpire;
+		}
 		$secure_cookie = (bool) $this->cookieSecure;
 
 		if ($secure_cookie && ! $request->isSecure())
