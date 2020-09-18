@@ -82,12 +82,6 @@ class PagerRenderer
 	 */
 	protected $pageCount;
 	/**
-	 * URI base for pagination links
-	 *
-	 * @var integer
-	 */
-	protected $surroundCount;
-	/**
 	 * number of surround links
 	 *
 	 * @var integer
@@ -138,7 +132,7 @@ class PagerRenderer
 	 */
 	public function setSurroundCount(int $count = null)
 	{
-		$this->surroundCount = $count;
+
 		$this->updatePages($count);
 
 		return $this;
