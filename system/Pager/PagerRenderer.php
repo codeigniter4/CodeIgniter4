@@ -425,4 +425,30 @@ class PagerRenderer
 
 		return (string) $uri;
 	}
+	
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns total.
+	 *
+	 * @return int|null
+	 */
+	public function getTotal()
+	{
+		return (int) $this->total;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns pageCount.
+	 *
+	 * @return int|null
+	 */
+	public function getPageCount()
+	{
+		return (int) $this->pageCount;
+	}
+	
 }
