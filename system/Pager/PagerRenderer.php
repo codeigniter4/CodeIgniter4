@@ -70,22 +70,28 @@ class PagerRenderer
 	 */
 	protected $current;
 	/**
-	 * Total number of pages? unused?
+	 * Total number of pages
 	 *
 	 * @var integer
 	 */
 	protected $total;
-		/**
-		 * Page count?
-		 *
-		 * @var integer
-		 */
+	/**
+	 * Page count
+	 *
+	 * @var integer
+	 */
 	protected $pageCount;
 	/**
 	 * URI base for pagination links
 	 *
 	 * @var integer
 	 */
+	protected $surroundCount;
+	/**
+	 * number of surround links
+	 *
+	 * @var integer
+	 */	
 	protected $uri;
 	/**
 	 * Segment number used for pagination.
@@ -132,6 +138,7 @@ class PagerRenderer
 	 */
 	public function setSurroundCount(int $count = null)
 	{
+		$this->surroundCount = $count;
 		$this->updatePages($count);
 
 		return $this;
@@ -387,6 +394,18 @@ class PagerRenderer
 	//--------------------------------------------------------------------
 
 	/**
+	 * Checks to see if there is a "previous" page nearby "one" page.
+	 *
+	 * @return boolean
+	 */
+	public function hasPreviousDot(): bool
+	{
+		return $this->first - 1 > 1;
+	}
+	
+	//--------------------------------------------------------------------
+
+	/**
 	 * Checks to see if there is a "next" page after our "last" page.
 	 *
 	 * @return boolean
@@ -425,8 +444,19 @@ class PagerRenderer
 
 		return (string) $uri;
 	}
-	
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks to see if there is a "next" page nearby our "last" page.
+	 *
+	 * @return boolean
+	 */
+	public function hasNextDot(): bool
+	{
+		return $this->last + 1 < $this->pageCount;
+	}
+	
 	//--------------------------------------------------------------------
 
 	/**
