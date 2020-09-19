@@ -124,6 +124,17 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertRedirect();
 	}
 
+	public function testAssertRedirectSuccessWithoutRedirectResponse()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->redirect('foo/bar');
+
+		$this->assertFalse($this->feature->response instanceof RedirectResponse);
+		$this->assertTrue($this->feature->isRedirect());
+		$this->feature->assertRedirect();
+		$this->assertEquals('foo/bar', $this->feature->getRedirectUrl());
+	}
+
 	public function testGetRedirectUrlReturnsUrl()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
