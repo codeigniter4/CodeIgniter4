@@ -196,13 +196,15 @@ class ControllerResponse {
 	}
 
 	/**
-	 * Returns whether or not the Response was a redirect response
+	 * Returns whether or not the Response was a redirect or RedirectResponse
 	 *
 	 * @return boolean
 	 */
 	public function isRedirect(): bool
 	{
-		return $this->response instanceof RedirectResponse;
+		return $this->response instanceof RedirectResponse
+			|| $this->response->hasHeader('Location')
+			|| $this->response->hasHeader('Refresh');
 	}
 
 	//--------------------------------------------------------------------
