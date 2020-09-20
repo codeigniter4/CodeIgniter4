@@ -1121,7 +1121,7 @@ class CodeIgniter
 			$uri = new URI($uri);
 		}
 
-		if (isset($_SESSION)) // @phpstan-ignore-line
+		if (isset($_SESSION))
 		{
 			$_SESSION['_ci_previous_url'] = (string) $uri;
 		}

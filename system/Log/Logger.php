@@ -458,7 +458,7 @@ class Logger implements LoggerInterface
 			}
 		}
 
-		if (isset($_SESSION)) // @phpstan-ignore-line
+		if (isset($_SESSION))
 		{
 			$replace['{session_vars}'] = '$_SESSION: ' . print_r($_SESSION, true);
 		}
