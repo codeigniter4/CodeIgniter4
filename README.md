@@ -39,7 +39,6 @@ not to the project root. A better practice would be to configure a virtual host 
 framework are exposed.
 
 **Please** read the user guide for a better explanation of how CI4 works!
-The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
 
 ## Repository Management
 
