@@ -338,12 +338,8 @@ class Message
 	 */
 	protected function getHeaderName(string $name): string
 	{
-		$lower_name = strtolower($name);
-
-		return $this->headerMap[$lower_name] ?? $name;
+		return $this->headerMap[strtolower($name)] ?? $name;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the HTTP Protocol Version.
