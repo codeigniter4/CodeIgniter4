@@ -46,12 +46,13 @@ namespace CodeIgniter\Encryption;
  */
 interface EncrypterInterface
 {
-
 	/**
 	 * Encrypt - convert plaintext into ciphertext
 	 *
-	 * @param string $data   Input data
-	 * @param array  $params Over-ridden parameters, specifically the key
+	 * @param string            $data   Input data
+	 * @param array|string|null $params Overridden parameters, specifically the key
+	 *
+	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 *
 	 * @return string
 	 */
@@ -60,8 +61,10 @@ interface EncrypterInterface
 	/**
 	 * Decrypt - convert ciphertext into plaintext
 	 *
-	 * @param string $data   Encrypted data
-	 * @param array  $params Over-ridden parameters, specifically the key
+	 * @param string            $data   Encrypted data
+	 * @param array|string|null $params Overridden parameters, specifically the key
+	 *
+	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 *
 	 * @return string
 	 */
