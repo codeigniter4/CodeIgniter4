@@ -64,7 +64,7 @@ abstract class BaseHandler implements EncrypterInterface
 		$config = $config ?? config('Encryption');
 
 		// make the parameters conveniently accessible
-		foreach ($config as $key => $value)
+		foreach (get_object_vars($config) as $key => $value)
 		{
 			if (property_exists($this, $key))
 			{
@@ -111,6 +111,6 @@ abstract class BaseHandler implements EncrypterInterface
 	 */
 	public function __isset($key): bool
 	{
-		return in_array($key, ['cipher', 'key'], true);
+		return property_exists($this, $key);
 	}
 }

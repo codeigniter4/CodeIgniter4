@@ -31,11 +31,23 @@ class Encryption extends BaseConfig
 	 * --------------------------------------------------------------------------
 	 *
 	 * One of the supported drivers, e.g. 'OpenSSL' or 'Sodium'.
-	 * The default driver, if you don't specify one, is 'OpenSSL'.
 	 *
 	 * @var string
 	 */
 	public $driver = 'OpenSSL';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * SodiumHandler's Padding Size
+	 * --------------------------------------------------------------------------
+	 *
+	 * This is the number of bytes that will be padded to the plaintext message
+	 * before it is encrypted. Maximum allowed value is 512 bytes. If none is
+	 * given, it will default to 512.
+	 *
+	 * @var integer
+	 */
+	public $blockSize = 512;
 
 	/**
 	 * --------------------------------------------------------------------------
