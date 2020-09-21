@@ -13,12 +13,13 @@ encryption **handler** to suit your parameters as explained below.
 
 Encryption Service handlers must implement CodeIgniter's simple ``EncrypterInterface``.
 Using an appropriate PHP cryptographic extension or third-party library may require
-additional software is installed on your server and/or might need to be explicitly
+additional software to be installed on your server and/or might need to be explicitly
 enabled in your instance of PHP.
 
 The following PHP extensions are currently supported:
 
 - `OpenSSL <https://www.php.net/openssl>`_
+- `Sodium <https://www.php.net/manual/en/book.sodium>`_
 
 This is not a full cryptographic solution. If you need more capabilities, for example,
 public-key encryption, we suggest you consider direct use of OpenSSL or
@@ -67,19 +68,18 @@ Configuring the Library
 
 The example above uses the configuration settings found in ``app/Config/Encryption.php``.
 
-There are only two settings:
-
-======== ===============================================
-Option   Possible values (default in parentheses)
-======== ===============================================
-key      Encryption key starter
-driver   Preferred handler (OpenSSL)
-======== ===============================================
+========== ====================================================
+Option     Possible values (default in parentheses)
+========== ====================================================
+key        Encryption key starter
+driver     Preferred handler, e.g. OpenSSL or Sodium (``OpenSSL``)
+blockSize  Padding size in bytes for SodiumHandler (``512``)
+digest     Message digest algorithm (``SHA512``)
+========== ====================================================
 
 You can replace the config file's settings by passing a configuration
 object of your own to the ``Services`` call. The ``$config`` variable must be
-an instance of either the ``Config\Encryption`` class or an object
-that extends ``CodeIgniter\Config\BaseConfig``.
+an instance of the ``Config\Encryption`` class.
 ::
 
     $config         = new \Config\Encryption();
@@ -87,7 +87,6 @@ that extends ``CodeIgniter\Config\BaseConfig``.
     $config->driver = 'OpenSSL';
 
     $encrypter = \Config\Services::encrypter($config);
-
 
 Default Behavior
 ================
@@ -107,7 +106,14 @@ you can use the Encryption library's ``createKey()`` method.
 ::
 
 	// $key will be assigned a 32-byte (256-bit) random key
-	$key = Encryption::createKey(32);
+	$key = Encryption::createKey();
+
+	// $key will be assigned a 24-byte random key
+	$key = Encryption::createKey(24);
+
+	// for the SodiumHandler, you can use either:
+	$key = sodium_crypto_secretbox_keygen();
+	$key = Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
 The key can be stored in ``app/Config/Encryption.php``, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
@@ -122,7 +128,7 @@ Encoding Keys or Results
 
 You'll notice that the ``createKey()`` method outputs binary data, which
 is hard to deal with (i.e. a copy-paste may damage it), so you may use
-``bin2hex()``, ``hex2bin()`` or Base64-encoding to work with the key in
+``bin2hex()``, or ``base64_encode`` to work with the key in
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
@@ -177,6 +183,21 @@ The *key* your configuration provides is used to derive two other keys, one for
 encryption and one for authentication. This is achieved by way of a technique known
 as an `HMAC-based Key Derivation Function <https://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
+Sodium Notes
+------------
+
+The `Sodium <https://www.php.net/manual/en/book.sodium>`_ extension is bundled by default in PHP as
+of PHP 7.2.0.
+
+Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
+sending secret messages in an end-to-end scenario. To encrypt and/or authenticate a string using
+a shared-key, such as symmetric encryption, Sodium uses the XSalsa20 algorithm to encrypt and
+HMAC-SHA512 for the authentication.
+
+.. note:: CodeIgniter's ``SodiumHandler`` uses ``sodium_memzero`` in every encryption or decryption
+	session. After each session, the message (whether plaintext or ciphertext) and starter key are
+	wiped out from the buffers. You may need to provide again the key before starting a new session.
+
 Message Length
 ==============
 
@@ -203,9 +224,7 @@ you can create an "Encrypter" directly, or change the settings of an existing in
     // reconfigure an instance with different settings
     $encrypter = $encryption->initialize($config);
 
-Remember, that ``$config`` must be an instance of either a ``Config\Encryption`` class
-or an object that extends ``CodeIgniter\Config\BaseConfig``.
-
+Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
 
 ***************
 Class Reference
@@ -215,20 +234,19 @@ Class Reference
 
 	.. php:staticmethod:: createKey([$length = 32])
 
-		:param	int	$length: Output length
-		:returns:	A pseudo-random cryptographic key with the specified length, or ``false`` on failure
+		:param int $length: Output length
+		:returns: A pseudo-random cryptographic key with the specified length, or ``false`` on failure
 		:rtype:	string
 
 		Creates a cryptographic key by fetching random data from
 		the operating system's sources (*i.e.* ``/dev/urandom``).
 
+	.. php:method:: initialize([Encryption $config = null])
 
-	.. php:method:: initialize([BaseConfig $config = null])
-
-		:param	BaseConfig	$config: Configuration parameters
-		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance
-		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:param Config\\Encryption $config: Configuration parameters
+		:returns: ``CodeIgniter\Encryption\EncrypterInterface`` instance
+		:rtype:	``CodeIgniter\Encryption\EncrypterInterface``
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Initializes (configures) the library to use different settings.
 
@@ -242,17 +260,17 @@ Class Reference
 
 	.. php:method:: encrypt($data[, $params = null])
 
-		:param	string	$data: Data to encrypt
-		:param		$params: Configuration parameters (key)
-		:returns:	Encrypted data or FALSE on failure
+		:param string $data: Data to encrypt
+		:param array|string|null $params: Configuration parameters (key)
+		:returns: Encrypted data
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Encrypts the input data and returns its ciphertext.
 
-                If you pass parameters as the second argument, the ``key`` element
-                will be used as the starting key for this operation if ``$params``
-                is an array; or the starting key may be passed as a string.
+        If you pass parameters as the second argument, the ``key`` element
+        will be used as the starting key for this operation if ``$params``
+        is an array; or the starting key may be passed as a string.
 
 		Examples::
 
@@ -262,18 +280,17 @@ Class Reference
 
 	.. php:method:: decrypt($data[, $params = null])
 
-		:param	string	$data: Data to decrypt
-		:param		$params: Configuration parameters (key)
-		:returns:	Decrypted data or FALSE on failure
+		:param string $data: Data to decrypt
+		:param array|string|null $params: Configuration parameters (key)
+		:returns: Decrypted data
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Decrypts the input data and returns it in plain-text.
 
-                If you pass parameters as the second argument, the ``key`` element
-                will be used as the starting key for this operation if ``$params``
-                is an array; or the starting key may be passed as a string.
-
+        If you pass parameters as the second argument, the ``key`` element
+        will be used as the starting key for this operation if ``$params``
+        is an array; or the starting key may be passed as a string.
 
 		Examples::
 
