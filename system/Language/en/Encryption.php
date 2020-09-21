@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Encryption language strings.
  *
