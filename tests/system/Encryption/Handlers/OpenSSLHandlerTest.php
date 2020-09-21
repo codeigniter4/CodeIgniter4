@@ -73,7 +73,7 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 
 		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
-		$encrypter->encrypt($message1);
+		$encrypter->encrypt($message1, ['key' => '']);
 	}
 
 	public function testWithKeyString()
