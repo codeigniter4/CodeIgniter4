@@ -33,16 +33,7 @@ class InfoCache extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'cache:info [driver]';
-
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [
-		'driver' => 'The cache driver to use',
-	];
+	protected $usage = 'cache:info';
 
 	/**
 	 * Clears the cache
@@ -54,15 +45,13 @@ class InfoCache extends BaseCommand
 		$config = config('Cache');
 		helper('number');
 
-		$handler = $params[0] ?? $config->handler;
-		if (! array_key_exists($handler, $config->validHandlers))
+		if ($config->handler !== 'file')
 		{
-			CLI::error($handler . ' is not a valid cache handler.');
+			CLI::error('This command only supports the file cache handler.');
 			return;
 		}
 
-		$config->handler = $handler;
-		$cache           = CacheFactory::getHandler($config);
+		$cache = CacheFactory::getHandler($config);
 
 		$caches = $cache->getCacheInfo();
 

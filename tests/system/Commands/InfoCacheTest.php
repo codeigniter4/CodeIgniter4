@@ -24,26 +24,12 @@ class InfoCacheTest extends CIUnitTestCase
 
 	public function tearDown(): void
 	{
-		if (! $this->result)
-		{
-			return;
-		}
-
 		stream_filter_remove($this->streamFilter);
 	}
 
 	protected function getBuffer()
 	{
 		return CITestStreamFilter::$buffer;
-	}
-
-	public function testInfoCacheInvalidHandler()
-	{
-		command('cache:info notfound');
-
-		$result = CITestStreamFilter::$buffer;
-
-		$this->assertStringContainsString('notfound is not a valid cache handler.', $result);
 	}
 
 	public function testInfoCacheCanSeeFoo()
