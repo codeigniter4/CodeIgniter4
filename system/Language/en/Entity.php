@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CLI language strings.
+ * Entity language strings.
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
