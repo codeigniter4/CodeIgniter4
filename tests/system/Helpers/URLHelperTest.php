@@ -1390,4 +1390,21 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, url_is($testPath));
 	}
+
+	/**
+	 * @dataProvider urlIsProvider
+	 */
+	public function testUrlIsSetPath(string $currentPath, string $testPath, bool $expected)
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$url = new URI();
+		$url->setPath($currentPath);
+
+		$request      = service('request');
+		$request->uri = $url;
+		Services::injectMock('request', $request);
+
+		$this->assertEquals($expected, url_is($testPath));
+	}
 }
