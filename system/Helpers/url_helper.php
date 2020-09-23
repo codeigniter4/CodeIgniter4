@@ -675,7 +675,7 @@ if (! function_exists('url_is'))
 	{
 		// Setup our regex to allow wildcards
 		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
-		$currentPath = rtrim(service('request')->uri->getPath(), '/ ');
+		$currentPath = '/' . trim(service('request')->uri->getPath(), '/ ');
 
 		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
 	}
