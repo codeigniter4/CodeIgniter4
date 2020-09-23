@@ -343,6 +343,14 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
+	public function testSetPathEquivalisesConstructor()
+	{
+		$uri1 = new URI('http://example.com/some/path');
+		$uri2 = (new URI())->setPath('some/path');
+
+		$this->assertEquals($uri1->getPath(), $uri2->getPath());
+	}
+
 	//--------------------------------------------------------------------
 
 	public function invalidPaths()
