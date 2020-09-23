@@ -91,7 +91,7 @@ includes the following code:
 
 ::
 
-        <em>&copy; 2019</em>
+        <em>&copy; 2020</em>
     </body>
     </html>
 
