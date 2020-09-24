@@ -26,13 +26,14 @@ Let's try it: Hello World!
 ==========================
 
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
-and put the following code in it::
+and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController you can
+also extend the Controller if you do not need the functionality of the BaseController.::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class Helloworld extends Controller
+    class Helloworld extends BaseController
     {
         public function index()
         {
@@ -58,9 +59,9 @@ This is valid::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class Helloworld extends Controller
+    class Helloworld extends BaseController
     {
 
     }
@@ -69,9 +70,9 @@ This is **not** valid::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class helloworld extends Controller
+    class helloworld extends BaseController
     {
 
     }
@@ -80,9 +81,9 @@ This is **not** valid::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class HelloWorld extends Controller
+    class HelloWorld extends BaseController
     {
 
     }
@@ -119,9 +120,9 @@ Let's try it. Add a new method to your controller::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class Helloworld extends Controller
+    class Helloworld extends BaseController
     {
         public function index()
         {
@@ -154,9 +155,9 @@ Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
     <?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class Products extends Controller
+    class Products extends BaseController
     {
         public function shoes($sandals, $id)
         {
@@ -338,9 +339,9 @@ these helper files will be automatically loaded into memory so that you can use 
 inside the controller::
 
     namespace App\Controllers;
-    use CodeIgniter\Controller;
+    use CodeIgniter\BaseController;
 
-    class MyController extends Controller
+    class MyController extends BaseController
     {
         protected $helpers = ['url', 'form'];
     }
