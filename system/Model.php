@@ -876,7 +876,7 @@ class Model
 				->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result->resultID)
+		if ($returnID && $result->resultID)
 		{
 			if (! $this->useAutoIncrement)
 			{
