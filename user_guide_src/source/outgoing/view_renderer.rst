@@ -70,7 +70,7 @@ If you choose not to escape data, or you are passing in an object instance, you 
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
 context to escape the data for (see below)::
 
-	<?= \esc($object->getStat()) ?>
+	<?= esc($object->getStat()) ?>
 
 Escaping Contexts
 -----------------
