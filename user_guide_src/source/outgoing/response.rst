@@ -120,7 +120,7 @@ introduction to all of the cache headers power, but you can get a good understan
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
 circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
-to set the Cache values to what you need, though, through the ``setCache()`` method::
+to set the Cache values to what you need, through the ``setCache()`` method::
 
 	$options = [
 		'max-age'  => 300,
