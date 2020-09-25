@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -30,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -38,10 +39,13 @@
 
 namespace CodeIgniter\Cache\Exceptions;
 
+use CodeIgniter\Exceptions\ExceptionInterface;
+use CodeIgniter\Exceptions\FrameworkException;
+
 /**
  * CacheException
  */
-class CacheException extends \RuntimeException implements ExceptionInterface
+class CacheException extends FrameworkException implements ExceptionInterface
 {
 	/**
 	 * Thrown when handler has no permission to write cache.
@@ -55,6 +59,8 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('Cache.unableToWrite', [$path]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * Thrown when an unrecognized handler is used.
 	 *
@@ -65,6 +71,8 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('Cache.invalidHandlers'));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * Thrown when no backup handler is setup in config.
 	 *
@@ -74,6 +82,8 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	{
 		return new static(lang('Cache.noBackup'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * Thrown when specified handler was not found.
