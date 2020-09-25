@@ -60,10 +60,6 @@ If you did it right you should see::
 
 This is valid::
 
-    <?php namespace App\Controllers;
-
-    use CodeIgniter\BaseController;
-
     class Helloworld extends BaseController
     {
 
@@ -71,20 +67,12 @@ This is valid::
 
 This is **not** valid::
 
-    <?php namespace App\Controllers;
-
-    use CodeIgniter\BaseController;
-
     class helloworld extends BaseController
     {
 
     }
 
 This is **not** valid::
-
-    <?php namespace App\Controllers;
-
-    use CodeIgniter\BaseController;
 
     class HelloWorld extends BaseController
     {
