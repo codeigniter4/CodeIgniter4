@@ -457,7 +457,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		force_https();
 
-		$this->assertEquals('https://example.com', Services::response()->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', Services::response()->getHeader('Location')->getValue());
 	}
 
 	//--------------------------------------------------------------------
