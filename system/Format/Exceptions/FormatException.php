@@ -40,12 +40,12 @@
 namespace CodeIgniter\Format\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
-use CodeIgniter\Exceptions\FrameworkException;
+use RuntimeException;
 
 /**
  * FormatException
  */
-class FormatException extends FrameworkException implements ExceptionInterface
+class FormatException extends RuntimeException implements ExceptionInterface
 {
 	/**
 	 * Thrown when the instantiated class does not exist.
