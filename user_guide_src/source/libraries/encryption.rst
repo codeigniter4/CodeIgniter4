@@ -73,7 +73,7 @@ Option     Possible values (default in parentheses)
 ========== ====================================================
 key        Encryption key starter
 driver     Preferred handler, e.g. OpenSSL or Sodium (``OpenSSL``)
-blockSize  Padding size in bytes for SodiumHandler (``512``)
+blockSize  Padding length in bytes for SodiumHandler (``16``)
 digest     Message digest algorithm (``SHA512``)
 ========== ====================================================
 
@@ -107,9 +107,6 @@ you can use the Encryption library's ``createKey()`` method.
 
 	// $key will be assigned a 32-byte (256-bit) random key
 	$key = Encryption::createKey();
-
-	// $key will be assigned a 24-byte random key
-	$key = Encryption::createKey(24);
 
 	// for the SodiumHandler, you can use either:
 	$key = sodium_crypto_secretbox_keygen();
@@ -168,6 +165,27 @@ Similarly, you can use these prefixes in your ``.env`` file, too!
 
 	// or
 	encryption.key = base64:<your-base64-encoded-key>
+
+Padding
+=======
+
+Sometimes, the length of a message may provide a lot of information about its nature. If
+a message is one of "yes", "no" and "maybe", encrypting the message doesn't help: knowing
+the length is enough to know what the message is.
+
+Padding is a technique to mitigate this, by making the length a multiple of a given block size.
+
+Padding is implemented in ``SodiumHandler`` using libsodium's native ``sodium_pad`` and ``sodium_unpad``
+functions. This requires the use of a padding length (in bytes) that is added to the plaintext
+message prior to encryption, and removed after decryption. Padding is configurable via the
+``$blockSize`` property of ``Config\Encryption``. This value should be greater than zero.
+
+.. important:: You are advised not to devise your own padding implementation. You must always use
+	the more secure implementation of a library. Also, passwords should not be padded. Usage of
+	padding in order to hide the length of a password is not recommended. A client willing to send
+	a password to a server should hash it instead (even with a single iteration of the hash function).
+	This ensures that the length of the transmitted data is constant, and that the server doesn't
+	effortlessly get a copy of the password.
 
 Encryption Handler Notes
 ========================
@@ -268,15 +286,20 @@ Class Reference
 
 		Encrypts the input data and returns its ciphertext.
 
-        If you pass parameters as the second argument, the ``key`` element
-        will be used as the starting key for this operation if ``$params``
-        is an array; or the starting key may be passed as a string.
+		If you pass parameters as the second argument, the ``key`` element
+		will be used as the starting key for this operation if ``$params``
+		is an array; or the starting key may be passed as a string.
+
+		If you are using the SodiumHandler and want to pass a different ``blockSize``
+		on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
 		Examples::
 
 			$ciphertext = $encrypter->encrypt('My secret message');
 			$ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key']);
+			$ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key', 'blockSize' => 32]);
 			$ciphertext = $encrypter->encrypt('My secret message', 'New secret key');
+			$ciphertext = $encrypter->encrypt('My secret message', ['blockSize' => 32]);
 
 	.. php:method:: decrypt($data[, $params = null])
 
@@ -288,12 +311,17 @@ Class Reference
 
 		Decrypts the input data and returns it in plain-text.
 
-        If you pass parameters as the second argument, the ``key`` element
-        will be used as the starting key for this operation if ``$params``
-        is an array; or the starting key may be passed as a string.
+		If you pass parameters as the second argument, the ``key`` element
+		will be used as the starting key for this operation if ``$params``
+		is an array; or the starting key may be passed as a string.
+
+		If you are using the SodiumHandler and want to pass a different ``blockSize``
+		on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
 		Examples::
 
 			echo $encrypter->decrypt($ciphertext);
 			echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key']);
+			echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key', 'blockSize' => 32]);
 			echo $encrypter->decrypt($ciphertext, 'New secret key');
+			echo $encrypter->decrypt($ciphertext, ['blockSize' => 32]);

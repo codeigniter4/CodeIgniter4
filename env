@@ -91,7 +91,7 @@
 
 # encryption.key =
 # encryption.driver = OpenSSL
-# encryption.blockSize = 512
+# encryption.blockSize = 16
 # encryption.digest = SHA512
 
 #--------------------------------------------------------------------

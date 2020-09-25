@@ -60,6 +60,15 @@ class SodiumHandlerTest extends CIUnitTestCase
 		$encrypter->encrypt('Some message to encrypt', '');
 	}
 
+	public function testInvalidBlockSizeThrowsErrorOnEncrypt()
+	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+		$this->config->blockSize = -1;
+
+		$encrypter = $this->encryption->initialize($this->config);
+		$encrypter->encrypt('Some message.');
+	}
+
 	public function testEmptyKeyThrowsErrorOnDecrypt()
 	{
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
@@ -70,6 +79,17 @@ class SodiumHandlerTest extends CIUnitTestCase
 		$encrypter->decrypt($ciphertext);
 	}
 
+	public function testInvalidBlockSizeThrowsErrorOnDecrypt()
+	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+		$key = $this->config->key;
+
+		$encrypter  = $this->encryption->initialize($this->config);
+		$ciphertext = $encrypter->encrypt('Some message.');
+		// After encrypt, the message and key are wiped from buffer.
+		$encrypter->decrypt($ciphertext, ['key' => $key, 'blockSize' => 0]);
+	}
+
 	public function testTruncatedMessageThrowsErrorOnDecrypt()
 	{
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
@@ -77,7 +97,7 @@ class SodiumHandlerTest extends CIUnitTestCase
 		$encrypter  = $this->encryption->initialize($this->config);
 		$ciphertext = $encrypter->encrypt('Some message to encrypt');
 		$truncated  = mb_substr($ciphertext, 0, 24, '8bit');
-		$encrypter->decrypt($truncated, ['block_size' => 256, 'key' => sodium_crypto_secretbox_keygen()]);
+		$encrypter->decrypt($truncated, ['blockSize' => 256, 'key' => sodium_crypto_secretbox_keygen()]);
 	}
 
 	public function testDecryptingMessages()
