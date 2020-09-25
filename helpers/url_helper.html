@@ -489,22 +489,34 @@ then a sanitized version of HTTP_REFERER will be used.</p>
 
 <dl class="function">
 <dt id="uri_string">
-<code class="sig-name descname">uri_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uri_string" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">uri_string</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$relative = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uri_string" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>An URI string</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$relative</strong> (<em>boolean</em>) – True if you would like the string relative to baseURL</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A URI string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
 </dd>
 </dl>
-<p>Returns the path part relative to <strong>baseUrl</strong>.
+<p>Returns the path part of the current URL.
 For example, if your URL was this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 <p>The function would return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+<p>Or with the optional relative parameter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">subfolder</span><span class="o">/</span>
+
+<span class="nx">uri_string</span><span class="p">();</span> <span class="c1">// &quot;/subfolder/blog/comments/123&quot;</span>
+<span class="nx">uri_string</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// &quot;blog/comments/123&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
