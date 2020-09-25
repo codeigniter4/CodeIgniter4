@@ -30,7 +30,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -42,22 +42,21 @@ use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
 /**
- * Things that can go wrong with HTTP
+ * HTTPException
  */
 class HTTPException extends FrameworkException implements ExceptionInterface
 {
-
 	/**
 	 * For CurlRequest
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public static function forMissingCurl()
 	{
 		return new static(lang('HTTP.missingCurl'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For CurlRequest
@@ -71,6 +70,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.sslCertNotFound', [$cert]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For CurlRequest
 	 *
@@ -82,6 +83,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidSSLKey', [$key]));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For CurlRequest
@@ -99,6 +102,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.curlError', [$errorNum, $error]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For IncomingRequest
 	 *
@@ -110,6 +115,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidNegotiationType', [$type]));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For Message
@@ -123,6 +130,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.invalidHTTPProtocol', [$protocols]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For Negotiate
 	 *
@@ -132,6 +141,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.emptySupportedNegotiations'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For RedirectResponse
@@ -145,6 +156,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.invalidRoute', [$route]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For Response
 	 *
@@ -154,6 +167,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.missingResponseStatus'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For Response
@@ -167,6 +182,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.invalidStatusCode', [$code]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For Response
 	 *
@@ -178,6 +195,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.unknownStatusCode', [$code]));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For URI
@@ -191,6 +210,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.cannotParseURI', [$uri]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For URI
 	 *
@@ -202,6 +223,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.segmentOutOfRange', [$segment]));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For URI
@@ -215,6 +238,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.invalidPort', [$port]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For URI
 	 *
@@ -225,6 +250,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.malformedQueryString'));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For Uploaded file move
 	 *
@@ -234,6 +261,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.alreadyMoved'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For Uploaded file move
@@ -246,6 +275,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidFile'));
 	}
+
+  	//--------------------------------------------------------------------
 
 	/**
 	 * For Uploaded file move
@@ -261,6 +292,8 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
 	}
 
+  	//--------------------------------------------------------------------
+
 	/**
 	 * For Invalid SameSite attribute setting
 	 *
@@ -272,5 +305,4 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
 	}
-
 }
