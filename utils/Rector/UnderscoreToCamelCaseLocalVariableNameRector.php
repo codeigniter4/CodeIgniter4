@@ -38,8 +38,9 @@ final class UnderscoreToCamelCaseLocalVariableNameRector extends AbstractRector
 
 	public function getDefinition(): RectorDefinition
 	{
-		return new RectorDefinition('Change under_score local variable names to camelCase', [
-			new CodeSample(
+		return new RectorDefinition(
+			'Change under_score local variable names to camelCase', [
+				new CodeSample(
 				<<<'CODE_SAMPLE'
 final class SomeClass
 {
@@ -49,7 +50,7 @@ final class SomeClass
     }
 }
 CODE_SAMPLE
-,
+				,
 				<<<'CODE_SAMPLE'
 final class SomeClass
 {
@@ -60,7 +61,7 @@ final class SomeClass
 }
 CODE_SAMPLE
 			),
-		]);
+			]);
 	}
 
 	/**
@@ -110,7 +111,8 @@ CODE_SAMPLE
 		}
 
 		if (($parentNode instanceof Arg || $parentNode instanceof Param || $parentNode instanceof Stmt)
-			&& $this->isFoundInParentNode($node))
+			&& $this->isFoundInParentNode($node)
+		)
 		{
 			return null;
 		}
@@ -131,8 +133,8 @@ CODE_SAMPLE
 		while ($parentNode)
 		{
 			/**
- * @var ClassMethod|Function_ $parentNode
-*/
+			 * @var ClassMethod|Function_ $parentNode
+			 */
 			$parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
 			if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_)
 			{
