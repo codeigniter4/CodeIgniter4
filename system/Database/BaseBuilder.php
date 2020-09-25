@@ -3300,14 +3300,14 @@ class BaseBuilder
 			return true;
 		}
 
-		static $str;
+		static $_str;
 
-		if (empty($str))
+		if (empty($_str))
 		{
-			$str = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
+			$_str = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
 		}
 
-		return in_array($str[0], $str, true);
+		return in_array($str[0], $_str, true);
 	}
 
 	//--------------------------------------------------------------------
@@ -3422,12 +3422,12 @@ class BaseBuilder
 	 */
 	protected function getOperator(string $str, bool $list = false)
 	{
-		static $operators;
+		static $_operators;
 
-		if (empty($operators))
+		if (empty($_operators))
 		{
-			$les       = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
-			$operators = [
+			$_les       = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
+			$_operators = [
 				'\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
 				'\s*<>?\s*', // <, <>
 				'\s*>\s*', // >
@@ -3438,12 +3438,12 @@ class BaseBuilder
 				'\s+BETWEEN\s+', // BETWEEN value AND value
 				'\s+IN\s*\(.*\)', // IN(list)
 				'\s+NOT IN\s*\(.*\)', // NOT IN (list)
-				'\s+LIKE\s+\S.*(' . $les . ')?', // LIKE 'expr'[ ESCAPE '%s']
-				'\s+NOT LIKE\s+\S.*(' . $les . ')?', // NOT LIKE 'expr'[ ESCAPE '%s']
+				'\s+LIKE\s+\S.*(' . $_les . ')?', // LIKE 'expr'[ ESCAPE '%s']
+				'\s+NOT LIKE\s+\S.*(' . $_les . ')?', // NOT LIKE 'expr'[ ESCAPE '%s']
 			];
 		}
 
-		return preg_match_all('/' . implode('|', $operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
+		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
 	}
 
 	// --------------------------------------------------------------------
