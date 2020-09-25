@@ -36,6 +36,8 @@ For security reasons be sure to declare any new methods as protected or private.
 
     <?php
 
+    namespace App\Controllers;
+
     class Helloworld extends BaseController
     {
         public function index()
@@ -60,6 +62,11 @@ If you did it right you should see::
 
 This is valid::
 
+    <?php
+
+    namespace App\Controllers;
+
+
     class Helloworld extends BaseController
     {
 
@@ -67,12 +74,20 @@ This is valid::
 
 This is **not** valid::
 
+    <?php
+
+    namespace App\Controllers;
+
     class helloworld extends BaseController
     {
 
     }
 
 This is **not** valid::
+
+    <?php
+
+    namespace App\Controllers;
 
     class HelloWorld extends BaseController
     {
@@ -109,9 +124,9 @@ controller gets called.**
 
 Let's try it. Add a new method to your controller::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\BaseController;
+    namespace App\Controllers;
 
     class Helloworld extends BaseController
     {
@@ -144,9 +159,9 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\BaseController;
+    namespace App\Controllers;
 
     class Products extends BaseController
     {
