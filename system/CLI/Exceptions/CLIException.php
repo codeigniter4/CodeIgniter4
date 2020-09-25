@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -39,10 +39,13 @@
 
 namespace CodeIgniter\CLI\Exceptions;
 
+use CodeIgniter\Exceptions\ExceptionInterface;
+use CodeIgniter\Exceptions\FrameworkException;
+
 /**
  * CLIException
  */
-class CLIException extends \RuntimeException
+class CLIException extends FrameworkException implements ExceptionInterface
 {
 	/**
 	 * Thrown when `$color` specified for `$type` is not within the
