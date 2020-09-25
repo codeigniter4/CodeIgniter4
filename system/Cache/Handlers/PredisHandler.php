@@ -167,7 +167,7 @@ class PredisHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		switch ($data_type = gettype($value))
+		switch ($dataType = gettype($value))
 		{
 			case 'array':
 			case 'object':
@@ -184,7 +184,7 @@ class PredisHandler implements CacheInterface
 				return false;
 		}
 
-		if (! $this->redis->hmset($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]))
 		{
 			return false;
 		}

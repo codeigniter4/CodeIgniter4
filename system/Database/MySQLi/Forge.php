@@ -212,11 +212,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _processColumn(array $field): string
 	{
-		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
+		$extraClause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
-		if (empty($extra_clause) && isset($field['first']) && $field['first'] === true)
+		if (empty($extraClause) && isset($field['first']) && $field['first'] === true)
 		{
-			$extra_clause = ' FIRST';
+			$extraClause = ' FIRST';
 		}
 
 		return $this->db->escapeIdentifiers($field['name'])
@@ -228,7 +228,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				. $field['auto_increment']
 				. $field['unique']
 				. (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
-				. $extra_clause;
+				. $extraClause;
 	}
 
 	//--------------------------------------------------------------------

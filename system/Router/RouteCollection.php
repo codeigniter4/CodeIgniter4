@@ -808,12 +808,12 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$new_name = implode('\\', array_map('ucfirst', explode('/', $name)));
+		$newName = implode('\\', array_map('ucfirst', explode('/', $name)));
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
 		{
-			$new_name = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+			$newName = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
 		}
 
 		// In order to allow customization of allowed id values
@@ -844,32 +844,32 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (in_array('index', $methods, true))
 		{
-			$this->get($name, $new_name . '::index', $options);
+			$this->get($name, $newName . '::index', $options);
 		}
 		if (in_array('new', $methods, true))
 		{
-			$this->get($name . '/new', $new_name . '::new', $options);
+			$this->get($name . '/new', $newName . '::new', $options);
 		}
 		if (in_array('edit', $methods, true))
 		{
-			$this->get($name . '/' . $id . '/edit', $new_name . '::edit/$1', $options);
+			$this->get($name . '/' . $id . '/edit', $newName . '::edit/$1', $options);
 		}
 		if (in_array('show', $methods, true))
 		{
-			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
+			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
 		}
 		if (in_array('create', $methods, true))
 		{
-			$this->post($name, $new_name . '::create', $options);
+			$this->post($name, $newName . '::create', $options);
 		}
 		if (in_array('update', $methods, true))
 		{
-			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
-			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
+			$this->put($name . '/' . $id, $newName . '::update/$1', $options);
+			$this->patch($name . '/' . $id, $newName . '::update/$1', $options);
 		}
 		if (in_array('delete', $methods, true))
 		{
-			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+			$this->delete($name . '/' . $id, $newName . '::delete/$1', $options);
 		}
 
 		// Web Safe? delete needs checking before update because of method name
@@ -877,11 +877,11 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			if (in_array('delete', $methods, true))
 			{
-				$this->post($name . '/' . $id . '/delete', $new_name . '::delete/$1', $options);
+				$this->post($name . '/' . $id . '/delete', $newName . '::delete/$1', $options);
 			}
 			if (in_array('update', $methods, true))
 			{
-				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
+				$this->post($name . '/' . $id, $newName . '::update/$1', $options);
 			}
 		}
 

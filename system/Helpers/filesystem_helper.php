@@ -68,7 +68,7 @@ if (! function_exists('directory_map'))
 			$fp = opendir($source_dir);
 
 			$fileData   = [];
-			$new_depth  = $directory_depth - 1;
+			$newDepth   = $directory_depth - 1;
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 			while (false !== ($file = readdir($fp)))
@@ -81,9 +81,9 @@ if (! function_exists('directory_map'))
 
 				is_dir($source_dir . $file) && $file .= DIRECTORY_SEPARATOR;
 
-				if (($directory_depth < 1 || $new_depth > 0) && is_dir($source_dir . $file))
+				if (($directory_depth < 1 || $newDepth > 0) && is_dir($source_dir . $file))
 				{
-					$fileData[$file] = directory_map($source_dir . $file, $new_depth, $hidden);
+					$fileData[$file] = directory_map($source_dir . $file, $newDepth, $hidden);
 				}
 				else
 				{
@@ -290,7 +290,7 @@ if (! function_exists('get_dir_file_info'))
 	function get_dir_file_info(string $source_dir, bool $top_level_only = true, bool $recursion = false): array
 	{
 		static $fileData = [];
-		$relative_path   = $source_dir;
+		$relativePath    = $source_dir;
 
 		try
 		{
@@ -312,7 +312,7 @@ if (! function_exists('get_dir_file_info'))
 				elseif ($file[0] !== '.')
 				{
 					$fileData[$file]                  = get_file_info($source_dir . $file);
-					$fileData[$file]['relative_path'] = $relative_path;
+					$fileData[$file]['relative_path'] = $relativePath;
 				}
 			}
 

@@ -257,37 +257,37 @@ class CLI
 	 */
 	public static function prompt(string $field, $options = null, string $validation = null): string
 	{
-		$extra_output = '';
-		$default      = '';
+		$extraOutput = '';
+		$default     = '';
 
 		if (is_string($options))
 		{
-			$extra_output = ' [' . static::color($options, 'white') . ']';
-			$default      = $options;
+			$extraOutput = ' [' . static::color($options, 'white') . ']';
+			$default     = $options;
 		}
 
 		if (is_array($options) && $options)
 		{
-			$opts                 = $options;
-			$extra_output_default = static::color($opts[0], 'white');
+			$opts               = $options;
+			$extraOutputDefault = static::color($opts[0], 'white');
 
 			unset($opts[0]);
 
 			if (empty($opts))
 			{
-				$extra_output = $extra_output_default;
+				$extraOutput = $extraOutputDefault;
 			}
 			else
 			{
-				$extra_output = ' [' . $extra_output_default . ', ' . implode(', ', $opts) . ']';
-				$validation  .= '|in_list[' . implode(',', $options) . ']';
-				$validation   = trim($validation, '|');
+				$extraOutput = ' [' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
+				$validation .= '|in_list[' . implode(',', $options) . ']';
+				$validation  = trim($validation, '|');
 			}
 
 			$default = $options[0];
 		}
 
-		static::fwrite(STDOUT, $field . $extra_output . ': ');
+		static::fwrite(STDOUT, $field . $extraOutput . ': ');
 
 		// Read the input from keyboard.
 		$input = trim(static::input()) ?: $default;
@@ -1070,45 +1070,45 @@ class CLI
 	public static function table(array $tbody, array $thead = [])
 	{
 		// All the rows in the table will be here until the end
-		$table_rows = [];
+		$tableRows = [];
 
 		// We need only indexes and not keys
 		if (! empty($thead))
 		{
-			$table_rows[] = array_values($thead);
+			$tableRows[] = array_values($thead);
 		}
 
 		foreach ($tbody as $tr)
 		{
-			$table_rows[] = array_values($tr);
+			$tableRows[] = array_values($tr);
 		}
 
 		// Yes, it really is necessary to know this count
-		$total_rows = count($table_rows);
+		$totalRows = count($tableRows);
 
 		// Store all columns lengths
 		// $all_cols_lengths[row][column] = length
-		$all_cols_lengths = [];
+		$allColsLengths = [];
 
 		// Store maximum lengths by column
 		// $max_cols_lengths[column] = length
-		$max_cols_lengths = [];
+		$maxColsLengths = [];
 
 		// Read row by row and define the longest columns
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $totalRows; $row ++)
 		{
 			$column = 0; // Current column index
-			foreach ($table_rows[$row] as $col)
+			foreach ($tableRows[$row] as $col)
 			{
 				// Sets the size of this column in the current row
-				$all_cols_lengths[$row][$column] = static::strlen($col);
+				$allColsLengths[$row][$column] = static::strlen($col);
 
 				// If the current column does not have a value among the larger ones
 				// or the value of this is greater than the existing one
 				// then, now, this assumes the maximum length
-				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
+				if (! isset($maxColsLengths[$column]) || $allColsLengths[$row][$column] > $maxColsLengths[$column])
 				{
-					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
+					$maxColsLengths[$column] = $allColsLengths[$row][$column];
 				}
 
 				// We can go check the size of the next column...
@@ -1118,15 +1118,15 @@ class CLI
 
 		// Read row by row and add spaces at the end of the columns
 		// to match the exact column length
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $totalRows; $row ++)
 		{
 			$column = 0;
-			foreach ($table_rows[$row] as $col)
+			foreach ($tableRows[$row] as $col)
 			{
-				$diff = $max_cols_lengths[$column] - static::strlen($col);
+				$diff = $maxColsLengths[$column] - static::strlen($col);
 				if ($diff)
 				{
-					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
+					$tableRows[$row][$column] = $tableRows[$row][$column] . str_repeat(' ', $diff);
 				}
 				$column ++;
 			}
@@ -1135,13 +1135,13 @@ class CLI
 		$table = '';
 
 		// Joins columns and append the well formatted rows to the table
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $totalRows; $row ++)
 		{
 			// Set the table border-top
 			if ($row === 0)
 			{
 				$cols = '+';
-				foreach ($table_rows[$row] as $col)
+				foreach ($tableRows[$row] as $col)
 				{
 					$cols .= str_repeat('-', static::strlen($col) + 2) . '+';
 				}
@@ -1149,10 +1149,10 @@ class CLI
 			}
 
 			// Set the columns borders
-			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
+			$table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
-			if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $total_rows))
+			if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $totalRows))
 			{
 				$table .= $cols . PHP_EOL;
 			}

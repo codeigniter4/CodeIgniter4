@@ -159,7 +159,7 @@ class Rules
 	public function is_not_unique(string $str = null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
-		list($field, $where_field, $where_value) = array_pad(explode(',', $field), 3, null);
+		list($field, $whereField, $whereValue) = array_pad(explode(',', $field), 3, null);
 
 		// Break the table and field apart
 		sscanf($field, '%[^.].%[^.]', $table, $field);
@@ -171,11 +171,11 @@ class Rules
 				  ->where($field, $str)
 				  ->limit(1);
 
-		if (! empty($where_field) && ! empty($where_value))
+		if (! empty($whereField) && ! empty($whereValue))
 		{
-			if (! preg_match('/^\{(\w+)\}$/', $where_value))
+			if (! preg_match('/^\{(\w+)\}$/', $whereValue))
 			{
-				$row = $row->where($where_field, $where_value);
+				$row = $row->where($whereField, $whereValue);
 			}
 		}
 

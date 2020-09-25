@@ -1300,9 +1300,9 @@ class Forge
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{
-				$name_index = $table . '_' . $field . '_foreign';
+				$nameIndex = $table . '_' . $field . '_foreign';
 
-				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
 					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
 				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))

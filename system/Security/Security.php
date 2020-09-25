@@ -288,10 +288,10 @@ class Security
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{
-		$expire        = $this->CSRFExpire === 0 ? $this->CSRFExpire : time() + $this->CSRFExpire;
-		$secure_cookie = (bool) $this->cookieSecure;
+		$expire       = $this->CSRFExpire === 0 ? $this->CSRFExpire : time() + $this->CSRFExpire;
+		$secureCookie = (bool) $this->cookieSecure;
 
-		if ($secure_cookie && ! $request->isSecure())
+		if ($secureCookie && ! $request->isSecure())
 		{
 			return false;
 		}
@@ -311,7 +311,7 @@ class Security
 				$expire,
 				$this->cookiePath . $samesite,
 				$this->cookieDomain,
-				$secure_cookie,
+				$secureCookie,
 				true                // Enforce HTTP only cookie for security
 			);
 		}
@@ -322,7 +322,7 @@ class Security
 				'expires'  => $expire,
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
-				'secure'   => $secure_cookie,
+				'secure'   => $secureCookie,
 				'httponly' => true,// Enforce HTTP only cookie for security
 			];
 

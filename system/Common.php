@@ -602,16 +602,16 @@ if (! function_exists('function_usable'))
 	 */
 	function function_usable(string $function_name): bool
 	{
-		static $_suhosin_func_blacklist;
+		static $suhosinFuncBlacklist;
 
 		if (function_exists($function_name))
 		{
-			if (! isset($_suhosin_func_blacklist))
+			if (! isset($suhosinFuncBlacklist))
 			{
-				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
+				$suhosinFuncBlacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
-			return ! in_array($function_name, $_suhosin_func_blacklist, true);
+			return ! in_array($function_name, $suhosinFuncBlacklist, true);
 		}
 
 		return false;

@@ -428,9 +428,9 @@ class Parser extends View
 			}
 
 			//Escape | character from filters as it's handled as OR in regex
-			$escaped_match = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
+			$escapedMatch = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
 
-			$replace['#' . $escaped_match . '#s'] = $str;
+			$replace['#' . $escapedMatch . '#s'] = $str;
 		}
 
 		return $replace;

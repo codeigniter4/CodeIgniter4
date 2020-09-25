@@ -423,26 +423,26 @@ if (! function_exists('convert_accented_characters'))
 	 */
 	function convert_accented_characters(string $str): string
 	{
-		static $array_from, $array_to;
+		static $arrayFrom, $arrayTo;
 
-		if (! is_array($array_from))
+		if (! is_array($arrayFrom))
 		{
 			$config = new Config\ForeignCharacters();
 
 			if (empty($config->characterList) || ! is_array($config->characterList))
 			{
-				$array_from = [];
-				$array_to   = [];
+				$arrayFrom = [];
+				$arrayTo   = [];
 
 				return $str;
 			}
-			$array_from = array_keys($config->characterList);
-			$array_to   = array_values($config->characterList);
+			$arrayFrom = array_keys($config->characterList);
+			$arrayTo   = array_values($config->characterList);
 
 			unset($config);
 		}
 
-		return preg_replace($array_from, $array_to, $str);
+		return preg_replace($arrayFrom, $arrayTo, $str);
 	}
 }
 

@@ -193,9 +193,9 @@ abstract class BaseUtils
 		}
 
 		$result = [];
-		foreach ($this->db->listTables() as $table_name)
+		foreach ($this->db->listTables() as $tableName)
 		{
-			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
+			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
 			if (is_bool($res))
 			{
 				return $res;
@@ -208,7 +208,7 @@ abstract class BaseUtils
 			// Postgre & SQLite3 returns empty array
 			if (empty($res))
 			{
-				$key = $table_name;
+				$key = $tableName;
 			}
 			else
 			{

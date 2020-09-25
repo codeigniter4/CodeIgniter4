@@ -148,12 +148,12 @@ class MemcachedHandler implements CacheInterface
 				$this->memcached = new \Memcache();
 
 				// Check if we can connect to the server
-				$can_connect = $this->memcached->connect(
+				$canConnect = $this->memcached->connect(
 					$this->config['host'], $this->config['port']
 				);
 
 				// If we can't connect, throw a CriticalError exception
-				if ($can_connect === false)
+				if ($canConnect === false)
 				{
 					throw new CriticalError('Cache: Memcache connection failed.');
 				}

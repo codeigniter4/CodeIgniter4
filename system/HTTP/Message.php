@@ -189,14 +189,14 @@ class Message
 	 */
 	public function getHeader(string $name)
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		if (! isset($this->headers[$orig_name]))
+		if (! isset($this->headers[$origName]))
 		{
 			return null;
 		}
 
-		return $this->headers[$orig_name];
+		return $this->headers[$origName];
 	}
 
 	/**
@@ -208,9 +208,9 @@ class Message
 	 */
 	public function hasHeader(string $name): bool
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		return isset($this->headers[$orig_name]);
+		return isset($this->headers[$origName]);
 	}
 
 	/**
@@ -230,14 +230,14 @@ class Message
 	 */
 	public function getHeaderLine(string $name): string
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		if (! array_key_exists($orig_name, $this->headers))
+		if (! array_key_exists($origName, $this->headers))
 		{
 			return '';
 		}
 
-		return $this->headers[$orig_name]->getValueLine();
+		return $this->headers[$origName]->getValueLine();
 	}
 
 	/**
@@ -282,9 +282,9 @@ class Message
 	 */
 	public function removeHeader(string $name): self
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		unset($this->headers[$orig_name]);
+		unset($this->headers[$origName]);
 		unset($this->headerMap[strtolower($name)]);
 
 		return $this;
@@ -301,10 +301,10 @@ class Message
 	 */
 	public function appendHeader(string $name, ?string $value): self
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		array_key_exists($orig_name, $this->headers)
-			? $this->headers[$orig_name]->appendValue($value)
+		array_key_exists($origName, $this->headers)
+			? $this->headers[$origName]->appendValue($value)
 			: $this->setHeader($name, $value);
 
 		return $this;
@@ -321,9 +321,9 @@ class Message
 	 */
 	public function prependHeader(string $name, string $value): self
 	{
-		$orig_name = $this->getHeaderName($name);
+		$origName = $this->getHeaderName($name);
 
-		$this->headers[$orig_name]->prependValue($value);
+		$this->headers[$origName]->prependValue($value);
 
 		return $this;
 	}

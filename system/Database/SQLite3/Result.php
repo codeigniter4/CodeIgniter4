@@ -86,7 +86,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		static $data_types = [
+		static $dataTypes = [
 			SQLITE3_INTEGER => 'integer',
 			SQLITE3_FLOAT   => 'float',
 			SQLITE3_TEXT    => 'text',
@@ -103,7 +103,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
 			$type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
 			$retVal[$i]->type       = $type;
-			$retVal[$i]->type_name  = isset($data_types[$type]) ? $data_types[$type] : null;
+			$retVal[$i]->type_name  = isset($dataTypes[$type]) ? $dataTypes[$type] : null;
 			$retVal[$i]->max_length = null;
 			$retVal[$i]->length     = null;
 		}

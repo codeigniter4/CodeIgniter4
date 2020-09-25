@@ -418,7 +418,7 @@ class CURLRequest extends Request
 	public function send(string $method, string $url)
 	{
 		// Reset our curl options so we're on a fresh slate.
-		$curl_options = [];
+		$curlOptions = [];
 
 		if (! empty($this->config['query']) && is_array($this->config['query']))
 		{
@@ -429,16 +429,16 @@ class CURLRequest extends Request
 			unset($this->config['query']);
 		}
 
-		$curl_options[CURLOPT_URL]            = $url;
-		$curl_options[CURLOPT_RETURNTRANSFER] = true;
-		$curl_options[CURLOPT_HEADER]         = true;
-		$curl_options[CURLOPT_FRESH_CONNECT]  = true;
+		$curlOptions[CURLOPT_URL]            = $url;
+		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
+		$curlOptions[CURLOPT_HEADER]         = true;
+		$curlOptions[CURLOPT_FRESH_CONNECT]  = true;
 		// Disable @file uploads in post data.
-		$curl_options[CURLOPT_SAFE_UPLOAD] = true;
+		$curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 
-		$curl_options = $this->setCURLOptions($curl_options, $this->config);
-		$curl_options = $this->applyMethod($method, $curl_options);
-		$curl_options = $this->applyRequestHeaders($curl_options);
+		$curlOptions = $this->setCURLOptions($curlOptions, $this->config);
+		$curlOptions = $this->applyMethod($method, $curlOptions);
+		$curlOptions = $this->applyRequestHeaders($curlOptions);
 
 		// Do we need to delay this request?
 		if ($this->delay > 0)
@@ -446,7 +446,7 @@ class CURLRequest extends Request
 			sleep($this->delay); // @phpstan-ignore-line
 		}
 
-		$output = $this->sendRequest($curl_options);
+		$output = $this->sendRequest($curlOptions);
 
 		// Set the string we want to break our response from
 		$breakString = "\r\n\r\n";

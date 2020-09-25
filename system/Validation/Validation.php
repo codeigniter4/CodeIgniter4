@@ -827,20 +827,20 @@ class Validation implements ValidationInterface
 	 */
 	protected function splitRules(string $rules): array
 	{
-		$non_escape_bracket  = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
-		$pipe_not_in_bracket = sprintf(
+		$nonEscapeBracket = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
+		$pipeNotInBracket = sprintf(
 				'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
-				$non_escape_bracket,
-				$non_escape_bracket,
-				$non_escape_bracket
+				$nonEscapeBracket,
+				$nonEscapeBracket,
+				$nonEscapeBracket
 		);
 
-		$_rules = preg_split(
-				$pipe_not_in_bracket,
+		$rules = preg_split(
+				$pipeNotInBracket,
 				$rules
 		);
 
-		return array_unique($_rules);
+		return array_unique($rules);
 	}
 
 	//--------------------------------------------------------------------

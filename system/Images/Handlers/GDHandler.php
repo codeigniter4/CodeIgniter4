@@ -171,9 +171,9 @@ class GDHandler extends BaseHandler
 	{
 		if (function_exists('gd_info'))
 		{
-			$gd_version = @gd_info();
+			$gdVersion = @gd_info();
 
-			return preg_replace('/\D/', '', $gd_version['GD Version']);
+			return preg_replace('/\D/', '', $gdVersion['GD Version']);
 		}
 
 		return false;

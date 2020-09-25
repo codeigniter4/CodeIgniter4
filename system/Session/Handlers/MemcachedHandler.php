@@ -123,11 +123,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->memcached = new \Memcached();
 		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
 
-		$server_list = [];
+		$serverList = [];
 
 		foreach ($this->memcached->getServerList() as $server)
 		{
-			$server_list[] = $server['host'] . ':' . $server['port'];
+			$serverList[] = $server['host'] . ':' . $server['port'];
 		}
 
 		if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
@@ -142,7 +142,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		foreach ($matches as $match)
 		{
 			// If Memcached already has this server (or if the port is invalid), skip it
-			if (in_array($match[1] . ':' . $match[2], $server_list, true))
+			if (in_array($match[1] . ':' . $match[2], $serverList, true))
 			{
 				$this->logger->debug('Session: Memcached server pool already has ' . $match[1] . ':' . $match[2]);
 				continue;
@@ -154,11 +154,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 			else
 			{
-				$server_list[] = $match[1] . ':' . $match[2];
+				$serverList[] = $match[1] . ':' . $match[2];
 			}
 		}
 
-		if (empty($server_list))
+		if (empty($serverList))
 		{
 			$this->logger->error('Session: Memcached server pool is empty.');
 
@@ -189,10 +189,10 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				$this->sessionID = $sessionID;
 			}
 
-			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-			$this->fingerprint = md5($session_data);
+			$sessionData       = (string) $this->memcached->get($this->keyPrefix . $sessionID);
+			$this->fingerprint = md5($sessionData);
 
-			return $session_data;
+			return $sessionData;
 		}
 
 		return '';
@@ -338,25 +338,25 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
-		$lock_key = $this->keyPrefix . $sessionID . ':lock';
-		$attempt  = 0;
+		$lockKey = $this->keyPrefix . $sessionID . ':lock';
+		$attempt = 0;
 
 		do
 		{
-			if ($this->memcached->get($lock_key))
+			if ($this->memcached->get($lockKey))
 			{
 				sleep(1);
 				continue;
 			}
 
-			if (! $this->memcached->set($lock_key, time(), 300))
+			if (! $this->memcached->set($lockKey, time(), 300))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
 				return false;
 			}
 
-			$this->lockKey = $lock_key;
+			$this->lockKey = $lockKey;
 			break;
 		}
 		while (++ $attempt < 30);
