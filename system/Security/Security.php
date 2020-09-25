@@ -41,7 +41,6 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use Config\Session as SessionConfig;
 
 /**
  * HTTP security handler.
@@ -180,11 +179,11 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param \Config\Session $config
+	 * @param \Config\App $config
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(SessionConfig $config)
+	public function __construct($config)
 	{
 		// Store our CSRF-related settings
 		$this->CSRFExpire     = $config->CSRFExpire ?? $this->CSRFExpire;
@@ -436,6 +435,4 @@ class Security
 
 		return stripslashes($str);
 	}
-
-	//--------------------------------------------------------------------
 }
