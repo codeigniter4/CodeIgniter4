@@ -26,7 +26,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$this->config          = new App();
-		$this->config->baseURL = 'http://example.com';
+		$this->config->baseURL = 'http://example.com/';
 
 		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
