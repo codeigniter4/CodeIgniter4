@@ -50,7 +50,7 @@ class LogException extends FrameworkException implements ExceptionInterface
 	/**
 	 * Thrown when log level is invalid/unsupported.
 	 *
-	 * @param string $path
+	 * @param string $level
 	 *
 	 * @return \CodeIgniter\Log\Exceptions\LogException
 	 */
