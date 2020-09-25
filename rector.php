@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::EXCLUDE_PATHS, [
 		__DIR__ . '/app/Views',
 		__DIR__ . '/system/ThirdParty',
+		__DIR__ . '/system/Autoloader/Autoloader.php',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 	]);
 
