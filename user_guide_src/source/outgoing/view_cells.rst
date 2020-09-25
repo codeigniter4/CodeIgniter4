@@ -16,7 +16,7 @@ must return the generated HTML as a string. The method can be either a static me
 Cell Parameters
 ---------------
 
-You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed 
+You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed
 can be an array of key/value pairs, or a comma-separated string of key/value pairs::
 
     // Passing Parameter Array
@@ -25,7 +25,7 @@ can be an array of key/value pairs, or a comma-separated string of key/value pai
     // Passing Parameter String
     <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
 
-    public function recentPosts(array $params=[])
+    public function recentPosts(array $params = [])
     {
         $posts = $this->blogModel->where('category', $params['category'])
                                  ->orderBy('published_on', 'desc')
@@ -40,7 +40,7 @@ When you use it this way, all of the parameters must always be specified in the 
 
     <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
 
-    public function recentPosts(int $limit, string $category)
+    public function recentPosts(string $category, int $limit)
     {
         $posts = $this->blogModel->where('category', $category)
                                  ->orderBy('published_on', 'desc')
