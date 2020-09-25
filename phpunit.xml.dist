@@ -41,7 +41,7 @@
 	</logging>
 
 	<php>
-		<server name="app.baseURL" value="http://example.com"/>
+		<server name="app.baseURL" value="http://example.com/"/>
 
 		<!-- Directory containing phpunit.xml -->
 		<const name="HOMEPATH" value="./"/>

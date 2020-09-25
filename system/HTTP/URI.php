@@ -614,8 +614,8 @@ class URI
 		}
 
 		return static::createURIString(
-						$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
-						$this->getQuery(), $this->getFragment()
+			$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
+			$this->getQuery(), $this->getFragment()
 		);
 	}
 

@@ -29,7 +29,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -466,7 +466,7 @@ EOH;
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
