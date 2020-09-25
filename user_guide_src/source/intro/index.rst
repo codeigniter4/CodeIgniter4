@@ -17,9 +17,9 @@ or completely replaced to make the system work the way you need it to.
 In short, CodeIgniter is the malleable framework that tries to provide
 the tools you need while staying out of the way.
 
-***********************
-Who is CodeIgniter For?
-***********************
+*****************************
+Is CodeIgniter Right for You?
+*****************************
 
 CodeIgniter is right for you if:
 
@@ -44,4 +44,3 @@ CodeIgniter is right for you if:
 	requirements
 	credits
 	psr
-
