@@ -281,7 +281,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', $response->getHeader('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithNamed()
