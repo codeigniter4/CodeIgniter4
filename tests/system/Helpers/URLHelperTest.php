@@ -452,18 +452,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	// Test uri_string
 
-	public function testUriString()
-	{
-		$request      = Services::request($this->config);
-		$request->uri = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$url = current_url();
-		$this->assertEquals('/', uri_string());
-	}
-
-	public function testUriStringExample()
+	public function testUriStringAbsolute()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
@@ -475,6 +464,103 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$url = current_url();
 		$this->assertEquals('/assets/image.jpg', uri_string());
+	}
+
+	public function testUriStringRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
+	}
+
+	public function testUriStringNoTrailingSlashAbsolute()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/assets/image.jpg', uri_string());
+	}
+
+	public function testUriStringNoTrailingSlashRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
+	}
+
+	public function testUriStringEmptyAbsolute()
+	{
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/', uri_string());
+	}
+
+	public function testUriStringEmptyRelative()
+	{
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('', uri_string(true));
+	}
+
+	public function testUriStringSubfolderAbsolute()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com/subfolder/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/subfolder/assets/image.jpg', uri_string());
+	}
+
+	public function testUriStringSubfolderRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+		$_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com/subfolder/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -1320,10 +1406,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
 	{
 		$_SERVER['HTTP_HOST']  = 'example.com';
-		$this->config->baseUrl = 'http://example.com/foobar/';
+		$this->config->baseURL = 'http://example.com/subfolder/';
 
 		$request      = Services::request($this->config);
-		$request->uri = new URI('http://example.com/foobar/' . $currentPath);
+		$request->uri = new URI('http://example.com/subfolder/' . $currentPath);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals($expected, url_is($testPath));

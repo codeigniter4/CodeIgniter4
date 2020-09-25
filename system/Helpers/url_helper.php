@@ -205,11 +205,26 @@ if (! function_exists('uri_string'))
 	 *
 	 * Returns the path part of the current URL
 	 *
+	 * @param boolean $relative Whether the resulting path should be relative to baseURL
+	 *
 	 * @return string
 	 */
-	function uri_string(): string
+	function uri_string(bool $relative = false): string
 	{
-		return \Config\Services::request()->uri->getPath();
+		$request = \Config\Services::request();
+		$uri     = $request->uri;
+
+		// An absolute path is equivalent to getPath()
+		if (! $relative)
+		{
+			return $uri->getPath();
+		}
+
+		// Remove the baseURL from the entire URL
+		$url     = (string) $uri->__toString();
+		$baseURL = rtrim($request->config->baseURL, '/ ') . '/';
+
+		return substr($url, strlen($baseURL));
 	}
 }
 
@@ -675,7 +690,7 @@ if (! function_exists('url_is'))
 	{
 		// Setup our regex to allow wildcards
 		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
-		$currentPath = '/' . trim(service('request')->uri->getPath(), '/ ');
+		$currentPath = '/' . trim(uri_string(true), '/ ');
 
 		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
 	}
