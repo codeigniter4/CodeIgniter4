@@ -696,7 +696,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Security\Security
 	 */
-	public static function security(SessionConfig $config = null, bool $getShared = true)
+	public static function security(App $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -885,6 +885,4 @@ class Services extends BaseService
 
 		return new Typography();
 	}
-
-	//--------------------------------------------------------------------
 }
