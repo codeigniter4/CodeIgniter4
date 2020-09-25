@@ -13,9 +13,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	// is there a file you need to skip?
 	$parameters->set(Option::EXCLUDE_PATHS, [
 		__DIR__ . '/app/Views',
-		__DIR__ . '/system/ThirdParty',
 		__DIR__ . '/system/Autoloader/Autoloader.php',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
+		__DIR__ . '/system/ThirdParty',
 	]);
 
 	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
