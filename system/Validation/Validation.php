@@ -835,12 +835,12 @@ class Validation implements ValidationInterface
 				$nonEscapeBracket
 		);
 
-		$rules = preg_split(
+		$_rules = preg_split(
 				$pipeNotInBracket,
 				$rules
 		);
 
-		return array_unique($rules);
+		return array_unique($_rules);
 	}
 
 	//--------------------------------------------------------------------

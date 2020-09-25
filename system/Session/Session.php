@@ -558,14 +558,14 @@ class Session implements SessionInterface
 		}
 
 		$userdata = [];
-		$exclude  = array_merge(
+		$_exclude = array_merge(
 			['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
 		);
 
 		$keys = array_keys($_SESSION);
 		foreach ($keys as $key)
 		{
-			if (! in_array($key, $exclude, true))
+			if (! in_array($key, $_exclude, true))
 			{
 				$userdata[$key] = $_SESSION[$key];
 			}

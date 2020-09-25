@@ -280,7 +280,7 @@ if (! function_exists('number_to_roman'))
 			return null;
 		}
 
-		$numberToRoman = function ($num, $th) use (&$numberToRoman) {
+		$_number_to_roman = function ($num, $th) use (&$_number_to_roman) {
 			$return = '';
 			$key1   = null;
 			$key2   = null;
@@ -333,10 +333,10 @@ if (! function_exists('number_to_roman'))
 			}
 			if ($num > 10)
 			{
-				$return = $numberToRoman($num / 10, ++ $th) . $return;
+				$return = $_number_to_roman($num / 10, ++ $th) . $return;
 			}
 			return $return;
 		};
-		return $numberToRoman($num, 1);
+		return $_number_to_roman($num, 1);
 	}
 }

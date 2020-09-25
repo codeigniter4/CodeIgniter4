@@ -437,15 +437,15 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getDirFileInfo(string $source_dir, bool $top_level_only = true, bool $_recursion = false)
 	{
-		static $filedata = [];
-		$relativePath    = $source_dir;
+		static $_filedata = [];
+		$relativePath     = $source_dir;
 
 		if ($fp = @opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($_recursion === false)
 			{
-				$filedata   = [];
+				$_filedata  = [];
 				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
@@ -458,14 +458,14 @@ class FileHandler implements CacheInterface
 				}
 				elseif ($file[0] !== '.')
 				{
-					$filedata[$file]                  = $this->getFileInfo($source_dir . $file);
-					$filedata[$file]['relative_path'] = $relativePath;
+					$_filedata[$file]                  = $this->getFileInfo($source_dir . $file);
+					$_filedata[$file]['relative_path'] = $relativePath;
 				}
 			}
 
 			closedir($fp);
 
-			return $filedata;
+			return $_filedata;
 		}
 
 		return false;
