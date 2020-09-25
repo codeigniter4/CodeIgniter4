@@ -27,11 +27,17 @@ Let's try it: Hello World!
 
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
 and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController you can
-also extend the Controller if you do not need the functionality of the BaseController.::
+also extend the Controller if you do not need the functionality of the BaseController.
 
-    <?php namespace App\Controllers;
+The BaseController provides a convenient place for loading components and performing functions that are needed by all your
+controllers. Extend this class in any new controllers:
 
-    use CodeIgniter\BaseController;
+For security reasons be sure to declare any new methods as protected or private.::
+
+    <?php
+
+    namespace App\Controllers;
+
 
     class Helloworld extends BaseController
     {
