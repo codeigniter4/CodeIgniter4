@@ -369,10 +369,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			$obj         = new \stdClass();
 			$obj->name   = $row->indexname;
-			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$fields      = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
 			$obj->fields = array_map(function ($v) {
 				return trim($v);
-			}, $_fields);
+			}, $fields);
 
 			if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0)
 			{

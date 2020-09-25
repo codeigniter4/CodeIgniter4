@@ -23,14 +23,14 @@ if (! function_exists('is_cli'))
 	function is_cli(bool $new_return = null): bool
 	{
 		// PHPUnit always runs via CLI.
-		static $return_value = true;
+		static $returnValue = true;
 
 		if ($new_return !== null)
 		{
-			$return_value = $new_return;
+			$returnValue = $new_return;
 		}
 
-		return $return_value;
+		return $returnValue;
 	}
 }
 

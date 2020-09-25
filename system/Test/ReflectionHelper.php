@@ -59,13 +59,13 @@ trait ReflectionHelper
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
 	{
-		$ref_method = new ReflectionMethod($obj, $method);
-		$ref_method->setAccessible(true);
+		$refMethod = new ReflectionMethod($obj, $method);
+		$refMethod->setAccessible(true);
 		$obj = (gettype($obj) === 'object') ? $obj : null;
 
-		return function () use ($obj, $ref_method) {
+		return function () use ($obj, $refMethod) {
 			$args = func_get_args();
-			return $ref_method->invokeArgs($obj, $args);
+			return $refMethod->invokeArgs($obj, $args);
 		};
 	}
 
@@ -82,17 +82,17 @@ trait ReflectionHelper
 	{
 		if (is_object($obj))
 		{
-			$ref_class = new ReflectionObject($obj);
+			$refClass = new ReflectionObject($obj);
 		}
 		else
 		{
-			$ref_class = new ReflectionClass($obj);
+			$refClass = new ReflectionClass($obj);
 		}
 
-		$ref_property = $ref_class->getProperty($property);
-		$ref_property->setAccessible(true);
+		$refProperty = $refClass->getProperty($property);
+		$refProperty->setAccessible(true);
 
-		return $ref_property;
+		return $refProperty;
 	}
 
 	/**
@@ -106,8 +106,8 @@ trait ReflectionHelper
 	 */
 	public static function setPrivateProperty($obj, $property, $value)
 	{
-		$ref_property = self::getAccessibleRefProperty($obj, $property);
-		$ref_property->setValue($obj, $value);
+		$refProperty = self::getAccessibleRefProperty($obj, $property);
+		$refProperty->setValue($obj, $value);
 	}
 
 	/**
@@ -121,8 +121,8 @@ trait ReflectionHelper
 	 */
 	public static function getPrivateProperty($obj, $property)
 	{
-		$ref_property = self::getAccessibleRefProperty($obj, $property);
-		return $ref_property->getValue($obj);
+		$refProperty = self::getAccessibleRefProperty($obj, $property);
+		return $refProperty->getValue($obj);
 	}
 
 }

@@ -421,11 +421,11 @@ if (! function_exists('form_dropdown'))
 					continue;
 				}
 				$form .= '<optgroup label="' . $key . "\">\n";
-				foreach ($val as $optgroup_key => $optgroup_val)
+				foreach ($val as $optgroupKey => $optgroupVal)
 				{
-					$sel   = in_array($optgroup_key, $selected, true) ? ' selected="selected"' : '';
-					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
-							. $optgroup_val . "</option>\n";
+					$sel   = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
+					$form .= '<option value="' . htmlspecialchars($optgroupKey) . '"' . $sel . '>'
+							. $optgroupVal . "</option>\n";
 				}
 				$form .= "</optgroup>\n";
 			}

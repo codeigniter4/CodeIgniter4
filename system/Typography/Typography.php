@@ -124,13 +124,13 @@ class Typography
 		}
 
 		// HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
-		$html_comments = [];
+		$htmlComments = [];
 		if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
 			for ($i = 0, $total = count($matches[0]); $i < $total; $i ++)
 			{
-				$html_comments[] = $matches[0][$i];
-				$str             = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
+				$htmlComments[] = $matches[0][$i];
+				$str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
 			}
 		}
 
@@ -217,12 +217,12 @@ class Typography
 		$str = $this->formatCharacters($str);
 
 		// restore HTML comments
-		for ($i = 0, $total = count($html_comments); $i < $total; $i ++)
+		for ($i = 0, $total = count($htmlComments); $i < $total; $i ++)
 		{
 			// remove surrounding paragraph tags, but only if there's an opening paragraph tag
 			// otherwise HTML comments at the ends of paragraphs will have the closing tag removed
 			// if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
-			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $html_comments[$i], $str);
+			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $htmlComments[$i], $str);
 		}
 
 		// Final clean up

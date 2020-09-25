@@ -1208,27 +1208,27 @@ class Email
 				$this->appendAttachments($body, $boundary);
 			break;
 			case 'html-attach':
-				$alt_boundary  = uniqid('B_ALT_', true);
-				$last_boundary = null;
+				$altBoundary  = uniqid('B_ALT_', true);
+				$lastBoundary = null;
 				if ($this->attachmentsHaveMultipart('mixed'))
 				{
-					$atc_boundary  = uniqid('B_ATC_', true);
-					$hdr          .= 'Content-Type: multipart/mixed; boundary="' . $atc_boundary . '"';
-					$last_boundary = $atc_boundary;
+					$atcBoundary  = uniqid('B_ATC_', true);
+					$hdr         .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
+					$lastBoundary = $atcBoundary;
 				}
 				if ($this->attachmentsHaveMultipart('related'))
 				{
-					$rel_boundary        = uniqid('B_REL_', true);
-					$rel_boundary_header = 'Content-Type: multipart/related; boundary="' . $rel_boundary . '"';
-					if (isset($last_boundary))
+					$relBoundary       = uniqid('B_REL_', true);
+					$relBoundaryHeader = 'Content-Type: multipart/related; boundary="' . $relBoundary . '"';
+					if (isset($lastBoundary))
 					{
-						$body .= '--' . $last_boundary . $this->newline . $rel_boundary_header;
+						$body .= '--' . $lastBoundary . $this->newline . $relBoundaryHeader;
 					}
 					else
 					{
-						$hdr .= $rel_boundary_header;
+						$hdr .= $relBoundaryHeader;
 					}
-					$last_boundary = $rel_boundary;
+					$lastBoundary = $relBoundary;
 				}
 				if ($this->getProtocol() === 'mail')
 				{
@@ -1236,27 +1236,27 @@ class Email
 				}
 				static::strlen($body) && $body .= $this->newline . $this->newline;
 				$body                          .= $this->getMimeMessage() . $this->newline . $this->newline
-						. '--' . $last_boundary . $this->newline
-						. 'Content-Type: multipart/alternative; boundary="' . $alt_boundary . '"' . $this->newline . $this->newline
-						. '--' . $alt_boundary . $this->newline
+						. '--' . $lastBoundary . $this->newline
+						. 'Content-Type: multipart/alternative; boundary="' . $altBoundary . '"' . $this->newline . $this->newline
+						. '--' . $altBoundary . $this->newline
 						. 'Content-Type: text/plain; charset=' . $this->charset . $this->newline
 						. 'Content-Transfer-Encoding: ' . $this->getEncoding() . $this->newline . $this->newline
 						. $this->getAltMessage() . $this->newline . $this->newline
-						. '--' . $alt_boundary . $this->newline
+						. '--' . $altBoundary . $this->newline
 						. 'Content-Type: text/html; charset=' . $this->charset . $this->newline
 						. 'Content-Transfer-Encoding: quoted-printable' . $this->newline . $this->newline
 						. $this->prepQuotedPrintable($this->body) . $this->newline . $this->newline
-						. '--' . $alt_boundary . '--' . $this->newline . $this->newline;
-				if (! empty($rel_boundary))
+						. '--' . $altBoundary . '--' . $this->newline . $this->newline;
+				if (! empty($relBoundary))
 				{
 					$body .= $this->newline . $this->newline;
-					$this->appendAttachments($body, $rel_boundary, 'related');
+					$this->appendAttachments($body, $relBoundary, 'related');
 				}
 				// multipart/mixed attachments
-				if (! empty($atc_boundary))
+				if (! empty($atcBoundary))
 				{
 					$body .= $this->newline . $this->newline;
-					$this->appendAttachments($body, $atc_boundary, 'mixed');
+					$this->appendAttachments($body, $atcBoundary, 'mixed');
 				}
 			break;
 		}
@@ -1321,7 +1321,7 @@ class Email
 		// ASCII code numbers for "safe" characters that can always be
 		// used literally, without encoding, as described in RFC 2049.
 		// http://www.ietf.org/rfc/rfc2049.txt
-		static $ascii_safe_chars = [
+		static $asciiSafeChars = [
 		// ' (  )   +   ,   -   .   /   :   =   ?
 			39,
 			40,
@@ -1448,7 +1448,7 @@ class Email
 				{
 					$char = $escape . strtoupper(sprintf('%02s', dechex($ascii)));  // =3D
 				}
-				elseif (! in_array($ascii, $ascii_safe_chars, true))
+				elseif (! in_array($ascii, $asciiSafeChars, true))
 				{
 					$char = $escape . strtoupper(sprintf('%02s', dechex($ascii)));
 				}
@@ -2113,12 +2113,12 @@ class Email
 	{
 		$msg = implode('', $this->debugMessage);
 		// Determine which parts of our raw data needs to be printed
-		$raw_data                                         = '';
-		is_array($include) || $include                    = [$include]; // @phpstan-ignore-line
-		in_array('headers', $include, true) && $raw_data  = htmlspecialchars($this->headerStr) . "\n";
-		in_array('subject', $include, true) && $raw_data .= htmlspecialchars($this->subject) . "\n";
-		in_array('body', $include, true) && $raw_data    .= htmlspecialchars($this->finalBody);
-		return $msg . ($raw_data === '' ? '' : '<pre>' . $raw_data . '</pre>');
+		$rawData                                         = '';
+		is_array($include) || $include                   = [$include]; // @phpstan-ignore-line
+		in_array('headers', $include, true) && $rawData  = htmlspecialchars($this->headerStr) . "\n";
+		in_array('subject', $include, true) && $rawData .= htmlspecialchars($this->subject) . "\n";
+		in_array('body', $include, true) && $rawData    .= htmlspecialchars($this->finalBody);
+		return $msg . ($rawData === '' ? '' : '<pre>' . $rawData . '</pre>');
 	}
 	//--------------------------------------------------------------------
 	/**

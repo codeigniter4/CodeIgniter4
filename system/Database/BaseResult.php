@@ -165,22 +165,36 @@ abstract class BaseResult implements ResultInterface
 		}
 
 		// Don't fetch the result set again if we already have it
+		/**
+		 * @noRector \Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector
+		 */
 		$_data = null;
 		if (($c = count($this->resultArray)) > 0)
 		{
+			/**
+			 * @noRector \Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector
+			 */
 			$_data = 'resultArray';
 		}
 		elseif (($c = count($this->resultObject)) > 0)
 		{
+			/**
+			 * @noRector \Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector
+			 */
 			$_data = 'resultObject';
 		}
 
+		/**
+		 * @noRector \Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector
+		 */
 		if ($_data !== null)
 		{
 			for ($i = 0; $i < $c; $i ++)
 			{
 				$this->customResultObject[$className][$i] = new $className();
-
+				/**
+				 * @noRector \Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector
+				 */
 				foreach ($this->{$_data}[$i] as $key => $value)
 				{
 					$this->customResultObject[$className][$i]->$key = $value;

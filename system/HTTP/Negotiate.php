@@ -297,8 +297,8 @@ class Negotiate
 		usort($results, function ($a, $b) {
 			if ($a['q'] === $b['q'])
 			{
-				$a_ast = substr_count($a['value'], '*');
-				$b_ast = substr_count($b['value'], '*');
+				$aAst = substr_count($a['value'], '*');
+				$bAst = substr_count($b['value'], '*');
 
 				// '*/*' has lower precedence than 'text/*',
 				// and 'text/*' has lower priority than 'text/plain'
@@ -306,7 +306,7 @@ class Negotiate
 				// This seems backwards, but needs to be that way
 				// due to the way PHP7 handles ordering or array
 				// elements created by reference.
-				if ($a_ast > $b_ast)
+				if ($aAst > $bAst)
 				{
 					return 1;
 				}
@@ -317,7 +317,7 @@ class Negotiate
 				// This seems backwards, but needs to be that way
 				// due to the way PHP7 handles ordering or array
 				// elements created by reference.
-				if ($a_ast === $b_ast)
+				if ($aAst === $bAst)
 				{
 					return count($b['params']) - count($a['params']);
 				}

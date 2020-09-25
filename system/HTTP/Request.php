@@ -105,15 +105,15 @@ class Request extends Message implements RequestInterface
 			return $this->ipAddress;
 		}
 
-		$proxy_ips = $this->proxyIPs;
+		$proxyIps = $this->proxyIPs;
 		if (! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
 		{
-			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
+			$proxyIps = explode(',', str_replace(' ', '', $this->proxyIPs));
 		}
 
 		$this->ipAddress = $this->getServer('REMOTE_ADDR');
 
-		if ($proxy_ips)
+		if ($proxyIps)
 		{
 			foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header)
 			{
@@ -137,14 +137,14 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				foreach ($proxy_ips as $proxy_ip)
+				foreach ($proxyIps as $proxyIp)
 				{
 					// Check if we have an IP address or a subnet
-					if (strpos($proxy_ip, '/') === false)
+					if (strpos($proxyIp, '/') === false)
 					{
 						// An IP address (and not a subnet) is specified.
 						// We can compare right away.
-						if ($proxy_ip === $this->ipAddress)
+						if ($proxyIp === $this->ipAddress)
 						{
 							$this->ipAddress = $spoof;
 							break;
@@ -158,7 +158,7 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxy_ip, $separator) === false) // @phpstan-ignore-line
+					if (strpos($proxyIp, $separator) === false) // @phpstan-ignore-line
 					{
 						continue;
 					}
@@ -190,7 +190,7 @@ class Request extends Message implements RequestInterface
 					}
 
 					// Split the netmask length off the network address
-					sscanf($proxy_ip, '%[^/]/%d', $netaddr, $masklen);
+					sscanf($proxyIp, '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
 					if ($separator === ':') // @phpstan-ignore-line

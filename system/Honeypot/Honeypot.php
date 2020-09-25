@@ -108,10 +108,10 @@ class Honeypot
 	 */
 	public function attachHoneypot(ResponseInterface $response)
 	{
-		$prep_field = $this->prepareTemplate($this->config->template);
+		$prepField = $this->prepareTemplate($this->config->template);
 
 		$body = $response->getBody();
-		$body = str_ireplace('</form>', $prep_field . '</form>', $body);
+		$body = str_ireplace('</form>', $prepField . '</form>', $body);
 		$response->setBody($body);
 	}
 

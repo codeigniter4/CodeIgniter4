@@ -202,7 +202,7 @@ class RedisHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		switch ($data_type = gettype($value))
+		switch ($dataType = gettype($value))
 		{
 			case 'array':
 			case 'object':
@@ -219,7 +219,7 @@ class RedisHandler implements CacheInterface
 				return false;
 		}
 
-		if (! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hMSet($key, ['__ci_type' => $dataType, '__ci_value' => $value]))
 		{
 			return false;
 		}

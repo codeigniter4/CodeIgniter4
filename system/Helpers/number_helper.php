@@ -280,25 +280,25 @@ if (! function_exists('number_to_roman'))
 			return null;
 		}
 
-		$_number_to_roman = function ($num, $th) use (&$_number_to_roman) {
+		$numberToRoman = function ($num, $th) use (&$numberToRoman) {
 			$return = '';
 			$key1   = null;
 			$key2   = null;
 			switch ($th) {
 				case 1:
-					$key1  = 'I';
-					$key2  = 'V';
-					$key_f = 'X';
+					$key1 = 'I';
+					$key2 = 'V';
+					$keyF = 'X';
 					break;
 				case 2:
-					$key1  = 'X';
-					$key2  = 'L';
-					$key_f = 'C';
+					$key1 = 'X';
+					$key2 = 'L';
+					$keyF = 'C';
 					break;
 				case 3:
-					$key1  = 'C';
-					$key2  = 'D';
-					$key_f = 'M';
+					$key1 = 'C';
+					$key2 = 'D';
+					$keyF = 'M';
 					break;
 				case 4:
 					$key1 = 'M';
@@ -323,20 +323,20 @@ if (! function_exists('number_to_roman'))
 					$return = $key2 . str_repeat($key1, $n - 5);
 					break;
 				case 9:
-					$return = $key1 . $key_f; // @phpstan-ignore-line
+					$return = $key1 . $keyF; // @phpstan-ignore-line
 					break;
 			}
 			switch ($num) {
 				case 10:
-					$return = $key_f; // @phpstan-ignore-line
+					$return = $keyF; // @phpstan-ignore-line
 					break;
 			}
 			if ($num > 10)
 			{
-				$return = $_number_to_roman($num / 10, ++ $th) . $return;
+				$return = $numberToRoman($num / 10, ++ $th) . $return;
 			}
 			return $return;
 		};
-		return $_number_to_roman($num, 1);
+		return $numberToRoman($num, 1);
 	}
 }

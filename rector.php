@@ -1,0 +1,27 @@
+<?php
+
+use Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector;
+use Rector\Core\Configuration\Option;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+	$parameters = $containerConfigurator->parameters();
+
+	// paths to refactor; solid alternative to CLI arguments
+	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system']);
+
+	// is there a file you need to skip?
+	$parameters->set(Option::EXCLUDE_PATHS, [
+		__DIR__ . '/app/Views',
+		__DIR__ . '/system/ThirdParty',
+	]);
+
+	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
+	$parameters->set(Option::AUTOLOAD_PATHS, [
+		// autoload specific file
+		__DIR__ . '/system/Test/bootstrap.php',
+	]);
+
+	$services = $containerConfigurator->services();
+	$services->set(UnderscoreToCamelCaseLocalVariableNameRector::class);
+};

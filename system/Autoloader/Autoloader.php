@@ -262,16 +262,16 @@ class Autoloader
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
 
-		$mapped_file = $this->loadInNamespace($class);
+		$mappedFile = $this->loadInNamespace($class);
 
 		// Nothing? One last chance by looking
 		// in common CodeIgniter folders.
-		if (! $mapped_file)
+		if (! $mappedFile)
 		{
-			$mapped_file = $this->loadLegacy($class);
+			$mappedFile = $this->loadLegacy($class);
 		}
 
-		return $mapped_file;
+		return $mappedFile;
 	}
 
 	//--------------------------------------------------------------------

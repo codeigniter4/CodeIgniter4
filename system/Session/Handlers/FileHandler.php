@@ -213,7 +213,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			rewind($this->fileHandle);
 		}
 
-		$session_data = '';
+		$sessionData = '';
 		clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
 		for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
@@ -222,12 +222,12 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				break;
 			}
 
-			$session_data .= $buffer;
+			$sessionData .= $buffer;
 		}
 
-		$this->fingerprint = md5($session_data);
+		$this->fingerprint = md5($sessionData);
 
-		return $session_data;
+		return $sessionData;
 	}
 
 	//--------------------------------------------------------------------

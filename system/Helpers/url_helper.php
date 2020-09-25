@@ -270,13 +270,13 @@ if (! function_exists('anchor'))
 		// use alternate config if provided, else default one
 		$config = $altConfig ?? config(\Config\App::class);
 
-		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
+		$siteUrl = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
-		$site_url = rtrim($site_url, '/');
+		$siteUrl = rtrim($siteUrl, '/');
 
 		if ($title === '')
 		{
-			$title = $site_url;
+			$title = $siteUrl;
 		}
 
 		if ($attributes !== '')
@@ -284,7 +284,7 @@ if (! function_exists('anchor'))
 			$attributes = stringify_attributes($attributes);
 		}
 
-		return '<a href="' . $site_url . '"' . $attributes . '>' . $title . '</a>';
+		return '<a href="' . $siteUrl . '"' . $attributes . '>' . $title . '</a>';
 	}
 }
 
@@ -310,17 +310,17 @@ if (! function_exists('anchor_popup'))
 		// use alternate config if provided, else default one
 		$config = $altConfig ?? config(\Config\App::class);
 
-		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
-		$site_url = rtrim($site_url, '/');
+		$siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
+		$siteUrl = rtrim($siteUrl, '/');
 
 		if ($title === '')
 		{
-			$title = $site_url;
+			$title = $siteUrl;
 		}
 
 		if ($attributes === false)
 		{
-			return '<a href="' . $site_url . '" onclick="window.open(\'' . $site_url . "', '_blank'); return false;\">" . $title . '</a>';
+			return '<a href="' . $siteUrl . '" onclick="window.open(\'' . $siteUrl . "', '_blank'); return false;\">" . $title . '</a>';
 		}
 
 		if (! is_array($attributes))
@@ -328,16 +328,16 @@ if (! function_exists('anchor_popup'))
 			$attributes = [$attributes];
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
-			$window_name = '_blank';
+			$windowName = '_blank';
 		}
 		elseif (! empty($attributes['window_name']))
 		{
-			$window_name = $attributes['window_name'];
+			$windowName = $attributes['window_name'];
 			unset($attributes['window_name']);
 		}
 		else
 		{
-			$window_name = '_blank';
+			$windowName = '_blank';
 		}
 
 		foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val)
@@ -348,8 +348,8 @@ if (! function_exists('anchor_popup'))
 
 		$attributes = stringify_attributes($attributes);
 
-		return '<a href="' . $site_url
-				. '" onclick="window.open(\'' . $site_url . "', '" . $window_name . "', '" . stringify_attributes($atts, true) . "'); return false;\""
+		return '<a href="' . $siteUrl
+				. '" onclick="window.open(\'' . $siteUrl . "', '" . $windowName . "', '" . stringify_attributes($atts, true) . "'); return false;\""
 				. $attributes . '>' . $title . '</a>';
 	}
 }
@@ -591,13 +591,13 @@ if (! function_exists('url_title'))
 	 */
 	function url_title(string $str, string $separator = '-', bool $lowercase = false): string
 	{
-		$q_separator = preg_quote($separator, '#');
+		$qSeparator = preg_quote($separator, '#');
 
 		$trans = [
-			'&.+?;'                   => '',
-			'[^\w\d\pL\pM _-]'        => '',
-			'\s+'                     => $separator,
-			'(' . $q_separator . ')+' => $separator,
+			'&.+?;'                  => '',
+			'[^\w\d\pL\pM _-]'       => '',
+			'\s+'                    => $separator,
+			'(' . $qSeparator . ')+' => $separator,
 		];
 
 		$str = strip_tags($str);
