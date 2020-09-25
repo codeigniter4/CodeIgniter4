@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -48,78 +48,87 @@ use CodeIgniter\Exceptions\FrameworkException;
 class I18nException extends FrameworkException implements ExceptionInterface
 {
 	/**
-	 * Thrown when the numeric representation of the month falls
-	 * outside the range of allowed months.
+	 * Thrown when the numeric representation of the month falls outside
+	 * the range of allowed months.
 	 *
 	 * @param string $month
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidMonth(string $month)
 	{
 		return new static(lang('Time.invalidMonth', [$month]));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
-	 * Thrown when the supplied day falls outside the range
-	 * of allowed days.
+	 * Thrown when the supplied day falls outside the range of allowed days.
 	 *
 	 * @param string $day
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidDay(string $day)
 	{
 		return new static(lang('Time.invalidDay', [$day]));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
-	 * Thrown when the day provided falls outside the allowed
-	 * last day for the given month.
+	 * Thrown when the day provided falls outside the allowed last day for
+	 * the given month.
 	 *
 	 * @param string $lastDay
 	 * @param string $day
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidOverDay(string $lastDay, string $day)
 	{
 		return new static(lang('Time.invalidOverDay', [$lastDay, $day]));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
-	 * Thrown when the supplied hour falls outside the
-	 * range of allowed hours.
+	 * Thrown when the supplied hour falls outside the range of allowed
+	 * hours.
 	 *
 	 * @param string $hour
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidHour(string $hour)
 	{
 		return new static(lang('Time.invalidHour', [$hour]));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
-	 * Thrown when the supplied minutes falls outside the
-	 * range of allowed minutes.
+	 * Thrown when the supplied minutes falls outside the range of allowed
+	 * minutes.
 	 *
 	 * @param string $minutes
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidMinutes(string $minutes)
 	{
 		return new static(lang('Time.invalidMinutes', [$minutes]));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
-	 * Thrown when the supplied seconds falls outside the
-	 * range of allowed seconds.
+	 * Thrown when the supplied seconds falls outside the range of allowed
+	 * seconds.
 	 *
 	 * @param string $seconds
 	 *
-	 * @return static
+	 * @return \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public static function forInvalidSeconds(string $seconds)
 	{
