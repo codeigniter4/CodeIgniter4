@@ -50,7 +50,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	/**
 	 * Thrown when there isn't driver requested.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forNoDriverRequested()
 	{
@@ -64,7 +64,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	 *
 	 * @param string $handler
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forNoHandlerAvailable(string $handler)
 	{
@@ -78,7 +78,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	 *
 	 * @param string|null $driver
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forUnKnownHandler(string $driver = null)
 	{
@@ -90,7 +90,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	/**
 	 * Thrown when the starter key isn't set or empty.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forNeedsStarterKey()
 	{
@@ -102,7 +102,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	/**
 	 * Thrown when decrypting authentication failed.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forAuthenticationFailed()
 	{
@@ -114,7 +114,7 @@ class EncryptionException extends FrameworkException implements ExceptionInterfa
 	/**
 	 * Thrown when encrption failed.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public static function forEncryptionFailed()
 	{
