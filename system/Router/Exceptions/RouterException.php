@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -57,6 +57,8 @@ class RouterException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('Router.invalidParameterType'));
 	}
+	
+  	//--------------------------------------------------------------------
 
 	/**
 	 * Thrown when a default route is not set.
