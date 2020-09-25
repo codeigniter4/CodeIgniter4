@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::EXCLUDE_PATHS, [
 		__DIR__ . '/app/Views',
 		__DIR__ . '/system/ThirdParty',
+		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 	]);
 
 	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
