@@ -361,7 +361,7 @@ can be an array of key/value pairs, or a comma-separated string of key/value pai
 // Passing Parameter String
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-public function recentPosts(array $params=[])
+public function recentPosts(array $params = [])
 {
     $posts = $this-&gt;blogModel-&gt;where(&#39;category&#39;, $params[&#39;category&#39;])
                              -&gt;orderBy(&#39;published_on&#39;, &#39;desc&#39;)
@@ -376,7 +376,7 @@ public function recentPosts(array $params=[])
 When you use it this way, all of the parameters must always be specified in the view cell call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-public function recentPosts(int $limit, string $category)
+public function recentPosts(string $category, int $limit)
 {
     $posts = $this-&gt;blogModel-&gt;where(&#39;category&#39;, $category)
                              -&gt;orderBy(&#39;published_on&#39;, &#39;desc&#39;)
