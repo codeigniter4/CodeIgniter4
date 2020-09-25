@@ -60,7 +60,7 @@ class SodiumHandler extends BaseHandler
 	 *
 	 * @var integer
 	 */
-	protected $blockSize = 512;
+	protected $blockSize = 16;
 
 	/**
 	 * {@inheritDoc}
@@ -77,12 +77,16 @@ class SodiumHandler extends BaseHandler
 		// create a nonce for this operation
 		$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES); // 24 bytes
 
-		// pad to a maximum of 512 bytes chunks
-		$paddedLength  = $this->blockSize <= 512 ? $this->blockSize : 512;
-		$paddedMessage = sodium_pad($data, $paddedLength);
+		// add padding before we encrypt the data
+		if ($this->blockSize <= 0)
+		{
+			throw EncryptionException::forEncryptionFailed();
+		}
+
+		$data = sodium_pad($data, $this->blockSize);
 
 		// encrypt message and combine with nonce
-		$ciphertext = $nonce . sodium_crypto_secretbox($paddedMessage, $nonce, $this->key);
+		$ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $this->key);
 
 		// cleanup buffers
 		sodium_memzero($data);
@@ -113,23 +117,28 @@ class SodiumHandler extends BaseHandler
 		$nonce      = self::substr($data, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 		$ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null);
 
-		// decrypt and account for extra padding
-		$paddedLength    = $this->blockSize <= 512 ? $this->blockSize : 512;
-		$paddedPlaintext = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
+		// decrypt data
+		$data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
 
-		if ($paddedPlaintext === false)
+		if ($data === false)
 		{
 			// message was tampered in transit
 			throw EncryptionException::forAuthenticationFailed(); // @codeCoverageIgnore
 		}
 
-		$plaintext = sodium_unpad($paddedPlaintext, $paddedLength);
+		// remove extra padding during encryption
+		if ($this->blockSize <= 0)
+		{
+			throw EncryptionException::forAuthenticationFailed();
+		}
+
+		$data = sodium_unpad($data, $this->blockSize);
 
 		// cleanup buffers
 		sodium_memzero($ciphertext);
 		sodium_memzero($this->key);
 
-		return $plaintext;
+		return $data;
 	}
 
 	/**
@@ -155,9 +164,9 @@ class SodiumHandler extends BaseHandler
 				$this->key = $params['key'];
 			}
 
-			if (isset($params['block_size']))
+			if (isset($params['blockSize']))
 			{
-				$this->blockSize = $params['block_size'];
+				$this->blockSize = $params['blockSize'];
 			}
 
 			return;
