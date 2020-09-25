@@ -39,7 +39,7 @@
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -630,7 +630,7 @@ if (! function_exists('helper'))
 	 *   3. system/Helpers
 	 *
 	 * @param  string|array $filenames
-	 * @throws \CodeIgniter\Files\Exceptions\FileNotFoundException
+	 * @throws \CodeIgniter\Files\Exceptions\FileException
 	 */
 	function helper($filenames)
 	{
@@ -665,7 +665,7 @@ if (! function_exists('helper'))
 
 				if (empty($path))
 				{
-					throw FileNotFoundException::forFileNotFound($filename);
+					throw FileException::forFileNotFound($filename);
 				}
 
 				$includes[] = $path;
