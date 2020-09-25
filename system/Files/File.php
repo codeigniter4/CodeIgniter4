@@ -40,7 +40,7 @@
 namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileException;
-use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use Config\Mimes;
 use SplFileInfo;
 
 /**
@@ -78,7 +78,7 @@ class File extends SplFileInfo
 	{
 		if ($checkFile && ! is_file($path))
 		{
-			throw FileNotFoundException::forFileNotFound($path);
+			throw FileException::forFileNotFound($path);
 		}
 
 		parent::__construct($path);
@@ -130,7 +130,7 @@ class File extends SplFileInfo
 	 */
 	public function guessExtension(): ?string
 	{
-		return \Config\Mimes::guessExtensionFromType($this->getMimeType());
+		return Mimes::guessExtensionFromType($this->getMimeType());
 	}
 
 	//--------------------------------------------------------------------
@@ -154,6 +154,7 @@ class File extends SplFileInfo
 		$finfo    = finfo_open(FILEINFO_MIME_TYPE);
 		$mimeType = finfo_file($finfo, $this->getRealPath());
 		finfo_close($finfo);
+		
 		return $mimeType;
 	}
 
@@ -169,6 +170,7 @@ class File extends SplFileInfo
 	{
 		$extension = $this->getExtension();
 		$extension = empty($extension) ? '' : '.' . $extension;
+		
 		return time() . '_' . bin2hex(random_bytes(10)) . $extension;
 	}
 
@@ -223,9 +225,11 @@ class File extends SplFileInfo
 		{
 			$info      = pathinfo($destination);
 			$extension = isset($info['extension']) ? '.' . $info['extension'] : '';
+			
 			if (strpos($info['filename'], $delimiter) !== false)
 			{
 				$parts = explode($delimiter, $info['filename']);
+				
 				if (is_numeric(end($parts)))
 				{
 					$i = end($parts);
@@ -243,8 +247,7 @@ class File extends SplFileInfo
 				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
 			}
 		}
+		
 		return $destination;
 	}
-
-	//--------------------------------------------------------------------
 }
