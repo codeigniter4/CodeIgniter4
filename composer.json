@@ -29,6 +29,11 @@
 			"CodeIgniter\\": "system/"
 		}
 	},
+	"autoload-dev": {
+        "psr-4": {
+            "Utils\\": "utils"
+        }
+    },
 	"scripts": {
 		"post-update-cmd": [
 			"@composer dump-autoload",
