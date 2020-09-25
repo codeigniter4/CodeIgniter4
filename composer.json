@@ -22,7 +22,7 @@
 		"phpunit/phpunit": "^8.5",
 		"predis/predis": "^1.1",
 		"squizlabs/php_codesniffer": "^3.3",
-		"rector/rector": "dev-failing-test-case-4290"
+		"rector/rector": "^0.8.10"
 	},
 	"autoload": {
 		"psr-4": {
