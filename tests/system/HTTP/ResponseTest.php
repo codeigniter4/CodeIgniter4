@@ -165,7 +165,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		// Ensure our URL is not getting overridden
 		$config          = new App();
-		$config->baseURL = 'http://example.com/test';
+		$config->baseURL = 'http://example.com/test/';
 		Config::injectMock('App', $config);
 
 		$response = new Response($config);

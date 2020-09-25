@@ -131,7 +131,7 @@ trait ControllerTester
 
 		if (! $this->uri instanceof URI)
 		{
-			$this->uri = new URI($this->appConfig->baseURL ?? 'http://example.com');
+			$this->uri = new URI($this->appConfig->baseURL ?? 'http://example.com/');
 		}
 
 		if (empty($this->request))

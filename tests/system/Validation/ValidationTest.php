@@ -441,7 +441,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 		$request->setMethod('patch');
@@ -666,7 +666,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRulesForArrayField($body, $rules, $results)
 	{
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), http_build_query($body), new UserAgent());
 		$request->setMethod('post');
@@ -740,7 +740,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRulesForSingleRuleWithAsteriskWillReturnNoError()
 	{
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$_REQUEST = [
 			'id_user'   => [
@@ -771,7 +771,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRulesForSingleRuleWithAsteriskWillReturnError()
 	{
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$_REQUEST = [
 			'id_user'   => [
@@ -805,7 +805,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRulesForSingleRuleWithSingleValue()
 	{
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$_REQUEST = [
 			'id_user' => 'gh',
