@@ -1,8 +1,8 @@
 <?php
 
-use Rector\CodingStyle\Rector\Variable\UnderscoreToCamelCaseLocalVariableNameRector;
 use Rector\Core\Configuration\Option;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Utils\Rector\UnderscoreToCamelCaseLocalVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
