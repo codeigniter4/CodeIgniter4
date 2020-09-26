@@ -142,7 +142,6 @@ if (! function_exists('array_deep_search'))
 						$result = array_deep_search($value, $key);
 						if ($result) {
 							return $result;
-							break;
 						}
 					}
 				}
