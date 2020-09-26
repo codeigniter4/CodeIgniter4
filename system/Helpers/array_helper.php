@@ -133,27 +133,23 @@ if (! function_exists('array_deep_search'))
 	 */
 	function array_deep_search(array $array, string $key)
 	{
-		if (is_array($array))
+		if (isset($array[$key]))
 		{
-			if (isset($array[$key]))
+			return $array[$key];
+		}
+
+		foreach ($array as $value)
+		{
+			if (is_array($value))
 			{
-				return $array[$key];
-			}
-			else
-			{
-				foreach ($array as $value)
+				$result = array_deep_search($value, $key);
+				if ($result)
 				{
-					if (is_array($value))
-					{
-						$result = array_deep_search($value, $key);
-						if ($result)
-						{
-							return $result;
-						}
-					}
+					return $result;
 				}
 			}
 		}
+		
 		return false;
 	}
 }
