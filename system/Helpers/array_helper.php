@@ -139,7 +139,7 @@ if (! function_exists('array_deep_search'))
 			}else{
 				foreach ($array as $value) {
 					if (is_array($value)) {
-						$result = search($value, $key);
+						$result = array_deep_search($value, $key);
 						if ($result) {
 							return $result;
 							break;
