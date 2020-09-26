@@ -129,7 +129,7 @@ if (! function_exists('array_deep_search'))
 	 * @param array  $array
 	 * @param string $key
 	 *
-	 * @return mixed|false
+	 * @return mixed|null
 	 */
 	function array_deep_search(array $array, string $key)
 	{
@@ -142,14 +142,13 @@ if (! function_exists('array_deep_search'))
 		{
 			if (is_array($value))
 			{
-				$result = array_deep_search($value, $key);
-				if ($result)
+				if ($result = array_deep_search($value, $key))
 				{
 					return $result;
 				}
 			}
 		}
 		
-		return false;
+		return null;
 	}
 }
