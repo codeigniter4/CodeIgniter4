@@ -8,7 +8,6 @@ use Config\Services;
 class ClearCacheTest extends CIUnitTestCase
 {
 	protected $streamFilter;
-	protected $result;
 
 	protected function setUp(): void
 	{
@@ -24,33 +23,24 @@ class ClearCacheTest extends CIUnitTestCase
 
 	public function tearDown(): void
 	{
-		if (! $this->result)
-		{
-			return;
-		}
-
 		stream_filter_remove($this->streamFilter);
 	}
 
 	public function testClearCacheInvalidHandler()
 	{
 		command('cache:clear junk');
-		$result = CITestStreamFilter::$buffer;
 
-		$this->assertStringContainsString('junk is not a valid cache handler.', $result);
+		$this->assertStringContainsString('junk is not a valid cache handler.', CITestStreamFilter::$buffer);
 	}
 
 	public function testClearCacheWorks()
 	{
 		cache()->save('foo', 'bar');
-
 		$this->assertEquals('bar', cache('foo'));
 
 		command('cache:clear');
-		$result = CITestStreamFilter::$buffer;
 
 		$this->assertNull(cache('foo'));
-
-		$this->assertStringContainsString('Done', $result);
+		$this->assertStringContainsString('Cache cleared.', CITestStreamFilter::$buffer);
 	}
 }
