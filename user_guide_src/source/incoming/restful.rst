@@ -146,7 +146,7 @@ Its usage is similar to the resource routing::
     $routes->get('photos/edit/(:segment)',    'Photos::edit/$1');
     $routes->post('photos/update/(:segment)', 'Photos::update/$1');
     $routes->get('photos/remove/(:segment)',  'Photos::remove/$1');
-    $routes->post('photos/delete/(:segment)', 'Photos::update/$1');
+    $routes->post('photos/delete/(:segment)', 'Photos::delete/$1');
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
