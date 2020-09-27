@@ -102,7 +102,7 @@ Now that all of the pieces are in place, you would work with the Entity class as
     $userModel->save($user);
 
 You may have noticed that the User class has not set any properties for the columns, but you can still
-access them as if they were public properties. The base class, **CodeIgniter\Entity**, takes care of this for you, as
+access them as if they were public properties. The base class, **CodeIgniter\\Entity**, takes care of this for you, as
 well as providing the ability to check the properties with **isset()**, or **unset()** the property, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
