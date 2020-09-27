@@ -18,7 +18,7 @@ jobs:
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
         db-platforms: ['sqlite', 'mysqli', 'postgres']
