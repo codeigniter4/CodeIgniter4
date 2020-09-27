@@ -357,8 +357,8 @@ the value whenever the property is set::
     {
         protected $casts = [
             'options' => 'array',
-		    'options_object' => 'json',
-		    'options_array' => 'json-array'
+	    'options_object' => 'json',
+	    'options_array' => 'json-array'
         ];
     }
 
