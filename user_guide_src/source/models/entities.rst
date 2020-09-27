@@ -341,7 +341,7 @@ Array/Json casting is especially useful with fields that store serialized arrays
 * a **json**, they will automatically be set as an value of json_decode($value, false),
 * a **json-array**, they will automatically be set as an value of json_decode($value, true),
 
-when you read the property's value.
+when you set the property's value.
 Unlike the rest of the data types that you can cast properties into, the:
 
 * **array** cast type will serialize,
