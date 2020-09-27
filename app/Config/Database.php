@@ -89,13 +89,13 @@ class Database extends Config
 		{
 			$this->defaultGroup = 'tests';
 
-			// Under Travis-CI, we can set an ENV var named 'DB_GROUP'
+			// Under Github Actions, we can set an ENV var named 'DB'
 			// so that we can test against multiple databases.
 			if ($group = getenv('DB'))
 			{
-				if (is_file(TESTPATH . 'travis/Database.php'))
+				if (is_file(TESTPATH . 'tests/_github/Database.php'))
 				{
-					require TESTPATH . 'travis/Database.php';
+					require TESTPATH . 'tests/_github/Database.php';
 
 					if (! empty($dbconfig) && array_key_exists($group, $dbconfig))
 					{

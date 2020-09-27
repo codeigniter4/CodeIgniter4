@@ -4,8 +4,8 @@ $dbconfig = [
 
    'mysqli'   => [
 	   'DSN'      => '',
-	   'hostname' => 'localhost',
-	   'username' => 'travis',
+	   'hostname' => '127.0.0.1',
+	   'username' => 'root',
 	   'password' => '',
 	   'database' => 'test',
 	   'DBDriver' => 'MySQLi',
@@ -19,13 +19,14 @@ $dbconfig = [
 	   'compress' => false,
 	   'strictOn' => false,
 	   'failover' => [],
+	   'port'     => 3306,
    ],
 
    'postgres' => [
 	   'DSN'      => '',
 	   'hostname' => 'localhost',
 	   'username' => 'postgres',
-	   'password' => '',
+	   'password' => 'postgres',
 	   'database' => 'test',
 	   'DBDriver' => 'Postgre',
 	   'DBPrefix' => 'db_',
@@ -38,6 +39,7 @@ $dbconfig = [
 	   'compress' => false,
 	   'strictOn' => false,
 	   'failover' => [],
+	   'port'     => 5432,
    ],
 
    'sqlite'   => [
@@ -57,6 +59,7 @@ $dbconfig = [
 	   'compress' => false,
 	   'strictOn' => false,
 	   'failover' => [],
+	   'port'     => 3306,
    ],
 
 ];
