@@ -48,6 +48,12 @@ before_install:
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - |
+    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.2" ]]; then
+      git clone -b stable https://github.com/jedisct1/libsodium.git
+      cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..
+      printf "\n" | pecl install -f libsodium
+    fi
   - composer install --prefer-source
 
 after_success:

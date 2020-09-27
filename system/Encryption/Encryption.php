@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -50,31 +51,38 @@ use Config\Encryption as EncryptionConfig;
  */
 class Encryption
 {
-
 	/**
 	 * The encrypter we create
 	 *
-	 * @var string
+	 * @var \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	protected $encrypter;
 
 	/**
 	 * The driver being used
+	 *
+	 * @var string
 	 */
 	protected $driver;
 
 	/**
 	 * The key/seed being used
+	 *
+	 * @var string
 	 */
 	protected $key;
 
 	/**
-	 * The derived hmac key
+	 * The derived HMAC key
+	 *
+	 * @var string
 	 */
 	protected $hmacKey;
 
 	/**
 	 * HMAC digest to use
+	 *
+	 * @var string
 	 */
 	protected $digest = 'SHA512';
 
@@ -85,43 +93,56 @@ class Encryption
 	 */
 	protected $drivers = [
 		'OpenSSL',
+		'Sodium',
 	];
 
-	// --------------------------------------------------------------------
+	/**
+	 * Handlers that are to be installed
+	 *
+	 * @var array<string, boolean>
+	 */
+	protected $handlers = [];
 
 	/**
 	 * Class constructor
 	 *
-	 * @param  EncryptionConfig $config Configuration parameters
-	 * @return void
+	 * @param \Config\Encryption $config Configuration parameters
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 *
+	 * @return void
 	 */
 	public function __construct(EncryptionConfig $config = null)
 	{
-		$config = $config ?? new \Config\Encryption();
+		$config = $config ?? new EncryptionConfig();
 
 		$this->key    = $config->key;
 		$this->driver = $config->driver;
 		$this->digest = $config->digest ?? 'SHA512';
 
-		// if any aren't there, bomb
-		if ($this->driver === 'OpenSSL' && ! extension_loaded('openssl'))
+		// Map what we have installed
+		$this->handlers = [
+			'OpenSSL' => extension_loaded('openssl'),
+			// the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
+			'Sodium'  => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
+		];
+
+		// If requested driver is not active, bail
+		if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver]))
 		{
 			// this should never happen in travis-ci
-			// @codeCoverageIgnoreStart
 			throw EncryptionException::forNoHandlerAvailable($this->driver);
-			// @codeCoverageIgnoreEnd
 		}
 	}
 
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param  EncryptionConfig $config Configuration parameters
-	 * @return \CodeIgniter\Encryption\EncrypterInterface
+	 * @param \Config\Encryption $config Configuration parameters
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 *
+	 * @return \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function initialize(EncryptionConfig $config = null)
 	{
@@ -155,15 +176,15 @@ class Encryption
 
 		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($config);
+
 		return $this->encrypter;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Create a random key
 	 *
-	 * @param  integer $length Output length
+	 * @param integer $length Output length
+	 *
 	 * @return string
 	 */
 	public static function createKey($length = 32)
@@ -171,17 +192,16 @@ class Encryption
 		return random_bytes($length);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * __get() magic, providing readonly access to some of our protected properties
 	 *
-	 * @param  string $key Property name
+	 * @param string $key Property name
+	 *
 	 * @return mixed
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['key', 'digest', 'driver', 'drivers'], true))
+		if ($this->__isset($key))
 		{
 			return $this->{$key};
 		}
@@ -199,5 +219,4 @@ class Encryption
 	{
 		return in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
 	}
-
 }

@@ -1,32 +1,43 @@
 <?php
-namespace CodeIgniter\Encrypt;
 
-class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Encryption\Handlers;
+
+use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Encryption as EncryptionConfig;
+
+class OpenSSLHandlerTest extends CIUnitTestCase
 {
+	/**
+	 * @var \CodeIgniter\Encryption\Encryption
+	 */
+	protected $encryption;
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
-		$this->encryption = new \CodeIgniter\Encryption\Encryption();
-	}
+		if (! extension_loaded('openssl'))
+		{
+			$this->markTestSkipped('OpenSSL is not available.');
+		}
 
-	// --------------------------------------------------------------------
+		$this->encryption = new Encryption();
+	}
 
 	/**
 	 * Sanity test
 	 */
 	public function testSanity()
 	{
-		$params         = new \Config\Encryption();
+		$params         = new EncryptionConfig();
 		$params->driver = 'OpenSSL';
 		$params->key    = 'Something other than an empty string';
 
-		$this->encrypter = $this->encryption->initialize($params);
+		$encrypter = $this->encryption->initialize($params);
 
-		$this->assertEquals('AES-256-CTR', $this->encrypter->cipher);
-		$this->assertEquals('Something other than an empty string', $this->encrypter->key);
+		$this->assertEquals('AES-256-CTR', $encrypter->cipher);
+		$this->assertEquals('Something other than an empty string', $encrypter->key);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * initialize(), encrypt(), decrypt() test
@@ -36,7 +47,7 @@ class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testSimple()
 	{
-		$params         = new \Config\Encryption();
+		$params         = new EncryptionConfig();
 		$params->driver = 'OpenSSL';
 		$params->key    = '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c';
 		// Default state (AES-256/Rijndael-256 in CTR mode)
@@ -60,15 +71,15 @@ class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
 
-		$encrypter = new \CodeIgniter\Encryption\Handlers\OpenSSLHandler();
+		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
-		$encrypter->encrypt($message1);
+		$encrypter->encrypt($message1, ['key' => '']);
 	}
 
 	public function testWithKeyString()
 	{
 		$key       = 'abracadabra';
-		$encrypter = new \CodeIgniter\Encryption\Handlers\OpenSSLHandler();
+		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
 		$encoded   = $encrypter->encrypt($message1, $key);
 		$this->assertEquals($message1, $encrypter->decrypt($encoded, $key));
@@ -82,7 +93,7 @@ class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
 
 		$key1      = 'abracadabra';
-		$encrypter = new \CodeIgniter\Encryption\Handlers\OpenSSLHandler();
+		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
 		$encoded   = $encrypter->encrypt($message1, $key1);
 		$this->assertNotEquals($message1, $encoded);
@@ -93,7 +104,7 @@ class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testWithKeyArray()
 	{
 		$key       = 'abracadabra';
-		$encrypter = new \CodeIgniter\Encryption\Handlers\OpenSSLHandler();
+		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
 		$encoded   = $encrypter->encrypt($message1, ['key' => $key]);
 		$this->assertEquals($message1, $encrypter->decrypt($encoded, ['key' => $key]));
@@ -107,12 +118,11 @@ class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
 
 		$key1      = 'abracadabra';
-		$encrypter = new \CodeIgniter\Encryption\Handlers\OpenSSLHandler();
+		$encrypter = new OpenSSLHandler();
 		$message1  = 'This is a plain-text message.';
 		$encoded   = $encrypter->encrypt($message1, ['key' => $key1]);
 		$this->assertNotEquals($message1, $encoded);
 		$key2 = 'Holy cow, batman!';
 		$this->assertNotEquals($message1, $encrypter->decrypt($encoded, ['key' => $key2]));
 	}
-
 }

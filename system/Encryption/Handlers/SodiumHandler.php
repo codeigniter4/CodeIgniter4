@@ -42,24 +42,12 @@ namespace CodeIgniter\Encryption\Handlers;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 
 /**
- * Encryption handling for OpenSSL library
+ * SodiumHandler uses libsodium in encryption.
+ *
+ * @see https://github.com/jedisct1/libsodium/issues/392
  */
-class OpenSSLHandler extends BaseHandler
+class SodiumHandler extends BaseHandler
 {
-	/**
-	 * HMAC digest to use
-	 *
-	 * @var string
-	 */
-	protected $digest = 'SHA512';
-
-	/**
-	 * Cipher to use
-	 *
-	 * @var string
-	 */
-	protected $cipher = 'AES-256-CTR';
-
 	/**
 	 * Starter key
 	 *
@@ -68,46 +56,43 @@ class OpenSSLHandler extends BaseHandler
 	protected $key = '';
 
 	/**
+	 * Block size for padding message.
+	 *
+	 * @var integer
+	 */
+	protected $blockSize = 16;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function encrypt($data, $params = null)
 	{
-		// Allow key override
-		if ($params)
-		{
-			if (is_array($params) && isset($params['key']))
-			{
-				$this->key = $params['key'];
-			}
-			else
-			{
-				$this->key = $params;
-			}
-		}
+		$this->parseParams($params);
 
 		if (empty($this->key))
 		{
 			throw EncryptionException::forNeedsStarterKey();
 		}
 
-		// derive a secret key
-		$secret = \hash_hkdf($this->digest, $this->key);
+		// create a nonce for this operation
+		$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES); // 24 bytes
 
-		// basic encryption
-		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
-
-		$data = \openssl_encrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
-
-		if ($data === false)
+		// add padding before we encrypt the data
+		if ($this->blockSize <= 0)
 		{
 			throw EncryptionException::forEncryptionFailed();
 		}
 
-		$result = $iv . $data;
+		$data = sodium_pad($data, $this->blockSize);
 
-		$hmacKey = \hash_hmac($this->digest, $result, $secret, true);
+		// encrypt message and combine with nonce
+		$ciphertext = $nonce . sodium_crypto_secretbox($data, $nonce, $this->key);
 
-		return $hmacKey . $result;
+		// cleanup buffers
+		sodium_memzero($data);
+		sodium_memzero($this->key);
+
+		return $ciphertext;
 	}
 
 	/**
@@ -115,47 +100,78 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	public function decrypt($data, $params = null)
 	{
-		// Allow key override
-		if ($params)
-		{
-			if (is_array($params) && isset($params['key']))
-			{
-				$this->key = $params['key'];
-			}
-			else
-			{
-				$this->key = $params;
-			}
-		}
+		$this->parseParams($params);
 
 		if (empty($this->key))
 		{
 			throw EncryptionException::forNeedsStarterKey();
 		}
 
-		// derive a secret key
-		$secret = \hash_hkdf($this->digest, $this->key);
+		if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES))
+		{
+			// message was truncated
+			throw EncryptionException::forAuthenticationFailed();
+		}
 
-		$hmacLength = self::substr($this->digest, 3) / 8;
-		$hmacKey    = self::substr($data, 0, $hmacLength);
-		$data       = self::substr($data, $hmacLength);
-		$hmacCalc   = \hash_hmac($this->digest, $data, $secret, true);
+		// Extract info from encrypted data
+		$nonce      = self::substr($data, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+		$ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null);
 
-		if (! hash_equals($hmacKey, $hmacCalc))
+		// decrypt data
+		$data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
+
+		if ($data === false)
+		{
+			// message was tampered in transit
+			throw EncryptionException::forAuthenticationFailed(); // @codeCoverageIgnore
+		}
+
+		// remove extra padding during encryption
+		if ($this->blockSize <= 0)
 		{
 			throw EncryptionException::forAuthenticationFailed();
 		}
 
-		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
+		$data = sodium_unpad($data, $this->blockSize);
+
+		// cleanup buffers
+		sodium_memzero($ciphertext);
+		sodium_memzero($this->key);
+
+		return $data;
+	}
+
+	/**
+	 * Parse the $params before doing assignment.
+	 *
+	 * @param array|string|null $params
+	 *
+	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException If key is empty
+	 *
+	 * @return void
+	 */
+	protected function parseParams($params)
+	{
+		if ($params === null)
 		{
-			$iv   = self::substr($data, 0, $iv_size);
-			$data = self::substr($data, $iv_size);
-		}
-		else
-		{
-			$iv = null;
+			return;
 		}
 
-		return \openssl_decrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
+		if (is_array($params))
+		{
+			if (isset($params['key']))
+			{
+				$this->key = $params['key'];
+			}
+
+			if (isset($params['blockSize']))
+			{
+				$this->blockSize = $params['blockSize'];
+			}
+
+			return;
+		}
+
+		$this->key = (string) $params;
 	}
 }
