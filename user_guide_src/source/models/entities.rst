@@ -102,7 +102,7 @@ Now that all of the pieces are in place, you would work with the Entity class as
     $userModel->save($user);
 
 You may have noticed that the User class has not set any properties for the columns, but you can still
-access them as if they were public properties. The base class, **CodeIgniter\Entity**, takes care of this for you, as
+access them as if they were public properties. The base class, **CodeIgniter\\Entity**, takes care of this for you, as
 well as providing the ability to check the properties with **isset()**, or **unset()** the property, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
@@ -341,7 +341,7 @@ Array/Json casting is especially useful with fields that store serialized arrays
 * a **json**, they will automatically be set as an value of json_decode($value, false),
 * a **json-array**, they will automatically be set as an value of json_decode($value, true),
 
-when you read the property's value.
+when you set the property's value.
 Unlike the rest of the data types that you can cast properties into, the:
 
 * **array** cast type will serialize,
@@ -357,8 +357,8 @@ the value whenever the property is set::
     {
         protected $casts = [
             'options' => 'array',
-		    'options_object' => 'json',
-		    'options_array' => 'json-array'
+	    'options_object' => 'json',
+	    'options_array' => 'json-array'
         ];
     }
 
