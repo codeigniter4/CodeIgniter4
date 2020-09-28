@@ -133,6 +133,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 	];
 
 	/**
+	 * Image types with support for transparency.
+	 *
+	 * @var array
+	 */
+	protected $supportTransparency = [
+		IMAGETYPE_PNG,
+		IMAGETYPE_WEBP,
+	];
+
+	/**
 	 * Temporary image used by the different engines.
 	 *
 	 * @var resource|null
