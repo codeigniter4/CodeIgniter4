@@ -246,7 +246,8 @@ class GDHandler extends BaseHandler
 
 		$dest = $create($this->width, $this->height);
 
-		if ($this->image()->imageType === IMAGETYPE_PNG) // png we can actually preserve transparency
+		// for png and webp we can actually preserve transparency
+		if (in_array($this->image()->imageType, [IMAGETYPE_PNG, IMAGETYPE_WEBP], true))
 		{
 			imagealphablending($dest, false);
 			imagesavealpha($dest, true);
