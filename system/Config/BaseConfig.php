@@ -107,13 +107,7 @@ class BaseConfig
 			}
 		}
 
-		if (defined('ENVIRONMENT') && ENVIRONMENT !== 'testing')
-		{
-			// well, this won't happen during unit testing
-			// @codeCoverageIgnoreStart
-			$this->registerProperties();
-			// @codeCoverageIgnoreEnd
-		}
+		$this->registerProperties();
 	}
 
 	//--------------------------------------------------------------------
