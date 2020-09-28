@@ -6,7 +6,7 @@
  * Provides a basic registrar class for testing BaseConfig registration functions.
  */
 
-class Registrar
+class TestRegistrar
 {
 
 	public static function RegistrarConfig()

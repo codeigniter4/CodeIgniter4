@@ -227,7 +227,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRegistrars()
 	{
 		$config              = new \RegistrarConfig();
-		$config::$registrars = ['\Tests\Support\Config\Registrar'];
+		$config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
