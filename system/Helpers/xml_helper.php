@@ -49,10 +49,10 @@ if (! function_exists('xml_convert'))
 	 * Convert Reserved XML characters to Entities
 	 *
 	 * @param  string  $str
-	 * @param  boolean $protect_all
+	 * @param  boolean $protectAll
 	 * @return string
 	 */
-	function xml_convert(string $str, bool $protect_all = false): string
+	function xml_convert(string $str, bool $protectAll = false): string
 	{
 		$temp = '__TEMP_AMPERSANDS__';
 
@@ -60,7 +60,7 @@ if (! function_exists('xml_convert'))
 		// ampersands won't get messed up
 		$str = preg_replace('/&#(\d+);/', $temp . '\\1;', $str);
 
-		if ($protect_all === true)
+		if ($protectAll === true)
 		{
 			$str = preg_replace('/&(\w+);/', $temp . '\\1;', $str);
 		}
@@ -88,7 +88,7 @@ if (! function_exists('xml_convert'))
 		// Decode the temp markers back to entities
 		$str = preg_replace('/' . $temp . '(\d+);/', '&#\\1;', $str);
 
-		if ($protect_all === true)
+		if ($protectAll === true)
 		{
 			return preg_replace('/' . $temp . '(\w+);/', '&\\1;', $str);
 		}

@@ -17,17 +17,17 @@ if (! function_exists('is_cli'))
 	 * Test to see if a request was made from the command line.
 	 * You can set the return value for testing.
 	 *
-	 * @param  boolean $new_return return value to set
+	 * @param  boolean $newReturn return value to set
 	 * @return boolean
 	 */
-	function is_cli(bool $new_return = null): bool
+	function is_cli(bool $newReturn = null): bool
 	{
 		// PHPUnit always runs via CLI.
 		static $returnValue = true;
 
-		if ($new_return !== null)
+		if ($newReturn !== null)
 		{
-			$returnValue = $new_return;
+			$returnValue = $newReturn;
 		}
 
 		return $returnValue;

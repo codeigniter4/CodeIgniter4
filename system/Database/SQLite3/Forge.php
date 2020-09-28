@@ -145,19 +145,18 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param string $alter_type ALTER type
-	 * @param string $table      Table name
-	 * @param mixed  $field      Column definition
+	 * @param string $alterType ALTER type
+	 * @param string $table     Table name
+	 * @param mixed  $field     Column definition
 	 *
 	 * @return string|array|null
 	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
+	protected function _alterTable(string $alterType, string $table, $field)
 	{
-		switch ($alter_type)
+		switch ($alterType)
 		{
 			case 'DROP':
 				$sqlTable = new Table($this->db, $this);
@@ -176,7 +175,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 				return null;
 			default:
-				return parent::_alterTable($alter_type, $table, $field);
+				return parent::_alterTable($alterType, $table, $field);
 		}
 	}
 

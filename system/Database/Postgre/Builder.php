@@ -233,7 +233,6 @@ class Builder extends BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Delete
 	 *
@@ -241,7 +240,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @param mixed   $where
 	 * @param integer $limit
-	 * @param boolean $reset_data
+	 * @param boolean $resetData
 	 *
 	 * @return   mixed
 	 * @throws   DatabaseException
@@ -249,14 +248,14 @@ class Builder extends BaseBuilder
 	 * @internal param the $mixed limit clause
 	 * @internal param $bool
 	 */
-	public function delete($where = '', int $limit = null, bool $reset_data = true)
+	public function delete($where = '', int $limit = null, bool $resetData = true)
 	{
 		if (! empty($limit) || ! empty($this->QBLimit))
 		{
 			throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
 		}
 
-		return parent::delete($where, $limit, $reset_data);
+		return parent::delete($where, $limit, $resetData);
 	}
 
 	//--------------------------------------------------------------------

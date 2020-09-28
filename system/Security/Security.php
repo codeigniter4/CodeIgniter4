@@ -397,7 +397,6 @@ class Security
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sanitize Filename
 	 *
@@ -409,16 +408,16 @@ class Security
 	 * e.g. file/in/some/approved/folder.txt, you can set the second optional
 	 * parameter, $relative_path to TRUE.
 	 *
-	 * @param string  $str           Input file name
-	 * @param boolean $relative_path Whether to preserve paths
+	 * @param string  $str          Input file name
+	 * @param boolean $relativePath Whether to preserve paths
 	 *
 	 * @return string
 	 */
-	public function sanitizeFilename(string $str, bool $relative_path = false): string
+	public function sanitizeFilename(string $str, bool $relativePath = false): string
 	{
 		$bad = $this->filenameBadChars;
 
-		if (! $relative_path)
+		if (! $relativePath)
 		{
 			$bad[] = './';
 			$bad[] = '/';

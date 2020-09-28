@@ -316,30 +316,29 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Destroy
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param string $session_id Session ID
+	 * @param string $sessionId Session ID
 	 *
 	 * @return boolean
 	 */
-	public function destroy($session_id): bool
+	public function destroy($sessionId): bool
 	{
 		if ($this->close())
 		{
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $sessionId)
+				? (unlink($this->filePath . $sessionId) && $this->destroyCookie()) : true;
 		}
 
 		if ($this->filePath !== null)
 		{
 			clearstatcache();
 
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $sessionId)
+				? (unlink($this->filePath . $sessionId) && $this->destroyCookie()) : true;
 		}
 
 		return false;

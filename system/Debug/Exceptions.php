@@ -227,21 +227,20 @@ class Exceptions
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the view to display based on the exception thrown,
 	 * whether an HTTP or CLI request, etc.
 	 *
 	 * @param \Throwable $exception
-	 * @param string     $template_path
+	 * @param string     $templatePath
 	 *
 	 * @return string       The path and filename of the view file to use
 	 */
-	protected function determineView(Throwable $exception, string $template_path): string
+	protected function determineView(Throwable $exception, string $templatePath): string
 	{
 		// Production environments should have a custom exception file.
-		$view          = 'production.php';
-		$template_path = rtrim($template_path, '\\/ ') . DIRECTORY_SEPARATOR;
+		$view         = 'production.php';
+		$templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
 
 		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
 		{
@@ -255,7 +254,7 @@ class Exceptions
 		}
 
 		// Allow for custom views based upon the status code
-		if (is_file($template_path . 'error_' . $exception->getCode() . '.php'))
+		if (is_file($templatePath . 'error_' . $exception->getCode() . '.php'))
 		{
 			return 'error_' . $exception->getCode() . '.php';
 		}

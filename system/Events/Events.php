@@ -126,7 +126,6 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
@@ -136,15 +135,15 @@ class Events
 	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
 	 *  Events::on('create', function() {});              // Closure
 	 *
-	 * @param string   $event_name
+	 * @param string   $eventName
 	 * @param callable $callback
 	 * @param integer  $priority
 	 */
-	public static function on($event_name, $callback, $priority = EVENT_PRIORITY_NORMAL)
+	public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
-		if (! isset(static::$listeners[$event_name]))
+		if (! isset(static::$listeners[$eventName]))
 		{
-			static::$listeners[$event_name] = [
+			static::$listeners[$eventName] = [
 				true, // If there's only 1 item, it's sorted.
 				[$priority],
 				[$callback],
@@ -152,9 +151,9 @@ class Events
 		}
 		else
 		{
-			static::$listeners[$event_name][0]   = false; // Not sorted
-			static::$listeners[$event_name][1][] = $priority;
-			static::$listeners[$event_name][2][] = $callback;
+			static::$listeners[$eventName][0]   = false; // Not sorted
+			static::$listeners[$eventName][1][] = $priority;
+			static::$listeners[$eventName][2][] = $callback;
 		}
 	}
 
@@ -206,7 +205,6 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of listeners for a single event. They are
 	 * sorted by priority.
@@ -214,56 +212,55 @@ class Events
 	 * If the listener could not be found, returns FALSE, or TRUE if
 	 * it was removed.
 	 *
-	 * @param string $event_name
+	 * @param string $eventName
 	 *
 	 * @return array
 	 */
-	public static function listeners($event_name): array
+	public static function listeners($eventName): array
 	{
-		if (! isset(static::$listeners[$event_name]))
+		if (! isset(static::$listeners[$eventName]))
 		{
 			return [];
 		}
 
 		// The list is not sorted
-		if (! static::$listeners[$event_name][0])
+		if (! static::$listeners[$eventName][0])
 		{
 			// Sort it!
-			array_multisort(static::$listeners[$event_name][1], SORT_NUMERIC, static::$listeners[$event_name][2]);
+			array_multisort(static::$listeners[$eventName][1], SORT_NUMERIC, static::$listeners[$eventName][2]);
 
 			// Mark it as sorted already!
-			static::$listeners[$event_name][0] = true;
+			static::$listeners[$eventName][0] = true;
 		}
 
-		return static::$listeners[$event_name][2];
+		return static::$listeners[$eventName][2];
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Removes a single listener from an event.
 	 *
 	 * If the listener couldn't be found, returns FALSE, else TRUE if
 	 * it was removed.
 	 *
-	 * @param string   $event_name
+	 * @param string   $eventName
 	 * @param callable $listener
 	 *
 	 * @return boolean
 	 */
-	public static function removeListener($event_name, callable $listener): bool
+	public static function removeListener($eventName, callable $listener): bool
 	{
-		if (! isset(static::$listeners[$event_name]))
+		if (! isset(static::$listeners[$eventName]))
 		{
 			return false;
 		}
 
-		foreach (static::$listeners[$event_name][2] as $index => $check)
+		foreach (static::$listeners[$eventName][2] as $index => $check)
 		{
 			if ($check === $listener)
 			{
-				unset(static::$listeners[$event_name][1][$index]);
-				unset(static::$listeners[$event_name][2][$index]);
+				unset(static::$listeners[$eventName][1][$index]);
+				unset(static::$listeners[$eventName][2][$index]);
 
 				return true;
 			}
@@ -273,20 +270,19 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Removes all listeners.
 	 *
 	 * If the event_name is specified, only listeners for that event will be
 	 * removed, otherwise all listeners for all events are removed.
 	 *
-	 * @param string|null $event_name
+	 * @param string|null $eventName
 	 */
-	public static function removeAllListeners($event_name = null)
+	public static function removeAllListeners($eventName = null)
 	{
-		if (! is_null($event_name))
+		if (! is_null($eventName))
 		{
-			unset(static::$listeners[$event_name]);
+			unset(static::$listeners[$eventName]);
 		}
 		else
 		{

@@ -745,7 +745,6 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * WHERE, HAVING
 	 *
@@ -754,7 +753,7 @@ class BaseBuilder
 	 * @used-by having()
 	 * @used-by orHaving()
 	 *
-	 * @param string  $qb_key 'QBWhere' or 'QBHaving'
+	 * @param string  $qbKey  'QBWhere' or 'QBHaving'
 	 * @param mixed   $key
 	 * @param mixed   $value
 	 * @param string  $type
@@ -762,7 +761,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function whereHaving(string $qb_key, $key, $value = null, string $type = 'AND ', bool $escape = null)
+	protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
 	{
 		if (! is_array($key))
 		{
@@ -774,7 +773,7 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$prefix = empty($this->$qb_key) ? $this->groupGetType('') : $this->groupGetType($type);
+			$prefix = empty($this->$qbKey) ? $this->groupGetType('') : $this->groupGetType($type);
 
 			if ($v !== null)
 			{
@@ -815,7 +814,7 @@ class BaseBuilder
 					$v = " :$bind:";
 				}
 			}
-			elseif (! $this->hasOperator($k) && $qb_key !== 'QBHaving')
+			elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving')
 			{
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
@@ -825,7 +824,7 @@ class BaseBuilder
 				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$this->{$qb_key}[] = [
+			$this->{$qbKey}[] = [
 				'condition' => $prefix . $k . $v,
 				'escape'    => $escape,
 			];
@@ -2803,20 +2802,19 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Delete
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param mixed   $where      The where clause
-	 * @param integer $limit      The limit clause
-	 * @param boolean $reset_data
+	 * @param mixed   $where     The where clause
+	 * @param integer $limit     The limit clause
+	 * @param boolean $resetData
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function delete($where = '', int $limit = null, bool $reset_data = true)
+	public function delete($where = '', int $limit = null, bool $resetData = true)
 	{
 		$table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 
@@ -2853,7 +2851,7 @@ class BaseBuilder
 			$sql = $this->_limit($sql, true);
 		}
 
-		if ($reset_data)
+		if ($resetData)
 		{
 			$this->resetWrite();
 		}
@@ -2959,23 +2957,22 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Compile the SELECT statement
 	 *
 	 * Generates a query string based on which functions were used.
 	 * Should not be called directly.
 	 *
-	 * @param mixed $select_override
+	 * @param mixed $selectOverride
 	 *
 	 * @return string
 	 */
-	protected function compileSelect($select_override = false): string
+	protected function compileSelect($selectOverride = false): string
 	{
 		// Write the "select" portion of the query
-		if ($select_override !== false)
+		if ($selectOverride !== false)
 		{
-			$sql = $select_override;
+			$sql = $selectOverride;
 		}
 		else
 		{
@@ -3052,7 +3049,6 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Compile WHERE, HAVING statements
 	 *
@@ -3062,15 +3058,15 @@ class BaseBuilder
 	 * where(), orWhere(), having(), orHaving are called prior to from(),
 	 * join() and prefixTable is added only if needed.
 	 *
-	 * @param string $qb_key 'QBWhere' or 'QBHaving'
+	 * @param string $qbKey 'QBWhere' or 'QBHaving'
 	 *
 	 * @return string    SQL statement
 	 */
-	protected function compileWhereHaving(string $qb_key): string
+	protected function compileWhereHaving(string $qbKey): string
 	{
-		if (! empty($this->$qb_key))
+		if (! empty($this->$qbKey))
 		{
-			foreach ($this->$qb_key as &$qbkey)
+			foreach ($this->$qbKey as &$qbkey)
 			{
 				// Is this condition already compiled?
 				if (is_string($qbkey))
@@ -3129,8 +3125,8 @@ class BaseBuilder
 				$qbkey = implode('', $conditions);
 			}
 
-			return ($qb_key === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
-					. implode("\n", $this->$qb_key);
+			return ($qbKey === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
+					. implode("\n", $this->$qbKey);
 		}
 
 		return '';
@@ -3328,17 +3324,16 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Resets the query builder values.  Called by the get() function
 	 *
-	 * @param array $qb_reset_items An array of fields to reset
+	 * @param array $qbResetItems An array of fields to reset
 	 *
 	 * @return void
 	 */
-	protected function resetRun(array $qb_reset_items)
+	protected function resetRun(array $qbResetItems)
 	{
-		foreach ($qb_reset_items as $item => $defaultValue)
+		foreach ($qbResetItems as $item => $defaultValue)
 		{
 			$this->$item = $defaultValue;
 		}

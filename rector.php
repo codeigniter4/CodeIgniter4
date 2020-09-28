@@ -2,7 +2,7 @@
 
 use Rector\Core\Configuration\Option;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Utils\Rector\UnderscoreToCamelCaseLocalVariableNameRector;
+use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
@@ -25,5 +25,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	]);
 
 	$services = $containerConfigurator->services();
-	$services->set(UnderscoreToCamelCaseLocalVariableNameRector::class);
+	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
 };

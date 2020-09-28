@@ -201,19 +201,18 @@ class BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Reset shared instances and mocks for testing.
 	 *
-	 * @param boolean $init_autoloader Initializes autoloader instance
+	 * @param boolean $initAutoloader Initializes autoloader instance
 	 */
-	public static function reset(bool $init_autoloader = false)
+	public static function reset(bool $initAutoloader = false)
 	{
 		static::$mocks = [];
 
 		static::$instances = [];
 
-		if ($init_autoloader)
+		if ($initAutoloader)
 		{
 			static::autoloader()->initialize(new Autoload(), new Modules());
 		}

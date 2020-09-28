@@ -97,21 +97,20 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param string $alter_type ALTER type
-	 * @param string $table      Table name
-	 * @param mixed  $field      Column definition
+	 * @param string $alterType ALTER type
+	 * @param string $table     Table name
+	 * @param mixed  $field     Column definition
 	 *
 	 * @return string|array|boolean
 	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
+	protected function _alterTable(string $alterType, string $table, $field)
 	{
-		if (in_array($alter_type, ['DROP', 'ADD'], true))
+		if (in_array($alterType, ['DROP', 'ADD'], true))
 		{
-			return parent::_alterTable($alter_type, $table, $field);
+			return parent::_alterTable($alterType, $table, $field);
 		}
 
 		$sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
@@ -232,21 +231,20 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Drop Table
 	 *
 	 * Generates a platform-specific DROP TABLE string
 	 *
-	 * @param string  $table     Table name
-	 * @param boolean $if_exists Whether to add an IF EXISTS condition
+	 * @param string  $table    Table name
+	 * @param boolean $ifExists Whether to add an IF EXISTS condition
 	 * @param boolean $cascade
 	 *
 	 * @return string
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
+	protected function _dropTable(string $table, bool $ifExists, bool $cascade): string
 	{
-		$sql = parent::_dropTable($table, $if_exists, $cascade);
+		$sql = parent::_dropTable($table, $ifExists, $cascade);
 
 		if ($cascade === true)
 		{
