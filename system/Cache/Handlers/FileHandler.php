@@ -373,7 +373,6 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Delete Files
 	 *
@@ -382,14 +381,14 @@ class FileHandler implements CacheInterface
 	 * If the second parameter is set to TRUE, any directories contained
 	 * within the supplied base directory will be nuked as well.
 	 *
-	 * @param string  $path    File path
-	 * @param boolean $del_dir Whether to delete any directories found in the path
-	 * @param boolean $htdocs  Whether to skip deleting .htaccess and index page files
-	 * @param integer $_level  Current directory depth level (default: 0; internal use only)
+	 * @param string  $path   File path
+	 * @param boolean $delDir Whether to delete any directories found in the path
+	 * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
+	 * @param integer $_level Current directory depth level (default: 0; internal use only)
 	 *
 	 * @return boolean
 	 */
-	protected function deleteFiles(string $path, bool $del_dir = false, bool $htdocs = false, int $_level = 0): bool
+	protected function deleteFiles(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
 	{
 		// Trim the trailing slash
 		$path = rtrim($path, '/\\');
@@ -405,7 +404,7 @@ class FileHandler implements CacheInterface
 			{
 				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
-					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $del_dir, $htdocs, $_level + 1);
+					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
 				}
 				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
@@ -416,11 +415,10 @@ class FileHandler implements CacheInterface
 
 		closedir($currentDir);
 
-		return ($del_dir === true && $_level > 0) ? @rmdir($path) : true;
+		return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Get Directory File Information
 	 *
@@ -429,36 +427,36 @@ class FileHandler implements CacheInterface
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $source_dir     Path to source
-	 * @param boolean $top_level_only Look only at the top level directory specified?
-	 * @param boolean $_recursion     Internal variable to determine recursion status - do not use in calls
+	 * @param string  $sourceDir    Path to source
+	 * @param boolean $topLevelOnly Look only at the top level directory specified?
+	 * @param boolean $_recursion   Internal variable to determine recursion status - do not use in calls
 	 *
 	 * @return array|false
 	 */
-	protected function getDirFileInfo(string $source_dir, bool $top_level_only = true, bool $_recursion = false)
+	protected function getDirFileInfo(string $sourceDir, bool $topLevelOnly = true, bool $_recursion = false)
 	{
 		static $_filedata = [];
-		$relativePath     = $source_dir;
+		$relativePath     = $sourceDir;
 
-		if ($fp = @opendir($source_dir))
+		if ($fp = @opendir($sourceDir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($_recursion === false)
 			{
-				$_filedata  = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$_filedata = [];
+				$sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
 			while (false !== ($file = readdir($fp)))
 			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+				if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false)
 				{
-					$this->getDirFileInfo($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
+					$this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
 				}
 				elseif ($file[0] !== '.')
 				{
-					$_filedata[$file]                  = $this->getFileInfo($source_dir . $file);
+					$_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
 					$_filedata[$file]['relative_path'] = $relativePath;
 				}
 			}
@@ -472,7 +470,6 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Get File Info
 	 *
@@ -481,24 +478,24 @@ class FileHandler implements CacheInterface
 	 * Options are: name, server_path, size, date, readable, writable, executable, fileperms
 	 * Returns FALSE if the file cannot be found.
 	 *
-	 * @param string $file            Path to file
-	 * @param mixed  $returned_values Array or comma separated string of information returned
+	 * @param string $file           Path to file
+	 * @param mixed  $returnedValues Array or comma separated string of information returned
 	 *
 	 * @return array|false
 	 */
-	protected function getFileInfo(string $file, $returned_values = ['name', 'server_path', 'size', 'date'])
+	protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
 	{
 		if (! is_file($file))
 		{
 			return false;
 		}
 
-		if (is_string($returned_values))
+		if (is_string($returnedValues))
 		{
-			$returned_values = explode(',', $returned_values);
+			$returnedValues = explode(',', $returnedValues);
 		}
 
-		foreach ($returned_values as $key)
+		foreach ($returnedValues as $key)
 		{
 			switch ($key)
 			{

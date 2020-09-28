@@ -133,17 +133,16 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
 	 * Sanitizes save_path and initializes connection.
 	 *
-	 * @param  string $save_path Server path
-	 * @param  string $name      Session cookie name, unused
+	 * @param  string $savePath Server path
+	 * @param  string $name     Session cookie name, unused
 	 * @return boolean
 	 */
-	public function open($save_path, $name): bool
+	public function open($savePath, $name): bool
 	{
 		if (empty($this->savePath))
 		{

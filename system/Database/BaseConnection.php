@@ -762,21 +762,20 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Start Transaction
 	 *
-	 * @param  boolean $test_mode = FALSE
+	 * @param  boolean $testMode = FALSE
 	 * @return boolean
 	 */
-	public function transStart(bool $test_mode = false): bool
+	public function transStart(bool $testMode = false): bool
 	{
 		if (! $this->transEnabled)
 		{
 			return false;
 		}
 
-		return $this->transBegin($test_mode);
+		return $this->transBegin($testMode);
 	}
 
 	//--------------------------------------------------------------------
@@ -826,14 +825,13 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @param  boolean $test_mode
+	 * @param  boolean $testMode
 	 * @return boolean
 	 */
-	public function transBegin(bool $test_mode = false): bool
+	public function transBegin(bool $testMode = false): bool
 	{
 		if (! $this->transEnabled)
 		{
@@ -855,7 +853,7 @@ abstract class BaseConnection implements ConnectionInterface
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
-		$this->transFailure = ($test_mode === true);
+		$this->transFailure = ($testMode === true);
 
 		if ($this->_transBegin())
 		{

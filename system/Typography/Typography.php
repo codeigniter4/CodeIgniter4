@@ -99,11 +99,11 @@ class Typography
 	 *  - Converts two spaces into entities
 	 *
 	 * @param string  $str
-	 * @param boolean $reduce_linebreaks whether to reduce more then two consecutive newlines to two
+	 * @param boolean $reduceLinebreaks whether to reduce more then two consecutive newlines to two
 	 *
 	 * @return string
 	 */
-	public function autoTypography(string $str, bool $reduce_linebreaks = false): string
+	public function autoTypography(string $str, bool $reduceLinebreaks = false): string
 	{
 		if ($str === '')
 		{
@@ -118,7 +118,7 @@ class Typography
 
 		// Reduce line breaks.  If there are more than two consecutive linebreaks
 		// we'll compress them down to a maximum of two since there's no benefit to more.
-		if ($reduce_linebreaks === false)
+		if ($reduceLinebreaks === false)
 		{
 			$str = preg_replace("/\n\n+/", "\n\n", $str);
 		}
@@ -254,7 +254,7 @@ class Typography
 		];
 
 		// Do we need to reduce empty lines?
-		if ($reduce_linebreaks === true)
+		if ($reduceLinebreaks === true)
 		{
 			$table['#<p>\n*</p>#'] = '';
 		}

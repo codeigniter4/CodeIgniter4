@@ -497,19 +497,19 @@ class Mimes
 	 * Attempts to determine the best file extension for a given mime type.
 	 *
 	 * @param string      $type
-	 * @param string|null $proposed_extension - default extension (in case there is more than one with the same mime type)
+	 * @param string|null $proposedExtension - default extension (in case there is more than one with the same mime type)
 	 *
 	 * @return string|null The extension determined, or null if unable to match.
 	 */
-	public static function guessExtensionFromType(string $type, string $proposed_extension = null)
+	public static function guessExtensionFromType(string $type, string $proposedExtension = null)
 	{
 		$type = trim(strtolower($type), '. ');
 
-		$proposed_extension = trim(strtolower($proposed_extension));
+		$proposedExtension = trim(strtolower($proposedExtension));
 
-		if ($proposed_extension !== '' && array_key_exists($proposed_extension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposed_extension]) ? [static::$mimes[$proposed_extension]] : static::$mimes[$proposed_extension]))
+		if ($proposedExtension !== '' && array_key_exists($proposedExtension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposedExtension]) ? [static::$mimes[$proposedExtension]] : static::$mimes[$proposedExtension]))
 		{
-			return $proposed_extension;
+			return $proposedExtension;
 		}
 
 		foreach (static::$mimes as $ext => $types)

@@ -813,7 +813,6 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a string and writes it to the command line, wrapping to a maximum
 	 * width. If no maximum width is specified, will wrap to the window's max
@@ -825,11 +824,11 @@ class CLI
 	 *
 	 * @param string  $string
 	 * @param integer $max
-	 * @param integer $pad_left
+	 * @param integer $padLeft
 	 *
 	 * @return string
 	 */
-	public static function wrap(string $string = null, int $max = 0, int $pad_left = 0): string
+	public static function wrap(string $string = null, int $max = 0, int $padLeft = 0): string
 	{
 		if (empty($string))
 		{
@@ -846,20 +845,20 @@ class CLI
 			$max = CLI::getWidth();
 		}
 
-		$max = $max - $pad_left;
+		$max = $max - $padLeft;
 
 		$lines = wordwrap($string, $max, PHP_EOL);
 
-		if ($pad_left > 0)
+		if ($padLeft > 0)
 		{
 			$lines = explode(PHP_EOL, $lines);
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
+			array_walk($lines, function (&$line, $index) use ($padLeft, &$first) {
 				if (! $first)
 				{
-					$line = str_repeat(' ', $pad_left) . $line;
+					$line = str_repeat(' ', $padLeft) . $line;
 				}
 				else
 				{

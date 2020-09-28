@@ -107,18 +107,17 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
 	 * Sanitizes save_path and initializes connections.
 	 *
-	 * @param string $save_path Server path(s)
-	 * @param string $name      Session cookie name, unused
+	 * @param string $savePath Server path(s)
+	 * @param string $name     Session cookie name, unused
 	 *
 	 * @return boolean
 	 */
-	public function open($save_path, $name): bool
+	public function open($savePath, $name): bool
 	{
 		$this->memcached = new \Memcached();
 		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
@@ -280,21 +279,20 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Destroy
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param string $session_id Session ID
+	 * @param string $sessionId Session ID
 	 *
 	 * @return boolean
 	 */
-	public function destroy($session_id): bool
+	public function destroy($sessionId): bool
 	{
 		if (isset($this->memcached, $this->lockKey))
 		{
-			$this->memcached->delete($this->keyPrefix . $session_id);
+			$this->memcached->delete($this->keyPrefix . $sessionId);
 
 			return $this->destroyCookie();
 		}

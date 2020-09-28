@@ -6,13 +6,10 @@ namespace Utils\Rector;
 
 use Nette\Utils\Strings;
 use PhpParser\Node;
-use PhpParser\Node\Arg;
-use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Variable;
-use PhpParser\Node\Param;
-use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
+use Rector\BetterPhpDocParser\PhpDocManipulator\PropertyDocBlockManipulator;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
 use Rector\Core\RectorDefinition\CodeSample;
@@ -21,26 +18,40 @@ use Rector\Core\Util\StaticRectorStrings;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 
 /**
- * Adapted from https://github.com/rectorphp/rector/blob/master/rules/coding-style/src/Rector/Variable/UnderscoreToCamelCaseLocalVariableNameRector.php
- * with skip _ in first character
+ * Adapted from https://github.com/rectorphp/rector/blob/master/rules/coding-style/src/Rector/Variable/UnderscoreToCamelCaseVariableNameRector.php
+ * with skip _ in first character\
  */
-final class UnderscoreToCamelCaseLocalVariableNameRector extends AbstractRector
+final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 {
+	/**
+	 * @var string
+	 * @see https://regex101.com/r/OtFn8I/1
+	 */
+	private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
+
+	/**
+	 * @var PropertyDocBlockManipulator
+	 */
+	private $propertyDocBlockManipulator;
+
 	/**
 	 * @var ReservedKeywordAnalyzer
 	 */
 	private $reservedKeywordAnalyzer;
 
-	public function __construct(ReservedKeywordAnalyzer $reservedKeywordAnalyzer)
+	public function __construct(
+		PropertyDocBlockManipulator $propertyDocBlockManipulator,
+		ReservedKeywordAnalyzer $reservedKeywordAnalyzer
+	)
 	{
-		$this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
+		$this->propertyDocBlockManipulator = $propertyDocBlockManipulator;
+		$this->reservedKeywordAnalyzer     = $reservedKeywordAnalyzer;
 	}
 
 	public function getDefinition(): RectorDefinition
 	{
-		return new RectorDefinition(
-			'Change under_score local variable names to camelCase', [
-				new CodeSample(
+		return new RectorDefinition('Change under_score names to camelCase', [
+			new CodeSample(
 				<<<'CODE_SAMPLE'
 final class SomeClass
 {
@@ -50,18 +61,18 @@ final class SomeClass
     }
 }
 CODE_SAMPLE
-				,
+,
 				<<<'CODE_SAMPLE'
 final class SomeClass
 {
-    public function run($a_b)
+    public function run($aB)
     {
-        $someValue = $a_b;
+        $someValue = $aB;
     }
 }
 CODE_SAMPLE
 			),
-			]);
+		]);
 	}
 
 	/**
@@ -104,30 +115,13 @@ CODE_SAMPLE
 			return null;
 		}
 
-		$parentNode = $node->getAttribute(AttributeKey::PARENT_NODE);
-		if ($parentNode instanceof Expr && $this->isFoundInParentNode($node))
-		{
-			return null;
-		}
-
-		if (($parentNode instanceof Arg || $parentNode instanceof Param || $parentNode instanceof Stmt)
-			&& $this->isFoundInParentNode($node)
-		)
-		{
-			return null;
-		}
-
-		if ($this->isFoundInPreviousNode($node))
-		{
-			return null;
-		}
-
 		$node->name = $camelCaseName;
+		$this->updateDocblock($node, $nodeName, $camelCaseName);
 
 		return $node;
 	}
 
-	private function isFoundInParentNode(Variable $variable): bool
+	private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
 	{
 		$parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
 		while ($parentNode)
@@ -144,24 +138,30 @@ CODE_SAMPLE
 
 		if ($parentNode === null)
 		{
-			return false;
+			return;
 		}
 
-		$params = $parentNode->getParams();
-		foreach ($params as $param)
+		$docComment = $parentNode->getDocComment();
+		if ($docComment === null)
 		{
-			if ($param->var->name === $variable->name)
-			{
-				return true;
-			}
+			return;
 		}
 
-		return false;
-	}
+		$docCommentText = $docComment->getText();
+		if ($docCommentText === null)
+		{
+			return;
+		}
 
-	private function isFoundInPreviousNode(Variable $variable): bool
-	{
-		$previousNode = $variable->getAttribute(AttributeKey::PREVIOUS_NODE);
-		return $previousNode instanceof Expr && $this->isFoundInParentNode($variable);
+		if (! $match = Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
+		{
+			return;
+		}
+
+		$this->propertyDocBlockManipulator->renameParameterNameInDocBlock(
+			$parentNode,
+			$match['paramName'],
+			$camelCaseName
+		);
 	}
 }
