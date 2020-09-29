@@ -17,6 +17,7 @@
 	"require-dev": {
 		"codeigniter4/codeigniter4-standard": "^1.0",
 		"fzaninotto/faker": "^1.9@dev",
+		"migrify/php-config-printer": "^0.3.48",
 		"mikey179/vfsstream": "1.6.*",
 		"nette/utils": "^3.1",
 		"phpstan/phpstan": "^0.12",

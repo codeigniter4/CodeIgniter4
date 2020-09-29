@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 	$parameters->set(Option::SKIP, [
 		// skipped for UnderscoreToCamelCaseVariableNameRector rule
-		// as the underscored variable removed in 4.1 branch
+		// as the underscored variable in system/Autoloader/Autoloader.php removed in 4.1 branch
 		UnderscoreToCamelCaseVariableNameRector::class => [__DIR__ . '/system/Autoloader/Autoloader.php'],
 	]);
 };
