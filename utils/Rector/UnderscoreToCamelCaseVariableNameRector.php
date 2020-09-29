@@ -18,7 +18,7 @@ use Rector\Core\Util\StaticRectorStrings;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 
 /**
- * Adapted from https://github.com/rectorphp/rector/blob/master/rules/coding-style/src/Rector/Variable/UnderscoreToCamelCaseVariableNameRector.php
+ * Adapted from https://github.com/rectorphp/rector/blob/4578e6d8490c1acfbf59bb17c4537a672fa77193/rules/naming/src/Rector/Variable/UnderscoreToCamelCaseVariableNameRector.php
  * with skip _ in first character\
  */
 final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
