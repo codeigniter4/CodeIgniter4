@@ -36,7 +36,7 @@
  * @filesource
  */
 
-namespace App\Commands;
+namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
