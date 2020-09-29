@@ -89,14 +89,13 @@ jobs:
           TERM: xterm-256color
 
       - name: Run Coveralls
-        if: ${{ success() }}
         run: |
           composer global require twinh/php-coveralls
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: php-${{ matrix.php-versions }}
+          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }}
 
   coveralls-finish:
     needs: [tests]
