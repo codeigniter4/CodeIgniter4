@@ -13,7 +13,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	// is there a file you need to skip?
 	$parameters->set(Option::EXCLUDE_PATHS, [
 		__DIR__ . '/app/Views',
-		__DIR__ . '/system/Autoloader/Autoloader.php',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 		__DIR__ . '/system/ThirdParty',
 	]);
@@ -26,4 +25,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
+
+	$parameters->set(Option::SKIP, [
+		// skipped for UnderscoreToCamelCaseVariableNameRector rule
+		// as the underscored variable removed in 4.1 branch
+		UnderscoreToCamelCaseVariableNameRector::class => [__DIR__ . '/system/Autoloader/Autoloader.php'],
+	]);
 };
