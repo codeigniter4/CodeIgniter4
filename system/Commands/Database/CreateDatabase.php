@@ -85,7 +85,7 @@ class CreateDatabase extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'db_name' => 'The database name',
+		'db_name' => 'The database name to create new database',
 	];
 
 	/**
@@ -96,7 +96,7 @@ class CreateDatabase extends BaseCommand
 	protected $options = [];
 
 	/**
-	 * Creates a new database migration file with the current timestamp.
+	 * Creates a new database.
 	 *
 	 * @param array $params
 	 */
