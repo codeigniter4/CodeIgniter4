@@ -213,7 +213,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			rewind($this->fileHandle);
 		}
 
-		$session_data = '';
+		$sessionData = '';
 		clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
 		for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
@@ -222,12 +222,12 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				break;
 			}
 
-			$session_data .= $buffer;
+			$sessionData .= $buffer;
 		}
 
-		$this->fingerprint = md5($session_data);
+		$this->fingerprint = md5($sessionData);
 
-		return $session_data;
+		return $sessionData;
 	}
 
 	//--------------------------------------------------------------------
@@ -316,30 +316,29 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Destroy
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param string $session_id Session ID
+	 * @param string $sessionId Session ID
 	 *
 	 * @return boolean
 	 */
-	public function destroy($session_id): bool
+	public function destroy($sessionId): bool
 	{
 		if ($this->close())
 		{
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $sessionId)
+				? (unlink($this->filePath . $sessionId) && $this->destroyCookie()) : true;
 		}
 
 		if ($this->filePath !== null)
 		{
 			clearstatcache();
 
-			return is_file($this->filePath . $session_id)
-				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $sessionId)
+				? (unlink($this->filePath . $sessionId) && $this->destroyCookie()) : true;
 		}
 
 		return false;

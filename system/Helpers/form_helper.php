@@ -421,11 +421,11 @@ if (! function_exists('form_dropdown'))
 					continue;
 				}
 				$form .= '<optgroup label="' . $key . "\">\n";
-				foreach ($val as $optgroup_key => $optgroup_val)
+				foreach ($val as $optgroupKey => $optgroupVal)
 				{
-					$sel   = in_array($optgroup_key, $selected, true) ? ' selected="selected"' : '';
-					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
-							. $optgroup_val . "</option>\n";
+					$sel   = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
+					$form .= '<option value="' . htmlspecialchars($optgroupKey) . '"' . $sel . '>'
+							. $optgroupVal . "</option>\n";
 				}
 				$form .= "</optgroup>\n";
 			}
@@ -604,13 +604,13 @@ if (! function_exists('form_label'))
 	/**
 	 * Form Label Tag
 	 *
-	 * @param string $label_text The text to appear onscreen
+	 * @param string $labelText  The text to appear onscreen
 	 * @param string $id         The id the label applies to
 	 * @param array  $attributes Additional attributes
 	 *
 	 * @return string
 	 */
-	function form_label(string $label_text = '', string $id = '', array $attributes = []): string
+	function form_label(string $labelText = '', string $id = '', array $attributes = []): string
 	{
 		$label = '<label';
 
@@ -627,7 +627,7 @@ if (! function_exists('form_label'))
 			}
 		}
 
-		return $label . '>' . $label_text . '</label>';
+		return $label . '>' . $labelText . '</label>';
 	}
 }
 
@@ -679,18 +679,18 @@ if (! function_exists('form_fieldset'))
 	 * Used to produce <fieldset><legend>text</legend>.  To close fieldset
 	 * use form_fieldset_close()
 	 *
-	 * @param string $legend_text The legend text
-	 * @param array  $attributes  Additional attributes
+	 * @param string $legendText The legend text
+	 * @param array  $attributes Additional attributes
 	 *
 	 * @return string
 	 */
-	function form_fieldset(string $legend_text = '', array $attributes = []): string
+	function form_fieldset(string $legendText = '', array $attributes = []): string
 	{
 		$fieldset = '<fieldset' . stringify_attributes($attributes) . ">\n";
 
-		if ($legend_text !== '')
+		if ($legendText !== '')
 		{
-			return $fieldset . '<legend>' . $legend_text . "</legend>\n";
+			return $fieldset . '<legend>' . $legendText . "</legend>\n";
 		}
 
 		return $fieldset;
@@ -741,13 +741,13 @@ if (! function_exists('set_value'))
 	 * Grabs a value from the POST array for the specified field so you can
 	 * re-populate an input field or textarea
 	 *
-	 * @param string  $field       Field name
-	 * @param string  $default     Default value
-	 * @param boolean $html_escape Whether to escape HTML special characters or not
+	 * @param string  $field      Field name
+	 * @param string  $default    Default value
+	 * @param boolean $htmlEscape Whether to escape HTML special characters or not
 	 *
 	 * @return string
 	 */
-	function set_value(string $field, string $default = '', bool $html_escape = true): string
+	function set_value(string $field, string $default = '', bool $htmlEscape = true): string
 	{
 		$request = Services::request();
 
@@ -759,7 +759,7 @@ if (! function_exists('set_value'))
 			$value = $request->getPost($field) ?? $default;
 		}
 
-		return ($html_escape) ? esc($value) : $value;
+		return ($htmlEscape) ? esc($value) : $value;
 	}
 }
 

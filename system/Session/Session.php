@@ -252,14 +252,14 @@ class Session implements SessionInterface
 
 		// Is session ID auto-regeneration configured? (ignoring ajax requests)
 		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerate_time = $this->sessionTimeToUpdate) > 0
+				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerateTime = $this->sessionTimeToUpdate) > 0
 		)
 		{
 			if (! isset($_SESSION['__ci_last_regenerate']))
 			{
 				$_SESSION['__ci_last_regenerate'] = time();
 			}
-			elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerate_time))
+			elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerateTime))
 			{
 				$this->regenerate((bool) $this->sessionRegenerateDestroy);
 			}
@@ -393,22 +393,22 @@ class Session implements SessionInterface
 	 */
 	protected function configureSidLength()
 	{
-		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false
+		$bitsPerCharacter = (int) (ini_get('session.sid_bits_per_character') !== false
 			? ini_get('session.sid_bits_per_character')
 			: 4);
-		$sid_length         = (int) (ini_get('session.sid_length') !== false
+		$sidLength        = (int) (ini_get('session.sid_length') !== false
 			? ini_get('session.sid_length')
 			: 40);
-		if (($sid_length * $bits_per_character) < 160)
+		if (($sidLength * $bitsPerCharacter) < 160)
 		{
-			$bits = ($sid_length * $bits_per_character);
+			$bits = ($sidLength * $bitsPerCharacter);
 			// Add as many more characters as necessary to reach at least 160 bits
-			$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
-			ini_set('session.sid_length', (string) $sid_length);
+			$sidLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
+			ini_set('session.sid_length', (string) $sidLength);
 		}
 
 		// Yes, 4,5,6 are the only known possible values as of 2016-10-27
-		switch ($bits_per_character)
+		switch ($bitsPerCharacter)
 		{
 			case 4:
 				$this->sidRegexp = '[0-9a-f]';
@@ -421,7 +421,7 @@ class Session implements SessionInterface
 				break;
 		}
 
-		$this->sidRegexp .= '{' . $sid_length . '}';
+		$this->sidRegexp .= '{' . $sidLength . '}';
 	}
 
 	//--------------------------------------------------------------------
@@ -439,7 +439,7 @@ class Session implements SessionInterface
 			return;
 		}
 
-		$current_time = time();
+		$currentTime = time();
 
 		foreach ($_SESSION['__ci_vars'] as $key => &$value)
 		{
@@ -449,7 +449,7 @@ class Session implements SessionInterface
 			}
 			// Hacky, but 'old' will (implicitly) always be less than time() ;)
 			// DO NOT move this above the 'new' check!
-			elseif ($value < $current_time)
+			elseif ($value < $currentTime)
 			{
 				unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 			}

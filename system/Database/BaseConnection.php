@@ -762,21 +762,20 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Start Transaction
 	 *
-	 * @param  boolean $test_mode = FALSE
+	 * @param  boolean $testMode = FALSE
 	 * @return boolean
 	 */
-	public function transStart(bool $test_mode = false): bool
+	public function transStart(bool $testMode = false): bool
 	{
 		if (! $this->transEnabled)
 		{
 			return false;
 		}
 
-		return $this->transBegin($test_mode);
+		return $this->transBegin($testMode);
 	}
 
 	//--------------------------------------------------------------------
@@ -826,14 +825,13 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @param  boolean $test_mode
+	 * @param  boolean $testMode
 	 * @return boolean
 	 */
-	public function transBegin(bool $test_mode = false): bool
+	public function transBegin(bool $testMode = false): bool
 	{
 		if (! $this->transEnabled)
 		{
@@ -855,7 +853,7 @@ abstract class BaseConnection implements ConnectionInterface
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
-		$this->transFailure = ($test_mode === true);
+		$this->transFailure = ($testMode === true);
 
 		if ($this->_transBegin())
 		{
@@ -1106,13 +1104,13 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if (is_array($item))
 		{
-			$escaped_array = [];
+			$escapedArray = [];
 			foreach ($item as $k => $v)
 			{
-				$escaped_array[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle, $protectIdentifiers, $fieldExists);
+				$escapedArray[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle, $protectIdentifiers, $fieldExists);
 			}
 
-			return $escaped_array;
+			return $escapedArray;
 		}
 
 		// This is basically a bug fix for queries that use MAX, MIN, etc.
@@ -1296,13 +1294,13 @@ abstract class BaseConnection implements ConnectionInterface
 			return $item;
 		}
 
-		static $preg_ec = [];
+		static $pregEc = [];
 
-		if (empty($preg_ec))
+		if (empty($pregEc))
 		{
 			if (is_array($this->escapeChar))
 			{
-				$preg_ec = [
+				$pregEc = [
 					preg_quote($this->escapeChar[0], '/'),
 					preg_quote($this->escapeChar[1], '/'),
 					$this->escapeChar[0],
@@ -1311,8 +1309,8 @@ abstract class BaseConnection implements ConnectionInterface
 			}
 			else
 			{
-				$preg_ec[0] = $preg_ec[1] = preg_quote($this->escapeChar, '/');
-				$preg_ec[2] = $preg_ec[3] = $this->escapeChar;
+				$pregEc[0] = $pregEc[1] = preg_quote($this->escapeChar, '/');
+				$pregEc[2] = $pregEc[3] = $this->escapeChar;
 			}
 		}
 
@@ -1320,11 +1318,11 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			if (strpos($item, '.' . $id) !== false)
 			{
-				return preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?\./i', $preg_ec[2] . '$1' . $preg_ec[3] . '.', $item);
+				return preg_replace('/' . $pregEc[0] . '?([^' . $pregEc[1] . '\.]+)' . $pregEc[1] . '?\./i', $pregEc[2] . '$1' . $pregEc[3] . '.', $item);
 			}
 		}
 
-		return preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?(\.)?/i', $preg_ec[2] . '$1' . $preg_ec[3] . '$2', $item);
+		return preg_replace('/' . $pregEc[0] . '?([^' . $pregEc[1] . '\.]+)' . $pregEc[1] . '?(\.)?/i', $pregEc[2] . '$1' . $pregEc[3] . '$2', $item);
 	}
 
 	//--------------------------------------------------------------------

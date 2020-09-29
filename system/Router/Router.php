@@ -614,8 +614,8 @@ class Router implements RouterInterface
 		});
 		$segments = array_values($segments);
 
-		$c                  = count($segments);
-		$directory_override = isset($this->directory);
+		$c                 = count($segments);
+		$directoryOverride = isset($this->directory);
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
@@ -623,7 +623,7 @@ class Router implements RouterInterface
 		{
 			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
+			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directoryOverride === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
 			{
 				$this->setDirectory(array_shift($segments), true);
 				continue;

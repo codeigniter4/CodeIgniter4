@@ -161,20 +161,19 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param  string $alter_type ALTER type
-	 * @param  string $table      Table name
-	 * @param  mixed  $field      Column definition
+	 * @param  string $alterType ALTER type
+	 * @param  string $table     Table name
+	 * @param  mixed  $field     Column definition
 	 * @return string|string[]
 	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
+	protected function _alterTable(string $alterType, string $table, $field)
 	{
-		if ($alter_type === 'DROP')
+		if ($alterType === 'DROP')
 		{
-			return parent::_alterTable($alter_type, $table, $field);
+			return parent::_alterTable($alterType, $table, $field);
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
@@ -182,11 +181,11 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			if ($data['_literal'] !== false)
 			{
-				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
+				$field[$i] = ($alterType === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
 			}
 			else
 			{
-				if ($alter_type === 'ADD')
+				if ($alterType === 'ADD')
 				{
 					$field[$i]['_literal'] = "\n\tADD ";
 				}
@@ -212,11 +211,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _processColumn(array $field): string
 	{
-		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
+		$extraClause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
-		if (empty($extra_clause) && isset($field['first']) && $field['first'] === true)
+		if (empty($extraClause) && isset($field['first']) && $field['first'] === true)
 		{
-			$extra_clause = ' FIRST';
+			$extraClause = ' FIRST';
 		}
 
 		return $this->db->escapeIdentifiers($field['name'])
@@ -228,7 +227,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				. $field['auto_increment']
 				. $field['unique']
 				. (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
-				. $extra_clause;
+				. $extraClause;
 	}
 
 	//--------------------------------------------------------------------

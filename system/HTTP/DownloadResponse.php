@@ -182,9 +182,9 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		if ($this->setMime === true)
 		{
-			if (($last_dot_position = strrpos($this->filename, '.')) !== false)
+			if (($lastDotPosition = strrpos($this->filename, '.')) !== false)
 			{
-				$mime    = Mimes::guessTypeFromExtension(substr($this->filename, $last_dot_position + 1));
+				$mime    = Mimes::guessTypeFromExtension(substr($this->filename, $lastDotPosition + 1));
 				$charset = $this->charset;
 			}
 		}
@@ -234,20 +234,20 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function getContentDisposition() : string
 	{
-		$download_filename = $this->getDownloadFileName();
+		$downloadFilename = $this->getDownloadFileName();
 
-		$utf8_filename = $download_filename;
+		$utf8Filename = $downloadFilename;
 
 		if (strtoupper($this->charset) !== 'UTF-8')
 		{
-			$utf8_filename = mb_convert_encoding($download_filename, 'UTF-8', $this->charset);
+			$utf8Filename = mb_convert_encoding($downloadFilename, 'UTF-8', $this->charset);
 		}
 
-		$result = sprintf('attachment; filename="%s"', $download_filename);
+		$result = sprintf('attachment; filename="%s"', $downloadFilename);
 
-		if ($utf8_filename)
+		if ($utf8Filename)
 		{
-			$result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8_filename);
+			$result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8Filename);
 		}
 
 		return $result;
@@ -526,10 +526,10 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function sendBodyByFilePath()
 	{
-		$spl_file_object = $this->file->openFile('rb');
+		$splFileObject = $this->file->openFile('rb');
 
 		// Flush 1MB chunks of data
-		while (! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
+		while (! $splFileObject->eof() && ($data = $splFileObject->fread(1048576)) !== false)
 		{
 			echo $data;
 		}

@@ -238,10 +238,10 @@ class UserAgent
 			}
 			else
 			{
-				$referer_host = @parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-				$own_host     = parse_url(\base_url(), PHP_URL_HOST);
+				$refererHost = @parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+				$ownHost     = parse_url(\base_url(), PHP_URL_HOST);
 
-				$this->referrer = ($referer_host && $referer_host !== $own_host);
+				$this->referrer = ($refererHost && $refererHost !== $ownHost);
 			}
 		}
 

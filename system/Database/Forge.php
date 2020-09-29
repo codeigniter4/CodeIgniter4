@@ -492,18 +492,17 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Create Table
 	 *
-	 * @param string  $table         Table name
-	 * @param boolean $if_not_exists Whether to add IF NOT EXISTS condition
-	 * @param array   $attributes    Associative array of table attributes
+	 * @param string  $table       Table name
+	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
+	 * @param array   $attributes  Associative array of table attributes
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
+	public function createTable(string $table, bool $ifNotExists = false, array $attributes = [])
 	{
 		if ($table === '')
 		{
@@ -517,7 +516,7 @@ class Forge
 			throw new \RuntimeException('Field information is required.');
 		}
 
-		$sql = $this->_createTable($table, $if_not_exists, $attributes);
+		$sql = $this->_createTable($table, $ifNotExists, $attributes);
 
 		if (is_bool($sql))
 		{
@@ -556,30 +555,29 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Create Table
 	 *
-	 * @param string  $table         Table name
-	 * @param boolean $if_not_exists Whether to add 'IF NOT EXISTS' condition
-	 * @param array   $attributes    Associative array of table attributes
+	 * @param string  $table       Table name
+	 * @param boolean $ifNotExists Whether to add 'IF NOT EXISTS' condition
+	 * @param array   $attributes  Associative array of table attributes
 	 *
 	 * @return mixed
 	 */
-	protected function _createTable(string $table, bool $if_not_exists, array $attributes)
+	protected function _createTable(string $table, bool $ifNotExists, array $attributes)
 	{
 		// For any platforms that don't support Create If Not Exists...
-		if ($if_not_exists === true && $this->createTableIfStr === false)
+		if ($ifNotExists === true && $this->createTableIfStr === false)
 		{
 			if ($this->db->tableExists($table))
 			{
 				return true;
 			}
 
-			$if_not_exists = false;
+			$ifNotExists = false;
 		}
 
-		$sql = ($if_not_exists) ? sprintf($this->createTableIfStr, $this->db->escapeIdentifiers($table))
+		$sql = ($ifNotExists) ? sprintf($this->createTableIfStr, $this->db->escapeIdentifiers($table))
 			: 'CREATE TABLE';
 
 		$columns = $this->_processFields(true);
@@ -691,23 +689,22 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Drop Table
 	 *
 	 * Generates a platform-specific DROP TABLE string
 	 *
-	 * @param string  $table     Table name
-	 * @param boolean $if_exists Whether to add an IF EXISTS condition
-	 * @param boolean $cascade   Whether to add an CASCADE condition
+	 * @param string  $table    Table name
+	 * @param boolean $ifExists Whether to add an IF EXISTS condition
+	 * @param boolean $cascade  Whether to add an CASCADE condition
 	 *
 	 * @return string|boolean
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
+	protected function _dropTable(string $table, bool $ifExists, bool $cascade)
 	{
 		$sql = 'DROP TABLE';
 
-		if ($if_exists)
+		if ($ifExists)
 		{
 			if ($this->dropTableIfStr === false)
 			{
@@ -726,19 +723,18 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Rename Table
 	 *
-	 * @param string $table_name     Old table name
-	 * @param string $new_table_name New table name
+	 * @param string $tableName    Old table name
+	 * @param string $newTableName New table name
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function renameTable(string $table_name, string $new_table_name)
+	public function renameTable(string $tableName, string $newTableName)
 	{
-		if ($table_name === '' || $new_table_name === '')
+		if ($tableName === '' || $newTableName === '')
 		{
 			throw new \InvalidArgumentException('A table name is required for that operation.');
 		}
@@ -754,17 +750,17 @@ class Forge
 		}
 
 		$result = $this->db->query(sprintf($this->renameTableStr,
-				$this->db->escapeIdentifiers($this->db->DBPrefix . $table_name),
-				$this->db->escapeIdentifiers($this->db->DBPrefix . $new_table_name))
+				$this->db->escapeIdentifiers($this->db->DBPrefix . $tableName),
+				$this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName))
 		);
 
 		if ($result && ! empty($this->db->dataCache['table_names']))
 		{
-			$key = array_search(strtolower($this->db->DBPrefix . $table_name),
+			$key = array_search(strtolower($this->db->DBPrefix . $tableName),
 				array_map('strtolower', $this->db->dataCache['table_names']), true);
 			if ($key !== false)
 			{
-				$this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $new_table_name;
+				$this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $newTableName;
 			}
 		}
 
@@ -816,19 +812,18 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Column Drop
 	 *
-	 * @param string       $table       Table name
-	 * @param string|array $column_name Column name Array or comma separated
+	 * @param string       $table      Table name
+	 * @param string|array $columnName Column name Array or comma separated
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropColumn(string $table, $column_name)
+	public function dropColumn(string $table, $columnName)
 	{
-		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $column_name);
+		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $columnName);
 		if ($sql === false)
 		{
 			if ($this->db->DBDebug)
@@ -895,22 +890,21 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param string $alter_type ALTER type
-	 * @param string $table      Table name
-	 * @param mixed  $fields     Column definition
+	 * @param string $alterType ALTER type
+	 * @param string $table     Table name
+	 * @param mixed  $fields    Column definition
 	 *
 	 * @return string|string[]|false
 	 */
-	protected function _alterTable(string $alter_type, string $table, $fields)
+	protected function _alterTable(string $alterType, string $table, $fields)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ';
 
 		// DROP has everything it needs now.
-		if ($alter_type === 'DROP')
+		if ($alterType === 'DROP')
 		{
 			if (is_string($fields))
 			{
@@ -924,7 +918,7 @@ class Forge
 			return $sql . implode(', ', $fields);
 		}
 
-		$sql .= ($alter_type === 'ADD') ? 'ADD ' : $alter_type . ' COLUMN ';
+		$sql .= ($alterType === 'ADD') ? 'ADD ' : $alterType . ' COLUMN ';
 
 		$sqls = [];
 		foreach ($fields as $data)
@@ -937,15 +931,14 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Process fields
 	 *
-	 * @param boolean $create_table
+	 * @param boolean $createTable
 	 *
 	 * @return array
 	 */
-	protected function _processFields(bool $create_table = false): array
+	protected function _processFields(bool $createTable = false): array
 	{
 		$fields = [];
 
@@ -959,7 +952,7 @@ class Forge
 
 			$attributes = array_change_key_case($attributes, CASE_UPPER);
 
-			if ($create_table === true && empty($attributes['TYPE']))
+			if ($createTable === true && empty($attributes['TYPE']))
 			{
 				continue;
 			}
@@ -983,7 +976,7 @@ class Forge
 			// @phpstan-ignore-next-line
 			isset($attributes['TYPE']) && $this->_attributeUnsigned($attributes, $field);
 
-			if ($create_table === false)
+			if ($createTable === false)
 			{
 				if (isset($attributes['AFTER']))
 				{
@@ -1008,7 +1001,7 @@ class Forge
 					$field['null'] = ' NOT NULL';
 				}
 			}
-			elseif ($create_table === true)
+			elseif ($createTable === true)
 			{
 				$field['null'] = ' NOT NULL';
 			}
@@ -1300,9 +1293,9 @@ class Forge
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{
-				$name_index = $table . '_' . $field . '_foreign';
+				$nameIndex = $table . '_' . $field . '_foreign';
 
-				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
 					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
 				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))

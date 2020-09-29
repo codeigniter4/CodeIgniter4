@@ -131,28 +131,26 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Determine if a particular database exists
 	 *
-	 * @param  string $database_name
+	 * @param  string $databaseName
 	 * @return boolean
 	 */
-	public function databaseExists(string $database_name): bool
+	public function databaseExists(string $databaseName): bool
 	{
-		return in_array($database_name, $this->listDatabases(), true);
+		return in_array($databaseName, $this->listDatabases(), true);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Optimize Table
 	 *
-	 * @param  string $table_name
+	 * @param  string $tableName
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function optimizeTable(string $table_name)
+	public function optimizeTable(string $tableName)
 	{
 		if ($this->optimizeTable === false)
 		{
@@ -163,7 +161,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
+		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
 		if ($query !== false)
 		{
 			$query = $query->getResultArray();
@@ -193,9 +191,9 @@ abstract class BaseUtils
 		}
 
 		$result = [];
-		foreach ($this->db->listTables() as $table_name)
+		foreach ($this->db->listTables() as $tableName)
 		{
-			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
+			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
 			if (is_bool($res))
 			{
 				return $res;
@@ -208,7 +206,7 @@ abstract class BaseUtils
 			// Postgre & SQLite3 returns empty array
 			if (empty($res))
 			{
-				$key = $table_name;
+				$key = $tableName;
 			}
 			else
 			{
@@ -225,15 +223,14 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Repair Table
 	 *
-	 * @param  string $table_name
+	 * @param  string $tableName
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function repairTable(string $table_name)
+	public function repairTable(string $tableName)
 	{
 		if ($this->repairTable === false)
 		{
@@ -244,7 +241,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($table_name)));
+		$query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($tableName)));
 		if (is_bool($query))
 		{
 			return $query;

@@ -594,24 +594,24 @@ if (! function_exists('function_usable'))
 	 * be just temporary, but would probably be kept for a few years.
 	 *
 	 * @link   http://www.hardened-php.net/suhosin/
-	 * @param  string $function_name Function to check for
+	 * @param  string $functionName Function to check for
 	 * @return boolean    TRUE if the function exists and is safe to call,
 	 *             FALSE otherwise.
 	 *
 	 * @codeCoverageIgnore This is too exotic
 	 */
-	function function_usable(string $function_name): bool
+	function function_usable(string $functionName): bool
 	{
 		static $_suhosin_func_blacklist;
 
-		if (function_exists($function_name))
+		if (function_exists($functionName))
 		{
 			if (! isset($_suhosin_func_blacklist))
 			{
 				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
-			return ! in_array($function_name, $_suhosin_func_blacklist, true);
+			return ! in_array($functionName, $_suhosin_func_blacklist, true);
 		}
 
 		return false;

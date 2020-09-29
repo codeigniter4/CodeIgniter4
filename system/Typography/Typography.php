@@ -99,11 +99,11 @@ class Typography
 	 *  - Converts two spaces into entities
 	 *
 	 * @param string  $str
-	 * @param boolean $reduce_linebreaks whether to reduce more then two consecutive newlines to two
+	 * @param boolean $reduceLinebreaks whether to reduce more then two consecutive newlines to two
 	 *
 	 * @return string
 	 */
-	public function autoTypography(string $str, bool $reduce_linebreaks = false): string
+	public function autoTypography(string $str, bool $reduceLinebreaks = false): string
 	{
 		if ($str === '')
 		{
@@ -118,19 +118,19 @@ class Typography
 
 		// Reduce line breaks.  If there are more than two consecutive linebreaks
 		// we'll compress them down to a maximum of two since there's no benefit to more.
-		if ($reduce_linebreaks === false)
+		if ($reduceLinebreaks === false)
 		{
 			$str = preg_replace("/\n\n+/", "\n\n", $str);
 		}
 
 		// HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
-		$html_comments = [];
+		$htmlComments = [];
 		if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
 			for ($i = 0, $total = count($matches[0]); $i < $total; $i ++)
 			{
-				$html_comments[] = $matches[0][$i];
-				$str             = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
+				$htmlComments[] = $matches[0][$i];
+				$str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
 			}
 		}
 
@@ -217,12 +217,12 @@ class Typography
 		$str = $this->formatCharacters($str);
 
 		// restore HTML comments
-		for ($i = 0, $total = count($html_comments); $i < $total; $i ++)
+		for ($i = 0, $total = count($htmlComments); $i < $total; $i ++)
 		{
 			// remove surrounding paragraph tags, but only if there's an opening paragraph tag
 			// otherwise HTML comments at the ends of paragraphs will have the closing tag removed
 			// if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
-			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $html_comments[$i], $str);
+			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $htmlComments[$i], $str);
 		}
 
 		// Final clean up
@@ -254,7 +254,7 @@ class Typography
 		];
 
 		// Do we need to reduce empty lines?
-		if ($reduce_linebreaks === true)
+		if ($reduceLinebreaks === true)
 		{
 			$table['#<p>\n*</p>#'] = '';
 		}

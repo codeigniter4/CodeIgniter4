@@ -99,21 +99,21 @@ class Iterator
 			// clear memory before start
 			gc_collect_cycles();
 
-			$start     = microtime(true);
-			$start_mem = $max_memory = memory_get_usage(true);
+			$start    = microtime(true);
+			$startMem = $maxMemory = memory_get_usage(true);
 
 			for ($i = 0; $i < $iterations; $i ++)
 			{
 				$result = $test();
 
-				$max_memory = max($max_memory, memory_get_usage(true));
+				$maxMemory = max($maxMemory, memory_get_usage(true));
 
 				unset($result);
 			}
 
 			$this->results[$name] = [
 				'time'   => microtime(true) - $start,
-				'memory' => $max_memory - $start_mem,
+				'memory' => $maxMemory - $startMem,
 				'n'      => $iterations,
 			];
 		}

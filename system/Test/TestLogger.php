@@ -23,7 +23,7 @@ class TestLogger extends Logger
 	{
 		// While this requires duplicate work, we want to ensure
 		// we have the final message to test against.
-		$log_message = $this->interpolate($message, $context);
+		$logMessage = $this->interpolate($message, $context);
 
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
@@ -41,7 +41,7 @@ class TestLogger extends Logger
 
 		self::$op_logs[] = [
 				  'level'   => $level,
-				  'message' => $log_message,
+				  'message' => $logMessage,
 				  'file'    => $file,
 			  ];
 

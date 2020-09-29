@@ -126,23 +126,22 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Runs the validation process, returning true/false determining whether
 	 * validation was successful or not.
 	 *
-	 * @param array  $data     The array of data to validate.
-	 * @param string $group    The pre-defined group of rules to apply.
-	 * @param string $db_group The database group to use.
+	 * @param array  $data    The array of data to validate.
+	 * @param string $group   The pre-defined group of rules to apply.
+	 * @param string $dbGroup The database group to use.
 	 *
 	 * @return boolean
 	 */
-	public function run(array $data = null, string $group = null, string $db_group = null): bool
+	public function run(array $data = null, string $group = null, string $dbGroup = null): bool
 	{
 		$data = $data ?? $this->data;
 
 		// i.e. is_unique
-		$data['DBGroup'] = $db_group;
+		$data['DBGroup'] = $dbGroup;
 
 		$this->loadRuleSets();
 
@@ -827,16 +826,16 @@ class Validation implements ValidationInterface
 	 */
 	protected function splitRules(string $rules): array
 	{
-		$non_escape_bracket  = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
-		$pipe_not_in_bracket = sprintf(
+		$nonEscapeBracket = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
+		$pipeNotInBracket = sprintf(
 				'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
-				$non_escape_bracket,
-				$non_escape_bracket,
-				$non_escape_bracket
+				$nonEscapeBracket,
+				$nonEscapeBracket,
+				$nonEscapeBracket
 		);
 
 		$_rules = preg_split(
-				$pipe_not_in_bracket,
+				$pipeNotInBracket,
 				$rules
 		);
 

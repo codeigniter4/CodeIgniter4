@@ -169,11 +169,11 @@ class FileLocator
 	 */
 	public function getClassname(string $file) : string
 	{
-		$php        = file_get_contents($file);
-		$tokens     = token_get_all($php);
-		$dlm        = false;
-		$namespace  = '';
-		$class_name = '';
+		$php       = file_get_contents($file);
+		$tokens    = token_get_all($php);
+		$dlm       = false;
+		$namespace = '';
+		$className = '';
 
 		foreach ($tokens as $i => $token)
 		{
@@ -202,17 +202,17 @@ class FileLocator
 				&& $tokens[$i - 1][0] === T_WHITESPACE
 				&& $token[0] === T_STRING)
 			{
-				$class_name = $token[1];
+				$className = $token[1];
 				break;
 			}
 		}
 
-		if (empty( $class_name ))
+		if (empty( $className ))
 		{
 			return '';
 		}
 
-		return $namespace . '\\' . $class_name;
+		return $namespace . '\\' . $className;
 	}
 
 	//--------------------------------------------------------------------

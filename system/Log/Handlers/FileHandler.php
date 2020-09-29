@@ -124,10 +124,10 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
 		if (strpos($this->dateFormat, 'u') !== false)
 		{
-			$microtime_full  = microtime(true);
-			$microtime_short = sprintf('%06d', ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, (int) $microtime_full));
-			$date            = $date->format($this->dateFormat);
+			$microtimeFull  = microtime(true);
+			$microtimeShort = sprintf('%06d', ($microtimeFull - floor($microtimeFull)) * 1000000);
+			$date           = new \DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));
+			$date           = $date->format($this->dateFormat);
 		}
 		else
 		{

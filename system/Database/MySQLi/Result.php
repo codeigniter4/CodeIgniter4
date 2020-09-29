@@ -87,7 +87,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		static $data_types = [
+		static $dataTypes = [
 			MYSQLI_TYPE_DECIMAL     => 'decimal',
 			MYSQLI_TYPE_NEWDECIMAL  => 'newdecimal',
 			MYSQLI_TYPE_FLOAT       => 'float',
@@ -128,7 +128,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
 			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true)
-				? 'char' : (isset($data_types[$data->type]) ? $data_types[$data->type] : null);
+				? 'char' : (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;

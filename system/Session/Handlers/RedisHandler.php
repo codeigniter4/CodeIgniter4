@@ -133,17 +133,16 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
 	 * Sanitizes save_path and initializes connection.
 	 *
-	 * @param  string $save_path Server path
-	 * @param  string $name      Session cookie name, unused
+	 * @param  string $savePath Server path
+	 * @param  string $name     Session cookie name, unused
 	 * @return boolean
 	 */
-	public function open($save_path, $name): bool
+	public function open($savePath, $name): bool
 	{
 		if (empty($this->savePath))
 		{
@@ -194,12 +193,12 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 				$this->sessionID = $sessionID;
 			}
 
-			$session_data                               = $this->redis->get($this->keyPrefix . $sessionID);
-			is_string($session_data) ? $this->keyExists = true : $session_data = '';
+			$sessionData                               = $this->redis->get($this->keyPrefix . $sessionID);
+			is_string($sessionData) ? $this->keyExists = true : $sessionData = '';
 
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = md5($sessionData);
 
-			return $session_data;
+			return $sessionData;
 		}
 
 		return '';
@@ -273,9 +272,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			try
 			{
-				$ping_reply = $this->redis->ping();
+				$pingReply = $this->redis->ping();
 				// @phpstan-ignore-next-line
-				if (($ping_reply === true) || ($ping_reply === '+PONG'))
+				if (($pingReply === true) || ($pingReply === '+PONG'))
 				{
 					isset($this->lockKey) && $this->redis->del($this->lockKey);
 
@@ -362,24 +361,24 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
-		$lock_key = $this->keyPrefix . $sessionID . ':lock';
-		$attempt  = 0;
+		$lockKey = $this->keyPrefix . $sessionID . ':lock';
+		$attempt = 0;
 
 		do
 		{
-			if (($ttl = $this->redis->ttl($lock_key)) > 0)
+			if (($ttl = $this->redis->ttl($lockKey)) > 0)
 			{
 				sleep(1);
 				continue;
 			}
 
-			if (! $this->redis->setex($lock_key, 300, (string) time()))
+			if (! $this->redis->setex($lockKey, 300, (string) time()))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 				return false;
 			}
 
-			$this->lockKey = $lock_key;
+			$this->lockKey = $lockKey;
 			break;
 		}
 		while (++ $attempt < 30);

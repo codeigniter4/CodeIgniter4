@@ -157,12 +157,12 @@ class Cell
 		}
 		else
 		{
-			$fireArgs      = [];
-			$method_params = [];
+			$fireArgs     = [];
+			$methodParams = [];
 
 			foreach ($refParams as $arg)
 			{
-				$method_params[$arg->name] = true;
+				$methodParams[$arg->name] = true;
 				if (array_key_exists($arg->name, $paramArray))
 				{
 					$fireArgs[$arg->name] = $paramArray[$arg->name];
@@ -171,7 +171,7 @@ class Cell
 
 			foreach ($paramArray as $key => $val)
 			{
-				if (! isset($method_params[$key]))
+				if (! isset($methodParams[$key]))
 				{
 					throw ViewException::forInvalidCellParameter($key);
 				}
@@ -207,8 +207,8 @@ class Cell
 
 		if (is_string($params))
 		{
-			$new_params = [];
-			$separator  = ' ';
+			$newParams = [];
+			$separator = ' ';
 
 			if (strpos($params, ',') !== false)
 			{
@@ -222,14 +222,14 @@ class Cell
 			{
 				if (! empty($p))
 				{
-					list($key, $val)        = explode('=', $p);
-					$new_params[trim($key)] = trim($val, ', ');
+					list($key, $val)       = explode('=', $p);
+					$newParams[trim($key)] = trim($val, ', ');
 				}
 			}
 
-			$params = $new_params;
+			$params = $newParams;
 
-			unset($new_params);
+			unset($newParams);
 		}
 
 		if (is_array($params) && empty($params))
