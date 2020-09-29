@@ -3494,4 +3494,15 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Passes through to $db insertID().
+	 *
+	 * @return integer|string
+	 */
+	public function insertID()
+	{
+		// @phpstan-ignore-next-line
+		return $this->db->insertID();
+	}
 }

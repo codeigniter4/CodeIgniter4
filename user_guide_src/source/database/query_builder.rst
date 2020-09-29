@@ -859,6 +859,8 @@ The first parameter is an object.
 
 .. note:: All values are escaped automatically producing safer queries.
 
+After a successful ``insert()`` you can use $builder->insertID() to retrieve the new ID.
+
 **$builder->ignore()**
 
 Generates an insert ignore string based on the data you supply, and runs the

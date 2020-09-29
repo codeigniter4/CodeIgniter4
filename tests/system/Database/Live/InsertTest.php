@@ -109,4 +109,20 @@ class InsertTest extends CIDatabaseTestCase
 		$this->seeInDatabase('misc', ['value' => $hash]);
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testBuilderInsertID()
+	{
+		$job_data = [
+			'name'        => 'Grocery Sales',
+			'description' => 'Discount!',
+		];
+
+		$builder = $this->db->table('job');
+		$builder->insert($job_data);
+
+		$expected = $this->db->insertID();
+
+		$this->assertEquals($expected, $builder->insertID());
+	}
 }
