@@ -96,6 +96,13 @@ class CreateDatabase extends BaseCommand
 	protected $options = [];
 
 	/**
+	 * the Database Connection
+	 *
+	 * @var array
+	 */
+	protected $connect = [];
+
+	/**
 	 * Creates a new database.
 	 *
 	 * @param array $params
