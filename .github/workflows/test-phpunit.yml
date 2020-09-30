@@ -1,4 +1,4 @@
-name: Test Framework
+name: Build
 
 on:
   push:
