@@ -1233,6 +1233,15 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Database\\BaseBuilder
 
+	.. php:method:: db()
+
+		:returns: The database connection in use
+		:rtype:	``ConnectionInterface``
+
+		Returns the current database connection from ``$db``. Useful for
+		accessing ``ConnectionInterface`` methods that are not directly
+		available to the Query Builder, like ``insertID()`` or ``errors()``.
+
 	.. php:method:: resetQuery()
 
 		:returns: ``BaseBuilder`` instance (method chaining)
