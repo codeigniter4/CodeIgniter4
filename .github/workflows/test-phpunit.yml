@@ -1,10 +1,6 @@
 name: PHPUnit
 
 on:
-  push:
-    branches: 
-      - master
-      - '4.*'
   pull_request:
     branches:
       - develop
@@ -23,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
-        db-platforms: ['mysqli', 'postgres', 'sqlite']
+        db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
 
     services:
       mysql:
