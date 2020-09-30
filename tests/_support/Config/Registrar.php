@@ -13,7 +13,7 @@ class Registrar
 	 *
 	 * @var array
 	 */
-	protected $dbConfig = [
+	protected static $dbConfig = [
 		'MySQLi'  => [
 			'DSN'      => '',
 			'hostname' => '127.0.0.1',
@@ -84,9 +84,9 @@ class Registrar
 
 		// Under Github Actions, we can set an ENV var named 'DB'
 		// so that we can test against multiple databases.
-		if ($group = getenv('DB') && ! empty($this->dbConfig[$group]))
+		if ($group = getenv('DB') && ! empty(self::$dbConfig[$group]))
 		{
-			$config['tests'] = $this->dbConfig[$group];
+			$config['tests'] = self::$dbConfig[$group];
 		}
 
 		return $config;
