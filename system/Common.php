@@ -39,6 +39,8 @@
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Entity;
+use CodeIgniter\EntityFactory;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -52,17 +54,11 @@ use Config\Services;
 use Config\View;
 use Laminas\Escaper\Escaper;
 
-/**
+/*
  * Common Functions
  *
  * Several application-wide utility methods.
- *
- * @package  CodeIgniter
- * @category Common Functions
  */
-//--------------------------------------------------------------------
-// Services Convenience Functions
-//--------------------------------------------------------------------
 
 if (! function_exists('app_timezone'))
 {
@@ -76,9 +72,7 @@ if (! function_exists('app_timezone'))
 	 */
 	function app_timezone(): string
 	{
-		$config = config(App::class);
-
-		return $config->appTimezone;
+		return config('App')->appTimezone;
 	}
 }
 
@@ -269,9 +263,7 @@ if (! function_exists('csrf_token'))
 	 */
 	function csrf_token(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFTokenName;
+		return config('App')->CSRFTokenName;
 	}
 }
 
@@ -286,9 +278,7 @@ if (! function_exists('csrf_header'))
 	 */
 	function csrf_header(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFHeaderName;
+		return config('App')->CSRFHeaderName;
 	}
 }
 
@@ -303,9 +293,7 @@ if (! function_exists('csrf_hash'))
 	 */
 	function csrf_hash(): string
 	{
-		$security = Services::security(null, true);
-
-		return $security->getCSRFHash();
+		return Services::security()->getCSRFHash();
 	}
 }
 
@@ -382,6 +370,23 @@ if (! function_exists('dd'))
 		Kint::dump(...$vars);
 		exit;
 		// @codeCoverageIgnoreEnd
+	}
+}
+
+if (! function_exists('entity'))
+{
+	/**
+	 * Procedural way of getting instances of Entity classes.
+	 *
+	 * @param string  $name
+	 * @param array   $data
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\Entity|null
+	 */
+	function entity(string $name, array $data = [], bool $getShared = true): ?Entity
+	{
+		return EntityFactory::get($name, $data, $getShared);
 	}
 }
 
@@ -508,8 +513,7 @@ if (! function_exists('force_https'))
 	 *
 	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 	 *
-	 * @param integer           $duration How long should the SSL header be set for? (in seconds)
-	 *                                    Defaults to 1 year.
+	 * @param integer           $duration How long should the SSL header be set for? (in seconds). Defaults to 1 year.
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 *
@@ -517,14 +521,8 @@ if (! function_exists('force_https'))
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request))
-		{
-			$request = Services::request(null, true);
-		}
-		if (is_null($response))
-		{
-			$response = Services::response(null, true);
-		}
+		$request  = $request ?? Services::request();
+		$response = $response ?? Services::response();
 
 		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
@@ -537,10 +535,7 @@ if (! function_exists('force_https'))
 		// the session ID for safety sake.
 		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
-			// @codeCoverageIgnoreStart
-			Services::session(null, true)
-				->regenerate();
-			// @codeCoverageIgnoreEnd
+			Services::session()->regenerate(); // @codeCoverageIgnore
 		}
 
 		$baseURL = config(App::class)->baseURL;
@@ -555,8 +550,11 @@ if (! function_exists('force_https'))
 		}
 
 		$uri = URI::createURIString(
-			'https', $baseURL, $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
-			$request->uri->getQuery(), $request->uri->getFragment()
+			'https',
+			$baseURL,
+			$request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$request->uri->getQuery(),
+			$request->uri->getFragment()
 		);
 
 		// Set an HSTS header
@@ -566,9 +564,7 @@ if (! function_exists('force_https'))
 
 		if (ENVIRONMENT !== 'testing')
 		{
-			// @codeCoverageIgnoreStart
-			exit();
-			// @codeCoverageIgnoreEnd
+			exit(); // @codeCoverageIgnore
 		}
 	}
 }
@@ -593,10 +589,12 @@ if (! function_exists('function_usable'))
 	 * that version is yet to be released. This function will therefore
 	 * be just temporary, but would probably be kept for a few years.
 	 *
-	 * @link   http://www.hardened-php.net/suhosin/
-	 * @param  string $functionName Function to check for
-	 * @return boolean    TRUE if the function exists and is safe to call,
-	 *             FALSE otherwise.
+	 * @see http://www.hardened-php.net/suhosin/
+	 *
+	 * @param string $functionName Function to check for
+	 *
+	 * @return boolean TRUE if the function exists and is safe to call,
+	 *                 FALSE otherwise.
 	 *
 	 * @codeCoverageIgnore This is too exotic
 	 */
@@ -738,7 +736,7 @@ if (! function_exists('is_cli'))
 	 */
 	function is_cli(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return PHP_SAPI === 'cli' || defined('STDIN');
 	}
 }
 
@@ -751,13 +749,14 @@ if (! function_exists('is_really_writable'))
 	 * the file, based on the read-only attribute. is_writable() is also unreliable
 	 * on Unix servers if safe_mode is on.
 	 *
-	 * @link https://bugs.php.net/bug.php?id=54709
+	 * @see https://bugs.php.net/bug.php?id=54709
 	 *
 	 * @param string $file
 	 *
 	 * @return boolean
 	 *
-	 * @throws             \Exception
+	 * @throws \Exception
+	 *
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable(string $file): bool
@@ -811,8 +810,7 @@ if (! function_exists('lang'))
 	 */
 	function lang(string $line, array $args = [], string $locale = null)
 	{
-		return Services::language($locale)
-			->getLine($line, $args);
+		return Services::language($locale)->getLine($line, $args);
 	}
 }
 
@@ -850,10 +848,7 @@ if (! function_exists('log_message'))
 			return $logger->log($level, $message, $context);
 		}
 
-		// @codeCoverageIgnoreStart
-		return Services::logger(true)
-			->log($level, $message, $context);
-		// @codeCoverageIgnoreEnd
+		return Services::logger()->log($level, $message, $context); // @codeCoverageIgnore
 	}
 }
 
@@ -937,7 +932,7 @@ if (! function_exists('redirect'))
 	 */
 	function redirect(string $uri = null): RedirectResponse
 	{
-		$response = Services::redirectResponse(null, true);
+		$response = Services::redirectResponse();
 
 		if (! empty($uri))
 		{
@@ -1086,13 +1081,11 @@ if (! function_exists('slash_item'))
 	 *
 	 * @param string $item Config item name
 	 *
-	 * @return string|null The configuration item or NULL if
-	 * the item doesn't exist
+	 * @return string|null The configuration item or NULL if the item doesn't exist
 	 */
 	function slash_item(string $item): ?string
 	{
-		$config     = config(App::class);
-		$configItem = $config->{$item};
+		$configItem = config('App')->{$item};
 
 		if (! isset($configItem) || empty(trim($configItem)))
 		{
@@ -1201,12 +1194,8 @@ if (! function_exists('view'))
 	 */
 	function view(string $name, array $data = [], array $options = []): string
 	{
-		/**
-		 * @var CodeIgniter\View\View $renderer
-		 */
 		$renderer = Services::renderer();
-
-		$saveData = config(View::class)->saveData;
+		$saveData = config('View')->saveData;
 
 		if (array_key_exists('saveData', $options))
 		{
@@ -1214,8 +1203,7 @@ if (! function_exists('view'))
 			unset($options['saveData']);
 		}
 
-		return $renderer->setData($data, 'raw')
-						->render($name, $options, $saveData);
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 }
 
@@ -1231,11 +1219,11 @@ if (! function_exists('view_cell'))
 	 * @param string|null $cacheName
 	 *
 	 * @return string
+	 *
 	 * @throws \ReflectionException
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
-		return Services::viewcell()
-			->render($library, $params, $ttl, $cacheName);
+		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
 	}
 }
