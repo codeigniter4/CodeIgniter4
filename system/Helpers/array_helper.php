@@ -124,14 +124,14 @@ if (! function_exists('_array_search_dot'))
 if (! function_exists('array_deep_search'))
 {
 	/**
-	 * Returns the value of an element with a key value in an array of uncertain depth.
+	 * Returns the value of an element at a key in an array of uncertain depth.
 	 *
-	 * @param array  $array
-	 * @param string $key
+	 * @param mixed $key
+	 * @param array $array
 	 *
 	 * @return mixed|null
 	 */
-	function array_deep_search(array $array, string $key)
+	function array_deep_search($key, array $array)
 	{
 		if (isset($array[$key]))
 		{
@@ -142,7 +142,7 @@ if (! function_exists('array_deep_search'))
 		{
 			if (is_array($value))
 			{
-				if ($result = array_deep_search($value, $key))
+				if ($result = array_deep_search($key, $value))
 				{
 					return $result;
 				}
