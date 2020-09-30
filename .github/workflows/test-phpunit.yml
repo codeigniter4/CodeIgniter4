@@ -15,11 +15,19 @@ jobs:
 
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
+    continue-on-error: ${{ matrix.experimental }}
+
     strategy:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
+        experimental: [false]
+        include:
+          - php-versions: '8.0'
+            db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
+            composer-options: '--ignore-platform-reqs'
+            experimental: true
 
     services:
       mysql:
@@ -74,7 +82,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader ${{ matrix.composer-options }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}     
 
