@@ -271,9 +271,9 @@ class BaseBuilder
 	/**
 	 * Constructor
 	 *
-	 * @param  string|array                              $tableName
-	 * @param  \CodeIgniter\Database\ConnectionInterface $db
-	 * @param  array                                     $options
+	 * @param  string|array        $tableName
+	 * @param  ConnectionInterface $db
+	 * @param  array               $options
 	 * @throws DatabaseException
 	 */
 	public function __construct($tableName, ConnectionInterface &$db, array $options = null)
@@ -297,6 +297,18 @@ class BaseBuilder
 				}
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current database connection
+	 *
+	 * @return ConnectionInterface
+	 */
+	public function db(): ConnectionInterface
+	{
+		return $this->db;
 	}
 
 	//--------------------------------------------------------------------
