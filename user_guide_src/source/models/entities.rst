@@ -2,7 +2,7 @@
 Working With Entities
 #####################
 
-CodeIgniter supports Entity classes as a first-class citizen in it's database layer, while keeping
+CodeIgniter supports Entity classes as a first-class citizen in its database layer, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the :doc:`Model </models/model>` if that fits your needs better.
 
@@ -109,6 +109,35 @@ of what columns have changed since the object was created or pulled from the dat
 When the User is passed to the model's **save()** method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model's **$allowedFields** property. It also knows whether to create
 a new row, or update an existing one.
+
+Accessing Entities Manually
+---------------------------
+
+While models usually takes care of instantiating the entity classes for you, you may find the need to instantiate
+them manually for your specific needs. Entities are expected to be found under the ``Entities`` sub-namespace. Thus,
+if you store them at the ``app/Entities`` directory, it is expected that the classes have the ``App\Entities``
+namespace or if you have customized the ``APP_NAMESPACE`` constant, it is found in the ``{APP_NAMESPACE}\Entities``
+namespace.
+
+Accessing entities outside your models is easy. You can instantiate them directly, or use the ``entity`` function.
+
+::
+
+    // create a class manually
+    $user = new App\Entities\UserEntity();
+
+    // create an entity class the procedural way
+    $user = entity('App\Entities\UserEntity', [], false);
+
+    // create a shared user entity instance
+    $user = entity('App\Entities\UserEntity');
+
+    // passing an array of data to the entity constructor
+    $user = entity('App\Entity\UserEntity', ['username' => 'admin']);
+
+    // if the passed entity name is not namespaced, the function will
+    // search all namespaces for a matching entity class
+    $user = entity('UserEntity');
 
 Filling Properties Quickly
 --------------------------
