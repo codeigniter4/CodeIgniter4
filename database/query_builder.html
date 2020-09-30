@@ -1473,6 +1473,22 @@ run the query:</p>
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\BaseBuilder</code></dt>
 <dd><dl class="method">
+<dt id="db">
+<code class="sig-name descname">db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#db" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The database connection in use</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">ConnectionInterface</span></code></p>
+</dd>
+</dl>
+<p>Returns the current database connection from <code class="docutils literal notranslate"><span class="pre">$db</span></code>. Useful for
+accessing <code class="docutils literal notranslate"><span class="pre">ConnectionInterface</span></code> methods that are not directly
+available to the Query Builder, like <code class="docutils literal notranslate"><span class="pre">insertID()</span></code> or <code class="docutils literal notranslate"><span class="pre">errors()</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="resetQuery">
 <code class="sig-name descname">resetQuery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resetQuery" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -2775,7 +2791,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Sep 29, 2020.
+        Last updated on Sep 30, 2020.
       </span>
 
     </p>
