@@ -121,7 +121,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider deepSearchProvider
 	 */
-	public function testArrayDeepSearch($search, $expected)
+	public function testArrayDeepSearch($key, $expected)
 	{
 		$data = [
 			'key1' => 'Value 1',
@@ -132,6 +132,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'key61' => [
 					'key61' => 'Value 6.1',
 					'key64' => [
+						42       => 'Value 42',
 						'key641' => 'Value 6.4.1',
 						'key644' => [
 							'key6441' => 'Value 6.4.4.1',
@@ -141,7 +142,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$result = array_deep_search($data, $search);
+		$result = array_deep_search($key, $data);
 
 		$this->assertEquals($expected, $result);
 	}
@@ -150,7 +151,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$data = [];
 
-		$this->assertNull(array_deep_search($data, 'key644'));
+		$this->assertNull(array_deep_search('key644', $data));
 	}
 
 	//--------------------------------------------------------------------
@@ -165,6 +166,10 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'key64421',
 				null,
+			],
+			[
+				42,
+				'Value 42',
 			],
 			[
 				'key644',

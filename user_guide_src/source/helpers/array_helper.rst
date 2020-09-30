@@ -57,10 +57,10 @@ The following functions are available:
         // Returns: 23
         $baz = dot_array_search('foo.*.baz', $data);
 
-..  php:function:: array_deep_search(array $array, string $key)
+..  php:function:: array_deep_search($key, array $array)
 
-    :param  array   $values: The array to search
-    :param  string  $search: The target key
+    :param  mixed  $key: The target key
+    :param  array  $array: The array to search
     :returns: The value found within the array, or null
     :rtype: mixed
 
