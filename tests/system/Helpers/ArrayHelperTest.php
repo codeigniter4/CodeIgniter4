@@ -118,7 +118,10 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['baz' => 23], dot_array_search('foo.bar.*', $data));
 	}
 
-	public function testArrayDeepSearch()
+	/**
+	 * @dataProvider deepSearchProvider
+	 */
+	public function testArrayDeepSearch($search, $expected)
 	{
 		$data = [
 			'key1' => 'Value 1',
@@ -132,88 +135,45 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 						'key641' => 'Value 6.4.1',
 						'key644' => [
 							'key6441' => 'Value 6.4.4.1',
-						]
-					]
-				]
-			]
-		];
-
-		$this->assertEquals('Value 6.4.4.1', array_deep_search($data, 'key6441'));
-	}
-
-	public function testArrayDeepSearchNotFound()
-	{
-		$data = [
-			'key1' => 'Value 1',
-			'key5' => [
-				'key51' => 'Value 5.1',
+						],
+					],
+				],
 			],
-			'key6' => [
-				'key61' => [
-					'key61' => 'Value 6.1',
-					'key64' => [
-						'key641' => 'Value 6.4.1',
-						'key644' => [
-							'key6441' => 'Value 6.4.4.1',
-						]
-					]
-				]
-			]
 		];
 
-		$this->assertNull(array_deep_search($data, 'key64421'));
+		$result = array_deep_search($data, $search);
+
+		$this->assertEquals($expected, $result);
 	}
 
-	public function testArrayDeepSearchReturnArray()
-	{
-		$data = [
-			'key1' => 'Value 1',
-			'key5' => [
-				'key51' => 'Value 5.1',
-			],
-			'key6' => [
-				'key61' => [
-					'key61' => 'Value 6.1',
-					'key64' => [
-						'key641' => 'Value 6.4.1',
-						'key644' => [
-							'key6441' => 'Value 6.4.4.1',
-						]
-					]
-				]
-			]
-		];
-
-		$this->assertEquals(['key6441' => 'Value 6.4.4.1'], array_deep_search($data, 'key644'));
-	}
-
-	public function testArrayDeepSearchReturnNullEmptyArray($value='')
+	public function testArrayDeepSearchReturnNullEmptyArray()
 	{
 		$data = [];
 
 		$this->assertNull(array_deep_search($data, 'key644'));
 	}
 
-	public function testArrayDeepSearchReturnNullEmptyIndex()
-	{
-		$data = [
-			'key1' => 'Value 1',
-			'key5' => [
-				'key51' => 'Value 5.1',
-			],
-			'key6' => [
-				'key61' => [
-					'key61' => 'Value 6.1',
-					'key64' => [
-						'key641' => 'Value 6.4.1',
-						'key644' => [
-							'key6441' => 'Value 6.4.4.1',
-						]
-					]
-				]
-			]
-		];
+	//--------------------------------------------------------------------
 
-		$this->assertNull(array_deep_search($data, ''));
+	public function deepSearchProvider()
+	{
+		return [
+			[
+				'key6441',
+				'Value 6.4.4.1',
+			],
+			[
+				'key64421',
+				null,
+			],
+			[
+				'key644',
+				['key6441' => 'Value 6.4.4.1'],
+			],
+			[
+				'',
+				null,
+			],
+		];
 	}
 }
