@@ -25,7 +25,15 @@ jobs:
         experimental: [false]
         include:
           - php-versions: '8.0'
-            db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
+            db-platforms: 'MySQLi'
+            composer-options: '--ignore-platform-reqs'
+            experimental: true
+          - php-versions: '8.0'
+            db-platforms: 'Postgre'
+            composer-options: '--ignore-platform-reqs'
+            experimental: true
+          - php-versions: '8.0'
+            db-platforms: 'SQLite3'
             composer-options: '--ignore-platform-reqs'
             experimental: true
 
