@@ -128,28 +128,34 @@ class CreateDatabase extends BaseCommand
 			try
 			{
 				$connect = \Config\Database::connect();
+
+				if($connect->hostname != NULL && $connect->username != NULL)
+				{
+					if($_SERVER['CI_ENVIRONMENT'] != "development")
+					{
+						CLI::write('Make sure your environment configuration are ' . CLI::color('development', 'yellow') . '.');
+						die();
+					}
+					
+					try
+					{
+						$forge = \Config\Database::forge();
+						$forge->createDatabase($name);
+						return CLI::write('Create database ' . CLI::color($name, 'green') . ' successfully');
+					}
+					catch (\Exception $e)
+					{
+						return CLI::write('Database ' . CLI::color($name, 'red') . ' exists');
+					}
+				}
+				else
+				{
+					CLI::write('Please check your database configuration in' . CLI::color(' .env', 'yellow') . ' or' . CLI::color(' app/Config/Database.php', 'yellow') . ' file.');
+				}
 			}
 			catch (\Exception $e)
 			{
 				$this->showError($e);
-			}
-
-			if($connect->hostname != NULL && $connect->username != NULL)
-			{
-				try
-				{
-					$forge = \Config\Database::forge();
-					$forge->createDatabase($name);
-					return CLI::write('Create database ' . CLI::color($name, 'green') . ' successfully');
-				}
-				catch (\Exception $e)
-				{
-					return CLI::write('Database ' . CLI::color($name, 'red') . ' exists');
-				}
-			}
-			else
-			{
-				CLI::write('Please check your database configuration in' . CLI::color(' .env', 'red') . ' file or' . CLI::color(' app/Config/Database.php', 'red'));
 			}
 		}
 	}
