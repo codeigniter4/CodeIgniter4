@@ -1,6 +1,6 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://github.com/codeigniter4/CodeIgniter4/workflows/Build/badge.svg?branch=develop)](https://github.com/codeigniter4/CodeIgniter4/actions?query=workflow%3A%22Build%22)
+[![Build Status](https://github.com/codeigniter4/CodeIgniter4/workflows/PHPUnit/badge.svg?branch=develop)](https://github.com/codeigniter4/CodeIgniter4/actions?query=workflow%3A%22PHPUnit%22)
 [![Coverage Status](https://coveralls.io/repos/github/codeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/codeigniter4/CodeIgniter4?branch=develop)
 [![Downloads](https://poser.pugx.org/codeigniter4/framework/downloads)](https://packagist.org/packages/codeigniter4/framework)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/codeigniter4/CodeIgniter4)](https://packagist.org/packages/codeigniter4/framework)
