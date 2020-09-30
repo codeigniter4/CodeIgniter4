@@ -38,8 +38,6 @@
 
 namespace CodeIgniter\Database\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
-
 class DatabaseException extends \Error implements ExceptionInterface
 {
 	/**
