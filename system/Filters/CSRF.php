@@ -81,15 +81,13 @@ class CSRF implements FilterInterface
 			return;
 		}
 
-		$security = Services::security();
-
 		try
 		{
-			$security->CSRFVerify($request);
+			Services::security()->verify($request);
 		}
 		catch (SecurityException $e)
 		{
-			if (config('App')->CSRFRedirect && ! $request->isAJAX())
+			if (config('Security')->redirect && ! $request->isAJAX())
 			{
 				return redirect()->back()->with('error', $e->getMessage());
 			}
@@ -112,6 +110,4 @@ class CSRF implements FilterInterface
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 	}
-
-	//--------------------------------------------------------------------
 }
