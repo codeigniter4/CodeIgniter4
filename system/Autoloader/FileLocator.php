@@ -354,16 +354,16 @@ class FileLocator
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
-		$path = realpath($path);
+		$path = realpath($path) ?: $path;
 
-		if (! $path)
+		if (! is_file($path))
 		{
 			return false;
 		}
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$namespace['path'] = realpath($namespace['path']);
+			$namespace['path'] = realpath($namespace['path']) ?: $namespace['path'];
 
 			if (empty($namespace['path']))
 			{
@@ -412,7 +412,8 @@ class FileLocator
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$fullPath = realpath($namespace['path'] . $path);
+			$fullPath = $namespace['path'] . $path;
+			$fullPath = realpath($fullPath) ?: $fullPath;
 
 			if (! is_dir($fullPath))
 			{
@@ -454,7 +455,8 @@ class FileLocator
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{
-			$fullPath = realpath(rtrim($namespacePath, '/') . '/' . $path);
+			$fullPath = rtrim($namespacePath, '/') . '/' . $path;
+			$fullPath = realpath($fullPath) ?: $fullPath;
 
 			if (! is_dir($fullPath))
 			{
@@ -485,7 +487,8 @@ class FileLocator
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{
-		$path = realpath(APPPATH . (empty($folder) ? $file : $folder . '/' . $file));
+		$path = APPPATH . (empty($folder) ? $file : $folder . '/' . $file);
+		$path = realpath($path) ?: $path;
 
 		if (is_file($path))
 		{

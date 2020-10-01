@@ -335,7 +335,9 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		return require realpath(__DIR__ . '/../') . '/bootstrap.php';
+		$path = __DIR__ . '/../bootstrap.php';
+		$path = realpath($path) ?: $path;
+		return require $path;
 	}
 
 	/**

@@ -444,7 +444,7 @@ class FileHandler implements CacheInterface
 			if ($_recursion === false)
 			{
 				$_filedata = [];
-				$sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
