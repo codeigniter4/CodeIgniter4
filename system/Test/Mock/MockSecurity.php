@@ -1,17 +1,16 @@
-<?php namespace CodeIgniter\Test\Mock;
+<?php
+
+namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Security;
 
 class MockSecurity extends Security
 {
-	public function CSRFSetCookie(RequestInterface $request)
+	public function sendCookie(RequestInterface $request)
 	{
-		$_COOKIE['csrf_cookie_name'] = $this->CSRFHash;
+		$_COOKIE['csrf_cookie_name'] = $this->hash;
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
-
 }
