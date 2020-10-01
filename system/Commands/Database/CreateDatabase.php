@@ -63,7 +63,7 @@ class CreateDatabase extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'db:go';
+	protected $name = 'db:create';
 
 	/**
 	 * the Command's short description
@@ -77,7 +77,7 @@ class CreateDatabase extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'db:go [db_name]';
+	protected $usage = 'db:create [db_name]';
 
 	/**
 	 * the Command's Arguments
