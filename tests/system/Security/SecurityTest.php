@@ -1,10 +1,13 @@
-<?php namespace CodeIgniter\Security;
+<?php
+
+namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 
@@ -13,7 +16,7 @@ use CodeIgniter\Test\Mock\MockSecurity;
 /**
  * @backupGlobals enabled
  */
-class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
+class SecurityTest extends CIUnitTestCase {
 
 	protected function setUp(): void
 	{
@@ -28,10 +31,8 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 	{
 		$security = new Security(new MockAppConfig());
 
-		$hash = $security->getCSRFHash();
-
-		$this->assertEquals(32, strlen($hash));
-		$this->assertEquals('csrf_test_name', $security->getCSRFTokenName());
+		$this->assertEquals(32, strlen($security->getHash()));
+		$this->assertEquals('csrf_test_name', $security->getTokenName());
 	}
 
 	//--------------------------------------------------------------------
@@ -44,7 +45,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 		$security = new Security(new MockAppConfig());
 
-		$this->assertEquals('8b9218a55906f9dcc1dc263dce7f005a', $security->getCSRFHash());
+		$this->assertEquals('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
 	}
 
 	//--------------------------------------------------------------------
@@ -55,9 +56,9 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$security->CSRFVerify(new Request(new MockAppConfig()));
+		$security->verify(new Request(new MockAppConfig()));
 
-		$this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getCSRFHash());
+		$this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getHash());
 	}
 
 	//--------------------------------------------------------------------
@@ -74,7 +75,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		];
 
 		$this->expectException(SecurityException::class);
-		$security->CSRFVerify($request);
+		$security->verify($request);
 	}
 
 	//--------------------------------------------------------------------
@@ -91,7 +92,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a',
 		];
 
-		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->CSRFVerify($request));
+		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->verify($request));
 		$this->assertLogged('info', 'CSRF token verified');
 
 		$this->assertTrue(count($_POST) === 1);
@@ -112,7 +113,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		];
 
 		$this->expectException(SecurityException::class);
-		$security->CSRFVerify($request);
+		$security->verify($request);
 	}
 
 	//--------------------------------------------------------------------
@@ -130,7 +131,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a',
 		];
 
-		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->CSRFVerify($request));
+		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->verify($request));
 		$this->assertLogged('info', 'CSRF token verified');
 
 		$this->assertTrue(count($_POST) === 1);
@@ -151,7 +152,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		];
 
 		$this->expectException(SecurityException::class);
-		$security->CSRFVerify($request);
+		$security->verify($request);
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +169,7 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a',
 		];
 
-		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->CSRFVerify($request));
+		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->verify($request));
 		$this->assertLogged('info', 'CSRF token verified');
 
 		$this->assertTrue($request->getBody() === '{"foo":"bar"}');
@@ -184,7 +185,4 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 		$this->assertEquals('foo', $security->sanitizeFilename($filename));
 	}
-
-	//--------------------------------------------------------------------
-
 }
