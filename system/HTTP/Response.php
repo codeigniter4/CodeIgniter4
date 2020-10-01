@@ -233,6 +233,19 @@ class Response extends Message implements ResponseInterface
 	 */
 	protected $bodyFormat = 'html';
 
+	/**
+	 * Whether CORS is being enforced.
+	 *
+	 * @var boolean
+	 */
+	protected $CORSEnabled = false;
+  /**
+   * Type Config\CORS
+   *
+   * @var CORS
+   */
+  protected $CORS;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -256,6 +269,10 @@ class Response extends Message implements ResponseInterface
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+
+    // CORS
+    $this->CORSEnabled     = $config->CORSEnabled;
+    $this->CORS = new \Config\CORS();
 
 		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
 		{
@@ -719,6 +736,14 @@ class Response extends Message implements ResponseInterface
 		{
 			header($name . ': ' . $this->getHeaderLine($name), true, $this->statusCode);
 		}
+
+    // Verifying if CORS is not already sent and if is enabled
+    if (!in_array('Access-Control-Allow-Origin', headers_list()) && $this->CORSEnabled) {
+      // Send CORS headers
+      foreach ($this->CORS->headerList as $name => $value) {
+        header($name . ': ' . $value, true, $this->statusCode);
+      }
+    }
 
 		return $this;
 	}
