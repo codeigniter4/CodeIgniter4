@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
+Use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurityConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 
@@ -53,7 +54,7 @@ class SecurityTest extends CIUnitTestCase {
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $security->verify(new Request(new MockSecurityConfig()));
+        $security->verify(new Request(new MockAppConfig()));
 
         $this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getHash());
     }
@@ -63,7 +64,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -78,7 +79,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyPostReturnsSelfOnMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['foo']                = 'bar';
@@ -96,7 +97,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -112,7 +113,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyHeaderReturnsSelfOnMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -131,7 +132,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}');
 
@@ -147,7 +148,7 @@ class SecurityTest extends CIUnitTestCase {
     public function testCSRFVerifyJsonReturnsSelfOnMatch()
     {
         $security = new MockSecurity(new MockSecurityConfig());
-        $request  = new IncomingRequest(new MockSecurityConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
 
