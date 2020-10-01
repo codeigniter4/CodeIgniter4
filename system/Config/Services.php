@@ -90,6 +90,7 @@ use Config\Honeypot as HoneypotConfig;
 use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
+use Config\Security as SecurityConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
@@ -691,19 +692,19 @@ class Services extends BaseService
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 *
-	 * @param \Config\App|null $config
-	 * @param boolean          $getShared
+	 * @param \Config\Security|null $config
+	 * @param boolean          	$getShared
 	 *
 	 * @return \CodeIgniter\Security\Security
 	 */
-	public static function security(App $config = null, bool $getShared = true)
+	public static function security(SecurityConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('security', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new SecurityConfig;
 
 		return new Security($config);
 	}
@@ -885,6 +886,4 @@ class Services extends BaseService
 
 		return new Typography();
 	}
-
-	//--------------------------------------------------------------------
 }
