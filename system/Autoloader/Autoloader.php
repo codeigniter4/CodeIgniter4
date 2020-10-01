@@ -377,7 +377,7 @@ class Autoloader
 
 		if (is_file($file))
 		{
-			require_once $file;
+			include_once $file;
 
 			return $file;
 		}
