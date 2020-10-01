@@ -132,7 +132,7 @@ class Security
      *
      * @param \Config\Security $config
      *
-     * @throws \CodeIgniter\Security\Exception\SecurityException
+     * @throws \CodeIgniter\Security\Exceptions\SecurityException
      */
     public function __construct(SecurityConfig $config)
     {
@@ -169,7 +169,7 @@ class Security
      * @param \CodeIgniter\HTTP\RequestInterface $request
      *
      * @return $this|false
-     * @throws \CodeIgniter\Security\Exception\SecurityException
+     * @throws \CodeIgniter\Security\Exceptions\SecurityException
      */
     public function verify(RequestInterface $request)
     {
