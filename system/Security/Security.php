@@ -146,7 +146,7 @@ class Security
 
         if (! in_array(strtolower($this->samesite), ['', 'none', 'lax', 'strict'], true))
         {
-            throw SecurityException::forInvalidSameSiteSetting($this->samesite);
+            throw SecurityException::forInvalidSameSite($this->samesite);
         }
 
         $config = new AppConfig();
