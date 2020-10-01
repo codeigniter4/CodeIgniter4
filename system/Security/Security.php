@@ -328,7 +328,7 @@ class Security
      *
      * @return string|null
      */
-    public function gethash(): ?string
+    public function getHash(): ?string
     {
         return $this->hash;
     }
