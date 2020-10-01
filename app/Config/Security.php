@@ -11,7 +11,7 @@ class Security extends BaseConfig
 	 * CSRF Token Name
 	 * --------------------------------------------------------------------------
 	 *
-	 * The token name.
+	 * Token name for Cross Site Request Forgery protection cookie.
 	 *
 	 * @var string
 	 */
@@ -22,7 +22,7 @@ class Security extends BaseConfig
 	 * CSRF Header Name
 	 * --------------------------------------------------------------------------
 	 *
-	 * The header name.
+	 * Token name for Cross Site Request Forgery protection cookie.
 	 *
 	 * @var string
 	 */
@@ -33,7 +33,7 @@ class Security extends BaseConfig
 	 * CSRF Cookie Name
 	 * --------------------------------------------------------------------------
 	 *
-	 * The cookie name.
+	 * Cookie name for Cross Site Request Forgery protection cookie.
 	 *
 	 * @var string
 	 */
@@ -44,7 +44,8 @@ class Security extends BaseConfig
 	 * CSRF Expire
 	 * --------------------------------------------------------------------------
 	 *
-	 * The number in seconds the token should expire.
+     	 * Expiration time for Cross Site Request Forgery protection cookie.
+     	 * Defaults to two hours (in seconds).
 	 *
 	 * @var integer
 	 */
@@ -55,7 +56,8 @@ class Security extends BaseConfig
 	 * CSRF Regenerate
 	 * --------------------------------------------------------------------------
 	 *
-	 * Regenerate token on every submission?
+	 * true : The CSRF Token will be regenerated on every request.
+	 * false: The CSRF will stay the same for the life of the cookie.
 	 *
 	 * @var boolean
 	 */
