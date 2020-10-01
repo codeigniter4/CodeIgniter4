@@ -39,6 +39,7 @@
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -76,9 +77,7 @@ if (! function_exists('app_timezone'))
 	 */
 	function app_timezone(): string
 	{
-		$config = config(App::class);
-
-		return $config->appTimezone;
+		return config('App')->appTimezone;
 	}
 }
 
@@ -269,9 +268,7 @@ if (! function_exists('csrf_token'))
 	 */
 	function csrf_token(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFTokenName;
+		return Services::security()->getTokenName();
 	}
 }
 
@@ -286,9 +283,7 @@ if (! function_exists('csrf_header'))
 	 */
 	function csrf_header(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFHeaderName;
+		return Services::security()->getHeaderName();
 	}
 }
 
@@ -303,9 +298,7 @@ if (! function_exists('csrf_hash'))
 	 */
 	function csrf_hash(): string
 	{
-		$security = Services::security(null, true);
-
-		return $security->getCSRFHash();
+		return Services::security()->getHash();
 	}
 }
 
@@ -538,8 +531,7 @@ if (! function_exists('force_https'))
 		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
 			// @codeCoverageIgnoreStart
-			Services::session(null, true)
-				->regenerate();
+			Services::session()->regenerate();
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -811,8 +803,7 @@ if (! function_exists('lang'))
 	 */
 	function lang(string $line, array $args = [], string $locale = null)
 	{
-		return Services::language($locale)
-			->getLine($line, $args);
+		return Services::language($locale)->getLine($line, $args);
 	}
 }
 
@@ -851,8 +842,7 @@ if (! function_exists('log_message'))
 		}
 
 		// @codeCoverageIgnoreStart
-		return Services::logger(true)
-			->log($level, $message, $context);
+		return Services::logger(true)->log($level, $message, $context);
 		// @codeCoverageIgnoreEnd
 	}
 }
@@ -870,7 +860,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return \CodeIgniter\Database\ModelFactory::get($name, $getShared, $conn);
+		return ModelFactory::get($name, $getShared, $conn);
 	}
 }
 
@@ -1214,8 +1204,7 @@ if (! function_exists('view'))
 			unset($options['saveData']);
 		}
 
-		return $renderer->setData($data, 'raw')
-						->render($name, $options, $saveData);
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 }
 
@@ -1235,7 +1224,6 @@ if (! function_exists('view_cell'))
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
-		return Services::viewcell()
-			->render($library, $params, $ttl, $cacheName);
+		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
 	}
 }
