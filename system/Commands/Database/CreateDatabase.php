@@ -100,7 +100,6 @@ class CreateDatabase extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
-		helper('inflector');
 		$name = array_shift($params);
 
 		if (empty($name))
