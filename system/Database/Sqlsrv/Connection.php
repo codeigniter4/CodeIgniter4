@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +30,10 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -46,7 +47,8 @@ use stdClass;
 /**
  * Connection for Sqlsrv
  */
-class Connection extends BaseConnection implements ConnectionInterface {
+class Connection extends BaseConnection implements ConnectionInterface
+{
 
 	/**
 	 * Database driver
@@ -54,6 +56,13 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	 * @var string
 	 */
 	public $DBDriver = 'SQLSrv';
+
+	/**
+	 * Database name
+	 *
+	 * @var string
+	 */
+	public $database;
 
 	/**
 	 * Scrollable flag
@@ -100,6 +109,8 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	 */
 	protected $_reserved_identifiers = ['*'];
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Class constructor
 	 *
@@ -116,8 +127,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 			$this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Connect to the database.
@@ -162,21 +171,17 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return $this->connID;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
 		$this->close();
 		$this->initialize();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Close the database connection.
@@ -187,8 +192,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	{
 		sqlsrv_close($this->connID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform-dependant string escape
@@ -201,8 +204,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return str_replace("'", "''", remove_invisible_characters($str, false));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
@@ -212,8 +213,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	{
 		return $this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
@@ -238,8 +237,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates a platform-specific query string so that the column names can be fetched.
 	 *
@@ -256,8 +253,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of objects with index data
@@ -313,8 +308,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return $retVal;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with Foreign key data
 	 * referenced_object_id  parent_object_id
@@ -363,17 +356,25 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return $retVal;
 	}
 
+	/**
+	 * Disables foreign key checks temporarily.
+	 *
+	 * @return string
+	 */
 	protected function _disableForeignKeyChecks()
 	{
-		return 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
+		return 'EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT ALL"';
 	}
 
+	/**
+	 * Enables foreign key checks temporarily.
+	 *
+	 * @return string
+	 */
 	protected function _enableForeignKeyChecks()
 	{
-		return 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL';
+		return 'EXEC sp_MSforeachtable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL"';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of objects with field data
@@ -407,8 +408,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return $retVal;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
@@ -418,8 +417,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	{
 		return (bool) sqlsrv_begin_transaction($this->connID);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Commit Transaction
@@ -431,8 +428,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return (bool) sqlsrv_commit($this->connID);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
@@ -442,8 +437,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	{
 		return (bool) sqlsrv_rollback($this->connID);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Returns the last error code and message.
@@ -461,32 +454,30 @@ class Connection extends BaseConnection implements ConnectionInterface {
 			'message' => '',
 		];
 
-		$sqlsrv_errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+		$sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
-		if (! is_array($sqlsrv_errors))
+		if (! is_array($sqlsrvErrors))
 		{
 			return $error;
 		}
 
-		$sqlsrv_error = array_shift($sqlsrv_errors);
-		if (isset($sqlsrv_error['SQLSTATE']))
+		$sqlsrvError = array_shift($sqlsrvErrors);
+		if (isset($sqlsrvError['SQLSTATE']))
 		{
-			$error['code'] = isset($sqlsrv_error['code']) ? $sqlsrv_error['SQLSTATE'] . '/' . $sqlsrv_error['code'] : $sqlsrv_error['SQLSTATE'];
+			$error['code'] = isset($sqlsrvError['code']) ? $sqlsrvError['SQLSTATE'] . '/' . $sqlsrvError['code'] : $sqlsrvError['SQLSTATE'];
 		}
-		elseif (isset($sqlsrv_error['code']))
+		elseif (isset($sqlsrvError['code']))
 		{
-			$error['code'] = $sqlsrv_error['code'];
+			$error['code'] = $sqlsrvError['code'];
 		}
 
-		if (isset($sqlsrv_error['message']))
+		if (isset($sqlsrvError['message']))
 		{
-			$error['message'] = $sqlsrv_error['message'];
+			$error['message'] = $sqlsrvError['message'];
 		}
 
 		return $error;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the total number of rows affected by this query.
@@ -498,18 +489,16 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return sqlsrv_rows_affected($this->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Select a specific database table to use.
 	 *
-	 * @param string $databaseName
+	 * @param string|null $databaseName
 	 *
 	 * @return mixed
 	 */
-	public function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName = null)
 	{
-		if ($databaseName === '')
+		if (empty($databaseName))
 		{
 			$databaseName = $this->database;
 		}
@@ -529,34 +518,43 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Executes the query against the database.
 	 *
 	 * @param string $sql
 	 *
-	 * @return resource
+	 * @return mixed
 	 */
 	public function execute(string $sql)
 	{
-		return ($this->scrollable === false || $this->isWriteType($sql)) ? sqlsrv_query($this->connID, $sql) : sqlsrv_query($this->connID, $sql, null, ['Scrollable' => $this->scrollable]);
-	}
+		$stmt = ($this->scrollable === false || $this->isWriteType($sql)) ?
+			sqlsrv_query($this->connID, $sql) :
+			sqlsrv_query($this->connID, $sql, [], ['Scrollable' => $this->scrollable]);
 
-	//--------------------------------------------------------------------
+		if ($stmt === false)
+		{
+			$error = $this->error();
+
+			log_message('error', $error['message']);
+			if ($this->DBDebug)
+			{
+				throw new \Exception($error['message']);
+			}
+		}
+
+		return $stmt;
+	}
 
 	/**
 	 * Determines if a query is a "write" type.
 	 *
-	 * @param  string	An SQL query string
+	 * @param  string $sql An SQL query string
 	 * @return boolean
 	 */
 	public function isWriteType($sql)
 	{
 		return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last error encountered by this connection.
@@ -565,36 +563,34 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	 */
 	public function getError()
 	{
-		$error         = [
+		$error        = [
 			'code'    => '00000',
 			'message' => '',
 		];
-		$sqlsrv_errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+		$sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
-		if (! is_array($sqlsrv_errors))
+		if (! is_array($sqlsrvErrors))
 		{
 			return $error;
 		}
 
-		$sqlsrv_error = array_shift($sqlsrv_errors);
-		if (isset($sqlsrv_error['SQLSTATE']))
+		$sqlsrvError = array_shift($sqlsrvErrors);
+		if (isset($sqlsrvError['SQLSTATE']))
 		{
-			$error['code'] = isset($sqlsrv_error['code']) ? $sqlsrv_error['SQLSTATE'] . '/' . $sqlsrv_error['code'] : $sqlsrv_error['SQLSTATE'];
+			$error['code'] = isset($sqlsrvError['code']) ? $sqlsrvError['SQLSTATE'] . '/' . $sqlsrvError['code'] : $sqlsrvError['SQLSTATE'];
 		}
-		elseif (isset($sqlsrv_error['code']))
+		elseif (isset($sqlsrvError['code']))
 		{
-			$error['code'] = $sqlsrv_error['code'];
+			$error['code'] = $sqlsrvError['code'];
 		}
 
-		if (isset($sqlsrv_error['message']))
+		if (isset($sqlsrvError['message']))
 		{
-			$error['message'] = $sqlsrv_error['message'];
+			$error['message'] = $sqlsrvError['message'];
 		}
 
 		return $error;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * The name of the platform in use (MySQLi, mssql, etc)
@@ -605,8 +601,6 @@ class Connection extends BaseConnection implements ConnectionInterface {
 	{
 		return $this->DBDriver;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a string containing the version of the database being used.
@@ -620,13 +614,12 @@ class Connection extends BaseConnection implements ConnectionInterface {
 			return $this->dataCache['version'];
 		}
 
-		if (! $this->connID || ( $info = sqlsrv_server_info($this->connID)) === false)
+		if (! $this->connID || empty($info = sqlsrv_server_info($this->connID)))
 		{
-			return false;
+			$this->initialize();
 		}
 
-		return $this->dataCache['version'] = $info['SQLServerVersion'];
+		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
 
-	//--------------------------------------------------------------------
 }

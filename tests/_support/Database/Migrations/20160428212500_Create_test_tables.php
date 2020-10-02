@@ -1,10 +1,6 @@
-<?php
+<?php namespace Tests\Support\Database\Migrations;
 
-namespace Tests\Support\Database\Migrations;
-
-use CodeIgniter\Database\Migration;
-
-class Migration_Create_test_tables extends Migration
+class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 {
 	public function up()
 	{
@@ -97,114 +93,127 @@ class Migration_Create_test_tables extends Migration
 		//missing types :
 		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
 		$data_type_fields = [
-			'id'             => [
+			'id'              => [
 				'type'           => 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field
 				'constraint'     => 20,
 				'auto_increment' => true,
 			],
-			'type_varchar'   => [
+			'type_varchar'    => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 				'null'       => true,
 			],
-			'type_char'      => [
+			'type_char'       => [
 				'type'       => 'CHAR',
 				'constraint' => 10,
 				'null'       => true,
 			],
-			'type_text'      => [
+			'type_text'       => [
 				'type' => 'TEXT',
 				'null' => true,
 			],
-			'type_smallint'  => [
+			'type_smallint'   => [
 				'type' => 'SMALLINT',
 				'null' => true,
 			],
-			'type_integer'   => [
+			'type_integer'    => [
 				'type' => 'INTEGER',
 				'null' => true,
 			],
-			'type_float'     => [
+			'type_float'      => [
 				'type' => 'FLOAT',
 				'null' => true,
 			],
-			'type_numeric'   => [
+			'type_numeric'    => [
 				'type'       => 'NUMERIC',
 				'constraint' => '18,2',
 				'null'       => true,
 			],
-			'type_date'      => [
+			'type_date'       => [
 				'type' => 'DATE',
 				'null' => true,
 			],
-			'type_time'      => [
+			'type_time'       => [
 				'type' => 'TIME',
 				'null' => true,
 			],
-
-			'type_datetime'  => [
+			'type_datetime'   => [
 				'type' => 'DATETIME',
 				'null' => true,
 			],
-			'type_timestamp' => [
+			'type_timestamp'  => [
 				'type' => 'TIMESTAMP',
 				'null' => true,
 			],
-			'type_bigint'    => [
+			'type_bigint'     => [
 				'type' => 'BIGINT',
+				'null' => true,
+			],
+			'type_real'       => [
+				'type' => 'REAL',
+				'null' => true,
+			],
+			'type_enum'       => [
+				'type'       => 'ENUM',
+				'constraint' => [
+					'appel',
+					'pears',
+					'bananas',
+				],
+				'null'       => true,
+			],
+			'type_set'        => [
+				'type'       => 'SET',
+				'constraint' => [
+					'one',
+					'two',
+				],
+				'null'       => true,
+			],
+			'type_mediumtext' => [
+				'type' => 'MEDIUMTEXT',
+				'null' => true,
+			],
+			'type_double'     => [
+				'type' => 'DOUBLE',
+				'null' => true,
+			],
+			'type_decimal'    => [
+				'type'       => 'DECIMAL',
+				'constraint' => '18,4',
+				'null'       => true,
+			],
+			'type_blob'       => [
+				'type' => 'BLOB',
 				'null' => true,
 			],
 
 		];
-		if ($this->db->DBDriver !== 'Postgre')
+
+		if ($this->db->DBDriver === 'Postgre')
 		{
-			$extra_fields = [
-
-				'type_real' => [
-					'type' => 'REAL',
-					'null' => true,
-				],
-
-			];
-			$data_type_fields = array_merge($data_type_fields, $extra_fields);
+			unset(
+				$data_type_fields['type_real'],
+				$data_type_fields['type_decimal']
+			);
 		}
 
-		if ($this->db->DBDriver !== 'Postgre' && $this->db->DBDriver !== 'Sqlsrv')
+		if ($this->db->DBDriver === 'Sqlsrv')
 		{
-			$extra_fields = [
-				'type_enum'       => [
-					'type'       => 'ENUM',
-					'constraint' => [
-						'appel',
-						'pears',
-						'bananas',
-					],
-					'null'       => true,
-				],
-				'type_set'        => [
-					'type'       => 'SET',
-					'constraint' => [
-						'one',
-						'two',
-					],
-					'null'       => true,
-				],
-				'type_mediumtext' => [
-					'type' => 'MEDIUMTEXT',
-					'null' => true,
-				],
-				'type_double'     => [
-					'type' => 'DOUBLE',
-					'null' => true,
-				],
-
-				'type_blob'       => [
-					'type' => 'BLOB',
-					'null' => true,
-				],
-			];
-			$data_type_fields = array_merge($data_type_fields, $extra_fields);
+			unset($data_type_fields['type_timestamp']);
 		}
+
+		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'Sqlsrv')
+		{
+			unset(
+				$data_type_fields['type_enum'],
+				$data_type_fields['type_set'],
+				$data_type_fields['type_mediumtext'],
+				$data_type_fields['type_double'],
+				$data_type_fields['type_blob']
+			);
+		}
+
 		$this->forge->addField($data_type_fields);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('type_test', true);
@@ -272,6 +281,8 @@ class Migration_Create_test_tables extends Migration
 		$this->forge->createTable('without_auto_increment', true);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function down()
 	{
 		$this->forge->dropTable('user', true);
@@ -283,4 +294,7 @@ class Migration_Create_test_tables extends Migration
 		$this->forge->dropTable('stringifypkey', true);
 		$this->forge->dropTable('without_auto_increment', true);
 	}
+
+	//--------------------------------------------------------------------
+
 }

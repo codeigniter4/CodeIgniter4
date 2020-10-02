@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +30,10 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -41,7 +42,8 @@ namespace CodeIgniter\Database\Sqlsrv;
 /**
  * Forge for Sqlsrv
  */
-class Forge extends \CodeIgniter\Database\Forge {
+class Forge extends \CodeIgniter\Database\Forge
+{
 
 	/**
 	 * DROP CONSTRAINT statement
@@ -53,11 +55,19 @@ class Forge extends \CodeIgniter\Database\Forge {
 	/**
 	 * CREATE DATABASE IF statement
 	 *
+	 * @todo missing charset, collat & check for existant
+	 *
 	 * @var string
 	 */
-	/// TODO: missing charset, collat & check for existant
 	protected $createDatabaseIfStr = "DECLARE @DBName VARCHAR(255) = '%s'\nDECLARE @SQL VARCHAR(max) = 'IF DB_ID( ''' + @DBName + ''' ) IS NULL CREATE DATABASE ' + @DBName\nEXEC( @SQL )";
-	/// TODO: missing charset & collat
+
+	/**
+	 * CREATE DATABASE IF statement
+	 *
+	 * @todo missing charset & collat
+	 *
+	 * @var string
+	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s ';
 
 	/**
@@ -72,7 +82,8 @@ class Forge extends \CodeIgniter\Database\Forge {
 	 *
 	 * While the below statement would work, it returns an error.
 	 * Also MS recommends dropping and dropping and re-creating the table.
-	 * https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-rename-transact-sql?view=sql-server-2017
+	 *
+	 * @see https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-rename-transact-sql?view=sql-server-2017
 	 * 'EXEC sp_rename %s , %s ;'
 	 *
 	 * @var string
@@ -99,12 +110,18 @@ class Forge extends \CodeIgniter\Database\Forge {
 	protected $createTableIfStr = "IF NOT EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nCREATE TABLE";
 
 	/**
+	 * CREATE TABLE statement
+	 *
+	 * @var string
+	 */
+	protected $createTableStr = "%s %s (%s\n) ";
+
+	/**
 	 * DROP TABLE IF statement
 	 *
 	 * @var string
 	 */
 	protected $_drop_table_if = "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
-	protected $createTableStr = "%s %s (%s\n) ";
 
 	//--------------------------------------------------------------------
 
@@ -119,26 +136,24 @@ class Forge extends \CodeIgniter\Database\Forge {
 		return '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param string $alter_type ALTER type
-	 * @param string $table      Table name
-	 * @param mixed  $field      Column definition
+	 * @param string $alterType ALTER type
+	 * @param string $table     Table name
+	 * @param mixed  $field     Column definition
 	 *
-	 * @return string|array
+	 * @return string|string[]|false
 	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
+	protected function _alterTable(string $alterType, string $table, $field)
 	{
-		if (in_array($alter_type, ['ADD'], true))
+		if ($alterType === 'ADD')
 		{
-			return parent::_alterTable($alter_type, $table, $field);
+			return parent::_alterTable($alterType, $table, $field);
 		}
 
 		// Handle DROP here
-		if ('DROP' === $alter_type)
+		if ($alterType === 'DROP')
 		{
 			// check if fields are part of any indexes
 			$indexData = $this->db->getIndexData($table);
@@ -163,7 +178,7 @@ class Forge extends \CodeIgniter\Database\Forge {
 
 			$fields = array_map(function ($item) {
 				return 'COLUMN [' . trim($item) . ']';
-			}, $field);
+			}, (array) $field);
 
 			return $sql .= implode(',', $fields);
 		}
@@ -204,6 +219,7 @@ class Forge extends \CodeIgniter\Database\Forge {
 						. "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
 						. "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
 			}
+
 			if (! empty($data['new_name']))
 			{
 				// EXEC sp_rename '[dbo].[db_misc].[value]', 'valueasdasd', 'COLUMN';
@@ -216,9 +232,17 @@ class Forge extends \CodeIgniter\Database\Forge {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Drop index for table
+	 *
+	 * @param string $table
+	 * @param object $indexData
+	 *
+	 * @return mixed
+	 */
 	protected function _dropIndex(string $table, object $indexData)
 	{
-		if ('PRIMARY' === $indexData->type)
+		if ($indexData->type === 'PRIMARY')
 		{
 			$sql = 'ALTER TABLE [' . $this->db->schema . '].[' . $table . '] DROP [' . $indexData->name . ']';
 		}
@@ -247,8 +271,6 @@ class Forge extends \CodeIgniter\Database\Forge {
 				. '' // (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
 				. $field['unique'];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process foreign keys
@@ -279,9 +301,9 @@ class Forge extends \CodeIgniter\Database\Forge {
 				 *  ALTER TABLE [dbo].[NewTable]  ADD FOREIGN KEY ([system]) REFERENCES [dbo].[lofasz] ([asdasdasd])
 				 * CONSTRAINT FK_TempSales_SalesReason FOREIGN KEY (TempID)  REFERENCES Sales.SalesReason (SalesReasonID) ON DELETE CASCADE  ON UPDATE CASCADE
 				 */
-				$name_index = $table . '_' . $field . '_foreign';
+				$nameIndex = $table . '_' . $field . '_foreign';
 
-				$sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+				$sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
 						. ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
 						. ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
@@ -299,8 +321,6 @@ class Forge extends \CodeIgniter\Database\Forge {
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process primary keys
@@ -328,14 +348,12 @@ class Forge extends \CodeIgniter\Database\Forge {
 		return $sql ?? '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
 	 * Performs a data type mapping between different databases.
 	 *
-	 * @param array &$attributes
+	 * @param array $attributes
 	 *
 	 * @return void
 	 */
@@ -373,13 +391,11 @@ class Forge extends \CodeIgniter\Database\Forge {
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
-	 * @param array &$attributes
-	 * @param array &$field
+	 * @param array $attributes
+	 * @param array $field
 	 *
 	 * @return void
 	 */
@@ -391,24 +407,24 @@ class Forge extends \CodeIgniter\Database\Forge {
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Drop Table
 	 *
 	 * Generates a platform-specific DROP TABLE string
 	 *
-	 * @param string  $table     Table name
-	 * @param boolean $if_exists Whether to add an IF EXISTS condition
+	 * @todo Support for cascade
+	 *
+	 * @param string  $table    Table name
+	 * @param boolean $ifExists Whether to add an IF EXISTS condition
 	 * @param boolean $cascade
 	 *
 	 * @return string
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
+	protected function _dropTable(string $table, bool $ifExists, bool $cascade): string
 	{
 		$sql = 'DROP TABLE';
 
-		if ($if_exists)
+		if ($ifExists)
 		{
 			$sql .= ' IF EXISTS ';
 		}
@@ -419,11 +435,10 @@ class Forge extends \CodeIgniter\Database\Forge {
 
 		if ($cascade === true)
 		{
-			$sql .= ' CASCADE';
+			$sql .= '';
 		}
 
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
 }

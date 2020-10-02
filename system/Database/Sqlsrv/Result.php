@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +30,10 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -45,7 +46,8 @@ use stdClass;
 /**
  * Result for Sqlsrv
  */
-class Result extends BaseResult implements ResultInterface {
+class Result extends BaseResult implements ResultInterface
+{
 
 	/**
 	 * Row offset
@@ -82,8 +84,6 @@ class Result extends BaseResult implements ResultInterface {
 		return $fieldNames;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates an array of objects representing field meta-data.
 	 *
@@ -91,19 +91,56 @@ class Result extends BaseResult implements ResultInterface {
 	 */
 	public function getFieldData(): array
 	{
+		static $data_types = [
+			SQLSRV_SQLTYPE_BIGINT           => 'bigint',
+			SQLSRV_SQLTYPE_BIT              => 'bit',
+			SQLSRV_SQLTYPE_CHAR             => 'char',
+
+			SQLSRV_SQLTYPE_DATE             => 'date',
+			SQLSRV_SQLTYPE_DATETIME         => 'datetime',
+			SQLSRV_SQLTYPE_DATETIME2        => 'datetime2',
+			SQLSRV_SQLTYPE_DATETIMEOFFSET   => 'datetimeoffset',
+
+			SQLSRV_SQLTYPE_DECIMAL          => 'decimal',
+			SQLSRV_SQLTYPE_FLOAT            => 'float',
+
+			SQLSRV_SQLTYPE_IMAGE            => 'image',
+			SQLSRV_SQLTYPE_INT              => 'int',
+			SQLSRV_SQLTYPE_MONEY            => 'money',
+			SQLSRV_SQLTYPE_NCHAR            => 'nchar',
+			SQLSRV_SQLTYPE_NUMERIC          => 'numeric',
+
+			SQLSRV_SQLTYPE_NVARCHAR         => 'nvarchar',
+			SQLSRV_SQLTYPE_NTEXT            => 'ntext',
+
+			SQLSRV_SQLTYPE_REAL             => 'real',
+			SQLSRV_SQLTYPE_SMALLDATETIME    => 'smalldatetime',
+			SQLSRV_SQLTYPE_SMALLINT         => 'smallint',
+			SQLSRV_SQLTYPE_SMALLMONEY       => 'smallmoney',
+			SQLSRV_SQLTYPE_TEXT             => 'text',
+
+			SQLSRV_SQLTYPE_TIME             => 'time',
+			SQLSRV_SQLTYPE_TIMESTAMP        => 'timestamp',
+			SQLSRV_SQLTYPE_TINYINT          => 'tinyint',
+			SQLSRV_SQLTYPE_UNIQUEIDENTIFIER => 'uniqueidentifier',
+			SQLSRV_SQLTYPE_UDT              => 'udt',
+			SQLSRV_SQLTYPE_VARBINARY        => 'varbinary',
+			SQLSRV_SQLTYPE_VARCHAR          => 'varchar',
+			SQLSRV_SQLTYPE_XML              => 'xml',
+		];
+
 		$retVal = [];
 		foreach (sqlsrv_field_metadata($this->resultID) as $i => $field)
 		{
 			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $field['Name'];
 			$retVal[$i]->type       = $field['Type'];
+			$retVal[$i]->type_name  = isset($data_types[$field['Type']]) ? $data_types[$field['Type']] : null;
 			$retVal[$i]->max_length = $field['Size'];
 		}
 
 		return $retVal;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Frees the current result.
@@ -118,8 +155,6 @@ class Result extends BaseResult implements ResultInterface {
 			$this->resultID = false;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Moves the internal pointer to the desired offset. This is called
@@ -146,8 +181,6 @@ class Result extends BaseResult implements ResultInterface {
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result set as an array.
 	 *
@@ -160,8 +193,6 @@ class Result extends BaseResult implements ResultInterface {
 		//return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC, SQLSRV_SCROLL_RELATIVE, $this->rowOffset );
 		return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result set as an object.
@@ -177,7 +208,5 @@ class Result extends BaseResult implements ResultInterface {
 		//return sqlsrv_fetch_object($this->resultID, $className, null, SQLSRV_SCROLL_RELATIVE, $this->rowOffset );
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
-
-	//--------------------------------------------------------------------
 
 }

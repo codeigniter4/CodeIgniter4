@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -45,7 +45,8 @@ use CodeIgniter\Database\BasePreparedQuery;
 /**
  * Prepared query for Postgre
  */
-class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface {
+class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
+{
 
 	/**
 	 * Parameters array used to store the dynamic variables.
@@ -53,6 +54,15 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 	 * @var array
 	 */
 	protected $parameters = [];
+
+	/**
+	 * The result boolean from a sqlsrv_execute.
+	 *
+	 * @var boolean
+	 */
+	protected $result;
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -79,14 +89,13 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 
 		if (! $this->statement)
 		{
-			$this->errorCode   = 0;
-			$this->errorString = sqlsrv_errors();
+			$info              = $this->db->error();
+			$this->errorCode   = $info['code'];
+			$this->errorString = $info['message'];
 		}
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes a new set of data and runs it against the currently
@@ -113,8 +122,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 		return (bool) $this->result;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result object for the prepared query.
 	 *
@@ -125,16 +132,16 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 		return $this->result;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
+	 * Handle parameters
 	 *
-	 * @param  string $querystring
+	 * @param string $queryString
+	 *
 	 * @return array
 	 */
-	protected function parameterize(string $querystring): array
+	protected function parameterize(string $queryString): array
 	{
-		$numberOfVariables = substr_count($querystring, '?');
+		$numberOfVariables = substr_count($queryString, '?');
 
 		$params = [];
 
@@ -146,7 +153,5 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 
 		return $params;
 	}
-
-	//--------------------------------------------------------------------
 
 }

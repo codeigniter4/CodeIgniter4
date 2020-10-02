@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
-        db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
+        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'Sqlsrv']
 
     services:
       mysql:
@@ -61,6 +61,14 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3
+      mssql:
+        image: microsoft/mssql-server-linux:2017-latest
+        env:
+          SA_PASSWORD: 1Secure*Password1
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+        ports:
+          - 1433:1433
       redis:
         image: redis
         ports:
@@ -68,6 +76,10 @@ jobs:
         options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
+      - name: Create database for MSSQL Server
+        if: ${{ matrix.db-platforms == 'Sqlsrv'}}
+        run: sqlcmd -S localhost -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -75,8 +87,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: composer:v2
-          extensions: imagick
+          tools: composer:v2, pecl
+          extensions: imagick, sqlsrv
           coverage: xdebug
         env:
           update: true

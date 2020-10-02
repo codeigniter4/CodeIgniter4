@@ -59,13 +59,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$databases = $util->listDatabases();
-
-			$this->assertTrue(in_array('test', $databases));
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
 		{
 			$databases = $util->listDatabases();
 
@@ -78,12 +72,6 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 			$util->listDatabases();
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
-		{
-			$databases = $util->listDatabases();
-
-			$this->assertTrue(in_array('test', $databases));
-		}
 	}
 
 	//--------------------------------------------------------------------
@@ -92,13 +80,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$exist = $util->databaseExists('test');
-
-			$this->assertTrue($exist);
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
 		{
 			$exist = $util->databaseExists('test');
 
@@ -110,12 +92,6 @@ class DbUtilsTest extends CIDatabaseTestCase {
 			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
 			$util->databaseExists('test');
-		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
-		{
-			$exist = $util->databaseExists('test');
-
-			$this->assertTrue($exist);
 		}
 	}
 
@@ -152,7 +128,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 		$d = $util->optimizeTable('db_job');
 
-		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3' || $this->db->DBDriver === 'Sqlsrv')
+		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'Sqlsrv']))
 		{
 			$this->assertFalse((bool) $d);
 		}
