@@ -44,9 +44,7 @@ use CodeIgniter\CLI\CLI;
 use Config\Services;
 
 /**
- * Creates a new database migration file.
- *
- * @package CodeIgniter\Commands
+ * Creates a new database.
  */
 class CreateDatabase extends BaseCommand
 {
