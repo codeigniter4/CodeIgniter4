@@ -104,13 +104,7 @@ class CreateDatabase extends BaseCommand
 
 		if (empty($name))
 		{
-			$name = CLI::prompt('Database name');
-		}
-
-		if (empty($name))
-		{
-			CLI::write('You must provide a ' . CLI::color('database name', 'red') . '.');
-			return;
+			$name = CLI::prompt('Database name', null, 'required');
 		}
 
 		if(!empty($name))
