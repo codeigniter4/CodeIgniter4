@@ -137,7 +137,8 @@ class CreateController extends GeneratorCommand
 		] = $this->getParentClass($bare, $rest);
 
 		$template = parent::setReplacements($template, $class);
-		$template = str_replace([
+
+		return str_replace([
 			'{useStatement}',
 			'{extends}',
 			'{restfulMethods}',
@@ -148,8 +149,6 @@ class CreateController extends GeneratorCommand
 		],
 			$template
 		);
-
-		return $template;
 	}
 
 	/**
