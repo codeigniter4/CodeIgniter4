@@ -13,6 +13,13 @@ class ModelFactory
 	static private $instances = [];
 
 	/**
+	 * Mapping of class basenames (no namespace) to instances.
+	 *
+	 * @var string[]
+	 */
+	static private $basenames = [];
+
+	/**
 	 * Creates new Model instances or returns a shared instance
 	 *
 	 * @param string              $name       Model name, namespace optional
@@ -23,10 +30,10 @@ class ModelFactory
 	 */
 	public static function get(string $name, bool $getShared = true, ConnectionInterface $connection = null)
 	{
-		$class = $name;
-		if (($pos = strrpos($name, '\\')) !== false)
+		$basename = $name;
+		if ($test = strrchr($name, '\\'))
 		{
-			$class = substr($name, $pos + 1);
+			$basename = substr($test, 1);
 		}
 
 		if (! $getShared)
@@ -34,30 +41,48 @@ class ModelFactory
 			return self::createClass($name, $connection);
 		}
 
-		if (! isset( self::$instances[$class] ))
+		if (! isset(self::$basenames[$basename]))
 		{
-			self::$instances[$class] = self::createClass($name, $connection);
+			if (! $instance = self::createClass($name, $connection))
+			{
+				return null;
+			}
+			$class = get_class($instance);
+
+			self::$instances[$class]    = $instance;
+			self::$basenames[$basename] = $class;
 		}
-		return self::$instances[$class];
+
+		return self::$instances[self::$basenames[$basename]];
 	}
 
 	/**
 	 * Helper method for injecting mock instances while testing.
 	 *
-	 * @param string $class
+	 * @param string $name
 	 * @param object $instance
 	 */
-	public static function injectMock(string $class, $instance)
+	public static function injectMock(string $name, $instance)
 	{
-		self::$instances[$class] = $instance;
+		$basename = $name;
+		if ($test = strrchr($name, '\\'))
+		{
+			$basename = substr($test, 1);
+		}
+
+		$class = get_class($instance);
+
+		self::$instances[$class]    = $instance;
+		self::$basenames[$basename] = $class;
 	}
 
 	/**
-	 * Resets the instances array
+	 * Resets the static arrays
 	 */
 	public static function reset()
 	{
 		static::$instances = [];
+		static::$basenames = [];
 	}
 
 	/**
@@ -76,31 +101,29 @@ class ModelFactory
 		}
 
 		$locator = Services::locator();
-		$file    = $locator->locateFile($name, 'Models');
 
-		if (empty($file))
+		// Check if the class was namespaced
+		if (strpos($name, '\\') !== false)
 		{
-			// No file found - check if the class was namespaced
-			if (strpos($name, '\\') !== false)
-			{
-				// Class was namespaced and locateFile couldn't find it
-				return null;
-			}
-
-			// Check all namespaces
-			$files = $locator->search('Models/' . $name);
-			if (empty($files))
+			if (! $file = $locator->locateFile($name, 'Models'))
 			{
 				return null;
 			}
+		}
+		// No namespace? Search for it
+		else
+		{
+			// Check all namespaces, prioritizing App and modules
+			if (! $files = $locator->search('Models/' . $name))
+			{
+				return null;
+			}
 
-			// Get the first match (prioritizes user and framework)
+			// Use the first match
 			$file = reset($files);
 		}
 
-		$name = $locator->getClassname($file);
-
-		if (empty($name))
+		if (! $name = $locator->getClassname($file))
 		{
 			return null;
 		}
