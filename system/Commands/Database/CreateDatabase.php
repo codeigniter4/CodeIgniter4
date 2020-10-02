@@ -83,7 +83,7 @@ class CreateDatabase extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'db_name' => 'The database name to create new database',
+		'db_name' => 'The database name to use',
 	];
 
 	/**
