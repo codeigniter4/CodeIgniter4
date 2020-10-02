@@ -170,7 +170,7 @@ class Controller
 			return;
 		}
 
-		helper($helper);
+		helper($this->helpers);
 	}
 
 	//--------------------------------------------------------------------
