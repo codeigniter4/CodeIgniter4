@@ -126,8 +126,7 @@ class XMLFormatter implements FormatterInterface
 		$key = trim($key);
 		$key = preg_replace("/[^{$validName}-]+/u", '', $key);
 		$key = preg_replace("/^[^{$startChar}]+/u", 'item$0', $key);
-		$key = preg_replace('/^(xml).*/iu', 'item$0', $key); // XML is a reserved starting word
 
-		return $key;
+		return preg_replace('/^(xml).*/iu', 'item$0', $key); // XML is a reserved starting word
 	}
 }
