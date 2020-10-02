@@ -152,7 +152,7 @@ class File extends SplFileInfo
 		}
 
 		$finfo    = finfo_open(FILEINFO_MIME_TYPE);
-		$mimeType = finfo_file($finfo, $this->getRealPath());
+		$mimeType = finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
 		finfo_close($finfo);
 		return $mimeType;
 	}
@@ -189,7 +189,7 @@ class File extends SplFileInfo
 		$name        = $name ?? $this->getBaseName();
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		$oldName = empty($this->getRealPath()) ? $this->getPath() : $this->getRealPath();
+		$oldName = $this->getRealPath() ?: $this->__toString();
 
 		if (! @rename($oldName, $destination))
 		{
