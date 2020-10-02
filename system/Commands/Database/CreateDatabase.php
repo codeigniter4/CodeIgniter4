@@ -75,7 +75,7 @@ class CreateDatabase extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'db:create [db_name]';
+	protected $usage = 'db:create <db_name>';
 
 	/**
 	 * the Command's Arguments
