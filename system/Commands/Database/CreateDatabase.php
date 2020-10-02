@@ -125,7 +125,8 @@ class CreateDatabase extends BaseCommand
 			{
 				$forge = \Config\Database::forge();
 				$forge->createDatabase($name);
-				return CLI::write('Create database ' . CLI::color($name, 'green') . ' successfully');
+
+				return CLI::write("Database \"{$name}\" created successfully.", 'green');
 			}
 			catch (\Exception $e)
 			{
