@@ -91,7 +91,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		static $data_types = [
+		static $dataTypes = [
 			SQLSRV_SQLTYPE_BIGINT           => 'bigint',
 			SQLSRV_SQLTYPE_BIT              => 'bit',
 			SQLSRV_SQLTYPE_CHAR             => 'char',
@@ -135,7 +135,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $field['Name'];
 			$retVal[$i]->type       = $field['Type'];
-			$retVal[$i]->type_name  = isset($data_types[$field['Type']]) ? $data_types[$field['Type']] : null;
+			$retVal[$i]->type_name  = isset($dataTypes[$field['Type']]) ? $dataTypes[$field['Type']] : null;
 			$retVal[$i]->max_length = $field['Size'];
 		}
 
