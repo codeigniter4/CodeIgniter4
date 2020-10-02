@@ -10,7 +10,7 @@ use CodeIgniter\Config\BaseConfig;
  * they can be overridden on a page-by-page basis.
  *
  * Suggested reference for explanations:
- *   - https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Controle_Acesso_CORS
+ *   - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
  *   - https://www.php.net/manual/en/function.header.php
  *
  * @author Marcelo Ratton <www.MarceloRatton.com>

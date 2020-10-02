@@ -272,7 +272,7 @@ class Response extends Message implements ResponseInterface
 
     // CORS
     $this->CORSEnabled     = $config->CORSEnabled;
-    $this->CORS = new \Config\CORS();
+    $this->CORS = new CORS(new \Config\CORS());
 
 		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
 		{
