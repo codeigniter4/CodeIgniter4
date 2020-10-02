@@ -48,7 +48,6 @@ use Config\Services;
  */
 class CreateDatabase extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
