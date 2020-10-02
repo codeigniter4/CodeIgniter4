@@ -50,7 +50,7 @@ class CORS
 					throw new HTTPException("Method not allowed");
 				}
 			}
-			array_push($this->allowedMethods, [$name=>$value]);
+			$this->headerList[$name]= $value;
 		}
 
 	}
