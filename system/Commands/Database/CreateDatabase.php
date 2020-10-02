@@ -128,7 +128,7 @@ class CreateDatabase extends BaseCommand
 
 				return CLI::write("Database \"{$name}\" created successfully.", 'green');
 			}
-			catch (\Exception $e)
+			catch (\Throwable $e)
 			{
 				return CLI::write('Database ' . CLI::color($name, 'red') . ' exists');
 			}
