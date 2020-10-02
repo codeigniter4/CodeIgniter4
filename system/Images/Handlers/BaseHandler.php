@@ -285,7 +285,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return BaseHandler
 	 */
-	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
+	public function resize(int $width, int $height = null, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
 		// If the target width/height match the source, then we have nothing to do here.
 		if ($this->image()->origWidth === $width && $this->image()->origHeight === $height)
@@ -294,6 +294,15 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 
 		$this->width  = $width;
+		
+		// For Height Auto / Flexible Height
+		list($resizeWidth, $resizeHeight) = $this->calcAspectRatio($width, $height, $this->image()->origWidth, $this->image()->origHeight );
+
+		if (is_null($height))
+		{
+			$height = ceil(($width / $resizeWidth) * $resizeHeight);
+		}
+		
 		$this->height = $height;
 
 		if ($maintainRatio)
