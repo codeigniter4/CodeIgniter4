@@ -246,12 +246,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _listColumns(string $table = ''): string
 	{
-		$sql = 'SELECT [COLUMN_NAME] '
+		return 'SELECT [COLUMN_NAME] '
 				. ' FROM [INFORMATION_SCHEMA].[COLUMNS]'
 				. ' WHERE  [TABLE_NAME] = ' . $this->escape($this->DBPrefix . $table)
 				. ' AND [TABLE_SCHEMA] = ' . $this->escape($this->schema);
-
-		return $sql;
 	}
 
 	/**
