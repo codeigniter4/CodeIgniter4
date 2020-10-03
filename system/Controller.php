@@ -170,10 +170,7 @@ class Controller
 			return;
 		}
 
-		foreach ($this->helpers as $helper)
-		{
-			helper($helper);
-		}
+		helper($this->helpers);
 	}
 
 	//--------------------------------------------------------------------
