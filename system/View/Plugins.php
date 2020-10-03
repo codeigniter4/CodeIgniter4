@@ -39,16 +39,19 @@
 
 namespace CodeIgniter\View;
 
- /**
-  * View plugins
-  */
+use CodeIgniter\HTTP\URI;
+use Config\Services;
+
+/**
+ * View plugins
+ */
 class Plugins
 {
 
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	public static function currentURL()
 	{
@@ -60,7 +63,7 @@ class Plugins
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @return \CodeIgniter\HTTP\URI|mixed|string
+	 * @return URI|mixed|string
 	 */
 	public static function previousURL()
 	{
@@ -130,7 +133,7 @@ class Plugins
 	 */
 	public static function ValidationErrors(array $params = []): string
 	{
-		$validator = \Config\Services::validation();
+		$validator = Services::validation();
 		if (empty($params))
 		{
 			return $validator->listErrors();

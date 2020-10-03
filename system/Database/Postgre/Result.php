@@ -42,6 +42,7 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
+use stdClass;
 
 /**
  * Result for Postgre
@@ -90,7 +91,7 @@ class Result extends BaseResult implements ResultInterface
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retVal[$i]             = new \stdClass();
+			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
 			$retVal[$i]->type       = pg_field_type_oid($this->resultID, $i);
 			$retVal[$i]->type_name  = pg_field_type($this->resultID, $i);

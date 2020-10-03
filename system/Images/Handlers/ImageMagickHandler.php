@@ -40,6 +40,8 @@
 namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Exceptions\ImageException;
+use Config\Images;
+use Exception;
 
 /**
  * Class ImageMagickHandler
@@ -69,7 +71,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  \Config\Images $config
+	 * @param  Images $config
 	 * @throws ImageException
 	 */
 	public function __construct($config = null)
@@ -93,7 +95,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param boolean $maintainRatio
 	 *
 	 * @return ImageMagickHandler
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function _resize(bool $maintainRatio = false)
 	{
@@ -121,7 +123,7 @@ class ImageMagickHandler extends BaseHandler
 	 * Crops the image.
 	 *
 	 * @return boolean|\CodeIgniter\Images\Handlers\ImageMagickHandler
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function _crop()
 	{
@@ -150,7 +152,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param integer $angle
 	 *
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function _rotate(int $angle)
 	{
@@ -176,7 +178,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param integer $blue
 	 *
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
@@ -200,7 +202,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param string $direction
 	 *
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function _flip(string $direction)
 	{
@@ -242,7 +244,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param integer $quality
 	 *
 	 * @return array  Lines of output from shell command
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function process(string $action, int $quality = 100): array
 	{
@@ -345,7 +347,7 @@ class ImageMagickHandler extends BaseHandler
 	 * during the process, we'll use a PNG as the temp file type.
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function getResourcePath()
 	{
@@ -369,7 +371,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Make the image resource object if needed
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function ensureResource()
 	{
@@ -404,7 +406,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param string $text
 	 * @param array  $options
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function _text(string $text, array $options = [])
 	{

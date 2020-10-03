@@ -70,7 +70,7 @@ class Commands
 	/**
 	 * Constructor
 	 *
-	 * @param \CodeIgniter\Log\Logger|null $logger
+	 * @param Logger|null $logger
 	 */
 	public function __construct($logger = null)
 	{

@@ -40,6 +40,10 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 
 /**
  * Console
@@ -59,7 +63,7 @@ class Console
 	/**
 	 * Console constructor.
 	 *
-	 * @param \CodeIgniter\CodeIgniter $app
+	 * @param CodeIgniter $app
 	 */
 	public function __construct(CodeIgniter $app)
 	{
@@ -73,8 +77,8 @@ class Console
 	 *
 	 * @param boolean $useSafeOutput
 	 *
-	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \Exception
+	 * @return RequestInterface|Response|ResponseInterface|mixed
+	 * @throws Exception
 	 */
 	public function run(bool $useSafeOutput = false)
 	{

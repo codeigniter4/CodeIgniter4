@@ -43,6 +43,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\Seeder;
 use Config\Database;
+use Throwable;
 
 /**
  * Runs the specified Seeder file to populate the database
@@ -109,7 +110,7 @@ class Seed extends BaseCommand
 		{
 			$seeder->call($seedName);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->showError($e);
 		}

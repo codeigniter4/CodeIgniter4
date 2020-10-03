@@ -41,6 +41,7 @@ namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\EncrypterInterface;
 use Config\Encryption;
+use Psr\Log\LoggerInterface;
 
 /**
  * Base class for encryption handling
@@ -50,14 +51,14 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\Encryption|null $config
+	 * @param Encryption|null $config
 	 */
 	public function __construct(Encryption $config = null)
 	{

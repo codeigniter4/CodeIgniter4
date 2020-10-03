@@ -41,8 +41,11 @@ namespace CodeIgniter\Database;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Database;
 use Config\Migrations as MigrationsConfig;
 use Config\Services;
+use RuntimeException;
+use stdClass;
 
 /**
  * Class MigrationRunner
@@ -96,7 +99,7 @@ class MigrationRunner
 	 * The main database connection. Used to store
 	 * migration information in.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -154,8 +157,8 @@ class MigrationRunner
 	 * - existing connection instance
 	 * - array of database configuration values
 	 *
-	 * @param MigrationsConfig                                       $config
-	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
+	 * @param MigrationsConfig                      $config
+	 * @param ConnectionInterface|array|string|null $db
 	 *
 	 * @throws ConfigException
 	 */
@@ -178,14 +181,13 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Locate and run all new migrations
 	 *
 	 * @param string|null $group
 	 *
 	 * @throws ConfigException
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 *
 	 * @return boolean
 	 */
@@ -249,7 +251,7 @@ class MigrationRunner
 					return false;
 				}
 
-				throw new \RuntimeException($message);
+				throw new RuntimeException($message);
 			}
 		}
 
@@ -261,7 +263,6 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Migrate down to a previous batch
 	 *
@@ -271,7 +272,7 @@ class MigrationRunner
 	 * @param string|null $group
 	 *
 	 * @throws ConfigException
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 *
 	 * @return mixed Current batch number on success, FALSE on failure or no migrations are found
 	 */
@@ -316,7 +317,7 @@ class MigrationRunner
 				return false;
 			}
 
-			throw new \RuntimeException($message);
+			throw new RuntimeException($message);
 		}
 
 		// Save the namespace to restore it after loading migrations
@@ -354,7 +355,7 @@ class MigrationRunner
 						return false;
 					}
 
-					throw new \RuntimeException($message);
+					throw new RuntimeException($message);
 				}
 
 				// Add the history and put it on the list
@@ -382,7 +383,7 @@ class MigrationRunner
 					return false;
 				}
 
-				throw new \RuntimeException($message);
+				throw new RuntimeException($message);
 			}
 		}
 
@@ -434,7 +435,7 @@ class MigrationRunner
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException($message);
+			throw new RuntimeException($message);
 		}
 
 		// Check the history for a match
@@ -480,7 +481,7 @@ class MigrationRunner
 			$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 			return false;
 		}
-		throw new \RuntimeException($message);
+		throw new RuntimeException($message);
 	}
 
 	//--------------------------------------------------------------------
@@ -584,7 +585,7 @@ class MigrationRunner
 		$locator = Services::locator(true);
 
 		// Create migration object using stdClass
-		$migration = new \stdClass();
+		$migration = new stdClass();
 
 		// Get migration version number
 		$migration->version   = $this->getMigrationNumber($name);
@@ -638,7 +639,7 @@ class MigrationRunner
 	 *
 	 * @param string $name
 	 *
-	 * @return \CodeIgniter\Database\MigrationRunner
+	 * @return MigrationRunner
 	 */
 	public function setName(string $name)
 	{
@@ -967,7 +968,7 @@ class MigrationRunner
 			return;
 		}
 
-		$forge = \Config\Database::forge($this->db);
+		$forge = Database::forge($this->db);
 
 		$forge->addField([
 			'id'        => [
@@ -1039,7 +1040,7 @@ class MigrationRunner
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException($message);
+			throw new RuntimeException($message);
 		}
 
 		// Initialize migration
@@ -1074,7 +1075,7 @@ class MigrationRunner
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException($message);
+			throw new RuntimeException($message);
 		}
 
 		$instance->{$direction}();

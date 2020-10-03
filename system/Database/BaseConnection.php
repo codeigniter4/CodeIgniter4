@@ -39,8 +39,10 @@
 
 namespace CodeIgniter\Database;
 
+use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use Throwable;
 
 /**
  * Class BaseConnection
@@ -337,7 +339,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Initializes the database connection/settings.
 	 *
 	 * @return mixed|void
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function initialize()
 	{
@@ -361,7 +363,7 @@ abstract class BaseConnection implements ConnectionInterface
 			// Connect to the database and set the connection ID
 			$this->connID = $this->connect($this->pConnect);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 		}
@@ -389,7 +391,7 @@ abstract class BaseConnection implements ConnectionInterface
 						// Try to connect
 						$this->connID = $this->connect($this->pConnect);
 					}
-					catch (\Throwable $e)
+					catch (Throwable $e)
 					{
 						log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 					}
@@ -762,6 +764,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Start Transaction
 	 *
@@ -825,6 +828,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Begin Transaction
 	 *
@@ -977,12 +981,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 *                     ->get();
 	 *           })
 	 *
-	 * @param \Closure $func
-	 * @param array    $options Passed to the prepare() method
+	 * @param Closure $func
+	 * @param array   $options Passed to the prepare() method
 	 *
 	 * @return BasePreparedQuery|null
 	 */
-	public function prepare(\Closure $func, array $options = [])
+	public function prepare(Closure $func, array $options = [])
 	{
 		if (empty($this->connID))
 		{
@@ -1335,7 +1339,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param string $table the table
 	 *
 	 * @return string
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function prefixTable(string $table = ''): string
 	{
@@ -1516,7 +1520,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param  boolean $constrainByPrefix = FALSE
 	 * @return boolean|array
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function listTables(bool $constrainByPrefix = false)
 	{

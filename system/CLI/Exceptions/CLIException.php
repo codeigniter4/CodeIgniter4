@@ -39,10 +39,12 @@
 
 namespace CodeIgniter\CLI\Exceptions;
 
+use RuntimeException;
+
 /**
  * CLIException
  */
-class CLIException extends \RuntimeException
+class CLIException extends RuntimeException
 {
 	/**
 	 * Thrown when `$color` specified for `$type` is not within the
@@ -51,7 +53,7 @@ class CLIException extends \RuntimeException
 	 * @param string $type
 	 * @param string $color
 	 *
-	 * @return \CodeIgniter\CLI\Exceptions\CLIException
+	 * @return CLIException
 	 */
 	public static function forInvalidColor(string $type, string $color)
 	{

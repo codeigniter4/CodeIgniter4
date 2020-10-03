@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Database;
 
+use Config\Database;
+
 /**
  * Class Migration
  */
@@ -71,11 +73,11 @@ abstract class Migration
 	/**
 	 * Constructor.
 	 *
-	 * @param \CodeIgniter\Database\Forge $forge
+	 * @param Forge $forge
 	 */
 	public function __construct(Forge $forge = null)
 	{
-		$this->forge = ! is_null($forge) ? $forge : \Config\Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
+		$this->forge = ! is_null($forge) ? $forge : Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
 
 		$this->db = $this->forge->getConnection();
 	}

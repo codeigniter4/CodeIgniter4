@@ -41,11 +41,16 @@ namespace CodeIgniter;
 
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
+use DateTime;
+use Exception;
+use JsonSerializable;
+use ReflectionException;
+use stdClass;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
  */
-class Entity implements \JsonSerializable
+class Entity implements JsonSerializable
 {
 	/**
 	 * Maps names used in sets and gets against unique
@@ -113,7 +118,7 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param array $data
 	 *
-	 * @return \CodeIgniter\Entity
+	 * @return $this
 	 */
 	public function fill(array $data = null)
 	{
@@ -143,7 +148,7 @@ class Entity implements \JsonSerializable
 	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 	{
@@ -306,7 +311,7 @@ class Entity implements \JsonSerializable
 	 * @param string $key
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __get(string $key)
 	{
@@ -359,7 +364,7 @@ class Entity implements \JsonSerializable
 	 * @param null   $value
 	 *
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __set(string $key, $value = null)
 	{
@@ -433,7 +438,7 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param string $key
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function __unset(string $key)
 	{
@@ -510,8 +515,8 @@ class Entity implements \JsonSerializable
 	 *
 	 * @param mixed $value
 	 *
-	 * @return \CodeIgniter\I18n\Time|mixed
-	 * @throws \Exception
+	 * @return Time|mixed
+	 * @throws Exception
 	 */
 	protected function mutateDate($value)
 	{
@@ -520,7 +525,7 @@ class Entity implements \JsonSerializable
 			return $value;
 		}
 
-		if ($value instanceof \DateTime)
+		if ($value instanceof DateTime)
 		{
 			return Time::instance($value);
 		}
@@ -548,9 +553,8 @@ class Entity implements \JsonSerializable
 	 * @param string $type
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
-
 	protected function castAs($value, string $type)
 	{
 		if (strpos($type, '?') === 0)
@@ -616,11 +620,11 @@ class Entity implements \JsonSerializable
 	 * @param boolean $asArray
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Exceptions\CastException
+	 * @throws CastException
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
-		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
+		$tmp = ! is_null($value) ? ($asArray ? [] : new stdClass) : null;
 		if (function_exists('json_decode'))
 		{
 			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value))
@@ -640,7 +644,7 @@ class Entity implements \JsonSerializable
 	 * Support for json_encode()
 	 *
 	 * @return array|mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function jsonSerialize()
 	{

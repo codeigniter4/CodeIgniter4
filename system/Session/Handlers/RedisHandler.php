@@ -41,17 +41,21 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Exception;
+use Redis;
+use RedisException;
+use SessionHandlerInterface;
 
 /**
  * Session handler using Redis for persistence
  */
-class RedisHandler extends BaseHandler implements \SessionHandlerInterface
+class RedisHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
 	 * phpRedis instance
 	 *
-	 * @var \Redis|null
+	 * @var Redis|null
 	 */
 	protected $redis;
 
@@ -91,7 +95,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param AppConfig $config
 	 * @param string    $ipAddress
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct(AppConfig $config, string $ipAddress)
 	{
@@ -133,6 +137,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Open
 	 *
@@ -149,7 +154,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			return false;
 		}
 
-		$redis = new \Redis();
+		$redis = new Redis();
 
 		if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout']))
 		{
@@ -284,7 +289,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 					}
 				}
 			}
-			catch (\RedisException $e)
+			catch (RedisException $e)
 			{
 				$this->logger->error('Session: Got RedisException on close(): ' . $e->getMessage());
 			}

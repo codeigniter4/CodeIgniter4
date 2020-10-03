@@ -38,10 +38,12 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
+use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
+use stdClass;
 
 /**
  * Result for SQLite3
@@ -99,7 +101,7 @@ class Result extends BaseResult implements ResultInterface
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retVal[$i]             = new \stdClass();
+			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
 			$type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
 			$retVal[$i]->type       = $type;
@@ -138,7 +140,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @param integer $n
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dataSeek(int $n = 0)
 	{
@@ -195,7 +197,7 @@ class Result extends BaseResult implements ResultInterface
 			return $classObj->setAttributes($row);
 		}
 
-		$classSet = \Closure::bind(function ($key, $value) {
+		$classSet = Closure::bind(function ($key, $value) {
 			$this->$key = $value;
 		}, $classObj, $className
 		);

@@ -41,11 +41,12 @@ namespace CodeIgniter\Session\Handlers;
 
 use Config\App as AppConfig;
 use Psr\Log\LoggerAwareTrait;
+use SessionHandlerInterface;
 
 /**
  * Base class for session handling
  */
-abstract class BaseHandler implements \SessionHandlerInterface
+abstract class BaseHandler implements SessionHandlerInterface
 {
 
 	use LoggerAwareTrait;

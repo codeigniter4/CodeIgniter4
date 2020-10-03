@@ -3,6 +3,9 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Filters\CSRF;
+use CodeIgniter\Filters\DebugToolbar;
+use CodeIgniter\Filters\Honeypot;
 
 class Filters extends BaseConfig
 {
@@ -13,9 +16,9 @@ class Filters extends BaseConfig
 	 * @var array
 	 */
 	public $aliases = [
-		'csrf'     => \CodeIgniter\Filters\CSRF::class,
-		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
-		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
+		'csrf'     => CSRF::class,
+		'toolbar'  => DebugToolbar::class,
+		'honeypot' => Honeypot::class,
 	];
 
 	/**

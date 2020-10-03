@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Config;
 
+use InvalidArgumentException;
+
 /**
  * Environment-specific configuration
  */
@@ -99,7 +101,7 @@ class DotEnv
 		// Ensure the file is readable
 		if (! is_readable($this->path))
 		{
-			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
+			throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
 
 		$vars = [];
@@ -201,7 +203,7 @@ class DotEnv
 	 * @param string $value
 	 *
 	 * @return string
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function sanitizeValue(string $value): string
 	{
@@ -242,7 +244,7 @@ class DotEnv
 			// Unquoted values cannot contain whitespace
 			if (preg_match('/\s+/', $value) > 0)
 			{
-				throw new \InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
+				throw new InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
 			}
 		}
 

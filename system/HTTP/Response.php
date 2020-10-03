@@ -41,9 +41,11 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use Config\App;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
+use InvalidArgumentException;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -165,7 +167,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Content security policy handler
 	 *
-	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
+	 * @var ContentSecurityPolicy
 	 */
 	public $CSP;
 
@@ -238,7 +240,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 */
 	public function __construct($config)
 	{
@@ -317,7 +319,7 @@ class Response extends Message implements ResponseInterface
 	 *                        default to the IANA name.
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code arguments.
+	 * @throws HTTPException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
@@ -392,7 +394,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Set the Link Header
 	 *
-	 * @param \CodeIgniter\Pager\PagerInterface $pager
+	 * @param PagerInterface $pager
 	 *
 	 * @see http://tools.ietf.org/html/rfc5988
 	 *
@@ -473,7 +475,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return mixed|string
 	 *
-	 * @throws \InvalidArgumentException If the body property is not array.
+	 * @throws InvalidArgumentException If the body property is not array.
 	 */
 	public function getJSON()
 	{
@@ -509,7 +511,7 @@ class Response extends Message implements ResponseInterface
 	 * Retrieves the current body into XML and returns it.
 	 *
 	 * @return mixed|string
-	 * @throws \InvalidArgumentException If the body property is not array.
+	 * @throws InvalidArgumentException If the body property is not array.
 	 */
 	public function getXML()
 	{
@@ -533,7 +535,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $format Valid: json, xml
 	 *
 	 * @return mixed
-	 * @throws \InvalidArgumentException If the body property is not string or array.
+	 * @throws InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
 	{
@@ -646,9 +648,9 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function setLastModified($date)
 	{
-		if ($date instanceof \DateTime)
+		if ($date instanceof DateTime)
 		{
-			$date->setTimezone(new \DateTimeZone('UTC'));
+			$date->setTimezone(new DateTimeZone('UTC'));
 			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
@@ -708,7 +710,7 @@ class Response extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']) && php_sapi_name() !== 'cli-server')
 		{
-			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
+			$this->setDate(DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status
@@ -757,7 +759,7 @@ class Response extends Message implements ResponseInterface
 	 * @param integer $code   The type of redirection, defaults to 302
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code.
+	 * @throws HTTPException For invalid status code.
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
@@ -1093,7 +1095,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string|null $data     The data to be downloaded
 	 * @param boolean     $setMime  Whether to try and send the actual MIME type
 	 *
-	 * @return \CodeIgniter\HTTP\DownloadResponse|null
+	 * @return DownloadResponse|null
 	 */
 	public function download(string $filename = '', $data = '', bool $setMime = false)
 	{

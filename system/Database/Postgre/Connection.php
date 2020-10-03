@@ -41,6 +41,8 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use ErrorException;
+use stdClass;
 
 /**
  * Connection for Postgre
@@ -196,7 +198,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return pg_query($this->connID, $sql);
 		}
-		catch (\ErrorException $e)
+		catch (ErrorException $e)
 		{
 			log_message('error', $e);
 			if ($this->DBDebug)
@@ -313,7 +315,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -332,7 +334,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i ++)
 		{
-			$retVal[$i]             = new \stdClass();
+			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $query[$i]->column_name;
 			$retVal[$i]->type       = $query[$i]->data_type;
 			$retVal[$i]->default    = $query[$i]->column_default;
@@ -348,7 +350,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _indexData(string $table): array
@@ -367,7 +369,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj         = new \stdClass();
+			$obj         = new stdClass();
 			$obj->name   = $row->indexname;
 			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
 			$obj->fields = array_map(function ($v) {
@@ -395,7 +397,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _foreignKeyData(string $table): array
@@ -421,7 +423,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj                      = new \stdClass();
+			$obj                      = new stdClass();
 			$obj->constraint_name     = $row->constraint_name;
 			$obj->table_name          = $row->table_name;
 			$obj->column_name         = $row->column_name;

@@ -106,7 +106,7 @@ class Database extends BaseCollector
 	 * The static method used during Events to collect
 	 * data.
 	 *
-	 * @param \CodeIgniter\Database\Query $query
+	 * @param Query $query
 	 *
 	 * @internal param $ array \CodeIgniter\Database\Query
 	 */

@@ -39,6 +39,7 @@
 namespace CodeIgniter\Language;
 
 use Config\Services;
+use MessageFormatter;
 
 /**
  * Handle system messages and localization.
@@ -272,7 +273,7 @@ class Language
 			return $message;
 		}
 
-		return \MessageFormatter::formatMessage($this->locale, $message, $args);
+		return MessageFormatter::formatMessage($this->locale, $message, $args);
 	}
 
 	//--------------------------------------------------------------------

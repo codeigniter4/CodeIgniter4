@@ -41,6 +41,7 @@ namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
+use Config\Cache;
 
 /**
  * Class Cache
@@ -54,13 +55,13 @@ class CacheFactory
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
-	 * @param \Config\Cache $config
-	 * @param string|null   $handler
-	 * @param string|null   $backup
+	 * @param Cache       $config
+	 * @param string|null $handler
+	 * @param string|null $backup
 	 *
-	 * @return \CodeIgniter\Cache\CacheInterface
+	 * @return CacheInterface
 	 */
-	public static function getHandler($config, string $handler = null, string $backup = null)
+	public static function getHandler(Cache $config, string $handler = null, string $backup = null)
 	{
 		if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
 		{

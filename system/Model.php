@@ -39,6 +39,7 @@
 
 namespace CodeIgniter;
 
+use BadMethodCallException;
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
@@ -51,7 +52,9 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
+use Config\Services;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 use stdClass;
 
@@ -372,7 +375,7 @@ class Model
 
 		if (is_null($validation))
 		{
-			$validation = \Config\Services::validation(null, false);
+			$validation = Services::validation(null, false);
 		}
 
 		$this->validation = $validation;
@@ -462,7 +465,7 @@ class Model
 	 * @param string $columnName
 	 *
 	 * @return array|null   The resulting row of data, or null if no data found.
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
+	 * @throws DataException
 	 */
 	public function findColumn(string $columnName)
 	{
@@ -641,7 +644,7 @@ class Model
 	 * @param array|object $data
 	 *
 	 * @return boolean
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function save($data): bool
 	{
@@ -706,7 +709,7 @@ class Model
 	 * @param boolean       $onlyChanged
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
 	{
@@ -790,7 +793,7 @@ class Model
 	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return BaseResult|integer|string|false
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true)
 	{
@@ -989,7 +992,7 @@ class Model
 	 * @param array|object         $data
 	 *
 	 * @return boolean
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function update($id = null, $data = null): bool
 	{
@@ -1100,7 +1103,7 @@ class Model
 	 * @param boolean $returnSQL True means SQL is returned, false will execute the query
 	 *
 	 * @return mixed    Number of rows affected or FALSE on failure
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
@@ -1163,7 +1166,7 @@ class Model
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return BaseResult|boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
@@ -1351,10 +1354,10 @@ class Model
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
 	 *
-	 * @param integer  $size
-	 * @param \Closure $userFunc
+	 * @param integer $size
+	 * @param Closure $userFunc
 	 *
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
+	 * @throws DataException
 	 */
 	public function chunk(int $size, Closure $userFunc)
 	{
@@ -1410,7 +1413,7 @@ class Model
 	 */
 	public function paginate(int $perPage = null, string $group = 'default', int $page = null, int $segment = 0)
 	{
-		$pager = \Config\Services::pager(null, null, false);
+		$pager = Services::pager(null, null, false);
 
 		if ($segment)
 		{
@@ -1455,7 +1458,7 @@ class Model
 	 * @param string $table
 	 *
 	 * @return BaseBuilder
-	 * @throws \CodeIgniter\Exceptions\ModelException;
+	 * @throws ModelException ;
 	 */
 	protected function builder(string $table = null)
 	{
@@ -1497,7 +1500,7 @@ class Model
 	 * @param array $data
 	 *
 	 * @return array
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
+	 * @throws DataException
 	 */
 	protected function doProtectFields(array $data): array
 	{
@@ -1538,7 +1541,7 @@ class Model
 	 * @param integer $userData An optional PHP timestamp to be converted.
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Exceptions\ModelException;
+	 * @throws ModelException ;
 	 */
 	protected function setDate(int $userData = null)
 	{
@@ -1955,7 +1958,7 @@ class Model
 	 * @param array  $eventData
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
+	 * @throws DataException
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
@@ -2070,7 +2073,7 @@ class Model
 			if (! method_exists($this->builder(), $name))
 			{
 				$className = get_class($this);
-				throw new \BadMethodCallException("Call to undefined method $className::$name");
+				throw new BadMethodCallException("Call to undefined method $className::$name");
 			}
 			return $result;
 		}

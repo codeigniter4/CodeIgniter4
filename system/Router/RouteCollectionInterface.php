@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Router;
 
+use Closure;
+
 /**
  * Interface RouteCollectionInterface
  *
@@ -170,7 +172,7 @@ interface RouteCollectionInterface
 	 * Returns the 404 Override setting, which can be null, a closure
 	 * or the controller/string.
 	 *
-	 * @return string|\Closure|null
+	 * @return string|Closure|null
 	 */
 	public function get404Override();
 

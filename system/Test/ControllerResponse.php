@@ -120,7 +120,7 @@ class ControllerResponse {
 	/**
 	 * Set the request.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 *
 	 * @return $this
 	 */
@@ -134,7 +134,7 @@ class ControllerResponse {
 	/**
 	 * Set the response.
 	 *
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param ResponseInterface $response
 	 *
 	 * @return $this
 	 */

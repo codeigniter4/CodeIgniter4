@@ -42,6 +42,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use Throwable;
 
 /**
  * Runs all new migrations.
@@ -133,7 +134,7 @@ class Migrate extends BaseCommand
 			CLI::write('Done migrations.', 'green');
 		}
 		// @codeCoverageIgnoreStart
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->showError($e);
 		}

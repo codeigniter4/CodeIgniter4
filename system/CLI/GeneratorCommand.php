@@ -39,8 +39,11 @@
 
 namespace CodeIgniter\CLI;
 
+use Config\Generators;
 use Config\Services;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
+use Throwable;
 
 /**
  * GeneratorCommand can be used as base class
@@ -96,15 +99,15 @@ abstract class GeneratorCommand extends BaseCommand
 	/**
 	 * Instance of Config\Generators
 	 *
-	 * @var \Config\Generators
+	 * @var Generators
 	 */
 	protected $config;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Psr\Log\LoggerInterface  $logger
-	 * @param \CodeIgniter\CLI\Commands $commands
+	 * @param LoggerInterface $logger
+	 * @param Commands        $commands
 	 */
 	public function __construct(LoggerInterface $logger, Commands $commands)
 	{
@@ -269,7 +272,7 @@ abstract class GeneratorCommand extends BaseCommand
 
 		if (! $base = reset($base))
 		{
-			throw new \RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
+			throw new RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
 		}
 
 		$base     = realpath($base) ?: $base;
@@ -387,7 +390,7 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			return view($this->config->views[$this->name], $data, ['debug' => false]);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			log_message('error', $e->getMessage());
 

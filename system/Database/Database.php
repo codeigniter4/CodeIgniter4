@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Database;
 
+use InvalidArgumentException;
+
 /**
  * Database Connection Factory
  *
@@ -81,7 +83,7 @@ class Database
 		// No DB specified? Beat them senseless...
 		if (empty($params['DBDriver']))
 		{
-			throw new \InvalidArgumentException('You have not selected a database type to connect to.');
+			throw new InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 
 		$className = strpos($params['DBDriver'], '\\') === false
@@ -148,13 +150,13 @@ class Database
 	 * @param array $params
 	 *
 	 * @return array
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function parseDSN(array $params): array
 	{
 		if (($dsn = parse_url($params['DSN'])) === false)
 		{
-			throw new \InvalidArgumentException('Your DSN connection string is invalid.');
+			throw new InvalidArgumentException('Your DSN connection string is invalid.');
 		}
 
 		$dsnParams = [

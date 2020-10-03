@@ -52,7 +52,7 @@ class TimeDifference
 	/**
 	 * The timestamp of the "current" time.
 	 *
-	 * @var \IntlCalendar
+	 * @var IntlCalendar
 	 */
 	protected $currentTime;
 

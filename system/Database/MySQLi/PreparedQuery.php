@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Database\MySQLi;
 
+use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\PreparedQueryInterface;
 
@@ -90,7 +91,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		if (is_null($this->statement))
 		{
-			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
+			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
 		// First off -bind the parameters

@@ -126,6 +126,7 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
@@ -205,6 +206,7 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Returns an array of listeners for a single event. They are
 	 * sorted by priority.
@@ -237,6 +239,7 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Removes a single listener from an event.
 	 *
@@ -270,6 +273,7 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Removes all listeners.
 	 *

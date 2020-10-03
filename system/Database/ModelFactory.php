@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
-use Config\Services;
 use CodeIgniter\Config\Factories;
+use Config\Services;
 
 /**
  * Returns new or shared Model instances

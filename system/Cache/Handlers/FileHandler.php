@@ -41,6 +41,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
+use Config\Cache;
 
 /**
  * File system cache handler
@@ -67,10 +68,10 @@ class FileHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  \Config\Cache $config
+	 * @param  Cache $config
 	 * @throws CacheException
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
 		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
 		if (! is_really_writable($path))
@@ -373,6 +374,7 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Delete Files
 	 *
@@ -419,6 +421,7 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Get Directory File Information
 	 *
@@ -470,6 +473,7 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Get File Info
 	 *

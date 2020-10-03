@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
@@ -46,6 +47,7 @@ use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
 use Config\Services;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -180,7 +182,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string|null $expectedMessage
 	 *
 	 * @return boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertLogged(string $level, $expectedMessage = null)
 	{
@@ -197,7 +199,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string $eventName
 	 *
 	 * @return boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertEventTriggered(string $eventName): bool
 	{
@@ -226,7 +228,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $header     The leading portion of the header we are looking for
 	 * @param boolean $ignoreCase
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertHeaderEmitted(string $header, bool $ignoreCase = false): void
 	{
@@ -258,7 +260,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $header     The leading portion of the header we don't want to find
 	 * @param boolean $ignoreCase
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): void
 	{
@@ -295,7 +297,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $message
 	 * @param integer $tolerance
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
 	{
@@ -316,7 +318,7 @@ class CIUnitTestCase extends TestCase
 	 * @param integer $tolerance
 	 *
 	 * @return void|boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
 	{
@@ -335,7 +337,7 @@ class CIUnitTestCase extends TestCase
 
 			$this->assertLessThanOrEqual($tolerance, $difference, $message);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			return false;
 		}
@@ -349,7 +351,7 @@ class CIUnitTestCase extends TestCase
 	 * Loads up an instance of CodeIgniter
 	 * and gets the environment setup.
 	 *
-	 * @return \CodeIgniter\CodeIgniter
+	 * @return CodeIgniter
 	 */
 	protected function createApplication()
 	{

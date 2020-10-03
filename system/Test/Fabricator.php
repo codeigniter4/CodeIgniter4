@@ -41,6 +41,8 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Fabricator
@@ -122,7 +124,7 @@ class Fabricator
 	 * @param array|null    $formatters Array of property => formatter
 	 * @param string|null   $locale     Locale for Faker provider
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($model, array $formatters = null, string $locale = null)
 	{
@@ -134,7 +136,7 @@ class Fabricator
 
 		if (! is_object($model))
 		{
-			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
+			throw new InvalidArgumentException(lang('Fabricator.invalidModel'));
 		}
 
 		$this->model = $model;
@@ -364,7 +366,7 @@ class Fabricator
 			$this->faker->getFormatter($field);
 			return $field;
 		}
-		catch (\InvalidArgumentException $e)
+		catch (InvalidArgumentException $e)
 		{
 			// No match, keep going
 		}
@@ -441,7 +443,7 @@ class Fabricator
 	 *
 	 * @return array  An array of faked data
 	 *
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function makeArray()
 	{
@@ -475,7 +477,7 @@ class Fabricator
 		// Nothing left to do but give up
 		else
 		{
-			throw new \RuntimeException(lang('Fabricator.missingFormatters'));
+			throw new RuntimeException(lang('Fabricator.missingFormatters'));
 		}
 
 		// Replace overridden fields
@@ -489,7 +491,7 @@ class Fabricator
 	 *
 	 * @return object  An instance of the class with faked data
 	 *
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function makeObject(string $className = null): object
 	{

@@ -1,5 +1,10 @@
 <?php
 
+use CodeIgniter\Services;
+use Config\Autoload;
+use Config\Modules;
+use Config\Paths;
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -22,7 +27,7 @@ unset($source);
 
 // Load framework paths from their config file
 require CONFIGPATH . 'Paths.php';
-$paths = new Config\Paths();
+$paths = new Paths();
 
 // Define necessary framework path constants
 defined('APPPATH')       || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
@@ -69,8 +74,8 @@ if (! class_exists('CodeIgniter\Services', false))
 }
 
 // Launch the autoloader to gather namespaces (includes composer.json's "autoload-dev")
-$loader = CodeIgniter\Services::autoloader();
-$loader->initialize(new Config\Autoload(), new Config\Modules());
+$loader = Services::autoloader();
+$loader->initialize(new Autoload(), new Modules());
 $loader->register(); // Register the loader with the SPL autoloader stack.
 
 require_once APPPATH . 'Config/Routes.php';

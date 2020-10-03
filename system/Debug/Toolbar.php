@@ -38,6 +38,9 @@
 
 namespace CodeIgniter\Debug;
 
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
+use CodeIgniter\Debug\Toolbar\Collectors\Config;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
@@ -69,7 +72,7 @@ class Toolbar
 	/**
 	 * Collectors to be used and displayed.
 	 *
-	 * @var \CodeIgniter\Debug\Toolbar\Collectors\BaseCollector[]
+	 * @var BaseCollector[]
 	 */
 	protected $collectors = [];
 
@@ -102,10 +105,10 @@ class Toolbar
 	/**
 	 * Returns all the data required by Debug Bar
 	 *
-	 * @param float                               $startTime App start time
-	 * @param float                               $totalTime
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param float             $startTime App start time
+	 * @param float             $totalTime
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
 	 *
 	 * @return string JSON encoded data
 	 */
@@ -120,7 +123,7 @@ class Toolbar
 		$data['totalMemory']     = number_format((memory_get_peak_usage()) / 1024 / 1024, 3);
 		$data['segmentDuration'] = $this->roundTo($data['totalTime'] / 7);
 		$data['segmentCount']    = (int) ceil($data['totalTime'] / $data['segmentDuration']);
-		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
+		$data['CI_VERSION']      = CodeIgniter::CI_VERSION;
 		$data['collectors']      = [];
 
 		foreach ($this->collectors as $collector)
@@ -198,7 +201,7 @@ class Toolbar
 			'contentType' => esc($response->getHeaderLine('content-type')),
 		];
 
-		$data['config'] = \CodeIgniter\Debug\Toolbar\Collectors\Config::display();
+		$data['config'] = Config::display();
 
 		if ($response->CSP !== null)
 		{

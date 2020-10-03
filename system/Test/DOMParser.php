@@ -39,6 +39,12 @@
 
 namespace CodeIgniter\Test;
 
+use BadMethodCallException;
+use DOMDocument;
+use DOMNodeList;
+use DOMXPath;
+use InvalidArgumentException;
+
 /**
  * Load a response into a DOMDocument for testing assertions based on that
  */
@@ -47,14 +53,14 @@ class DOMParser
 	/**
 	 * DOM for the body,
 	 *
-	 * @var \DOMDocument
+	 * @var DOMDocument
 	 */
 	protected $dom;
 
 	/**
 	 * Constructor.
 	 *
-	 * @throws \BadMethodCallException
+	 * @throws BadMethodCallException
 	 */
 	public function __construct()
 	{
@@ -62,11 +68,11 @@ class DOMParser
 		{
 			// always there in travis-ci
 			// @codeCoverageIgnoreStart
-			throw new \BadMethodCallException('DOM extension is required, but not currently loaded.');
+			throw new BadMethodCallException('DOM extension is required, but not currently loaded.');
 			// @codeCoverageIgnoreEnd
 		}
 
-		$this->dom = new \DOMDocument('1.0', 'utf-8');
+		$this->dom = new DOMDocument('1.0', 'utf-8');
 	}
 
 	/**
@@ -99,7 +105,7 @@ class DOMParser
 			// unclear how we would get here, given that we are trapping libxml errors
 			// @codeCoverageIgnoreStart
 			libxml_clear_errors();
-			throw new \BadMethodCallException('Invalid HTML');
+			throw new BadMethodCallException('Invalid HTML');
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -115,13 +121,13 @@ class DOMParser
 	 *
 	 * @param string $path
 	 *
-	 * @return \CodeIgniter\Test\DOMParser
+	 * @return DOMParser
 	 */
 	public function withFile(string $path)
 	{
 		if (! is_file($path))
 		{
-			throw new \InvalidArgumentException(basename($path) . ' is not a valid file.');
+			throw new InvalidArgumentException(basename($path) . ' is not a valid file.');
 		}
 
 		$content = file_get_contents($path);
@@ -236,15 +242,15 @@ class DOMParser
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Search the DOM using an XPath expression.
 	 *
 	 * @param  string $search
 	 * @param  string $element
 	 * @param  array  $paths
-	 * @return \DOMNodeList
+	 * @return DOMNodeList
 	 */
-
 	protected function doXPath(string $search = null, string $element, array $paths = [])
 	{
 		// Otherwise, grab any elements that match
@@ -296,7 +302,7 @@ class DOMParser
 			$path .= "[contains(., \"{$search}\")]";
 		}
 
-		$xpath = new \DOMXPath($this->dom);
+		$xpath = new DOMXPath($this->dom);
 
 		return $xpath->query($path);
 	}

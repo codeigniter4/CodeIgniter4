@@ -41,6 +41,8 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
 use Config\Database;
+use Faker\Factory;
+use InvalidArgumentException;
 
 /**
  * Class Seeder
@@ -108,14 +110,14 @@ class Seeder
 
 		if (empty($this->seedPath))
 		{
-			throw new \InvalidArgumentException('Invalid filesPath set in the Config\Database.');
+			throw new InvalidArgumentException('Invalid filesPath set in the Config\Database.');
 		}
 
 		$this->seedPath = rtrim($this->seedPath, '\\/') . '/Seeds/';
 
 		if (! is_dir($this->seedPath))
 		{
-			throw new \InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
+			throw new InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
 		}
 
 		$this->config = &$config;
@@ -124,7 +126,7 @@ class Seeder
 
 		$this->db    = &$db;
 		$this->forge = Database::forge($this->DBGroup);
-		$this->faker = class_exists('\Faker\Factory') ? \Faker\Factory::create() : null;
+		$this->faker = class_exists(Factory::class) ? Factory::create() : null;
 	}
 
 	/**
@@ -132,7 +134,7 @@ class Seeder
 	 *
 	 * @param string $class
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 *
 	 * @return void
 	 */
@@ -140,7 +142,7 @@ class Seeder
 	{
 		if (empty($class))
 		{
-			throw new \InvalidArgumentException('No seeder was specified.');
+			throw new InvalidArgumentException('No seeder was specified.');
 		}
 
 		$path = str_replace('.php', '', $class) . '.php';
@@ -157,7 +159,7 @@ class Seeder
 
 			if (! is_file($path))
 			{
-				throw new \InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
+				throw new InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
 			}
 
 			// Assume the class has the correct namespace

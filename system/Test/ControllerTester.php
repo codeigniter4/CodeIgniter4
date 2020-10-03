@@ -161,7 +161,7 @@ trait ControllerTester
 	 * @param string $method
 	 * @param array  $params
 	 *
-	 * @return \CodeIgniter\Test\ControllerResponse|\InvalidArgumentException
+	 * @return ControllerResponse|\InvalidArgumentException
 	 */
 	public function execute(string $method, ...$params)
 	{
