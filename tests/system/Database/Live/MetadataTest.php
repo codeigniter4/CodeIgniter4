@@ -7,7 +7,8 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class MetadataTest extends CIDatabaseTestCase {
+class MetadataTest extends CIDatabaseTestCase
+{
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';

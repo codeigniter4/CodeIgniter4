@@ -9,7 +9,8 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class ForgeTest extends CIDatabaseTestCase {
+class ForgeTest extends CIDatabaseTestCase
+{
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
