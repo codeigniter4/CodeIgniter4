@@ -2,6 +2,7 @@
 
 use Rector\Core\Configuration\Option;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
+use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
@@ -33,4 +34,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
 	$services->set(SimplifyUselessVariableRector::class);
+	$services->set(RemoveAlwaysElseRector::class);
 };

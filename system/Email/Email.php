@@ -888,10 +888,7 @@ class Email
 		{
 			return 'plain-attach';
 		}
-		else
-		{
-			return 'plain';
-		}
+		return 'plain';
 	}
 	//--------------------------------------------------------------------
 	/**

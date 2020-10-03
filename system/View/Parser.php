@@ -406,7 +406,7 @@ class Parser extends View
 
 						continue;
 					}
-					else if (is_object($val))
+					if (is_object($val))
 					{
 						$val = 'Class: ' . get_class($val);
 					}
