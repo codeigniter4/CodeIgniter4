@@ -166,7 +166,8 @@ class CreateCommand extends GeneratorCommand
 
 		// Do the replacements
 		$template = parent::setReplacements($template, $class);
-		$template = str_replace([
+
+		return str_replace([
 			'{useStatement}',
 			'{extends}',
 			'{commandGroup}',
@@ -181,8 +182,6 @@ class CreateCommand extends GeneratorCommand
 		],
 			$template
 		);
-
-		return $template;
 	}
 
 	/**

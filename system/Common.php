@@ -236,9 +236,8 @@ if (! function_exists('command'))
 
 		ob_start();
 		$runner->run($command, $params);
-		$output = ob_get_clean();
 
-		return $output;
+		return ob_get_clean();
 	}
 }
 
