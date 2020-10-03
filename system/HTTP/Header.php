@@ -208,7 +208,7 @@ class Header
 		{
 			return $this->value;
 		}
-		else if (! is_array($this->value))
+		if (! is_array($this->value))
 		{
 			return '';
 		}

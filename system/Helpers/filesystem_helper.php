@@ -177,21 +177,19 @@ if (! function_exists('delete_files'))
 			) as $object)
 			{
 				$filename = $object->getFilename();
-
 				if (! $hidden && $filename[0] === '.')
 				{
 					continue;
 				}
-				elseif (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+
+				if (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
 					$isDir = $object->isDir();
-
 					if ($isDir && $delDir)
 					{
 						@rmdir($object->getPathname());
 						continue;
 					}
-
 					if (! $isDir)
 					{
 						@unlink($object->getPathname());
@@ -239,12 +237,12 @@ if (! function_exists('get_filenames'))
 				) as $name => $object)
 			{
 				$basename = pathinfo($name, PATHINFO_BASENAME);
-
 				if (! $hidden && $basename[0] === '.')
 				{
 					continue;
 				}
-				elseif ($includePath === false)
+
+				if ($includePath === false)
 				{
 					$files[] = $basename;
 				}

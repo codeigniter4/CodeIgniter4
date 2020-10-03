@@ -415,7 +415,7 @@ class Exceptions
 		{
 			return $bytes . 'B';
 		}
-		else if ($bytes < 1048576)
+		if ($bytes < 1048576)
 		{
 			return round($bytes / 1024, 2) . 'KB';
 		}
