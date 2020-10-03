@@ -120,3 +120,35 @@ if (! function_exists('_array_search_dot'))
 		return $array[$currentIndex];
 	}
 }
+
+if (! function_exists('array_deep_search'))
+{
+	/**
+	 * Returns the value of an element at a key in an array of uncertain depth.
+	 *
+	 * @param mixed $key
+	 * @param array $array
+	 *
+	 * @return mixed|null
+	 */
+	function array_deep_search($key, array $array)
+	{
+		if (isset($array[$key]))
+		{
+			return $array[$key];
+		}
+
+		foreach ($array as $value)
+		{
+			if (is_array($value))
+			{
+				if ($result = array_deep_search($key, $value))
+				{
+					return $result;
+				}
+			}
+		}
+
+		return null;
+	}
+}

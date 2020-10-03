@@ -117,4 +117,68 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(['baz' => 23], dot_array_search('foo.bar.*', $data));
 	}
+
+	/**
+	 * @dataProvider deepSearchProvider
+	 */
+	public function testArrayDeepSearch($key, $expected)
+	{
+		$data = [
+			'key1' => 'Value 1',
+			'key5' => [
+				'key51' => 'Value 5.1',
+			],
+			'key6' => [
+				'key61' => [
+					'key61' => 'Value 6.1',
+					'key64' => [
+						42       => 'Value 42',
+						'key641' => 'Value 6.4.1',
+						'key644' => [
+							'key6441' => 'Value 6.4.4.1',
+						],
+					],
+				],
+			],
+		];
+
+		$result = array_deep_search($key, $data);
+
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testArrayDeepSearchReturnNullEmptyArray()
+	{
+		$data = [];
+
+		$this->assertNull(array_deep_search('key644', $data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function deepSearchProvider()
+	{
+		return [
+			[
+				'key6441',
+				'Value 6.4.4.1',
+			],
+			[
+				'key64421',
+				null,
+			],
+			[
+				42,
+				'Value 42',
+			],
+			[
+				'key644',
+				['key6441' => 'Value 6.4.4.1'],
+			],
+			[
+				'',
+				null,
+			],
+		];
+	}
 }
