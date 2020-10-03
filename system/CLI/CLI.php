@@ -40,6 +40,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
+use Config\Services;
 
 /**
  * Set of static methods useful for CLI request handling.
@@ -320,7 +321,7 @@ class CLI
 	{
 		$label      = $field;
 		$field      = 'temp';
-		$validation = \Config\Services::validation(null, false);
+		$validation = Services::validation(null, false);
 		$validation->setRule($field, $label, $rules);
 		$validation->run([$field => $value]);
 
@@ -813,6 +814,7 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Takes a string and writes it to the command line, wrapping to a maximum
 	 * width. If no maximum width is specified, will wrap to the window's max

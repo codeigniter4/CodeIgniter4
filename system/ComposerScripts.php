@@ -40,6 +40,7 @@
 namespace CodeIgniter;
 
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * ComposerScripts
@@ -66,7 +67,7 @@ class ComposerScripts
 	 * the bare-minimum required files for our dependencies
 	 * to appropriate locations.
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function postUpdate()
 	{
@@ -111,7 +112,7 @@ class ComposerScripts
 	 * @param string $class
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	protected static function getClassFilePath(string $class)
 	{
@@ -178,7 +179,7 @@ class ComposerScripts
 	 * Moves the Laminas Escaper files into our base repo so that it's
 	 * available for packaged releases where the users don't user Composer.
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function moveEscaper()
 	{

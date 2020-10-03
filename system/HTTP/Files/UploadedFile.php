@@ -44,6 +44,8 @@ use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Mimes;
 use Exception;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Value object representing a single file uploaded through an
@@ -154,9 +156,9 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * @return boolean
 	 *
-	 * @throws \InvalidArgumentException if the $path specified is invalid.
-	 * @throws \RuntimeException on any error during the move operation.
-	 * @throws \RuntimeException on the second or subsequent call to the method.
+	 * @throws InvalidArgumentException if the $path specified is invalid.
+	 * @throws RuntimeException on any error during the move operation.
+	 * @throws RuntimeException on the second or subsequent call to the method.
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{

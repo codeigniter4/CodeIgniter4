@@ -38,6 +38,8 @@
 
 namespace CodeIgniter\Debug;
 
+use Closure;
+
 /**
  * Iterator for debugging.
  */
@@ -66,12 +68,12 @@ class Iterator
 	 * Tests are simply closures that the user can define any sequence of
 	 * things to happen during the test.
 	 *
-	 * @param string   $name
-	 * @param \Closure $closure
+	 * @param string  $name
+	 * @param Closure $closure
 	 *
 	 * @return $this
 	 */
-	public function add(string $name, \Closure $closure)
+	public function add(string $name, Closure $closure)
 	{
 		$name = strtolower($name);
 

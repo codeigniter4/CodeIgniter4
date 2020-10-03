@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Router;
 
+use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -114,7 +115,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * A callable that will be shown
 	 * when the route cannot be matched.
 	 *
-	 * @var string|\Closure
+	 * @var string|Closure
 	 */
 	protected $override404;
 
@@ -215,14 +216,14 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Handle to the file locator to use.
 	 *
-	 * @var \CodeIgniter\Autoloader\FileLocator
+	 * @var FileLocator
 	 */
 	protected $fileLocator;
 
 	/**
 	 * Handle to the modules config.
 	 *
-	 * @var \Config\Modules
+	 * @var Modules
 	 */
 	protected $moduleConfig;
 
@@ -231,8 +232,8 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \CodeIgniter\Autoloader\FileLocator $locator
-	 * @param \Config\Modules                     $moduleConfig
+	 * @param FileLocator $locator
+	 * @param Modules     $moduleConfig
 	 */
 	public function __construct(FileLocator $locator, Modules $moduleConfig)
 	{
@@ -253,7 +254,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $placeholder
 	 * @param string       $pattern
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
@@ -275,7 +276,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $value
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultNamespace(string $value): RouteCollectionInterface
 	{
@@ -293,7 +294,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $value
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultController(string $value): RouteCollectionInterface
 	{
@@ -310,7 +311,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $value
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultMethod(string $value): RouteCollectionInterface
 	{
@@ -330,7 +331,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param boolean $value
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function setTranslateURIDashes(bool $value): RouteCollectionInterface
 	{
@@ -386,7 +387,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Returns the 404 Override setting, which can be null, a closure
 	 * or the controller/string.
 	 *
-	 * @return string|\Closure|null
+	 * @return string|Closure|null
 	 */
 	public function get404Override()
 	{
@@ -727,8 +728,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *            $route->resource('users');
 	 *     });
 	 *
-	 * @param string $name      The name to group/prefix the routes with.
-	 * @param array|callable  ...$params
+	 * @param string         $name      The name to group/prefix the routes with.
+	 * @param array|callable ...$params
 	 *
 	 * @return void
 	 */
@@ -1012,7 +1013,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function match(array $verbs = [], string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1035,7 +1036,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function get(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1053,7 +1054,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function post(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1071,7 +1072,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function put(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1089,7 +1090,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function delete(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1107,7 +1108,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function head(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1125,7 +1126,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function patch(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1143,7 +1144,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function options(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1161,7 +1162,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $to
 	 * @param array|null   $options
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function cli(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -1175,12 +1176,12 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
 	 *
-	 * @param string   $env
-	 * @param \Closure $callback
+	 * @param string  $env
+	 * @param Closure $callback
 	 *
-	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
-	public function environment(string $env, \Closure $callback): RouteCollectionInterface
+	public function environment(string $env, Closure $callback): RouteCollectionInterface
 	{
 		if (ENVIRONMENT === $env)
 		{
@@ -1328,7 +1329,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param array|null $params
 	 *
 	 * @return string
-	 * @throws \CodeIgniter\Router\Exceptions\RouterException
+	 * @throws RouterException
 	 */
 	protected function fillRouteParams(string $from, array $params = null): string
 	{

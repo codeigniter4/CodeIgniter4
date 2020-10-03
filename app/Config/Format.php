@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Format\FormatterInterface;
 
 class Format extends BaseConfig
 {
@@ -67,7 +68,7 @@ class Format extends BaseConfig
 	 *
 	 * @param string $mime
 	 *
-	 * @return \CodeIgniter\Format\FormatterInterface
+	 * @return FormatterInterface
 	 *
 	 * @deprecated This is an alias of `\CodeIgniter\Format\Format::getFormatter`. Use that instead.
 	 */

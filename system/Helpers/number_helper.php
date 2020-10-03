@@ -38,6 +38,8 @@
  * @filesource
  */
 
+use Config\Services;
+
 /**
  * CodeIgniter Number Helpers
  *
@@ -62,7 +64,7 @@ if (! function_exists('number_to_size'))
 		{
 			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
-		catch (\ErrorException $ee)
+		catch (ErrorException $ee)
 		{
 			return false;
 		}
@@ -131,7 +133,7 @@ if (! function_exists('number_to_amount'))
 		{
 			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
-		catch (\ErrorException $ee)
+		catch (ErrorException $ee)
 		{
 			return false;
 		}
@@ -215,7 +217,7 @@ if (! function_exists('format_number'))
 	function format_number(float $num, int $precision = 1, string $locale = null, array $options = []): string
 	{
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
-		$locale = $locale ?? \Config\Services::request()->getLocale();
+		$locale = $locale ?? Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
 		$type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);

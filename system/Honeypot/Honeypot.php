@@ -94,7 +94,7 @@ class Honeypot
 	/**
 	 * Checks the request if honeypot field has data.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 */
 	public function hasContent(RequestInterface $request)
 	{
@@ -104,7 +104,7 @@ class Honeypot
 	/**
 	 * Attaches Honeypot template to response.
 	 *
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param ResponseInterface $response
 	 */
 	public function attachHoneypot(ResponseInterface $response)
 	{

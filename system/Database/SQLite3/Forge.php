@@ -105,7 +105,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $dbName
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dropDatabase(string $dbName): bool
 	{
@@ -145,6 +145,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * ALTER TABLE
 	 *
@@ -250,6 +251,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Field attribute TYPE
 	 *
@@ -306,7 +308,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $foreignName Foreign name
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dropForeignKey(string $table, string $foreignName): bool
 	{

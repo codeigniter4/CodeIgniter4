@@ -134,7 +134,7 @@ class BaseService
 	 *
 	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Autoloader\Autoloader
+	 * @return Autoloader
 	 */
 	public static function autoloader(bool $getShared = true)
 	{
@@ -160,7 +160,7 @@ class BaseService
 	 *
 	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Autoloader\FileLocator
+	 * @return FileLocator
 	 */
 	public static function locator(bool $getShared = true)
 	{
@@ -201,6 +201,7 @@ class BaseService
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Reset shared instances and mocks for testing.
 	 *

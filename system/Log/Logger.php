@@ -40,7 +40,10 @@
 namespace CodeIgniter\Log;
 
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
+use Throwable;
 
 /**
  * The CodeIgntier Logger
@@ -144,7 +147,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @param  \Config\Logger $config
 	 * @param  boolean        $debug
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
 	{
@@ -367,7 +370,7 @@ class Logger implements LoggerInterface
 			}
 
 			/**
-			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
+			 * @var HandlerInterface
 			 */
 			$handler = $this->handlers[$className];
 
@@ -420,7 +423,7 @@ class Logger implements LoggerInterface
 		{
 			// Verify that the 'exception' key is actually an exception
 			// or error, both of which implement the 'Throwable' interface.
-			if ($key === 'exception' && $val instanceof \Throwable)
+			if ($key === 'exception' && $val instanceof Throwable)
 			{
 				$val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
 			}

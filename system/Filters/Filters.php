@@ -42,8 +42,9 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
+use Config\Filters as FiltersConfig;
 use Config\Modules;
+use Config\Services;
 
 /**
  * Filters
@@ -83,7 +84,7 @@ class Filters
 	/**
 	 * The original config file
 	 *
-	 * @var \Config\Filters
+	 * @var FiltersConfig
 	 */
 	protected $config;
 
@@ -119,17 +120,17 @@ class Filters
 	/**
 	 * Handle to the modules config.
 	 *
-	 * @var \Config\Modules
+	 * @var Modules
 	 */
 	protected $modules;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Filters      $config
-	 * @param RequestInterface     $request
-	 * @param ResponseInterface    $response
-	 * @param \Config\Modules|null $modules
+	 * @param FiltersConfig     $config
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 * @param Modules|null      $modules
 	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $modules = null)
 	{
@@ -188,8 +189,8 @@ class Filters
 	 * @param string $uri
 	 * @param string $position
 	 *
-	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
+	 * @return RequestInterface|ResponseInterface|mixed
+	 * @throws FilterException
 	 */
 	public function run(string $uri, string $position = 'before')
 	{
@@ -360,7 +361,7 @@ class Filters
 	 * @param string $name
 	 * @param string $when
 	 *
-	 * @return \CodeIgniter\Filters\Filters
+	 * @return Filters
 	 */
 	public function enableFilter(string $name, string $when = 'before')
 	{

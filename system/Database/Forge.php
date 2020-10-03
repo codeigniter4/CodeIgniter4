@@ -40,6 +40,8 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Class Forge
@@ -190,7 +192,7 @@ class Forge
 	/**
 	 * Constructor.
 	 *
-	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface $db)
 	{
@@ -218,7 +220,7 @@ class Forge
 	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function createDatabase(string $dbName, bool $ifNotExists = false): bool
 	{
@@ -267,7 +269,7 @@ class Forge
 	 * @param string $dbName
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	private function databaseExists(string $dbName): bool
 	{
@@ -292,7 +294,7 @@ class Forge
 	 * @param string $dbName
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dropDatabase(string $dbName): bool
 	{
@@ -416,7 +418,7 @@ class Forge
 			{
 				if (strpos($field, ' ') === false)
 				{
-					throw new \InvalidArgumentException('Field information is required for that operation.');
+					throw new InvalidArgumentException('Field information is required for that operation.');
 				}
 
 				$this->fields[] = $field;
@@ -442,8 +444,8 @@ class Forge
 	 * @param string $onUpdate
 	 * @param string $onDelete
 	 *
-	 * @return \CodeIgniter\Database\Forge
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @return Forge
+	 * @throws DatabaseException
 	 */
 	public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
 	{
@@ -470,8 +472,8 @@ class Forge
 	 * @param string $table       Table name
 	 * @param string $foreignName Foreign name
 	 *
-	 * @return boolean|\CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false|mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @return boolean|BaseResult|Query|false|mixed
+	 * @throws DatabaseException
 	 */
 	public function dropForeignKey(string $table, string $foreignName)
 	{
@@ -492,6 +494,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Create Table
 	 *
@@ -500,20 +503,20 @@ class Forge
 	 * @param array   $attributes  Associative array of table attributes
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function createTable(string $table, bool $ifNotExists = false, array $attributes = [])
 	{
 		if ($table === '')
 		{
-			throw new \InvalidArgumentException('A table name is required for that operation.');
+			throw new InvalidArgumentException('A table name is required for that operation.');
 		}
 
 		$table = $this->db->DBPrefix . $table;
 
 		if (count($this->fields) === 0)
 		{
-			throw new \RuntimeException('Field information is required.');
+			throw new RuntimeException('Field information is required.');
 		}
 
 		$sql = $this->_createTable($table, $ifNotExists, $attributes);
@@ -555,6 +558,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Create Table
 	 *
@@ -643,7 +647,7 @@ class Forge
 	 * @param boolean $cascade   Whether to add an CASCADE condition
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dropTable(string $tableName, bool $ifExists = false, bool $cascade = false)
 	{
@@ -689,6 +693,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Drop Table
 	 *
@@ -723,6 +728,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Rename Table
 	 *
@@ -730,13 +736,13 @@ class Forge
 	 * @param string $newTableName New table name
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function renameTable(string $tableName, string $newTableName)
 	{
 		if ($tableName === '' || $newTableName === '')
 		{
-			throw new \InvalidArgumentException('A table name is required for that operation.');
+			throw new InvalidArgumentException('A table name is required for that operation.');
 		}
 
 		if ($this->renameTableStr === false)
@@ -776,7 +782,7 @@ class Forge
 	 * @param string|array $field Column definition
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function addColumn(string $table, $field): bool
 	{
@@ -812,6 +818,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Column Drop
 	 *
@@ -819,7 +826,7 @@ class Forge
 	 * @param string|array $columnName Column name Array or comma separated
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function dropColumn(string $table, $columnName)
 	{
@@ -846,7 +853,7 @@ class Forge
 	 * @param string|array $field Column definition
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function modifyColumn(string $table, $field): bool
 	{
@@ -860,7 +867,7 @@ class Forge
 
 		if (count($this->fields) === 0)
 		{
-			throw new \RuntimeException('Field information is required');
+			throw new RuntimeException('Field information is required');
 		}
 
 		$sqls = $this->_alterTable('CHANGE', $this->db->DBPrefix . $table, $this->_processFields());
@@ -890,6 +897,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * ALTER TABLE
 	 *
@@ -931,6 +939,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Process fields
 	 *

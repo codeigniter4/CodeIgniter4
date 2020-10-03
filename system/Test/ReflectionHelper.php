@@ -39,9 +39,12 @@
 
 namespace CodeIgniter\Test;
 
+use Closure;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 use ReflectionObject;
+use ReflectionProperty;
 
 /**
  * Testing helper.
@@ -54,8 +57,8 @@ trait ReflectionHelper
 	 * @param object|string $obj    object or class name
 	 * @param string        $method method name
 	 *
-	 * @return \Closure
-	 * @throws \ReflectionException
+	 * @return Closure
+	 * @throws ReflectionException
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
 	{
@@ -75,8 +78,8 @@ trait ReflectionHelper
 	 * @param object|string $obj
 	 * @param string        $property
 	 *
-	 * @return \ReflectionProperty
-	 * @throws \ReflectionException
+	 * @return ReflectionProperty
+	 * @throws ReflectionException
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
@@ -102,7 +105,7 @@ trait ReflectionHelper
 	 * @param string        $property property name
 	 * @param mixed         $value    value
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function setPrivateProperty($obj, $property, $value)
 	{
@@ -117,7 +120,7 @@ trait ReflectionHelper
 	 * @param string        $property property name
 	 *
 	 * @return mixed value
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function getPrivateProperty($obj, $property)
 	{

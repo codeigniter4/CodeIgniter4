@@ -39,10 +39,12 @@
 
 namespace CodeIgniter\Router\Exceptions;
 
+use Exception;
+
 /**
  * RedirectException
  */
-class RedirectException extends \Exception
+class RedirectException extends Exception
 {
 	/**
 	 * Status code for redirects

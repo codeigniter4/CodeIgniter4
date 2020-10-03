@@ -40,6 +40,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use InvalidArgumentException;
 
 /**
  * Class Config
@@ -59,7 +60,7 @@ class Config extends BaseConfig
 	 * The main instance used to manage all of
 	 * our open database connections.
 	 *
-	 * @var \CodeIgniter\Database\Database|null
+	 * @var Database|null
 	 */
 	static protected $factory;
 
@@ -97,7 +98,7 @@ class Config extends BaseConfig
 
 		if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0)
 		{
-			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
+			throw new InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
 		if ($getShared && isset(static::$instances[$group]))

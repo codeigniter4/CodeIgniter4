@@ -39,6 +39,9 @@
 
 namespace CodeIgniter\Log\Handlers;
 
+use DateTime;
+use Exception;
+
 /**
  * Log error messages to file system
  */
@@ -97,7 +100,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * @param string $message
 	 *
 	 * @return boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function handle($level, $message): bool
 	{
@@ -126,7 +129,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		{
 			$microtimeFull  = microtime(true);
 			$microtimeShort = sprintf('%06d', ($microtimeFull - floor($microtimeFull)) * 1000000);
-			$date           = new \DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));
+			$date           = new DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));
 			$date           = $date->format($this->dateFormat);
 		}
 		else

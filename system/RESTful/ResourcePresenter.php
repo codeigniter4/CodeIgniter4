@@ -41,6 +41,7 @@ namespace CodeIgniter\RESTful;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Model;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -59,7 +60,7 @@ class ResourcePresenter extends Controller
 
 	/**
 	 *
-	 * @var \CodeIgniter\Model|null the model holding this resource's data
+	 * @var Model|null the model holding this resource's data
 	 */
 	protected $model;
 

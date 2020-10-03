@@ -50,7 +50,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For CurlRequest
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -64,7 +64,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $cert
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forSSLCertNotFound(string $cert)
 	{
@@ -76,7 +76,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $key
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidSSLKey(string $key)
 	{
@@ -104,7 +104,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $type
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidNegotiationType(string $type)
 	{
@@ -116,7 +116,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $protocols
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidHTTPProtocol(string $protocols)
 	{
@@ -126,7 +126,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Negotiate
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forEmptySupportedNegotiations()
 	{
@@ -138,7 +138,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $route
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidRedirectRoute(string $route)
 	{
@@ -148,7 +148,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Response
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forMissingResponseStatus()
 	{
@@ -160,7 +160,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param integer $code
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidStatusCode(int $code)
 	{
@@ -172,7 +172,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param integer $code
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forUnkownStatusCode(int $code)
 	{
@@ -184,7 +184,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $uri
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forUnableToParseURI(string $uri)
 	{
@@ -196,7 +196,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param integer $segment
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forURISegmentOutOfRange(int $segment)
 	{
@@ -208,7 +208,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param integer $port
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidPort(int $port)
 	{
@@ -218,7 +218,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For URI
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forMalformedQueryString()
 	{
@@ -228,7 +228,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Uploaded file move
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forAlreadyMoved()
 	{
@@ -240,7 +240,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string|null $path
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidFile(string $path = null)
 	{
@@ -254,7 +254,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 * @param string $target
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forMoveFailed(string $source, string $target, string $error)
 	{
@@ -266,7 +266,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @param string $samesite
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 */
 	public static function forInvalidSameSiteSetting(string $samesite)
 	{

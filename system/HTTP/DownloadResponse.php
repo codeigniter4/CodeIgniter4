@@ -42,6 +42,8 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
+use DateTime;
+use DateTimeZone;
 
 /**
  * HTTP response when a download is requested.
@@ -307,13 +309,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * Sets the date header
 	 *
-	 * @param \DateTime $date
+	 * @param DateTime $date
 	 *
 	 * @return ResponseInterface
 	 */
-	public function setDate(\DateTime $date)
+	public function setDate(DateTime $date)
 	{
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new DateTimeZone('UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
 
@@ -404,9 +406,9 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setLastModified($date)
 	{
-		if ($date instanceof \DateTime)
+		if ($date instanceof DateTime)
 		{
-			$date->setTimezone(new \DateTimeZone('UTC'));
+			$date->setTimezone(new DateTimeZone('UTC'));
 			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
@@ -481,7 +483,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']))
 		{
-			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
+			$this->setDate(DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status

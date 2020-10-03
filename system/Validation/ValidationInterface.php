@@ -78,9 +78,9 @@ interface ValidationInterface
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface;
 
@@ -94,7 +94,7 @@ interface ValidationInterface
 	 * @param array $rules
 	 * @param array $messages
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function setRules(array $rules, array $messages = []): ValidationInterface;
 
@@ -146,7 +146,7 @@ interface ValidationInterface
 	 * @param string $alias
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function setError(string $alias, string $error): ValidationInterface;
 
@@ -158,7 +158,7 @@ interface ValidationInterface
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function reset(): ValidationInterface;
 

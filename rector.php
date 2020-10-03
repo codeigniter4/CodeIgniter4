@@ -25,6 +25,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . '/system/Test/bootstrap.php',
 	]);
 
+	// auto import fully qualified class names
+	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
+
 	$parameters->set(Option::SKIP, [
 		// skipped for UnderscoreToCamelCaseVariableNameRector rule
 		// as the underscored variable removed in 4.1 branch

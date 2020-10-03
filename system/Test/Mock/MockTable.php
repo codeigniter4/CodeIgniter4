@@ -1,6 +1,9 @@
 <?php namespace CodeIgniter\Test\Mock;
 
-class MockTable extends \CodeIgniter\View\Table {
+use BadMethodCallException;
+use CodeIgniter\View\Table;
+
+class MockTable extends Table {
 
 	// Override inaccessible protected method
 	public function __call($method, $params)
@@ -10,7 +13,7 @@ class MockTable extends \CodeIgniter\View\Table {
 			return call_user_func_array([$this, '_' . $method], $params);
 		}
 
-		throw new \BadMethodCallException('Method ' . $method . ' was not found');
+		throw new BadMethodCallException('Method ' . $method . ' was not found');
 	}
 
 }

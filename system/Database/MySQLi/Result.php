@@ -42,6 +42,7 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
+use stdClass;
 
 /**
  * Result for MySQLi
@@ -124,7 +125,7 @@ class Result extends BaseResult implements ResultInterface
 
 		foreach ($fieldData as $i => $data)
 		{
-			$retVal[$i]              = new \stdClass();
+			$retVal[$i]              = new stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
 			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true)

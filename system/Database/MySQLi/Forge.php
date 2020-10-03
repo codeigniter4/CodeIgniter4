@@ -161,6 +161,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * ALTER TABLE
 	 *

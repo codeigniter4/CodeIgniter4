@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
+
 /**
  * Class ContentSecurityPolicy
  *
@@ -222,9 +224,9 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the Config file.
 	 *
-	 * @param \Config\ContentSecurityPolicy $config
+	 * @param ContentSecurityPolicyConfig $config
 	 */
-	public function __construct(\Config\ContentSecurityPolicy $config)
+	public function __construct(ContentSecurityPolicyConfig $config)
 	{
 		foreach ($config as $setting => $value) // @phpstan-ignore-line
 		{
@@ -658,7 +660,7 @@ class ContentSecurityPolicy
 	 * placeholders with actual nonces, that we'll then add to our
 	 * headers.
 	 *
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|Response $response
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
@@ -710,7 +712,7 @@ class ContentSecurityPolicy
 	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
 	 * with their values to the response object.
 	 *
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|Response $response
 	 */
 	protected function buildHeaders(ResponseInterface &$response)
 	{

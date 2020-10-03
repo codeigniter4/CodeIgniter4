@@ -43,7 +43,9 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\App;
 use Config\Services;
+use Locale;
 
 /**
  * Class IncomingRequest
@@ -93,14 +95,14 @@ class IncomingRequest extends Request
 	/**
 	 * File collection
 	 *
-	 * @var Files\FileCollection|null
+	 * @var FileCollection|null
 	 */
 	protected $files;
 
 	/**
 	 * Negotiator
 	 *
-	 * @var \CodeIgniter\HTTP\Negotiate|null
+	 * @var Negotiate|null
 	 */
 	protected $negotiator;
 
@@ -130,7 +132,7 @@ class IncomingRequest extends Request
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Config\App
+	 * @var App
 	 */
 	public $config;
 
@@ -144,7 +146,7 @@ class IncomingRequest extends Request
 	/**
 	 * The user agent this request is from.
 	 *
-	 * @var \CodeIgniter\HTTP\UserAgent
+	 * @var UserAgent
 	 */
 	protected $userAgent;
 
@@ -153,10 +155,10 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param object                      $config
-	 * @param \CodeIgniter\HTTP\URI       $uri
-	 * @param string|null                 $body
-	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
+	 * @param object      $config
+	 * @param URI         $uri
+	 * @param string|null $body
+	 * @param UserAgent   $userAgent
 	 */
 	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
@@ -194,7 +196,7 @@ class IncomingRequest extends Request
 	 * Handles setting up the locale, perhaps auto-detecting through
 	 * content negotiation.
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 */
 	public function detectLocale($config)
 	{
@@ -252,7 +254,7 @@ class IncomingRequest extends Request
 		}
 
 		$this->locale = $locale;
-		\Locale::setDefault($locale);
+		Locale::setDefault($locale);
 
 		return $this;
 	}
@@ -455,7 +457,7 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch the user agent string
 	 *
-	 * @return \CodeIgniter\HTTP\UserAgent
+	 * @return UserAgent
 	 */
 	public function getUserAgent()
 	{

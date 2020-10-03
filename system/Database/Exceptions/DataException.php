@@ -2,14 +2,16 @@
 
 namespace CodeIgniter\Database\Exceptions;
 
-class DataException extends \RuntimeException implements ExceptionInterface
+use RuntimeException;
+
+class DataException extends RuntimeException implements ExceptionInterface
 {
 	/**
 	 * Used by the Model's trigger() method when the callback cannot be found.
 	 *
 	 * @param string $method
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forInvalidMethodTriggered(string $method)
 	{
@@ -22,7 +24,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 *
 	 * @param string $mode
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forEmptyDataset(string $mode)
 	{
@@ -36,7 +38,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 *
 	 * @param string $mode
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forEmptyPrimaryKey(string $mode)
 	{
@@ -50,7 +52,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 *
 	 * @param string $argument
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forInvalidArgument(string $argument)
 	{
