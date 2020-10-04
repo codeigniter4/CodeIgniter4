@@ -167,7 +167,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function dataSeek(int $n = 0)
 	{
-		if ($n)
+		if ($n > 0)
 		{
 			for ($i = 0; $i < $n; $i++)
 			{
