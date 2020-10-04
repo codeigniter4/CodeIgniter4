@@ -859,7 +859,7 @@ if (! function_exists('log_message'))
 if (! function_exists('model'))
 {
 	/**
-	 * More simple way of getting model instances
+	 * More simple way of getting model instances from the Factory
 	 *
 	 * @param string                   $name
 	 * @param boolean                  $getShared
@@ -869,7 +869,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return \CodeIgniter\Database\ModelFactory::get($name, $getShared, $conn);
+		return \CodeIgniter\Config\Factory::model($name, $getShared, $conn);
 	}
 }
 
