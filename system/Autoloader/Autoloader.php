@@ -289,7 +289,7 @@ class Autoloader
 		{
 			$class    = 'Config\\' . $class;
 			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-			$filename = $this->requireFile($filePath);
+			$filename = $this->includeFile($filePath);
 
 			if ($filename)
 			{
@@ -308,7 +308,7 @@ class Autoloader
 				if (strpos($class, $namespace) === 0)
 				{
 					$filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
-					$filename = $this->requireFile($filePath);
+					$filename = $this->includeFile($filePath);
 
 					if ($filename)
 					{
@@ -352,7 +352,7 @@ class Autoloader
 
 		foreach ($paths as $path)
 		{
-			if ($file = $this->requireFile($path . $class))
+			if ($file = $this->includeFile($path . $class))
 			{
 				return $file;
 			}
@@ -364,20 +364,19 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * A central way to require a file is loaded. Split out primarily
-	 * for testing purposes.
+	 * A central way to include a file. Split out primarily for testing purposes.
 	 *
 	 * @param string $file
 	 *
 	 * @return string|false The filename on success, false if the file is not loaded
 	 */
-	protected function requireFile(string $file)
+	protected function includeFile(string $file)
 	{
 		$file = $this->sanitizeFilename($file);
 
 		if (is_file($file))
 		{
-			require_once $file;
+			include_once $file;
 
 			return $file;
 		}
