@@ -76,10 +76,10 @@ jobs:
       - name: Install dependencies
         run: |
           composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
-          composer remove --dev phpstan/phpstan
-          composer remove --dev rector/rector
-          composer remove --dev codeigniter4/codeigniter4-standard
-          composer remove --dev squizlabs/php_codesniffer
+          composer remove --dev phpstan/phpstan --update-with-dependencies
+          composer remove --dev rector/rector --update-with-dependencies
+          composer remove --dev codeigniter4/codeigniter4-standard --update-with-dependencies
+          composer remove --dev squizlabs/php_codesniffer --update-with-dependencies
           php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
