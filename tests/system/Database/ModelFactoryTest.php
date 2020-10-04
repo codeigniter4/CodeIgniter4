@@ -34,6 +34,7 @@ class ModelFactoryTest extends CIDatabaseTestCase
 	public function testInjection()
 	{
 		ModelFactory::injectMock('Banana', new JobModel());
+
 		$this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
 	}
 
