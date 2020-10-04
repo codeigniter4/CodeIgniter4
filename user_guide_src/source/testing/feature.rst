@@ -114,6 +114,21 @@ to send out emails. You can tell the system to skip any event handling with the 
     $result = $this->skipEvents()
         ->post('users', $userInfo);
 
+Formatting The Request
+-----------------------
+
+You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
+`json` or `xml`. This will take the parameters passed into ``call(), post(), get()...`` and assign them to the
+body of the request in the given format. This is useful when testing JSON or XML API's so that you can set the request
+in the form that the controller will expect.
+::
+
+    //If your feature test contains this:
+    $result = $this->withBodyFormat('json')
+        ->post('users', $userInfo);
+
+    //Your controller can then get the parameters passed in with:
+    $userInfo = $this->request->getJson();
 
 Testing the Response
 ====================
