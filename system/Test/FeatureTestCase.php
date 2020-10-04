@@ -80,4 +80,12 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @var array
 	 */
 	protected $headers = [];
+
+	/**
+	 * Allows for formatting the request body to what
+	 * the controller is going to expect
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = '';
 }

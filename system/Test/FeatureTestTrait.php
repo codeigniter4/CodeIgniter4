@@ -122,6 +122,19 @@ trait FeatureTestTrait
 	}
 
 	/**
+	 * Set the format the request's body should have.
+	 *
+	 * @param  string $format The desired format. Currently supported formats: xml, json
+	 * @return $this
+	 */
+	public function withBodyFormat(string $format)
+	{
+		$this->bodyFormat = $format;
+
+		return $this;
+	}
+
+	/**
 	 * Don't run any events while running this test.
 	 *
 	 * @return $this
@@ -165,6 +178,7 @@ trait FeatureTestTrait
 		$request = $this->setupRequest($method, $path);
 		$request = $this->setupHeaders($request);
 		$request = $this->populateGlobals($method, $request, $params);
+		$request = $this->setRequestBody($request);
 
 		// Make sure the RouteCollection knows what method we're using...
 		$routes = $this->routes ?? Services::routes();
@@ -373,6 +387,40 @@ trait FeatureTestTrait
 		$request->setGlobal('request', $params);
 
 		$_SESSION = $this->session ?? [];
+
+		return $request;
+	}
+
+	/**
+	 * Set the request's body formatted according to the value in $this->bodyFormat.
+	 * This allows the body to be formatted in a way that the controller is going to
+	 * expect as in the case of testing a JSON or XML API.
+	 *
+	 * @param  Request    $request
+	 * @param  null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
+	 *                               what has been loaded into the request global of the request class.
+	 * @return mixed
+	 */
+	protected function setRequestBody(Request $request, $params = null)
+	{
+		if (empty($params))
+		{
+			$params = $request->fetchGlobal('request');
+		}
+		$formatMime = '';
+		if ($this->bodyFormat === 'json')
+		{
+			$formatMime = 'application/json';
+		}
+		elseif ($this->bodyFormat === 'xml')
+		{
+			$formatMime = 'application/xml';
+		}
+		if (! empty($formatMime))
+		{
+			$formatted = Services::format()->getFormatter($formatMime)->format($params);
+			$request->setBody($formatted);
+		}
 
 		return $request;
 	}

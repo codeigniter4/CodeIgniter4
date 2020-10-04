@@ -313,4 +313,40 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->assertTrue($response->isRedirect());
 		$this->assertTrue($response->isOK());
 	}
+
+	public function testCallWithJsonRequest()
+	{
+		$this->withRoutes([
+			[
+				'post',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::echoJson',
+			],
+		]);
+		$response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
+		$response->assertOK();
+		$response->assertJSONExact(['foo' => 'bar']);
+	}
+
+	public function testSetupRequestBodyWithParams()
+	{
+		$request = $this->setupRequest('post', 'home');
+
+		$request = $this->withBodyFormat('json')->setRequestBody($request, ['foo1' => 'bar1']);
+
+		$this->assertJsonStringEqualsJsonString(json_encode(['foo1' => 'bar1']), $request->getBody());
+	}
+
+	public function testSetupRequestBodyWithXml()
+	{
+		$request = $this->setupRequest('post', 'home');
+
+		$request = $this->withBodyFormat('xml')->setRequestBody($request, ['foo' => 'bar']);
+
+		$expectedXml = '<?xml version="1.0"?>
+<response><foo>bar</foo></response>
+';
+
+		$this->assertEquals($expectedXml, $request->getBody());
+	}
 }
