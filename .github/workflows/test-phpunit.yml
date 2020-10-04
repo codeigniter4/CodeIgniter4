@@ -116,11 +116,8 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Whitelist filtering for Xdebug
-        run: php vendor/bin/phpunit --dump-xdebug-filter build/xdebug-filter.php
-
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --prepend build/xdebug-filter.php -v"
+        run: script -e -c "vendor/bin/phpunit -v"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
