@@ -403,23 +403,26 @@ trait FeatureTestTrait
 	 */
 	protected function setRequestBody(Request $request, $params = null)
 	{
-		if (empty($params))
+		if (! empty($this->bodyFormat))
 		{
-			$params = $request->fetchGlobal('request');
-		}
-		$formatMime = '';
-		if ($this->bodyFormat === 'json')
-		{
-			$formatMime = 'application/json';
-		}
-		elseif ($this->bodyFormat === 'xml')
-		{
-			$formatMime = 'application/xml';
-		}
-		if (! empty($formatMime))
-		{
-			$formatted = Services::format()->getFormatter($formatMime)->format($params);
-			$request->setBody($formatted);
+			if (empty($params))
+			{
+				$params = $request->fetchGlobal('request');
+			}
+			$formatMime = '';
+			if ($this->bodyFormat === 'json')
+			{
+				$formatMime = 'application/json';
+			}
+			elseif ($this->bodyFormat === 'xml')
+			{
+				$formatMime = 'application/xml';
+			}
+			if (! empty($formatMime))
+			{
+				$formatted = Services::format()->getFormatter($formatMime)->format($params);
+				$request->setBody($formatted);
+			}
 		}
 
 		return $request;
