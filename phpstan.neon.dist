@@ -27,6 +27,7 @@ parameters:
 		- '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getRoutesOptions)\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Validation\\ValidationInterface::loadRuleGroup\(\)#'
+		- '#Call to an undefined static method CodeIgniter\\Config\\Factory::[a-z]+\(\)#'
 		- '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
 		- '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
 		- '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'
