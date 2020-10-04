@@ -19,7 +19,18 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
-        db-platforms: ['MySQLi', 'Postgre', 'SQLite3']
+        db-platforms: ['MySQLi', 'Postgre']
+        ini-values: ['xdebug.coverage_enable=0']
+        include:
+          - php-versions: '7.2'
+            db-platforms: 'SQLite3'
+            ini-values: 'xdebug.coverage_enable=1'
+          - php-versions: '7.3'
+            db-platforms: 'SQLite3'
+            ini-values: 'xdebug.coverage_enable=1'
+          - php-versions: '7.4'
+            db-platforms: 'SQLite3'
+            ini-values: 'xdebug.coverage_enable=1'
 
     services:
       mysql:
@@ -55,6 +66,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           tools: composer:v2
           extensions: imagick
+          ini-values: ${{ matrix.ini-values }}
           coverage: xdebug
         env:
           update: true
@@ -91,6 +103,7 @@ jobs:
           TERM: xterm-256color
 
       - name: Run Coveralls
+        if: ${{ matrix.ini-values == 'xdebug.coverage_enable=1' }}
         run: |
           composer global require twinh/php-coveralls
           php-coveralls --coverage_clover=build/logs/clover.xml -v
