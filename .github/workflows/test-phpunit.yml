@@ -19,17 +19,17 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
-        db-platforms: ['SQLite3', 'Postgre']
+        db-platforms: ['SQLite3', 'MySQLi']
         ini-values: ['xdebug.coverage_enable=0']
         include:
           - php-versions: '7.2'
-            db-platforms: 'MySQLi'
+            db-platforms: 'Postgre'
             ini-values: 'xdebug.coverage_enable=1'
           - php-versions: '7.3'
-            db-platforms: 'MySQLi'
+            db-platforms: 'Postgre'
             ini-values: 'xdebug.coverage_enable=1'
           - php-versions: '7.4'
-            db-platforms: 'MySQLi'
+            db-platforms: 'Postgre'
             ini-values: 'xdebug.coverage_enable=1'
 
     services:
