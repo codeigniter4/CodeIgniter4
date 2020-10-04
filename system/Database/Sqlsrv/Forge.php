@@ -433,7 +433,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		$sql .= $table;
 
-		if ($cascade === true)
+		if ($cascade)
 		{
 			$sql .= '';
 		}

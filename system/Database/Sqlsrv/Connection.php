@@ -55,7 +55,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var string
 	 */
-	public $DBDriver = 'SQLSrv';
+	public $DBDriver = 'Sqlsrv';
 
 	/**
 	 * Database name

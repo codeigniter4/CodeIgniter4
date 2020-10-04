@@ -330,12 +330,12 @@ class Builder extends BaseBuilder
 
 		foreach ($pKeys as $key)
 		{
-			if ('PRIMARY' === $key->type)
+			if ($key->type === 'PRIMARY')
 			{
 				$keyFields = array_merge($keyFields, $key->fields);
 			}
 
-			if ('UNIQUE' === $key->type)
+			if ($key->type === 'UNIQUE')
 			{
 				$keyFields = array_merge($keyFields, $key->fields);
 			}
