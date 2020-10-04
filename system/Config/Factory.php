@@ -40,7 +40,7 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\FileLocator;
-use Config\Factories as FactoriesConfig;
+use CodeIgniter\Config\Factories as FactoriesConfig;
 
 /**
  * Dynamic Component Factory.
@@ -202,7 +202,7 @@ class Factory
 		$values = $config->$component ?? [];
 
 		// Add defaults for any missing values
-		$values = array_merge($config::$default, $values);
+		$values = array_merge(FactoriesConfig::$default, $values);
 
 		// If no path was available then guess it based on the component
 		$values['path'] = $values['path'] ?? ucfirst($component);
