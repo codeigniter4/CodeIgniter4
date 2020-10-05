@@ -869,7 +869,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return Factories::model($name, $getShared, $conn);
+		return Factories::models($name, $getShared, $conn);
 	}
 }
 
