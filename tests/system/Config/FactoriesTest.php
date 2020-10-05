@@ -9,21 +9,21 @@ use Tests\Support\Widgets\SomeWidget;
 use ReflectionClass;
 use stdClass;
 
-class FactoryTest extends CIUnitTestCase
+class FactoriesTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		Factory::reset();
+		Factories::reset();
 	}
 
-	protected function getFactoryStaticProperty(...$params)
+	protected function getFactoriesStaticProperty(...$params)
 	{
 		// First parameter is the actual property
 		$name = array_shift($params);
 
-		$factory  = new ReflectionClass(Factory::class);
+		$factory  = new ReflectionClass(Factories::class);
 		$property = $factory->getStaticPropertyValue($name, 'ignoreMissing');
 
 		if ($property === 'ignoreMissing')
@@ -44,14 +44,14 @@ class FactoryTest extends CIUnitTestCase
 
 	public function testGetsConfigValues()
 	{
-		$result = Factory::getConfig('models');
+		$result = Factories::getConfig('models');
 
 		$this->assertTrue($result['prefersApp']);
 	}
 
 	public function testGetsConfigDefaults()
 	{
-		$result = Factory::getConfig('blahblahs');
+		$result = Factories::getConfig('blahblahs');
 
 		$this->assertTrue($result['prefersApp']);
 		$this->assertEquals('Blahblahs', $result['path']);
@@ -59,9 +59,9 @@ class FactoryTest extends CIUnitTestCase
 
 	public function testSetsConfigValues()
 	{
-		Factory::setConfig('widgets', ['foo' => 'bar']);
+		Factories::setConfig('widgets', ['foo' => 'bar']);
 
-		$result = Factory::getConfig('widgets');
+		$result = Factories::getConfig('widgets');
 
 		$this->assertEquals('bar', $result['foo']);
 		$this->assertEquals(true, $result['prefersApp']);
@@ -69,47 +69,47 @@ class FactoryTest extends CIUnitTestCase
 
 	public function testUsesConfigFileValues()
 	{
-		// Simulate having a $widgets property in App\Config\Factories
-		$config          = new Factories();
+		// Simulate having a $widgets property in App\Config\Factory
+		$config          = new Factory();
 		$config->widgets = ['bar' => 'bam'];
-		Factory::injectMock('config', Factories::class, $config);
+		Factories::injectMock('config', Factory::class, $config);
 
-		$result = Factory::getConfig('widgets');
+		$result = Factories::getConfig('widgets');
 
 		$this->assertEquals('bam', $result['bar']);
 	}
 
 	public function testSetConfigResets()
 	{
-		Factory::injectMock('widgets', 'Banana', new stdClass());
+		Factories::injectMock('widgets', 'Banana', new stdClass());
 
-		$result = $this->getFactoryStaticProperty('instances');
+		$result = $this->getFactoriesStaticProperty('instances');
 		$this->assertArrayHasKey('widgets', $result);
 
-		Factory::setConfig('widgets', []);
+		Factories::setConfig('widgets', []);
 
-		$result = $this->getFactoryStaticProperty('instances');
+		$result = $this->getFactoriesStaticProperty('instances');
 		$this->assertArrayNotHasKey('widgets', $result);
 	}
 
 	public function testResetsAll()
 	{
-		Factory::setConfig('widgets', ['foo' => 'bar']);
+		Factories::setConfig('widgets', ['foo' => 'bar']);
 
-		Factory::reset();
+		Factories::reset();
 
-		$result = $this->getFactoryStaticProperty('configs');
+		$result = $this->getFactoriesStaticProperty('configs');
 		$this->assertEquals([], $result);
 	}
 
 	public function testResetsComponentOnly()
 	{
-		Factory::setConfig('widgets', ['foo' => 'bar']);
-		Factory::setConfig('spigots', ['bar' => 'bam']);
+		Factories::setConfig('widgets', ['foo' => 'bar']);
+		Factories::setConfig('spigots', ['bar' => 'bam']);
 
-		Factory::reset('spigots');
+		Factories::reset('spigots');
 
-		$result = $this->getFactoryStaticProperty('configs');
+		$result = $this->getFactoriesStaticProperty('configs');
 		$this->assertArrayHasKey('widgets', $result);
 	}
 
@@ -117,62 +117,62 @@ class FactoryTest extends CIUnitTestCase
 
 	public function testGetsBasenameByBasename()
 	{
-		$this->assertEquals('SomeWidget', Factory::getBasename('SomeWidget'));
+		$this->assertEquals('SomeWidget', Factories::getBasename('SomeWidget'));
 	}
 
 	public function testGetsBasenameByClassname()
 	{
-		$this->assertEquals('SomeWidget', Factory::getBasename(SomeWidget::class));
+		$this->assertEquals('SomeWidget', Factories::getBasename(SomeWidget::class));
 	}
 
 	public function testGetsBasenameInvalid()
 	{
-		$this->assertEquals('', Factory::getBasename('Tests\\Support\\'));
+		$this->assertEquals('', Factories::getBasename('Tests\\Support\\'));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testCreatesByBasename()
 	{
-		$result = Factory::widgets('SomeWidget', false);
+		$result = Factories::widgets('SomeWidget', false);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesByClassname()
 	{
-		$result = Factory::widgets(SomeWidget::class, false);
+		$result = Factories::widgets(SomeWidget::class, false);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesInvalid()
 	{
-		$result = Factory::widgets('gfnusvjai', false);
+		$result = Factories::widgets('gfnusvjai', false);
 
 		$this->assertNull($result);
 	}
 
 	public function testIgnoresNonClass()
 	{
-		$result = Factory::widgets('NopeWidget', false);
+		$result = Factories::widgets('NopeWidget', false);
 
 		$this->assertNull($result);
 	}
 
 	public function testReturnsSharedInstance()
 	{
-		$widget1 = Factory::widgets('SomeWidget');
-		$widget2 = Factory::widgets(SomeWidget::class);
+		$widget1 = Factories::widgets('SomeWidget');
+		$widget2 = Factories::widgets(SomeWidget::class);
 
 		$this->assertSame($widget1, $widget2);
 	}
 
 	public function testInjection()
 	{
-		Factory::injectMock('widgets', 'Banana', new stdClass());
+		Factories::injectMock('widgets', 'Banana', new stdClass());
 
-		$result = Factory::widgets('Banana');
+		$result = Factories::widgets('Banana');
 
 		$this->assertInstanceOf(stdClass::class, $result);
 	}
@@ -181,28 +181,28 @@ class FactoryTest extends CIUnitTestCase
 
 	public function testRespectsComponentAlias()
 	{
-		Factory::setConfig('tedwigs', ['component' => 'widgets']);
+		Factories::setConfig('tedwigs', ['component' => 'widgets']);
 
-		$result = Factory::tedwigs('SomeWidget');
+		$result = Factories::tedwigs('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testRespectsPath()
 	{
-		Factory::setConfig('models', ['path' => 'Widgets']);
+		Factories::setConfig('models', ['path' => 'Widgets']);
 
-		$result = Factory::models('SomeWidget');
+		$result = Factories::models('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testRespectsInstanceOf()
 	{
-		Factory::setConfig('widgets', ['instanceOf' => stdClass::class]);
+		Factories::setConfig('widgets', ['instanceOf' => stdClass::class]);
 
-		$result = Factory::widgets('SomeWidget');
+		$result = Factories::widgets('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
 
-		$result = Factory::widgets('OtherWidget');
+		$result = Factories::widgets('OtherWidget');
 		$this->assertNull($result);
 	}
 
@@ -215,7 +215,7 @@ class FactoryTest extends CIUnitTestCase
 			class_alias(SomeWidget::class, $class);
 		}
 
-		$result = Factory::widgets('OtherWidget');
+		$result = Factories::widgets('OtherWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
@@ -228,12 +228,12 @@ class FactoryTest extends CIUnitTestCase
 			class_alias(SomeWidget::class, $class);
 		}
 
-		$result = Factory::widgets(OtherWidget::class);
+		$result = Factories::widgets(OtherWidget::class);
 		$this->assertInstanceOf(SomeWidget::class, $result);
 
-		Factory::setConfig('widgets', ['prefersApp' => false]);
+		Factories::setConfig('widgets', ['prefersApp' => false]);
 
-		$result = Factory::widgets(OtherWidget::class);
+		$result = Factories::widgets(OtherWidget::class);
 		$this->assertInstanceOf(OtherWidget::class, $result);
 	}
 }
