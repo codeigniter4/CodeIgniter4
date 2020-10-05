@@ -64,7 +64,7 @@ class Factory
 	 * Explicit configuration for the Config
 	 * component to prevent logic loops.
 	 *
-	 * @var array<string, array>
+	 * @var array<string, mixed>
 	 */
 	private static $configValues = [
 		'component'  => 'config',
