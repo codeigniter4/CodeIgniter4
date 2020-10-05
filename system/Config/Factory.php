@@ -111,7 +111,7 @@ class Factory
 
 		// First argument is the name, second is whether to use a shared instance
 		$name      = array_shift($arguments);
-		$getShared = array_shift($arguments);
+		$getShared = array_shift($arguments) ?? true;
 
 		if (! $getShared)
 		{
@@ -123,7 +123,7 @@ class Factory
 			return null;
 		}
 
-		$basename = self::basename($name);
+		$basename = self::getBasename($name);
 
 		// Check for an existing instance
 		if (isset(self::$basenames[$config['component']][$basename]))
@@ -158,13 +158,13 @@ class Factory
 		// Check for low-hanging fruit
 		if (class_exists($name)
 			&& (! $config['prefersApp'] || strpos($name, APP_NAMESPACE) === 0)
-			&& (! $config['instanceOf'] || is_a($name, $config['instanceOf']))
+			&& (! $config['instanceOf'] || is_a($name, $config['instanceOf'], true))
 		)
 		{
 			return $name;
 		}
 
-		$basename = self::basename($name);
+		$basename = self::getBasename($name);
 
 		// Look for an App version if requested
 		$appName = APP_NAMESPACE . DIRECTORY_SEPARATOR . $config['path'] . $basename;
@@ -183,6 +183,8 @@ class Factory
 			{
 				return null;
 			}
+
+			$files = [$file];
 		}
 		// No namespace? Search for it
 		else
@@ -192,17 +194,20 @@ class Factory
 			{
 				return null;
 			}
-
-			// Use the first match - prioritizes app, then modules, then system
-			$file = reset($files);
 		}
 
-		if (! $class = $locator->getClassname($file))
+		// Return the first valid class
+		foreach ($files as $file)
 		{
-			return null;
+			$class = $locator->getClassname($file);
+
+			if ($class && (! $config['instanceOf'] || is_a($class, $config['instanceOf'], true)))
+			{
+				return $class;
+			}
 		}
 
-		return $class;
+		return null;
 	}
 
 	//--------------------------------------------------------------------
@@ -294,10 +299,11 @@ class Factory
 	 */
 	public static function injectMock(string $component, string $name, $instance)
 	{
-		$class = get_class($instance);
+		$class    = get_class($instance);
+		$basename = self::getBasename($name);
 
-		self::$instances[$component][$class]                = $instance;
-		self::$basenames[$component][self::basename($name)] = $class;
+		self::$instances[$component][$class]    = $instance;
+		self::$basenames[$component][$basename] = $class;
 	}
 
 	/**
@@ -307,7 +313,7 @@ class Factory
 	 *
 	 * @return string
 	 */
-	public static function basename(string $name): string
+	public static function getBasename(string $name): string
 	{
 		// Determine the basename
 		if ($basename = strrchr($name, '\\'))
