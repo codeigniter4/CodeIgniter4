@@ -39,8 +39,7 @@
 
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Config\Factory;
+use Config\Services;
 
 /**
  * Factories for creating instances.

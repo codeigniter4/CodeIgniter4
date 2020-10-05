@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockCache;
@@ -66,6 +67,7 @@ class CIUnitTestCase extends TestCase
 	 * @var array of methods
 	 */
 	protected $setUpMethods = [
+		'resetFactories',
 		'mockCache',
 		'mockEmail',
 		'mockSession',
@@ -120,6 +122,22 @@ class CIUnitTestCase extends TestCase
 	//--------------------------------------------------------------------
 	// Mocking
 	//--------------------------------------------------------------------
+
+	/**
+	 * Resets shared instanced for all Factories components
+	 */
+	protected function resetFactories()
+	{
+		Factories::reset();
+	}
+
+	/**
+	 * Resets shared instanced for all Services
+	 */
+	protected function resetServices()
+	{
+		Services::reset();
+	}
 
 	/**
 	 * Injects the mock Cache driver to prevent filesystem collisions
