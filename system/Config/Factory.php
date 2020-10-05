@@ -167,10 +167,10 @@ class Factory
 		$basename = self::getBasename($name);
 
 		// Look for an App version if requested
-		$appName = APP_NAMESPACE . DIRECTORY_SEPARATOR . $config['path'] . $basename;
-		if ($config['prefersApp'] && class_exists($appName))
+		$appname = APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
+		if ($config['prefersApp'] && class_exists($appname))
 		{
-			return $appName;
+			return $appname;
 		}
 
 		// Have to do this the hard way...
@@ -256,7 +256,10 @@ class Factory
 		// Allow the config to replace the component name, to support "aliases"
 		$values['component'] = strtolower($values['component'] ?? $component);
 
-		// If no path was available then guess it based on the component
+		// Reset this component so instances can be rediscovered with the updated config
+		self::reset($values['component']);
+
+		// If no path was available then use the component
 		$values['path'] = trim($values['path'] ?? ucfirst($values['component']), '\\ ');
 
 		// Add defaults for any missing values
@@ -299,6 +302,10 @@ class Factory
 	 */
 	public static function injectMock(string $component, string $name, $instance)
 	{
+		// Force a configuration to exist for this component
+		$component = strtolower($component);
+		self::getConfig($component);
+
 		$class    = get_class($instance);
 		$basename = self::getBasename($name);
 
