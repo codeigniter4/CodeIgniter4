@@ -65,7 +65,7 @@ class Factories extends BaseConfig
 		'component'  => null,
 		'path'       => null,
 		'instanceOf' => null,
-		'prefersApp' => false,
+		'prefersApp' => true,
 	];
 
 	/**
