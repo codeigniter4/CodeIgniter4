@@ -1,12 +1,12 @@
 <?php namespace CodeIgniter\Database;
 
 use Config\Services;
-use CodeIgniter\Config\Factory;
+use CodeIgniter\Config\Factories;
 
 /**
  * Returns new or shared Model instances
  *
- * @deprecated Use CodeIgniter\Config\Factory::models()
+ * @deprecated Use CodeIgniter\Config\Factories::models()
  */
 class ModelFactory
 {
@@ -21,7 +21,7 @@ class ModelFactory
 	 */
 	public static function get(string $name, bool $getShared = true, ConnectionInterface $connection = null)
 	{
-		return Factory::models($name, $getShared, $connection);
+		return Factories::models($name, $getShared, $connection);
 	}
 
 	/**
@@ -32,7 +32,7 @@ class ModelFactory
 	 */
 	public static function injectMock(string $name, $instance)
 	{
-		Factory::injectMock('models', $name, $instance);
+		Factories::injectMock('models', $name, $instance);
 	}
 
 	/**
@@ -40,6 +40,6 @@ class ModelFactory
 	 */
 	public static function reset()
 	{
-		Factory::reset('models');
+		Factories::reset('models');
 	}
 }

@@ -42,7 +42,7 @@ namespace CodeIgniter\Config;
 /**
  * Class Config
  *
- * @deprecated Use CodeIgniter\Config\Factory::config()
+ * @deprecated Use CodeIgniter\Config\Factories::config()
  */
 class Config
 {
@@ -57,7 +57,7 @@ class Config
 	 */
 	public static function get(string $name, bool $getShared = true)
 	{
-		return Factory::config($name, $getShared);
+		return Factories::config($name, $getShared);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Config
 	 */
 	public static function injectMock(string $name, $instance)
 	{
-		Factory::injectMock('config', $name, $instance);
+		Factories::injectMock('config', $name, $instance);
 	}
 
 	/**
@@ -76,6 +76,6 @@ class Config
 	 */
 	public static function reset()
 	{
-		Factory::reset('config');
+		Factories::reset('config');
 	}
 }
