@@ -53,14 +53,12 @@ use CodeIgniter\Config\Factories as FactoriesConfig;
 class Factory
 {
 	/**
-	 * Cache for instance of any component that
-	 * has been requested as a "shared" instance.
-	 * A multi-dimensional array with components as
-	 * keys to the underlying array of instances.
+	 * Store of component configurations, usually
+	 * from CodeIgniter\Config\Factories.
 	 *
 	 * @var array<string, array>
 	 */
-	public static $instances = [];
+	protected static $configs = [];
 
 	/**
 	 * Mapping of class basenames (no namespace) to
@@ -68,7 +66,17 @@ class Factory
 	 *
 	 * @var array<string, string[]>
 	 */
-	public static $basenames = [];
+	protected static $basenames = [];
+
+	/**
+	 * Store for instances of any component that
+	 * has been requested as a "shared".
+	 * A multi-dimensional array with components as
+	 * keys to the array of name-indexed instances.
+	 *
+	 * @var array<string, array>
+	 */
+	protected static $instances = [];
 
 	//--------------------------------------------------------------------
 
@@ -193,22 +201,44 @@ class Factory
 	 *
 	 * @return array<string, mixed>
 	 */
-	protected static function getConfig(string $component): array
+	public static function getConfig(string $component): array
 	{
-		// Load the best Factories config, including Registrars
-		$config = config('Factories');
+		$component = strtolower($component);
 
-		// Check for an explicit match
-		$values = $config->$component ?? [];
+		// Check for a stored version
+		if (isset(self::$configs[$component]))
+		{
+			return self::$configs[$component];
+		}
+
+		// Load the best Factories config (will include Registrars)
+		$values = config('Factories')->$component ?? [];
+
+		return self::setConfig($component, $values);
+	}
+
+	/**
+	 * Normalizes, stores, and returns the configuration for a specific component
+	 *
+	 * @param string $component Lowercase, plural component name
+	 * @param array  $values
+	 *
+	 * @return array<string, mixed> The result after applying defaults and normalization
+	 */
+	public static function setConfig(string $component, array $values): array
+	{
+		// Allow the config to replace the component name, to support "aliases"
+		$values['component'] = strtolower($values['component'] ?? $component);
+
+		// If no path was available then guess it based on the component
+		$values['path'] = trim($values['path'] ?? ucfirst($values['component']), '\\ ');
 
 		// Add defaults for any missing values
 		$values = array_merge(FactoriesConfig::$default, $values);
 
-		// If no path was available then guess it based on the component
-		$values['path'] = $values['path'] ?? ucfirst($component);
-
-		// Allow the config to replace the component name, to support "aliases"
-		$values['component'] = strtolower($values['component'] ?? $component);
+		// Store the result to the supplied name and potential alias
+		self::$configs[$component]           = $values;
+		self::$configs[$values['component']] = $values;
 
 		return $values;
 	}
@@ -222,14 +252,16 @@ class Factory
 	{
 		if ($component)
 		{
-			unset(static::$instances[$component]);
+			unset(static::$configs[$component]);
 			unset(static::$basenames[$component]);
+			unset(static::$instances[$component]);
 
 			return;
 		}
 
-		static::$instances = [];
+		static::$configs   = [];
 		static::$basenames = [];
+		static::$instances = [];
 	}
 
 	/**
