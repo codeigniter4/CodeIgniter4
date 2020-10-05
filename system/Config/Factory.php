@@ -61,6 +61,19 @@ class Factory
 	protected static $configs = [];
 
 	/**
+	 * Explicit configuration for the Config
+	 * component to prevent logic loops.
+	 *
+	 * @var array<string, array>
+	 */
+	private static $configValues = [
+		'component'  => 'config',
+		'path'       => 'Config',
+		'instanceOf' => null,
+		'prefersApp' => true,
+	];
+
+	/**
 	 * Mapping of class basenames (no namespace) to
 	 * their instances.
 	 *
@@ -211,8 +224,16 @@ class Factory
 			return self::$configs[$component];
 		}
 
-		// Load the best Factories config (will include Registrars)
-		$values = config('Factories')->$component ?? [];
+		// Handle Config as a special case to prevent logic loops
+		if ($component === 'config')
+		{
+			$values = self::$configValues;
+		}
+		// Load values from the best Factories configuration (will include Registrars)
+		else
+		{
+			$values = config('Factories')->$component ?? [];
+		}
 
 		return self::setConfig($component, $values);
 	}

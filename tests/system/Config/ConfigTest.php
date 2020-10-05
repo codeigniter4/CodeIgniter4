@@ -44,7 +44,7 @@ class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testInjection()
 	{
 		Config::reset();
-		Config::injectMock('Banana', '\stdClass');
+		Config::injectMock('Banana', new \stdClass());
 		$this->assertNotNull(Config::get('Banana'));
 	}
 
