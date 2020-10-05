@@ -39,11 +39,6 @@
 
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Autoloader\Autoloader;
-use CodeIgniter\Autoloader\FileLocator;
-use Config\Autoload;
-use Config\Modules;
-
 /**
  * Factories Configuration file.
  *
