@@ -103,10 +103,8 @@ class Factories
 	 */
 	public static function __callStatic(string $component, array $arguments)
 	{
-		$component = strtolower($component);
-
 		// Load the component-specific configuration
-		$config = self::getConfig($component);
+		$config = self::getConfig(strtolower($component));
 
 		// First argument is the name, second is whether to use a shared instance
 		$name      = array_shift($arguments);
