@@ -332,4 +332,21 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
+	public function testIsJsonReturnsFalseWithNoHeader()
+	{
+		$this->assertFalse($this->message->isJson());
+	}
+
+	public function testIsJsonReturnsFalseWithWrongContentType()
+	{
+		$this->message->setHeader('Content-Type', 'application/xml');
+		$this->assertFalse($this->message->isJson());
+	}
+
+	public function testIsJsonReturnsTrue()
+	{
+		$this->message->setHeader('Content-Type', 'application/json');
+		$this->assertTrue($this->message->isJson());
+	}
+
 }
