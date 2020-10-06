@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -53,7 +53,6 @@ use Psr\Log\LoggerInterface;
  */
 class Controller
 {
-
 	/**
 	 * An array of helpers to be automatically loaded
 	 * upon class instantiation.
@@ -62,34 +61,32 @@ class Controller
 	 */
 	protected $helpers = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var RequestInterface
+	 * @var \CodeIgniter\HTTP\RequestInterface
 	 */
 	protected $request;
 
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var ResponseInterface
+	 * @var \CodeIgniter\HTTP\ResponseInterface
 	 */
 	protected $response;
 
 	/**
 	 * Instance of logger to use.
 	 *
-	 * @var LoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
 
 	/**
-	 * Whether HTTPS access should be enforced
-	 * for all methods in this controller.
+	 * Whether HTTPS access should be enforced for all
+	 * methods in this controller.
 	 *
-	 * @var integer  Number of seconds to set HSTS header
+	 * @var integer Number of seconds to set HSTS header
 	 */
 	protected $forceHTTPS = 0;
 
@@ -106,9 +103,9 @@ class Controller
 	/**
 	 * Constructor.
 	 *
-	 * @param RequestInterface         $request
-	 * @param ResponseInterface        $response
-	 * @param \Psr\Log\LoggerInterface $logger
+	 * @param \CodeIgniter\HTTP\RequestInterface  $request
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param \Psr\Log\LoggerInterface 	      $logger
 	 *
 	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
@@ -123,7 +120,11 @@ class Controller
 			$this->forceHTTPS($this->forceHTTPS);
 		}
 
-		$this->loadHelpers();
+		// Autoloading helper files.
+		if (! empty($this->helpers))
+		{
+			helper($this->helpers);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -148,29 +149,14 @@ class Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * Provides a simple way to tie into the main CodeIgniter class
-	 * and tell it how long to cache the current page for.
+	 * Provides a simple way to tie into the main CodeIgniter class and
+	 * tell it how long to cache the current page for.
 	 *
 	 * @param integer $time
 	 */
 	protected function cachePage(int $time)
 	{
 		CodeIgniter::cache($time);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Handles "auto-loading" helper files.
-	 */
-	protected function loadHelpers()
-	{
-		if (empty($this->helpers))
-		{
-			return;
-		}
-
-		helper($this->helpers);
 	}
 
 	//--------------------------------------------------------------------
@@ -210,11 +196,6 @@ class Controller
 			$rules = $validation->$rules;
 		}
 
-		return $this->validator
-			->withRequest($this->request)
-			->setRules($rules, $messages)
-			->run();
+		return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();
 	}
-
-	//--------------------------------------------------------------------
 }
