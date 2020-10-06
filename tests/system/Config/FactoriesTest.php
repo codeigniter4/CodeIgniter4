@@ -84,11 +84,13 @@ class FactoriesTest extends CIUnitTestCase
 		Factories::injectMock('widgets', 'Banana', new stdClass());
 
 		$result = $this->getFactoriesStaticProperty('instances');
+		$this->assertIsArray($result);
 		$this->assertArrayHasKey('widgets', $result);
 
 		Factories::setConfig('widgets', []);
 
 		$result = $this->getFactoriesStaticProperty('instances');
+		$this->assertIsArray($result);
 		$this->assertArrayNotHasKey('widgets', $result);
 	}
 
@@ -110,6 +112,7 @@ class FactoriesTest extends CIUnitTestCase
 		Factories::reset('spigots');
 
 		$result = $this->getFactoriesStaticProperty('configs');
+		$this->assertIsArray($result);
 		$this->assertArrayHasKey('widgets', $result);
 	}
 
@@ -123,6 +126,11 @@ class FactoriesTest extends CIUnitTestCase
 	public function testGetsBasenameByClassname()
 	{
 		$this->assertEquals('SomeWidget', Factories::getBasename(SomeWidget::class));
+	}
+
+	public function testGetsBasenameByAbsoluteClassname()
+	{
+		$this->assertEquals('UserModel', Factories::getBasename('\Tests\Support\Models\UserModel'));
 	}
 
 	public function testGetsBasenameInvalid()
@@ -144,6 +152,13 @@ class FactoriesTest extends CIUnitTestCase
 		$result = Factories::widgets(SomeWidget::class, false);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
+	}
+
+	public function testCreatesByAbsoluteClassname()
+	{
+		$result = Factories::models('\Tests\Support\Models\UserModel', false);
+
+		$this->assertInstanceOf('Tests\Support\Models\UserModel', $result);
 	}
 
 	public function testCreatesInvalid()

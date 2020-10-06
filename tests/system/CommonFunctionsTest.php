@@ -280,9 +280,19 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull(model(UnexsistenceClass::class));
 	}
 
-	public function testModelExists()
+	public function testModelExistsBasename()
+	{
+		$this->assertInstanceOf(JobModel::class, model('JobModel'));
+	}
+
+	public function testModelExistsClassname()
 	{
 		$this->assertInstanceOf(JobModel::class, model(JobModel::class));
+	}
+
+	public function testModelExistsAbsoluteClassname()
+	{
+		$this->assertInstanceOf(JobModel::class, model('\Tests\Support\Models\JobModel'));
 	}
 
 	// ------------------------------------------------------------------------

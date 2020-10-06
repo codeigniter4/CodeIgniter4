@@ -158,13 +158,22 @@ class Factories
 			return $name;
 		}
 
+		// Determine the relative class names we need
 		$basename = self::getBasename($name);
+		$appname  = $config['component'] === 'config' ?
+			'Config\\' . $basename :
+			APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
 
-		// Look for an App version if requested
-		$appname = $config['component'] === 'config' ? 'Config\\' . $basename : APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
-		if ($config['prefersApp'] && class_exists($appname))
+		// If an App version was requested see if it verifies
+		if ($config['prefersApp'] && class_exists($appname) && self::verifyInstanceOf($config, $name))
 		{
 			return $appname;
+		}
+
+		// If we have ruled out an App version and the class exists then try it
+		if (class_exists($name) && self::verifyInstanceOf($config, $name))
+		{
+			return $name;
 		}
 
 		// Have to do this the hard way...
@@ -190,7 +199,7 @@ class Factories
 			}
 		}
 
-		// Return the first valid class
+		// Check all files for a valid class
 		foreach ($files as $file)
 		{
 			$class = $locator->getClassname($file);
