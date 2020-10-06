@@ -83,12 +83,15 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->hasInDatabase('migrations', $history);
 
+		$this->assertEquals($history, (array) $runner->getHistory()[0]);
+
 		if ($this->db->DBDriver === 'Sqlsrv')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
-		}
 
-		$this->assertEquals($history, (array) $runner->getHistory()[0]);
+			$db = $this->getPrivateProperty($runner, 'db');
+			$db->table('migrations')->delete(['id' => 4]);
+		}
 	}
 
 	public function testGetHistoryReturnsEmptyArrayWithNoResults()
