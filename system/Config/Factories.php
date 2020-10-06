@@ -107,7 +107,7 @@ class Factories
 		$config = self::getConfig(strtolower($component));
 
 		// First argument is the name, second is whether to use a shared instance
-		$name      = array_shift($arguments);
+		$name      = trim(array_shift($arguments), '\\ ');
 		$getShared = array_shift($arguments) ?? true;
 
 		if (! $getShared)
@@ -153,10 +153,7 @@ class Factories
 	protected static function locateClass(array $config, string $name): ?string
 	{
 		// Check for low-hanging fruit
-		if (class_exists($name)
-			&& (! $config['prefersApp'] || strpos($name, APP_NAMESPACE) === 0)
-			&& (! $config['instanceOf'] || is_a($name, $config['instanceOf'], true))
-		)
+		if (class_exists($name) && self::verifyPrefersApp($config, $name) && self::verifyInstanceOf($config, $name))
 		{
 			return $name;
 		}
@@ -164,7 +161,7 @@ class Factories
 		$basename = self::getBasename($name);
 
 		// Look for an App version if requested
-		$appname = APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
+		$appname = $config['component'] === 'config' ? 'Config\\' . $basename : APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
 		if ($config['prefersApp'] && class_exists($appname))
 		{
 			return $appname;
@@ -198,13 +195,59 @@ class Factories
 		{
 			$class = $locator->getClassname($file);
 
-			if ($class && (! $config['instanceOf'] || is_a($class, $config['instanceOf'], true)))
+			if ($class && self::verifyInstanceOf($config, $class))
 			{
 				return $class;
 			}
 		}
 
 		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Verifies that a class & config satisfy the "prefersApp" option
+	 *
+	 * @param array  $config The array of component-specific directives
+	 * @param string $name   Class name, namespace optional
+	 *
+	 * @return boolean
+	 */
+	protected static function verifyPrefersApp(array $config, string $name): bool
+	{
+		// Anything without that restriction passes
+		if (! $config['prefersApp'])
+		{
+			return true;
+		}
+
+		// Special case for Config since its App namespace is actually \Config
+		if ($config['component'] === 'config')
+		{
+			return strpos($name, 'Config') === 0;
+		}
+
+		return strpos($name, APP_NAMESPACE) === 0;
+	}
+
+	/**
+	 * Verifies that a class & config satisfy the "instanceOf" option
+	 *
+	 * @param array  $config The array of component-specific directives
+	 * @param string $name   Class name, namespace optional
+	 *
+	 * @return boolean
+	 */
+	protected static function verifyInstanceOf(array $config, string $name): bool
+	{
+		// Anything without that restriction passes
+		if (! $config['instanceOf'])
+		{
+			return true;
+		}
+
+		return is_a($name, $config['instanceOf'], true);
 	}
 
 	//--------------------------------------------------------------------
