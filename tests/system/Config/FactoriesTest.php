@@ -76,6 +76,11 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testSetConfigResets()
 	{
+		if (version_compare(PHP_VERSION, '7.4', '<'))
+		{
+			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
+		}
+
 		Factories::injectMock('widgets', 'Banana', new stdClass());
 
 		$result = $this->getFactoriesStaticProperty('instances');
@@ -91,6 +96,11 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testResetsAll()
 	{
+		if (version_compare(PHP_VERSION, '7.4', '<'))
+		{
+			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
+		}
+
 		Factories::setConfig('widgets', ['foo' => 'bar']);
 
 		Factories::reset();
@@ -101,6 +111,11 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testResetsComponentOnly()
 	{
+		if (version_compare(PHP_VERSION, '7.4', '<'))
+		{
+			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
+		}
+
 		Factories::setConfig('widgets', ['foo' => 'bar']);
 		Factories::setConfig('spigots', ['bar' => 'bam']);
 
