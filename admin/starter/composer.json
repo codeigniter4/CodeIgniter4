@@ -25,9 +25,6 @@
 		}
 	},
 	"scripts": {
-		"post-update-cmd": [
-			"@composer dump-autoload"
-		],
 		"test": "phpunit"
 	},
 	"support": {

@@ -29,7 +29,6 @@
 	},
 	"scripts": {
 		"post-update-cmd": [
-			"@composer dump-autoload",
 			"CodeIgniter\\ComposerScripts::postUpdate"
 		],
 		"test": "phpunit"
