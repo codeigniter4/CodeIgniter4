@@ -498,51 +498,51 @@ class Builder extends BaseBuilder
 	 */
 	protected function compileSelect($selectOverride = false): string
 	{
-		if (empty($this->QBLimit) || $selectOverride !== false)
+		// Write the "select" portion of the query
+		if ($selectOverride !== false)
 		{
-			if (empty($this->QBSelect) && empty($this->QBGroupBy))
-			{
-				return parent::compileSelect($selectOverride);
-			}
-		}
-
-		$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
-
-		// SQL Server can't work with select * if group by is specified
-		if (empty($this->QBSelect) && ! empty($this->QBGroupBy))
-		{
-			if (is_array($this->QBGroupBy))
-			{
-				foreach ($this->QBGroupBy as $field)
-				{
-					if (is_array($field))
-					{
-						$this->QBSelect[] = $field['field'];
-					}
-					else
-					{
-						$this->QBSelect[] = $field;
-					}
-				}
-			}
-		}
-
-		if (empty($this->QBSelect))
-		{
-			$sql .= '*';
+			$sql = $selectOverride;
 		}
 		else
 		{
-			// Cycle through the "select" portion of the query and prep each column name.
-			// The reason we protect identifiers here rather than in the select() function
-			// is because until the user calls the from() function we don't know if there are aliases
-			foreach ($this->QBSelect as $key => $val)
+			$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+
+			// SQL Server can't work with select * if group by is specified
+			if (empty($this->QBSelect) && ! empty($this->QBGroupBy))
 			{
-				$noEscape             = $this->QBNoEscape[$key] ?? null;
-				$this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $noEscape);
+				if (is_array($this->QBGroupBy))
+				{
+					foreach ($this->QBGroupBy as $field)
+					{
+						if (is_array($field))
+						{
+							$this->QBSelect[] = $field['field'];
+						}
+						else
+						{
+							$this->QBSelect[] = $field;
+						}
+					}
+				}
 			}
 
-			$sql .= implode(', ', $this->QBSelect);
+			if (empty($this->QBSelect))
+			{
+				$sql .= '*';
+			}
+			else
+			{
+				// Cycle through the "select" portion of the query and prep each column name.
+				// The reason we protect identifiers here rather than in the select() function
+				// is because until the user calls the from() function we don't know if there are aliases
+				foreach ($this->QBSelect as $key => $val)
+				{
+					$noEscape             = $this->QBNoEscape[$key] ?? null;
+					$this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $noEscape);
+				}
+
+				$sql .= implode(', ', $this->QBSelect);
+			}
 		}
 
 		// Write the "FROM" portion of the query
