@@ -5,6 +5,12 @@ on:
     branches:
       - develop
       - '4.*'
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - 'utils/**'
 
 jobs:
 
