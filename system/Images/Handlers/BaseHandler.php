@@ -414,7 +414,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$this->width  = $this->image()->origWidth;
 		$this->height = $this->image()->origHeight;
 
-		return $this->_flatten();
+		return $this->_flatten($red, $green, $blue);
 	}
 
 	//--------------------------------------------------------------------
