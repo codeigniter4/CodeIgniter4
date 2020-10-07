@@ -160,9 +160,9 @@ class Factories
 
 		// Determine the relative class names we need
 		$basename = self::getBasename($name);
-		$appname  = $config['component'] === 'config' ?
-			'Config\\' . $basename :
-			APP_NAMESPACE . '\\' . $config['path'] . '\\' . $basename;
+		$appname  = $config['component'] === 'config'
+			? 'Config\\' . $basename
+			: rtrim(APP_NAMESPACE, '\\') . '\\' . $config['path'] . '\\' . $basename;
 
 		// If an App version was requested see if it verifies
 		if ($config['prefersApp'] && class_exists($appname) && self::verifyInstanceOf($config, $name))
@@ -349,7 +349,7 @@ class Factories
 	 * @param string $name      The name of the instance
 	 * @param object $instance
 	 */
-	public static function injectMock(string $component, string $name, $instance)
+	public static function injectMock(string $component, string $name, object $instance)
 	{
 		// Force a configuration to exist for this component
 		$component = strtolower($component);
