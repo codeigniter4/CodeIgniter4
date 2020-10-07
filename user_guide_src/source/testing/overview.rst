@@ -312,9 +312,9 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 Mocking Factory Instances
 =========================
 
-Similar to with Services, you may find yourself needing to supply a pre-configured class instance
+Similar to Services, you may find yourself needing to supply a pre-configured class instance
 during testing that will be used with ``Factories``. Use the same ``injectMock()`` and ``reset()``
-static methods like **Services**, but they take an additional preceding parameter of the
+static methods like **Services**, but they take an additional preceding parameter for the
 component name::
 
     protected function setUp()
@@ -325,7 +325,7 @@ component name::
 		Factories::injectMock('models', 'App\Models\UserModel', $model);
 	}
 		
-.. note:: All Factories components are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
+.. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
 Stream Filters
 ==============
