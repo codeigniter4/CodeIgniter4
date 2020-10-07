@@ -364,7 +364,7 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		if ($request->isJson())
+		if ($request->isJSON())
 		{
 			$this->data = $request->getJSON(true);
 			return $this;

@@ -383,7 +383,7 @@ class Message
 	 *
 	 * @return boolean
 	 */
-	public function isJson()
+	public function isJSON()
 	{
 		return $this->hasHeader('Content-Type')
 			&& $this->getHeader('Content-Type')->getValue() === 'application/json';
