@@ -11,6 +11,10 @@ on:
       - 'system/**'
       - 'tests/**'
       - 'utils/**'
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-phpunit.yml
 
 jobs:
 
