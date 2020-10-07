@@ -54,8 +54,7 @@ use Psr\Log\LoggerInterface;
 class Controller
 {
 	/**
-	 * An array of helpers to be automatically loaded
-	 * upon class instantiation.
+	 * Helpers that will be automatically loaded on class instantiation.
 	 *
 	 * @var array
 	 */
@@ -83,16 +82,14 @@ class Controller
 	protected $logger;
 
 	/**
-	 * Whether HTTPS access should be enforced for all
-	 * methods in this controller.
+	 * Should enforce HTTPS access for all methods in this controller.
 	 *
 	 * @var integer Number of seconds to set HSTS header
 	 */
 	protected $forceHTTPS = 0;
 
 	/**
-	 * Once validation has been run,
-	 * will hold the Validation instance.
+	 * Once validation has been run, will hold the Validation instance.
 	 *
 	 * @var Validation
 	 */
@@ -120,7 +117,7 @@ class Controller
 			$this->forceHTTPS($this->forceHTTPS);
 		}
 
-		// Autoloading helper files.
+		// Autoload helper files.
 		if (! empty($this->helpers))
 		{
 			helper($this->helpers);
@@ -157,6 +154,23 @@ class Controller
 	protected function cachePage(int $time)
 	{
 		CodeIgniter::cache($time);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles "auto-loading" helper files.
+	 *
+	 * @deprecated Use `helper` function instead of using this method.
+	 */
+	protected function loadHelpers()
+	{
+		if (empty($this->helpers))
+		{
+			return;
+		}
+		
+		helper($this->helpers);
 	}
 
 	//--------------------------------------------------------------------
