@@ -432,16 +432,18 @@ class App extends BaseConfig
 	 */
 	public $CSPEnabled = false;
 
-	/*
-	|--------------------------------------------------------------------------
-	| CORS - Cross Origin Resource Sharing
-	|--------------------------------------------------------------------------
-	| Enables the CORS solution for API to accept requests for outside domains
-	| on PHP backend application
-	|
-	| For a better understanding of CORS, see these documents:
-	|   - https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Controle_Acesso_CORS
-	|   - https://www.php.net/manual/en/function.header.php
-	*/
+	/**
+	 * --------------------------------------------------------------------------
+	 *  CORS - Cross Origin Resource Sharing
+	 * --------------------------------------------------------------------------
+	 * Enables the CORS solution for API to accept requests for outside domains
+	 * on PHP backend application
+	 *
+	 * For a better understanding of CORS, see these documents:
+	 * - https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Controle_Acesso_CORS
+	 * - https://www.php.net/manual/en/function.header.php
+	 *
+	 * @var boolean
+	 */
 	public $CORSEnabled = true;
 }
