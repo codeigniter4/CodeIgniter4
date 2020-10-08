@@ -70,7 +70,7 @@ class CORS
 		foreach ($arrayMethods as $method) {
 			// removing white spaces
 			$method= trim($method);
-			if (!in_array($method, $this->allowedMethods)) {
+			if (!in_array($method, $this->allowedMethods, true)) {
 				return false;
 			}
 		}
