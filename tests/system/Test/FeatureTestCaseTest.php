@@ -335,6 +335,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$request = $this->withBodyFormat('json')->setRequestBody($request, ['foo1' => 'bar1']);
 
 		$this->assertJsonStringEqualsJsonString(json_encode(['foo1' => 'bar1']), $request->getBody());
+		$this->assertTrue('application/json' === $request->getHeader('Content-Type')->getValue());
 	}
 
 	public function testSetupRequestBodyWithXml()
@@ -348,5 +349,15 @@ class FeatureTestCaseTest extends FeatureTestCase
 ';
 
 		$this->assertEquals($expectedXml, $request->getBody());
+		$this->assertTrue('application/xml' === $request->getHeader('Content-Type')->getValue());
+	}
+
+	public function testSetupRequestBodyWithBody()
+	{
+		$request = $this->setupRequest('post', 'home');
+
+		$request = $this->withBody('test')->setRequestBody($request);
+
+		$this->assertEquals('test', $request->getBody());
 	}
 }

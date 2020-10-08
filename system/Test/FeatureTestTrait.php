@@ -135,6 +135,19 @@ trait FeatureTestTrait
 	}
 
 	/**
+	 * Set the raw body for the request
+	 *
+	 * @param  mixed $body
+	 * @return $this
+	 */
+	public function withBody($body)
+	{
+		$this->requestBody = $body;
+
+		return $this;
+	}
+
+	/**
 	 * Don't run any events while running this test.
 	 *
 	 * @return $this
@@ -399,10 +412,16 @@ trait FeatureTestTrait
 	 * @param  Request    $request
 	 * @param  null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
 	 *                               what has been loaded into the request global of the request class.
-	 * @return mixed
+	 * @return Request
 	 */
-	protected function setRequestBody(Request $request, $params = null)
+	protected function setRequestBody(Request $request, array $params = null): Request
 	{
+		if (! empty($this->requestBody))
+		{
+			$request->setBody($this->requestBody);
+			return $request;
+		}
+
 		if (! empty($this->bodyFormat))
 		{
 			if (empty($params))
@@ -418,10 +437,11 @@ trait FeatureTestTrait
 			{
 				$formatMime = 'application/xml';
 			}
-			if (! empty($formatMime))
+			if (! empty($formatMime) && ! empty($params))
 			{
 				$formatted = Services::format()->getFormatter($formatMime)->format($params);
 				$request->setBody($formatted);
+				$request->setHeader('Content-Type', $formatMime);
 			}
 		}
 

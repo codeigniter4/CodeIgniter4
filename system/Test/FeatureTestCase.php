@@ -88,4 +88,12 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @var string
 	 */
 	protected $bodyFormat = '';
+
+	/**
+	 * Allows for directly setting the body to what
+	 * it needs to be.
+	 *
+	 * @var mixed
+	 */
+	protected $requestBody = '';
 }
