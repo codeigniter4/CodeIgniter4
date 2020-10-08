@@ -46,12 +46,13 @@ use CodeIgniter\Database\ResultInterface;
 
 /**
  * Builder for Sqlsrv
+ *
+ * @todo auto check for TextCastToInt
+ * @todo auto check for InsertIndexValue
+ * @todo replace: delete index entries before insert
  */
 class Builder extends BaseBuilder
 {
-	/// TODO: auto check for TextCastToInt
-	/// TODO: auto check for InsertIndexValue
-	/// TODO: replace: delete index entries before insert
 
 	/**
 	 * ORDER BY random keyword
@@ -206,7 +207,7 @@ class Builder extends BaseBuilder
 	}
 
 	/**
-	 * Get funn name of the table
+	 * Get full name of the table
 	 *
 	 * @param string $table
 	 *
