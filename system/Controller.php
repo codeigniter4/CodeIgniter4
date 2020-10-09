@@ -118,10 +118,7 @@ class Controller
 		}
 
 		// Autoload helper files.
-		if (! empty($this->helpers))
-		{
-			helper($this->helpers);
-		}
+		helper($this->helpers);
 	}
 
 	//--------------------------------------------------------------------
