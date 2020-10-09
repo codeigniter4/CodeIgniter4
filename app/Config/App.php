@@ -329,6 +329,105 @@ class App extends BaseConfig
 
 	/**
 	 * --------------------------------------------------------------------------
+	 * CSRF Token Name
+	 * --------------------------------------------------------------------------
+	 *
+	 * The token name.
+	 *
+	 * @deprecated Use `Config\Security` $tokenName property instead of using this property.
+	 *
+	 * @var string
+	 */
+	public $CSRFTokenName = 'csrf_test_name';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF Header Name
+	 * --------------------------------------------------------------------------
+	 *
+	 * The header name.
+	 *
+	 * @deprecated Use `Config\Security` $headerName property instead of using this property.
+	 *
+	 * @var string
+	 */
+	public $CSRFHeaderName = 'X-CSRF-TOKEN';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF Cookie Name
+	 * --------------------------------------------------------------------------
+	 *
+	 * The cookie name.
+	 *
+	 * @deprecated Use `Config\Security` $cookieName property instead of using this property.
+	 *
+	 * @var string
+	 */
+	public $CSRFCookieName = 'csrf_cookie_name';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF Expire
+	 * --------------------------------------------------------------------------
+	 *
+	 * The number in seconds the token should expire.
+	 *
+	 * @deprecated Use `Config\Security` $expire property instead of using this property.
+	 *
+	 * @var integer
+	 */
+	public $CSRFExpire = 7200;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF Regenerate
+	 * --------------------------------------------------------------------------
+	 *
+	 * Regenerate token on every submission?
+	 *
+	 * @deprecated Use `Config\Security` $regenerate property instead of using this property.
+	 *
+	 * @var boolean
+	 */
+	public $CSRFRegenerate = true;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF Redirect
+	 * --------------------------------------------------------------------------
+	 *
+	 * Redirect to previous page with error on failure?
+	 *
+	 * @deprecated Use `Config\Security` $redirect property instead of using this property.
+	 *
+	 * @var boolean
+	 */
+	public $CSRFRedirect = true;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * CSRF SameSite
+	 * --------------------------------------------------------------------------
+	 *
+	 * Setting for CSRF SameSite cookie token. Allowed values are:
+	 * - None
+	 * - Lax
+	 * - Strict
+	 * - ''
+	 *
+	 * Defaults to `Lax` as recommended in this link:
+	 *
+	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
+	 *
+	 * @deprecated Use `Config\Security` $samesite property instead of using this property.
+	 *
+	 * @var string
+	 */
+	public $CSRFSameSite = 'Lax';
+
+	/**
+	 * --------------------------------------------------------------------------
 	 * Content Security Policy
 	 * --------------------------------------------------------------------------
 	 *
