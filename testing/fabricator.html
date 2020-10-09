@@ -579,7 +579,7 @@ Your model’s fake method could look like this:</p>
             <span class="k">return</span> <span class="p">[</span>
             <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">,</span>
             <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
-            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)),</span>
+            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">)),</span>
             <span class="p">];</span>
     <span class="p">}</span>
 </pre></div>
