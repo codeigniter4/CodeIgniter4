@@ -23,7 +23,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 	protected function tearDown(): void
 	{
 		stream_filter_remove($this->streamFilter);
-		$file = WRITEPATH . 'user.db';
+		$file = WRITEPATH . 'foobar.db';
 
 		if (file_exists($file))
 		{
@@ -40,7 +40,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 
 	public function testCreateDatabase()
 	{
-		command('db:create user');
+		command('db:create foobar');
 		$this->assertStringContainsString('successfully created.', $this->getBuffer());
 	}
 
@@ -51,10 +51,10 @@ class CreateDatabaseTest extends CIUnitTestCase
 			$this->markTestSkipped('Needs to run on SQLite3.');
 		}
 
-		command('db:create user');
+		command('db:create foobar');
 		CITestStreamFilter::$buffer = '';
 
-		command('db:create user --ext db');
+		command('db:create foobar --ext db');
 		$this->assertStringContainsString('already exists.', $this->getBuffer());
 	}
 }
