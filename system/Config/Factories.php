@@ -48,6 +48,9 @@ use Config\Services;
  * and name. The "shared instance" implementation provides a
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
+ *
+ * @method static \CodeIgniter\Model models(...$arguments)
+ * @method static \Config\BaseConfig config(...$arguments)
  */
 class Factories
 {
