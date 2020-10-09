@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -36,20 +37,19 @@
  * @filesource
  */
 
-namespace App\Commands;
+namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
+use CodeIgniter\Config\Config;
+use CodeIgniter\Database\SQLite3\Connection;
+use Config\Database;
 
 /**
- * Creates a new database migration file.
- *
- * @package CodeIgniter\Commands
+ * Creates a new database.
  */
 class CreateDatabase extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -63,88 +63,128 @@ class CreateDatabase extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'db:go';
+	protected $name = 'db:create';
 
 	/**
 	 * the Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Create a new database.';
+	protected $description = 'Create a new database schema.';
 
 	/**
 	 * the Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'db:go [db_name]';
+	protected $usage = 'db:create <db_name> [options]';
 
 	/**
-	 * the Command's Arguments
+	 * The Command's arguments
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $arguments = [
-		'db_name' => 'The database name',
+		'db_name' => 'The database name to use',
 	];
 
 	/**
-	 * the Command's Options
+	 * The Command's options
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
-	protected $options = [];
+	protected $options = [
+		'--ext' => 'File extension of the database file for SQLite3. Can be `db` or `sqlite`. Defaults to `db`.',
+	];
 
 	/**
-	 * Creates a new database migration file with the current timestamp.
+	 * Creates a new database.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
-		helper('inflector');
 		$name = array_shift($params);
 
 		if (empty($name))
 		{
-			$name = CLI::prompt('Database name');
+			$name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
 		}
 
-		if (empty($name))
-		{
-			CLI::write('You must provide a ' . CLI::color('database name', 'red') . '.');
-			return;
-		}
+		$db = Database::connect();
 
-		if(!empty($name))
+		try
 		{
-			try
+			// Special SQLite3 handling
+			if ($db instanceof Connection)
 			{
-				$connect = \Config\Database::connect();
-			}
-			catch (\Exception $e)
-			{
-				$this->showError($e);
-			}
+				$config = config('Database');
+				$group  = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
+				$ext    = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
 
-			if($connect->hostname != NULL && $connect->username != NULL)
-			{
-				try
+				if (! in_array($ext, ['db', 'sqlite'], true))
 				{
-					$forge = \Config\Database::forge();
-					$forge->createDatabase($name);
-					return CLI::write('Create database ' . CLI::color($name, 'green') . ' successfully');
+					$ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
 				}
-				catch (\Exception $e)
+
+				if (strpos($name, ':memory:') === false)
 				{
-					return CLI::write('Database ' . CLI::color($name, 'red') . ' exists');
+					$name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
+				}
+
+				$config->{$group}['DBDriver'] = 'SQLite3';
+				$config->{$group}['database'] = $name;
+
+				if (strpos($name, ':memory:') === false)
+				{
+					$dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
+
+					if (is_file($dbName))
+					{
+						CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
+						CLI::newLine();
+
+						return;
+					}
+
+					unset($dbName);
+				}
+
+				// Connect to new SQLite3 to create new database,
+				// then reset the altered Config\Database instance
+				$db = Database::connect(null, false);
+				$db->connect();
+				Config::reset();
+
+				if (! is_file($db->getDatabase()) && strpos($name, ':memory:') === false)
+				{
+					// @codeCoverageIgnoreStart
+					CLI::error('Database creation failed.', 'light_gray', 'red');
+					CLI::newLine();
+
+					return;
+					// @codeCoverageIgnoreEnd
 				}
 			}
 			else
 			{
-				CLI::write('Please check your database configuration in' . CLI::color(' .env', 'red') . ' file or' . CLI::color(' app/Config/Database.php', 'red'));
+				if (! Database::forge()->createDatabase($name))
+				{
+					CLI::error('Database creation failed.', 'light_gray', 'red');
+					CLI::newLine();
+
+					return;
+				}
 			}
+
+			CLI::write("Database \"{$name}\" successfully created.", 'green');
+			CLI::newLine();
+		}
+		catch (\Throwable $e)
+		{
+			$this->showError($e);
 		}
 	}
-
 }

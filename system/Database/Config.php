@@ -115,7 +115,7 @@ class Config extends BaseConfig
 
 		$connection = static::$factory->load($config, $group);
 
-		static::$instances[$group] = & $connection;
+		static::$instances[$group] = &$connection;
 
 		return $connection;
 	}
