@@ -183,6 +183,11 @@ class MigrationRunner
 	 * Locate and run all new migrations
 	 *
 	 * @param string|null $group
+	 *
+	 * @throws ConfigException
+	 * @throws \RuntimeException
+	 *
+	 * @return boolean
 	 */
 	public function latest(string $group = null)
 	{
@@ -243,6 +248,7 @@ class MigrationRunner
 					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 					return false;
 				}
+
 				throw new \RuntimeException($message);
 			}
 		}
@@ -264,8 +270,10 @@ class MigrationRunner
 	 * @param integer     $targetBatch Target batch number, or negative for a relative batch, 0 for all
 	 * @param string|null $group
 	 *
-	 * @return mixed Current batch number on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
+	 * @throws \RuntimeException
+	 *
+	 * @return mixed Current batch number on success, FALSE on failure or no migrations are found
 	 */
 	public function regress(int $targetBatch = 0, string $group = null)
 	{
@@ -307,6 +315,7 @@ class MigrationRunner
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
+
 			throw new \RuntimeException($message);
 		}
 
@@ -319,6 +328,7 @@ class MigrationRunner
 
 		// Gather migrations down through each batch until reaching the target
 		$migrations = [];
+
 		while ($batch = array_pop($batches))
 		{
 			// Check if reached target
@@ -343,6 +353,7 @@ class MigrationRunner
 						$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 						return false;
 					}
+
 					throw new \RuntimeException($message);
 				}
 
@@ -370,6 +381,7 @@ class MigrationRunner
 					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 					return false;
 				}
+
 				throw new \RuntimeException($message);
 			}
 		}
@@ -737,8 +749,7 @@ class MigrationRunner
 	{
 		if ($this->db->tableExists($this->table))
 		{
-			$this->db->table($this->table)
-					 ->truncate();
+			$this->db->table($this->table)->truncate();
 		}
 	}
 

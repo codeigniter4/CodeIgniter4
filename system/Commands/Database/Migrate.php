@@ -45,8 +45,6 @@ use Config\Services;
 
 /**
  * Runs all new migrations.
- *
- * @package CodeIgniter\Commands
  */
 class Migrate extends BaseCommand
 {
@@ -80,13 +78,6 @@ class Migrate extends BaseCommand
 	protected $usage = 'migrate [options]';
 
 	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
 	 * the Command's Options
 	 *
 	 * @var array
@@ -101,6 +92,8 @@ class Migrate extends BaseCommand
 	 * Ensures that all migrations have been run.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
@@ -127,10 +120,11 @@ class Migrate extends BaseCommand
 
 			if (! $runner->latest($group))
 			{
-				CLI::write(lang('Migrations.generalFault'), 'red');
+				CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
 			}
 
 			$messages = $runner->getCliMessages();
+
 			foreach ($messages as $message)
 			{
 				CLI::write($message);
@@ -138,9 +132,11 @@ class Migrate extends BaseCommand
 
 			CLI::write('Done migrations.', 'green');
 		}
+		// @codeCoverageIgnoreStart
 		catch (\Throwable $e)
 		{
 			$this->showError($e);
 		}
+		// @codeCoverageIgnoreEnd
 	}
 }

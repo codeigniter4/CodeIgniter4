@@ -45,8 +45,6 @@ use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
- *
- * @package CodeIgniter\Commands
  */
 class MigrateStatus extends BaseCommand
 {
@@ -80,16 +78,9 @@ class MigrateStatus extends BaseCommand
 	protected $usage = 'migrate:status [options]';
 
 	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
 	 * the Command's Options
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $options = [
 		'-g' => 'Set database group',
@@ -98,12 +89,11 @@ class MigrateStatus extends BaseCommand
 	/**
 	 * Namespaces to ignore when looking for migrations.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $ignoredNamespaces = [
 		'CodeIgniter',
 		'Config',
-		'Tests\Support',
 		'Kint',
 		'Laminas\ZendFrameworkBridge',
 		'Laminas\Escaper',
@@ -113,7 +103,9 @@ class MigrateStatus extends BaseCommand
 	/**
 	 * Displays a list of all migrations and whether they've been run or not.
 	 *
-	 * @param array $params
+	 * @param array<string, mixed> $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
@@ -133,6 +125,12 @@ class MigrateStatus extends BaseCommand
 
 		foreach ($namespaces as $namespace => $path)
 		{
+			if (ENVIRONMENT !== 'testing')
+			{
+				// Make Tests\\Support discoverable for testing
+				$this->ignoredNamespaces[] = 'Tests\Support'; // @codeCoverageIgnore
+			}
+
 			if (in_array($namespace, $this->ignoredNamespaces, true))
 			{
 				continue;
@@ -163,6 +161,7 @@ class MigrateStatus extends BaseCommand
 
 				foreach ($history as $row)
 				{
+					// @codeCoverageIgnoreStart
 					if ($runner->getObjectUid($row) !== $migration->uid)
 					{
 						continue;
@@ -171,6 +170,7 @@ class MigrateStatus extends BaseCommand
 					$date  = date('Y-m-d H:i:s', $row->time);
 					$group = $row->group;
 					$batch = $row->batch;
+					// @codeCoverageIgnoreEnd
 				}
 
 				$status[] = [
@@ -184,23 +184,25 @@ class MigrateStatus extends BaseCommand
 			}
 		}
 
-		if ($status)
+		if (! $status)
 		{
-			$headers = [
-				CLI::color(lang('Migrations.namespace'), 'yellow'),
-				CLI::color(lang('Migrations.version'), 'yellow'),
-				CLI::color(lang('Migrations.filename'), 'yellow'),
-				CLI::color(lang('Migrations.group'), 'yellow'),
-				CLI::color(str_replace(': ', '', lang('Migrations.on')), 'yellow'),
-				CLI::color(lang('Migrations.batch'), 'yellow'),
-			];
-
-			CLI::table($status, $headers);
+			// @codeCoverageIgnoreStart
+			CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
+			CLI::newLine();
 
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
-		CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
-		CLI::newLine();
+		$headers = [
+			CLI::color(lang('Migrations.namespace'), 'yellow'),
+			CLI::color(lang('Migrations.version'), 'yellow'),
+			CLI::color(lang('Migrations.filename'), 'yellow'),
+			CLI::color(lang('Migrations.group'), 'yellow'),
+			CLI::color(str_replace(': ', '', lang('Migrations.on')), 'yellow'),
+			CLI::color(lang('Migrations.batch'), 'yellow'),
+		];
+
+		CLI::table($status, $headers);
 	}
 }

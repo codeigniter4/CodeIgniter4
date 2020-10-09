@@ -1,6 +1,10 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
 
-class CITestSeeder extends \CodeIgniter\Database\Seeder
+namespace Tests\Support\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+class CITestSeeder extends Seeder
 {
 	public function run()
 	{
@@ -96,6 +100,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 				],
 			],
 		];
+
 		//set SQL times to more correct format
 		if ($this->db->DBDriver === 'SQLite3')
 		{
@@ -115,6 +120,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			unset($data['type_test'][0]['type_decimal']);
 			unset($data['type_test'][0]['type_blob']);
 		}
+
 		foreach ($data as $table => $dummy_data)
 		{
 			$this->db->table($table)->truncate();
@@ -125,7 +131,4 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }

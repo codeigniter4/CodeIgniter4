@@ -46,12 +46,9 @@ use Config\Services;
 /**
  * Runs all of the migrations in reverse order, until they have
  * all been unapplied.
- *
- * @package CodeIgniter\Commands
  */
 class MigrateRollback extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -94,27 +91,30 @@ class MigrateRollback extends BaseCommand
 
 	/**
 	 * Runs all of the migrations in reverse order, until they have
-	 * all been un-applied.
+	 * all been unapplied.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
 		if (ENVIRONMENT === 'production')
 		{
+			// @codeCoverageIgnoreStart
 			$force = array_key_exists('f', $params) || CLI::getOption('f');
-			// @phpstan-ignore-next-line
-			if (is_null($force) && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n')
+
+			if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n')
 			{
 				return;
 			}
+			// @codeCoverageIgnoreEnd
 		}
 
 		$runner = Services::migrations();
+		$group  = $params['g'] ?? CLI::getOption('g');
 
-		$group = $params['g'] ?? CLI::getOption('g');
-
-		if (! is_null($group))
+		if (is_string($group))
 		{
 			$runner->setGroup($group);
 		}
@@ -126,20 +126,23 @@ class MigrateRollback extends BaseCommand
 
 			if (! $runner->regress($batch))
 			{
-				CLI::write(lang('Migrations.generalFault'), 'red');
+				CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
 			}
 
 			$messages = $runner->getCliMessages();
+
 			foreach ($messages as $message)
 			{
 				CLI::write($message);
 			}
 
-			CLI::write('Done');
+			CLI::write('Done rolling back migrations.', 'green');
 		}
+		// @codeCoverageIgnoreStart
 		catch (\Throwable $e)
 		{
 			$this->showError($e);
 		}
+		// @codeCoverageIgnoreEnd
 	}
 }
