@@ -44,6 +44,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\SQLite3\Connection;
 use Config\Database;
+use Throwable;
 
 /**
  * Creates a new database.
@@ -172,17 +173,19 @@ class CreateDatabase extends BaseCommand
 			{
 				if (! Database::forge()->createDatabase($name))
 				{
+					// @codeCoverageIgnoreStart
 					CLI::error('Database creation failed.', 'light_gray', 'red');
 					CLI::newLine();
 
 					return;
+					// @codeCoverageIgnoreEnd
 				}
 			}
 
 			CLI::write("Database \"{$name}\" successfully created.", 'green');
 			CLI::newLine();
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->showError($e);
 		}
