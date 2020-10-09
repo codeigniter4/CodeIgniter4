@@ -228,6 +228,7 @@ class Forge
 			{
 				return true;
 			}
+
 			$ifNotExists = false;
 		}
 
@@ -238,25 +239,39 @@ class Forge
 				throw new DatabaseException('This feature is not available for the database you are using.');
 			}
 
-			return false;
+			return false; // @codeCoverageIgnore
 		}
 
-		if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat)))
+		try
+		{
+			if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat)))
+			{
+				// @codeCoverageIgnoreStart
+				if ($this->db->DBDebug)
+				{
+					throw new DatabaseException('Unable to create the specified database.');
+				}
+
+				return false;
+				// @codeCoverageIgnoreEnd
+			}
+
+			if (! empty($this->db->dataCache['db_names']))
+			{
+				$this->db->dataCache['db_names'][] = $dbName;
+			}
+
+			return true;
+		}
+		catch (\Throwable $e)
 		{
 			if ($this->db->DBDebug)
 			{
-				throw new DatabaseException('Unable to create the specified database.');
+				throw new DatabaseException('Unable to create the specified database.', 0, $e);
 			}
 
-			return false;
+			return false; // @codeCoverageIgnore
 		}
-
-		if (! empty($this->db->dataCache['db_names']))
-		{
-			$this->db->dataCache['db_names'][] = $dbName;
-		}
-
-		return true;
 	}
 
 	//--------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;
@@ -11,12 +11,18 @@ class CreateDatabaseTest extends CIUnitTestCase
 {
 	protected $streamFilter;
 
+	/**
+	 * @var \CodeIgniter\Database\BaseConnection
+	 */
+	protected $connection;
+
 	protected function setUp(): void
 	{
 		CITestStreamFilter::$buffer = '';
 
 		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+		$this->connection   = Database::connect();
 
 		parent::setUp();
 	}
@@ -25,7 +31,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 	{
 		stream_filter_remove($this->streamFilter);
 
-		if (Database::connect()->getPlatform() === 'SQLite3')
+		if ($this->connection instanceof Connection)
 		{
 			$file = WRITEPATH . 'foobar.db';
 
@@ -39,7 +45,6 @@ class CreateDatabaseTest extends CIUnitTestCase
 			Database::forge()->dropDatabase('foobar');
 		}
 
-		Config::reset();
 		parent::tearDown();
 	}
 
@@ -56,7 +61,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 
 	public function testSqliteDatabaseDuplicated()
 	{
-		if (Database::connect()->getPlatform() !== 'SQLite3')
+		if (! $this->connection instanceof Connection)
 		{
 			$this->markTestSkipped('Needs to run on SQLite3.');
 		}
@@ -68,9 +73,9 @@ class CreateDatabaseTest extends CIUnitTestCase
 		$this->assertStringContainsString('already exists.', $this->getBuffer());
 	}
 
-	public function testOtherDriverDuplicatedDatabaseThrowsDatabaseException()
+	public function testOtherDriverDuplicatedDatabase()
 	{
-		if (Database::connect()->getPlatform() === 'SQLite3')
+		if ($this->connection instanceof Connection)
 		{
 			$this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
 		}
@@ -80,21 +85,5 @@ class CreateDatabaseTest extends CIUnitTestCase
 
 		command('db:create foobar');
 		$this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());
-	}
-
-	public function testOtherDriverDuplicatedDatabaseOnSilent()
-	{
-		if (Database::connect()->getPlatform() === 'SQLite3')
-		{
-			$this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
-		}
-
-		config('Database')->tests['DBDebug'] = false;
-
-		command('db:create foobar');
-		CITestStreamFilter::$buffer = '';
-
-		command('db:create foobar');
-		$this->assertStringContainsString('Database creation failed.', $this->getBuffer());
 	}
 }
