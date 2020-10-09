@@ -23,3 +23,5 @@ Deprecations:
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
+- Deprecated ``CodeIgniter\Database\ModelFactory`` in favor of ``CodeIgniter\Config\Factories::models()``
+- Deprecated ``Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``
