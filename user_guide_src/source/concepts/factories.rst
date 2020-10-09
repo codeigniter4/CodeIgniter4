@@ -86,6 +86,7 @@ component  string or null The name of the component (if different than the stati
 path       string or null The relative path within the namespace/folder to look for classes.                                                   ``null`` (defaults to the component name)
 instanceOf string or null A required class name to match on the returned instance.                                                             ``null`` (no filtering)
 prefersApp boolean        Whether a class with the same basename in the App namespace overrides other explicit class requests.                 ``true``
+========== ============== ==================================================================================================================== ===================================================
 
 Configurations can be applied in one of two ways: through a configuration file or at runtime.
 To use the file, create a new configuration at **app/Config/Factory.php** that supplies
