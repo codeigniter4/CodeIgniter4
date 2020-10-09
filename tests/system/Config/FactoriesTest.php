@@ -23,9 +23,9 @@ class FactoriesTest extends CIUnitTestCase
 		// First parameter is the actual property
 		$name = array_shift($params);
 
-		$factory  = new ReflectionClass(Factories::class);
+		$factory    = new ReflectionClass(Factories::class);
 		$properties = $factory->getStaticProperties();
-		$property = $properties[$name] ?? [];
+		$property   = $properties[$name] ?? [];
 
 		// If any additional parameters were provided then drill into the array
 		foreach ($params as $param)
@@ -77,11 +77,6 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testSetConfigResets()
 	{
-		if (version_compare(PHP_VERSION, '7.4', '<'))
-		{
-			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
-		}
-
 		Factories::injectMock('widgets', 'Banana', new stdClass());
 
 		$result = $this->getFactoriesStaticProperty('instances');
@@ -97,11 +92,6 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testResetsAll()
 	{
-		if (version_compare(PHP_VERSION, '7.4', '<'))
-		{
-			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
-		}
-
 		Factories::setConfig('widgets', ['foo' => 'bar']);
 
 		Factories::reset();
@@ -112,11 +102,6 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testResetsComponentOnly()
 	{
-		if (version_compare(PHP_VERSION, '7.4', '<'))
-		{
-			$this->markTestSkipped('ReflectionClass::getStaticPropertyValue fails PHP < 7.4');
-		}
-
 		Factories::setConfig('widgets', ['foo' => 'bar']);
 		Factories::setConfig('spigots', ['bar' => 'bam']);
 
