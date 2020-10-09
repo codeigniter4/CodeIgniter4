@@ -245,7 +245,7 @@ Your model's fake method could look like this::
         	return [
                 'first'    => $faker->firstName,
                 'email'    => $faker->email,
-                'group_id' => rand(1, Fabricator::getCount('users')),
+                'group_id' => rand(1, Fabricator::getCount('groups')),
         	];
         }
 
