@@ -21,5 +21,6 @@ Bugs Fixed:
 Deprecations:
 
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
+- Deprecated ``CodeIgniter\Controller::loadHelpers`` in favor of ``helper`` function.
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
