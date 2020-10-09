@@ -22,4 +22,11 @@ Deprecations:
 
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
+- Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
+- Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
+- Deprecated ``Config\App::$CSRFCookieName`` in favor of ``Config\Security::$cookieName``
+- Deprecated ``Config\App::$CSRFExpire`` in favor of ``Config\Security::$expire``
+- Deprecated ``Config\App::$CSRFRegenerate`` in favor of ``Config\Security::$regenerate``
+- Deprecated ``Config\App::$CSRFRedirect`` in favor of ``Config\Security::$redirect``
+- Deprecated ``Config\App::$CSRFSameSite`` in favor of ``Config\Security::$samesite``
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
