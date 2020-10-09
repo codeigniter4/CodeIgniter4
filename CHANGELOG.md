@@ -7,7 +7,7 @@
 **Deprecations:**
 
 - `CodeIgniter\Database\ModelFactory` is now deprecated in favor of `CodeIgniter\Config\Factories::models()`
-- `Config\Config` is now deprecated in favor of `CodeIgniter\Config\Factories::config()`
+- `CodeIgniter\Config\Config` is now deprecated in favor of `CodeIgniter\Config\Factories::config()`
 
 ## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4) (2020-07-15)
 
