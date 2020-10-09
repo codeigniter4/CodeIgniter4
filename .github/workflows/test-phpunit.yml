@@ -5,6 +5,15 @@ on:
     branches:
       - develop
       - '4.*'
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-phpunit.yml
 
 jobs:
 
