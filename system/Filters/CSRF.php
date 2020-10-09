@@ -87,7 +87,11 @@ class CSRF implements FilterInterface
 		}
 		catch (SecurityException $e)
 		{
-			if (config('Security')->redirect && ! $request->isAJAX())
+			/**
+	 		 * @deprecated Use `Config\Security` $redirect property instead of using this property.
+			 */
+			$shouldRedirect = ;
+			if ($shouldRedirect && ! $request->isAJAX())
 			{
 				return redirect()->back()->with('error', $e->getMessage());
 			}
