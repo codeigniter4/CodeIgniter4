@@ -728,7 +728,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *     });
 	 *
 	 * @param string $name      The name to group/prefix the routes with.
-	 * @param mixed  ...$params
+	 * @param array|callable  ...$params
 	 *
 	 * @return void
 	 */
