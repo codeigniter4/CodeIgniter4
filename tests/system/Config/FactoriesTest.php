@@ -24,7 +24,8 @@ class FactoriesTest extends CIUnitTestCase
 		$name = array_shift($params);
 
 		$factory  = new ReflectionClass(Factories::class);
-		$property = $factory->getStaticPropertyValue($name);
+		$properties = $factory->getStaticProperties();
+		$property = $properties[$name] ?? [];
 
 		// If any additional parameters were provided then drill into the array
 		foreach ($params as $param)
