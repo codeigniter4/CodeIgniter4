@@ -1,15 +1,19 @@
-<?php namespace Tests\Support\Database\Migrations;
+<?php
 
-class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
+namespace Tests\Support\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class Migration_Create_test_tables extends Migration
 {
 	public function up()
 	{
 		// User Table
 		$this->forge->addField([
 			'id'         => [
-				'type'          => 'INTEGER',
-				'constraint'    => 3,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER',
+				'constraint'     => 3,
+				'auto_increment' => true,
 			],
 			'name'       => [
 				'type'       => 'VARCHAR',
@@ -42,9 +46,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Job Table
 		$this->forge->addField([
 			'id'          => [
-				'type'          => 'INTEGER',
-				'constraint'    => 3,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER',
+				'constraint'     => 3,
+				'auto_increment' => true,
 			],
 			'name'        => [
 				'type'       => 'VARCHAR',
@@ -76,9 +80,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Misc Table
 		$this->forge->addField([
 			'id'    => [
-				'type'          => 'INTEGER',
-				'constraint'    => 3,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER',
+				'constraint'     => 3,
+				'auto_increment' => true,
 			],
 			'key'   => [
 				'type'       => 'VARCHAR',
@@ -94,9 +98,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
 		$data_type_fields = [
 			'id'             => [
-				'type'          => 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field
-				'constraint'    => 20,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field
+				'constraint'     => 20,
+				'auto_increment' => true,
 			],
 			'type_varchar'   => [
 				'type'       => 'VARCHAR',
@@ -203,9 +207,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Empty Table
 		$this->forge->addField([
 			'id'         => [
-				'type'          => 'INTEGER',
-				'constraint'    => 3,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER',
+				'constraint'     => 3,
+				'auto_increment' => true,
 			],
 			'name'       => [
 				'type'       => 'VARCHAR',
@@ -226,9 +230,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Secondary Table
 		$this->forge->addField([
 			'id'    => [
-				'type'          => 'INTEGER',
-				'constraint'    => 3,
-				'auto_increment'=> true,
+				'type'           => 'INTEGER',
+				'constraint'     => 3,
+				'auto_increment' => true,
 			],
 			'key'   => [
 				'type'       => 'VARCHAR',
@@ -263,8 +267,6 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->createTable('without_auto_increment', true);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function down()
 	{
 		$this->forge->dropTable('user', true);
@@ -276,7 +278,4 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->dropTable('stringifypkey', true);
 		$this->forge->dropTable('without_auto_increment', true);
 	}
-
-	//--------------------------------------------------------------------
-
 }

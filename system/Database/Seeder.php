@@ -140,7 +140,7 @@ class Seeder
 	{
 		if (empty($class))
 		{
-			throw new \InvalidArgumentException('No Seeder was specified.');
+			throw new \InvalidArgumentException('No seeder was specified.');
 		}
 
 		$path = str_replace('.php', '', $class) . '.php';
@@ -157,7 +157,7 @@ class Seeder
 
 			if (! is_file($path))
 			{
-				throw new \InvalidArgumentException('The specified Seeder is not a valid file: ' . $path);
+				throw new \InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
 			}
 
 			// Assume the class has the correct namespace

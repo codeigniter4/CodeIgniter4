@@ -42,16 +42,14 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\Seeder;
+use Config\Database;
 
 /**
  * Runs the specified Seeder file to populate the database
  * with some data.
- *
- * @package CodeIgniter\Commands
  */
 class Seed extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -79,38 +77,32 @@ class Seed extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'db:seed [seeder_name]';
+	protected $usage = 'db:seed <seeder_name>';
 
 	/**
 	 * the Command's Arguments
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $arguments = [
 		'seeder_name' => 'The seeder name to run',
 	];
 
 	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [];
-
-	/**
 	 * Passes to Seeder to populate the database.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
-		$seeder = new Seeder(new \Config\Database());
-
+		$seeder   = new Seeder(new Database());
 		$seedName = array_shift($params);
 
 		if (empty($seedName))
 		{
-			$seedName = CLI::prompt(lang('Migrations.migSeeder'), null, 'required');
+			$seedName = CLI::prompt(lang('Migrations.migSeeder'), null, 'required'); // @codeCoverageIgnore
 		}
 
 		try
