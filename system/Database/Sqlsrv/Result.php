@@ -56,6 +56,8 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	private $rowOffset = 0;
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Gets the number of fields in the result set.
 	 *
@@ -65,8 +67,6 @@ class Result extends BaseResult implements ResultInterface
 	{
 		return @sqlsrv_num_fields($this->resultID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of column names in the result set.
@@ -190,7 +190,6 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchAssoc()
 	{
-		//return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC, SQLSRV_SCROLL_RELATIVE, $this->rowOffset );
 		return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC);
 	}
 
@@ -205,7 +204,6 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
-		//return sqlsrv_fetch_object($this->resultID, $className, null, SQLSRV_SCROLL_RELATIVE, $this->rowOffset );
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
 

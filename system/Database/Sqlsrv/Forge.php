@@ -295,12 +295,6 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{
-				// TODO: Review and fix this.
-
-				/*
-				 *  ALTER TABLE [dbo].[NewTable]  ADD FOREIGN KEY ([system]) REFERENCES [dbo].[lofasz] ([asdasdasd])
-				 * CONSTRAINT FK_TempSales_SalesReason FOREIGN KEY (TempID)  REFERENCES Sales.SalesReason (SalesReasonID) ON DELETE CASCADE  ON UPDATE CASCADE
-				 */
 				$nameIndex = $table . '_' . $field . '_foreign';
 
 				$sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)

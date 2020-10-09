@@ -292,17 +292,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retVal[$obj->name] = $obj;
 		}
 
-		// TODO try to use the below sql to get the data
-		/*    SELECT i.name AS index_name
-		  ,COL_NAME(ic.object_id,ic.column_id) AS column_name
-		  ,i.is_primary_key
-		  ,i.is_unique_constraint
-
-		  FROM sys.indexes AS i
-		  INNER JOIN sys.index_columns AS ic
-		  ON i.object_id = ic.object_id AND i.index_id = ic.index_id
-		  WHERE i.object_id = OBJECT_ID('database.schema.table'); */
-
 		return $retVal;
 	}
 

@@ -113,6 +113,8 @@ class Builder extends BaseBuilder
 	 * Generates a platform-specific insert string from the supplied data
 	 * auto-enable
 	 *
+	 * @todo implement check for this instad static $insertKeyPermission
+	 *
 	 * @param string $table         The table name
 	 * @param array  $keys          The insert keys
 	 * @param array  $unescapedKeys The insert values
@@ -123,8 +125,6 @@ class Builder extends BaseBuilder
 	{
 		$fullTableName = $this->getFullName($table);
 
-		// check for index key
-		// TODO: implement check for this instad static $insertKeyPermission
 		// insert statement
 		$statement = 'INSERT INTO ' . $fullTableName . ' (' . implode(',', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
 
@@ -245,8 +245,6 @@ class Builder extends BaseBuilder
 	 */
 	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
-		// Ref ->  return $sql . ' LIMIT ' . (false === $offsetIgnore && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
-
 		if (empty($this->QBOrderBy))
 		{
 			$sql .= ' ORDER BY (SELECT NULL) ';
