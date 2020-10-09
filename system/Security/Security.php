@@ -136,27 +136,27 @@ class Security
      */
     public function __construct(SecurityConfig $config)
     {
+		/**
+		 * @deprecated Use `Config\Security` instead of using `Config\App`.
+		 */
+		$appConfig = new AppConfig();
         // Store our CSRF-related configuration.
-        $this->tokenName  = $config->tokenName ?? $this->tokenName;
-        $this->headerName = $config->headerName ?? $this->headerName;
-        $this->cookieName = $config->cookieName ?? $this->cookieName;
-        $this->expire     = $config->expire ?? $this->expire;
-        $this->regenerate = $config->regenerate ?? $this->regenerate;
-        $this->samesite   = $config->samesite ?? $this->samesite;
+        $this->tokenName  = $appConfig->CSRFTokenName ?? $config->tokenName ?? $this->tokenName;
+        $this->headerName = $appConfig->CSRFHeaderName ?? $config->headerName ?? $this->headerName;
+        $this->cookieName = $appConfig->CSRFCookieName ?? $config->cookieName ?? $this->cookieName;
+        $this->expire     = $appConfig->CSRFExpire ?? $config->expire ?? $this->expire;
+        $this->regenerate = $appConfig->CSRFRegenerate ?? $config->regenerate ?? $this->regenerate;
+        $this->samesite   = $appConfig->CSRFSameSite ?? $config->samesite ?? $this->samesite;
 
         if (! in_array(strtolower($this->samesite), ['', 'none', 'lax', 'strict'], true))
         {
             throw SecurityException::forInvalidSameSite($this->samesite);
         }
 
-        $config = new AppConfig();
-
-        if (isset($config->cookiePrefix))
+        if (isset($appConfig->cookiePrefix))
         {
-            $this->cookieName = $config->cookiePrefix . $this->cookieName;
+            $this->cookieName = $appConfig->cookiePrefix . $this->cookieName;
         }
-
-        unset($config);
 
         $this->generateHash();
     }
