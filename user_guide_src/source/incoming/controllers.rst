@@ -30,9 +30,9 @@ and put the following code in it. You will notice that the Helloworld Controller
 also extend the CodeIgniter\\Controller if you do not need the functionality of the BaseController.
 
 The BaseController provides a convenient place for loading components and performing functions that are needed by all your
-controllers. Extend this class in any new controller:
+controllers. You can extend this class in any new controller.
 
-For security reasons be sure to declare any new methods as protected or private.::
+For security reasons be sure to declare any new utility methods as protected or private.::
 
     <?php
 
@@ -345,7 +345,6 @@ these helper files will be automatically loaded into memory so that you can use 
 inside the controller::
 
     namespace App\Controllers;
-    use CodeIgniter\BaseController;
 
     class MyController extends BaseController
     {
