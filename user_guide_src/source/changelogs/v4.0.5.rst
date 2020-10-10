@@ -21,6 +21,7 @@ Bugs Fixed:
 Deprecations:
 
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
+- Deprecated ``CodeIgniter\Controller::loadHelpers`` in favor of ``helper`` function.
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
 - Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
 - Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
@@ -30,3 +31,5 @@ Deprecations:
 - Deprecated ``Config\App::$CSRFRedirect`` in favor of ``Config\Security::$redirect``
 - Deprecated ``Config\App::$CSRFSameSite`` in favor of ``Config\Security::$samesite``
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
+- Deprecated ``CodeIgniter\Database\ModelFactory`` in favor of ``CodeIgniter\Config\Factories::models()``
+- Deprecated ``CodeIgniter\Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``

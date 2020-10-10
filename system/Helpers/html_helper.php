@@ -37,6 +37,9 @@
  * @filesource
  */
 
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use Config\Mimes;
+
 // --------------------------------------------------------------------
 
 /**
@@ -145,9 +148,9 @@ if (! function_exists('img'))
 	 *
 	 * Generates an image element
 	 *
-	 * @param mixed   $src
-	 * @param boolean $indexPage
-	 * @param mixed   $attributes
+	 * @param string|array        $src        Image source URI, or array of attributes and values
+	 * @param boolean             $indexPage  Whether to treat $src as a routed URI string
+	 * @param string|array|object $attributes Additional HTML attributes
 	 *
 	 * @return string
 	 */
@@ -157,7 +160,10 @@ if (! function_exists('img'))
 		{
 			$src = ['src' => $src];
 		}
-
+		if (! isset($src['src']))
+		{
+			$src['src'] = $attributes['src'] ?? '';
+		}
 		if (! isset($src['alt']))
 		{
 			$src['alt'] = $attributes['alt'] ?? '';
@@ -165,33 +171,68 @@ if (! function_exists('img'))
 
 		$img = '<img';
 
-		foreach ($src as $k => $v)
+		// Check for a relative URI
+		if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0)
 		{
-			//Include a protocol if nothing is explicitely defined.
-			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
+			if ($indexPage === true)
 			{
-				if ($indexPage === true)
-				{
-					$img .= ' src="' . site_url($v) . '"';
-				}
-				else
-				{
-					$img .= ' src="' . slash_item('baseURL') . $v . '"';
-				}
+				$img .= ' src="' . site_url($src['src']) . '"';
 			}
 			else
 			{
-				$img .= ' ' . $k . '="' . $v . '"';
+				$img .= ' src="' . slash_item('baseURL') . $src['src'] . '"';
 			}
+
+			unset($src['src']);
 		}
 
-		// prevent passing "alt" to stringify_attributes
-		if (is_array($attributes) && isset($attributes['alt']))
+		// Append any other values
+		foreach ($src as $key => $value)
 		{
-			unset($attributes['alt']);
+			$img .= ' ' . $key . '="' . $value . '"';
+		}
+
+		// Prevent passing completed values to stringify_attributes
+		if (is_array($attributes))
+		{
+			unset($attributes['alt'], $attributes['src']);
 		}
 
 		return $img . stringify_attributes($attributes) . ' />';
+	}
+}
+
+if (! function_exists('img_data'))
+{
+	/**
+	 * Image (data)
+	 *
+	 * Generates a src-ready string from an image using the "data:" protocol
+	 *
+	 * @param string      $path Image source path
+	 * @param string|null $mime MIME type to use, or null to guess
+	 *
+	 * @return string
+	 */
+	function img_data(string $path, string $mime = null): string
+	{
+		if (! is_file($path) || ! is_readable($path))
+		{
+			throw FileNotFoundException::forFileNotFound($path);
+		}
+
+		// Read in file binary data
+		$handle = fopen($path, 'rb');
+		$data   = fread($handle, filesize($path));
+		fclose($handle);
+
+		// Encode as base64
+		$data = base64_encode($data);
+
+		// Figure out the type (Hail Mary to JPEG)
+		$mime = $mime ?? Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
+
+		return 'data:' . $mime . ';base64,' . $data;
 	}
 }
 

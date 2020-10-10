@@ -666,9 +666,9 @@ class CURLRequest extends Request
 		{
 			if (is_string($config['verify']))
 			{
-				$file = realpath($config['ssl_key']);
+				$file = realpath($config['ssl_key']) ?: $config['ssl_key'];
 
-				if (! $file)
+				if (! is_file($file))
 				{
 					throw HTTPException::forInvalidSSLKey($config['ssl_key']);
 				}

@@ -266,10 +266,12 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Seeds that database with a specific seeder.
 	 *
 	 * @param string $name
+	 *
+	 * @return void
 	 */
 	public function seed(string $name)
 	{
-		return $this->seeder->call($name);
+		$this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------

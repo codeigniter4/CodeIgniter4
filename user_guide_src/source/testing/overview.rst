@@ -309,6 +309,24 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 
 .. note:: The ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
 
+Mocking Factory Instances
+=========================
+
+Similar to Services, you may find yourself needing to supply a pre-configured class instance
+during testing that will be used with ``Factories``. Use the same ``injectMock()`` and ``reset()``
+static methods like **Services**, but they take an additional preceding parameter for the
+component name::
+
+    protected function setUp()
+    {
+    	parent::setUp();
+
+		$model = new MockUserModel();
+		Factories::injectMock('models', 'App\Models\UserModel', $model);
+	}
+		
+.. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
+
 Stream Filters
 ==============
 

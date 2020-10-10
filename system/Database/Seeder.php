@@ -40,14 +40,13 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
-use Config\Database as DatabaseConfig;
+use Config\Database;
 
 /**
  * Class Seeder
  */
 class Seeder
 {
-
 	/**
 	 * The name of the database group to use.
 	 *
@@ -65,7 +64,7 @@ class Seeder
 	/**
 	 * An instance of the main Database configuration
 	 *
-	 * @var DatabaseConfig
+	 * @var Database
 	 */
 	protected $config;
 
@@ -84,21 +83,26 @@ class Seeder
 	protected $forge;
 
 	/**
+	 * Faker Generator instance.
+	 *
+	 * @var \Faker\Generator|null
+	 */
+	protected $faker;
+
+	/**
 	 * If true, will not display CLI messages.
 	 *
 	 * @var boolean
 	 */
 	protected $silent = false;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Seeder constructor.
 	 *
-	 * @param DatabaseConfig $config
-	 * @param BaseConnection $db
+	 * @param Database            $config
+	 * @param BaseConnection|null $db
 	 */
-	public function __construct(DatabaseConfig $config, BaseConnection $db = null)
+	public function __construct(Database $config, BaseConnection $db = null)
 	{
 		$this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 
@@ -107,26 +111,21 @@ class Seeder
 			throw new \InvalidArgumentException('Invalid filesPath set in the Config\Database.');
 		}
 
-		$this->seedPath = rtrim($this->seedPath, '/') . '/Seeds/';
+		$this->seedPath = rtrim($this->seedPath, '\\/') . '/Seeds/';
 
 		if (! is_dir($this->seedPath))
 		{
 			throw new \InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
 		}
 
-		$this->config = & $config;
+		$this->config = &$config;
 
-		if (is_null($db))
-		{
-			$db = \Config\Database::connect($this->DBGroup);
-		}
+		$db = $db ?? Database::connect($this->DBGroup);
 
-		$this->db = & $db;
-
-		$this->forge = \Config\Database::forge($this->DBGroup);
+		$this->db    = &$db;
+		$this->forge = Database::forge($this->DBGroup);
+		$this->faker = class_exists('\Faker\Factory') ? \Faker\Factory::create() : null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Loads the specified seeder and runs it.
@@ -134,12 +133,14 @@ class Seeder
 	 * @param string $class
 	 *
 	 * @throws \InvalidArgumentException
+	 *
+	 * @return void
 	 */
 	public function call(string $class)
 	{
 		if (empty($class))
 		{
-			throw new \InvalidArgumentException('No Seeder was specified.');
+			throw new \InvalidArgumentException('No seeder was specified.');
 		}
 
 		$path = str_replace('.php', '', $class) . '.php';
@@ -156,7 +157,7 @@ class Seeder
 
 			if (! is_file($path))
 			{
-				throw new \InvalidArgumentException('The specified Seeder is not a valid file: ' . $path);
+				throw new \InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
 			}
 
 			// Assume the class has the correct namespace
@@ -181,30 +182,26 @@ class Seeder
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the location of the directory that seed files can be located in.
 	 *
 	 * @param string $path
 	 *
-	 * @return Seeder
+	 * @return $this
 	 */
 	public function setPath(string $path)
 	{
-		$this->seedPath = rtrim($path, '/') . '/';
+		$this->seedPath = rtrim($path, '\\/') . '/';
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the silent treatment.
 	 *
 	 * @param boolean $silent
 	 *
-	 * @return Seeder
+	 * @return $this
 	 */
 	public function setSilent(bool $silent)
 	{
@@ -212,8 +209,6 @@ class Seeder
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Run the database seeds. This is where the magic happens.
@@ -226,6 +221,4 @@ class Seeder
 	public function run()
 	{
 	}
-
-	//--------------------------------------------------------------------
 }

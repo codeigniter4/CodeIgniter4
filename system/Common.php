@@ -31,15 +31,14 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT  MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
  */
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -160,7 +159,7 @@ if (! function_exists('command'))
 	 */
 	function command(string $command)
 	{
-		$runner      = service('commands');
+		$runner      = Services::commands();
 		$regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
 		$regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
 
@@ -189,9 +188,9 @@ if (! function_exists('command'))
 			}
 			else
 			{
-				// @codeCoverageIgnoreStart
-				throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)));
-				// @codeCoverageIgnoreEnd
+				throw new InvalidArgumentException(
+          sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)) // @codeCoverageIgnoreLine
+        );
 			}
 
 			$cursor += strlen($match[0]);
@@ -235,16 +234,15 @@ if (! function_exists('command'))
 
 		ob_start();
 		$runner->run($command, $params);
-		$output = ob_get_clean();
 
-		return $output;
+		return ob_get_clean();
 	}
 }
 
 if (! function_exists('config'))
 {
 	/**
-	 * More simple way of getting config instances
+	 * More simple way of getting config instances from Factories
 	 *
 	 * @param string  $name
 	 * @param boolean $getShared
@@ -253,7 +251,7 @@ if (! function_exists('config'))
 	 */
 	function config(string $name, bool $getShared = true)
 	{
-		return Config::get($name, $getShared);
+		return Factories::config($name, $getShared);
 	}
 }
 
@@ -391,12 +389,12 @@ if (! function_exists('env'))
 	 *
 	 * @return mixed
 	 */
-	function env(string $key, $default = null)
+	function env(string $key, string $default = null)
 	{
 		$value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
 
 		// Not found? Return the default value
-		if ($value === false)
+		if (! $value)
 		{
 			return $default;
 		}
@@ -464,22 +462,11 @@ if (! function_exists('esc'))
 				throw new InvalidArgumentException('Invalid escape context provided.');
 			}
 
-			if ($context === 'attr')
-			{
-				$method = 'escapeHtmlAttr';
-			}
-			else
-			{
-				$method = 'escape' . ucfirst($context);
-			}
+			$method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
 			static $escaper;
-			if (! $escaper)
-			{
-				$escaper = new Escaper($encoding);
-			}
-
-			if ($encoding && $escaper->getEncoding() !== $encoding)
+      
+			if (! $escaper && $encoding && $escaper->getEncoding() !== $encoding))
 			{
 				$escaper = new Escaper($encoding);
 			}
@@ -501,38 +488,28 @@ if (! function_exists('force_https'))
 	 *
 	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 	 *
-	 * @param integer           $duration How long should the SSL header be set for? (in seconds)
-	 *                                    Defaults to 1 year.
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
+	 * @param integer                             $duration How long should
+   *                                            the SSL header be set for?
+   *                                            Defaults to 1 year. (in seconds) 
+	 * @param \CodeIgniter\HTTP\RequestInterface  $request
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
 	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request))
-		{
-			$request = Services::request(null, true);
-		}
-		if (is_null($response))
-		{
-			$response = Services::response(null, true);
-		}
+    $request  = $request ?? Services::request();
+    $response = $response ?? Services::response();
 
 		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
-			// @codeCoverageIgnoreStart
-			return;
-			// @codeCoverageIgnoreEnd
+			return; // @codeCoverageIgnoreLine
 		}
 
-		// If the session status is active, we should regenerate
-		// the session ID for safety sake.
+		// regenerate seession id when session status is active for safety sake.
 		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
-			// @codeCoverageIgnoreStart
-			Services::session()->regenerate();
-			// @codeCoverageIgnoreEnd
+			Services::session()->regenerate(); // @codeCoverageIgnoreLine
 		}
 
 		$baseURL = config(App::class)->baseURL;
@@ -546,21 +523,16 @@ if (! function_exists('force_https'))
 			$baseURL = (string) substr($baseURL, strlen('http://'));
 		}
 
-		$uri = URI::createURIString(
-			'https', $baseURL, $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
-			$request->uri->getQuery(), $request->uri->getFragment()
-		);
-
 		// Set an HSTS header
 		$response->setHeader('Strict-Transport-Security', 'max-age=' . $duration);
-		$response->redirect($uri);
+		$response->redirect(URI::createURIString(
+			'https', $baseURL, $request->uri->getPath(), $request->uri->getQuery(), $request->uri->getFragment()
+		));
 		$response->sendHeaders();
 
 		if (ENVIRONMENT !== 'testing')
 		{
-			// @codeCoverageIgnoreStart
-			exit();
-			// @codeCoverageIgnoreEnd
+			exit(); // @codeCoverageIgnoreLine
 		}
 	}
 }
@@ -626,8 +598,6 @@ if (! function_exists('helper'))
 	 */
 	function helper($filenames)
 	{
-		$loader = Services::locator(true);
-
 		if (! is_array($filenames))
 		{
 			$filenames = [$filenames];
@@ -653,7 +623,7 @@ if (! function_exists('helper'))
 			// file and not search for any others
 			if (strpos($filename, '\\') !== false)
 			{
-				$path = $loader->locateFile($filename, 'Helpers');
+				$path = Services::locator()->locateFile($filename, 'Helpers');
 
 				if (empty($path))
 				{
@@ -674,9 +644,8 @@ if (! function_exists('helper'))
 					{
 						if (strpos($path, APPPATH) === 0)
 						{
-							// @codeCoverageIgnoreStart
-							$appHelper = $path;
-							// @codeCoverageIgnoreEnd
+							
+							$appHelper = $path; // @codeCoverageIgnoreLine
 						}
 						elseif (strpos($path, SYSTEMPATH) === 0)
 						{
@@ -692,9 +661,7 @@ if (! function_exists('helper'))
 				// App-level helpers should override all others
 				if (! empty($appHelper))
 				{
-					// @codeCoverageIgnoreStart
-					$includes[] = $appHelper;
-					// @codeCoverageIgnoreEnd
+					$includes[] = $appHelper; // @codeCoverageIgnoreLine
 				}
 
 				// All namespaced files get added in next
@@ -814,15 +781,8 @@ if (! function_exists('log_message'))
 	 * the Log system.
 	 *
 	 * Allowed log levels are:
-	 *  - emergency
-	 *  - alert
-	 *  - critical
-	 *  - error
-	 *  - warning
-	 *  - notice
-	 *  - info
-	 *  - debug
-	 *
+	 *  "emergency, alert, critical, error, warning, notice, info, debug"
+	 * 
 	 * @param string $level
 	 * @param string $message
 	 * @param array  $context
@@ -836,21 +796,17 @@ if (! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT === 'testing')
 		{
-			$logger = new TestLogger(new Logger());
-
-			return $logger->log($level, $message, $context);
+			return (new TestLogger(new Logger()))->log($level, $message, $context);
 		}
 
-		// @codeCoverageIgnoreStart
-		return Services::logger(true)->log($level, $message, $context);
-		// @codeCoverageIgnoreEnd
+		return Services::logger()->log($level, $message, $context); // @codeCoverageIgnoreLine
 	}
 }
 
 if (! function_exists('model'))
 {
 	/**
-	 * More simple way of getting model instances
+	 * More simple way of getting model instances from Factories
 	 *
 	 * @param string                   $name
 	 * @param boolean                  $getShared
@@ -860,7 +816,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return ModelFactory::get($name, $getShared, $conn);
+		return Factories::models($name, $getShared, $conn);
 	}
 }
 
@@ -881,17 +837,12 @@ if (! function_exists('old'))
 		// Ensure the session is loaded
 		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
 		{
-			// @codeCoverageIgnoreStart
-			session();
-			// @codeCoverageIgnoreEnd
+			Services::session(); // @codeCoverageIgnoreLine
 		}
 
-		$request = Services::request();
+		$value = Services::request()->getOldInput($key);
 
-		$value = $request->getOldInput($key);
-
-		// Return the default value if nothing
-		// found in the old input.
+		// Return the default value if nothing found in the old input.
 		if (is_null($value))
 		{
 			return $default;
@@ -921,13 +872,13 @@ if (! function_exists('redirect'))
 	 *
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
-	 * @param string $uri
+	 * @param string|null $uri
 	 *
 	 * @return \CodeIgniter\HTTP\RedirectResponse
 	 */
 	function redirect(string $uri = null): RedirectResponse
 	{
-		$response = Services::redirectResponse(null, true);
+		$response = Services::redirectResponse();
 
 		if (! empty($uri))
 		{
@@ -986,7 +937,7 @@ if (! function_exists('route_to'))
 	 * have a route defined in the routes Config file.
 	 *
 	 * @param string $method
-	 * @param mixed  ...$params
+	 * @param array  ...$params
 	 *
 	 * @return false|string
 	 */
@@ -1053,8 +1004,8 @@ if (! function_exists('single_service'))
 	 * Allow cleaner access to a Service.
 	 * Always returns a new instance of the class.
 	 *
-	 * @param string     $name
-	 * @param array|null $params
+	 * @param string $name
+	 * @param array  $params
 	 *
 	 * @return mixed
 	 */
@@ -1081,8 +1032,7 @@ if (! function_exists('slash_item'))
 	 */
 	function slash_item(string $item): ?string
 	{
-		$config     = config(App::class);
-		$configItem = $config->{$item};
+		$configItem = config('App')->{$item};
 
 		if (! isset($configItem) || empty(trim($configItem)))
 		{
@@ -1191,11 +1141,6 @@ if (! function_exists('view'))
 	 */
 	function view(string $name, array $data = [], array $options = []): string
 	{
-		/**
-		 * @var CodeIgniter\View\View $renderer
-		 */
-		$renderer = Services::renderer();
-
 		$saveData = config(View::class)->saveData;
 
 		if (array_key_exists('saveData', $options))
@@ -1204,7 +1149,7 @@ if (! function_exists('view'))
 			unset($options['saveData']);
 		}
 
-		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
+		return Services::renderer()->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 }
 

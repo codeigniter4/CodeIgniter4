@@ -204,9 +204,8 @@ abstract class GeneratorCommand extends BaseCommand
 	{
 		$class = trim($class);
 		$class = str_replace('/', '\\', $class);
-		$class = implode('\\', array_map('pascalize', explode('\\', $class)));
 
-		return $class;
+		return implode('\\', array_map('pascalize', explode('\\', $class)));
 	}
 
 	/**

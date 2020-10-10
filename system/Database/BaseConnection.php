@@ -1374,19 +1374,23 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return array_map([&$this, 'escape'], $str);
 		}
-		else if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+
+		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}
-		else if (is_bool($str))
+
+		if (is_bool($str))
 		{
 			return ($str === false) ? 0 : 1;
 		}
-		else if (is_numeric($str) && $str < 0)
+
+		if (is_numeric($str) && $str < 0)
 		{
 			return "'{$str}'";
 		}
-		else if ($str === null)
+
+		if ($str === null)
 		{
 			return 'NULL';
 		}

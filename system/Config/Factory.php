@@ -37,85 +37,39 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
-
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+namespace CodeIgniter\Config;
 
 /**
- * Does a rollback followed by a latest to refresh the current state
- * of the database.
+ * Factories Configuration file.
+ *
+ * Provides overriding directives for how
+ * Factories should handle discovery and
+ * instantiation of specific components.
+ * Each property should correspond to the
+ * lowercase, plural component name.
  */
-class MigrateRefresh extends BaseCommand
+class Factory extends BaseConfig
 {
 	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Database';
-
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'migrate:refresh';
-
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Does a rollback followed by a latest to refresh the current state of the database.';
-
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'migrate:refresh [options]';
-
-	/**
-	 * the Command's Options
+	 * Supplies a default configuration to merge for
+	 * all unspecified factory configuration values.
 	 *
 	 * @var array
 	 */
-	protected $options = [
-		'-n'    => 'Set migration namespace',
-		'-g'    => 'Set database group',
-		'--all' => 'Set latest for all namespace, will ignore (-n) option',
-		'-f'    => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
+	public static $default = [
+		'component'  => null,
+		'path'       => null,
+		'instanceOf' => null,
+		'prefersApp' => true,
 	];
 
 	/**
-	 * Does a rollback followed by a latest to refresh the current state
-	 * of the database.
+	 * Specifies that Models should always favor child
+	 * classes to allow easy extension of module Models.
 	 *
-	 * @param array $params
-	 *
-	 * @return void
+	 * @var array
 	 */
-	public function run(array $params)
-	{
-		$params['b'] = 0;
-
-		if (ENVIRONMENT === 'production')
-		{
-			// @codeCoverageIgnoreStart
-			$force = array_key_exists('f', $params) || CLI::getOption('f');
-
-			if (! $force && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
-			{
-				return;
-			}
-
-			$params['f'] = null;
-			// @codeCoverageIgnoreEnd
-		}
-
-		$this->call('migrate:rollback', $params);
-		$this->call('migrate', $params);
-	}
+	public $models = [
+		'preferApp' => true,
+	];
 }

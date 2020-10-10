@@ -109,7 +109,7 @@ class Image extends File
 
 		if (! is_dir($targetPath))
 		{
-			mkdir($targetName, 0755, true);
+			mkdir($targetPath, 0755, true);
 		}
 
 		if (! copy($this->getPathname(), "{$targetPath}{$targetName}"))

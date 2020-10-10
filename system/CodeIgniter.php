@@ -917,9 +917,8 @@ class CodeIgniter
 		{
 			throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
 		}
-		else if (! method_exists($this->controller, '_remap') &&
-				! is_callable([$this->controller, $this->method], false)
-		)
+		if (! method_exists($this->controller, '_remap') &&
+				! is_callable([$this->controller, $this->method], false))
 		{
 			throw PageNotFoundException::forMethodNotFound($this->method);
 		}

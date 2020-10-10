@@ -377,4 +377,15 @@ class Message
 
 		return $this;
 	}
+
+	/**
+	 * Determines if this is a json message based on the Content-Type header
+	 *
+	 * @return boolean
+	 */
+	public function isJSON()
+	{
+		return $this->hasHeader('Content-Type')
+			&& $this->getHeader('Content-Type')->getValue() === 'application/json';
+	}
 }
