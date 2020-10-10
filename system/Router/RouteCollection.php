@@ -514,7 +514,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the raw array of available routes.
 	 *
-	 * @param mixed $verb
+	 * @param string|null $verb
 	 *
 	 * @return array
 	 */
@@ -557,8 +557,8 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns one or all routes options
 	 *
-	 * @param string $from
-       * @param string|null $verb
+	 * @param string      $from
+	 * @param string|null $verb
 	 *
 	 * @return array
 	 */
@@ -1287,8 +1287,8 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Checks a route (using the "from") to see if it's filtered or not.
 	 *
-	 * @param string $search
-       * @param string|null $verb
+	 * @param string      $search
+	 * @param string|null $verb
 	 *
 	 * @return boolean
 	 */
@@ -1311,8 +1311,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * has a filter of "role", with parameters of ['admin', 'manager'].
 	 *
-	 * @param string $search
-       * @param string|null $verb
+	 * @param string      $search
+	 * @param string|null $verb
 	 *
 	 * @return string
 	 */
@@ -1591,7 +1591,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Load routes options based on verb
 	 *
-       * @param string|null $verb
+	 * @param string|null $verb
 	 *
 	 * @return array
 	 */
@@ -1605,9 +1605,15 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			foreach ($this->routesOptions['*'] as $key => $val)
 			{
-				$options[$key] = $options[$key] ?? [];
-				$extraOptions  = array_diff_key($val, $options[$key]);
-				$options[$key] = array_merge($options[$key], $extraOptions);
+				if (isset($options[$key]))
+				{
+					$extraOptions  = array_diff_key($val, $options[$key]);
+					$options[$key] = array_merge($options[$key], $extraOptions);
+				}
+				else
+				{
+					$options[$key] = $val;
+				}
 			}
 		}
 
