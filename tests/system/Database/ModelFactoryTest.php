@@ -2,37 +2,57 @@
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\UserModel;
 
 class ModelFactoryTest extends CIDatabaseTestCase
 {
+	protected function setUp(): void
+	{
+		parent::setUp();
+
+		ModelFactory::reset();
+	}
 
 	public function testCreateSeparateInstances()
 	{
-		$model          = ModelFactory::get('JobModel', false);
+		$basenameModel  = ModelFactory::get('JobModel', false);
 		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
 
-		$this->assertInstanceOf(JobModel::class, $model);
+		$this->assertInstanceOf(JobModel::class, $basenameModel);
 		$this->assertInstanceOf(JobModel::class, $namespaceModel);
-		$this->assertNotSame($model, $namespaceModel);
+		$this->assertNotSame($basenameModel, $namespaceModel);
 	}
 
 	public function testCreateSharedInstance()
 	{
-		$model          = ModelFactory::get('JobModel', true);
+		$basenameModel  = ModelFactory::get('JobModel', true);
 		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
 
-		$this->assertSame($model, $namespaceModel);
+		$this->assertSame($basenameModel, $namespaceModel);
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
 	public function testInjection()
 	{
-		ModelFactory::reset();
-		ModelFactory::injectMock('Banana', '\stdClass');
-		$this->assertNotNull(ModelFactory::get('Banana'));
+		ModelFactory::injectMock('Banana', new JobModel());
+
+		$this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
 	}
 
+	public function testReset()
+	{
+		ModelFactory::injectMock('Banana', new JobModel());
+
+		ModelFactory::reset();
+
+		$this->assertNull(ModelFactory::get('Banana'));
+	}
+
+	public function testBasenameReturnsExistingNamespaceInstance()
+	{
+		ModelFactory::injectMock(UserModel::class, new JobModel());
+
+		$basenameModel = ModelFactory::get('UserModel');
+
+		$this->assertInstanceOf(JobModel::class, $basenameModel);
+	}
 }

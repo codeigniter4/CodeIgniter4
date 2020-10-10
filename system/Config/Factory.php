@@ -40,42 +40,36 @@
 namespace CodeIgniter\Config;
 
 /**
- * Class Config
+ * Factories Configuration file.
  *
- * @deprecated Use CodeIgniter\Config\Factories::config()
+ * Provides overriding directives for how
+ * Factories should handle discovery and
+ * instantiation of specific components.
+ * Each property should correspond to the
+ * lowercase, plural component name.
  */
-class Config
+class Factory extends BaseConfig
 {
 	/**
-	 * Create new configuration instances or return
-	 * a shared instance
+	 * Supplies a default configuration to merge for
+	 * all unspecified factory configuration values.
 	 *
-	 * @param string  $name      Configuration name
-	 * @param boolean $getShared Use shared instance
-	 *
-	 * @return mixed|null
+	 * @var array
 	 */
-	public static function get(string $name, bool $getShared = true)
-	{
-		return Factories::config($name, $getShared);
-	}
+	public static $default = [
+		'component'  => null,
+		'path'       => null,
+		'instanceOf' => null,
+		'prefersApp' => true,
+	];
 
 	/**
-	 * Helper method for injecting mock instances while testing.
+	 * Specifies that Models should always favor child
+	 * classes to allow easy extension of module Models.
 	 *
-	 * @param string $name
-	 * @param object $instance
+	 * @var array
 	 */
-	public static function injectMock(string $name, $instance)
-	{
-		Factories::injectMock('config', $name, $instance);
-	}
-
-	/**
-	 * Resets the static arrays
-	 */
-	public static function reset()
-	{
-		Factories::reset('config');
-	}
+	public $models = [
+		'preferApp' => true,
+	];
 }

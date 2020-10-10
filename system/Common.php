@@ -37,7 +37,7 @@
  * @filesource
  */
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
@@ -244,7 +244,7 @@ if (! function_exists('command'))
 if (! function_exists('config'))
 {
 	/**
-	 * More simple way of getting config instances
+	 * More simple way of getting config instances from Factories
 	 *
 	 * @param string  $name
 	 * @param boolean $getShared
@@ -253,7 +253,7 @@ if (! function_exists('config'))
 	 */
 	function config(string $name, bool $getShared = true)
 	{
-		return Config::get($name, $getShared);
+		return Factories::config($name, $getShared);
 	}
 }
 
@@ -859,7 +859,7 @@ if (! function_exists('log_message'))
 if (! function_exists('model'))
 {
 	/**
-	 * More simple way of getting model instances
+	 * More simple way of getting model instances from Factories
 	 *
 	 * @param string                   $name
 	 * @param boolean                  $getShared
@@ -869,7 +869,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return \CodeIgniter\Database\ModelFactory::get($name, $getShared, $conn);
+		return Factories::models($name, $getShared, $conn);
 	}
 }
 
