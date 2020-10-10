@@ -158,6 +158,7 @@ class Table
 	 * Called after `fromTable` and any actions, like `dropColumn`, etc,
 	 * to finalize the action. It creates a temp table, creates the new
 	 * table with modifications, and copies the data over to the new table.
+	 * Resets the connection dataCache to be sure changes are collected.
 	 *
 	 * @return boolean
 	 */
@@ -180,6 +181,8 @@ class Table
 		$success = $this->db->transComplete();
 
 		$this->db->query('PRAGMA foreign_keys = ON');
+
+		$this->db->resetDataCache();
 
 		return $success;
 	}
