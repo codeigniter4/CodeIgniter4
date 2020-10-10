@@ -67,8 +67,8 @@ The following functions are available:
 
 .. php:function:: img_data([$src = ''[, $indexPage = false[, $attributes = '']]])
 
-    :param  string  $path:     Path to the image file
-    :param  string|null $mime  MIME type to use, or null to guess
+    :param string $path: Path to the image file
+    :param string|null $mime: MIME type to use, or null to guess
     :returns: base64 encoded binary image string
     :rtype: string
 
