@@ -370,4 +370,15 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
+	public function testCachedAutoDiscoverAndRender()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = '<h1>Hello World</h1>';
+
+		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+		// this second renderings should go thru the cache
+		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+	}
 }

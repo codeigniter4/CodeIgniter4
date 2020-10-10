@@ -186,9 +186,9 @@ class View implements RendererInterface
 	 *     - cache 		number of seconds to cache for
 	 *  - cache_name	Name to use for cache
 	 *
-	 * @param string  $view
-	 * @param array   $options
-	 * @param boolean $saveData
+	 * @param string       $view
+	 * @param array|null   $options
+	 * @param boolean|null $saveData
 	 *
 	 * @return string
 	 */
@@ -208,11 +208,15 @@ class View implements RendererInterface
 		// Was it cached?
 		if (isset($this->renderVars['options']['cache']))
 		{
-			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = str_replace(['\\', '/'], '', $cacheName);
+
+			$this->renderVars['cacheName'] = $cacheName;
 
 			if ($output = cache($this->renderVars['cacheName']))
 			{
 				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+
 				return $output;
 			}
 		}
