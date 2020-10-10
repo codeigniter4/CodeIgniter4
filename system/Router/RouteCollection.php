@@ -558,7 +558,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Returns one or all routes options
 	 *
 	 * @param string $from
-	 * @param string $verb
+       * @param string|null $verb
 	 *
 	 * @return array
 	 */
@@ -1288,7 +1288,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Checks a route (using the "from") to see if it's filtered or not.
 	 *
 	 * @param string $search
-	 * @param string $verb
+       * @param string|null $verb
 	 *
 	 * @return boolean
 	 */
@@ -1312,7 +1312,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * has a filter of "role", with parameters of ['admin', 'manager'].
 	 *
 	 * @param string $search
-	 * @param string $verb
+       * @param string|null $verb
 	 *
 	 * @return string
 	 */
@@ -1591,16 +1591,13 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Load routes options based on verb
 	 *
-	 * @param string $verb
+       * @param string|null $verb
 	 *
 	 * @return array
 	 */
 	protected function loadRoutesOptions(string $verb = null): array
 	{
-		if (empty($verb))
-		{
-			$verb = $this->getHTTPVerb();
-		}
+		$verb = $verb ?: $this->getHTTPVerb();
 
 		$options = $this->routesOptions[$verb] ?? [];
 
