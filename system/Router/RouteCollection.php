@@ -251,7 +251,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * multiple placeholders added at once.
 	 *
 	 * @param string|array $placeholder
-	 * @param string       $pattern
+	 * @param string|null  $pattern
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -518,7 +518,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return array
 	 */
-	public function getRoutes($verb = null): array
+	public function getRoutes(string $verb = null): array
 	{
 		if (empty($verb))
 		{
@@ -557,7 +557,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns one or all routes options
 	 *
-	 * @param string      $from
+	 * @param string|null $from
 	 * @param string|null $verb
 	 *
 	 * @return array
@@ -603,8 +603,8 @@ class RouteCollection implements RouteCollectionInterface
 	 * It does not allow any options to be set on the route, or to
 	 * define the method used.
 	 *
-	 * @param array $routes
-	 * @param array $options
+	 * @param array      $routes
+	 * @param array|null $options
 	 *
 	 * @return RouteCollectionInterface
 	 */
