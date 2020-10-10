@@ -558,12 +558,15 @@ class RouteCollection implements RouteCollectionInterface
 	 * Returns one or all routes options
 	 *
 	 * @param string $from
+	 * @param string $verb
 	 *
 	 * @return array
 	 */
-	public function getRoutesOptions(string $from = null): array
+	public function getRoutesOptions(string $from = null, string $verb = null): array
 	{
-		return $from ? $this->routesOptions[$from] ?? [] : $this->routesOptions;
+		$options = $this->loadRoutesOptions($verb);
+
+		return $from ? $options[$from] ?? [] : $options;
 	}
 
 	//--------------------------------------------------------------------
@@ -727,8 +730,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *            $route->resource('users');
 	 *     });
 	 *
-	 * @param string $name      The name to group/prefix the routes with.
-	 * @param array|callable  ...$params
+	 * @param string         $name      The name to group/prefix the routes with.
+	 * @param array|callable ...$params
 	 *
 	 * @return void
 	 */
@@ -1285,12 +1288,15 @@ class RouteCollection implements RouteCollectionInterface
 	 * Checks a route (using the "from") to see if it's filtered or not.
 	 *
 	 * @param string $search
+	 * @param string $verb
 	 *
 	 * @return boolean
 	 */
-	public function isFiltered(string $search): bool
+	public function isFiltered(string $search, string $verb = null): bool
 	{
-		return isset($this->routesOptions[$search]['filter']);
+		$options = $this->loadRoutesOptions($verb);
+
+		return isset($options[$search]['filter']);
 	}
 
 	//--------------------------------------------------------------------
@@ -1306,17 +1312,15 @@ class RouteCollection implements RouteCollectionInterface
 	 * has a filter of "role", with parameters of ['admin', 'manager'].
 	 *
 	 * @param string $search
+	 * @param string $verb
 	 *
 	 * @return string
 	 */
-	public function getFilterForRoute(string $search): string
+	public function getFilterForRoute(string $search, string $verb = null): string
 	{
-		if (! $this->isFiltered($search))
-		{
-			return '';
-		}
+		$options = $this->loadRoutesOptions($verb);
 
-		return $this->routesOptions[$search]['filter'];
+		return $options[$search]['filter'] ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -1470,7 +1474,7 @@ class RouteCollection implements RouteCollectionInterface
 			'route' => [$from => $to],
 		];
 
-		$this->routesOptions[$from] = $options;
+		$this->routesOptions[$verb][$from] = $options;
 
 		// Is this a redirect?
 		if (isset($options['redirect']) && is_numeric($options['redirect']))
@@ -1580,6 +1584,37 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->routes[$verb] = [];
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Load routes options based on verb
+	 *
+	 * @param string $verb
+	 *
+	 * @return array
+	 */
+	protected function loadRoutesOptions(string $verb = null): array
+	{
+		if (empty($verb))
+		{
+			$verb = $this->getHTTPVerb();
+		}
+
+		$options = $this->routesOptions[$verb] ?? [];
+
+		if (isset($this->routesOptions['*']))
+		{
+			foreach ($this->routesOptions['*'] as $key => $val)
+			{
+				$options[$key] = $options[$key] ?? [];
+				$extraOptions  = array_diff_key($val, $options[$key]);
+				$options[$key] = array_merge($options[$key], $extraOptions);
+			}
+		}
+
+		return $options;
 	}
 
 }
