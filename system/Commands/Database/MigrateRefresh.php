@@ -45,12 +45,9 @@ use CodeIgniter\CLI\CLI;
 /**
  * Does a rollback followed by a latest to refresh the current state
  * of the database.
- *
- * @package CodeIgniter\Commands
  */
 class MigrateRefresh extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -78,14 +75,7 @@ class MigrateRefresh extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:refresh [Options]';
-
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
+	protected $usage = 'migrate:refresh [options]';
 
 	/**
 	 * the Command's Options
@@ -104,24 +94,28 @@ class MigrateRefresh extends BaseCommand
 	 * of the database.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
-		$params = ['b' => 0];
+		$params['b'] = 0;
 
 		if (ENVIRONMENT === 'production')
 		{
-			$force = CLI::getOption('f');
-			if (is_null($force) && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
+			// @codeCoverageIgnoreStart
+			$force = array_key_exists('f', $params) || CLI::getOption('f');
+
+			if (! $force && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
 			{
 				return;
 			}
 
 			$params['f'] = null;
+			// @codeCoverageIgnoreEnd
 		}
 
 		$this->call('migrate:rollback', $params);
-		$this->call('migrate');
+		$this->call('migrate', $params);
 	}
-
 }
