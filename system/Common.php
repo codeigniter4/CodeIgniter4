@@ -466,7 +466,7 @@ if (! function_exists('esc'))
 
 			static $escaper;
       
-			if (! $escaper && $encoding && $escaper->getEncoding() !== $encoding))
+			if (! $escaper && $encoding && $escaper->getEncoding() !== $encoding)
 			{
 				$escaper = new Escaper($encoding);
 			}
