@@ -378,8 +378,8 @@
 and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController. you can
 also extend the CodeIgniter\Controller if you do not need the functionality of the BaseController.</p>
 <p>The BaseController provides a convenient place for loading components and performing functions that are needed by all your
-controllers. Extend this class in any new controller:</p>
-<p>For security reasons be sure to declare any new methods as protected or private.:</p>
+controllers. You can extend this class in any new controller.</p>
+<p>For security reasons be sure to declare any new utility methods as protected or private.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -685,7 +685,6 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\BaseController</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -769,7 +768,7 @@ the $rules array with the name of the group as defined in <code class="docutils 
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Oct 09, 2020.
+        Last updated on Oct 10, 2020.
       </span>
 
     </p>
