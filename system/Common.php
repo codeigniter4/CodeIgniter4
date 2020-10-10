@@ -598,6 +598,8 @@ if (! function_exists('helper'))
 	 */
 	function helper($filenames)
 	{
+		$loader = Services::locator();
+		
 		if (! is_array($filenames))
 		{
 			$filenames = [$filenames];
@@ -623,7 +625,7 @@ if (! function_exists('helper'))
 			// file and not search for any others
 			if (strpos($filename, '\\') !== false)
 			{
-				$path = Services::locator()->locateFile($filename, 'Helpers');
+				$path = $loader->locateFile($filename, 'Helpers');
 
 				if (empty($path))
 				{
