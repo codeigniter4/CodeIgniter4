@@ -1,19 +1,18 @@
 <?php
+
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
+use stdClass;
 
-class TableTest extends \CodeIgniter\Test\CIUnitTestCase
+class TableTest extends CIUnitTestCase
 {
-
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		$this->table = new MockTable();
 	}
-
-	// Setter Methods
-	// --------------------------------------------------------------------
 
 	public function testSetTemplate()
 	{
@@ -37,10 +36,9 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('awesome cap', $this->table->caption);
 	}
 
-	/*
-	 * @depends	test_prep_args
+	/**
+	 * @depends	testPrepArgs
 	 */
-
 	public function testSetHeading()
 	{
 		// uses _prep_args internally, so we'll just do a quick
@@ -49,12 +47,13 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->table->setHeading('name', 'color', 'size');
 
-		$this->assertEquals([
-			['data' => 'name'],
-			['data' => 'color'],
-			['data' => 'size'],
-		],
-				$this->table->heading
+		$this->assertEquals(
+			[
+				['data' => 'name'],
+				['data' => 'color'],
+				['data' => 'size'],
+			],
+			$this->table->heading
 		);
 	}
 
@@ -68,18 +67,18 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->table->setFooting('Subtotal', $subtotal);
 
-		$this->assertEquals([
-			['data' => 'Subtotal'],
-			['data' => $subtotal],
-		],
-				$this->table->footing
+		$this->assertEquals(
+			[
+				['data' => 'Subtotal'],
+				['data' => $subtotal],
+			],
+			$this->table->footing
 		);
 	}
 
-	/*
-	 * @depends	test_prep_args
+	/**
+	 * @depends	testPrepArgs
 	 */
-
 	public function testAddRow()
 	{
 		// uses _prep_args internally, so we'll just do a quick
@@ -92,17 +91,15 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertCount(3, $this->table->rows);
 
-		$this->assertEquals([
-			['data' => 'your'],
-			['data' => 'pony'],
-			['data' => 'stinks'],
-		],
-				$this->table->rows[1]
+		$this->assertEquals(
+			[
+				['data' => 'your'],
+				['data' => 'pony'],
+				['data' => 'stinks'],
+			],
+			$this->table->rows[1]
 		);
 	}
-
-	// Uility Methods
-	// --------------------------------------------------------------------
 
 	public function testPrepArgs()
 	{
@@ -113,8 +110,8 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->assertEquals(
-				$expected,
-				$this->table->prepArgs(['name', 'color', 'size'])
+			$expected,
+			$this->table->prepArgs(['name', 'color', 'size'])
 		);
 
 		// with cell attributes
@@ -125,8 +122,8 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->assertEquals(
-				$expected,
-				$this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
+			$expected,
+			$this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
 		);
 	}
 
@@ -197,24 +194,25 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// No column count - no changes to the array
 		$this->assertEquals(
-				$five_values,
-				$this->table->makeColumns($five_values)
+			$five_values,
+			$this->table->makeColumns($five_values)
 		);
 
 		// Column count of 3 leaves us with one &nbsp;
-		$this->assertEquals([
+		$this->assertEquals(
 			[
-				'Laura',
-				'Red',
-				'15',
+				[
+					'Laura',
+					'Red',
+					'15',
+				],
+				[
+					'Katie',
+					'Blue',
+					'&nbsp;',
+				],
 			],
-			[
-				'Katie',
-				'Blue',
-				'&nbsp;',
-			],
-		],
-				$this->table->makeColumns($five_values, 3)
+			$this->table->makeColumns($five_values, 3)
 		);
 	}
 
@@ -294,7 +292,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSetFromObject()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 
@@ -402,8 +400,6 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<td>Huh?</td>', $table);
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testWithConfig()
 	{
 		$customSettings = [
@@ -444,7 +440,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGenerateFromDBResult()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 		$DBResult        = new DBResultDummy($dummy->connID, $dummy->resultID);
@@ -470,8 +466,6 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Undefined table data', $table);
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testCallback()
 	{
 		$this->table->setHeading('Name', 'Color', 'Size');
@@ -495,13 +489,11 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
 	}
-
 }
 
 // We need this for the _set_from_db_result() test
 class DBResultDummy extends Result
 {
-
 	public function getFieldNames(): array
 	{
 		return [
@@ -523,5 +515,4 @@ class DBResultDummy extends Result
 			],
 		];
 	}
-
 }

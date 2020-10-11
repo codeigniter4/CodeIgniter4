@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
@@ -74,8 +73,8 @@ class EncryptionTest extends CIUnitTestCase
 	public function testKeyCreation()
 	{
 		$this->assertNotEmpty($this->encryption->createKey());
-		$this->assertEquals(32, strlen($this->encryption->createKey()));
-		$this->assertEquals(16, strlen($this->encryption->createKey(16)));
+		$this->assertEquals(64, mb_strlen(bin2hex($this->encryption->createKey())));
+		$this->assertEquals(32, mb_strlen(bin2hex($this->encryption->createKey(16))));
 	}
 
 	public function testServiceSuccess()

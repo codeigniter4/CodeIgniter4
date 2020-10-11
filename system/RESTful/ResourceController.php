@@ -33,7 +33,7 @@
  * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -48,8 +48,6 @@ use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
- *
- * @package CodeIgniter\RESTful
  */
 class ResourceController extends Controller
 {
@@ -69,8 +67,6 @@ class ResourceController extends Controller
 	 */
 	protected $model;
 
-	//--------------------------------------------------------------------
-
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
 		parent::initController($request, $response, $logger);
@@ -79,12 +75,10 @@ class ResourceController extends Controller
 		$this->setModel($this->modelName);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return an array of resource objects, themselves in array format
 	 *
-	 * @return array	an array
+	 * @return array an array
 	 */
 	public function index()
 	{
@@ -94,7 +88,9 @@ class ResourceController extends Controller
 	/**
 	 * Return the properties of a resource object
 	 *
-	 * @return array	an array
+	 * @param mixed|null $id
+	 *
+	 * @return array an array
 	 */
 	public function show($id = null)
 	{
@@ -104,7 +100,7 @@ class ResourceController extends Controller
 	/**
 	 * Return a new resource object, with default properties
 	 *
-	 * @return array	an array
+	 * @return array an array
 	 */
 	public function new()
 	{
@@ -114,7 +110,7 @@ class ResourceController extends Controller
 	/**
 	 * Create a new resource object, from "posted" parameters
 	 *
-	 * @return array	an array
+	 * @return array an array
 	 */
 	public function create()
 	{
@@ -124,7 +120,9 @@ class ResourceController extends Controller
 	/**
 	 * Return the editable properties of a resource object
 	 *
-	 * @return array	an array
+	 * @param mixed|null $id
+	 *
+	 * @return array an array
 	 */
 	public function edit($id = null)
 	{
@@ -134,7 +132,9 @@ class ResourceController extends Controller
 	/**
 	 * Add or update a model resource, from "posted" properties
 	 *
-	 * @return array	an array
+	 * @param mixed|null $id
+	 *
+	 * @return array an array
 	 */
 	public function update($id = null)
 	{
@@ -144,20 +144,20 @@ class ResourceController extends Controller
 	/**
 	 * Delete the designated resource object from the model
 	 *
-	 * @return array	an array
+	 * @param mixed|null $id
+	 *
+	 * @return array an array
 	 */
 	public function delete($id = null)
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['delete']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set or change the model this controller is bound to.
 	 * Given either the name or the object, determine the other.
 	 *
-	 * @param string|object $which
+	 * @param object|string $which
 	 */
 	public function setModel($which = null)
 	{

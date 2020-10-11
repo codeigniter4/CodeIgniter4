@@ -17,14 +17,13 @@
  * @var array                      $styles
  * @var \CodeIgniter\View\Parser   $parser
  */
-
 ?>
 <style type="text/css">
-	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')) ?>
+	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')); ?>
 </style>
 
 <script id="toolbar_js" type="text/javascript">
-	<?= file_get_contents(__DIR__ . '/toolbar.js') ?>
+	<?= file_get_contents(__DIR__ . '/toolbar.js'); ?>
 </script>
 <div id="debug-icon" class="debug-bar-ndisplay">
 	<a id="debug-icon-link" href="javascript:void(0)">
@@ -53,25 +52,25 @@
 		<span class="ci-label">
 			<a href="javascript: void(0)" data-tab="ci-timeline">
 				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD7SURBVEhLY6ArSEtLK09NTbWHcvGC9PR0BaDaQiAdUl9fzwQVxg+AFvwHamqHcnGCpKQkeaDa9yD1UD09UCn8AKaBWJySkmIApFehi0ONwwRQBceBLurAh4FqFoHUAtkrgPgREN+ByYEw1DhMANVEMIhAYQ5U1wtU/wmILwLZRlAp/IBYC8gGw88CaFj3A/FnIL4ETDXGUCnyANSC/UC6HIpnQMXAqQXIvo0khxNDjcMEQEmU9AzDuNI7Lgw1DhOAJIEuhQcRKMcC+e+QNHdDpcgD6BaAANSSQqBcENFlDi6AzQKqgkFlwWhxjVI8o2OgmkFaXI8CTMDAAAAxd1O4FzLMaAAAAABJRU5ErkJggg==">
-				<span class="hide-sm"><?= $totalTime ?> ms &nbsp; <?= $totalMemory ?> MB</span>
+				<span class="hide-sm"><?= $totalTime; ?> ms &nbsp; <?= $totalMemory; ?> MB</span>
 			</a>
 		</span>
 
 		<?php foreach ($collectors as $c) : ?>
 			<?php if (! $c['isEmpty'] && ($c['hasTabContent'] || $c['hasLabel'])) : ?>
 				<span class="ci-label">
-					<a href="javascript: void(0)" data-tab="ci-<?= $c['titleSafe'] ?>">
-						<img src="<?= $c['icon'] ?>">
+					<a href="javascript: void(0)" data-tab="ci-<?= $c['titleSafe']; ?>">
+						<img src="<?= $c['icon']; ?>">
 						<span class="hide-sm">
-							<?= $c['title'] ?>
-							<?php if (! is_null($c['badgeValue'])) : ?>
-								<span class="badge"><?= $c['badgeValue'] ?></span>
-							<?php endif ?>
+							<?= $c['title']; ?>
+							<?php if ($c['badgeValue'] !== null) : ?>
+								<span class="badge"><?= $c['badgeValue']; ?></span>
+							<?php endif; ?>
 						</span>
 					</a>
 				</span>
-			<?php endif ?>
-		<?php endforeach ?>
+			<?php endif; ?>
+		<?php endforeach; ?>
 
 		<span class="ci-label">
 			<a href="javascript: void(0)" data-tab="ci-vars">
@@ -99,7 +98,7 @@
 							89 -104 206 -162 247 -17 13 -18 12 -11 -15z"/>
 						</g>
 					</svg>
-					<?= $CI_VERSION ?>
+					<?= $CI_VERSION; ?>
 				</a>
 			</span>
 		</h1>
@@ -119,13 +118,12 @@
 				<th class="debug-bar-width10">COMPONENT</th>
 				<th class="debug-bar-width10">DURATION</th>
 				<?php for ($i = 0; $i < $segmentCount; $i++) : ?>
-					<th><?= $i * $segmentDuration ?> ms</th>
-				<?php endfor ?>
+					<th><?= $i * $segmentDuration; ?> ms</th>
+				<?php endfor; ?>
 			</tr>
 			</thead>
 			<tbody>
-			<?= $this->renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration,
-				$styles) ?>
+				<?= $this->renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles); ?>
 			</tbody>
 		</table>
 	</div>
@@ -134,14 +132,14 @@
 	<?php foreach ($collectors as $c) : ?>
 		<?php if (! $c['isEmpty']) : ?>
 			<?php if ($c['hasTabContent']) : ?>
-				<div id="ci-<?= $c['titleSafe'] ?>" class="tab">
-					<h2><?= $c['title'] ?> <span><?= $c['titleDetails'] ?></span></h2>
+				<div id="ci-<?= $c['titleSafe']; ?>" class="tab">
+					<h2><?= $c['title']; ?> <span><?= $c['titleDetails']; ?></span></h2>
 
-					<?= is_string($c['display']) ? $c['display'] : $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl") ?>
+					<?= is_string($c['display']) ? $c['display'] : $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl"); ?>
 				</div>
-			<?php endif ?>
-		<?php endif ?>
-	<?php endforeach ?>
+			<?php endif; ?>
+		<?php endif; ?>
+	<?php endforeach; ?>
 
 	<!-- In & Out -->
 	<div id="ci-vars" class="tab">
@@ -150,29 +148,29 @@
 		<?php if (isset($vars['varData'])) : ?>
 			<?php foreach ($vars['varData'] as $heading => $items) : ?>
 
-				<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('<?= strtolower(str_replace(' ',
-					'-', $heading)) ?>'); return false;">
-					<h2><?= $heading ?></h2>
+				<?php $dashedHeading = strtolower(str_replace(' ', '-', $heading)); ?>
+				<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('<?= $dashedHeading; ?>'); return false;">
+					<h2><?= $heading; ?></h2>
 				</a>
 
 				<?php if (is_array($items)) : ?>
 
-					<table id="<?= strtolower(str_replace(' ', '-', $heading . '_table')) ?>">
+					<table id="<?= strtolower(str_replace(' ', '-', $heading . '_table')); ?>">
 						<tbody>
 						<?php foreach ($items as $key => $value) : ?>
 							<tr>
-								<td><?= $key ?></td>
-								<td><?= $value ?></td>
+								<td><?= $key; ?></td>
+								<td><?= $value; ?></td>
 							</tr>
-						<?php endforeach ?>
+						<?php endforeach; ?>
 						</tbody>
 					</table>
 
 				<?php else: ?>
 					<p class="muted">No data to display.</p>
-				<?php endif ?>
-			<?php endforeach ?>
-		<?php endif ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
 
 		<!-- Session -->
 		<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('session'); return false;">
@@ -185,20 +183,20 @@
 					<tbody>
 					<?php foreach ($vars['session'] as $key => $value) : ?>
 						<tr>
-							<td><?= $key ?></td>
-							<td><?= $value ?></td>
+							<td><?= $key; ?></td>
+							<td><?= $value; ?></td>
 						</tr>
-					<?php endforeach ?>
+					<?php endforeach; ?>
 					</tbody>
 				</table>
 			<?php else : ?>
 				<p class="muted">No data to display.</p>
-			<?php endif ?>
+			<?php endif; ?>
 		<?php else : ?>
 			<p class="muted">Session doesn't seem to be active.</p>
-		<?php endif ?>
+		<?php endif; ?>
 
-		<h2>Request <span>( <?= $vars['request'] ?> )</span></h2>
+		<h2>Request <span>( <?= $vars['request']; ?> )</span></h2>
 
 		<?php if (isset($vars['get']) && $get = $vars['get']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('get'); return false;">
@@ -209,13 +207,13 @@
 				<tbody>
 				<?php foreach ($get as $name => $value) : ?>
 					<tr>
-						<td><?= $name ?></td>
-						<td><?= $value ?></td>
+						<td><?= $name; ?></td>
+						<td><?= $value; ?></td>
 					</tr>
-				<?php endforeach ?>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		<?php endif ?>
+		<?php endif; ?>
 
 		<?php if (isset($vars['post']) && $post = $vars['post']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('post'); return false;">
@@ -226,13 +224,13 @@
 				<tbody>
 				<?php foreach ($post as $name => $value) : ?>
 					<tr>
-						<td><?= $name ?></td>
-						<td><?= $value ?></td>
+						<td><?= $name; ?></td>
+						<td><?= $value; ?></td>
 					</tr>
-				<?php endforeach ?>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		<?php endif ?>
+		<?php endif; ?>
 
 		<?php if (isset($vars['headers']) && $headers = $vars['headers']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('request_headers'); return false;">
@@ -243,13 +241,13 @@
 				<tbody>
 				<?php foreach ($headers as $header => $value) : ?>
 					<tr>
-						<td><?= $header ?></td>
-						<td><?= $value ?></td>
+						<td><?= $header; ?></td>
+						<td><?= $value; ?></td>
 					</tr>
-				<?php endforeach ?>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		<?php endif ?>
+		<?php endif; ?>
 
 		<?php if (isset($vars['cookies']) && $cookies = $vars['cookies']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('cookie'); return false;">
@@ -260,16 +258,16 @@
 				<tbody>
 				<?php foreach ($cookies as $name => $value) : ?>
 					<tr>
-						<td><?= $name ?></td>
-						<td><?= is_array($value) ? print_r($value, true) : $value ?></td>
+						<td><?= $name; ?></td>
+						<td><?= is_array($value) ? print_r($value, true) : $value; ?></td>
 					</tr>
-				<?php endforeach ?>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		<?php endif ?>
+		<?php endif; ?>
 
 		<h2>Response
-			<span>( <?= $vars['response']['statusCode'] . ' - ' . $vars['response']['reason'] ?> )</span>
+			<span>( <?= $vars['response']['statusCode'] . ' - ' . $vars['response']['reason']; ?> )</span>
 		</h2>
 
 		<?php if (isset($vars['headers']) && $headers = $vars['headers']) : ?>
@@ -281,27 +279,27 @@
 				<tbody>
 				<?php foreach ($headers as $header => $value) : ?>
 					<tr>
-						<td><?= $header ?></td>
-						<td><?= $value ?></td>
+						<td><?= $header; ?></td>
+						<td><?= $value; ?></td>
 					</tr>
-				<?php endforeach ?>
+				<?php endforeach; ?>
 				</tbody>
 			</table>
-		<?php endif ?>
+		<?php endif; ?>
 	</div>
 
 	<!-- Config Values -->
 	<div id="ci-config" class="tab">
 		<h2>System Configuration</h2>
 
-		<?= $parser->setData($config)->render('_config.tpl') ?>
+		<?= $parser->setData($config)->render('_config.tpl'); ?>
 	</div>
 </div>
 <style type="text/css">
-	<?php foreach($styles as $name => $style) : ?>
-	.<?= $name ?> {
-		<?= $style ?>
+	<?php foreach ($styles as $name => $style) : ?>
+	<?= '.' . $name; ?> {
+		<?= $style; ?>
 	}
 
-	<?php endforeach ?>
+	<?php endforeach; ?>
 </style>

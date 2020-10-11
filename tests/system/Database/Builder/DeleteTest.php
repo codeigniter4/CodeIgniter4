@@ -1,12 +1,13 @@
-<?php namespace Builder;
+<?php
 
+namespace Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
+class DeleteTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -14,8 +15,6 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDelete()
 	{
@@ -34,5 +33,4 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
-
 }

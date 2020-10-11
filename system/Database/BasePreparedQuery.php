@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -48,18 +49,17 @@ use mysqli_stmt;
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * The prepared statement itself.
 	 *
-	 * @var resource|mysqli_stmt
+	 * @var mysqli_stmt|resource
 	 */
 	protected $statement;
 
 	/**
 	 * The error code, if any.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $errorCode;
 
@@ -85,8 +85,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	protected $db;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -97,8 +95,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		$this->db = &$db;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -107,7 +103,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options    Passed to the connection's prepare statement.
+	 * @param array  $options    Passed to the connection's prepare statement
 	 * @param string $queryClass
 	 *
 	 * @return mixed
@@ -136,19 +132,15 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		return $this->_prepare($query->getOriginalQuery(), $options);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The database-dependent portion of the prepare statement.
 	 *
 	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
+	 * @param array  $options Passed to the connection's prepare statement
 	 *
 	 * @return mixed
 	 */
 	abstract public function _prepare(string $sql, array $options = []);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes a new set of data and runs it against the currently
@@ -175,25 +167,21 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		Events::trigger('DBQuery', $query);
 
 		// Return a result object
-		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
+		$resultClass = str_replace('PreparedQuery', 'Result', static::class);
 
 		$resultID = $this->_getResult();
 
 		return new $resultClass($this->db->connID, $resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The database dependant version of the execute method.
 	 *
 	 * @param array $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	abstract public function _execute(array $data): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result object for the prepared query.
@@ -202,12 +190,10 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	abstract public function _getResult();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Explicitly closes the statement.
 	 *
-	 * @return null|void
+	 * @return void
 	 */
 	public function close()
 	{
@@ -236,12 +222,10 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		return $this->query->getQuery();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A helper to determine if any error exists.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasError(): bool
 	{
@@ -253,14 +237,12 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getErrorCode(): int
 	{
 		return $this->errorCode;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error message created while executing this statement.
@@ -271,6 +253,4 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->errorString;
 	}
-
-	//--------------------------------------------------------------------
 }

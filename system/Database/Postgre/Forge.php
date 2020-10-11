@@ -44,7 +44,6 @@ namespace CodeIgniter\Database\Postgre;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * CHECK DATABASE EXIST statement
 	 *
@@ -83,20 +82,17 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected $_null = 'NULL';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * CREATE TABLE attributes
 	 *
-	 * @param  array $attributes Associative array of table attributes
+	 * @param array $attributes Associative array of table attributes
+	 *
 	 * @return string
 	 */
 	protected function _createTableAttributes(array $attributes): string
 	{
 		return '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * ALTER TABLE
@@ -105,7 +101,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $table     Table name
 	 * @param mixed  $field     Column definition
 	 *
-	 * @return string|array|boolean
+	 * @return array|bool|string
 	 */
 	protected function _alterTable(string $alterType, string $table, $field)
 	{
@@ -116,6 +112,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		$sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 		$sqls = [];
+
 		foreach ($field as $data)
 		{
 			if ($data['_literal'] !== false)
@@ -158,12 +155,11 @@ class Forge extends \CodeIgniter\Database\Forge
 		return $sqls;
 	}
 
-		//--------------------------------------------------------------------
-
 	/**
 	 * Process column
 	 *
-	 * @param  array $field
+	 * @param array $field
+	 *
 	 * @return string
 	 */
 	protected function _processColumn(array $field): string
@@ -175,8 +171,6 @@ class Forge extends \CodeIgniter\Database\Forge
 				. $field['auto_increment']
 				. $field['unique'];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Field attribute TYPE
@@ -200,20 +194,21 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'TINYINT':
 				$attributes['TYPE']     = 'SMALLINT';
 				$attributes['UNSIGNED'] = false;
+
 				break;
 			case 'MEDIUMINT':
 				$attributes['TYPE']     = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
+
 				break;
 			case 'DATETIME':
 				$attributes['TYPE'] = 'TIMESTAMP';
+
 				break;
 			default:
 				break;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Field attribute AUTO_INCREMENT
@@ -231,16 +226,14 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Drop Table
 	 *
 	 * Generates a platform-specific DROP TABLE string
 	 *
-	 * @param string  $table    Table name
-	 * @param boolean $ifExists Whether to add an IF EXISTS condition
-	 * @param boolean $cascade
+	 * @param string $table    Table name
+	 * @param bool   $ifExists Whether to add an IF EXISTS condition
+	 * @param bool   $cascade
 	 *
 	 * @return string
 	 */
@@ -255,7 +248,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
-
 }

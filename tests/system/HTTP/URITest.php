@@ -1,27 +1,24 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class URITest extends \CodeIgniter\Test\CIUnitTestCase
+class URITest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 	}
 
-	//--------------------------------------------------------------------
-
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		Config::reset();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testConstructorSetsAllParts()
 	{
@@ -41,8 +38,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['path'], $uri->getSegments());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSegmentsIsPopulatedRightForMultipleSegments()
 	{
 		$uri = new URI('http://hostname/path/to/script');
@@ -56,8 +51,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(3, $uri->getTotalSegments());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSegmentOutOfRange()
 	{
 		$this->expectException(HTTPException::class);
@@ -65,16 +58,12 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->getSegment(5);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSegmentOutOfRangeWithSilent()
 	{
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$this->assertEquals('', $uri->setSilent()->getSegment(22));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSegmentOutOfRangeWithDefaultValue()
 	{
@@ -84,16 +73,12 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->getSegment(22, 'something');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSegmentOutOfRangeWithSilentAndDefaultValue()
 	{
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$this->assertEquals('something', $uri->setSilent()->getSegment(22, 'something'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSegmentsWithDefaultValueAndSilent()
 	{
@@ -109,8 +94,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(2, $uri->getTotalSegments());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSegmentOutOfRangeWithDefaultValuesAndSilent()
 	{
 		$uri = new URI('http://hostname/path/to/script');
@@ -123,8 +106,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['path', 'to', 'script'], $uri->getSegments());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
@@ -134,8 +115,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleUri()
 	{
@@ -148,8 +127,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($url, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEmptyUri()
 	{
 		$url = '';
@@ -160,16 +137,12 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://', (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMalformedUri()
 	{
 		$this->expectException(HTTPException::class);
 		$url = 'http://abc:a123';
 		$uri = new URI($url);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMissingScheme()
 	{
@@ -181,8 +154,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($url, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSchemeSub()
 	{
 		$url = 'example.com';
@@ -190,8 +161,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setScheme('x');
 		$this->assertEquals('x://' . $url, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetSchemeSetsValue()
 	{
@@ -205,8 +174,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetUserInfoSetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -218,8 +185,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('user', $uri->getUserInfo());
 		$this->assertEquals($expected, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUserInfoCanShowPassword()
 	{
@@ -240,8 +205,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetHostSetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -254,8 +217,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetPortSetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -267,8 +228,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(9000, $uri->getPort());
 		$this->assertEquals($expected, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetPortInvalidValues()
 	{
@@ -283,8 +242,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setPort(70000);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetPortInvalidValuesSilent()
 	{
 		$url = 'http://example.com/path';
@@ -292,10 +249,8 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$uri->setSilent()->setPort(70000);
 
-		$this->assertEquals(null, $uri->getPort());
+		$this->assertNull($uri->getPort());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetPortTooSmall()
 	{
@@ -307,8 +262,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setPort(-1);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetPortZero()
 	{
 		$url = 'http://example.com/path';
@@ -319,8 +272,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setPort(0);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCatchesBadPort()
 	{
 		$this->expectException(HTTPException::class);
@@ -328,8 +279,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri = new URI();
 		$uri->setURI($url);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetPathSetsValue()
 	{
@@ -343,20 +292,18 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function invalidPaths()
 	{
 		return [
-			'dot-segment'  => [
+			'dot-segment' => [
 				'/./path/to/nowhere',
 				'/path/to/nowhere',
 			],
-			'double-dots'  => [
+			'double-dots' => [
 				'/../path/to/nowhere',
 				'/path/to/nowhere',
 			],
-			'start-dot'    => [
+			'start-dot' => [
 				'./path/to/nowhere',
 				'/path/to/nowhere',
 			],
@@ -364,21 +311,22 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 				'../path/to/nowhere',
 				'/path/to/nowhere',
 			],
-			'decoded'      => [
+			'decoded' => [
 				'../%41path',
 				'/Apath',
 			],
-			'encoded'      => [
+			'encoded' => [
 				'/path^here',
 				'/path%5Ehere',
 			],
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider invalidPaths
+	 *
+	 * @param mixed $path
+	 * @param mixed $expected
 	 */
 	public function testPathGetsFiltered($path, $expected)
 	{
@@ -386,8 +334,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setPath($path);
 		$this->assertEquals($expected, $uri->getPath());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetFragmentSetsValue()
 	{
@@ -401,8 +347,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetQuerySetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -414,8 +358,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetQuerySetsValueWithUseRawQueryString()
 	{
@@ -429,8 +371,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetQueryArraySetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -442,8 +382,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetQueryArraySetsValueWithUseRawQueryString()
 	{
@@ -457,8 +395,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetQueryThrowsErrorWhenFragmentPresent()
 	{
 		$url = 'http://example.com/path';
@@ -470,8 +406,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setQuery('?key=value#fragment');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetQueryThrowsErrorWhenFragmentPresentSilent()
 	{
 		$url = 'http://example.com/path';
@@ -482,20 +416,18 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $uri->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function authorityInfo()
 	{
 		return [
-			'host-only'      => [
+			'host-only' => [
 				'http://foo.com/bar',
 				'foo.com',
 			],
-			'host-port'      => [
+			'host-port' => [
 				'http://foo.com:3000/bar',
 				'foo.com:3000',
 			],
-			'user-host'      => [
+			'user-host' => [
 				'http://me@foo.com/bar',
 				'me@foo.com',
 			],
@@ -506,10 +438,11 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider authorityInfo
+	 *
+	 * @param mixed $url
+	 * @param mixed $expected
 	 */
 	public function testAuthorityReturnsExceptedValues($url, $expected)
 	{
@@ -517,12 +450,10 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $uri->getAuthority());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function defaultPorts()
 	{
 		return [
-			'http'  => [
+			'http' => [
 				'http',
 				80,
 			],
@@ -533,10 +464,11 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider defaultPorts
+	 *
+	 * @param mixed $scheme
+	 * @param mixed $port
 	 */
 	public function testAuthorityRemovesDefaultPorts($scheme, $port)
 	{
@@ -548,8 +480,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetAuthorityReconstitutes()
 	{
 		$authority = 'me@foo.com:3000';
@@ -559,8 +489,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($authority, $uri->getAuthority());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function defaultDots()
 	{
@@ -632,18 +560,17 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider defaultDots
+	 *
+	 * @param mixed $path
+	 * @param mixed $expected
 	 */
 	public function testRemoveDotSegments($path, $expected)
 	{
 		$uri = new URI();
 		$this->assertEquals($expected, $uri->removeDotSegments($path));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function defaultResolutions()
 	{
@@ -677,6 +604,9 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider defaultResolutions
+	 *
+	 * @param mixed $rel
+	 * @param mixed $expected
 	 */
 	public function testResolveRelativeURI($rel, $expected)
 	{
@@ -692,6 +622,9 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider defaultResolutions
 	 * @group        single
+	 *
+	 * @param mixed $rel
+	 * @param mixed $expected
 	 */
 	public function testResolveRelativeURIHTTPS($rel, $expected)
 	{
@@ -717,8 +650,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://a/x', (string) $new);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddQueryVar()
 	{
 		$base = 'http://example.com/foo';
@@ -729,8 +660,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('http://example.com/foo?bar=baz', (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/pull/954
@@ -760,8 +689,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStripQueryVars()
 	{
 		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -772,8 +699,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('http://example.com/foo?foo=bar', (string) $uri);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testKeepQueryVars()
 	{
@@ -786,8 +711,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEmptyQueryVars()
 	{
 		$base = 'http://example.com/foo';
@@ -797,8 +720,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?foo=&bar=baz&baz=foz', (string) $uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetQueryExcept()
 	{
 		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -807,8 +728,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('foo=bar&baz=foz', $uri->getQuery(['except' => ['bar']]));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetQueryOnly()
 	{
@@ -820,8 +739,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('foo=bar&baz=foz', $uri->getQuery(['except' => 'bar']));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetQueryWithStrings()
 	{
 		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -830,8 +747,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('bar=baz', $uri->getQuery(['only' => 'bar']));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
@@ -844,8 +759,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://localtest.me/subfolder', (string) (new URI('localtest.me/subfolder')));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetSegment()
 	{
 		$base = 'http://example.com/foo/bar/baz';
@@ -855,8 +768,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('foo/banana/baz', $uri->getPath());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetSegmentFallback()
 	{
@@ -907,7 +818,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($segments, $uri->getSegments());
 	}
 
-	//--------------------------------------------------------------------
 	// Exploratory testing, investigating https://github.com/codeigniter4/CodeIgniter4/issues/2016
 
 	public function testBasedNoIndex()
@@ -1036,5 +946,4 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $uri);
 	}
-
 }

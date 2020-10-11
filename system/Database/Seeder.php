@@ -88,7 +88,7 @@ class Seeder
 	/**
 	 * If true, will not display CLI messages.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $silent = false;
 
@@ -180,8 +180,11 @@ class Seeder
 				throw new InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
 			}
 
-			// Assume the class has the correct namespace
-			// @codeCoverageIgnoreStart
+			/**
+			 * Assume the class has the correct namespace
+			 *
+			 * @codeCoverageIgnoreStart
+			 */
 			$class = APP_NAMESPACE . '\Database\Seeds\\' . $class;
 
 			if (! class_exists($class, false))
@@ -223,7 +226,7 @@ class Seeder
 	/**
 	 * Sets the silent treatment.
 	 *
-	 * @param boolean $silent
+	 * @param bool $silent
 	 *
 	 * @return $this
 	 */

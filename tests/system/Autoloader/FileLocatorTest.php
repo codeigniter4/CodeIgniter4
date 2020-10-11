@@ -1,22 +1,24 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
 
+namespace CodeIgniter\Autoloader;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Autoload;
 use Config\Modules;
 
-class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileLocatorTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Autoloader\FileLocator
+	 * @var FileLocator
 	 */
 	protected $locator;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$autoloader = new Autoloader();
-		$autoloader->initialize(new \Config\Autoload(), new Modules());
+		$autoloader->initialize(new Autoload(), new Modules());
 		$autoloader->addNamespace([
 			'Unknown'       => '/i/do/not/exist',
 			'Tests/Support' => TESTPATH . '_support/',
@@ -25,14 +27,12 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 				TESTPATH,
 				SYSTEMPATH,
 			],
-			'Errors'        => APPPATH . 'Views/errors',
-			'System'        => SUPPORTPATH . 'Autoloader/system',
+			'Errors' => APPPATH . 'Views/errors',
+			'System' => SUPPORTPATH . 'Autoloader/system',
 		]);
 
 		$this->locator = new FileLocator($autoloader);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocateFileWorksWithLegacyStructure()
 	{
@@ -43,16 +43,12 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->locator->locateFile($file));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileWithLegacyStructureNotFound()
 	{
 		$file = 'Unknown';
 
 		$this->assertFalse($this->locator->locateFile($file));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocateFileWorksInApplicationDirectory()
 	{
@@ -63,8 +59,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
 	{
 		$file = 'Common';
@@ -73,8 +67,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $this->locator->locateFile($file));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocateFileWorksInNestedApplicationDirectory()
 	{
@@ -85,8 +77,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'Controllers'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileReplacesFolderName()
 	{
 		$file = '\App\Views/errors/html/error_404.php';
@@ -95,8 +85,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocateFileReplacesFolderNameLegacy()
 	{
@@ -107,8 +95,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileCanFindNamespacedView()
 	{
 		$file = '\Errors\error_404';
@@ -117,8 +103,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'html'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocateFileCanFindNestedNamespacedView()
 	{
@@ -129,8 +113,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'html'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileNotFoundExistingNamespace()
 	{
 		$file = '\App\Views/unexistence-file.php';
@@ -138,16 +120,12 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($this->locator->locateFile($file, 'Views'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLocateFileNotFoundWithBadNamespace()
 	{
 		$file = '\Blogger\admin/posts.php';
 
 		$this->assertFalse($this->locator->locateFile($file, 'Views'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSearchSimple()
 	{
@@ -158,8 +136,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $foundFiles[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSearchWithFileExtension()
 	{
 		$expected = APPPATH . 'Config/App.php';
@@ -168,8 +144,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $foundFiles[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSearchWithMultipleFilesFound()
 	{
@@ -182,8 +156,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertContains($expected, $foundFiles);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSearchForFileNotExist()
 	{
 		$foundFiles = $this->locator->search('Views/Fake.html');
@@ -191,28 +163,23 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayNotHasKey(0, $foundFiles);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSearchPrioritizeSystemOverApp()
 	{
 		$foundFiles = $this->locator->search('Language/en/Validation.php', 'php', false);
 
-		$this->assertEquals([
-			SYSTEMPATH . 'Language/en/Validation.php',
-			APPPATH . 'Language/en/Validation.php',
-		],
+		$this->assertEquals(
+			[
+				SYSTEMPATH . 'Language/en/Validation.php',
+				APPPATH . 'Language/en/Validation.php',
+			],
 			$foundFiles
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testListNamespaceFilesEmptyPrefixAndPath()
 	{
 		$this->assertEmpty($this->locator->listNamespaceFiles('', ''));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testListFilesSimple()
 	{
@@ -220,10 +187,8 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedWin = APPPATH . 'Config\App.php';
 		$expectedLin = APPPATH . 'Config/App.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testListFilesWithFileAsInput()
 	{
@@ -232,22 +197,18 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEmpty($files);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testListFilesFromMultipleDir()
 	{
 		$files = $this->locator->listFiles('Filters/');
 
 		$expectedWin = SYSTEMPATH . 'Filters\DebugToolbar.php';
 		$expectedLin = SYSTEMPATH . 'Filters/DebugToolbar.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 
 		$expectedWin = SYSTEMPATH . 'Filters\Filters.php';
 		$expectedLin = SYSTEMPATH . 'Filters/Filters.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testListFilesWithPathNotExist()
 	{
@@ -255,8 +216,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEmpty($files);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testListFilesWithoutPath()
 	{
@@ -302,5 +261,4 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->locator->getClassname(SYSTEMPATH . 'bootstrap.php')
 		);
 	}
-
 }

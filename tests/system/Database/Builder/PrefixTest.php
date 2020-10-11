@@ -1,12 +1,13 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
 
+namespace CodeIgniter\Database\Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
+class PrefixTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,16 +16,12 @@ class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->db = new MockConnection(['DBPrefix' => 'ci_']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPrefixesSetOnTableNames()
 	{
 		$expected = 'ci_users';
 
 		$this->assertEquals($expected, $this->db->prefixTable('users'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPrefixesSetOnTableNamesWithWhereClause()
 	{
@@ -40,5 +37,4 @@ class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
 }

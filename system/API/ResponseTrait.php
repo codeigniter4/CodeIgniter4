@@ -53,8 +53,6 @@ use Config\Services;
  *
  * @property IncomingRequest $request
  * @property Response        $response
- *
- * @package CodeIgniter\API
  */
 trait ResponseTrait
 {
@@ -111,14 +109,12 @@ trait ResponseTrait
 	 */
 	protected $formatter;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Provides a single, simple method to return an API response, formatted
 	 * to match the requested format, with proper content-type and status code.
 	 *
 	 * @param array|string|null $data
-	 * @param integer           $status
+	 * @param int               $status
 	 * @param string            $message
 	 *
 	 * @return mixed
@@ -147,13 +143,11 @@ trait ResponseTrait
 		return $this->response->setBody($output)->setStatusCode($status, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used for generic failures that no custom methods exist for.
 	 *
-	 * @param string|array $messages
-	 * @param integer      $status        HTTP status code
+	 * @param array|string $messages
+	 * @param int          $status        HTTP status code
 	 * @param string|null  $code          Custom, API-specific, error code
 	 * @param string       $customMessage
 	 *
@@ -176,15 +170,14 @@ trait ResponseTrait
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Response Helpers
 	//--------------------------------------------------------------------
 
 	/**
 	 * Used after successfully creating a new resource.
 	 *
-	 * @param mixed  $data    Data.
-	 * @param string $message Message.
+	 * @param mixed  $data    Data
+	 * @param string $message Message
 	 *
 	 * @return mixed
 	 */
@@ -193,13 +186,11 @@ trait ResponseTrait
 		return $this->respond($data, $this->codes['created'], $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used after a resource has been successfully deleted.
 	 *
-	 * @param mixed  $data    Data.
-	 * @param string $message Message.
+	 * @param mixed  $data    Data
+	 * @param string $message Message
 	 *
 	 * @return mixed
 	 */
@@ -211,8 +202,8 @@ trait ResponseTrait
 	/**
 	 * Used after a resource has been successfully updated.
 	 *
-	 * @param mixed  $data    Data.
-	 * @param string $message Message.
+	 * @param mixed  $data    Data
+	 * @param string $message Message
 	 *
 	 * @return mixed
 	 */
@@ -221,13 +212,11 @@ trait ResponseTrait
 		return $this->respond($data, $this->codes['updated'], $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used after a command has been successfully executed but there is no
 	 * meaningful reply to send back to the client.
 	 *
-	 * @param string $message Message.
+	 * @param string $message Message
 	 *
 	 * @return mixed
 	 */
@@ -235,8 +224,6 @@ trait ResponseTrait
 	{
 		return $this->respond(null, $this->codes['no_content'], $message);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Used when the client is either didn't send authorization information,
@@ -254,8 +241,6 @@ trait ResponseTrait
 		return $this->fail($description, $this->codes['unauthorized'], $code, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used when access is always denied to this resource and no amount
 	 * of trying again will help.
@@ -271,8 +256,6 @@ trait ResponseTrait
 		return $this->fail($description, $this->codes['forbidden'], $code, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used when a specified resource cannot be found.
 	 *
@@ -286,8 +269,6 @@ trait ResponseTrait
 	{
 		return $this->fail($description, $this->codes['resource_not_found'], $code, $message);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Used when the data provided by the client cannot be validated.
@@ -303,8 +284,6 @@ trait ResponseTrait
 		return $this->fail($description, $this->codes['invalid_data'], $code, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Use when trying to create a new resource and it already exists.
 	 *
@@ -318,8 +297,6 @@ trait ResponseTrait
 	{
 		return $this->fail($description, $this->codes['resource_exists'], $code, $message);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Use when a resource was previously deleted. This is different than
@@ -337,8 +314,6 @@ trait ResponseTrait
 		return $this->fail($description, $this->codes['resource_gone'], $code, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used when the user has made too many requests for the resource recently.
 	 *
@@ -353,16 +328,14 @@ trait ResponseTrait
 		return $this->fail($description, $this->codes['too_many_requests'], $code, $message);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used when there is a server error.
 	 *
-	 * @param string      $description The error message to show the user.
-	 * @param string|null $code        A custom, API-specific, error code.
-	 * @param string      $message     A custom "reason" message to return.
+	 * @param string      $description The error message to show the user
+	 * @param string|null $code        A custom, API-specific, error code
+	 * @param string      $message     A custom "reason" message to return
 	 *
-	 * @return Response The value of the Response's send() method.
+	 * @return Response The value of the Response's send() method
 	 */
 	public function failServerError(string $description = 'Internal Server Error', string $code = null, string $message = ''): Response
 	{
@@ -377,7 +350,7 @@ trait ResponseTrait
 	 * Handles formatting a response. Currently makes some heavy assumptions
 	 * and needs updating! :)
 	 *
-	 * @param string|array|null $data
+	 * @param array|string|null $data
 	 *
 	 * @return string|null
 	 */

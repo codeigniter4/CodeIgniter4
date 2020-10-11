@@ -1,6 +1,8 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,9 +11,8 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseSendTest extends CIUnitTestCase
 {
-
 	/**
 	 * These need to be run as a separate process, since phpunit
 	 * has already captured the "normal" output, and we will get
@@ -25,7 +26,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * The tests includes a basic sanity check, to make sure that
 	 * the body we thought would be sent actually was.
 	 */
-	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -50,6 +51,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -59,7 +61,6 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Date:');
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * This test does not test that CSP is handled properly -
 	 * it makes sure that sending gives CSP a chance to do its thing.
@@ -86,6 +87,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -95,7 +97,6 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Content-Security-Policy:');
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -113,8 +114,8 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
 		$answer1 = $response->redirect('/login')
-				->setCookie('foo', 'bar', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+			->setCookie('foo', 'bar', YEAR)
+			->setCookie('login_time', $login_time, YEAR);
 		$this->assertTrue($answer1->hasCookie('foo', 'bar'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
 		$response->setBody('Hello');
@@ -124,6 +125,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -133,5 +135,4 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Set-Cookie: foo=bar;');
 		$this->assertHeaderEmitted('Set-Cookie: login_time');
 	}
-
 }

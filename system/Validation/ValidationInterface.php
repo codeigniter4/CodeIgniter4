@@ -46,33 +46,28 @@ use CodeIgniter\HTTP\RequestInterface;
  */
 interface ValidationInterface
 {
-
 	/**
 	 * Runs the validation process, returning true/false determining whether
 	 * or not validation was successful.
 	 *
-	 * @param array  $data  The array of data to validate.
-	 * @param string $group The pre-defined group of rules to apply.
+	 * @param array  $data  the array of data to validate
+	 * @param string $group the pre-defined group of rules to apply
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function run(array $data = null, string $group = null): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Check; runs the validation process, returning true or false
 	 * determining whether or not validation was successful.
 	 *
-	 * @param mixed    $value  Value to validation.
-	 * @param string   $rule   Rule.
-	 * @param string[] $errors Errors.
+	 * @param mixed    $value  value to validate
+	 * @param string   $rule   rule
+	 * @param string[] $errors errors
 	 *
-	 * @return boolean True if valid, else false.
+	 * @return bool true if valid, else false
 	 */
 	public function check($value, string $rule, array $errors = []): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes a Request object and grabs the input data to use from its
@@ -98,18 +93,15 @@ interface ValidationInterface
 	 */
 	public function setRules(array $rules, array $messages = []): ValidationInterface;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if the rule for key $field has been set or not.
 	 *
 	 * @param string $field
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasRule(string $field): bool;
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Errors
 	//--------------------------------------------------------------------
@@ -123,8 +115,6 @@ interface ValidationInterface
 	 */
 	public function getError(string $field): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the array of errors that were encountered during
 	 * a run() call. The array should be in the following format:
@@ -137,8 +127,6 @@ interface ValidationInterface
 	 * @return array
 	 */
 	public function getErrors(): array;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the error for a specific field. Used by custom validation methods.
@@ -161,6 +149,4 @@ interface ValidationInterface
 	 * @return ValidationInterface
 	 */
 	public function reset(): ValidationInterface;
-
-	//--------------------------------------------------------------------
 }

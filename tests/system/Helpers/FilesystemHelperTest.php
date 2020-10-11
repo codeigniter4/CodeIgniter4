@@ -2,21 +2,22 @@
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 
-class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class FilesystemHelperTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->structure = [
-			'foo'           => [
+			'foo' => [
 				'bar' => 'Once upon a midnight dreary',
 				'baz' => 'While I pondered weak and weary',
 			],
-			'boo'           => [
+			'boo' => [
 				'far' => 'Upon a tome of long-forgotten lore',
 				'faz' => 'There came a tapping up on the door',
 			],
@@ -26,24 +27,22 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDirectoryMapDefaults()
 	{
 		helper('filesystem');
 		$this->assertTrue(function_exists('directory_map'));
 
 		$expected = [
-			'foo' . DIRECTORY_SEPARATOR           => [
-						'bar',
-						'baz',
-					],
-			'boo' . DIRECTORY_SEPARATOR           => [
-						'far',
-						'faz',
-					],
+			'foo' . DIRECTORY_SEPARATOR => [
+				'bar',
+				'baz',
+			],
+			'boo' . DIRECTORY_SEPARATOR => [
+				'far',
+				'faz',
+			],
 			'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
-			'simpleFile'
+			'simpleFile',
 		];
 
 		$root = vfsStream::setup('root', null, $this->structure);
@@ -59,16 +58,16 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = [
 			'foo' . DIRECTORY_SEPARATOR => [
-						'bar',
-						'baz',
-					],
+				'bar',
+				'baz',
+			],
 			'boo' . DIRECTORY_SEPARATOR => [
-						'far',
-						'faz',
-					],
+				'far',
+				'faz',
+			],
 			'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
 			'simpleFile',
-			'.hidden'
+			'.hidden',
 		];
 
 		$root = vfsStream::setup('root', null, $this->structure);
@@ -100,8 +99,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], directory_map(SUPPORTPATH . 'Files/shaker/'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testWriteFileSuccess()
 	{
 		$vfs = vfsStream::setup('root');
@@ -116,8 +113,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse(write_file(vfsStream::url('apple#test.php'), 'Simple'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDeleteFilesDefaultsToOneLevelDeep()
 	{
@@ -197,8 +192,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertFalse(delete_files(SUPPORTPATH . 'Files/shaker/'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFilenames()
 	{
@@ -290,8 +283,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], get_filenames(SUPPORTPATH . 'Files/shaker/'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetDirFileInfo()
 	{
 		$file = SUPPORTPATH . 'Files/baker/banana.php';
@@ -329,8 +320,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, get_dir_file_info(SUPPORTPATH . 'Files#baker'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFileInfo()
 	{
@@ -376,7 +365,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, get_file_info(SUPPORTPATH . 'Files/icer'));
 	}
 
-	//--------------------------------------------------------------------
 	public function testOctalPermissions()
 	{
 		$this->assertEquals('777', octal_permissions(0777));
@@ -405,17 +393,15 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRealPathURL()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		set_realpath('http://somewhere.com/overtherainbow');
 	}
 
 	public function testRealPathInvalid()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		set_realpath(SUPPORTPATH . 'root/../', true);
 	}
 
@@ -423,5 +409,4 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertEquals(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
 	}
-
 }

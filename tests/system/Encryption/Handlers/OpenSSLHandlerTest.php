@@ -3,14 +3,13 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
-use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
 class OpenSSLHandlerTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Encryption\Encryption
+	 * @var Encryption
 	 */
 	protected $encryption;
 

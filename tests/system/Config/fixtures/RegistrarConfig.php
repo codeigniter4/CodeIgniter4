@@ -1,10 +1,12 @@
 <?php
 
-class RegistrarConfig extends \CodeIgniter\Config\BaseConfig
+use CodeIgniter\Config\BaseConfig;
+
+class RegistrarConfig extends BaseConfig
 {
 	public $foo = 'bar';
-	public $bar = [
-		'baz'
-	];
 
+	public $bar = [
+		'baz',
+	];
 }

@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -40,13 +40,8 @@
 use Config\App;
 use Config\Services;
 
-// --------------------------------------------------------------------
+// CodeIgniter Cookie Helpers
 
-/**
- * CodeIgniter Cookie Helpers
- *
- * @package CodeIgniter
- */
 if (! function_exists('set_cookie'))
 {
 	/**
@@ -55,16 +50,16 @@ if (! function_exists('set_cookie'))
 	 * Accepts seven parameters, or you can submit an associative
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param string|array $name     Cookie name or array containing binds
+	 * @param array|string $name     Cookie name or array containing binds
 	 * @param string       $value    The value of the cookie
 	 * @param string       $expire   The number of seconds until expiration
 	 * @param string       $domain   For site-wide cookie.
-	 *                                 Usually: .yourdomain.com
+	 *                               Usually: .yourdomain.com
 	 * @param string       $path     The cookie path
 	 * @param string       $prefix   The cookie prefix
-	 * @param boolean      $secure   True makes the cookie secure
-	 * @param boolean      $httpOnly True makes the cookie accessible via
-	 *                                 http(s) only (no javascript)
+	 * @param bool         $secure   True makes the cookie secure
+	 * @param bool         $httpOnly True makes the cookie accessible via
+	 *                               http(s) only (no javascript)
 	 * @param string|null  $sameSite The cookie SameSite value
 	 *
 	 * @see (\Config\Services::response())->setCookie()
@@ -80,8 +75,7 @@ if (! function_exists('set_cookie'))
 		bool $secure = false,
 		bool $httpOnly = false,
 		string $sameSite = null
-	)
-	{
+	) {
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
 		$response = Services::response();
@@ -89,15 +83,13 @@ if (! function_exists('set_cookie'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('get_cookie'))
 {
 	/**
 	 * Fetch an item from the COOKIE array
 	 *
-	 * @param string  $index
-	 * @param boolean $xssClean
+	 * @param string $index
+	 * @param bool   $xssClean
 	 *
 	 * @return mixed
 	 *
@@ -116,8 +108,6 @@ if (! function_exists('get_cookie'))
 		return $request->getCookie($prefix . $index, $filter);
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('delete_cookie'))
 {

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -19,9 +21,6 @@ class AliasTest extends CIDatabaseTestCase
 			->where('j.name', 'Developer')
 			->get();
 
-		$this->assertEquals(1, count($jobs->getResult()));
+		$this->assertCount(1, $jobs->getResult());
 	}
-
-	//--------------------------------------------------------------------
-
 }

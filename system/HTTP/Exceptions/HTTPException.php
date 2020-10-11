@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +47,6 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 class HTTPException extends FrameworkException implements ExceptionInterface
 {
-
 	/**
 	 * For CurlRequest
 	 *
@@ -89,7 +89,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 * @param string $errorNum
 	 * @param string $error
 	 *
-	 * @return             \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @return HTTPException
 	 *
 	 * Not testable with travis-ci; we over-ride the method which triggers it
 	 * @codeCoverageIgnore
@@ -158,7 +158,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Response
 	 *
-	 * @param integer $code
+	 * @param int $code
 	 *
 	 * @return HTTPException
 	 */
@@ -170,7 +170,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Response
 	 *
-	 * @param integer $code
+	 * @param int $code
 	 *
 	 * @return HTTPException
 	 */
@@ -194,7 +194,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For URI
 	 *
-	 * @param integer $segment
+	 * @param int $segment
 	 *
 	 * @return HTTPException
 	 */
@@ -206,7 +206,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For URI
 	 *
-	 * @param integer $port
+	 * @param int $port
 	 *
 	 * @return HTTPException
 	 */
@@ -272,5 +272,4 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
 	}
-
 }

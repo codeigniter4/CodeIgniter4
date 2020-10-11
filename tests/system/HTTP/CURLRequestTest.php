@@ -3,10 +3,12 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use CURLFile;
 
-class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class CURLRequestTest extends CIUnitTestCase
 {
 	/**
 	 * @var MockCURLRequest
@@ -27,8 +29,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		return new MockCURLRequest(($app = new App()), $uri, new Response($app), $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
@@ -60,8 +60,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/api/v1/', $uri->getPath());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSendReturnsResponse()
 	{
 		$output = 'Howdy Stranger.';
@@ -72,8 +70,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
 		$this->assertEquals($output, $response->getBody());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetSetsCorrectMethod()
 	{
@@ -87,8 +83,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('GET', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDeleteSetsCorrectMethod()
 	{
 		$this->request->delete('http://example.com');
@@ -100,8 +94,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHeadSetsCorrectMethod()
 	{
@@ -115,8 +107,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOptionsSetsCorrectMethod()
 	{
 		$this->request->options('http://example.com');
@@ -128,8 +118,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOptionsBaseURIOption()
 	{
@@ -152,8 +140,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://bogus/com', $request->getBaseURI());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOptionsHeaders()
 	{
 		$options = [
@@ -166,8 +152,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $this->getRequest($options);
 		$this->assertEquals('apple', $request->getHeader('fruit')->getValue());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @backupGlobals enabled
@@ -216,8 +200,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $request->getHeader('Accept-Encoding')->getValue());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOptionsDelay()
 	{
 		$options = [
@@ -231,8 +213,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(2.0, $request->getDelay());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPatchSetsCorrectMethod()
 	{
 		$this->request->patch('http://example.com');
@@ -244,8 +224,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPostSetsCorrectMethod()
 	{
@@ -259,8 +237,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('POST', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPutSetsCorrectMethod()
 	{
 		$this->request->put('http://example.com');
@@ -272,8 +248,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('PUT', $options[CURLOPT_CUSTOMREQUEST]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCustomMethodSetsCorrectMethod()
 	{
@@ -287,8 +261,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequestMethodGetsSanitized()
 	{
 		$this->request->request('<script>Custom</script>', 'http://example.com');
@@ -300,8 +272,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRequestSetsBasicCurlOptions()
 	{
@@ -328,8 +298,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(150 * 1000, $options[CURLOPT_CONNECTTIMEOUT_MS]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAuthBasicOption()
 	{
 		$this->request->request('get', 'http://example.com', [
@@ -347,8 +315,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAuthBasicOptionExplicit()
 	{
@@ -368,8 +334,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAuthDigestOption()
 	{
@@ -410,8 +374,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetAuthBasic()
 	{
@@ -460,8 +422,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCertOption()
 	{
 		$file = __FILE__;
@@ -506,8 +466,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSSLVerification()
 	{
 		$file = __FILE__;
@@ -537,8 +495,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDebugOptionTrue()
 	{
 		$this->request->request('get', 'http://example.com', [
@@ -551,7 +507,7 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $options[CURLOPT_VERBOSE]);
 
 		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
-		$this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+		$this->assertIsResource($options[CURLOPT_STDERR]);
 	}
 
 	public function testDebugOptionFalse()
@@ -580,10 +536,8 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $options[CURLOPT_VERBOSE]);
 
 		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
-		$this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+		$this->assertIsResource($options[CURLOPT_STDERR]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDecodeContent()
 	{
@@ -612,8 +566,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_HTTPHEADER, $options);
 		$this->assertEquals('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAllowRedirectsOptionFalse()
 	{
@@ -677,8 +629,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(2, $options[CURLOPT_MAXREDIRS]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSendWithQuery()
 	{
 		$request = $this->getRequest([
@@ -696,7 +646,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
 	}
 
-	//--------------------------------------------------------------------
 	public function testSendWithDelay()
 	{
 		$request = $this->getRequest([
@@ -710,7 +659,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1.0, $request->getDelay());
 	}
 
-	//--------------------------------------------------------------------
 	public function testSendContinued()
 	{
 		$request = $this->getRequest([
@@ -770,7 +718,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals(200, $response->getStatusCode());
 	}
 
-	//--------------------------------------------------------------------
 	public function testSplitResponse()
 	{
 		$request = $this->getRequest([
@@ -783,7 +730,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals('Hi there', $response->getBody());
 	}
 
-	//--------------------------------------------------------------------
 	public function testApplyBody()
 	{
 		$request = $this->getRequest([
@@ -799,7 +745,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
 	}
 
-	//--------------------------------------------------------------------
 	public function testResponseHeaders()
 	{
 		$request = $this->getRequest([
@@ -828,8 +773,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals(235, $response->getStatusCode());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPostFormEncoded()
 	{
 		$params = [
@@ -855,12 +798,12 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 	public function testPostFormMultipart()
 	{
 		$params = [
-			'foo'   => 'bar',
-			'baz'   => [
+			'foo' => 'bar',
+			'baz' => [
 				'hi',
 				'there',
 			],
-			'afile' => new \CURLFile(__FILE__),
+			'afile' => new CURLFile(__FILE__),
 		];
 		$this->request->request('POST', '/post', [
 			'multipart' => $params,
@@ -873,8 +816,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertArrayHasKey(CURLOPT_POSTFIELDS, $options);
 		$this->assertEquals($params, $options[CURLOPT_POSTFIELDS]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetForm()
 	{
@@ -893,7 +834,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 			$this->request->curl_options[CURLOPT_POSTFIELDS]
 		);
 
-		$params['afile'] = new \CURLFile(__FILE__);
+		$params['afile'] = new CURLFile(__FILE__);
 
 		$this->request->setForm($params, true)->post('/post');
 
@@ -902,8 +843,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 			$this->request->curl_options[CURLOPT_POSTFIELDS]
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testJSONData()
 	{
@@ -924,8 +863,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals($expected, $this->request->getBody());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetJSON()
 	{
 		$params = [
@@ -940,8 +877,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertEquals(json_encode($params), $this->request->getBody());
 		$this->assertEquals('application/json', $this->request->getHeaderLine('Content-Type'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHTTPv1()
 	{
@@ -966,8 +901,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
 		$this->assertEquals(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCookieOption()
 	{

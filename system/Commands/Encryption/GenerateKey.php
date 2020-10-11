@@ -99,18 +99,18 @@ class GenerateKey extends BaseCommand
 	public function run(array $params)
 	{
 		$prefix = $params['prefix'] ?? CLI::getOption('prefix');
+
 		if (in_array($prefix, [null, true], true))
 		{
 			$prefix = 'hex2bin';
 		}
 		elseif (! in_array($prefix, ['hex2bin', 'base64'], true))
 		{
-			// @codeCoverageIgnoreStart
-			$prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required');
-			// @codeCoverageIgnoreEnd
+			$prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required'); // @codeCoverageIgnore
 		}
 
 		$length = $params['length'] ?? CLI::getOption('length');
+
 		if (in_array($length, [null, true], true))
 		{
 			$length = 32;
@@ -122,6 +122,7 @@ class GenerateKey extends BaseCommand
 		{
 			CLI::write($encodedKey, 'yellow');
 			CLI::newLine();
+
 			return;
 		}
 
@@ -129,6 +130,7 @@ class GenerateKey extends BaseCommand
 		{
 			CLI::write('Error in setting new encryption key to .env file.', 'light_gray', 'red');
 			CLI::newLine();
+
 			return;
 		}
 
@@ -145,8 +147,8 @@ class GenerateKey extends BaseCommand
 	/**
 	 * Generates a key and encodes it.
 	 *
-	 * @param string  $prefix
-	 * @param integer $length
+	 * @param string $prefix
+	 * @param int    $length
 	 *
 	 * @return string
 	 */
@@ -168,7 +170,7 @@ class GenerateKey extends BaseCommand
 	 * @param string $key
 	 * @param array  $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function setNewEncryptionKey(string $key, array $params): bool
 	{
@@ -190,7 +192,7 @@ class GenerateKey extends BaseCommand
 	 *
 	 * @param array $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function confirmOverwrite(array $params): bool
 	{
@@ -203,7 +205,7 @@ class GenerateKey extends BaseCommand
 	 * @param string $oldKey
 	 * @param string $newKey
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function writeNewEncryptionKeyToFile(string $oldKey, string $newKey): bool
 	{
@@ -217,6 +219,7 @@ class GenerateKey extends BaseCommand
 				CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
 				CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
 				CLI::newLine();
+
 				return false;
 			}
 
@@ -225,7 +228,7 @@ class GenerateKey extends BaseCommand
 
 		$ret = file_put_contents($envFile, preg_replace(
 			$this->keyPattern($oldKey),
-			"\nencryption.key = $newKey",
+			"\nencryption.key = {$newKey}",
 			file_get_contents($envFile)
 		));
 
@@ -245,9 +248,9 @@ class GenerateKey extends BaseCommand
 
 		if ($escaped !== '')
 		{
-			$escaped = "[$escaped]*";
+			$escaped = "[{$escaped}]*";
 		}
 
-		return "/^[#\s]*encryption.key[=\s]*{$escaped}$/m";
+		return '/^[#\s]*encryption.key[=\s]*' . $escaped . '$/m';
 	}
 }

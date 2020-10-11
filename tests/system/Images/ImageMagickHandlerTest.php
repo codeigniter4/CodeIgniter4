@@ -1,7 +1,11 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Imagick;
 
 /**
  * Unit testing for the ImageMagick image handler.
@@ -12,14 +16,14 @@ use CodeIgniter\Images\Exceptions\ImageException;
  *
  * Was unable to test fontPath & related logic.
  */
-class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class ImageMagickHandlerTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		if (! extension_loaded('imagick'))
 		{
 			$this->markTestSkipped('The ImageMagick extension is not available.');
+
 			return;
 		}
 
@@ -34,7 +38,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->path = $this->origin . 'ci-logo.png';
 
-		$handlerConfig              = new \Config\Images;
+		$handlerConfig              = new \Config\Images();
 		$handlerConfig->libraryPath = '/usr/bin/convert';
 		$this->handler              = Services::image('imagick', $handlerConfig, false);
 	}
@@ -76,8 +80,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('image/png', $props['mime_type']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testResizeIgnored()
 	{
 		$this->handler->withFile($this->path);
@@ -117,8 +119,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(353, $this->handler->getWidth());
 		$this->assertEquals(456, $this->handler->getHeight());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCropTopLeft()
 	{
@@ -168,8 +168,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(100, $this->handler->getHeight());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRotate()
 	{
 		$this->handler->withFile($this->path); // 155x200
@@ -192,8 +190,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->handler->rotate(77);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFlatten()
 	{
 		$this->handler->withFile($this->path);
@@ -201,8 +197,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(155, $this->handler->getWidth());
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFlip()
 	{
@@ -235,7 +229,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->handler->flip('bogus');
 	}
 
-	//--------------------------------------------------------------------
 	public function testFit()
 	{
 		$this->handler->withFile($this->path);
@@ -274,6 +267,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bottom-right',
 		];
 		$this->handler->withFile($this->path);
+
 		foreach ($choices as $position)
 		{
 			$this->handler->fit(100, 100, $position);
@@ -281,8 +275,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testText()
 	{
@@ -292,8 +284,6 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMoreText()
 	{
 		$this->handler->withFile($this->path);
@@ -302,13 +292,11 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testImageCreation()
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -321,13 +309,11 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testImageCopy()
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -335,7 +321,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save($this->root . 'ci-logo.' . $type);
-			$this->assertTrue(file_exists($this->root . 'ci-logo.' . $type));
+			$this->assertFileExists($this->root . 'ci-logo.' . $type);
 
 			$this->assertNotEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
@@ -350,7 +336,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save(null, 100);
-			$this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
+			$this->assertFileExists($this->origin . 'ci-logo.' . $type);
 
 			$this->assertEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
@@ -363,7 +349,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -372,7 +358,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->getResource(); // make sure resource is loaded
 			$this->handler->save($this->root . 'ci-logo.' . $type);
-			$this->assertTrue(file_exists($this->root . 'ci-logo.' . $type));
+			$this->assertFileExists($this->root . 'ci-logo.' . $type);
 
 			$this->assertNotEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
@@ -385,7 +371,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -395,7 +381,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 				->withResource() // make sure resource is loaded
 				->save($this->root . 'ci-logo.' . $type);
 
-			$this->assertTrue(file_exists($this->root . 'ci-logo.' . $type));
+			$this->assertFileExists($this->root . 'ci-logo.' . $type);
 
 			$this->assertNotEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
@@ -452,5 +438,4 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
 		}
 	}
-
 }

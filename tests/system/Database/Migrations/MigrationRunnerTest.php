@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database;
+<?php
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
@@ -15,10 +17,12 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $root;
+
 	protected $start;
+
 	protected $config;
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -39,7 +43,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertInstanceOf(BaseConnection::class, $db);
 		$this->assertEquals(
-			($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
+			($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '') . $dbConfig->tests['database'],
 			$this->getPrivateProperty($db, 'database')
 		);
 		$this->assertEquals($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
@@ -181,23 +185,23 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$mig1      = (object)[
-								 'name'      => 'Some_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
-								 'version'   => '2018-01-24-102301',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-							 ];
+		$mig1 = (object) [
+			'name'      => 'Some_migration',
+			'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+			'version'   => '2018-01-24-102301',
+			'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+			'namespace' => 'Tests\Support\MigrationTestMigrations',
+		];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
-		$mig2      = (object)[
-								 'name'      => 'Another_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
-								 'version'   => '2018-01-24-102302',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-								 'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-							 ];
+		$mig2 = (object) [
+			'name'      => 'Another_migration',
+			'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+			'version'   => '2018-01-24-102302',
+			'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+			'namespace' => 'Tests\Support\MigrationTestMigrations',
+			'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+		];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
 		$migrations = $runner->findMigrations();
@@ -301,7 +305,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			->clearHistory();
 
 		$result = null;
-		Events::on('migrate', function ($arg) use (&$result) {
+		Events::on('migrate', static function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
@@ -319,7 +323,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			->clearHistory();
 
 		$result = null;
-		Events::on('migrate', function ($arg) use (&$result) {
+		Events::on('migrate', static function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
@@ -379,6 +383,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$forge = Config::forge();
 
 		$tables = $db->listTables();
+
 		foreach ($tables as $table)
 		{
 			$table = str_replace('db_', '', $table);

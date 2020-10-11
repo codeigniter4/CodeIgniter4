@@ -48,24 +48,19 @@ use RuntimeException;
  * provide files.
  *
  * Typically, implementors will extend the SplFileInfo class.
- *
- * @package CodeIgniter\HTTP
  */
 interface UploadedFileInterface
 {
-
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *
-	 * @param string  $path         The temporary location of the uploaded file.
-	 * @param string  $originalName The client-provided filename.
-	 * @param string  $mimeType     The type of file as provided by PHP
-	 * @param integer $size         The size of the file, in bytes
-	 * @param integer $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+	 * @param string $path         the temporary location of the uploaded file
+	 * @param string $originalName the client-provided filename
+	 * @param string $mimeType     The type of file as provided by PHP
+	 * @param int    $size         The size of the file, in bytes
+	 * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Move the uploaded file to a new location.
@@ -89,27 +84,23 @@ interface UploadedFileInterface
 	 * @see http://php.net/is_uploaded_file
 	 * @see http://php.net/move_uploaded_file
 	 *
-	 * @param string $targetPath Path to which to move the uploaded file.
-	 * @param string $name       the name to rename the file to.
+	 * @param string $targetPath path to which to move the uploaded file
+	 * @param string $name       the name to rename the file to
 	 *
-	 * @throws InvalidArgumentException if the $path specified is invalid.
-	 * @throws RuntimeException on any error during the move operation.
-	 * @throws RuntimeException on the second or subsequent call to the method.
+	 * @throws InvalidArgumentException if the $path specified is invalid
+	 * @throws RuntimeException         on any error during the move operation
+	 * @throws RuntimeException         on the second or subsequent call to the method
 	 */
 	public function move(string $targetPath, string $name = null);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns whether the file has been moved or not. If it has,
 	 * the move() method will not work and certain properties, like
 	 * the tempName, will no longer be available.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasMoved(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the error associated with the uploaded file.
@@ -123,11 +114,10 @@ interface UploadedFileInterface
 	 * the file in the $_FILES array.
 	 *
 	 * @see    http://php.net/manual/en/features.file-upload.errors.php
-	 * @return integer One of PHP's UPLOAD_ERR_XXX constants.
+	 *
+	 * @return int One of PHP's UPLOAD_ERR_XXX constants
 	 */
 	public function getError(): int;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the filename sent by the client.
@@ -140,11 +130,9 @@ interface UploadedFileInterface
 	 * the file in the $_FILES array.
 	 *
 	 * @return string The filename sent by the client or null if none
-	 *     was provided.
+	 *                was provided
 	 */
 	public function getName(): string;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Gets the temporary filename where the file was uploaded to.
@@ -152,8 +140,6 @@ interface UploadedFileInterface
 	 * @return string
 	 */
 	public function getTempName(): string;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the original file extension, based on the file name that
@@ -164,8 +150,6 @@ interface UploadedFileInterface
 	 */
 	public function getClientExtension(): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the mime type as provided by the client.
 	 * This is NOT a trusted value.
@@ -175,17 +159,13 @@ interface UploadedFileInterface
 	 */
 	public function getClientMimeType(): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns whether the file was uploaded successfully, based on whether
 	 * it was uploaded via HTTP and has no errors.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isValid(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the destination path for the move operation where overwriting is not expected.
@@ -194,13 +174,11 @@ interface UploadedFileInterface
 	 * last element is an integer as there may be cases that the delimiter may be present in the filename.
 	 * For the all other cases, it appends an integer starting from zero before the file's extension.
 	 *
-	 * @param string  $destination
-	 * @param string  $delimiter
-	 * @param integer $i
+	 * @param string $destination
+	 * @param string $delimiter
+	 * @param int    $i
 	 *
 	 * @return string
 	 */
 	public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
-
-	//--------------------------------------------------------------------
 }

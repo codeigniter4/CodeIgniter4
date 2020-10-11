@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -19,8 +21,6 @@ class DeleteTest extends CIDatabaseTestCase
 		$this->db->table('job')->delete();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDeleteWithExternalWhere()
 	{
 		$this->seeInDatabase('job', ['name' => 'Developer']);
@@ -29,8 +29,6 @@ class DeleteTest extends CIDatabaseTestCase
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDeleteWithInternalWhere()
 	{
@@ -41,10 +39,9 @@ class DeleteTest extends CIDatabaseTestCase
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group  single
+	 *
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function testDeleteWithLimit()
@@ -54,11 +51,11 @@ class DeleteTest extends CIDatabaseTestCase
 		try
 		{
 			$this->db->table('user')
-					 ->delete(['country' => 'US'], 1);
+				->delete(['country' => 'US'], 1);
 		}
 		catch (DatabaseException $e)
 		{
-			if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
+			if (mb_strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
 			{
 				return;
 			}
@@ -66,7 +63,4 @@ class DeleteTest extends CIDatabaseTestCase
 
 		$this->seeNumRecords(1, 'user', ['country' => 'US']);
 	}
-
-	//--------------------------------------------------------------------
-
 }

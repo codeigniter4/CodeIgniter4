@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Filters\fixtures;
+<?php
+
+namespace CodeIgniter\Filters\fixtures;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -13,14 +15,10 @@ class GoogleMe implements FilterInterface
 		return $request;
 	}
 
-	//--------------------------------------------------------------------
-
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 		$response->csp = 'http://google.com';
 
 		return $response;
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -6,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,12 +29,11 @@
  * THE SOFTWARE.
  *
  * @package    CodeIgniter
- * @author     EllisLab Dev Team
- * @copyright  Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright  Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 1.3.1
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -45,15 +45,9 @@ use CodeIgniter\Database\BaseResult;
  * HTML Table Generating Class
  *
  * Lets you create tables manually or from database result objects, or arrays.
- *
- * @package    CodeIgniter
- * @subpackage Libraries
- * @category   HTML Tables
- * @author     EllisLab Dev Team
  */
 class Table
 {
-
 	/**
 	 * Data for table rows
 	 *
@@ -78,7 +72,7 @@ class Table
 	/**
 	 * Whether or not to automatically create the table header
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $autoHeading = true;
 
@@ -120,7 +114,8 @@ class Table
 	/**
 	 * Set the template from the table config file if it exists
 	 *
-	 * @param  array $config (default: array())
+	 * @param array $config (default: array())
+	 *
 	 * @return void
 	 */
 	public function __construct($config = [])
@@ -132,13 +127,12 @@ class Table
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set the template
 	 *
-	 * @param  array $template
-	 * @return boolean
+	 * @param array $template
+	 *
+	 * @return bool
 	 */
 	public function setTemplate($template)
 	{
@@ -148,10 +142,9 @@ class Table
 		}
 
 		$this->template = $template;
+
 		return true;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set the table heading
@@ -163,6 +156,7 @@ class Table
 	public function setHeading()
 	{
 		$this->heading = $this->_prepArgs(func_get_args());
+
 		return $this;
 	}
 
@@ -176,10 +170,9 @@ class Table
 	public function setFooting()
 	{
 		$this->footing = $this->_prepArgs(func_get_args());
+
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set columns. Takes a one-dimensional array as input and creates
@@ -187,8 +180,9 @@ class Table
 	 * columns. This allows a single array with many elements to be
 	 * displayed in a table that has a fixed column count.
 	 *
-	 * @param  array   $array
-	 * @param  integer $columnLimit
+	 * @param array $array
+	 * @param int   $columnLimit
+	 *
 	 * @return array|false
 	 */
 	public function makeColumns($array = [], $columnLimit = 0)
@@ -214,36 +208,33 @@ class Table
 
 			if (count($temp) < $columnLimit)
 			{
-				for ($i = count($temp); $i < $columnLimit; $i ++)
+				for ($i = count($temp); $i < $columnLimit; $i++)
 				{
 					$temp[] = '&nbsp;';
 				}
 			}
 
 			$new[] = $temp;
-		}
-		while (count($array) > 0);
+		} while (count($array) > 0);
 
 		return $new;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set "empty" cells
 	 *
 	 * Can be passed as an array or discreet params
 	 *
-	 * @param  mixed $value
+	 * @param mixed $value
+	 *
 	 * @return Table
 	 */
 	public function setEmpty($value)
 	{
 		$this->emptyCells = $value;
+
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Add a table row
@@ -255,17 +246,17 @@ class Table
 	public function addRow()
 	{
 		$this->rows[] = $this->_prepArgs(func_get_args());
+
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Prep Args
 	 *
 	 * Ensures a standard associative array format for all cell data
 	 *
-	 * @param  array $args
+	 * @param array $args
+	 *
 	 * @return array
 	 */
 	protected function _prepArgs(array $args)
@@ -286,26 +277,25 @@ class Table
 		return $args;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Add a table caption
 	 *
-	 * @param  string $caption
+	 * @param string $caption
+	 *
 	 * @return Table
 	 */
 	public function setCaption($caption)
 	{
 		$this->caption = $caption;
+
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Generate the table
 	 *
-	 * @param  mixed $tableData
+	 * @param mixed $tableData
+	 *
 	 * @return string
 	 */
 	public function generate($tableData = null)
@@ -366,7 +356,7 @@ class Table
 					}
 				}
 
-				$out .= $temp . (isset($heading['data']) ? $heading['data'] : '') . $this->template['heading_cell_end'];
+				$out .= $temp . ($heading['data'] ?? '') . $this->template['heading_cell_end'];
 			}
 
 			$out .= $this->template['heading_row_end'] . $this->newline . $this->template['thead_close'] . $this->newline;
@@ -378,10 +368,11 @@ class Table
 			$out .= $this->template['tbody_open'] . $this->newline;
 
 			$i = 1;
+
 			foreach ($this->rows as $row)
 			{
 				// We use modulus to alternate the row colors
-				$name = fmod($i ++, 2) ? '' : 'alt_';
+				$name = fmod($i++, 2) ? '' : 'alt_';
 
 				$out .= $this->template['row_' . $name . 'start'] . $this->newline;
 
@@ -397,7 +388,7 @@ class Table
 						}
 					}
 
-					$cell = isset($cell['data']) ? $cell['data'] : '';
+					$cell = $cell['data'] ?? '';
 					$out .= $temp;
 
 					if ($cell === '' || $cell === null)
@@ -437,7 +428,7 @@ class Table
 					}
 				}
 
-				$out .= $temp . (isset($footing['data']) ? $footing['data'] : '') . $this->template['footing_cell_end'];
+				$out .= $temp . ($footing['data'] ?? '') . $this->template['footing_cell_end'];
 			}
 
 			$out .= $this->template['footing_row_end'] . $this->newline . $this->template['tfoot_close'] . $this->newline;
@@ -454,8 +445,6 @@ class Table
 		return $out;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clears the table arrays.  Useful if multiple tables are being generated
 	 *
@@ -468,15 +457,15 @@ class Table
 		$this->footing     = [];
 		$this->autoHeading = true;
 		$this->caption     = null;
+
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set table data from a database result object
 	 *
-	 * @param  BaseResult $object Database result object
+	 * @param BaseResult $object Database result object
+	 *
 	 * @return void
 	 */
 	protected function _setFromDBResult($object)
@@ -493,12 +482,11 @@ class Table
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set table data from an array
 	 *
-	 * @param  array $data
+	 * @param array $data
+	 *
 	 * @return void
 	 */
 	protected function _setFromArray($data)
@@ -514,8 +502,6 @@ class Table
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Compile Template
 	 *
@@ -526,10 +512,12 @@ class Table
 		if ($this->template === null)
 		{
 			$this->template = $this->_defaultTemplate();
+
 			return;
 		}
 
 		$temp = $this->_defaultTemplate();
+
 		foreach (['table_open', 'thead_open', 'thead_close', 'heading_row_start', 'heading_row_end', 'heading_cell_start', 'heading_cell_end', 'tbody_open', 'tbody_close', 'row_start', 'row_end', 'cell_start', 'cell_end', 'row_alt_start', 'row_alt_end', 'cell_alt_start', 'cell_alt_end', 'table_close'] as $val)
 		{
 			if (! isset($this->template[$val]))
@@ -538,8 +526,6 @@ class Table
 			}
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Default Template
@@ -575,6 +561,4 @@ class Table
 			'table_close'        => '</table>',
 		];
 	}
-
-	// --------------------------------------------------------------------
 }

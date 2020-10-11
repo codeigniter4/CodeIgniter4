@@ -6,10 +6,13 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 class LanguageCommand extends GeneratorCommand
 {
-	protected $name        = 'publish:language';
+	protected $name = 'publish:language';
+
 	protected $description = 'Publishes a language file.';
-	protected $usage       = 'publish:language [options]';
-	protected $options     = [
+
+	protected $usage = 'publish:language [options]';
+
+	protected $options = [
 		'--lang' => 'The language folder to save the file.',
 		'--sort' => 'Turn on/off the sortImports flag.',
 	];

@@ -45,12 +45,9 @@ use Throwable;
 
 /**
  * Class BaseCommand
- *
- * @package CodeIgniter\CLI
  */
 abstract class BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -109,8 +106,6 @@ abstract class BaseCommand
 	 */
 	protected $commands;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * BaseCommand constructor.
 	 *
@@ -123,8 +118,6 @@ abstract class BaseCommand
 		$this->commands = $commands;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Actually execute a command.
 	 * This has to be over-ridden in any concrete implementation.
@@ -133,23 +126,20 @@ abstract class BaseCommand
 	 */
 	abstract public function run(array $params);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Can be used by a command to run other commands.
 	 *
 	 * @param string $command
 	 * @param array  $params
 	 *
-	 * @return mixed
 	 * @throws ReflectionException
+	 *
+	 * @return mixed
 	 */
 	protected function call(string $command, array $params = [])
 	{
 		return $this->commands->run($command, $params);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A simple method to display an error with line/file, in child commands.
@@ -163,8 +153,6 @@ abstract class BaseCommand
 
 		require APPPATH . 'Views/errors/cli/error_exception.php';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Show Help includes (Usage, Arguments, Description, Options).
@@ -221,15 +209,13 @@ abstract class BaseCommand
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Pads our string out so that all titles are the same length to nicely line up descriptions.
 	 *
-	 * @param string  $item
-	 * @param integer $max
-	 * @param integer $extra  How many extra spaces to add at the end
-	 * @param integer $indent
+	 * @param string $item
+	 * @param int    $max
+	 * @param int    $extra  How many extra spaces to add at the end
+	 * @param int    $indent
 	 *
 	 * @return string
 	 */
@@ -240,31 +226,29 @@ abstract class BaseCommand
 		return str_pad(str_repeat(' ', $indent) . $item, $max);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get pad for $key => $value array output
 	 *
-	 * @param array   $array
-	 * @param integer $pad
+	 * @param array $array
+	 * @param int   $pad
 	 *
-	 * @return integer
+	 * @return int
 	 *
-	 * @deprecated Use setPad() instead.
+	 * @deprecated use setPad() instead
 	 *
 	 * @codeCoverageIgnore
 	 */
 	public function getPad(array $array, int $pad): int
 	{
 		$max = 0;
+
 		foreach ($array as $key => $value)
 		{
 			$max = max($max, strlen($key));
 		}
+
 		return $max + $pad;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Makes it simple to access our protected properties.
@@ -275,25 +259,23 @@ abstract class BaseCommand
 	 */
 	public function __get(string $key)
 	{
-		if (isset($this->$key))
+		if (isset($this->{$key}))
 		{
-			return $this->$key;
+			return $this->{$key};
 		}
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Makes it simple to check our protected properties.
 	 *
 	 * @param string $key
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function __isset(string $key): bool
 	{
-		return isset($this->$key);
+		return isset($this->{$key});
 	}
 }

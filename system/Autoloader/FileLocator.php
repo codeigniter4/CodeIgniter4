@@ -44,8 +44,6 @@ namespace CodeIgniter\Autoloader;
  *
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
- *
- * @package CodeIgniter
  */
 class FileLocator
 {
@@ -55,8 +53,6 @@ class FileLocator
 	 * @var \CodeIgniter\Autoloader\Autoloader
 	 */
 	protected $autoloader;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -68,17 +64,15 @@ class FileLocator
 		$this->autoloader = $autoloader;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to locate a file by examining the name for a namespace
 	 * and looking through the PSR-4 namespaced files that we know about.
 	 *
 	 * @param string $file   The namespaced file to locate
-	 * @param string $folder The folder within the namespace that we should look for the file.
-	 * @param string $ext    The file extension the file should have.
+	 * @param string $folder The folder within the namespace that we should look for the file
+	 * @param string $ext    The file extension the file should have
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return false|string The path to the file, or false if not found
 	 */
 	public function locateFile(string $file, string $folder = null, string $ext = 'php')
 	{
@@ -125,6 +119,7 @@ class FileLocator
 			$paths = $namespaces[$prefix];
 
 			$filename = implode('/', $segments);
+
 			break;
 		}
 
@@ -149,6 +144,7 @@ class FileLocator
 			}
 
 			$path .= $filename;
+
 			if (is_file($path))
 			{
 				return $path;
@@ -158,8 +154,6 @@ class FileLocator
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Examines a file and returns the fully qualified domain name.
 	 *
@@ -167,7 +161,7 @@ class FileLocator
 	 *
 	 * @return string
 	 */
-	public function getClassname(string $file) : string
+	public function getClassname(string $file): string
 	{
 		$php       = file_get_contents($file);
 		$tokens    = token_get_all($php);
@@ -188,6 +182,7 @@ class FileLocator
 				{
 					$namespace = 0;
 				}
+
 				if (isset($token[1]))
 				{
 					$namespace = $namespace ? $namespace . '\\' . $token[1] : $token[1];
@@ -198,16 +193,18 @@ class FileLocator
 			{
 				$dlm = false;
 			}
+
 			if (($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
 				&& $tokens[$i - 1][0] === T_WHITESPACE
 				&& $token[0] === T_STRING)
 			{
 				$className = $token[1];
+
 				break;
 			}
 		}
 
-		if (empty( $className ))
+		if (empty($className))
 		{
 			return '';
 		}
@@ -230,9 +227,9 @@ class FileLocator
 	 *      'app/Modules/bar/Config/Routes.php',
 	 *  ]
 	 *
-	 * @param string  $path
-	 * @param string  $ext
-	 * @param boolean $prioritizeApp
+	 * @param string $path
+	 * @param string $ext
+	 * @param bool   $prioritizeApp
 	 *
 	 * @return array
 	 */
@@ -248,6 +245,7 @@ class FileLocator
 			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
 				$fullPath = $namespace['path'] . $path;
+
 				if ($prioritizeApp)
 				{
 					$foundPaths[] = $fullPath;
@@ -272,12 +270,8 @@ class FileLocator
 		}
 
 		// Remove any duplicates
-		$foundPaths = array_unique($foundPaths);
-
-		return $foundPaths;
+		return array_unique($foundPaths);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures a extension is at the end of a filename
@@ -301,8 +295,6 @@ class FileLocator
 
 		return $path;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Return the namespace mappings we know about.
@@ -342,15 +334,13 @@ class FileLocator
 		return $namespaces;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Find the qualified name of a file according to
 	 * the namespace of the first matched namespace path.
 	 *
 	 * @param string $path
 	 *
-	 * @return string|false The qualified name or false if the path is not found
+	 * @return false|string The qualified name or false if the path is not found
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
@@ -370,14 +360,11 @@ class FileLocator
 				continue;
 			}
 
-			if (mb_strpos($path, $namespace['path']) === 0)
+			if (strpos($path, $namespace['path']) === 0)
 			{
-				$className = '\\' . $namespace['prefix'] . '\\' .
-						ltrim(str_replace('/', '\\', mb_substr(
-							$path, mb_strlen($namespace['path']))
-						), '\\');
+				$className = '\\' . $namespace['prefix'] . '\\' . ltrim(str_replace('/', '\\', substr($path, strlen($namespace['path']))), '\\');
 				// Remove the file extension (.php)
-				$className = mb_substr($className, 0, -4);
+				$className = substr($className, 0, -4);
 
 				// Check if this exists
 				if (class_exists($className))
@@ -389,8 +376,6 @@ class FileLocator
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Scans the defined namespaces, returning a list of all files
@@ -430,8 +415,6 @@ class FileLocator
 
 		return $files;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Scans the provided namespace, returning a list of all files
@@ -474,8 +457,6 @@ class FileLocator
 		return $files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks the app folder to see if the file can be found.
 	 * Only for use with filenames that DO NOT include namespacing.
@@ -483,7 +464,7 @@ class FileLocator
 	 * @param string      $file
 	 * @param string|null $folder
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return false|string The path to the file, or false if not found
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{

@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT - MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -49,8 +49,6 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class Controller
- *
- * @package CodeIgniter
  */
 class Controller
 {
@@ -85,7 +83,7 @@ class Controller
 	/**
 	 * Should enforce HTTPS access for all methods in this controller.
 	 *
-	 * @var integer Number of seconds to set HSTS header
+	 * @var int Number of seconds to set HSTS header
 	 */
 	protected $forceHTTPS = 0;
 
@@ -96,7 +94,6 @@ class Controller
 	 */
 	protected $validator;
 
-	//--------------------------------------------------------------------
 	/**
 	 * Constructor.
 	 *
@@ -121,17 +118,15 @@ class Controller
 		helper($this->helpers);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A convenience method to use when you need to ensure that a single
 	 * method is reached only via HTTPS. If it isn't, then a redirect
 	 * will happen back to this method and HSTS header will be sent
 	 * to have modern browsers transform requests automatically.
 	 *
-	 * @param integer $duration The number of seconds this link should be
-	 *                          considered secure for. Only with HSTS header.
-	 *                          Default value is 1 year.
+	 * @param int $duration The number of seconds this link should be
+	 *                      considered secure for. Only with HSTS header.
+	 *                      Default value is 1 year.
 	 *
 	 * @throws HTTPException
 	 */
@@ -140,37 +135,26 @@ class Controller
 		force_https($duration, $this->request, $this->response);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Provides a simple way to tie into the main CodeIgniter class and
 	 * tell it how long to cache the current page for.
 	 *
-	 * @param integer $time
+	 * @param int $time
 	 */
 	protected function cachePage(int $time)
 	{
 		CodeIgniter::cache($time);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles "auto-loading" helper files.
 	 *
-	 * @deprecated Use `helper` function instead of using this method.
+	 * @deprecated Use `helper` function instead of using this method
 	 */
 	protected function loadHelpers()
 	{
-		if (empty($this->helpers))
-		{
-			return;
-		}
-
 		helper($this->helpers);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A shortcut to performing validation on input data. If validation
@@ -179,7 +163,7 @@ class Controller
 	 * @param array|string $rules
 	 * @param array        $messages An array of custom error messages
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function validate($rules, array $messages = []): bool
 	{
@@ -192,7 +176,7 @@ class Controller
 
 			// If the rule wasn't found in the \Config\Validation, we
 			// should throw an exception so the developer can find it.
-			if (! isset($validation->$rules))
+			if (! isset($validation->{$rules}))
 			{
 				throw ValidationException::forRuleNotFound($rules);
 			}
@@ -201,10 +185,10 @@ class Controller
 			if (! $messages)
 			{
 				$errorName = $rules . '_errors';
-				$messages  = $validation->$errorName ?? [];
+				$messages  = $validation->{$errorName} ?? [];
 			}
 
-			$rules = $validation->$rules;
+			$rules = $validation->{$rules};
 		}
 
 		return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();

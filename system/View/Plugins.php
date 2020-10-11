@@ -47,7 +47,6 @@ use Config\Services;
  */
 class Plugins
 {
-
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
@@ -58,19 +57,15 @@ class Plugins
 		return current_url();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @return URI|mixed|string
+	 * @return mixed|string|URI
 	 */
 	public static function previousURL()
 	{
 		return previous_url();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Wrap helper function to use as view plugin.
@@ -81,14 +76,12 @@ class Plugins
 	 */
 	public static function mailto(array $params = []): string
 	{
-		$email = $params['email'] ?? '';
-		$title = $params['title'] ?? '';
+		$email = $params['email']      ?? '';
+		$title = $params['title']      ?? '';
 		$attrs = $params['attributes'] ?? '';
 
 		return mailto($email, $title, $attrs);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Wrap helper function to use as view plugin.
@@ -99,14 +92,12 @@ class Plugins
 	 */
 	public static function safeMailto(array $params = []): string
 	{
-		$email = $params['email'] ?? '';
-		$title = $params['title'] ?? '';
+		$email = $params['email']      ?? '';
+		$title = $params['title']      ?? '';
 		$attrs = $params['attributes'] ?? '';
 
 		return safe_mailto($email, $title, $attrs);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Wrap helper function to use as view plugin.
@@ -122,8 +113,6 @@ class Plugins
 		return lang($line, $params);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
@@ -134,6 +123,7 @@ class Plugins
 	public static function ValidationErrors(array $params = []): string
 	{
 		$validator = Services::validation();
+
 		if (empty($params))
 		{
 			return $validator->listErrors();
@@ -142,21 +132,17 @@ class Plugins
 		return $validator->showError($params['field']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
 	 * @param array $params
 	 *
-	 * @return string|false
+	 * @return false|string
 	 */
 	public static function route(array $params = [])
 	{
 		return route_to(...$params);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Wrap helper function to use as view plugin.

@@ -1,13 +1,15 @@
 <?php
+
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
-class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
+class RouterTest extends CIUnitTestCase
 {
-
 	/**
-	 * @var \CodeIgniter\Router\RouteCollection $collection
+	 * @var RouteCollection
 	 */
 	protected $collection;
 
@@ -27,20 +29,20 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$moduleConfig          = new \Config\Modules;
+		$moduleConfig          = new Modules();
 		$moduleConfig->enabled = false;
 		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
 		$routes = [
-			'users'                                           => 'Users::index',
-			'user-setting/show-list'                          => 'User_setting::show_list',
-			'user-setting/(:segment)'                         => 'User_setting::detail/$1',
-			'posts'                                           => 'Blog::posts',
-			'pages'                                           => 'App\Pages::list_all',
-			'posts/(:num)'                                    => 'Blog::show/$1',
-			'posts/(:num)/edit'                               => 'Blog::edit/$1',
-			'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
-			'closure/(:num)/(:alpha)'                         => function ($num, $str) {
+			'users'                        => 'Users::index',
+			'user-setting/show-list'       => 'User_setting::show_list',
+			'user-setting/(:segment)'      => 'User_setting::detail/$1',
+			'posts'                        => 'Blog::posts',
+			'pages'                        => 'App\Pages::list_all',
+			'posts/(:num)'                 => 'Blog::show/$1',
+			'posts/(:num)/edit'            => 'Blog::edit/$1',
+			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
+			'closure/(:num)/(:alpha)'      => static function ($num, $str) {
 				return $num . '-' . $str;
 			},
 			'{locale}/pages'                                  => 'App\Pages::list_all',
@@ -54,14 +56,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request->setMethod('get');
 	}
 
-	//--------------------------------------------------------------------
-
-	public function tearDown(): void
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testEmptyURIMatchesDefaults()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -72,8 +66,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($this->collection->getDefaultMethod(), $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testZeroAsURIPath()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -82,8 +74,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('0', $router->controllerName());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testURIMapsToController()
 	{
@@ -95,8 +85,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('index', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testURIMapsToControllerAltMethod()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -106,8 +94,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('\Blog', $router->controllerName());
 		$this->assertEquals('posts', $router->methodName());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testURIMapsToNamespacedController()
 	{
@@ -119,8 +105,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('list_all', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testURIMapsParamsToBackReferences()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -130,8 +114,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('show', $router->methodName());
 		$this->assertEquals([123], $router->params());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testURIMapsParamsToRearrangedBackReferences()
 	{
@@ -143,8 +125,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([123], $router->params());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testURIMapsParamsToBackReferencesWithUnused()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -154,8 +134,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('show', $router->methodName());
 		$this->assertEquals([456, 123], $router->params());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
@@ -169,8 +147,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('objectsSortCreate', $router->methodName());
 		$this->assertEquals([123, 'abc', 'FOO'], $router->params());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testClosures()
 	{
@@ -186,8 +162,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, '123-alpha');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAutoRouteFindsControllerWithFileAndMethod()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -198,8 +172,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('someMethod', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAutoRouteFindsControllerWithFile()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -209,8 +181,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('index', $router->methodName());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAutoRouteFindsControllerWithSubfolder()
 	{
@@ -226,8 +196,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('someMethod', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDetectsLocales()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -237,8 +205,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($router->hasLocale());
 		$this->assertEquals('fr', $router->getLocale());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRouteResource()
 	{
@@ -250,8 +216,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('list_all', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRouteWithLeadingSlash()
 	{
 		$router = new Router($this->collection, $this->request);
@@ -262,7 +226,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('index', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
 	// options need to be declared separately, to not confuse PHPCBF
 	public function testMatchedRouteOptions()
 	{
@@ -270,13 +233,13 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 			'as'  => 'login',
 			'foo' => 'baz',
 		];
-		$this->collection->add('foo', function () {
+		$this->collection->add('foo', static function () {
 		}, $optionsFoo);
 		$optionsBaz = [
 			'as'  => 'admin',
 			'foo' => 'bar',
 		];
-		$this->collection->add('baz', function () {
+		$this->collection->add('baz', static function () {
 		}, $optionsBaz);
 
 		$router = new Router($this->collection, $this->request);
@@ -290,7 +253,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$collection = $this->collection;
 
-		$collection->group('foo', ['filter' => 'test'], function ($routes) {
+		$collection->group('foo', ['filter' => 'test'], static function ($routes) {
 			$routes->add('bar', 'TestController::foobar');
 		});
 
@@ -303,8 +266,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('test', $router->getFilter());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1247
 	 */
@@ -316,7 +277,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 				'namespace' => 'App\Controllers\Api',
 				'filter'    => 'api-auth',
 			],
-			function (RouteCollection $routes) {
+			static function (RouteCollection $routes) {
 				$routes->resource('posts', [
 					'controller' => 'PostController',
 				]);
@@ -401,8 +362,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('api-auth', $router->getFilter());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
 	 */
@@ -433,8 +392,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('\Pages', $router->controllerName());
 		$this->assertEquals('view', $router->methodName());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
@@ -467,8 +424,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('show_list', $router->methodName());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
 	 */
@@ -484,8 +439,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['2018-12-02'], $router->params());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
 	 */
@@ -499,8 +452,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Admin_user', $router->controllerName());
 		$this->assertEquals('show_list', $router->methodName());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2032
@@ -531,8 +482,6 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Home', $router->controllerName());
 		$this->assertEquals('index', $router->methodName());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169

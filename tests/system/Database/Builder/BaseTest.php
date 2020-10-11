@@ -1,13 +1,13 @@
-<?php namespace Builder;
+<?php
 
-use CodeIgniter\Database\Query;
+namespace Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +15,6 @@ class BaseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDbReturnsConnection()
 	{

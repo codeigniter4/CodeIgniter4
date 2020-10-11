@@ -1,8 +1,10 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
-class WithoutAutoIncrementModel extends Model
+class WithoutAutoincrementModel extends Model
 {
 	protected $table = 'without_auto_increment';
 

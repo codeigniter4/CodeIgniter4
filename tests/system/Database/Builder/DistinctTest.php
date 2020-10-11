@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DistinctTest extends \CodeIgniter\Test\CIUnitTestCase
+class DistinctTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class DistinctTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDelete()
 	{
@@ -28,6 +27,4 @@ class DistinctTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 }

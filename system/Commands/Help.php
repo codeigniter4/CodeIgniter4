@@ -46,12 +46,9 @@ use CodeIgniter\CLI\BaseCommand;
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
  */
 class Help extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -97,12 +94,12 @@ class Help extends BaseCommand
 	 */
 	protected $options = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays the help for spark commands.
 	 *
 	 * @param array $params
+	 *
+	 * @return void
 	 */
 	public function run(array $params)
 	{
@@ -118,5 +115,4 @@ class Help extends BaseCommand
 		$class = new $commands[$command]['class']($this->logger, $this->commands);
 		$class->showHelp();
 	}
-
 }

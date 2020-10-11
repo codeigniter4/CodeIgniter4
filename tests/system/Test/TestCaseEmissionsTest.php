@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
@@ -10,9 +11,8 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
+class TestCaseEmissionsTest extends CIUnitTestCase
 {
-
 	/**
 	 * These need to be run as a separate process, since phpunit
 	 * has already captured the "normal" output, and we will get
@@ -27,7 +27,6 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * the body we thought would be sent actually was.
 	 */
 
-	//--------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -49,6 +48,7 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -59,7 +59,6 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('set-cookie: FOO=bar', true);
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -81,6 +80,7 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		ob_start();
 		$response->send();
 		$output = ob_clean(); // what really was sent
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -88,5 +88,4 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertHeaderNotEmitted('Set-Cookie: pop=corn', true);
 	}
-
 }

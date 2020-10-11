@@ -1,13 +1,14 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class DEBugTest extends CIDatabaseTestCase
+class DBDebugTest extends CIDatabaseTestCase
 {
-
 	protected $refresh = true;
 
 	public function testDBDebugTrue()
@@ -21,10 +22,10 @@ class DEBugTest extends CIDatabaseTestCase
 	{
 		$this->setPrivateProperty($this->db, 'DBDebug', false);
 		$result = $this->db->simpleQuery('SELECT * FROM db_error');
-		$this->assertEquals(false, $result);
+		$this->assertFalse($result);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		$this->setPrivateProperty($this->db, 'DBDebug', true);
 		parent::tearDown();

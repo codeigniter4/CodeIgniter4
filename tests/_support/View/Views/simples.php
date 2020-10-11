@@ -1,1 +1,1 @@
-<h1><?= $testString ?? 'is_not' ?></h1>
+<h1><?= $testString ?? 'is_not'; ?></h1>

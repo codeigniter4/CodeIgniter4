@@ -1,18 +1,22 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $honey;
+
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -26,7 +30,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_POST[$this->honey->name] = 'hey';
 	}
 
-	//--------------------------------------------------------------------
 	public function testBeforeTriggered()
 	{
 		$this->config->globals = [
@@ -44,7 +47,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $filters->run($uri, 'before');
 	}
 
-	//--------------------------------------------------------------------
 	public function testBeforeClean()
 	{
 		$this->config->globals = [
@@ -64,8 +66,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $filters->run($uri, 'before');
 		$this->assertEquals($expected, $request);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -89,8 +89,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString($this->honey->name, $this->response->getBody());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -112,5 +110,4 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response = $filters->run($uri, 'after');
 		$this->assertStringNotContainsString($this->honey->name, $this->response->getBody());
 	}
-
 }

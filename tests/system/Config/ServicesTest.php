@@ -2,14 +2,19 @@
 
 namespace Config;
 
+use CodeIgniter\Autoloader\Autoloader;
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Email\Email;
 use CodeIgniter\Format\Format;
+use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
+use Config\Email as EmailConfig;
 
 class ServicesTest extends CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $original;
 
 	protected function setUp(): void
@@ -23,7 +28,7 @@ class ServicesTest extends CIUnitTestCase
 		//      $this->config->supportedLocales = ['en', 'es'];
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		$_SERVER = $this->original;
 	}
@@ -31,49 +36,49 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewAutoloader()
 	{
 		$actual = Services::autoloader();
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+		$this->assertInstanceOf(Autoloader::class, $actual);
 	}
 
 	public function testNewUnsharedAutoloader()
 	{
 		$actual = Services::autoloader(false);
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+		$this->assertInstanceOf(Autoloader::class, $actual);
 	}
 
 	public function testNewFileLocator()
 	{
 		$actual = Services::locator();
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+		$this->assertInstanceOf(FileLocator::class, $actual);
 	}
 
 	public function testNewUnsharedFileLocator()
 	{
 		$actual = Services::locator(false);
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+		$this->assertInstanceOf(FileLocator::class, $actual);
 	}
 
 	public function testNewCurlRequest()
 	{
 		$actual = Services::curlrequest();
-		$this->assertInstanceOf(\CodeIgniter\HTTP\CURLRequest::class, $actual);
+		$this->assertInstanceOf(CURLRequest::class, $actual);
 	}
 
 	public function testNewEmail()
 	{
 		$actual = Services::email();
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewUnsharedEmailWithEmptyConfig()
 	{
 		$actual = Services::email(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewUnsharedEmailWithNonEmptyConfig()
 	{
-		$actual = Services::email(new \Config\Email(), false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$actual = Services::email(new EmailConfig(), false);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewExceptions()
@@ -354,5 +359,4 @@ class ServicesTest extends CIUnitTestCase
 		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
 	}
-
 }

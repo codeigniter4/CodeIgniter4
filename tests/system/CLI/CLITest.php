@@ -1,10 +1,13 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
+namespace CodeIgniter\CLI;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use ReflectionProperty;
 
-class CLITest extends \CodeIgniter\Test\CIUnitTestCase
+class CLITest extends CIUnitTestCase
 {
-
 	private $stream_filter;
 
 	protected function setUp(): void
@@ -15,7 +18,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		stream_filter_remove($this->stream_filter);
 	}
@@ -99,7 +102,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		CLI::init(); // force re-check on env
 		$this->assertEquals('test', CLI::color('test', 'white', 'green'));
-		putenv($nocolor ? "NO_COLOR=$nocolor" : 'NO_COLOR');
+		putenv($nocolor ? "NO_COLOR={$nocolor}" : 'NO_COLOR');
 	}
 
 	public function testColorSupportOnHyperTerminals()
@@ -109,7 +112,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		CLI::init(); // force re-check on env
 		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
-		putenv($termProgram ? "TERM_PROGRAM=$termProgram" : 'TERM_PROGRAM');
+		putenv($termProgram ? "TERM_PROGRAM={$termProgram}" : 'TERM_PROGRAM');
 	}
 
 	public function testStreamSupports()
@@ -264,7 +267,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$_SERVER['argc'] = 3;
 		CLI::init();
-		$this->assertEquals(null, CLI::getSegment(3));
+		$this->assertNull(CLI::getSegment(3));
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('b/c', CLI::getURI());
@@ -289,7 +292,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'sure',
 		];
 		CLI::init();
-		$this->assertEquals(null, CLI::getSegment(7));
+		$this->assertNull(CLI::getSegment(7));
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('d', CLI::getSegment(3));
@@ -347,15 +350,15 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testWindow()
 	{
-		$height = new \ReflectionProperty(CLI::class, 'height');
+		$height = new ReflectionProperty(CLI::class, 'height');
 		$height->setAccessible(true);
 		$height->setValue(null);
-		$this->assertTrue(is_int(CLI::getHeight()));
+		$this->assertIsInt(CLI::getHeight());
 
-		$width = new \ReflectionProperty(CLI::class, 'width');
+		$width = new ReflectionProperty(CLI::class, 'width');
 		$width->setAccessible(true);
 		$width->setValue(null);
-		$this->assertTrue(is_int(CLI::getWidth()));
+		$this->assertIsInt(CLI::getWidth());
 	}
 
 	/**
@@ -373,11 +376,11 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tableProvider()
 	{
-		$head      = [
+		$head = [
 			'ID',
 			'Title',
 		];
-		$one_row   = [
+		$one_row = [
 			[
 				'id'  => 1,
 				'foo' => 'bar',

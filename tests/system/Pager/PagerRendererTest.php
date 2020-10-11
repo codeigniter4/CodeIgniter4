@@ -3,15 +3,14 @@
 namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Test\CIUnitTestCase;
 
-class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
+class PagerRendererTest extends CIUnitTestCase
 {
 	/**
 	 * @var URI
 	 */
 	protected $uri;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -20,8 +19,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->uri    = new URI('http://example.com/foo');
 		$this->expect = 'http://example.com/foo?page=';
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsFalseWhenFirstIsOne()
 	{
@@ -36,8 +33,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($pager->hasPrevious());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsTrueWhenFirstIsMoreThanOne()
 	{
@@ -58,8 +53,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?foo=bar&page=2', $pager->getPrevious());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetPreviousWhenSurroundCountIsZero()
 	{
 		$uri = $this->uri;
@@ -79,8 +72,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?foo=bar&page=3', $pager->getPrevious());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasNextReturnsFalseWhenLastIsTotal()
 	{
 		$uri = $this->uri;
@@ -98,8 +89,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($pager->hasNext());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasNextReturnsTrueWhenLastIsSmallerThanTotal()
 	{
@@ -120,8 +109,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?foo=bar&page=7', $pager->getNext());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetNextWhenSurroundCountIsZero()
 	{
 		$uri = $this->uri;
@@ -140,8 +127,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($pager->hasNext());
 		$this->assertEquals('http://example.com/foo?foo=bar&page=5', $pager->getNext());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLinksBasics()
 	{
@@ -176,8 +161,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $pager->links());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFirstAndGetLast()
 	{
 		$uri = $this->uri;
@@ -196,8 +179,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?foo=bar&page=50', $pager->getLast());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetCurrent()
 	{
 		$uri = $this->uri;
@@ -214,8 +195,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('http://example.com/foo?foo=bar&page=10', $pager->getCurrent());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetCurrentWithSegment()
 	{
@@ -235,8 +214,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/10?foo=bar', $pager->getCurrent());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSurroundCount()
 	{
 		$uri = $this->uri;
@@ -251,8 +228,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager = new PagerRenderer($details);
 
 		// without any surround count
-		$this->assertEquals(null, $pager->getPrevious());
-		$this->assertEquals(null, $pager->getNext());
+		$this->assertNull($pager->getPrevious());
+		$this->assertNull($pager->getNext());
 
 		// with surropund count of 2
 		$pager->setSurroundCount(2);
@@ -266,11 +243,9 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// and with huge surround count
 		$pager->setSurroundCount(100);
-		$this->assertEquals(null, $pager->getPrevious());
-		$this->assertEquals(null, $pager->getNext());
+		$this->assertNull($pager->getPrevious());
+		$this->assertNull($pager->getNext());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsFalseWhenFirstIsOneSegment()
 	{
@@ -286,8 +261,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($pager->hasPrevious());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsTrueWhenFirstIsMoreThanOneSegment()
 	{
@@ -309,8 +282,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/2?foo=bar', $pager->getPrevious());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetPreviousWhenSurroundCountIsZeroSegment()
 	{
 		$uri = $this->uri;
@@ -331,8 +302,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/3?foo=bar', $pager->getPrevious());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasNextReturnsFalseWhenLastIsTotalSegment()
 	{
 		$uri = $this->uri;
@@ -351,8 +320,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($pager->hasNext());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasNextReturnsTrueWhenLastIsSmallerThanTotalSegment()
 	{
@@ -374,8 +341,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/7?foo=bar', $pager->getNext());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetNextWhenSurroundCountIsZeroSegment()
 	{
 		$uri = $this->uri;
@@ -395,8 +360,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($pager->hasNext());
 		$this->assertEquals('http://example.com/foo/5?foo=bar', $pager->getNext());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLinksBasicsSegment()
 	{
@@ -432,8 +395,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $pager->links());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFirstAndGetLastSegment()
 	{
 		$uri = $this->uri;
@@ -453,8 +414,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/50?foo=bar', $pager->getLast());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasPreviousPageReturnsFalseWhenCurrentPageIsFirst()
 	{
 		$details = [
@@ -470,8 +429,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($pager->hasPreviousPage());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasNextPageReturnsFalseWhenCurrentPageIsLast()
 	{
 		$details = [
@@ -486,8 +443,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($pager->getNextPage());
 		$this->assertFalse($pager->hasNextPage());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasPreviousPageReturnsTrueWhenFirstIsMoreThanCurrent()
 	{
@@ -507,8 +462,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo?page=2', $pager->getPreviousPage());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetPreviousPageWithSegmentHigherThanZero()
 	{
 		$uri = $this->uri;
@@ -524,8 +477,6 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager = new PagerRenderer($details);
 		$this->assertEquals('http://example.com/foo/2', $pager->getPreviousPage());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasNextPageReturnsTrueWhenLastIsMoreThanCurrent()
 	{

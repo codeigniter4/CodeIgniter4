@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class FromTest extends \CodeIgniter\Test\CIUnitTestCase
+class FromTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleFrom()
 	{
@@ -29,8 +28,6 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFromThatOverwrites()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -41,8 +38,6 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFromWithMultipleTables()
 	{
@@ -55,8 +50,6 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFromWithMultipleTablesAsString()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -67,8 +60,6 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFromReset()
 	{
@@ -96,6 +87,4 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 }

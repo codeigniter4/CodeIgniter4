@@ -1,24 +1,27 @@
 <?php
 
-use CodeIgniter\View\Parser;
+namespace CodeIgniter\View;
 
-class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
+use Config\View;
+
+class ParserFilterTest extends CIUnitTestCase
 {
 	protected $loader;
+
 	protected $viewsDir;
+
 	protected $config;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->loader = \CodeIgniter\Config\Services::locator();
-		;
+		$this->loader   = Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
+		$this->config   = new View();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAbs()
 	{
@@ -35,8 +38,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('55', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCapitalize()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -51,8 +52,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('Wonder Twins', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDate()
 	{
@@ -76,8 +75,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals("{$today_dash} {$today_dash} {$today_dot} {$today_space} {$today_colon} {$today_slash} {$today_backslash}", $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDateModify()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -96,8 +93,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals("{$tommorrow} {$tommorrow}", $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDefault()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -113,8 +108,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('foo bar test', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEsc()
 	{
@@ -133,8 +126,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals("{$value1} {$value2}", $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExcerpt()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -148,8 +139,6 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('... red fox jumped over ...', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHighlight()
 	{
@@ -175,7 +164,7 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 
 		$template = '{ value1|highlight_code }';
-		$expected = <<<EOF
+		$expected = <<<'EOF'
 <code><span style="color: #000000">
 <span style="color: #0000BB">Sincerely&nbsp;</span>
 </span>
@@ -198,8 +187,6 @@ EOF;
 		$this->assertEquals($expected, $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLimitChars()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -213,8 +200,6 @@ EOF;
 		$parser->setData($data);
 		$this->assertEquals('The quick&#8230;', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLimitWords()
 	{
@@ -230,8 +215,6 @@ EOF;
 		$this->assertEquals('The quick red fox&#8230;', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLower()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -245,8 +228,6 @@ EOF;
 		$parser->setData($data);
 		$this->assertEquals('something', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNL2BR()
 	{
@@ -262,8 +243,6 @@ EOF;
 		$this->assertEquals("first<br />\nsecond", $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNumberFormat()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -277,8 +256,6 @@ EOF;
 		$parser->setData($data);
 		$this->assertEquals('1,098.35', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRound()
 	{
@@ -294,8 +271,6 @@ EOF;
 		$this->assertEquals('5.6 5.6 6 5 5.55', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStripTags()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -309,8 +284,6 @@ EOF;
 		$parser->setData($data);
 		$this->assertEquals('Middle <b>Middle</b>', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testTitle()
 	{
@@ -326,8 +299,6 @@ EOF;
 		$this->assertEquals('Though She Be Little', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpper()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -341,8 +312,6 @@ EOF;
 		$parser->setData($data);
 		$this->assertEquals('THOUGH SHE BE LITTLE', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLocalNumberBase()
 	{
@@ -411,7 +380,7 @@ EOF;
 		$template = '{ mynum|local_currency(EUR,de_DE,2) }';
 
 		$parser->setData($data);
-		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
+		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
 	}
 
 	public function testParsePairWithAbs()
@@ -427,7 +396,7 @@ EOF;
 					'svalue2' => 2,
 				],
 			],
-			'loop'   => [
+			'loop' => [
 				[
 					'lvalue' => -3,
 				],
@@ -445,7 +414,7 @@ EOF;
 							'nsvalue2' => 5,
 						],
 					],
-					'nsloop'  => [
+					'nsloop' => [
 						[
 							'nlvalue' => -6,
 						],

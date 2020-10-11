@@ -47,12 +47,9 @@ use CodeIgniter\CLI\CLI;
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
  */
 class ListCommands extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -96,8 +93,6 @@ class ListCommands extends BaseCommand
 	 */
 	protected $options = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays the help for the spark cli script itself.
 	 *
@@ -130,10 +125,12 @@ class ListCommands extends BaseCommand
 		foreach ($groups as $group => $commands)
 		{
 			CLI::write($group, 'yellow');
+
 			foreach ($commands as $name => $command)
 			{
 				$name   = $this->setPad($name, $length, 2, 2);
 				$output = CLI::color($name, 'green');
+
 				if (isset($command['description']))
 				{
 					$output .= CLI::wrap($command['description'], 125, strlen($name));

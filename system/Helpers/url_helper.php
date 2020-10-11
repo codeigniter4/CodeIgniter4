@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -42,11 +42,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Services;
 
-/**
- * CodeIgniter URL Helpers
- *
- * @package CodeIgniter
- */
+// CodeIgniter URL Helpers
 
 if (! function_exists('site_url'))
 {
@@ -77,6 +73,7 @@ if (! function_exists('site_url'))
 		{
 			$fullPath .= rtrim($config->indexPage, '/');
 		}
+
 		if (! empty($uri))
 		{
 			$fullPath .= '/' . $uri;
@@ -94,15 +91,14 @@ if (! function_exists('site_url'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('base_url'))
 {
 	/**
 	 * Return the base URL to use in views
 	 *
-	 * @param  mixed  $uri      URI string or array of URI segments
-	 * @param  string $protocol
+	 * @param mixed  $uri      URI string or array of URI segments
+	 * @param string $protocol
+	 *
 	 * @return string
 	 */
 	function base_url($uri = '', string $protocol = null): string
@@ -150,8 +146,6 @@ if (! function_exists('base_url'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('current_url'))
 {
 	/**
@@ -160,9 +154,9 @@ if (! function_exists('current_url'))
 	 * Returns the full URL (including segments) of the page where this
 	 * function is placed
 	 *
-	 * @param boolean $returnObject True to return an object instead of a strong
+	 * @param bool $returnObject True to return an object instead of a strong
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -174,8 +168,6 @@ if (! function_exists('current_url'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('previous_url'))
 {
 	/**
@@ -184,9 +176,9 @@ if (! function_exists('previous_url'))
 	 * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
 	 * which can be set by the user so is untrusted and not set by certain browsers/servers.
 	 *
-	 * @param boolean $returnObject
+	 * @param bool $returnObject
 	 *
-	 * @return URI|mixed|string
+	 * @return mixed|string|URI
 	 */
 	function previous_url(bool $returnObject = false)
 	{
@@ -201,8 +193,6 @@ if (! function_exists('previous_url'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('uri_string'))
 {
 	/**
@@ -210,7 +200,7 @@ if (! function_exists('uri_string'))
 	 *
 	 * Returns the path part of the current URL
 	 *
-	 * @param boolean $relative Whether the resulting path should be relative to baseURL
+	 * @param bool $relative Whether the resulting path should be relative to baseURL
 	 *
 	 * @return string
 	 */
@@ -233,8 +223,6 @@ if (! function_exists('uri_string'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('index_page'))
 {
 	/**
@@ -242,7 +230,8 @@ if (! function_exists('index_page'))
 	 *
 	 * Returns the "index_page" from your config file
 	 *
-	 * @param  \Config\App|null $altConfig Alternate configuration to use
+	 * @param App|null $altConfig Alternate configuration to use
+	 *
 	 * @return string
 	 */
 	function index_page(App $altConfig = null): string
@@ -253,8 +242,6 @@ if (! function_exists('index_page'))
 		return $config->indexPage;
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('anchor'))
 {
@@ -292,8 +279,6 @@ if (! function_exists('anchor'))
 		return '<a href="' . $siteUrl . '"' . $attributes . '>' . $title . '</a>';
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('anchor_popup'))
 {
@@ -359,8 +344,6 @@ if (! function_exists('anchor_popup'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('mailto'))
 {
 	/**
@@ -382,8 +365,6 @@ if (! function_exists('mailto'))
 		return '<a href="mailto:' . $email . '"' . stringify_attributes($attributes) . '>' . $title . '</a>';
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('safe_mailto'))
 {
@@ -407,7 +388,7 @@ if (! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($email); $i < $l; $i++)
 		{
 			$x[] = '|' . ord($email[$i]);
 		}
@@ -421,7 +402,8 @@ if (! function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' ' . $key . '="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
+
+					for ($i = 0, $l = strlen($val); $i < $l; $i++)
 					{
 						$x[] = '|' . ord($val[$i]);
 					}
@@ -430,9 +412,9 @@ if (! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i++)
 				{
-					$x[] = mb_substr($attributes, $i, 1);
+					$x[] = substr($attributes, $i, 1);
 				}
 			}
 		}
@@ -440,7 +422,8 @@ if (! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = [];
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
+
+		for ($i = 0, $l = strlen($title); $i < $l; $i++)
 		{
 			$ordinal = ord($title[$i]);
 
@@ -456,7 +439,9 @@ if (! function_exists('safe_mailto'))
 				}
 
 				$temp[] = $ordinal;
-				if (count($temp) === $count) // @phpstan-ignore-line
+
+				// @phpstan-ignore-next-line
+				if (count($temp) === $count)
 				{
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[]    = '|' . $number;
@@ -477,7 +462,7 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		for ($i = 0, $c = count($x); $i < $c; $i++)
 		{
 			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
 		}
@@ -490,8 +475,6 @@ if (! function_exists('safe_mailto'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('auto_link'))
 {
 	/**
@@ -502,9 +485,9 @@ if (! function_exists('auto_link'))
 	 * URLs or emails that end in a period. We'll strip these
 	 * off and add them after the link.
 	 *
-	 * @param string  $str   the string
-	 * @param string  $type  the type: email, url, or both
-	 * @param boolean $popup whether to create pop-up links
+	 * @param string $str   the string
+	 * @param string $type  the type: email, url, or both
+	 * @param bool   $popup whether to create pop-up links
 	 *
 	 * @return string
 	 */
@@ -547,8 +530,6 @@ if (! function_exists('auto_link'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('prep_url'))
 {
 	/**
@@ -557,7 +538,8 @@ if (! function_exists('prep_url'))
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
 	 *
-	 * @param  string $str the URL
+	 * @param string $str the URL
+	 *
 	 * @return string
 	 */
 	function prep_url(string $str = ''): string
@@ -578,8 +560,6 @@ if (! function_exists('prep_url'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('url_title'))
 {
 	/**
@@ -589,9 +569,10 @@ if (! function_exists('url_title'))
 	 * human-friendly URL string with a "separator" string
 	 * as the word separator.
 	 *
-	 * @param  string  $str       Input string
-	 * @param  string  $separator Word separator (usually '-' or '_')
-	 * @param  boolean $lowercase Whether to transform the output string to lowercase
+	 * @param string $str       Input string
+	 * @param string $separator Word separator (usually '-' or '_')
+	 * @param bool   $lowercase Whether to transform the output string to lowercase
+	 *
 	 * @return string
 	 */
 	function url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -606,6 +587,7 @@ if (! function_exists('url_title'))
 		];
 
 		$str = strip_tags($str);
+
 		foreach ($trans as $key => $val)
 		{
 			$str = preg_replace('#' . $key . '#iu', $val, $str);
@@ -613,14 +595,12 @@ if (! function_exists('url_title'))
 
 		if ($lowercase === true)
 		{
-			$str = mb_strtolower($str);
+			$str = strtolower($str);
 		}
 
 		return trim(trim($str, $separator));
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('mb_url_title'))
 {
@@ -631,9 +611,10 @@ if (! function_exists('mb_url_title'))
 	 * human-friendly URL string with a "separator" string
 	 * as the word separator.
 	 *
-	 * @param  string  $str       Input string
-	 * @param  string  $separator Word separator (usually '-' or '_')
-	 * @param  boolean $lowercase Whether to transform the output string to lowercase
+	 * @param string $str       Input string
+	 * @param string $separator Word separator (usually '-' or '_')
+	 * @param bool   $lowercase Whether to transform the output string to lowercase
+	 *
 	 * @return string
 	 */
 	function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -643,8 +624,6 @@ if (! function_exists('mb_url_title'))
 		return url_title(convert_accented_characters($str), $separator, $lowercase);
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('url_to'))
 {
@@ -689,7 +668,7 @@ if (! function_exists('url_is'))
 	 *
 	 * @param string $path
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	function url_is(string $path): bool
 	{
@@ -697,6 +676,6 @@ if (! function_exists('url_is'))
 		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
 		$currentPath = '/' . trim(uri_string(true), '/ ');
 
-		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
+		return (bool) preg_match("|^{$path}$|", $currentPath, $matches);
 	}
 }

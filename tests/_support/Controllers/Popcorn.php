@@ -1,8 +1,10 @@
 <?php
+
 namespace Tests\Support\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use RuntimeException;
 
 /**
  * This is a testing only controller, intended to blow up in multiple
@@ -10,7 +12,6 @@ use CodeIgniter\Controller;
  */
 class Popcorn extends Controller
 {
-
 	use ResponseTrait;
 
 	public function index()
@@ -25,7 +26,7 @@ class Popcorn extends Controller
 
 	public function popper()
 	{
-		throw new \RuntimeException('Surprise', 500);
+		throw new RuntimeException('Surprise', 500);
 	}
 
 	public function weasel()
@@ -43,7 +44,9 @@ class Popcorn extends Controller
 		return redirect()->to('/');
 	}
 
-	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	 */
 	public function index3()
 	{
 		return $this->response->setJSON(['lang' => $this->request->getLocale()]);
@@ -72,5 +75,4 @@ class Popcorn extends Controller
 	{
 		return redirect()->route('testing-index');
 	}
-
 }

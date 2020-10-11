@@ -1,26 +1,32 @@
 <?php
+
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
-class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
+class TimeTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testNewTimeNow()
 	{
 		$formatter = new IntlDateFormatter(
-				'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'America/Chicago', // Default for CodeIgniter
-				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+			'en_US',
+			IntlDateFormatter::SHORT,
+			IntlDateFormatter::SHORT,
+			'America/Chicago', // Default for CodeIgniter
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time(null, 'America/Chicago');
@@ -31,8 +37,12 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testTimeWithTimezone()
 	{
 		$formatter = new IntlDateFormatter(
-				'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
-				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+			'en_US',
+			IntlDateFormatter::SHORT,
+			IntlDateFormatter::SHORT,
+			'Europe/London', // Default for CodeIgniter
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time('now', 'Europe/London');
@@ -43,8 +53,12 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testTimeWithTimezoneAndLocale()
 	{
 		$formatter = new IntlDateFormatter(
-				'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
-				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+			'fr_FR',
+			IntlDateFormatter::SHORT,
+			IntlDateFormatter::SHORT,
+			'Europe/London', // Default for CodeIgniter
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time('now', 'Europe/London', 'fr_FR');
@@ -55,10 +69,15 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testTimeWithDateTimeZone()
 	{
 		$formatter = new IntlDateFormatter(
-				'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+			'fr_FR',
+			IntlDateFormatter::SHORT,
+			IntlDateFormatter::SHORT,
+			'Europe/London',
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
+		$time = new Time('now', new DateTimeZone('Europe/London'), 'fr_FR');
 
 		$this->assertEquals($formatter->format($time), (string) $time);
 	}
@@ -69,13 +88,13 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$obj = $time->toDateTime();
 
-		$this->assertInstanceOf(\DateTime::class, $obj);
+		$this->assertInstanceOf(DateTime::class, $obj);
 	}
 
 	public function testNow()
 	{
 		$time  = Time::now();
-		$time1 = new \DateTime();
+		$time1 = new DateTime();
 
 		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
@@ -84,7 +103,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testParse()
 	{
 		$time  = Time::parse('next Tuesday', 'America/Chicago');
-		$time1 = new \DateTime('now', new \DateTimeZone('America/Chicago'));
+		$time1 = new DateTime('now', new DateTimeZone('America/Chicago'));
 		$time1->modify('next Tuesday');
 
 		$this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
@@ -102,7 +121,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$time = Time::parse('2017-01-12 00:00', 'Europe/London');
 
-		$expects = new \DateTime('2017-01-12', new \DateTimeZone('Europe/London'));
+		$expects = new DateTime('2017-01-12', new DateTimeZone('Europe/London'));
 
 		$this->assertEquals($expects->format('Y-m-d H:i:s'), $time->toDateTimeString());
 	}
@@ -172,7 +191,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCreateFromFormat()
 	{
-		$now = new \DateTime('now');
+		$now = new DateTime('now');
 
 		Time::setTestNow($now);
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
@@ -190,7 +209,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCreateFromFormatWithTimezoneObject()
 	{
-		$tz = new \DateTimeZone('Europe/London');
+		$tz = new DateTimeZone('Europe/London');
 
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
@@ -219,8 +238,6 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMagicIssetTrue()
 	{
 		$time = Time::parse('January 1, 2016');
@@ -234,8 +251,6 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse(isset($time->foobar));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetYear()
 	{
@@ -376,7 +391,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$instance = Time::now()->getTimezone();
 
-		$this->assertInstanceOf(\DateTimeZone::class, $instance);
+		$this->assertInstanceOf(DateTimeZone::class, $instance);
 	}
 
 	public function testGetTimezonename()
@@ -747,7 +762,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testEqualWithDateTime()
 	{
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
-		$time2 = new \DateTime('January 11, 2017 03:50:00', new \DateTimeZone('Europe/London'));
+		$time2 = new DateTime('January 11, 2017 03:50:00', new DateTimeZone('Europe/London'));
 
 		$this->assertTrue($time1->equals($time2));
 	}
@@ -755,7 +770,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testEqualWithSameDateTime()
 	{
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
-		$time2 = new \DateTime('January 10, 2017 21:50:00', new \DateTimeZone('America/Chicago'));
+		$time2 = new DateTime('January 10, 2017 21:50:00', new DateTimeZone('America/Chicago'));
 
 		$this->assertTrue($time1->equals($time2));
 	}
@@ -990,7 +1005,6 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('2020-05-13 18:00:00', $time2->toDateTimeString());
 	}
 
-	//--------------------------------------------------------------------
 	// Missing tests
 
 	public function testInstance()

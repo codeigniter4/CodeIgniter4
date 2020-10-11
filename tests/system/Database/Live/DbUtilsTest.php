@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -13,8 +15,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsBackup()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -24,8 +24,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$util->backup();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUtilsBackupWithParamsArray()
 	{
@@ -40,8 +38,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util->backup($params);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsBackupWithParamsString()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -52,8 +48,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util->backup('db_jobs');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsListDatabases()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -62,13 +56,13 @@ class DbUtilsTest extends CIDatabaseTestCase
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertTrue(in_array('test', $databases));
+			$this->assertTrue(in_array('test', $databases, true));
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertTrue(in_array('test', $databases));
+			$this->assertTrue(in_array('test', $databases, true));
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
@@ -78,8 +72,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 			$util->listDatabases();
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUtilsDatabaseExist()
 	{
@@ -106,18 +98,14 @@ class DbUtilsTest extends CIDatabaseTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsOptimizeDatabase()
 	{
 		$util = (new Database())->loadUtils($this->db);
 
 		$d = $util->optimizeDatabase();
 
-		$this->assertTrue((bool)$d);
+		$this->assertTrue((bool) $d);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUtilsOptimizeTableFalseOptimizeDatabase()
 	{
@@ -131,8 +119,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util->optimizeDatabase();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsOptimizeTable()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -141,15 +127,13 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
 		{
-			$this->assertFalse((bool)$d);
+			$this->assertFalse((bool) $d);
 		}
 		else
 		{
-			$this->assertTrue((bool)$d);
+			$this->assertTrue((bool) $d);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUtilsOptimizeTableFalseOptimizeTable()
 	{
@@ -163,8 +147,6 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util->optimizeTable('db_job');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsRepairTable()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -175,12 +157,9 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util->repairTable('db_job');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsCSVFromResult()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -191,13 +170,9 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUtilsXMLFromResult()
 	{
-		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+		$data = $this->db->table('job')->where('id', 4)->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -210,6 +185,4 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $actual);
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -93,8 +93,6 @@ class Factories
 	 */
 	protected static $instances = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads instances based on the method component name. Either
 	 * creates a new instance or returns an existing shared instance.
@@ -216,15 +214,13 @@ class Factories
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Verifies that a class & config satisfy the "prefersApp" option
 	 *
 	 * @param array  $config The array of component-specific directives
 	 * @param string $name   Class name, namespace optional
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected static function verifyPrefersApp(array $config, string $name): bool
 	{
@@ -249,7 +245,7 @@ class Factories
 	 * @param array  $config The array of component-specific directives
 	 * @param string $name   Class name, namespace optional
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected static function verifyInstanceOf(array $config, string $name): bool
 	{
@@ -261,8 +257,6 @@ class Factories
 
 		return is_a($name, $config['instanceOf'], true);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the component-specific configuration
@@ -289,7 +283,7 @@ class Factories
 		// Load values from the best Factory configuration (will include Registrars)
 		else
 		{
-			$values = config('Factory')->$component ?? [];
+			$values = config('Factory')->{$component} ?? [];
 		}
 
 		return self::setConfig($component, $values);
@@ -333,9 +327,7 @@ class Factories
 	{
 		if ($component)
 		{
-			unset(static::$configs[$component]);
-			unset(static::$basenames[$component]);
-			unset(static::$instances[$component]);
+			unset(static::$configs[$component], static::$basenames[$component], static::$instances[$component]);
 
 			return;
 		}

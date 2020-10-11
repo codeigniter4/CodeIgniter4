@@ -89,7 +89,7 @@ class CreateModel extends GeneratorCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -104,7 +104,7 @@ class CreateModel extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
@@ -112,7 +112,7 @@ class CreateModel extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getTemplate(): string
 	{
@@ -129,7 +129,7 @@ class CreateModel extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function setReplacements(string $template, string $class): string
 	{

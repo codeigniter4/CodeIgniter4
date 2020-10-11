@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class CountTest extends \CodeIgniter\Test\CIUnitTestCase
+class CountTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCountAll()
 	{
@@ -27,8 +26,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, $builder->countAll(true));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCountAllResults()
 	{
@@ -42,8 +39,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCountAllResultsWithGroupBy()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -56,8 +51,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3651
@@ -79,8 +72,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer2));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCountAllResultsWithGroupByAndHaving()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -95,8 +86,6 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCountAllResultsWithHavingOnly()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -109,6 +98,4 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,33 +1,53 @@
 <?php
 
-class SimpleConfig extends \CodeIgniter\Config\BaseConfig
-{
+use CodeIgniter\Config\BaseConfig;
 
+class SimpleConfig extends BaseConfig
+{
 	public $QZERO;
+
 	public $QZEROSTR;
+
 	public $QEMPTYSTR;
+
 	public $QFALSE;
-	public $first  = 'foo';
+
+	public $first = 'foo';
+
 	public $second = 'bar';
+
 	public $FOO;
+
 	public $onedeep;
+
 	public $default = [
 		'name' => null,
 	];
-	public $simple  = [
+
+	public $simple = [
 		'name' => null,
 	];
+
 	// properties for environment over-ride testing
-	public $alpha   = 'one';
-	public $bravo   = 'two';
+	public $alpha = 'one';
+
+	public $bravo = 'two';
+
 	public $charlie = 'three';
-	public $delta   = 'four';
-	public $echo    = '';
+
+	public $delta = 'four';
+
+	public $echo = '';
+
 	public $foxtrot = 'false';
-	public $fruit   = 'pineapple';
+
+	public $fruit = 'pineapple';
+
 	public $dessert = '';
-	public $golf    = 18;
-	public $crew    = [
+
+	public $golf = 18;
+
+	public $crew = [
 		'captain' => 'Kirk',
 		'science' => 'Spock',
 		'doctor'  => 'Bones',
@@ -35,5 +55,6 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 	];
 
 	public $shortie;
+
 	public $longie;
 }

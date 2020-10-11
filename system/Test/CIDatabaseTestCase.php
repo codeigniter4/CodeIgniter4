@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -55,7 +56,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Should the db be refreshed before
 	 * each test?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $refresh = true;
 
@@ -63,7 +64,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * The seed file(s) used for all tests within this test case.
 	 * Should be fully-namespaced or relative to $basePath
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $seed = '';
 
@@ -81,7 +82,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Note that running "all" runs migrations in date order,
 	 * but specifying namespaces runs them in namespace order (then date)
 	 *
-	 * @var string|array|null
+	 * @var array|string|null
 	 */
 	protected $namespace = 'Tests\Support';
 
@@ -122,8 +123,6 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	protected $insertCache = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Load any database test dependencies.
 	 */
@@ -151,8 +150,6 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$this->seeder->setSilent(true);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that the database is cleaned up to a known state
@@ -184,14 +181,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			}
 
 			$seeds = is_array($this->seed) ? $this->seed : [$this->seed];
+
 			foreach ($seeds as $seed)
 			{
 				$this->seed($seed);
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes care of any required cleanup after the test, like
@@ -205,14 +201,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		{
 			foreach ($this->insertCache as $row)
 			{
-				$this->db->table($row[0])
-						->where($row[1])
-						->delete();
+				$this->db->table($row[0])->where($row[1])->delete();
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Regress migrations as defined by the class
@@ -225,7 +217,6 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$this->migrations->setNamespace(null);
 			$this->migrations->regress(0, 'tests');
 		}
-
 		// Regress each specified namespace
 		else
 		{
@@ -290,14 +281,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function dontSeeInDatabase(string $table, array $where)
 	{
-		$count = $this->db->table($table)
-				->where($where)
-				->countAllResults();
+		$count = $this->db->table($table)->where($where)->countAllResults();
 
 		$this->assertTrue($count === 0, 'Row was found in database');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Asserts that records that match the conditions in $where DO
@@ -306,19 +293,16 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $where
 	 *
-	 * @return void
 	 * @throws DatabaseException
+	 *
+	 * @return void
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
-		$count = $this->db->table($table)
-				->where($where)
-				->countAllResults();
+		$count = $this->db->table($table)->where($where)->countAllResults();
 
 		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fetches a single column from a database row with criteria
@@ -328,22 +312,21 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $column
 	 * @param array  $where
 	 *
-	 * @return boolean
 	 * @throws DatabaseException
+	 *
+	 * @return bool
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
 		$query = $this->db->table($table)
-				->select($column)
-				->where($where)
-				->get();
+			->select($column)
+			->where($where)
+			->get();
 
 		$query = $query->getRow();
 
-		return $query->$column ?? false;
+		return $query->{$column} ?? false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Inserts a row into to the database. This row will be removed
@@ -352,7 +335,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasInDatabase(string $table, array $data)
 	{
@@ -361,31 +344,27 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$data,
 		];
 
-		return $this->db->table($table)
-					->insert($data);
+		return $this->db->table($table)->insert($data);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Asserts that the number of rows in the database that match $where
 	 * is equal to $expected.
 	 *
-	 * @param integer $expected
-	 * @param string  $table
-	 * @param array   $where
+	 * @param int    $expected
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return void
-	 * @throws DatabaseException
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{
 		$count = $this->db->table($table)
-				->where($where)
-				->countAllResults();
+			->where($where)
+			->countAllResults();
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
-
-	//--------------------------------------------------------------------
 }

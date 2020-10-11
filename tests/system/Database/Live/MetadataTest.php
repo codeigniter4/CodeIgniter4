@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -44,16 +46,12 @@ class MetadataTest extends CIDatabaseTestCase
 		$this->assertEquals($this->expectedTables, array_values($result));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testListTablesConstrainPrefix()
 	{
 		$result = $this->db->listTables(true);
 
 		$this->assertEquals($this->expectedTables, array_values($result));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testConstrainPrefixIgnoresOtherTables()
 	{
@@ -65,7 +63,7 @@ class MetadataTest extends CIDatabaseTestCase
 
 		// Create a table with the new prefix
 		$fields = [
-			'name'       => [
+			'name' => [
 				'type'       => 'varchar',
 				'constraint' => 31,
 			],
@@ -88,7 +86,4 @@ class MetadataTest extends CIDatabaseTestCase
 		$this->forge->dropTable('widgets');
 		$this->db->setPrefix($DBPrefix);
 	}
-
-	//--------------------------------------------------------------------
-
 }

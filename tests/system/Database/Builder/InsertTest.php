@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\Query;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
+class InsertTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleInsert()
 	{
@@ -30,7 +29,7 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
 		$expectedBinds = [
-			'id'   => [
+			'id' => [
 				1,
 				true,
 			],
@@ -44,8 +43,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testThrowsExceptionOnNoValuesSet()
 	{
 		$builder = $this->db->table('jobs');
@@ -55,8 +52,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$builder->testMode()->insert(null, true);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testInsertBatch()
 	{
@@ -75,8 +70,7 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->db->shouldReturn('execute', 1)
-				 ->shouldReturn('affectedRows', 1);
+		$this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
 
 		$builder->insertBatch($insertData, true, true);
 
@@ -86,14 +80,12 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
 
-		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
 
 		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
+		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testInsertBatchThrowsExceptionOnNoData()
 	{
@@ -104,8 +96,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->insertBatch();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testInsertBatchThrowsExceptionOnEmptyData()
 	{
 		$builder = $this->db->table('jobs');
@@ -114,6 +104,4 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectExceptionMessage('insertBatch() called with no data');
 		$builder->insertBatch([]);
 	}
-
-	//--------------------------------------------------------------------
 }

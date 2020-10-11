@@ -42,7 +42,7 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE)
 
 		if (isset($error['class']))
 		{
-			$type      = ($error['type'] === '->') ? '()' . $error['type'] : $error['type'];
+			$type = ($error['type'] === '->') ? '()' . $error['type'] : $error['type'];
 			$function .= $padClass . $error['class'] . $type . $error['function'];
 		}
 		elseif (! isset($error['class']) && isset($error['function']))
@@ -50,14 +50,14 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE)
 			$function .= $padClass . $error['function'];
 		}
 
-		$args = implode(', ', array_map(function ($value) {
+		$args = implode(', ', array_map(static function ($value) {
 			switch (true)
 			{
 				case is_object($value):
 					return 'Object(' . get_class($value) . ')';
 				case is_array($value):
 					return count($value) ? '[...]' : '[]';
-				case is_null($value):
+				case $value === null:
 					return 'null'; // return the lowercased version
 				default:
 					return var_export($value, true);

@@ -49,15 +49,12 @@ use Config\Cache;
  */
 class WincacheHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
 	 * @var string
 	 */
 	protected $prefix;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -69,8 +66,6 @@ class WincacheHandler implements CacheInterface
 		$this->prefix = $config->prefix ?: '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes care of any handler-specific setup that must be done.
 	 *
@@ -80,8 +75,6 @@ class WincacheHandler implements CacheInterface
 	{
 		// Nothing to see here...
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -103,14 +96,12 @@ class WincacheHandler implements CacheInterface
 		return ($success) ? $data : null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 *
@@ -123,14 +114,12 @@ class WincacheHandler implements CacheInterface
 		return wincache_ucache_set($key, $value, $ttl);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes a specific item from the cache store.
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return bool
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -141,13 +130,11 @@ class WincacheHandler implements CacheInterface
 		return wincache_ucache_delete($key);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 *
@@ -163,13 +150,11 @@ class WincacheHandler implements CacheInterface
 		return ($success === true) ? $value : false; // @phpstan-ignore-line
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 *
@@ -185,12 +170,10 @@ class WincacheHandler implements CacheInterface
 		return ($success === true) ? $value : false; // @phpstan-ignore-line
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return bool
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -198,8 +181,6 @@ class WincacheHandler implements CacheInterface
 	{
 		return wincache_ucache_clear();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns information on the entire cache.
@@ -216,12 +197,10 @@ class WincacheHandler implements CacheInterface
 		return wincache_ucache_info(true);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns detailed information about the specific item in the cache.
 	 *
-	 * @param string $key Cache item name.
+	 * @param string $key Cache item name
 	 *
 	 * @return mixed
 	 *
@@ -248,17 +227,13 @@ class WincacheHandler implements CacheInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('wincache') && ini_get('wincache.ucenabled'));
+		return extension_loaded('wincache') && ini_get('wincache.ucenabled');
 	}
-
-	//--------------------------------------------------------------------
 }

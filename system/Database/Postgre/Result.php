@@ -49,18 +49,15 @@ use stdClass;
  */
 class Result extends BaseResult implements ResultInterface
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getFieldCount(): int
 	{
 		return pg_num_fields($this->resultID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of column names in the result set.
@@ -70,15 +67,14 @@ class Result extends BaseResult implements ResultInterface
 	public function getFieldNames(): array
 	{
 		$fieldNames = [];
-		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
+
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++)
 		{
 			$fieldNames[] = pg_field_name($this->resultID, $i);
 		}
 
 		return $fieldNames;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of objects representing field meta-data.
@@ -89,7 +85,7 @@ class Result extends BaseResult implements ResultInterface
 	{
 		$retVal = [];
 
-		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++)
 		{
 			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
@@ -103,8 +99,6 @@ class Result extends BaseResult implements ResultInterface
 
 		return $retVal;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Frees the current result.
@@ -120,14 +114,12 @@ class Result extends BaseResult implements ResultInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Moves the internal pointer to the desired offset. This is called
 	 * internally before fetching results to make sure the result set
 	 * starts at zero.
 	 *
-	 * @param integer $n
+	 * @param int $n
 	 *
 	 * @return mixed
 	 */
@@ -135,8 +127,6 @@ class Result extends BaseResult implements ResultInterface
 	{
 		return pg_result_seek($this->resultID, $n);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result set as an array.
@@ -150,8 +140,6 @@ class Result extends BaseResult implements ResultInterface
 		return pg_fetch_assoc($this->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result set as an object.
 	 *
@@ -159,7 +147,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object|boolean|Entity
+	 * @return bool|Entity|object
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
@@ -167,8 +155,7 @@ class Result extends BaseResult implements ResultInterface
 		{
 			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
 		}
+
 		return pg_fetch_object($this->resultID, null, $className);
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,28 +1,24 @@
 <?php
+
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled
  */
-class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
+class RouteCollectionTest extends CIUnitTestCase
 {
-
-	public function tearDown(): void
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
 	{
 		$defaults = [
 			'Config' => APPPATH . 'Config',
 			'App'    => APPPATH,
 		];
-		$config   = array_merge($config, $defaults);
+		$config = array_merge($config, $defaults);
 
 		Services::autoloader()->addNamespace($config);
 
@@ -30,7 +26,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		if ($moduleConfig === null)
 		{
-			$moduleConfig          = new \Config\Modules();
+			$moduleConfig          = new Modules();
 			$moduleConfig->enabled = false;
 		}
 
@@ -52,8 +48,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddPrefixesDefaultNamespaceWhenNoneExist()
 	{
 		$routes = $this->getCollector();
@@ -69,8 +63,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddIgnoresDefaultNamespaceWhenExists()
 	{
 		$routes = $this->getCollector();
@@ -85,8 +77,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expects, $routes);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAddWorksWithCurrentHTTPMethods()
 	{
@@ -105,8 +95,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddWithLeadingSlash()
 	{
 		$routes = $this->getCollector();
@@ -122,8 +110,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMatchIgnoresInvalidHTTPMethods()
 	{
 		Services::request()->setMethod('get');
@@ -136,8 +122,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals([], $routes);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAddWorksWithArrayOFHTTPMethods()
 	{
@@ -156,8 +140,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddReplacesDefaultPlaceholders()
 	{
 		$routes = $this->getCollector();
@@ -172,8 +154,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expects, $routes);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAddReplacesCustomPlaceholders()
 	{
@@ -191,8 +171,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAddRecognizesCustomNamespaces()
 	{
 		$routes = $this->getCollector();
@@ -209,8 +187,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetDefaultControllerStoresIt()
 	{
 		$routes = $this->getCollector();
@@ -218,8 +194,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('godzilla', $routes->getDefaultController());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetDefaultMethodStoresIt()
 	{
@@ -229,8 +203,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('biggerBox', $routes->getDefaultMethod());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testTranslateURIDashesWorks()
 	{
 		$routes = $this->getCollector();
@@ -238,8 +210,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertTrue($routes->shouldTranslateURIDashes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAutoRouteStoresIt()
 	{
@@ -249,16 +219,15 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($routes->shouldAutoRoute());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGroupingWorks()
 	{
 		$routes = $this->getCollector();
 
 		$routes->group(
-				'admin', function ($routes) {
-					$routes->add('users/list', '\Users::list');
-				}
+			'admin',
+			static function ($routes) {
+				$routes->add('users/list', '\Users::list');
+			}
 		);
 
 		$expected = [
@@ -267,17 +236,16 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGroupGetsSanitized()
 	{
 		$routes = $this->getCollector();
 
 		$routes->group(
-				'<script>admin', function ($routes) {
-					$routes->add('users/list', '\Users::list');
-				}
+			'<script>admin',
+			static function ($routes) {
+				$routes->add('users/list', '\Users::list');
+			}
 		);
 
 		$expected = [
@@ -287,16 +255,16 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGroupSetsOptions()
 	{
 		$routes = $this->getCollector();
 
 		$routes->group(
-				'admin', ['namespace' => 'Admin'], function ($routes) {
-					$routes->add('users/list', 'Users::list');
-				}
+			'admin',
+			['namespace' => 'Admin'],
+			static function ($routes) {
+				$routes->add('users/list', 'Users::list');
+			}
 		);
 
 		$expected = [
@@ -305,8 +273,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHostnameOption()
 	{
@@ -323,8 +289,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testResourceScaffoldsCorrectly()
 	{
@@ -474,8 +438,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testResourcesWithCustomController()
 	{
 		Services::request()->setMethod('get');
@@ -492,8 +454,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testResourcesWithCustomPlaceholder()
 	{
@@ -548,8 +508,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testResourcesWithOnly()
 	{
 		Services::request()->setMethod('get');
@@ -563,8 +521,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testResourcesWithExcept()
 	{
@@ -580,8 +536,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testResourcesWithWebsafe()
 	{
@@ -599,8 +553,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMatchSupportsMultipleMethods()
 	{
 		Services::request()->setMethod('get');
@@ -617,8 +569,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGet()
 	{
 		Services::request()->setMethod('get');
@@ -630,8 +580,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPost()
 	{
 		$routes = $this->getCollector();
@@ -642,8 +590,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->post('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetDoesntAllowOtherMethods()
 	{
@@ -657,8 +603,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPut()
 	{
 		$routes = $this->getCollector();
@@ -669,8 +613,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->put('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDelete()
 	{
@@ -683,8 +625,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHead()
 	{
 		$routes = $this->getCollector();
@@ -695,8 +635,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->head('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPatch()
 	{
@@ -709,8 +647,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOptions()
 	{
 		$routes = $this->getCollector();
@@ -722,8 +658,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCLI()
 	{
 		$routes = $this->getCollector();
@@ -733,8 +667,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->cli('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes('cli'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEnvironmentRestricts()
 	{
@@ -746,21 +678,21 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = ['here' => '\there'];
 
 		$routes->environment(
-				'testing', function ($routes) {
-					$routes->get('here', 'there');
-				}
+			'testing',
+			static function ($routes) {
+				$routes->get('here', 'there');
+			}
 		);
 
 		$routes->environment(
-				'badenvironment', function ($routes) {
-					$routes->get('from', 'to');
-				}
+			'badenvironment',
+			static function ($routes) {
+				$routes->get('from', 'to');
+			}
 		);
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testReverseRoutingFindsSimpleMatch()
 	{
@@ -773,8 +705,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/path/string/to/13', $match);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReverseRoutingWithLocaleAndFindsSimpleMatch()
 	{
 		$routes = $this->getCollector();
@@ -786,8 +716,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/en/path/string/to/13', $match);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReverseRoutingReturnsFalseWithBadParamCount()
 	{
 		$routes = $this->getCollector();
@@ -796,8 +724,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($routes->reverseRoute('myController::goto', 'string', 13));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testReverseRoutingReturnsFalseWithNoMatch()
 	{
@@ -808,8 +734,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($routes->reverseRoute('myBadController::goto', 'string', 13));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReverseRoutingThrowsExceptionWithBadParamTypes()
 	{
 		$routes = $this->getCollector();
@@ -819,7 +743,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
-	//--------------------------------------------------------------------
 
 	public function testReverseRoutingWithLocale()
 	{
@@ -830,8 +753,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNamedRoutes()
 	{
 		$routes = $this->getCollector();
@@ -841,8 +762,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/users', $routes->reverseRoute('namedRoute'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNamedRoutesWithLocale()
 	{
 		$routes = $this->getCollector();
@@ -851,8 +770,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('/en/users', $routes->reverseRoute('namedRoute'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNamedRoutesFillInParams()
 	{
@@ -865,8 +782,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/path/string/to/13', $match);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNamedRoutesWithLocaleAndFillInParams()
 	{
 		$routes = $this->getCollector();
@@ -878,8 +793,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/en/path/string/to/13', $match);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/642
 	 */
@@ -889,12 +802,16 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post(
-				'user/insert', function () {
-				}, ['as' => 'namedRoute2']
+			'user/insert',
+			static function () {
+			},
+			['as' => 'namedRoute2']
 		);
 		$routes->put(
-				'user/insert', function () {
-				}, ['as' => 'namedRoute3']
+			'user/insert',
+			static function () {
+			},
+			['as' => 'namedRoute3']
 		);
 
 		$match1 = $routes->reverseRoute('namedRoute1');
@@ -906,8 +823,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/user/insert', $match3);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/642
 	 */
@@ -918,13 +833,13 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->get('{locale}/user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post(
 			'{locale}/user/insert',
-			function () {
+			static function () {
 			},
 			['as' => 'namedRoute2']
 		);
 		$routes->put(
 			'{locale}/user/insert',
-			function () {
+			static function () {
 			},
 			['as' => 'namedRoute3']
 		);
@@ -937,8 +852,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/en/user/insert', $match2);
 		$this->assertEquals('/en/user/insert', $match3);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3048
@@ -953,8 +866,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/system/that', $routes->reverseRoute('pipedRoute', 'that'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReverseRouteMatching()
 	{
 		$routes = $this->getCollector();
@@ -966,8 +877,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/test/1/2', $match);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReverseRouteMatchingWithLocale()
 	{
 		$routes = $this->getCollector();
@@ -978,8 +887,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('/en/test/1/2', $match);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAddRedirect()
 	{
@@ -1006,7 +913,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->addRedirect('users', 'namedRoute', 307);
 
 		$expected = [
-			'users'   => [
+			'users' => [
 				'zombies' => '\Zombies::index',
 			],
 			'zombies' => '\Zombies::index',
@@ -1025,7 +932,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->addRedirect('users', 'namedRoute', 307);
 
 		$expected = [
-			'users'   => [
+			'users' => [
 				'zombies' => '\Zombies::index',
 			],
 			'zombies' => '\Zombies::index',
@@ -1035,8 +942,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($routes->isRedirect('users'));
 		$this->assertEquals(307, $routes->getRedirectCode('users'));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/497
@@ -1137,8 +1042,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
 	 */
@@ -1158,8 +1061,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/568
 	 */
@@ -1167,7 +1068,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('login', function () {
+		$routes->add('login', static function () {
 		});
 
 		$match = $routes->reverseRoute('login');
@@ -1179,13 +1080,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('login', function () {
+		$routes->add('login', static function () {
 		});
 
 		$this->assertFalse($routes->reverseRoute('foobar'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWillDiscoverLocal()
 	{
@@ -1203,8 +1102,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('testing', $match);
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDiscoverLocalAllowsConfigToOverridePackages()
 	{
@@ -1225,8 +1122,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($match['testing'], '\MainRoutes::index');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRoutesOptions()
 	{
 		$routes = $this->getCollector();
@@ -1237,8 +1132,10 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'foo' => 'baz',
 		];
 		$routes->add(
-				'administrator', function () {
-				}, $options
+			'administrator',
+			static function () {
+			},
+			$options
 		);
 
 		$options = $routes->getRoutesOptions('administrator');
@@ -1263,16 +1160,22 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar' => 'baz',
 		];
 		$routes->get(
-				'administrator', function () {
-				}, $options1
+			'administrator',
+			static function () {
+			},
+			$options1
 		);
 		$routes->post(
-				'administrator', function () {
-				}, $options2
+			'administrator',
+			static function () {
+			},
+			$options2
 		);
 		$routes->add(
-				'administrator', function () {
-				}, $options3
+			'administrator',
+			static function () {
+			},
+			$options3
 		);
 
 		$options = $routes->getRoutesOptions('administrator');
@@ -1294,9 +1197,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-				'admin', ['filter' => 'role'], function ($routes) {
-					$routes->add('users', '\Users::list');
-				}
+			'admin',
+			['filter' => 'role'],
+			static function ($routes) {
+				$routes->add('users', '\Users::list');
+			}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
@@ -1311,9 +1216,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-				'admin', ['filter' => 'role:admin,manager'], function ($routes) {
-					$routes->add('users', '\Users::list');
-				}
+			'admin',
+			['filter' => 'role:admin,manager'],
+			static function ($routes) {
+				$routes->add('users', '\Users::list');
+			}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
@@ -1321,14 +1228,12 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('role:admin,manager', $routes->getFilterForRoute('admin/users'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function test404OverrideNot()
 	{
 		Services::request()->setMethod('get');
 		$routes = $this->getCollector();
 
-		$this->assertEquals(null, $routes->get404Override());
+		$this->assertNull($routes->get404Override());
 	}
 
 	public function test404OverrideString()
@@ -1345,14 +1250,13 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::request()->setMethod('get');
 		$routes = $this->getCollector();
 
-		$routes->set404Override(function () {
-			echo 'Explode now';
-		}
+		$routes->set404Override(
+			static function () {
+				echo 'Explode now';
+			}
 		);
-		$this->assertTrue(is_callable($routes->get404Override()));
+		$this->assertIsCallable($routes->get404Override());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOffsetParameters()
 	{
@@ -1364,11 +1268,10 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
-	//--------------------------------------------------------------------
-	// Battery of tests for reported issue
-	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
-
 	/**
+	 * Battery of tests for reported issue
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
 	 */
 	public function testRouteToWithSubdomainMatch()
 	{
@@ -1478,10 +1381,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
 	}
 
-	//--------------------------------------------------------------------
-	// Tests for router overwritting issue
-	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
-
+	/**
+	 * Tests for router overwritting issue
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
+	 */
 	public function testRouteOverwritingDifferentSubdomains()
 	{
 		Services::request()->setMethod('get');
@@ -1584,10 +1488,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $router->handle('/'));
 	}
 
-	//--------------------------------------------------------------------
-	// Tests for router DefaultNameSpace issue
-	// @see https://github.com/codeigniter4/CodeIgniter4/issues/2423
-
+	/**
+	 * Tests for router DefaultNameSpace issue
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2423
+	 */
 	public function testRouteDefaultNameSpace()
 	{
 		Services::request()->setMethod('get');
@@ -1626,6 +1531,8 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideRouteDefaultNamespace
+	 *
+	 * @param mixed $namespace
 	 */
 	public function testAutoRoutesControllerNameReturnsFQCN($namespace)
 	{
@@ -1641,6 +1548,8 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideRouteDefaultNamespace
+	 *
+	 * @param mixed $namespace
 	 */
 	public function testRoutesControllerNameReturnsFQCN($namespace)
 	{
@@ -1654,5 +1563,4 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
-
 }

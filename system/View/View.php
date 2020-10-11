@@ -50,12 +50,9 @@ use RuntimeException;
 
 /**
  * Class View
- *
- * @package CodeIgniter\View
  */
 class View implements RendererInterface
 {
-
 	/**
 	 * Data that is made available to the Views.
 	 *
@@ -66,7 +63,7 @@ class View implements RendererInterface
 	/**
 	 * Merge savedData and userData
 	 */
-	protected $tempData = null;
+	protected $tempData;
 
 	/**
 	 * The base directory to look in for our Views.
@@ -101,7 +98,7 @@ class View implements RendererInterface
 	/**
 	 * Should we store performance info?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $debug = false;
 
@@ -121,14 +118,14 @@ class View implements RendererInterface
 	/**
 	 * Whether data should be saved between renders.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $saveData;
 
 	/**
 	 * Number of loaded views
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $viewsCount = 0;
 
@@ -155,28 +152,24 @@ class View implements RendererInterface
 	 */
 	protected $currentSection;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
 	 * @param ViewConfig       $config
 	 * @param string|null      $viewPath
 	 * @param FileLocator|null $loader
-	 * @param boolean|null     $debug
+	 * @param bool|null        $debug
 	 * @param LoggerInterface  $logger
 	 */
 	public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		$this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-		$this->loader   = $loader ?? Services::locator();
-		$this->logger   = $logger ?? Services::logger();
-		$this->debug    = $debug ?? CI_DEBUG;
+		$this->loader   = $loader           ?? Services::locator();
+		$this->logger   = $logger           ?? Services::logger();
+		$this->debug    = $debug            ?? CI_DEBUG;
 		$this->saveData = $config->saveData ?? null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Builds the output based upon a file name and any
@@ -186,9 +179,9 @@ class View implements RendererInterface
 	 *     - cache 		number of seconds to cache for
 	 *  - cache_name	Name to use for cache
 	 *
-	 * @param string       $view
-	 * @param array|null   $options
-	 * @param boolean|null $saveData
+	 * @param string     $view
+	 * @param array|null $options
+	 * @param bool|null  $saveData
 	 *
 	 * @return string
 	 */
@@ -257,7 +250,7 @@ class View implements RendererInterface
 		// When using layouts, the data has already been stored
 		// in $this->sections, and no other valid output
 		// is allowed in $output so we'll overwrite it.
-		if (! is_null($this->layout) && empty($this->currentSection))
+		if ($this->layout !== null && empty($this->currentSection))
 		{
 			$layoutView   = $this->layout;
 			$this->layout = null;
@@ -296,27 +289,25 @@ class View implements RendererInterface
 		return $output;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Builds the output based upon a string and any
 	 * data that has already been set.
 	 * Cache does not apply, because there is no "key".
 	 *
-	 * @param string  $view     The view contents
-	 * @param array   $options  Reserved for 3rd-party uses since
-	 *                          it might be needed to pass additional info
-	 *                          to other template engines.
-	 * @param boolean $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 * @param string $view     The view contents
+	 * @param array  $options  reserved for 3rd-party uses since
+	 *                         it might be needed to pass additional info
+	 *                         to other template engines
+	 * @param bool   $saveData if true, will save data for use with any other calls,
+	 *                         if false, will clean the data after displaying the view,
+	 *                         if not specified, use the config setting
 	 *
 	 * @return string
 	 */
 	public function renderString(string $view, array $options = null, bool $saveData = null): string
 	{
 		$start          = microtime(true);
-		$saveData       = $saveData ?? $this->saveData;
+		$saveData       = $saveData       ?? $this->saveData;
 		$this->tempData = $this->tempData ?? $this->data;
 
 		extract($this->tempData);
@@ -339,21 +330,18 @@ class View implements RendererInterface
 		return $output;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Extract first bit of a long string and add ellipsis
 	 *
-	 * @param  string  $string
-	 * @param  integer $length
+	 * @param string $string
+	 * @param int    $length
+	 *
 	 * @return string
 	 */
 	public function excerpt(string $string, int $length = 20): string
 	{
 		return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets several pieces of view data at once.
@@ -376,8 +364,6 @@ class View implements RendererInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets a single piece of view data.
@@ -402,8 +388,6 @@ class View implements RendererInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Removes all of the view data from the system.
 	 *
@@ -416,8 +400,6 @@ class View implements RendererInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current data that will be displayed in the view.
 	 *
@@ -427,8 +409,6 @@ class View implements RendererInterface
 	{
 		return $this->tempData ?? $this->data;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Specifies that the current view should extend an existing layout.
@@ -442,8 +422,6 @@ class View implements RendererInterface
 		$this->layout = $layout;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Starts holds content for a section within the layout.
 	 *
@@ -456,11 +434,7 @@ class View implements RendererInterface
 		ob_start();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 *
-	 *
 	 * @throws RuntimeException
 	 */
 	public function endSection()
@@ -481,8 +455,6 @@ class View implements RendererInterface
 
 		$this->currentSection = null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Renders a section's contents.
@@ -505,14 +477,12 @@ class View implements RendererInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used within layout views to include additional views.
 	 *
 	 * @param string     $view
 	 * @param array|null $options
-	 * @param boolean    $saveData
+	 * @param bool       $saveData
 	 *
 	 * @return string
 	 */
@@ -520,8 +490,6 @@ class View implements RendererInterface
 	{
 		return $this->render($view, $options, $saveData);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the performance data that might have been collected
@@ -533,8 +501,6 @@ class View implements RendererInterface
 	{
 		return $this->performanceData;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Logs performance data for rendering a view.
@@ -556,6 +522,4 @@ class View implements RendererInterface
 			];
 		}
 	}
-
-	//--------------------------------------------------------------------
 }

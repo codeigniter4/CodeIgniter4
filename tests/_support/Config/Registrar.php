@@ -1,11 +1,12 @@
-<?php namespace Tests\Support\Config;
+<?php
+
+namespace Tests\Support\Config;
 
 /**
  * Class Registrar
  *
  * Provides a basic registrar class for testing BaseConfig registration functions.
  */
-
 class Registrar
 {
 	/**
@@ -14,7 +15,7 @@ class Registrar
 	 * @var array
 	 */
 	protected static $dbConfig = [
-		'MySQLi'  => [
+		'MySQLi' => [
 			'DSN'      => '',
 			'hostname' => '127.0.0.1',
 			'username' => 'root',
@@ -94,5 +95,4 @@ class Registrar
 
 		return $config;
 	}
-
 }

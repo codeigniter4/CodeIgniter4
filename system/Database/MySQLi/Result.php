@@ -49,18 +49,15 @@ use stdClass;
  */
 class Result extends BaseResult implements ResultInterface
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getFieldCount(): int
 	{
 		return $this->resultID->field_count;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of column names in the result set.
@@ -71,6 +68,7 @@ class Result extends BaseResult implements ResultInterface
 	{
 		$fieldNames = [];
 		$this->resultID->field_seek(0);
+
 		while ($field = $this->resultID->fetch_field())
 		{
 			$fieldNames[] = $field->name;
@@ -78,8 +76,6 @@ class Result extends BaseResult implements ResultInterface
 
 		return $fieldNames;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of objects representing field meta-data.
@@ -89,29 +85,29 @@ class Result extends BaseResult implements ResultInterface
 	public function getFieldData(): array
 	{
 		static $dataTypes = [
-			MYSQLI_TYPE_DECIMAL     => 'decimal',
-			MYSQLI_TYPE_NEWDECIMAL  => 'newdecimal',
-			MYSQLI_TYPE_FLOAT       => 'float',
-			MYSQLI_TYPE_DOUBLE      => 'double',
+			MYSQLI_TYPE_DECIMAL    => 'decimal',
+			MYSQLI_TYPE_NEWDECIMAL => 'newdecimal',
+			MYSQLI_TYPE_FLOAT      => 'float',
+			MYSQLI_TYPE_DOUBLE     => 'double',
 
-			MYSQLI_TYPE_BIT         => 'bit',
-			MYSQLI_TYPE_SHORT       => 'short',
-			MYSQLI_TYPE_LONG        => 'long',
-			MYSQLI_TYPE_LONGLONG    => 'longlong',
-			MYSQLI_TYPE_INT24       => 'int24',
+			MYSQLI_TYPE_BIT      => 'bit',
+			MYSQLI_TYPE_SHORT    => 'short',
+			MYSQLI_TYPE_LONG     => 'long',
+			MYSQLI_TYPE_LONGLONG => 'longlong',
+			MYSQLI_TYPE_INT24    => 'int24',
 
-			MYSQLI_TYPE_YEAR        => 'year',
+			MYSQLI_TYPE_YEAR => 'year',
 
-			MYSQLI_TYPE_TIMESTAMP   => 'timestamp',
-			MYSQLI_TYPE_DATE        => 'date',
-			MYSQLI_TYPE_TIME        => 'time',
-			MYSQLI_TYPE_DATETIME    => 'datetime',
-			MYSQLI_TYPE_NEWDATE     => 'newdate',
+			MYSQLI_TYPE_TIMESTAMP => 'timestamp',
+			MYSQLI_TYPE_DATE      => 'date',
+			MYSQLI_TYPE_TIME      => 'time',
+			MYSQLI_TYPE_DATETIME  => 'datetime',
+			MYSQLI_TYPE_NEWDATE   => 'newdate',
 
-			MYSQLI_TYPE_SET         => 'set',
+			MYSQLI_TYPE_SET => 'set',
 
-			MYSQLI_TYPE_VAR_STRING  => 'var_string',
-			MYSQLI_TYPE_STRING      => 'string',
+			MYSQLI_TYPE_VAR_STRING => 'var_string',
+			MYSQLI_TYPE_STRING     => 'string',
 
 			MYSQLI_TYPE_GEOMETRY    => 'geometry',
 			MYSQLI_TYPE_TINY_BLOB   => 'tiny_blob',
@@ -128,8 +124,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]              = new stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true)
-				? 'char' : (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
+			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char' : (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;
@@ -138,8 +133,6 @@ class Result extends BaseResult implements ResultInterface
 
 		return $retVal;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Frees the current result.
@@ -155,14 +148,12 @@ class Result extends BaseResult implements ResultInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Moves the internal pointer to the desired offset. This is called
 	 * internally before fetching results to make sure the result set
 	 * starts at zero.
 	 *
-	 * @param integer $n
+	 * @param int $n
 	 *
 	 * @return mixed
 	 */
@@ -170,8 +161,6 @@ class Result extends BaseResult implements ResultInterface
 	{
 		return $this->resultID->data_seek($n);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result set as an array.
@@ -185,8 +174,6 @@ class Result extends BaseResult implements ResultInterface
 		return $this->resultID->fetch_assoc();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result set as an object.
 	 *
@@ -194,7 +181,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object|boolean|Entity
+	 * @return bool|Entity|object
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
@@ -202,8 +189,7 @@ class Result extends BaseResult implements ResultInterface
 		{
 			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
 		}
+
 		return $this->resultID->fetch_object($className);
 	}
-
-	//--------------------------------------------------------------------
 }

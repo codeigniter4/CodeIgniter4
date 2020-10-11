@@ -47,12 +47,9 @@ use Config\Autoload;
  * Lists namespaces set in Config\Autoload with their
  * full server path. Helps you to verify that you have
  * the namespaces setup correctly.
- *
- * @package CodeIgniter\Commands
  */
 class Namespaces extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -96,8 +93,6 @@ class Namespaces extends BaseCommand
 	 */
 	protected $options = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays the help for the spark cli script itself.
 	 *
@@ -108,6 +103,7 @@ class Namespaces extends BaseCommand
 		$config = new Autoload();
 
 		$tbody = [];
+
 		foreach ($config->psr4 as $ns => $path)
 		{
 			$path = realpath($path) ?: $path;
@@ -127,5 +123,4 @@ class Namespaces extends BaseCommand
 
 		CLI::table($tbody, $thead);
 	}
-
 }

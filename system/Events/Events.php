@@ -50,7 +50,6 @@ define('EVENT_PRIORITY_HIGH', 10);
  */
 class Events
 {
-
 	/**
 	 * The list of listeners.
 	 *
@@ -62,7 +61,7 @@ class Events
 	 * Flag to let us know if we've read from the Config file(s)
 	 * and have all of the defined events.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $initialized = false;
 
@@ -70,7 +69,7 @@ class Events
 	 * If true, events will not actually be fired.
 	 * Useful during testing.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $simulate = false;
 
@@ -88,8 +87,6 @@ class Events
 	 * @var array
 	 */
 	protected static $files = [];
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that we have a events file ready.
@@ -125,8 +122,6 @@ class Events
 		static::$initialized = true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
@@ -138,7 +133,7 @@ class Events
 	 *
 	 * @param string   $eventName
 	 * @param callable $callback
-	 * @param integer  $priority
+	 * @param int      $priority
 	 */
 	public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
@@ -158,8 +153,6 @@ class Events
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Runs through all subscribed methods running them one at a time,
 	 * until either:
@@ -169,7 +162,7 @@ class Events
 	 * @param string $eventName
 	 * @param mixed  $arguments
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function trigger($eventName, ...$arguments): bool
 	{
@@ -205,8 +198,6 @@ class Events
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of listeners for a single event. They are
 	 * sorted by priority.
@@ -238,8 +229,6 @@ class Events
 		return static::$listeners[$eventName][2];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Removes a single listener from an event.
 	 *
@@ -249,7 +238,7 @@ class Events
 	 * @param string   $eventName
 	 * @param callable $listener
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function removeListener($eventName, callable $listener): bool
 	{
@@ -262,8 +251,7 @@ class Events
 		{
 			if ($check === $listener)
 			{
-				unset(static::$listeners[$eventName][1][$index]);
-				unset(static::$listeners[$eventName][2][$index]);
+				unset(static::$listeners[$eventName][1][$index], static::$listeners[$eventName][2][$index]);
 
 				return true;
 			}
@@ -271,8 +259,6 @@ class Events
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Removes all listeners.
@@ -284,7 +270,7 @@ class Events
 	 */
 	public static function removeAllListeners($eventName = null)
 	{
-		if (! is_null($eventName))
+		if ($eventName !== null)
 		{
 			unset(static::$listeners[$eventName]);
 		}
@@ -293,8 +279,6 @@ class Events
 			static::$listeners = [];
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the path to the file that routes are read from.
@@ -306,8 +290,6 @@ class Events
 		static::$files = $files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the files that were found/loaded during this request.
 	 *
@@ -318,21 +300,17 @@ class Events
 		return static::$files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Turns simulation on or off. When on, events will not be triggered,
 	 * simply logged. Useful during testing when you don't actually want
 	 * the tests to run.
 	 *
-	 * @param boolean $choice
+	 * @param bool $choice
 	 */
 	public static function simulate(bool $choice = true)
 	{
 		static::$simulate = $choice;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Getter for the performance log records.
@@ -343,6 +321,4 @@ class Events
 	{
 		return static::$performanceLog;
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -13,14 +16,14 @@ use org\bovigo\vfs\vfsStream;
  *
  * Was unable to test fontPath & related logic.
  */
-class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class GDHandlerTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		if (! extension_loaded('gd'))
 		{
 			$this->markTestSkipped('The GD extension is not available.');
+
 			return;
 		}
 
@@ -80,8 +83,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('image/png', $props['mime_type']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testResizeIgnored()
 	{
 		$this->handler->withFile($this->path);
@@ -121,8 +122,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(354, $this->handler->getWidth());
 		$this->assertEquals(456, $this->handler->getHeight());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCropTopLeft()
 	{
@@ -172,8 +171,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(100, $this->handler->getHeight());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRotate()
 	{
 		$this->handler->withFile($this->path); // 155x200
@@ -196,8 +193,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->handler->rotate(77);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFlatten()
 	{
 		$this->handler->withFile($this->path);
@@ -205,8 +200,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(155, $this->handler->getWidth());
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFlip()
 	{
@@ -239,7 +232,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->handler->flip('bogus');
 	}
 
-	//--------------------------------------------------------------------
 	public function testFit()
 	{
 		$this->handler->withFile($this->path);
@@ -278,6 +270,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bottom-right',
 		];
 		$this->handler->withFile($this->path);
+
 		foreach ($choices as $position)
 		{
 			$this->handler->fit(100, 100, $position);
@@ -285,8 +278,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testText()
 	{
@@ -296,8 +287,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMoreText()
 	{
 		$this->handler->withFile($this->path);
@@ -305,8 +294,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(155, $this->handler->getWidth());
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testImageCreation()
 	{
@@ -324,8 +311,6 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(200, $this->handler->getHeight());
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testImageCopy()
 	{
@@ -354,7 +339,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save(null, 100);
-			$this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
+			$this->assertFileExists($this->origin . 'ci-logo.' . $type);
 
 			$this->assertEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
@@ -450,5 +435,4 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
 		}
 	}
-
 }

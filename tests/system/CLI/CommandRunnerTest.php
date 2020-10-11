@@ -1,20 +1,31 @@
 <?php
+
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Config\DotEnv;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use Config\Services;
 
-class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
+class CommandRunnerTest extends CIUnitTestCase
 {
-
 	private $stream_filter;
+
 	protected $env;
+
 	protected $config;
+
 	protected $request;
+
 	protected $response;
+
 	protected $logger;
+
 	protected $runner;
 
 	protected function setUp(): void
@@ -22,9 +33,10 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
-		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+
+		$this->env = new DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
@@ -41,14 +53,14 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		CLI::init();
 
 		$this->config   = new MockCLIConfig();
-		$this->request  = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response = new \CodeIgniter\HTTP\Response($this->config);
+		$this->request  = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+		$this->response = new Response($this->config);
 		$this->logger   = Services::logger();
 		$this->runner   = new CommandRunner();
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		stream_filter_remove($this->stream_filter);
 	}
@@ -133,5 +145,4 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		// make sure the result looks like a command list
 		$this->assertStringContainsString('Lists the available commands.', $result);
 	}
-
 }

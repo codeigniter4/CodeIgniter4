@@ -1,13 +1,17 @@
-<?php namespace CodeIgniter\Files;
+<?php
 
+namespace CodeIgniter\Files;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileWithVfsTest extends CIUnitTestCase
 {
-
 	// For VFS stuff
 	protected $root;
+
 	protected $path;
+
 	protected $start;
 
 	/**
@@ -26,7 +30,7 @@ class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->file  = new File($this->start . 'able/apple.php');
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 

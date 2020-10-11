@@ -1,9 +1,9 @@
 <?php
 
+use CodeIgniter\Test\CIUnitTestCase;
 
-class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
+class CommonFunctionsSendTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -11,7 +11,6 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		unset($_ENV['foo'], $_SERVER['foo']);
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Make sure cookies are set by RedirectResponse this way
 	 * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
@@ -27,8 +26,8 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
 		$response = redirect()->route('login')
-				->setCookie('foo', 'onething', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+			->setCookie('foo', 'onething', YEAR)
+			->setCookie('login_time', $login_time, YEAR);
 		$response->pretend(false);
 		$this->assertTrue($response->hasCookie('foo', 'onething'));
 		$this->assertTrue($response->hasCookie('login_time'));
@@ -39,6 +38,7 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -48,5 +48,4 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Set-Cookie: foo=onething;');
 		$this->assertHeaderEmitted('Set-Cookie: login_time');
 	}
-
 }

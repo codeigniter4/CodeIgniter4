@@ -1,11 +1,21 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class PredisHandlerTest extends CIUnitTestCase
 {
 	private $PredisHandler;
+
 	private static $key1 = 'key1';
+
 	private static $key2 = 'key2';
+
 	private static $key3 = 'key3';
+
 	private static function getKeyArray()
 	{
 		return [
@@ -16,15 +26,17 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	private static $dummy = 'dymmy';
+
 	private $config;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->PredisHandler = new PredisHandler($this->config);
+
 		if (! $this->PredisHandler->isSupported())
 		{
 			$this->markTestSkipped('Not support Predis');
@@ -33,7 +45,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->PredisHandler->initialize();
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		foreach (self::getKeyArray() as $key)
 		{
@@ -61,7 +73,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
 		$this->assertNull($this->PredisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 

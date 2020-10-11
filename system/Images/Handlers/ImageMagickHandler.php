@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -42,6 +42,7 @@ namespace CodeIgniter\Images\Handlers;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use Exception;
+use Imagick;
 
 /**
  * Class ImageMagickHandler
@@ -53,12 +54,9 @@ use Exception;
  * hmm - the width & height accessors at the end use the imagick extension.
  *
  * FIXME - This needs conversion & unit testing, to use the imagick extension
- *
- * @package CodeIgniter\Images\Handlers
  */
 class ImageMagickHandler extends BaseHandler
 {
-
 	/**
 	 * Stores image resource in memory.
 	 *
@@ -66,36 +64,34 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	protected $resource;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param  Images $config
+	 * @param Images $config
+	 *
 	 * @throws ImageException
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
 
 		// We should never see this, so can't test it
-		// @codeCoverageIgnoreStart
 		if (! (extension_loaded('imagick') || class_exists('Imagick')))
 		{
 			throw ImageException::forMissingExtension('IMAGICK');
 		}
-		// @codeCoverageIgnoreEnd
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles the actual resizing of the image.
 	 *
-	 * @param boolean $maintainRatio
+	 * @param bool $maintainRatio
+	 *
+	 * @throws Exception
 	 *
 	 * @return ImageMagickHandler
-	 * @throws Exception
 	 */
 	public function _resize(bool $maintainRatio = false)
 	{
@@ -103,6 +99,7 @@ class ImageMagickHandler extends BaseHandler
 		$destination = $this->getResourcePath();
 
 		$escape = '\\';
+
 		if (stripos(PHP_OS, 'WIN') === 0)
 		{
 			$escape = '';
@@ -117,13 +114,12 @@ class ImageMagickHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Crops the image.
 	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\ImageMagickHandler
 	 * @throws Exception
+	 *
+	 * @return bool|ImageMagickHandler
 	 */
 	public function _crop()
 	{
@@ -131,6 +127,7 @@ class ImageMagickHandler extends BaseHandler
 		$destination = $this->getResourcePath();
 
 		$extent = ' ';
+
 		if ($this->xAxis >= $this->width || $this->yAxis > $this->height)
 		{
 			$extent = ' -background transparent -extent ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ';
@@ -143,16 +140,15 @@ class ImageMagickHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles the rotation of an image resource.
 	 * Doesn't save the image, but replaces the current resource.
 	 *
-	 * @param integer $angle
+	 * @param int $angle
+	 *
+	 * @throws Exception
 	 *
 	 * @return $this
-	 * @throws Exception
 	 */
 	protected function _rotate(int $angle)
 	{
@@ -168,17 +164,16 @@ class ImageMagickHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flattens transparencies, default white background
 	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @throws Exception
 	 *
 	 * @return $this
-	 * @throws Exception
 	 */
 	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
@@ -194,15 +189,14 @@ class ImageMagickHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flips an image along it's vertical or horizontal axis.
 	 *
 	 * @param string $direction
 	 *
-	 * @return $this
 	 * @throws Exception
+	 *
+	 * @return $this
 	 */
 	public function _flip(string $direction)
 	{
@@ -217,8 +211,6 @@ class ImageMagickHandler extends BaseHandler
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get driver version
@@ -235,16 +227,15 @@ class ImageMagickHandler extends BaseHandler
 		return str_replace('ImageMagick ', '', $matches[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles all of the grunt work of resizing, etc.
 	 *
-	 * @param string  $action
-	 * @param integer $quality
+	 * @param string $action
+	 * @param int    $quality
 	 *
-	 * @return array  Lines of output from shell command
 	 * @throws Exception
+	 *
+	 * @return array Lines of output from shell command
 	 */
 	protected function process(string $action, int $quality = 100): array
 	{
@@ -264,7 +255,7 @@ class ImageMagickHandler extends BaseHandler
 			$this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
 		}
 
-		$cmd  = $this->config->libraryPath;
+		$cmd = $this->config->libraryPath;
 		$cmd .= $action === '-version' ? ' ' . $action : ' -quality ' . $quality . ' ' . $action;
 
 		$retval = 1;
@@ -283,8 +274,6 @@ class ImageMagickHandler extends BaseHandler
 		return $output; // @phpstan-ignore-line
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves any changes that have been made to file. If no new filename is
 	 * provided, the existing image is overwritten, otherwise a copy of the
@@ -295,9 +284,9 @@ class ImageMagickHandler extends BaseHandler
 	 *          ->save();
 	 *
 	 * @param string|null $target
-	 * @param integer     $quality
+	 * @param int         $quality
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function save(string $target = null, int $quality = 90): bool
 	{
@@ -332,8 +321,6 @@ class ImageMagickHandler extends BaseHandler
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get Image Resource
 	 *
@@ -346,12 +333,13 @@ class ImageMagickHandler extends BaseHandler
 	 * To ensure we can use all features, like transparency,
 	 * during the process, we'll use a PNG as the temp file type.
 	 *
-	 * @return string
 	 * @throws Exception
+	 *
+	 * @return string
 	 */
 	protected function getResourcePath()
 	{
-		if (! is_null($this->resource))
+		if ($this->resource !== null)
 		{
 			return $this->resource;
 		}
@@ -365,8 +353,6 @@ class ImageMagickHandler extends BaseHandler
 
 		return $this->resource;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Make the image resource object if needed
@@ -390,15 +376,14 @@ class ImageMagickHandler extends BaseHandler
 		switch ($this->image()->imageType)
 		{
 			case IMAGETYPE_WEBP:
-				if (! in_array('WEBP', \Imagick::queryFormats(), true))
+				if (! in_array('WEBP', Imagick::queryFormats(), true))
 				{
 					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
 				}
+
 				break;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handler-specific method for overlaying text on an image.
@@ -434,7 +419,7 @@ class ImageMagickHandler extends BaseHandler
 			$cmd .= " -font '{$options['fontPath']}'";
 		}
 
-		if (isset($options['hAlign']) && isset($options['vAlign']))
+		if (isset($options['hAlign'], $options['vAlign']))
 		{
 			switch ($options['hAlign'])
 			{
@@ -442,35 +427,41 @@ class ImageMagickHandler extends BaseHandler
 					$xAxis   = $options['hOffset'] + $options['padding'];
 					$yAxis   = $options['vOffset'] + $options['padding'];
 					$gravity = $options['vAlign'] === 'top' ? 'NorthWest' : 'West';
+
 					if ($options['vAlign'] === 'bottom')
 					{
 						$gravity = 'SouthWest';
 						$yAxis   = $options['vOffset'] - $options['padding'];
 					}
+
 					break;
 				case 'center':
 					$xAxis   = $options['hOffset'] + $options['padding'];
 					$yAxis   = $options['vOffset'] + $options['padding'];
 					$gravity = $options['vAlign'] === 'top' ? 'North' : 'Center';
+
 					if ($options['vAlign'] === 'bottom')
 					{
 						$yAxis   = $options['vOffset'] - $options['padding'];
 						$gravity = 'South';
 					}
+
 					break;
 				case 'right':
 					$xAxis   = $options['hOffset'] - $options['padding'];
 					$yAxis   = $options['vOffset'] + $options['padding'];
 					$gravity = $options['vAlign'] === 'top' ? 'NorthEast' : 'East';
+
 					if ($options['vAlign'] === 'bottom')
 					{
 						$gravity = 'SouthEast';
 						$yAxis   = $options['vOffset'] - $options['padding'];
 					}
+
 					break;
 			}
 
-			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis; // @phpstan-ignore-line
+			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis; /** @phpstan-ignore-line */
 			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis; // @phpstan-ignore-line
 
 			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}"; // @phpstan-ignore-line
@@ -479,7 +470,7 @@ class ImageMagickHandler extends BaseHandler
 		// Color
 		if (isset($options['color']))
 		{
-			list($r, $g, $b) = sscanf("#{$options['color']}", '#%02x%02x%02x');
+			[$r, $g, $b] = sscanf("#{$options['color']}", '#%02x%02x%02x');
 
 			$cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
 		}
@@ -501,12 +492,10 @@ class ImageMagickHandler extends BaseHandler
 		$this->process($cmd);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return the width of an image.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function _getWidth()
 	{
@@ -516,14 +505,12 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Return the height of an image.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function _getHeight()
 	{
 		return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reads the EXIF information from the image and modifies the orientation
@@ -531,7 +518,7 @@ class ImageMagickHandler extends BaseHandler
 	 * with images taken by smartphones who always store the image up-right,
 	 * but set the orientation flag to display it correctly.
 	 *
-	 * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+	 * @param bool $silent if true, will ignore exceptions when PHP doesn't support EXIF
 	 *
 	 * @return $this
 	 */
@@ -546,16 +533,13 @@ class ImageMagickHandler extends BaseHandler
 			case 3:
 				return $this->rotate(180);
 			case 4:
-				return $this->rotate(180)
-								->flip('horizontal');
+				return $this->rotate(180)->flip('horizontal');
 			case 5:
-				return $this->rotate(90)
-								->flip('horizontal');
+				return $this->rotate(90)->flip('horizontal');
 			case 6:
 				return $this->rotate(90);
 			case 7:
-				return $this->rotate(270)
-								->flip('horizontal');
+				return $this->rotate(270)->flip('horizontal');
 			case 8:
 				return $this->rotate(270);
 			default:

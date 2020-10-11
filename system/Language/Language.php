@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -45,12 +46,9 @@ use MessageFormatter;
  * Handle system messages and localization.
  *
  * Locale-based, built on top of PHP internationalization.
- *
- * @package CodeIgniter\Language
  */
 class Language
 {
-
 	/**
 	 * Stores the retrieved language lines
 	 * from files for faster retrieval on
@@ -71,7 +69,7 @@ class Language
 	 * Boolean value whether the intl
 	 * libraries exist on the system.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $intlSupport = false;
 
@@ -83,8 +81,6 @@ class Language
 	 */
 	protected $loadedFiles = [];
 
-	//--------------------------------------------------------------------
-
 	public function __construct(string $locale)
 	{
 		$this->locale = $locale;
@@ -92,10 +88,8 @@ class Language
 		if (class_exists('\MessageFormatter'))
 		{
 			$this->intlSupport = true;
-		};
+		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the current locale to use when performing string lookups.
@@ -106,15 +100,13 @@ class Language
 	 */
 	public function setLocale(string $locale = null)
 	{
-		if (! is_null($locale))
+		if ($locale !== null)
 		{
 			$this->locale = $locale;
 		}
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @return string
@@ -124,16 +116,14 @@ class Language
 		return $this->locale;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parses the language string for a file, loads the file, if necessary,
 	 * getting the line.
 	 *
-	 * @param string $line Line.
-	 * @param array  $args Arguments.
+	 * @param string $line
+	 * @param array  $args
 	 *
-	 * @return string|string[] Returns line.
+	 * @return string|string[]
 	 */
 	public function getLine(string $line, array $args = [])
 	{
@@ -184,14 +174,17 @@ class Language
 		return $output;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
+	 * @param string $locale
+	 * @param string $file
+	 * @param string $parsedLine
+	 *
 	 * @return array|string|null
 	 */
 	private function getTranslationOutput(string $locale, string $file, string $parsedLine)
 	{
 		$output = $this->language[$locale][$file][$parsedLine] ?? null;
+
 		if ($output !== null)
 		{
 			return $output;
@@ -205,6 +198,7 @@ class Language
 			}
 
 			$output = $current[$row] ?? null;
+
 			if (is_array($output))
 			{
 				$current = $output;
@@ -247,15 +241,13 @@ class Language
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Advanced message formatting.
 	 *
-	 * @param string|array $message Message.
-	 * @param array	       $args    Arguments.
+	 * @param array|string $message Message
+	 * @param array        $args    Arguments
 	 *
-	 * @return string|array Returns formatted message.
+	 * @return array|string returns formatted message
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
@@ -270,24 +262,23 @@ class Language
 			{
 				$message[$index] = $this->formatMessage($value, $args);
 			}
+
 			return $message;
 		}
 
 		return MessageFormatter::formatMessage($this->locale, $message, $args);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads a language file in the current locale. If $return is true,
 	 * will return the file's contents, otherwise will merge with
 	 * the existing language lines.
 	 *
-	 * @param string  $file
-	 * @param string  $locale
-	 * @param boolean $return
+	 * @param string $file
+	 * @param string $locale
+	 * @param bool   $return
 	 *
-	 * @return void|array
+	 * @return array|void
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{
@@ -327,8 +318,6 @@ class Language
 		$this->language[$locale][$file] = $lang;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A simple method for including files that can be
 	 * overridden during testing.
@@ -365,6 +354,4 @@ class Language
 
 		return $strings;
 	}
-
-	//--------------------------------------------------------------------
 }

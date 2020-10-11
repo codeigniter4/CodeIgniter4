@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -52,11 +53,10 @@ use stdClass;
  */
 class MigrationRunner
 {
-
 	/**
 	 * Whether or not migrations are allowed to run.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $enabled = false;
 
@@ -107,7 +107,7 @@ class MigrationRunner
 	 * If true, will continue instead of throwing
 	 * exceptions.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $silent = false;
 
@@ -122,7 +122,7 @@ class MigrationRunner
 	 * Tracks whether we have already ensured
 	 * the table exists or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $tableChecked = false;
 
@@ -143,11 +143,9 @@ class MigrationRunner
 	/**
 	 * Used to skip current migration.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $groupSkip = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -158,14 +156,14 @@ class MigrationRunner
 	 * - array of database configuration values
 	 *
 	 * @param MigrationsConfig                      $config
-	 * @param ConnectionInterface|array|string|null $db
+	 * @param array|ConnectionInterface|string|null $db
 	 *
 	 * @throws ConfigException
 	 */
 	public function __construct(MigrationsConfig $config, $db = null)
 	{
 		$this->enabled = $config->enabled ?? false;
-		$this->table   = $config->table ?? 'migrations';
+		$this->table   = $config->table   ?? 'migrations';
 
 		// Default name space is the app namespace
 		$this->namespace = APP_NAMESPACE;
@@ -180,7 +178,6 @@ class MigrationRunner
 		$this->db = db_connect($db);
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Locate and run all new migrations
 	 *
@@ -189,7 +186,7 @@ class MigrationRunner
 	 * @throws ConfigException
 	 * @throws RuntimeException
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function latest(string $group = null)
 	{
@@ -201,7 +198,7 @@ class MigrationRunner
 		$this->ensureTable();
 
 		// Set database group if not null
-		if (! is_null($group))
+		if ($group !== null)
 		{
 			$this->groupFilter = $group;
 			$this->setGroup($group);
@@ -233,6 +230,7 @@ class MigrationRunner
 				if ($this->groupSkip === true)
 				{
 					$this->groupSkip = false;
+
 					continue;
 				}
 
@@ -248,6 +246,7 @@ class MigrationRunner
 				if ($this->silent)
 				{
 					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 					return false;
 				}
 
@@ -262,13 +261,12 @@ class MigrationRunner
 		return true;
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Migrate down to a previous batch
 	 *
 	 * Calls each migration step required to get to the provided batch
 	 *
-	 * @param integer     $targetBatch Target batch number, or negative for a relative batch, 0 for all
+	 * @param int         $targetBatch Target batch number, or negative for a relative batch, 0 for all
 	 * @param string|null $group
 	 *
 	 * @throws ConfigException
@@ -284,7 +282,7 @@ class MigrationRunner
 		}
 
 		// Set database group if not null
-		if (! is_null($group))
+		if ($group !== null)
 		{
 			$this->setGroup($group);
 		}
@@ -314,6 +312,7 @@ class MigrationRunner
 			if ($this->silent)
 			{
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 				return false;
 			}
 
@@ -352,6 +351,7 @@ class MigrationRunner
 					if ($this->silent)
 					{
 						$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 						return false;
 					}
 
@@ -380,6 +380,7 @@ class MigrationRunner
 				if ($this->silent)
 				{
 					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 					return false;
 				}
 
@@ -397,16 +398,15 @@ class MigrationRunner
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Migrate a single file regardless of order or batches.
 	 * Method "up" or "down" determined by presence in history.
 	 * NOTE: This is not recommended and provided mostly for testing.
 	 *
-	 * @param string      $path  Full path to a valid migration file
-	 * @param string      $path  Namespace of the target migration
+	 * @param string      $path      Full path to a valid migration file
+	 * @param string      $path      Namespace of the target migration
 	 * @param string|null $group
+	 * @param string      $namespace
 	 */
 	public function force(string $path, string $namespace, string $group = null)
 	{
@@ -418,7 +418,7 @@ class MigrationRunner
 		$this->ensureTable();
 
 		// Set database group if not null
-		if (! is_null($group))
+		if ($group !== null)
 		{
 			$this->groupFilter = $group;
 			$this->setGroup($group);
@@ -426,6 +426,7 @@ class MigrationRunner
 
 		// Create and validate the migration
 		$migration = $this->migrationFromFile($path, $namespace);
+
 		if (empty($migration))
 		{
 			$message = lang('Migrations.notFound');
@@ -433,20 +434,24 @@ class MigrationRunner
 			if ($this->silent)
 			{
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 				return false;
 			}
+
 			throw new RuntimeException($message);
 		}
 
 		// Check the history for a match
 		$method = 'up';
 		$this->setNamespace($migration->namespace);
+
 		foreach ($this->getHistory($this->group) as $history)
 		{
 			if ($this->getObjectUid($history) === $migration->uid)
 			{
 				$method             = 'down';
 				$migration->history = $history;
+
 				break;
 			}
 		}
@@ -460,16 +465,17 @@ class MigrationRunner
 			if ($this->migrate('up', $migration) && $this->groupSkip === false)
 			{
 				$this->addHistory($migration, $batch);
+
 				return true;
 			}
 
 			$this->groupSkip = false;
 		}
-
 		// down
 		elseif ($this->migrate('down', $migration))
 		{
 			$this->removeHistory($migration->history);
+
 			return true;
 		}
 
@@ -479,17 +485,17 @@ class MigrationRunner
 		if ($this->silent)
 		{
 			$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 			return false;
 		}
+
 		throw new RuntimeException($message);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieves list of available migration scripts
 	 *
-	 * @return array    List of all located migrations by their UID
+	 * @return array List of all located migrations by their UID
 	 */
 	public function findMigrations(): array
 	{
@@ -498,6 +504,7 @@ class MigrationRunner
 
 		// Collect the migrations to run by their sortable UID
 		$migrations = [];
+
 		foreach ($namespaces as $namespace)
 		{
 			foreach ($this->findNamespaceMigrations($namespace) as $migration)
@@ -512,14 +519,12 @@ class MigrationRunner
 		return $migrations;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieves a list of available migration scripts for one namespace
 	 *
 	 * @param string $namespace The namespace to search for migrations
 	 *
-	 * @return array    List of unsorted migrations from the namespace
+	 * @return array List of unsorted migrations from the namespace
 	 */
 	public function findNamespaceMigrations(string $namespace): array
 	{
@@ -556,15 +561,14 @@ class MigrationRunner
 		return $migrations;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Create a migration object from a file path.
 	 *
-	 * @param string $path The path to the file
-	 * @param string $path The namespace of the target migration
+	 * @param string $path      The path to the file
+	 * @param string $path      The namespace of the target migration
+	 * @param string $namespace
 	 *
-	 * @return object|false    Returns the migration object, or false on failure
+	 * @return false|object Returns the migration object, or false on failure
 	 */
 	protected function migrationFromFile(string $path, string $namespace)
 	{
@@ -598,8 +602,6 @@ class MigrationRunner
 		return $migration;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set namespace.
 	 * Allows other scripts to modify on the fly as needed.
@@ -614,8 +616,6 @@ class MigrationRunner
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set database Group.
@@ -632,8 +632,6 @@ class MigrationRunner
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set migration Name.
 	 *
@@ -648,13 +646,11 @@ class MigrationRunner
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If $silent == true, then will not throw exceptions and will
 	 * attempt to continue gracefully.
 	 *
-	 * @param boolean $silent
+	 * @param bool $silent
 	 *
 	 * @return MigrationRunner
 	 */
@@ -665,14 +661,12 @@ class MigrationRunner
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Extracts the migration number from a filename
 	 *
 	 * @param string $migration
 	 *
-	 * @return string    Numeric portion of a migration filename
+	 * @return string Numeric portion of a migration filename
 	 */
 	protected function getMigrationNumber(string $migration): string
 	{
@@ -681,14 +675,12 @@ class MigrationRunner
 		return count($matches) ? $matches[0] : '0';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Extracts the migration class name from a filename
 	 *
 	 * @param string $migration
 	 *
-	 * @return string    text portion of a migration filename
+	 * @return string text portion of a migration filename
 	 */
 	protected function getMigrationName(string $migration): string
 	{
@@ -697,8 +689,6 @@ class MigrationRunner
 
 		return implode('_', $parts);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Uses the non-repeatable portions of a migration or history
@@ -713,19 +703,15 @@ class MigrationRunner
 		return preg_replace('/[^0-9]/', '', $object->version) . $object->class;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieves messages formatted for CLI output
 	 *
-	 * @return array    Current migration version
+	 * @return array Current migration version
 	 */
 	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Clears any CLI messages.
@@ -738,8 +724,6 @@ class MigrationRunner
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Truncates the history table.
@@ -754,36 +738,33 @@ class MigrationRunner
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Add a history to the table.
 	 *
-	 * @param object  $migration
-	 * @param integer $batch
+	 * @param object $migration
+	 * @param int    $batch
 	 *
 	 * @return void
 	 */
 	protected function addHistory($migration, int $batch)
 	{
-		$this->db->table($this->table)
-				 ->insert([
-					 'version'   => $migration->version,
-					 'class'     => $migration->class,
-					 'group'     => $this->group,
-					 'namespace' => $migration->namespace,
-					 'time'      => time(),
-					 'batch'     => $batch,
-				 ]);
+		$this->db
+			->table($this->table)
+			->insert([
+				'version'   => $migration->version,
+				'class'     => $migration->class,
+				'group'     => $this->group,
+				'namespace' => $migration->namespace,
+				'time'      => time(),
+				'batch'     => $batch,
+			]);
 
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'),
-					'yellow') . "($migration->namespace) " . $migration->version . '_' . $migration->class;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow')
+				. "({$migration->namespace}) " . $migration->version . '_' . $migration->class;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Removes a single history
@@ -798,12 +779,10 @@ class MigrationRunner
 
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
-					'yellow') . "($history->namespace) " . $history->version . '_' . $this->getMigrationName($history->class);
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow')
+				. "({$history->namespace}) " . $history->version . '_' . $this->getMigrationName($history->class);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Grabs the full migration history from the database for a group
@@ -824,20 +803,20 @@ class MigrationRunner
 			$criteria['namespace'] = $this->namespace;
 		}
 
-		$query = $this->db->table($this->table)
-						  ->where($criteria)
-						  ->orderBy('id', 'ASC')
-						  ->get();
+		$query = $this->db
+			->table($this->table)
+			->where($criteria)
+			->orderBy('id', 'ASC')
+			->get();
 
 		return ! empty($query) ? $query->getResultObject() : [];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the migration history for a single batch.
 	 *
-	 * @param integer $batch
+	 * @param int   $batch
+	 * @param mixed $order
 	 *
 	 * @return array
 	 */
@@ -845,15 +824,14 @@ class MigrationRunner
 	{
 		$this->ensureTable();
 
-		$query = $this->db->table($this->table)
-						  ->where('batch', $batch)
-						  ->orderBy('id', $order)
-						  ->get();
+		$query = $this->db
+			->table($this->table)
+			->where('batch', $batch)
+			->orderBy('id', $order)
+			->get();
 
 		return ! empty($query) ? $query->getResultObject() : [];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns all the batches from the database history in order
@@ -864,46 +842,44 @@ class MigrationRunner
 	{
 		$this->ensureTable();
 
-		$batches = $this->db->table($this->table)
-						  ->select('batch')
-						  ->distinct()
-						  ->orderBy('batch', 'asc')
-						  ->get()
-						  ->getResultArray();
+		$batches = $this->db
+			->table($this->table)
+			->select('batch')
+			->distinct()
+			->orderBy('batch', 'asc')
+			->get()
+			->getResultArray();
 
 		return array_map('intval', array_column($batches, 'batch'));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the value of the last batch in the database.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getLastBatch(): int
 	{
 		$this->ensureTable();
 
-		$batch = $this->db->table($this->table)
-						  ->selectMax('batch')
-						  ->get()
-						  ->getResultObject();
+		$batch = $this->db
+			->table($this->table)
+			->selectMax('batch')
+			->get()
+			->getResultObject();
 
 		$batch = is_array($batch) && count($batch)
 			? end($batch)->batch
 			: 0;
 
-		return (int)$batch;
+		return (int) $batch;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the version number of the first migration for a batch.
 	 * Mostly just for tests.
 	 *
-	 * @param integer $batch
+	 * @param int $batch
 	 *
 	 * @return string
 	 */
@@ -926,13 +902,11 @@ class MigrationRunner
 		return count($migration) ? $migration[0]->version : '0';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the version number of the last migration for a batch.
 	 * Mostly just for tests.
 	 *
-	 * @param integer $batch
+	 * @param int $batch
 	 *
 	 * @return string
 	 */
@@ -945,17 +919,16 @@ class MigrationRunner
 			$batch   = $batches[count($batches) - 1] ?? 0;
 		}
 
-		$migration = $this->db->table($this->table)
-			  ->where('batch', $batch)
-			  ->orderBy('id', 'desc')
-			  ->limit(1)
-			  ->get()
-			  ->getResultObject();
+		$migration = $this->db
+			->table($this->table)
+			->where('batch', $batch)
+			->orderBy('id', 'desc')
+			->limit(1)
+			->get()
+			->getResultObject();
 
 		return count($migration) ? $migration[0]->version : 0;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that we have created our migrations table
@@ -971,22 +944,22 @@ class MigrationRunner
 		$forge = Database::forge($this->db);
 
 		$forge->addField([
-			'id'        => [
+			'id' => [
 				'type'           => 'BIGINT',
 				'constraint'     => 20,
 				'unsigned'       => true,
 				'auto_increment' => true,
 			],
-			'version'   => [
+			'version' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 				'null'       => false,
 			],
-			'class'     => [
+			'class' => [
 				'type' => 'TEXT',
 				'null' => false,
 			],
-			'group'     => [
+			'group' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 				'null'       => false,
@@ -996,12 +969,12 @@ class MigrationRunner
 				'constraint' => 255,
 				'null'       => false,
 			],
-			'time'      => [
+			'time' => [
 				'type'       => 'INT',
 				'constraint' => 11,
 				'null'       => false,
 			],
-			'batch'     => [
+			'batch' => [
 				'type'       => 'INT',
 				'constraint' => 11,
 				'unsigned'   => true,
@@ -1021,7 +994,7 @@ class MigrationRunner
 	 * @param string $direction "up" or "down"
 	 * @param object $migration The migration to run
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function migrate($direction, $migration): bool
 	{
@@ -1038,8 +1011,10 @@ class MigrationRunner
 			if ($this->silent)
 			{
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 				return false;
 			}
+
 			throw new RuntimeException($message);
 		}
 
@@ -1053,14 +1028,16 @@ class MigrationRunner
 		{
 			// @codeCoverageIgnoreStart
 			$this->groupSkip = true;
+
 			return true;
 			// @codeCoverageIgnoreEnd
 		}
 
 		// Skip migration if group filtering was set
-		if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group)
+		if ($direction === 'up' && $this->groupFilter !== null && $this->groupFilter !== $group)
 		{
 			$this->groupSkip = true;
+
 			return true;
 		}
 
@@ -1073,8 +1050,10 @@ class MigrationRunner
 			if ($this->silent)
 			{
 				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
 				return false;
 			}
+
 			throw new RuntimeException($message);
 		}
 

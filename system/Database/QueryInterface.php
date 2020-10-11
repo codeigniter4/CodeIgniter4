@@ -44,24 +44,19 @@ namespace CodeIgniter\Database;
  *
  * Represents a single statement that can be executed against the database.
  * Statements are platform-specific and can handle binding of binds.
- *
- * @package CodeIgniter\Database
  */
 interface QueryInterface
 {
-
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
-	 * @param string  $sql
-	 * @param mixed   $binds
-	 * @param boolean $setEscape
+	 * @param string $sql
+	 * @param mixed  $binds
+	 * @param bool   $setEscape
 	 *
 	 * @return mixed
 	 */
 	public function setQuery(string $sql, $binds = null, bool $setEscape = true);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the final, processed query string after binding, etal
@@ -70,8 +65,6 @@ interface QueryInterface
 	 * @return mixed
 	 */
 	public function getQuery();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Records the execution time of the statement using microtime(true)
@@ -85,47 +78,37 @@ interface QueryInterface
 	 */
 	public function setDuration(float $start, float $end = null);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
 	 *
-	 * @param integer $decimals The accuracy of the returned time.
+	 * @param int $decimals The accuracy of the returned time
 	 *
 	 * @return string
 	 */
 	public function getDuration(int $decimals = 6): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Stores the error description that happened for this query.
 	 *
-	 * @param integer $code
-	 * @param string  $error
+	 * @param int    $code
+	 * @param string $error
 	 */
 	public function setError(int $code, string $error);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reports whether this statement created an error not.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasError(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getErrorCode(): int;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error message created while executing this statement.
@@ -134,16 +117,12 @@ interface QueryInterface
 	 */
 	public function getErrorMessage(): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the statement is a write-type query or not.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isWriteType(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Swaps out one table prefix for a new one.
@@ -154,6 +133,4 @@ interface QueryInterface
 	 * @return mixed
 	 */
 	public function swapPrefix(string $orig, string $swap);
-
-	//--------------------------------------------------------------------
 }

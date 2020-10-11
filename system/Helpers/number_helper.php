@@ -30,17 +30,16 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
  * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 1.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 use Config\Services;
 
-/**
+/*
  * CodeIgniter Number Helpers
  *
  * @package CodeIgniter
@@ -51,11 +50,11 @@ if (! function_exists('number_to_size'))
 	/**
 	 * Formats a numbers as bytes, based on size, and adds the appropriate suffix
 	 *
-	 * @param mixed   $num       Will be cast as int
-	 * @param integer $precision
-	 * @param string  $locale
+	 * @param mixed  $num       Will be cast as int
+	 * @param int    $precision
+	 * @param string $locale
 	 *
-	 * @return boolean|string
+	 * @return bool|string
 	 */
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
@@ -71,7 +70,8 @@ if (! function_exists('number_to_size'))
 
 		// ignore sub part
 		$generalLocale = $locale;
-		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
+
+		if (! empty($locale) && ($underscorePos = strpos($locale, '_')))
 		{
 			$generalLocale = substr($locale, 0, $underscorePos);
 		}
@@ -105,8 +105,6 @@ if (! function_exists('number_to_size'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('number_to_amount'))
 {
 	/**
@@ -121,10 +119,10 @@ if (! function_exists('number_to_amount'))
 	 * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
 	 *
 	 * @param string      $num
-	 * @param integer     $precision
+	 * @param int         $precision
 	 * @param string|null $locale
 	 *
-	 * @return boolean|string
+	 * @return bool|string
 	 */
 	function number_to_amount($num, int $precision = 0, string $locale = null)
 	{
@@ -142,7 +140,8 @@ if (! function_exists('number_to_amount'))
 
 		// ignore sub part
 		$generalLocale = $locale;
-		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
+
+		if (! empty($locale) && ($underscorePos = strpos($locale, '_')))
 		{
 			$generalLocale = substr($locale, 0, $underscorePos);
 		}
@@ -157,17 +156,17 @@ if (! function_exists('number_to_amount'))
 			$suffix = lang('Number.trillion', [], $generalLocale);
 			$num    = round(($num / 1000000000000), $precision);
 		}
-		else if ($num > 1000000000)
+		elseif ($num > 1000000000)
 		{
 			$suffix = lang('Number.billion', [], $generalLocale);
 			$num    = round(($num / 1000000000), $precision);
 		}
-		else if ($num > 1000000)
+		elseif ($num > 1000000)
 		{
 			$suffix = lang('Number.million', [], $generalLocale);
 			$num    = round(($num / 1000000), $precision);
 		}
-		else if ($num > 1000)
+		elseif ($num > 1000)
 		{
 			$suffix = lang('Number.thousand', [], $generalLocale);
 			$num    = round(($num / 1000), $precision);
@@ -177,15 +176,13 @@ if (! function_exists('number_to_amount'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('number_to_currency'))
 {
 	/**
-	 * @param float   $num
-	 * @param string  $currency
-	 * @param string  $locale
-	 * @param integer $fraction
+	 * @param float  $num
+	 * @param string $currency
+	 * @param string $locale
+	 * @param int    $fraction
 	 *
 	 * @return string
 	 */
@@ -199,8 +196,6 @@ if (! function_exists('number_to_currency'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('format_number'))
 {
 	/**
@@ -208,7 +203,7 @@ if (! function_exists('format_number'))
 	 * Used by all of the functions of the number_helper.
 	 *
 	 * @param float       $num
-	 * @param integer     $precision
+	 * @param int         $precision
 	 * @param string|null $locale
 	 * @param array       $options
 	 *
@@ -263,8 +258,6 @@ if (! function_exists('format_number'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('number_to_roman'))
 {
 	/**
@@ -277,68 +270,85 @@ if (! function_exists('number_to_roman'))
 	function number_to_roman(string $num): ?string
 	{
 		$num = (int) $num;
+
 		if ($num < 1 || $num > 3999)
 		{
 			return null;
 		}
 
-		$_number_to_roman = function ($num, $th) use (&$_number_to_roman) {
+		$_number_to_roman = static function ($num, $th) use (&$_number_to_roman) {
 			$return = '';
 			$key1   = null;
 			$key2   = null;
+
 			switch ($th) {
 				case 1:
 					$key1 = 'I';
 					$key2 = 'V';
 					$keyF = 'X';
+
 					break;
 				case 2:
 					$key1 = 'X';
 					$key2 = 'L';
 					$keyF = 'C';
+
 					break;
 				case 3:
 					$key1 = 'C';
 					$key2 = 'D';
 					$keyF = 'M';
+
 					break;
 				case 4:
 					$key1 = 'M';
+
 					break;
 			}
 			$n = $num % 10;
+
 			switch ($n) {
 				case 1:
 				case 2:
 				case 3:
 					$return = str_repeat($key1, $n);
+
 					break;
 				case 4:
 					$return = $key1 . $key2;
+
 					break;
 				case 5:
 					$return = $key2;
+
 					break;
 				case 6:
 				case 7:
 				case 8:
 					$return = $key2 . str_repeat($key1, $n - 5);
+
 					break;
 				case 9:
 					$return = $key1 . $keyF; // @phpstan-ignore-line
+
 					break;
 			}
+
 			switch ($num) {
 				case 10:
 					$return = $keyF; // @phpstan-ignore-line
+
 					break;
 			}
+
 			if ($num > 10)
 			{
-				$return = $_number_to_roman($num / 10, ++ $th) . $return;
+				$return = $_number_to_roman($num / 10, ++$th) . $return;
 			}
+
 			return $return;
 		};
+
 		return $_number_to_roman($num, 1);
 	}
 }

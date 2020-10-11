@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -124,7 +124,7 @@ class Encryption
 		$this->handlers = [
 			'OpenSSL' => extension_loaded('openssl'),
 			// the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
-			'Sodium'  => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
+			'Sodium' => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
 		];
 
 		// If requested driver is not active, bail
@@ -183,7 +183,7 @@ class Encryption
 	/**
 	 * Create a random key
 	 *
-	 * @param integer $length Output length
+	 * @param int $length Output length
 	 *
 	 * @return string
 	 */
@@ -212,8 +212,9 @@ class Encryption
 	/**
 	 * __isset() magic, providing checking for some of our protected properties
 	 *
-	 * @param  string $key Property name
-	 * @return boolean
+	 * @param string $key Property name
+	 *
+	 * @return bool
 	 */
 	public function __isset($key): bool
 	{

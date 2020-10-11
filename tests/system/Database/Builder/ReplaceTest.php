@@ -1,12 +1,13 @@
-<?php namespace Builder;
+<?php
 
+namespace Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class ReplaceTest extends \CodeIgniter\Test\CIUnitTestCase
+class ReplaceTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -14,8 +15,6 @@ class ReplaceTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleReplace()
 	{
@@ -32,8 +31,6 @@ class ReplaceTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expected, $builder->testMode()->replace($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReplaceThrowsExceptionWithNoData()
 	{
 		$builder = $this->db->table('jobs');
@@ -43,7 +40,4 @@ class ReplaceTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$builder->replace();
 	}
-
-	//--------------------------------------------------------------------
-
 }

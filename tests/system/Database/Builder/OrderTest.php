@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class OrderTest extends \CodeIgniter\Test\CIUnitTestCase
+class OrderTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class OrderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrderAscending()
 	{
@@ -29,8 +28,6 @@ class OrderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrderDescending()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -42,8 +39,6 @@ class OrderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrderRandom()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -54,6 +49,4 @@ class OrderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 }

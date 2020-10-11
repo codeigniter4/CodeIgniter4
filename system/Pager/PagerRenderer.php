@@ -45,62 +45,64 @@ namespace CodeIgniter\Pager;
  * This class is passed to the view that describes the pagination,
  * and is used to get the link information and provide utility
  * methods needed to work with pagination.
- *
- * @package CodeIgniter\Pager
  */
 class PagerRenderer
 {
-
 	/**
 	 * First page number.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $first;
+
 	/**
 	 * Last page number.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $last;
+
 	/**
 	 * Current page number.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $current;
+
 	/**
 	 * Total number of pages? unused?
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $total;
+
 	/**
 	 * Page count?
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $pageCount;
+
 	/**
 	 * URI base for pagination links
 	 *
 	 * @var \CodeIgniter\HTTP\URI
 	 */
 	protected $uri;
+
 	/**
 	 * Segment number used for pagination.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $segment;
+
 	/**
 	 * Name of $_GET parameter
 	 *
 	 * @var string
 	 */
 	protected $pageSelector;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -115,18 +117,16 @@ class PagerRenderer
 		$this->total        = $details['total'];
 		$this->uri          = $details['uri'];
 		$this->pageCount    = $details['pageCount'];
-		$this->segment      = $details['segment'] ?? 0;
+		$this->segment      = $details['segment']      ?? 0;
 		$this->pageSelector = $details['pageSelector'] ?? 'page';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the total number of links that should appear on either
 	 * side of the current page. Adjusts the first and last counts
 	 * to reflect it.
 	 *
-	 * @param integer|null $count
+	 * @param int|null $count
 	 *
 	 * @return PagerRenderer
 	 */
@@ -137,19 +137,15 @@ class PagerRenderer
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if there is a "previous" page before our "first" page.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasPrevious(): bool
 	{
 		return $this->first > 1;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a URL to the "previous" page. The previous page is NOT the
@@ -181,19 +177,15 @@ class PagerRenderer
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if there is a "next" page after our "last" page.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasNext(): bool
 	{
 		return $this->pageCount > $this->last;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a URL to the "next" page. The next page is NOT, the
@@ -225,8 +217,6 @@ class PagerRenderer
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the URI of the first page.
 	 *
@@ -247,8 +237,6 @@ class PagerRenderer
 
 		return (string) $uri;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the URI of the last page.
@@ -271,8 +259,6 @@ class PagerRenderer
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the URI of the current page.
 	 *
@@ -294,8 +280,6 @@ class PagerRenderer
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of links that should be displayed. Each link
 	 * is represented by another array containing of the URI the link
@@ -310,7 +294,7 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		for ($i = $this->first; $i <= $this->last; $i ++)
+		for ($i = $this->first; $i <= $this->last; $i++)
 		{
 			$links[] = [
 				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i)),
@@ -322,18 +306,16 @@ class PagerRenderer
 		return $links;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Updates the first and last pages based on $surroundCount,
 	 * which is the number of links surrounding the active page
 	 * to show.
 	 *
-	 * @param integer|null $count The new "surroundCount"
+	 * @param int|null $count The new "surroundCount"
 	 */
 	protected function updatePages(int $count = null)
 	{
-		if (is_null($count))
+		if ($count === null)
 		{
 			return;
 		}
@@ -342,19 +324,15 @@ class PagerRenderer
 		$this->last  = $this->current + $count <= $this->pageCount ? (int) ($this->current + $count) : (int) $this->pageCount;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if there is a "previous" page before our "first" page.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasPreviousPage(): bool
 	{
 		return $this->current > 1;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a URL to the "previous" page.
@@ -384,19 +362,15 @@ class PagerRenderer
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if there is a "next" page after our "last" page.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasNextPage(): bool
 	{
 		return $this->current < $this->last;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a URL to the "next" page.

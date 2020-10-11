@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -15,7 +17,7 @@ class UpdateTest extends CIDatabaseTestCase
 	public function testUpdateSetsAllWithoutWhere()
 	{
 		$this->db->table('user')
-					->update(['name' => 'Bobby']);
+			->update(['name' => 'Bobby']);
 
 		$result = $this->db->table('user')->get()->getResult();
 
@@ -25,19 +27,17 @@ class UpdateTest extends CIDatabaseTestCase
 		$this->assertEquals('Bobby', $result[3]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateSetsAllWithoutWhereAndLimit()
 	{
 		try
 		{
 			$this->db->table('user')
-					 ->update(['name' => 'Bobby'], null, 1);
+				->update(['name' => 'Bobby'], null, 1);
 
 			$result = $this->db->table('user')
-							   ->orderBy('id', 'asc')
-							   ->get()
-							   ->getResult();
+				->orderBy('id', 'asc')
+				->get()
+				->getResult();
 
 			$this->assertEquals('Bobby', $result[0]->name);
 			$this->assertEquals('Ahmadinejad', $result[1]->name);
@@ -49,16 +49,15 @@ class UpdateTest extends CIDatabaseTestCase
 			// This DB doesn't support Where and Limit together
 			// but we don't want it called a "Risky" test.
 			$this->assertTrue(true);
+
 			return;
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateWithWhere()
 	{
 		$this->db->table('user')
-				 ->update(['name' => 'Bobby'], ['country' => 'US']);
+			->update(['name' => 'Bobby'], ['country' => 'US']);
 
 		$result = $this->db->table('user')->get()->getResultArray();
 
@@ -75,18 +74,16 @@ class UpdateTest extends CIDatabaseTestCase
 		$this->assertCount(2, $rows);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateWithWhereAndLimit()
 	{
 		try
 		{
 			$this->db->table('user')
-					 ->update(['name' => 'Bobby'], ['country' => 'US'], 1);
+				->update(['name' => 'Bobby'], ['country' => 'US'], 1);
 
 			$result = $this->db->table('user')
-							   ->get()
-							   ->getResult();
+				->get()
+				->getResult();
 
 			$this->assertEquals('Bobby', $result[0]->name);
 			$this->assertEquals('Ahmadinejad', $result[1]->name);
@@ -98,11 +95,10 @@ class UpdateTest extends CIDatabaseTestCase
 			// This DB doesn't support Where and Limit together
 			// but we don't want it called a "Risky" test.
 			$this->assertTrue(true);
+
 			return;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateBatch()
 	{
@@ -118,7 +114,7 @@ class UpdateTest extends CIDatabaseTestCase
 		];
 
 		$this->db->table('user')
-					->updateBatch($data, 'name');
+			->updateBatch($data, 'name');
 
 		$this->seeInDatabase('user', [
 			'name'    => 'Derek Jones',
@@ -130,12 +126,10 @@ class UpdateTest extends CIDatabaseTestCase
 		]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateWithWhereSameColumn()
 	{
 		$this->db->table('user')
-				 ->update(['country' => 'CA'], ['country' => 'US']);
+			->update(['country' => 'CA'], ['country' => 'US']);
 
 		$result = $this->db->table('user')->get()->getResultArray();
 
@@ -151,16 +145,14 @@ class UpdateTest extends CIDatabaseTestCase
 
 		$this->assertCount(2, $rows);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithWhereSameColumn2()
 	{
 		// calling order: set() -> where()
 		$this->db->table('user')
-				 ->set('country', 'CA')
-				 ->where('country', 'US')
-				 ->update();
+			->set('country', 'CA')
+			->where('country', 'US')
+			->update();
 
 		$result = $this->db->table('user')->get()->getResultArray();
 
@@ -176,15 +168,13 @@ class UpdateTest extends CIDatabaseTestCase
 
 		$this->assertCount(2, $rows);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithWhereSameColumn3()
 	{
 		// calling order: where() -> set() in update()
 		$this->db->table('user')
-				 ->where('country', 'US')
-				 ->update(['country' => 'CA']);
+			->where('country', 'US')
+			->update(['country' => 'CA']);
 
 		$result = $this->db->table('user')->get()->getResultArray();
 
@@ -201,10 +191,9 @@ class UpdateTest extends CIDatabaseTestCase
 		$this->assertCount(2, $rows);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group single
+	 *
 	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/324
 	 */
 	public function testUpdatePeriods()
@@ -220,14 +209,14 @@ class UpdateTest extends CIDatabaseTestCase
 		]);
 	}
 
-	//--------------------------------------------------------------------
-
-	// @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	/**
+	 * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	 */
 	public function testSetWithoutEscape()
 	{
 		$this->db->table('job')
-				 ->set('description', 'name', false)
-				 ->update();
+			->set('description', 'name', false)
+			->update();
 
 		$result = $this->db->table('user')->get()->getResultArray();
 
@@ -236,5 +225,4 @@ class UpdateTest extends CIDatabaseTestCase
 			'description' => 'Developer',
 		]);
 	}
-
 }

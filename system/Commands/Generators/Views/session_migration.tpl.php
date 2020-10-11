@@ -7,8 +7,8 @@ use CodeIgniter\Database\Migration;
 class {class} extends Migration
 {
 <?php if (isset($DBGroup)) : ?>
-	protected $DBGroup = '<?= $DBGroup ?>';
-<?php endif ?>
+	protected $DBGroup = '<?= $DBGroup; ?>';
+<?php endif; ?>
 
 	public function up()
 	{
@@ -40,15 +40,15 @@ class {class} extends Migration
 	$this->forge->addKey(['id', 'ip_address'], true);
 	<?php else: ?>
 	$this->forge->addKey('id', true);
-	<?php endif ?>
+	<?php endif; ?>
 	$this->forge->addKey('timestamp');
-		$this->forge->createTable('<?= $tableName ?>', true);
+		$this->forge->createTable('<?= $tableName; ?>', true);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function down()
 	{
-		$this->forge->dropTable('<?= $tableName ?>', true);
+		$this->forge->dropTable('<?= $tableName; ?>', true);
 	}
 }

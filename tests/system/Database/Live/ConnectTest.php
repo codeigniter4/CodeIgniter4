@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -33,7 +35,7 @@ class ConnectTest extends CIDatabaseTestCase
 	{
 		// We should have our test database connection already.
 		$instances = $this->getPrivateProperty(Database::class, 'instances');
-		$this->assertEquals(1, count($instances));
+		$this->assertCount(1, $instances);
 
 		$db1 = Database::connect($this->group1);
 		$db2 = Database::connect($this->group2);
@@ -41,7 +43,7 @@ class ConnectTest extends CIDatabaseTestCase
 		$this->assertNotSame($db1, $db2);
 
 		$instances = $this->getPrivateProperty(Database::class, 'instances');
-		$this->assertEquals(3, count($instances));
+		$this->assertCount(3, $instances);
 	}
 
 	public function testConnectReturnsProvidedConnection()

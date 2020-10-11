@@ -1,11 +1,5 @@
 <?php
 
-use CodeIgniter\CodeIgniter;
-use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Services;
-use Config\Autoload;
-use Config\Modules;
-
 /**
  * CodeIgniter
  *
@@ -43,6 +37,12 @@ use Config\Modules;
  * @filesource
  */
 
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Services;
+use Config\Autoload;
+use Config\Modules;
+
 /*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
@@ -54,46 +54,19 @@ use Config\Modules;
  */
 
 // The path to the application directory.
-if (! defined('APPPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('APPPATH') || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 // The path to the project root directory. Just above APPPATH.
-if (! defined('ROOTPATH'))
-{
-	define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
-}
+defined('ROOTPATH') || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 
 // The path to the system directory.
-if (! defined('SYSTEMPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('SYSTEMPATH') || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 // The path to the writable directory.
-if (! defined('WRITEPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('WRITEPATH') || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 // The path to the tests directory
-if (! defined('TESTPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('TESTPATH') || define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 /*
  * ---------------------------------------------------------------
@@ -143,9 +116,8 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-$loader = Services::autoloader();
-$loader->initialize(new Autoload(), new Modules());
-$loader->register(); // Register the loader with the SPL autoloader stack.
+// Register the loader with the SPL autoloader stack.
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
@@ -155,16 +127,12 @@ if (is_file(COMPOSER_PATH))
 	 *
 	 * We do not want to enforce this, so set the constant if Composer was used.
 	 */
-	if (! defined('VENDORPATH'))
-	{
-		define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
-	}
+	defined('VENDORPATH') || define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 	require_once COMPOSER_PATH;
 }
 
-// Load environment settings from .env files
-// into $_SERVER and $_ENV
+// Load environment settings from .env files into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
 $env = new DotEnv(ROOTPATH);
@@ -184,8 +152,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$appConfig = config('Config\App');
-$app       = new CodeIgniter($appConfig);
+$app = new CodeIgniter(config('App'));
 $app->initialize();
 
 return $app;

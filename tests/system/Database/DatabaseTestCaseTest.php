@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database;
+<?php
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Services;
@@ -11,7 +13,7 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 	 * Should the db be refreshed before
 	 * each test?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $refresh = true;
 
@@ -19,7 +21,7 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 	 * The seed file(s) used for all tests within this test case.
 	 * Should be fully-namespaced or relative to $basePath
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $seed = [
 		'Tests\Support\Database\Seeds\CITestSeeder',
@@ -32,14 +34,14 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 	 * Note that running "all" runs migrations in date order,
 	 * but specifying namespaces runs them in namespace order (then date)
 	 *
-	 * @var string|array|null
+	 * @var array|string|null
 	 */
 	protected $namespace = [
 		'Tests\Support',
 		'Tests\Support\MigrationTestMigrations',
 	];
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		if (! $this->loaded)
 		{

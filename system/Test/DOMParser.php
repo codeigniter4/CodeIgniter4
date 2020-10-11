@@ -105,6 +105,7 @@ class DOMParser
 			// unclear how we would get here, given that we are trapping libxml errors
 			// @codeCoverageIgnoreStart
 			libxml_clear_errors();
+
 			throw new BadMethodCallException('Invalid HTML');
 			// @codeCoverageIgnoreEnd
 		}
@@ -141,20 +142,21 @@ class DOMParser
 	 * @param string $search
 	 * @param string $element
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function see(string $search = null, string $element = null): bool
 	{
 		// If Element is null, we're just scanning for text
-		if (is_null($element))
+		if ($element === null)
 		{
 			$content = $this->dom->saveHTML($this->dom->documentElement);
-			return mb_strpos($content, $search) !== false;
+
+			return strpos($content, $search) !== false;
 		}
 
 		$result = $this->doXPath($search, $element);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -163,7 +165,7 @@ class DOMParser
 	 * @param string      $search
 	 * @param string|null $element
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function dontSee(string $search = null, string $element = null): bool
 	{
@@ -176,7 +178,7 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function seeElement(string $element): bool
 	{
@@ -188,7 +190,7 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function dontSeeElement(string $element): bool
 	{
@@ -202,7 +204,7 @@ class DOMParser
 	 * @param string      $text
 	 * @param string|null $details
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function seeLink(string $text, string $details = null): bool
 	{
@@ -215,13 +217,13 @@ class DOMParser
 	 * @param string $field
 	 * @param string $value
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function seeInField(string $field, string $value): bool
 	{
 		$result = $this->doXPath(null, 'input', ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -229,7 +231,7 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function seeCheckboxIsChecked(string $element): bool
 	{
@@ -238,17 +240,16 @@ class DOMParser
 			'[@checked="checked"]',
 		]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Search the DOM using an XPath expression.
 	 *
-	 * @param  string $search
-	 * @param  string $element
-	 * @param  array  $paths
+	 * @param string $search
+	 * @param string $element
+	 * @param array  $paths
+	 *
 	 * @return DOMNodeList
 	 */
 	protected function doXPath(string $search = null, string $element, array $paths = [])
@@ -267,14 +268,14 @@ class DOMParser
 				: "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
 		}
 		// By Class
-		else if (! empty($selector['class']))
+		elseif (! empty($selector['class']))
 		{
 			$path = empty($selector['tag'])
 				? "//*[@class=\"{$selector['class']}\"]"
 				: "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
 		}
 		// By tag only
-		else if (! empty($selector['tag']))
+		elseif (! empty($selector['tag']))
 		{
 			$path = "//body//{$selector['tag']}";
 		}
@@ -297,7 +298,7 @@ class DOMParser
 			}
 		}
 
-		if (! is_null($search))
+		if ($search !== null)
 		{
 			$path .= "[contains(., \"{$search}\")]";
 		}
@@ -310,7 +311,8 @@ class DOMParser
 	/**
 	 * Look for the a selector  in the passed text.
 	 *
-	 * @param  string $selector
+	 * @param string $selector
+	 *
 	 * @return array
 	 */
 	public function parseSelector(string $selector)
@@ -321,9 +323,9 @@ class DOMParser
 		$attr  = null;
 
 		// ID?
-		if ($pos = strpos($selector, '#') !== false)
+		if (strpos($selector, '#') !== false)
 		{
-			list($tag, $id) = explode('#', $selector);
+			[$tag, $id] = explode('#', $selector);
 		}
 		// Attribute
 		elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false)
@@ -338,15 +340,15 @@ class DOMParser
 			$text = explode(',', $text);
 			$text = trim(array_shift($text));
 
-			list($name, $value) = explode('=', $text);
-			$name               = trim($name);
-			$value              = trim($value);
-			$attr               = [$name => trim($value, '] ')];
+			[$name, $value] = explode('=', $text);
+			$name           = trim($name);
+			$value          = trim($value);
+			$attr           = [$name => trim($value, '] ')];
 		}
 		// Class?
-		elseif ($pos = strpos($selector, '.') !== false)
+		elseif (strpos($selector, '.') !== false)
 		{
-			list($tag, $class) = explode('.', $selector);
+			[$tag, $class] = explode('.', $selector);
 		}
 		// Otherwise, assume the entire string is our tag
 		else
@@ -361,5 +363,4 @@ class DOMParser
 			'attr'  => $attr,
 		];
 	}
-
 }

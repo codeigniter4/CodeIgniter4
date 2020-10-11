@@ -51,7 +51,6 @@ use ReflectionException;
  * download
  *
  * @codeCoverageIgnore
- * @package            CodeIgniter
  */
 class ComposerScripts
 {
@@ -75,15 +74,13 @@ class ComposerScripts
 		static::moveKint();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Move a file.
 	 *
 	 * @param string $source
 	 * @param string $destination
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected static function moveFile(string $source, string $destination): bool
 	{
@@ -91,9 +88,7 @@ class ComposerScripts
 
 		if (empty($source))
 		{
-			// @codeCoverageIgnoreStart
 			die('Cannot move file. Source path invalid.');
-			// @codeCoverageIgnoreEnd
 		}
 
 		if (! is_file($source))
@@ -104,15 +99,14 @@ class ComposerScripts
 		return copy($source, $destination);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determine file path of a class.
 	 *
 	 * @param string $class
 	 *
-	 * @return string
 	 * @throws ReflectionException
+	 *
+	 * @return string
 	 */
 	protected static function getClassFilePath(string $class)
 	{
@@ -120,8 +114,6 @@ class ComposerScripts
 
 		return $reflector->getFileName();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A recursive remove directory method.
@@ -133,6 +125,7 @@ class ComposerScripts
 		if (is_dir($dir))
 		{
 			$objects = scandir($dir);
+
 			foreach ($objects as $object)
 			{
 				if ($object !== '.' && $object !== '..')
@@ -157,9 +150,9 @@ class ComposerScripts
 		$dir = opendir($source);
 		@mkdir($dest);
 
-		while (false !== ( $file = readdir($dir)))
+		while (false !== ($file = readdir($dir)))
 		{
-			if (( $file !== '.' ) && ( $file !== '..' ))
+			if (($file !== '.') && ($file !== '..'))
 			{
 				if (is_dir($source . '/' . $file))
 				{
@@ -206,15 +199,11 @@ class ComposerScripts
 			{
 				if (! static::moveFile($source, $dest))
 				{
-					// @codeCoverageIgnoreStart
 					die('Error moving: ' . $source);
-					// @codeCoverageIgnoreEnd
 				}
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Moves the Kint file into our base repo so that it's

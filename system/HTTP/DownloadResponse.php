@@ -67,7 +67,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * mime set flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	private $setMime;
 
@@ -95,15 +95,15 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * pretend
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	private $pretend = false;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string  $filename
-	 * @param boolean $setMime
+	 * @param string $filename
+	 * @param bool   $setMime
 	 */
 	public function __construct(string $filename, bool $setMime)
 	{
@@ -151,15 +151,16 @@ class DownloadResponse extends Message implements ResponseInterface
 	public function setFileName(string $filename)
 	{
 		$this->filename = $filename;
+
 		return $this;
 	}
 
 	/**
 	 * get content length.
 	 *
-	 * @return integer
+	 * @return int
 	 */
-	public function getContentLength() : int
+	public function getContentLength(): int
 	{
 		if (is_string($this->binary))
 		{
@@ -234,7 +235,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 *
 	 * @return string
 	 */
-	private function getContentDisposition() : string
+	private function getContentDisposition(): string
 	{
 		$downloadFilename = $this->getDownloadFileName();
 
@@ -256,14 +257,12 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getStatusCode(): int
 	{
 		return 200;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Return an instance with the specified status code and, optionally, reason phrase.
@@ -274,10 +273,10 @@ class DownloadResponse extends Message implements ResponseInterface
 	 * @see http://tools.ietf.org/html/rfc7231#section-6
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
-	 * @param integer $code   The 3-digit integer result code to set.
-	 * @param string  $reason The reason phrase to use with the
-	 *                        provided status code; if none is provided, will
-	 *                        default to the IANA name.
+	 * @param int    $code   The 3-digit integer result code to set
+	 * @param string $reason The reason phrase to use with the
+	 *                       provided status code; if none is provided, will
+	 *                       default to the IANA name
 	 *
 	 * @throws DownloadException
 	 */
@@ -285,8 +284,6 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		throw DownloadException::forCannotSetStatusCode($code, $reason);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Gets the response response phrase associated with the status code.
@@ -301,7 +298,6 @@ class DownloadResponse extends Message implements ResponseInterface
 		return $this->reason;
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
@@ -322,8 +318,6 @@ class DownloadResponse extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Content Type header for this response with the mime type
 	 * and, optionally, the charset.
@@ -343,6 +337,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
+
 		if (! empty($charset))
 		{
 			$this->charset = $charset;
@@ -363,8 +358,6 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A shortcut method that allows the developer to set all of the
@@ -399,10 +392,8 @@ class DownloadResponse extends Message implements ResponseInterface
 		throw DownloadException::forCannotSetCache();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function setLastModified($date)
 	{
@@ -420,14 +411,14 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
 
 	/**
 	 * For unit testing, don't actually send headers.
 	 *
-	 * @param  boolean $pretend
+	 * @param bool $pretend
+	 *
 	 * @return $this
 	 */
 	public function pretend(bool $pretend = true)
@@ -438,7 +429,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function send()
 	{
@@ -462,7 +453,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Disposition', $this->getContentDisposition());
 		$this->setHeader('Expires-Disposition', '0');
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
-		$this->setHeader('Content-Length', (string)$this->getContentLength());
+		$this->setHeader('Content-Length', (string) $this->getContentLength());
 		$this->noCache();
 	}
 
@@ -487,8 +478,11 @@ class DownloadResponse extends Message implements ResponseInterface
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true,
-				$this->getStatusCode());
+		header(
+			sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()),
+			true,
+			$this->getStatusCode()
+		);
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)

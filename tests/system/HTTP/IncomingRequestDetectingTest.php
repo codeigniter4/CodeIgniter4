@@ -2,14 +2,14 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
+class IncomingRequestDetectingTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
@@ -19,12 +19,11 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$_POST         = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+
 		$origin        = 'http://www.example.com/index.php/woot?code=good#pos';
 		$this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPathDefault()
 	{
@@ -107,8 +106,6 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPathQueryString()
 	{
 		$this->request->uri      = '/?/ci/index.php/woot';
@@ -128,8 +125,6 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected                = '';
 		$this->assertEquals($expected, $this->request->detectPath('QUERY_STRING'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPathPathInfo()
 	{
@@ -156,5 +151,4 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = 'silliness';
 		$this->assertEquals($expected, $this->request->detectPath('PATH_INFO'));
 	}
-
 }

@@ -31,17 +31,15 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT  MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
  */
 
-use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -55,14 +53,6 @@ use Config\Services;
 use Config\View;
 use Laminas\Escaper\Escaper;
 
-/**
- * Common Functions
- *
- * Several application-wide utility methods.
- *
- * @package  CodeIgniter
- * @category Common Functions
- */
 //--------------------------------------------------------------------
 // Services Convenience Functions
 //--------------------------------------------------------------------
@@ -105,12 +95,11 @@ if (! function_exists('cache'))
 		$cache = Services::cache();
 
 		// No params - return cache object
-		if (is_null($key))
+		if ($key === null)
 		{
 			return $cache;
 		}
 
-		// Still here? Retrieve the value.
 		return $cache->get($key);
 	}
 }
@@ -172,10 +161,10 @@ if (! function_exists('command'))
 		$length = strlen($command);
 		$cursor = 0;
 
-		/**
+		/*
 		 * Adopted from Symfony's `StringInput::tokenize()` with few changes.
 		 *
-		 * @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
+		 * See: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
 		 */
 		while ($cursor < $length)
 		{
@@ -207,7 +196,7 @@ if (! function_exists('command'))
 
 		foreach ($args as $i => $arg)
 		{
-			if (mb_strpos($arg, '-') !== 0)
+			if (strpos($arg, '-') !== 0)
 			{
 				if ($optionValue)
 				{
@@ -228,7 +217,7 @@ if (! function_exists('command'))
 			$arg   = ltrim($arg, '-');
 			$value = null;
 
-			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
+			if (isset($args[$i + 1]) && strpos($args[$i + 1], '-') !== 0)
 			{
 				$value       = $args[$i + 1];
 				$optionValue = true;
@@ -249,8 +238,8 @@ if (! function_exists('config'))
 	/**
 	 * More simple way of getting config instances from Factories
 	 *
-	 * @param string  $name
-	 * @param boolean $getShared
+	 * @param string $name
+	 * @param bool   $getShared
 	 *
 	 * @return mixed
 	 */
@@ -357,8 +346,8 @@ if (! function_exists('db_connect'))
 	 * If $getShared === false then a new connection instance will be provided,
 	 * otherwise it will all calls will return the same instance.
 	 *
-	 * @param ConnectionInterface|array|string|null $db
-	 * @param boolean                               $getShared
+	 * @param array|ConnectionInterface|string|null $db
+	 * @param bool                                  $getShared
 	 *
 	 * @return BaseConnection
 	 */
@@ -439,12 +428,13 @@ if (! function_exists('esc'))
 	 *
 	 * Valid context values: html, js, css, url, attr, raw, null
 	 *
-	 * @param string|array $data
+	 * @param array|string $data
 	 * @param string       $context
 	 * @param string       $encoding
 	 *
-	 * @return string|array
 	 * @throws InvalidArgumentException
+	 *
+	 * @return array|string
 	 */
 	function esc($data, string $context = 'html', string $encoding = null)
 	{
@@ -483,6 +473,7 @@ if (! function_exists('esc'))
 			}
 
 			static $escaper;
+
 			if (! $escaper)
 			{
 				$escaper = new Escaper($encoding);
@@ -493,7 +484,7 @@ if (! function_exists('esc'))
 				$escaper = new Escaper($encoding);
 			}
 
-			$data = $escaper->$method($data);
+			$data = $escaper->{$method}($data);
 		}
 
 		return $data;
@@ -510,8 +501,8 @@ if (! function_exists('force_https'))
 	 *
 	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 	 *
-	 * @param integer           $duration How long should the SSL header be set for? (in seconds)
-	 *                                    Defaults to 1 year.
+	 * @param int               $duration How long should the SSL header be set for? (in seconds)
+	 *                                    Defaults to 1 year
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 *
@@ -519,30 +510,19 @@ if (! function_exists('force_https'))
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request))
-		{
-			$request = Services::request(null, true);
-		}
-		if (is_null($response))
-		{
-			$response = Services::response(null, true);
-		}
+		$request  = $request  ?? Services::request();
+		$response = $response ?? Services::response();
 
 		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
-			// @codeCoverageIgnoreStart
-			return;
-			// @codeCoverageIgnoreEnd
+			return; // @codeCoverageIgnore
 		}
 
 		// If the session status is active, we should regenerate
 		// the session ID for safety sake.
 		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
-			// @codeCoverageIgnoreStart
-			Services::session(null, true)
-				->regenerate();
-			// @codeCoverageIgnoreEnd
+			Services::session()->regenerate(); // @codeCoverageIgnore
 		}
 
 		$baseURL = config(App::class)->baseURL;
@@ -557,8 +537,11 @@ if (! function_exists('force_https'))
 		}
 
 		$uri = URI::createURIString(
-			'https', $baseURL, $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
-			$request->uri->getQuery(), $request->uri->getFragment()
+			'https',
+			$baseURL,
+			$request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$request->uri->getQuery(),
+			$request->uri->getFragment()
 		);
 
 		// Set an HSTS header
@@ -568,9 +551,7 @@ if (! function_exists('force_https'))
 
 		if (ENVIRONMENT !== 'testing')
 		{
-			// @codeCoverageIgnoreStart
-			exit();
-			// @codeCoverageIgnoreEnd
+			exit(); // @codeCoverageIgnore
 		}
 	}
 }
@@ -595,10 +576,12 @@ if (! function_exists('function_usable'))
 	 * that version is yet to be released. This function will therefore
 	 * be just temporary, but would probably be kept for a few years.
 	 *
-	 * @link   http://www.hardened-php.net/suhosin/
-	 * @param  string $functionName Function to check for
-	 * @return boolean    TRUE if the function exists and is safe to call,
-	 *             FALSE otherwise.
+	 * @see   http://www.hardened-php.net/suhosin/
+	 *
+	 * @param string $functionName Function to check for
+	 *
+	 * @return bool TRUE if the function exists and is safe to call,
+	 *              FALSE otherwise
 	 *
 	 * @codeCoverageIgnore This is too exotic
 	 */
@@ -631,7 +614,8 @@ if (! function_exists('helper'))
 	 *   2. {namespace}/Helpers
 	 *   3. system/Helpers
 	 *
-	 * @param  string|array $filenames
+	 * @param array|string $filenames
+	 *
 	 * @throws FileNotFoundException
 	 */
 	function helper($filenames)
@@ -684,9 +668,7 @@ if (! function_exists('helper'))
 					{
 						if (strpos($path, APPPATH) === 0)
 						{
-							// @codeCoverageIgnoreStart
-							$appHelper = $path;
-							// @codeCoverageIgnoreEnd
+							$appHelper = $path; // @codeCoverageIgnore
 						}
 						elseif (strpos($path, SYSTEMPATH) === 0)
 						{
@@ -702,9 +684,7 @@ if (! function_exists('helper'))
 				// App-level helpers should override all others
 				if (! empty($appHelper))
 				{
-					// @codeCoverageIgnoreStart
-					$includes[] = $appHelper;
-					// @codeCoverageIgnoreEnd
+					$includes[] = $appHelper; // @codeCoverageIgnore
 				}
 
 				// All namespaced files get added in next
@@ -723,7 +703,7 @@ if (! function_exists('helper'))
 		{
 			foreach ($includes as $path)
 			{
-				include_once($path);
+				include_once $path;
 			}
 		}
 	}
@@ -736,11 +716,11 @@ if (! function_exists('is_cli'))
 	 *
 	 * Test to see if a request was made from the command line.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	function is_cli(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return PHP_SAPI === 'cli' || defined('STDIN');
 	}
 }
 
@@ -753,13 +733,14 @@ if (! function_exists('is_really_writable'))
 	 * the file, based on the read-only attribute. is_writable() is also unreliable
 	 * on Unix servers if safe_mode is on.
 	 *
-	 * @link https://bugs.php.net/bug.php?id=54709
+	 * @see https://bugs.php.net/bug.php?id=54709
 	 *
 	 * @param string $file
 	 *
-	 * @return boolean
+	 * @throws Exception
 	 *
-	 * @throws             Exception
+	 * @return bool
+	 *
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable(string $file): bool
@@ -776,6 +757,7 @@ if (! function_exists('is_really_writable'))
 		if (is_dir($file))
 		{
 			$file = rtrim($file, '/') . '/' . bin2hex(random_bytes(16));
+
 			if (($fp = @fopen($file, 'ab')) === false)
 			{
 				return false;
@@ -788,7 +770,7 @@ if (! function_exists('is_really_writable'))
 			return true;
 		}
 
-		if (! is_file($file) || ( $fp = @fopen($file, 'ab')) === false)
+		if (! is_file($file) || ($fp = @fopen($file, 'ab')) === false)
 		{
 			return false;
 		}
@@ -813,8 +795,7 @@ if (! function_exists('lang'))
 	 */
 	function lang(string $line, array $args = [], string $locale = null)
 	{
-		return Services::language($locale)
-			->getLine($line, $args);
+		return Services::language($locale)->getLine($line, $args);
 	}
 }
 
@@ -852,10 +833,7 @@ if (! function_exists('log_message'))
 			return $logger->log($level, $message, $context);
 		}
 
-		// @codeCoverageIgnoreStart
-		return Services::logger(true)
-			->log($level, $message, $context);
-		// @codeCoverageIgnoreEnd
+		return Services::logger()->log($level, $message, $context); // @codeCoverageIgnore
 	}
 }
 
@@ -865,7 +843,7 @@ if (! function_exists('model'))
 	 * More simple way of getting model instances from Factories
 	 *
 	 * @param string                   $name
-	 * @param boolean                  $getShared
+	 * @param bool                     $getShared
 	 * @param ConnectionInterface|null $conn
 	 *
 	 * @return mixed
@@ -882,9 +860,9 @@ if (! function_exists('old'))
 	 * Provides access to "old input" that was set in the session
 	 * during a redirect()->withInput().
 	 *
-	 * @param string         $key
-	 * @param null           $default
-	 * @param string|boolean $escape
+	 * @param string      $key
+	 * @param null        $default
+	 * @param bool|string $escape
 	 *
 	 * @return mixed|null
 	 */
@@ -893,9 +871,7 @@ if (! function_exists('old'))
 		// Ensure the session is loaded
 		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
 		{
-			// @codeCoverageIgnoreStart
-			session();
-			// @codeCoverageIgnoreEnd
+			session(); // @codeCoverageIgnore
 		}
 
 		$request = Services::request();
@@ -904,7 +880,7 @@ if (! function_exists('old'))
 
 		// Return the default value if nothing
 		// found in the old input.
-		if (is_null($value))
+		if ($value === null)
 		{
 			return $default;
 		}
@@ -958,8 +934,8 @@ if (! function_exists('remove_invisible_characters'))
 	 * This prevents sandwiching null characters
 	 * between ascii characters, like Java\0script.
 	 *
-	 * @param string  $str
-	 * @param boolean $urlEncoded
+	 * @param string $str
+	 * @param bool   $urlEncoded
 	 *
 	 * @return string
 	 */
@@ -980,8 +956,7 @@ if (! function_exists('remove_invisible_characters'))
 		do
 		{
 			$str = preg_replace($nonDisplayables, '', $str, -1, $count);
-		}
-		while ($count);
+		} while ($count);
 
 		return $str;
 	}
@@ -1020,7 +995,7 @@ if (! function_exists('session'))
 	 *
 	 * @param string $val
 	 *
-	 * @return Session|mixed|null
+	 * @return mixed|Session|null
 	 */
 	function session(string $val = null)
 	{
@@ -1089,11 +1064,11 @@ if (! function_exists('slash_item'))
 	 * @param string $item Config item name
 	 *
 	 * @return string|null The configuration item or NULL if
-	 * the item doesn't exist
+	 *                     the item doesn't exist
 	 */
 	function slash_item(string $item): ?string
 	{
-		$config     = config(App::class);
+		$config     = config('App');
 		$configItem = $config->{$item};
 
 		if (! isset($configItem) || empty(trim($configItem)))
@@ -1113,8 +1088,8 @@ if (! function_exists('stringify_attributes'))
 	 * Helper function used to convert a string, array, or object
 	 * of attributes to a string.
 	 *
-	 * @param mixed   $attributes string, array, object
-	 * @param boolean $js
+	 * @param mixed $attributes string, array, object
+	 * @param bool  $js
 	 *
 	 * @return string
 	 */
@@ -1152,7 +1127,7 @@ if (! function_exists('timer'))
 	 *
 	 * @param string|null $name
 	 *
-	 * @return Timer|mixed
+	 * @return mixed|Timer
 	 */
 	function timer(string $name = null)
 	{
@@ -1197,7 +1172,7 @@ if (! function_exists('view'))
 	 *
 	 * @param string $name
 	 * @param array  $data
-	 * @param array  $options Unused - reserved for third-party extensions.
+	 * @param array  $options Unused - reserved for third-party extensions
 	 *
 	 * @return string
 	 */
@@ -1216,8 +1191,7 @@ if (! function_exists('view'))
 			unset($options['saveData']);
 		}
 
-		return $renderer->setData($data, 'raw')
-						->render($name, $options, $saveData);
+		return $renderer->setData($data, 'raw')->render($name, $options, $saveData);
 	}
 }
 
@@ -1229,15 +1203,15 @@ if (! function_exists('view_cell'))
 	 *
 	 * @param string      $library
 	 * @param null        $params
-	 * @param integer     $ttl
+	 * @param int         $ttl
 	 * @param string|null $cacheName
 	 *
-	 * @return string
 	 * @throws ReflectionException
+	 *
+	 * @return string
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
-		return Services::viewcell()
-			->render($library, $params, $ttl, $cacheName);
+		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
 	}
 }

@@ -13,7 +13,6 @@ use Config\App;
  */
 class CLIRequestTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\CLIRequest
 	 */
@@ -27,8 +26,6 @@ class CLIRequestTest extends CIUnitTestCase
 		$_POST         = [];
 		$_GET          = [];
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testParsingSegments()
 	{
@@ -210,8 +207,6 @@ class CLIRequestTest extends CIUnitTestCase
 		$this->assertEquals('users/21/profile/bar', $this->request->getPath());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFetchGlobalsSingleValue()
 	{
 		$_POST['foo'] = 'bar';
@@ -364,7 +359,7 @@ class CLIRequestTest extends CIUnitTestCase
 					'DETAIL' => 'sdfg',
 				],
 			],
-			'submit'        => 'SAVE',
+			'submit' => 'SAVE',
 		];
 		$this->request->setGlobal('post', $post);
 		$result = $this->request->fetchGlobal('post');
@@ -421,7 +416,7 @@ class CLIRequestTest extends CIUnitTestCase
 		$this->request->setGlobal('post', $post);
 
 		$this->assertEquals(['zipcode' => 90210], $this->request->fetchGlobal('post', 'clients[address]'));
-		$this->assertEquals(null, $this->request->fetchGlobal('post', 'clients[zipcode]'));
+		$this->assertNull($this->request->fetchGlobal('post', 'clients[zipcode]'));
 	}
 
 	public function testFetchGlobalWithKeylessArrayChildElement()
@@ -431,7 +426,7 @@ class CLIRequestTest extends CIUnitTestCase
 				'address' => [
 					'zipcode' => 90210,
 				],
-				'stuff'   => [['a']],
+				'stuff' => [['a']],
 			],
 		];
 		$this->request->setGlobal('post', $post);
@@ -467,7 +462,7 @@ class CLIRequestTest extends CIUnitTestCase
 				],
 			],
 		];
-		$post     = [
+		$post = [
 			'clients' => $expected,
 		];
 		$this->request->setGlobal('post', $post);
@@ -475,43 +470,41 @@ class CLIRequestTest extends CIUnitTestCase
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'clients[]'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function ipAddressChecks()
 	{
 		return [
-			'empty'         => [
+			'empty' => [
 				false,
 				'',
 			],
-			'zero'          => [
+			'zero' => [
 				false,
 				0,
 			],
-			'large_ipv4'    => [
+			'large_ipv4' => [
 				false,
 				'256.256.256.999',
 				'ipv4',
 			],
-			'good_ipv4'     => [
+			'good_ipv4' => [
 				true,
 				'100.100.100.0',
 				'ipv4',
 			],
-			'good_default'  => [
+			'good_default' => [
 				true,
 				'100.100.100.0',
 			],
-			'zeroed_ipv4'   => [
+			'zeroed_ipv4' => [
 				true,
 				'0.0.0.0',
 			],
-			'large_ipv6'    => [
+			'large_ipv6' => [
 				false,
 				'h123:0000:0000:0000:0000:0000:0000:0000',
 				'ipv6',
 			],
-			'good_ipv6'     => [
+			'good_ipv6' => [
 				true,
 				'2001:0db8:85a3:0000:0000:8a2e:0370:7334',
 			],
@@ -525,13 +518,15 @@ class CLIRequestTest extends CIUnitTestCase
 
 	/**
 	 * @dataProvider ipAddressChecks
+	 *
+	 * @param mixed      $expected
+	 * @param mixed      $address
+	 * @param mixed|null $type
 	 */
 	public function testValidIPAddress($expected, $address, $type = null)
 	{
 		$this->assertEquals($expected, $this->request->isValidIP($address, $type));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetIPAddressDefault()
 	{
@@ -615,16 +610,12 @@ class CLIRequestTest extends CIUnitTestCase
 
 	//FIXME getIPAddress should have more testing, to 100% code coverage
 
-	//--------------------------------------------------------------------
-
 	public function testMethodReturnsRightStuff()
 	{
 		// Defaults method to CLI now.
 		$this->assertEquals('cli', $this->request->getMethod());
 		$this->assertEquals('CLI', $this->request->getMethod(true));
 	}
-
-	//---------------------------------------------------------------------
 
 	public function testMethodIsCliReturnsAlwaysTrue()
 	{

@@ -55,8 +55,6 @@ use ReflectionException;
  *
  * Provides additional utilities for doing full HTTP testing
  * against your application in trait format.
- *
- * @package CodeIgniter\Test
  */
 trait FeatureTestTrait
 {
@@ -80,6 +78,7 @@ trait FeatureTestTrait
 		if ($routes)
 		{
 			$collection->resetRoutes();
+
 			foreach ($routes as $route)
 			{
 				$collection->{$route[0]}($route[1], $route[2]);
@@ -100,7 +99,7 @@ trait FeatureTestTrait
 	 */
 	public function withSession(array $values = null)
 	{
-		$this->session = is_null($values) ? $_SESSION : $values;
+		$this->session = $values === null ? $_SESSION : $values;
 
 		return $this;
 	}
@@ -144,9 +143,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function call(string $method, string $path, array $params = null)
 	{
@@ -154,15 +154,14 @@ trait FeatureTestTrait
 
 		// Clean up any open output buffers
 		// not relevant to unit testing
-		// @codeCoverageIgnoreStart
 		if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true))
 		{
-			\ob_end_clean();
+			\ob_end_clean(); // @codeCoverageIgnore
 		}
-		// @codeCoverageIgnoreEnd
 
 		// Simulate having a blank session
-		$_SESSION                  = [];
+		$_SESSION = [];
+
 		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$request = $this->setupRequest($method, $path);
@@ -180,11 +179,10 @@ trait FeatureTestTrait
 		// Make sure filters are reset between tests
 		Services::injectMock('filters', Services::filters(null, false));
 
-		$response = $this->app
-				->setRequest($request)
-				->run($routes, true);
+		$response = $this->app->setRequest($request)->run($routes, true);
 
 		$output = \ob_get_contents();
+
 		if (empty($response->getBody()) && ! empty($output))
 		{
 			$response->setBody($output);
@@ -214,9 +212,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function get(string $path, array $params = null)
 	{
@@ -229,9 +228,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function post(string $path, array $params = null)
 	{
@@ -244,9 +244,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function put(string $path, array $params = null)
 	{
@@ -259,9 +260,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function patch(string $path, array $params = null)
 	{
@@ -274,9 +276,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function delete(string $path, array $params = null)
 	{
@@ -289,9 +292,10 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
 	 * @throws RedirectException
 	 * @throws Exception
+	 *
+	 * @return FeatureResponse
 	 */
 	public function options(string $path, array $params = null)
 	{
@@ -312,7 +316,7 @@ trait FeatureTestTrait
 		$config = config(App::class);
 		$uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
 
-		$request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
+		$request      = new IncomingRequest($config, clone $uri, null, new UserAgent());
 		$request->uri = $uri;
 
 		$request->setMethod($method);
@@ -356,8 +360,9 @@ trait FeatureTestTrait
 	 * @param Request    $request
 	 * @param array|null $params
 	 *
-	 * @return Request
 	 * @throws ReflectionException
+	 *
+	 * @return Request
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{
@@ -368,6 +373,7 @@ trait FeatureTestTrait
 			: $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
 
 		$request->setGlobal('get', $get);
+
 		if ($method !== 'get')
 		{
 			$request->setGlobal($method, $params);

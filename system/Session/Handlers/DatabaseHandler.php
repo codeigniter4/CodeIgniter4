@@ -51,7 +51,6 @@ use SessionHandlerInterface;
  */
 class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * The database group to use for storage.
 	 *
@@ -83,11 +82,9 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 	/**
 	 * Row exists flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $rowExists = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -115,6 +112,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 
 		// Determine Database type
 		$driver = strtolower(get_class($this->db));
+
 		if (strpos($driver, 'mysql') !== false)
 		{
 			$this->platform = 'mysql';
@@ -125,8 +123,6 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
@@ -135,8 +131,9 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $savePath Path to session files' directory
 	 * @param string $name     Session cookie name
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function open($savePath, $name): bool
 	{
@@ -148,8 +145,6 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Read
 	 *
@@ -157,25 +152,26 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string    Serialized session data
+	 * @return string Serialized session data
 	 */
 	public function read($sessionID): string
 	{
 		if ($this->lockSession($sessionID) === false)
 		{
 			$this->fingerprint = md5('');
+
 			return '';
 		}
 
 		// Needed by write() to detect session_regenerate_id() calls
-		if (is_null($this->sessionID)) // @phpstan-ignore-line
+		if ($this->sessionID === null)
 		{
 			$this->sessionID = $sessionID;
 		}
 
 		$builder = $this->db->table($this->table)
-				->select('data')
-				->where('id', $sessionID);
+			->select('data')
+			->where('id', $sessionID);
 
 		if ($this->matchIP)
 		{
@@ -204,7 +200,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		}
 		else
 		{
-			$result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data)) : $result->data;
+			$result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data), true) : $result->data;
 		}
 
 		$this->fingerprint = md5($result);
@@ -212,8 +208,6 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 
 		return $result;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Write
@@ -223,7 +217,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $sessionID   Session ID
 	 * @param string $sessionData Serialized session data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function write($sessionID, $sessionData): bool
 	{
@@ -285,21 +279,17 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close
 	 *
 	 * Releases locks and closes file descriptor.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function close(): bool
 	{
 		return ($this->lock && ! $this->releaseLock()) ? $this->fail() : true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Destroy
@@ -308,7 +298,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function destroy($sessionID): bool
 	{
@@ -337,38 +327,37 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		return $this->fail();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Garbage Collector
 	 *
 	 * Deletes expired sessions
 	 *
-	 * @param integer $maxlifetime Maximum lifetime of sessions
+	 * @param int $maxlifetime Maximum lifetime of sessions
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function gc($maxlifetime): bool
 	{
 		return ($this->db->table($this->table)->delete('timestamp < ' . (time() - $maxlifetime))) ? true : $this->fail();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Lock the session.
 	 *
-	 * @param  string $sessionID
-	 * @return boolean
+	 * @param string $sessionID
+	 *
+	 * @return bool
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
 		if ($this->platform === 'mysql')
 		{
 			$arg = md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
+
 			if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = $arg;
+
 				return true;
 			}
 
@@ -378,9 +367,11 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		if ($this->platform === 'postgre')
 		{
 			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
+
 			if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
 			{
 				$this->lock = $arg;
+
 				return true;
 			}
 
@@ -391,12 +382,10 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		return parent::lockSession($sessionID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Releases the lock, if any.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function releaseLock(): bool
 	{
@@ -410,6 +399,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 			if ($this->db->query("SELECT RELEASE_LOCK('{$this->lock}') AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = false;
+
 				return true;
 			}
 
@@ -421,6 +411,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 			if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})"))
 			{
 				$this->lock = false;
+
 				return true;
 			}
 
@@ -430,6 +421,4 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		// Unsupported DB? Let the parent handle the simple version.
 		return parent::releaseLock();
 	}
-
-	//--------------------------------------------------------------------
 }

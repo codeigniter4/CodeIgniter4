@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -49,7 +50,6 @@ use Predis\Client;
  */
 class PredisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -77,8 +77,6 @@ class PredisHandler implements CacheInterface
 	 */
 	protected $redis;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -93,8 +91,6 @@ class PredisHandler implements CacheInterface
 			$this->config = array_merge($this->config, $config->redis);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes care of any handler-specific setup that must be done.
@@ -118,8 +114,6 @@ class PredisHandler implements CacheInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to fetch an item from the cache store.
 	 *
@@ -129,10 +123,12 @@ class PredisHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$data = array_combine([
-			'__ci_type',
-			'__ci_value',
-		], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
+		$data = array_combine(
+			[
+				'__ci_type',
+				'__ci_value',
+			],
+			$this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
@@ -157,14 +153,12 @@ class PredisHandler implements CacheInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -175,6 +169,7 @@ class PredisHandler implements CacheInterface
 			case 'array':
 			case 'object':
 				$value = serialize($value);
+
 				break;
 			case 'boolean':
 			case 'integer':
@@ -197,27 +192,23 @@ class PredisHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes a specific item from the cache store.
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function delete(string $key)
 	{
-		return ($this->redis->del($key) === 1);
+		return $this->redis->del($key) === 1;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -226,13 +217,11 @@ class PredisHandler implements CacheInterface
 		return $this->redis->hincrby($key, 'data', $offset);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -241,19 +230,15 @@ class PredisHandler implements CacheInterface
 		return $this->redis->hincrby($key, 'data', -$offset);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function clean()
 	{
 		return $this->redis->flushdb()->getPayload() === 'OK';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns information on the entire cache.
@@ -268,12 +253,10 @@ class PredisHandler implements CacheInterface
 		return $this->redis->info();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns detailed information about the specific item in the cache.
 	 *
-	 * @param string $key Cache item name.
+	 * @param string $key Cache item name
 	 *
 	 * @return mixed
 	 */
@@ -284,6 +267,7 @@ class PredisHandler implements CacheInterface
 		if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
 		{
 			$time = time();
+
 			return [
 				'expire' => $time + $this->redis->ttl($key),
 				'mtime'  => $time,
@@ -294,16 +278,13 @@ class PredisHandler implements CacheInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSupported(): bool
 	{
 		return class_exists('\Predis\Client');
 	}
-
 }

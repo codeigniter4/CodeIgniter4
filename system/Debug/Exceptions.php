@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -53,13 +54,12 @@ use Throwable;
  */
 class Exceptions
 {
-
 	use ResponseTrait;
 
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	public $ob_level;
 
@@ -92,8 +92,6 @@ class Exceptions
 	 */
 	protected $response;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -113,8 +111,6 @@ class Exceptions
 		$this->response = $response;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Responsible for registering the error, exception and shutdown
 	 * handling of our application.
@@ -132,8 +128,6 @@ class Exceptions
 		register_shutdown_function([$this, 'shutdownHandler']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Catches any uncaught errors and exceptions, including most Fatal errors
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
@@ -145,17 +139,14 @@ class Exceptions
 	 */
 	public function exceptionHandler(Throwable $exception)
 	{
-		[
-			$statusCode,
-			$exitCode,
-		] = $this->determineCodes($exception);
+		[$statusCode, $exitCode] = $this->determineCodes($exception);
 
 		// Log it
 		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
 		{
 			log_message('critical', $exception->getMessage() . "\n{trace}", [
-							'trace' => $exception->getTraceAsString(),
-						]);
+				'trace' => $exception->getTraceAsString(),
+			]);
 		}
 
 		if (! is_cli())
@@ -177,8 +168,6 @@ class Exceptions
 		exit($exitCode);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Even in PHP7, some errors make it through to the errorHandler, so
 	 * convert these to Exceptions and let the exception handler log it and
@@ -186,10 +175,10 @@ class Exceptions
 	 *
 	 * This seems to be primarily when a user triggers it with trigger_error().
 	 *
-	 * @param integer      $severity
-	 * @param string       $message
-	 * @param string|null  $file
-	 * @param integer|null $line
+	 * @param int         $severity
+	 * @param string      $message
+	 * @param string|null $file
+	 * @param int|null    $line
 	 *
 	 * @throws ErrorException
 	 */
@@ -204,8 +193,6 @@ class Exceptions
 		throw new ErrorException($message, 0, $severity, $file, $line);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if any errors have happened during shutdown that
 	 * need to be caught and handle them.
@@ -217,7 +204,7 @@ class Exceptions
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if (! is_null($error))
+		if ($error !== null)
 		{
 			// Fatal Error?
 			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
@@ -227,8 +214,6 @@ class Exceptions
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the view to display based on the exception thrown,
 	 * whether an HTTP or CLI request, etc.
@@ -236,7 +221,7 @@ class Exceptions
 	 * @param Throwable $exception
 	 * @param string    $templatePath
 	 *
-	 * @return string       The path and filename of the view file to use
+	 * @return string The path and filename of the view file to use
 	 */
 	protected function determineView(Throwable $exception, string $templatePath): string
 	{
@@ -264,13 +249,11 @@ class Exceptions
 		return $view;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Given an exception and status code will display the error to the client.
 	 *
 	 * @param Throwable $exception
-	 * @param integer   $statusCode
+	 * @param int       $statusCode
 	 */
 	protected function render(Throwable $exception, int $statusCode)
 	{
@@ -306,19 +289,17 @@ class Exceptions
 		}
 
 		ob_start();
-		include $viewFile; // @phpstan-ignore-line
+		include $viewFile; /** @phpstan-ignore-line */
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gathers the variables that will be made available to the view.
 	 *
 	 * @param Throwable $exception
-	 * @param integer   $statusCode
+	 * @param int       $statusCode
 	 *
 	 * @return array
 	 */
@@ -340,7 +321,7 @@ class Exceptions
 	 *
 	 * @param Throwable $exception
 	 *
-	 * @return array
+	 * @return int[]
 	 */
 	protected function determineCodes(Throwable $exception): array
 	{
@@ -349,9 +330,10 @@ class Exceptions
 		if ($statusCode < 100 || $statusCode > 599)
 		{
 			$exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
-			if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX
+
+			if ($exitStatus > EXIT__AUTO_MAX)
 			{
-				$exitStatus = EXIT_ERROR; // EXIT_ERROR
+				$exitStatus = EXIT_ERROR;
 			}
 			$statusCode = 500;
 		}
@@ -366,7 +348,6 @@ class Exceptions
 		];
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Display Methods
 	//--------------------------------------------------------------------
@@ -386,28 +367,30 @@ class Exceptions
 		{
 			case strpos($file, APPPATH) === 0:
 				$file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
+
 				break;
 			case strpos($file, SYSTEMPATH) === 0:
 				$file = 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(SYSTEMPATH));
+
 				break;
 			case strpos($file, FCPATH) === 0:
 				$file = 'FCPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(FCPATH));
+
 				break;
 			case defined('VENDORPATH') && strpos($file, VENDORPATH) === 0:
 				$file = 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VENDORPATH));
+
 				break;
 		}
 
 		return $file;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Describes memory usage in real-world units. Intended for use
 	 * with memory_get_usage, etc.
 	 *
-	 * @param integer $bytes
+	 * @param int $bytes
 	 *
 	 * @return string
 	 */
@@ -417,6 +400,7 @@ class Exceptions
 		{
 			return $bytes . 'B';
 		}
+
 		if ($bytes < 1048576)
 		{
 			return round($bytes / 1024, 2) . 'KB';
@@ -425,16 +409,14 @@ class Exceptions
 		return round($bytes / 1048576, 2) . 'MB';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a syntax-highlighted version of a PHP file.
 	 *
-	 * @param string  $file
-	 * @param integer $lineNumber
-	 * @param integer $lines
+	 * @param string $file
+	 * @param int    $lineNumber
+	 * @param int    $lines
 	 *
-	 * @return boolean|string
+	 * @return bool|string
 	 */
 	public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
 	{
@@ -473,7 +455,7 @@ class Exceptions
 		$start = $start < 0 ? 0 : $start;
 
 		// Get just the lines we need to display, while keeping line numbers...
-		$source = array_splice($source, $start, $lines, true); // @phpstan-ignore-line
+		$source = array_splice($source, $start, $lines, true); /** @phpstan-ignore-line */
 
 		// Used to format the line number in the source
 		$format = '% ' . strlen(sprintf('%s', $start + $lines)) . 'd';
@@ -488,12 +470,16 @@ class Exceptions
 		foreach ($source as $n => $row)
 		{
 			$spans += substr_count($row, '<span') - substr_count($row, '</span');
-			$row    = str_replace(["\r", "\n"], ['', ''], $row);
+			$row = str_replace(["\r", "\n"], ['', ''], $row);
 
 			if (($n + $start + 1) === $lineNumber)
 			{
 				preg_match_all('#<[^>]+>#', $row, $tags);
-				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, strip_tags($row), implode('', $tags[0])
+				$out .= sprintf(
+					"<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
+					$n + $start + 1,
+					strip_tags($row),
+					implode('', $tags[0])
 				);
 			}
 			else
@@ -509,6 +495,4 @@ class Exceptions
 
 		return '<pre><code>' . $out . '</code></pre>';
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -30,22 +30,16 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
  * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 1.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 use CodeIgniter\Test\Fabricator;
 
-/**
- * CodeIgniter Test Helpers
- *
- * @package CodeIgniter
- */
-//--------------------------------------------------------------------
+// CodeIgniter Test Helpers
 
 if (! function_exists('fake'))
 {
@@ -55,7 +49,7 @@ if (! function_exists('fake'))
 	 * @param Model|object|string $model     Instance or name of the model
 	 * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
 	 *
-	 * @return object|array
+	 * @return array|object
 	 */
 	function fake($model, array $overrides = null)
 	{

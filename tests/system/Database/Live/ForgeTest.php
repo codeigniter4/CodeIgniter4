@@ -1,8 +1,12 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * @group DatabaseLive
@@ -12,6 +16,7 @@ class ForgeTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+
 	/**
 	 * @var \CodeIgniter\Database\Forge
 	 */
@@ -35,6 +40,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$dbName = 'test_forge_database_exist';
 
 		$databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
+
 		if ($this->db->DBDriver !== 'SQLite3')
 		{
 			$this->forge->dropDatabase($dbName);
@@ -49,6 +55,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->createDatabase($dbName);
 		$databaseExists = $this->forge->createDatabase($dbName, true);
+
 		if ($this->db->DBDriver !== 'SQLite3')
 		{
 			$this->forge->dropDatabase($dbName);
@@ -109,7 +116,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_table', true);
 
 		$this->forge->addField([
-			'id'     => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => true,
@@ -153,17 +160,18 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->createTable('forge_test_table', true);
 
 		$fieldsData = $this->db->getFieldData('forge_test_table');
+
 		if ($this->db->DBDriver === 'MySQLi')
 		{
-			$this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+			$this->assertEquals(mb_strtolower($fieldsData[0]->type), 'bigint');
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
-			$this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+			$this->assertEquals(mb_strtolower($fieldsData[0]->type), 'bigint');
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
-			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
+			$this->assertEquals(mb_strtolower($fieldsData[0]->type), 'integer');
 		}
 
 		$this->forge->dropTable('forge_test_table', true);
@@ -194,7 +202,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithArrayFieldConstraints()
 	{
-		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true))
 		{
 			$this->forge->dropTable('forge_array_constraint', true);
 			$this->forge->addField([
@@ -253,7 +261,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addField('id');
 		$this->forge->addField('name varchar(100) NULL');
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('A table name is required for that operation.');
 
 		$this->forge->createTable('');
@@ -263,7 +271,7 @@ class ForgeTest extends CIDatabaseTestCase
 	{
 		$this->forge->dropTable('forge_test_table', true);
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$this->expectExceptionMessage('Field information is required.');
 
 		$this->forge->createTable('forge_test_table');
@@ -271,7 +279,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithStringFieldException()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('Field information is required for that operation.');
 
 		$this->forge->dropTable('forge_test_table', true);
@@ -307,7 +315,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->createTable('forge_test_table');
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('A table name is required for that operation.');
 
 		$this->forge->renameTable('forge_test_table', '');
@@ -348,7 +356,7 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -361,7 +369,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
 		$this->forge->addField([
-			'id'       => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -369,7 +377,7 @@ class ForgeTest extends CIDatabaseTestCase
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
-			'name'     => [
+			'name' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 			],
@@ -412,7 +420,7 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -425,7 +433,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
 		$this->forge->addField([
-			'id'       => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -433,7 +441,7 @@ class ForgeTest extends CIDatabaseTestCase
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
-			'name'     => [
+			'name' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 			],
@@ -454,7 +462,7 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -467,7 +475,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
 		$this->forge->addField([
-			'id'       => [
+			'id' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
@@ -475,7 +483,7 @@ class ForgeTest extends CIDatabaseTestCase
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 			],
-			'name'     => [
+			'name' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 			],
@@ -522,8 +530,8 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addColumn('forge_test_table', $newField);
 
 		$fieldNames = $this->db->table('forge_test_table')
-							   ->get()
-							   ->getFieldNames();
+			->get()
+			->getFieldNames();
 
 		$this->forge->dropTable('forge_test_table', true);
 
@@ -535,7 +543,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_fields', true);
 
 		$this->forge->addField([
-			'id'       => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
@@ -546,11 +554,11 @@ class ForgeTest extends CIDatabaseTestCase
 				'constraint' => 255,
 				'unique'     => false,
 			],
-			'name'     => [
+			'name' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 			],
-			'active'   => [
+			'active' => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 				'default'    => 0,
@@ -601,8 +609,8 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
-			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
-			$this->assertEquals(strtolower($fieldsData[1]->type), 'varchar');
+			$this->assertEquals(mb_strtolower($fieldsData[0]->type), 'integer');
+			$this->assertEquals(mb_strtolower($fieldsData[1]->type), 'varchar');
 
 			$this->assertEquals($fieldsData[1]->default, null);
 		}
@@ -620,12 +628,12 @@ class ForgeTest extends CIDatabaseTestCase
 		$unique_or_auto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
 
 		$this->forge->addField([
-			'id'      => [
+			'id' => [
 				'type'          => 'INTEGER',
 				'constraint'    => 3,
 				$unique_or_auto => true,
 			],
-			'code'    => [
+			'code' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
@@ -633,7 +641,7 @@ class ForgeTest extends CIDatabaseTestCase
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'active'  => [
+			'active' => [
 				'type'       => 'INTEGER',
 				'constraint' => 1,
 			],
@@ -687,7 +695,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_two', true);
 
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
@@ -719,7 +727,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_three', true);
 
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
@@ -797,13 +805,13 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_two', true);
 
 		$this->forge->addField([
-			'id'    => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
 				'auto_increment' => true,
 			],
-			'name'  => [
+			'name' => [
 				'type'       => 'varchar',
 				'constraint' => 255,
 				'null'       => true,
@@ -835,13 +843,13 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_four', true);
 
 		$this->forge->addField([
-			'id'    => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
 				'auto_increment' => true,
 			],
-			'name'  => [
+			'name' => [
 				'type'       => 'varchar',
 				'constraint' => 255,
 				'null'       => true,

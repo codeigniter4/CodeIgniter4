@@ -47,12 +47,9 @@ use Config\Services;
  * Lists all of the user-defined routes. This will include any Routes files
  * that can be discovered, but will NOT include any routes that are not defined
  * in a routes file, but are instead discovered through auto-routing.
- *
- * @package CodeIgniter\Commands
  */
 class Routes extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -96,8 +93,6 @@ class Routes extends BaseCommand
 	 */
 	protected $options = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays the help for the spark cli script itself.
 	 *
@@ -120,6 +115,7 @@ class Routes extends BaseCommand
 		];
 
 		$tbody = [];
+
 		foreach ($methods as $method)
 		{
 			$routes = $collection->getRoutes($method);
@@ -146,5 +142,4 @@ class Routes extends BaseCommand
 
 		CLI::table($tbody, $thead);
 	}
-
 }

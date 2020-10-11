@@ -1,21 +1,11 @@
 <?php
+
 namespace CodeIgniter\Debug;
 
-class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class TimerTest extends CIUnitTestCase
 {
-
-	protected function setUp(): void
-	{
-	}
-
-	//--------------------------------------------------------------------
-
-	public function tearDown(): void
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * We do most of our tests in this one method. While I usually frown
 	 * on this, it's handy here so that we don't stall the tests any
@@ -42,8 +32,6 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThanOrEqual(1.0, $timers['test1']['duration']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAutoCalcsTimerEnd()
 	{
 		$timer = new Timer();
@@ -56,8 +44,6 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('duration', $timers['test1'], 'No duration was calculated.');
 		$this->assertGreaterThanOrEqual(1.0, $timers['test1']['duration']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testElapsedTimeGivesSameResultAsTimersArray()
 	{
@@ -74,8 +60,6 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $timer->getElapsedTime('test1'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testThrowsExceptionStoppingNonTimer()
 	{
 		$this->expectException('RunTimeException');
@@ -85,8 +69,6 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$timer->stop('test1');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLongExecutionTime()
 	{
 		$timer = new Timer();
@@ -94,16 +76,12 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLongExecutionTimeThroughCommonFunc()
 	{
 		$timer = new Timer();
 		$timer->start('longjohn', strtotime('-11 minutes'));
 		$this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCommonStartStop()
 	{
@@ -114,14 +92,10 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('test1'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReturnsNullGettingElapsedTimeOfNonTimer()
 	{
 		$timer = new Timer();
 
 		$this->assertNull($timer->getElapsedTime('test1'));
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -69,19 +68,16 @@ use Locale;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
- *
- * @package CodeIgniter\HTTP
  */
 class IncomingRequest extends Request
 {
-
 	/**
 	 * Enable CSRF flag
 	 *
 	 * Enables a CSRF cookie token to be set.
 	 * Set automatically based on Config setting.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $enableCSRF = false;
 
@@ -150,8 +146,6 @@ class IncomingRequest extends Request
 	 */
 	protected $userAgent;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -190,8 +184,6 @@ class IncomingRequest extends Request
 		$this->detectLocale($config);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles setting up the locale, perhaps auto-detecting through
 	 * content negotiation.
@@ -210,8 +202,6 @@ class IncomingRequest extends Request
 		$this->setLocale($this->negotiate('language', $config->supportedLocales));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the default locale as set in Config\App.php
 	 *
@@ -221,8 +211,6 @@ class IncomingRequest extends Request
 	{
 		return $this->defaultLocale;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Gets the current locale, with a fallback to the default
@@ -234,8 +222,6 @@ class IncomingRequest extends Request
 	{
 		return $this->locale ?? $this->defaultLocale;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the locale string for this request.
@@ -259,37 +245,31 @@ class IncomingRequest extends Request
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if this request was made from the command line (CLI).
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isCLI(): bool
 	{
 		return is_cli();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isAJAX(): bool
 	{
 		return $this->hasHeader('X-Requested-With') && strtolower($this->getHeader('X-Requested-With')->getValue()) === 'xmlhttprequest';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to detect if the current connection is secure through
 	 * a few different methods.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSecure(): bool
 	{
@@ -311,15 +291,13 @@ class IncomingRequest extends Request
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from the $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
-	 * @param string|array|null $index
-	 * @param integer|null      $filter Filter constant
+	 * @param array|string|null $index
+	 * @param int|null          $filter Filter constant
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -329,8 +307,6 @@ class IncomingRequest extends Request
 		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A convenience method that grabs the raw input stream and decodes
 	 * the JSON into an array.
@@ -338,9 +314,9 @@ class IncomingRequest extends Request
 	 * If $assoc == true, then all objects in the response will be converted
 	 * to associative arrays.
 	 *
-	 * @param boolean $assoc   Whether to return objects as associative arrays
-	 * @param integer $depth   How many levels deep to decode
-	 * @param integer $options Bitmask of options
+	 * @param bool $assoc   Whether to return objects as associative arrays
+	 * @param int  $depth   How many levels deep to decode
+	 * @param int  $options Bitmask of options
 	 *
 	 * @see http://php.net/manual/en/function.json-decode.php
 	 *
@@ -350,8 +326,6 @@ class IncomingRequest extends Request
 	{
 		return json_decode($this->body, $assoc, $depth, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
@@ -366,13 +340,11 @@ class IncomingRequest extends Request
 		return $output;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from GET data.
 	 *
-	 * @param string|array|null $index  Index for item to fetch from $_GET.
-	 * @param integer|null      $filter A filter name to apply.
+	 * @param array|string|null $index  index for item to fetch from $_GET
+	 * @param int|null          $filter a filter name to apply
 	 * @param mixed|null        $flags
 	 *
 	 * @return mixed
@@ -382,13 +354,11 @@ class IncomingRequest extends Request
 		return $this->fetchGlobal('get', $index, $filter, $flags);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from POST.
 	 *
-	 * @param string|array|null $index  Index for item to fetch from $_POST.
-	 * @param integer|null      $filter A filter name to apply
+	 * @param array|string|null $index  index for item to fetch from $_POST
+	 * @param int|null          $filter A filter name to apply
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -398,13 +368,11 @@ class IncomingRequest extends Request
 		return $this->fetchGlobal('post', $index, $filter, $flags);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from POST data with fallback to GET.
 	 *
-	 * @param string|array|null $index  Index for item to fetch from $_POST or $_GET
-	 * @param integer|null      $filter A filter name to apply
+	 * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
+	 * @param int|null          $filter A filter name to apply
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -417,13 +385,11 @@ class IncomingRequest extends Request
 		return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from GET data with fallback to POST.
 	 *
-	 * @param string|array|null $index  Index for item to be fetched from $_GET or $_POST
-	 * @param integer|null      $filter A filter name to apply
+	 * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
+	 * @param int|null          $filter A filter name to apply
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -436,13 +402,11 @@ class IncomingRequest extends Request
 		return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from the COOKIE array.
 	 *
-	 * @param string|array|null $index  Index for item to be fetched from $_COOKIE
-	 * @param integer|null      $filter A filter name to be applied
+	 * @param array|string|null $index  Index for item to be fetched from $_COOKIE
+	 * @param int|null          $filter A filter name to be applied
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -451,8 +415,6 @@ class IncomingRequest extends Request
 	{
 		return $this->fetchGlobal('cookie', $index, $filter, $flags);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fetch the user agent string
@@ -463,8 +425,6 @@ class IncomingRequest extends Request
 	{
 		return $this->userAgent;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to get old Input data that has been flashed to the session
@@ -502,7 +462,8 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['post']))
 		{
 			$value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
-			if (! is_null($value))
+
+			if ($value !== null)
 			{
 				return $value;
 			}
@@ -512,7 +473,8 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['get']))
 		{
 			$value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
-			if (! is_null($value))
+
+			if ($value !== null)
 			{
 				return $value;
 			}
@@ -530,15 +492,13 @@ class IncomingRequest extends Request
 	 */
 	public function getFiles(): array
 	{
-		if (is_null($this->files))
+		if ($this->files === null)
 		{
 			$this->files = new FileCollection();
 		}
 
 		return $this->files->all(); // return all files
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Verify if a file exist, by the name of the input field used to upload it, in the collection
@@ -550,15 +510,13 @@ class IncomingRequest extends Request
 	 */
 	public function getFileMultiple(string $fileID)
 	{
-		if (is_null($this->files))
+		if ($this->files === null)
 		{
 			$this->files = new FileCollection();
 		}
 
 		return $this->files->getFileMultiple($fileID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieves a single file by the name of the input field used
@@ -570,15 +528,13 @@ class IncomingRequest extends Request
 	 */
 	public function getFile(string $fileID)
 	{
-		if (is_null($this->files))
+		if ($this->files === null)
 		{
 			$this->files = new FileCollection();
 		}
 
 		return $this->files->getFile($fileID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets up our URI object based on the information we have. This is
@@ -618,8 +574,6 @@ class IncomingRequest extends Request
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Based on the URIProtocol Config setting, will attempt to
 	 * detect the path portion of the current URI.
@@ -639,34 +593,35 @@ class IncomingRequest extends Request
 		{
 			case 'REQUEST_URI':
 				$path = $this->parseRequestURI();
+
 				break;
 			case 'QUERY_STRING':
 				$path = $this->parseQueryString();
+
 				break;
 			case 'PATH_INFO':
 			default:
 				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
+
 				break;
 		}
 
 		return $path;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Provides a convenient way to work with the Negotiate class
 	 * for content negotiation.
 	 *
-	 * @param string  $type
-	 * @param array   $supported
-	 * @param boolean $strictMatch
+	 * @param string $type
+	 * @param array  $supported
+	 * @param bool   $strictMatch
 	 *
 	 * @return string
 	 */
 	public function negotiate(string $type, array $supported, bool $strictMatch = false): string
 	{
-		if (is_null($this->negotiator))
+		if ($this->negotiator === null)
 		{
 			$this->negotiator = Services::negotiator($this, true);
 		}
@@ -686,13 +641,11 @@ class IncomingRequest extends Request
 		throw HTTPException::forInvalidNegotiationType($type);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will parse the REQUEST_URI and automatically detect the URI from it,
 	 * fixing the query string if necessary.
 	 *
-	 * @return string The URI it found.
+	 * @return string the URI it found
 	 */
 	protected function parseRequestURI(): string
 	{
@@ -706,7 +659,7 @@ class IncomingRequest extends Request
 		// REQUEST_URI does not include the host. This allows us to parse out the query string and path.
 		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
 		$query = $parts['query'] ?? '';
-		$uri   = $parts['path'] ?? '';
+		$uri   = $parts['path']  ?? '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
@@ -750,8 +703,6 @@ class IncomingRequest extends Request
 		return $this->removeRelativeDirectory($uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parse QUERY_STRING
 	 *
@@ -780,8 +731,6 @@ class IncomingRequest extends Request
 		return $this->removeRelativeDirectory($uri);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Remove relative directory (../) and multi slashes (///)
 	 *
@@ -797,7 +746,7 @@ class IncomingRequest extends Request
 		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
-			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
+			if ((! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}
@@ -806,6 +755,4 @@ class IncomingRequest extends Request
 
 		return implode('/', $uris);
 	}
-
-	// --------------------------------------------------------------------
 }

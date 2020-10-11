@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -77,9 +77,9 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * Byte-safe substr()
 	 *
-	 * @param string  $str
-	 * @param integer $start
-	 * @param integer $length
+	 * @param string $str
+	 * @param int    $start
+	 * @param int    $length
 	 *
 	 * @return string
 	 */
@@ -91,7 +91,8 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * __get() magic, providing readonly access to some of our properties
 	 *
-	 * @param  string $key Property name
+	 * @param string $key Property name
+	 *
 	 * @return mixed
 	 */
 	public function __get($key)
@@ -107,8 +108,9 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * __isset() magic, providing checking for some of our properties
 	 *
-	 * @param  string $key Property name
-	 * @return boolean
+	 * @param string $key Property name
+	 *
+	 * @return bool
 	 */
 	public function __isset($key): bool
 	{

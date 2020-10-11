@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -42,12 +43,9 @@ namespace CodeIgniter\HTTP;
  * Class Header
  *
  * Represents a single HTTP header.
- *
- * @package CodeIgniter\HTTP
  */
 class Header
 {
-
 	/**
 	 * The name of the header.
 	 *
@@ -59,25 +57,21 @@ class Header
 	 * The value of the header. May have more than one
 	 * value. If so, will be an array of strings.
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $value;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Header constructor. name is mandatory, if a value is provided, it will be set.
 	 *
 	 * @param string            $name
-	 * @param string|array|null $value
+	 * @param array|string|null $value
 	 */
 	public function __construct(string $name, $value = null)
 	{
 		$this->name = $name;
 		$this->setValue($value);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the header, in the same case it was set.
@@ -89,8 +83,6 @@ class Header
 		return $this->name;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the raw value of the header. This may return either a string
 	 * of an array, depending on whether the header has multiple values or not.
@@ -101,8 +93,6 @@ class Header
 	{
 		return $this->value;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the name of the header, overwriting any previous value.
@@ -118,12 +108,10 @@ class Header
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the value of the header, overwriting any previous value(s).
 	 *
-	 * @param string|array|null $value
+	 * @param array|string|null $value
 	 *
 	 * @return $this
 	 */
@@ -134,13 +122,11 @@ class Header
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Appends a value to the list of values for this header. If the
 	 * header is a single value string, it will be converted to an array.
 	 *
-	 * @param string|array|null $value
+	 * @param array|string|null $value
 	 *
 	 * @return $this
 	 */
@@ -164,13 +150,11 @@ class Header
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Prepends a value to the list of values for this header. If the
 	 * header is a single value string, it will be converted to an array.
 	 *
-	 * @param string|array|null $value
+	 * @param array|string|null $value
 	 *
 	 * @return $this
 	 */
@@ -191,8 +175,6 @@ class Header
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieves a comma-separated string of the values for a single header.
 	 *
@@ -208,6 +190,7 @@ class Header
 		{
 			return $this->value;
 		}
+
 		if (! is_array($this->value))
 		{
 			return '';
@@ -221,12 +204,12 @@ class Header
 			{
 				$options[] = $key . '=' . $value;
 			}
-			else if (is_array($value))
+			elseif (is_array($value))
 			{
 				$key       = key($value);
 				$options[] = $key . '=' . $value[$key];
 			}
-			else if (is_numeric($key))
+			elseif (is_numeric($key))
 			{
 				$options[] = $value;
 			}
@@ -234,8 +217,6 @@ class Header
 
 		return implode(', ', $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a representation of the entire header string, including
@@ -247,6 +228,4 @@ class Header
 	{
 		return $this->name . ': ' . $this->getValueLine();
 	}
-
-	//--------------------------------------------------------------------
 }

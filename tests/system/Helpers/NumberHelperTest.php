@@ -1,9 +1,11 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
-final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use CodeIgniter\Test\CIUnitTestCase;
 
+final class NumberHelperTest extends CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -22,9 +24,9 @@ final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRomanNumberRange()
 	{
-		$this->assertEquals(null, number_to_roman(-1));
-		$this->assertEquals(null, number_to_roman(0));
-		$this->assertEquals(null, number_to_roman(4000));
+		$this->assertNull(number_to_roman(-1));
+		$this->assertNull(number_to_roman(0));
+		$this->assertNull(number_to_roman(4000));
 	}
 
 	public function testFormatNumber()
@@ -114,7 +116,7 @@ final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertEquals('$1,234.56', number_to_currency(1234.56, 'USD', 'en_US', 2));
 		$this->assertEquals('£1,234.56', number_to_currency(1234.56, 'GBP', 'en_GB', 2));
-		$this->assertEquals('1.234,56 RSD', number_to_currency(1234.56, 'RSD', 'sr_RS', 2));
+		$this->assertEquals('1.234,56 RSD', number_to_currency(1234.56, 'RSD', 'sr_RS', 2));
 	}
 
 	public function testNumbersThatArent()
@@ -122,5 +124,4 @@ final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse(number_to_size('1232x'));
 		$this->assertFalse(number_to_amount('1232x'));
 	}
-
 }

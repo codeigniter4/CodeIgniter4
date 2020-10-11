@@ -56,12 +56,9 @@ use Throwable;
  * The context array can contain arbitrary data, the only assumption that
  * can be made by implementors is that if an Exception instance is given
  * to produce a stack trace, it MUST be in a key named "exception".
- *
- * @package CodeIgniter\Log
  */
 class Logger implements LoggerInterface
 {
-
 	/**
 	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
@@ -91,7 +88,7 @@ class Logger implements LoggerInterface
 	/**
 	 * File permissions
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $filePermissions = 0644;
 
@@ -136,17 +133,16 @@ class Logger implements LoggerInterface
 	/**
 	 * Should we cache our logged items?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cacheLogs = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param  \Config\Logger $config
-	 * @param  boolean        $debug
+	 * @param \Config\Logger $config
+	 * @param bool           $debug
+	 *
 	 * @throws RuntimeException
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
@@ -158,9 +154,10 @@ class Logger implements LoggerInterface
 		if ($this->loggableLevels)
 		{
 			$temp = [];
+
 			foreach ($this->loggableLevels as $level)
 			{
-				$temp[] = array_search((int) $level, $this->logLevels);
+				$temp[] = array_search((int) $level, $this->logLevels, true);
 			}
 
 			$this->loggableLevels = $temp;
@@ -179,13 +176,12 @@ class Logger implements LoggerInterface
 		$this->handlerConfig = $config->handlers;
 
 		$this->cacheLogs = $debug;
+
 		if ($this->cacheLogs)
 		{
 			$this->logCache = [];
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * System is unusable.
@@ -193,14 +189,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function emergency($message, array $context = []): bool
 	{
 		return $this->log('emergency', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Action must be taken immediately.
@@ -211,14 +205,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function alert($message, array $context = []): bool
 	{
 		return $this->log('alert', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Critical conditions.
@@ -228,14 +220,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function critical($message, array $context = []): bool
 	{
 		return $this->log('critical', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Runtime errors that do not require immediate action but should typically
@@ -244,14 +234,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function error($message, array $context = []): bool
 	{
 		return $this->log('error', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Exceptional occurrences that are not errors.
@@ -262,14 +250,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function warning($message, array $context = []): bool
 	{
 		return $this->log('warning', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Normal but significant events.
@@ -277,14 +263,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function notice($message, array $context = []): bool
 	{
 		return $this->log('notice', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Interesting events.
@@ -294,14 +278,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function info($message, array $context = []): bool
 	{
 		return $this->log('info', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Detailed debug information.
@@ -309,14 +291,12 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function debug($message, array $context = []): bool
 	{
 		return $this->log('debug', $message, $context);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Logs with an arbitrary level.
@@ -325,13 +305,13 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function log($level, $message, array $context = []): bool
 	{
 		if (is_numeric($level))
 		{
-			$level = array_search((int) $level, $this->logLevels);
+			$level = array_search((int) $level, $this->logLevels, true);
 		}
 
 		// Is the level a valid level?
@@ -390,8 +370,6 @@ class Logger implements LoggerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Replaces any placeholders in the message with variables
 	 * from the context, as well as a few special items like:
@@ -440,7 +418,7 @@ class Logger implements LoggerInterface
 		// Allow us to log the file/line that we are logging from
 		if (strpos($message, '{file}') !== false)
 		{
-			list($file, $line) = $this->determineFile();
+			[$file, $line] = $this->determineFile();
 
 			$replace['{file}'] = $file;
 			$replace['{line}'] = $line;
@@ -505,6 +483,7 @@ class Logger implements LoggerInterface
 			{
 				$file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
 				$line = $frame['line'] ?? 'unknown';
+
 				return [
 					$file,
 					$line,
@@ -517,8 +496,6 @@ class Logger implements LoggerInterface
 			'unknown',
 		];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
@@ -539,6 +516,4 @@ class Logger implements LoggerInterface
 
 		return str_replace(FCPATH, 'FCPATH/', $file);
 	}
-
-	//--------------------------------------------------------------------
 }

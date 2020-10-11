@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
+class LimitTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLimitAlone()
 	{
@@ -29,8 +28,6 @@ class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLimitAndOffset()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -42,8 +39,6 @@ class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLimitAndOffsetMethod()
 	{
 		$builder = new BaseBuilder('user', $this->db);
@@ -54,6 +49,4 @@ class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 }

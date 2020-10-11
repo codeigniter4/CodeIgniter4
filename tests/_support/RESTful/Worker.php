@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Support\RESTful;
 
 use CodeIgniter\RESTful\ResourceController;

@@ -48,20 +48,19 @@ use InvalidArgumentException;
  */
 class URI
 {
-
 	/**
 	 * Sub-delimiters used in query strings and fragments.
 	 *
-	 * @const string
+	 * @var string
 	 */
-	const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+	public const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
 
 	/**
 	 * Unreserved characters used in paths, query strings, and fragments.
 	 *
-	 * @const string
+	 * @var string
 	 */
-	const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
+	public const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
 
 	/**
 	 * Current URI string
@@ -110,7 +109,7 @@ class URI
 	/**
 	 * URI Port
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $port;
 
@@ -151,25 +150,23 @@ class URI
 	 * Whether passwords should be shown in userInfo/authority calls.
 	 * Default to false because URIs often show up in logs
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $showPassword = false;
 
 	/**
 	 * If true, will continue instead of throwing exceptions.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $silent = false;
 
 	/**
 	 * If true, will use raw query string.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $rawQueryString = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -180,19 +177,17 @@ class URI
 	 */
 	public function __construct(string $uri = null)
 	{
-		if (! is_null($uri))
+		if ($uri !== null)
 		{
 			$this->setURI($uri);
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If $silent == true, then will not throw exceptions and will
 	 * attempt to continue gracefully.
 	 *
-	 * @param boolean $silent
+	 * @param bool $silent
 	 *
 	 * @return URI
 	 */
@@ -203,13 +198,11 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If $raw == true, then will use parseStr() method
 	 * instead of native parse_str() function.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
 	 * @return URI
 	 */
@@ -220,8 +213,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets and overwrites any current URI information.
 	 *
@@ -231,7 +222,7 @@ class URI
 	 */
 	public function setURI(string $uri = null)
 	{
-		if (! is_null($uri))
+		if ($uri !== null)
 		{
 			$parts = parse_url($uri);
 
@@ -251,8 +242,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the scheme component of the URI.
 	 *
@@ -265,14 +254,13 @@ class URI
 	 * added.
 	 *
 	 * @see    https://tools.ietf.org/html/rfc3986#section-3.1
-	 * @return string The URI scheme.
+	 *
+	 * @return string The URI scheme
 	 */
 	public function getScheme(): string
 	{
 		return $this->scheme;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the authority component of the URI.
@@ -291,9 +279,9 @@ class URI
 	 *
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
 	 *
-	 * @param boolean $ignorePort
+	 * @param bool $ignorePort
 	 *
-	 * @return string The URI authority, in "[user-info@]host[:port]" format.
+	 * @return string The URI authority, in "[user-info@]host[:port]" format
 	 */
 	public function getAuthority(bool $ignorePort = false): string
 	{
@@ -324,8 +312,6 @@ class URI
 		return $authority;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the user information component of the URI.
 	 *
@@ -344,7 +330,7 @@ class URI
 	 * The trailing "@" character is not part of the user information and MUST
 	 * NOT be added.
 	 *
-	 * @return string|null The URI user information, in "username[:password]" format.
+	 * @return string|null The URI user information, in "username[:password]" format
 	 */
 	public function getUserInfo()
 	{
@@ -358,13 +344,11 @@ class URI
 		return $userInfo;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Temporarily sets the URI to show a password in userInfo. Will
 	 * reset itself after the first call to authority().
 	 *
-	 * @param boolean $val
+	 * @param bool $val
 	 *
 	 * @return URI
 	 */
@@ -375,8 +359,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the host component of the URI.
 	 *
@@ -386,14 +368,13 @@ class URI
 	 * Section 3.2.2.
 	 *
 	 * @see    http://tools.ietf.org/html/rfc3986#section-3.2.2
-	 * @return string The URI host.
+	 *
+	 * @return string The URI host
 	 */
 	public function getHost(): string
 	{
 		return $this->host;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the port component of the URI.
@@ -408,14 +389,12 @@ class URI
 	 * If no port is present, but a scheme is present, this method MAY return
 	 * the standard port for that scheme, but SHOULD return null.
 	 *
-	 * @return null|integer The URI port.
+	 * @return int|null the URI port
 	 */
 	public function getPort()
 	{
 		return $this->port;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the path component of the URI.
@@ -440,14 +419,13 @@ class URI
 	 *
 	 * @see    https://tools.ietf.org/html/rfc3986#section-2
 	 * @see    https://tools.ietf.org/html/rfc3986#section-3.3
-	 * @return string The URI path.
+	 *
+	 * @return string The URI path
 	 */
 	public function getPath(): string
 	{
 		return $this->path ?? '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the query string
@@ -495,8 +473,6 @@ class URI
 		return empty($vars) ? '' : http_build_query($vars);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve a URI fragment
 	 *
@@ -506,8 +482,6 @@ class URI
 	{
 		return $this->fragment ?? '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the segments of the path as an array.
@@ -519,22 +493,20 @@ class URI
 		return $this->segments;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the value of a specific segment of the URI path.
 	 *
-	 * @param integer $number  Segment number
-	 * @param string  $default Default value
+	 * @param int    $number  Segment number
+	 * @param string $default Default value
 	 *
-	 * @return string     The value of the segment. If no segment is found,
-	 *                    throws InvalidArgumentError
+	 * @return string The value of the segment. If no segment is found,
+	 *                throws InvalidArgumentError
 	 */
 	public function getSegment(int $number, string $default = ''): string
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
-		$number -= 1;
+		$number--;
 
 		if ($number > count($this->segments) && ! $this->silent)
 		{
@@ -548,8 +520,8 @@ class URI
 	 * Set the value of a specific segment of the URI path.
 	 * Allows to set only existing segments or add new one.
 	 *
-	 * @param integer $number
-	 * @param mixed   $value  (string or int)
+	 * @param int   $number
+	 * @param mixed $value  (string or int)
 	 *
 	 * @return $this
 	 */
@@ -557,7 +529,7 @@ class URI
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
-		$number -= 1;
+		$number--;
 
 		if ($number > count($this->segments) + 1)
 		{
@@ -575,19 +547,15 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the total number of segments.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getTotalSegments(): int
 	{
 		return count($this->segments);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Allow the URI to be output as a string by simply casting it to a string
@@ -616,12 +584,13 @@ class URI
 		}
 
 		return static::createURIString(
-			$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
-			$this->getQuery(), $this->getFragment()
+			$this->getScheme(),
+			$this->getAuthority(),
+			$path, // Absolute URIs should use a "/" for an empty path
+			$this->getQuery(),
+			$this->getFragment()
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Builds a representation of the string from the component parts.
@@ -637,6 +606,7 @@ class URI
 	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
 	{
 		$uri = '';
+
 		if (! empty($scheme))
 		{
 			$uri .= $scheme . '://';
@@ -665,8 +635,6 @@ class URI
 		return $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parses the given string an saves the appropriate authority pieces.
 	 *
@@ -694,8 +662,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the scheme for this URI.
 	 *
@@ -718,8 +684,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the userInfo/Authority portion of the URI.
 	 *
@@ -736,8 +700,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the host name to use.
 	 *
@@ -752,18 +714,16 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the port portion of the URI.
 	 *
-	 * @param integer $port
+	 * @param int $port
 	 *
 	 * @return $this
 	 */
 	public function setPort(int $port = null)
 	{
-		if (is_null($port))
+		if ($port === null)
 		{
 			return $this;
 		}
@@ -782,8 +742,6 @@ class URI
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the path portion of the URI.
@@ -818,8 +776,6 @@ class URI
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the query portion of the URI, while attempting
@@ -859,8 +815,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A convenience method to pass an array of items in as the Query
 	 * portion of the URI.
@@ -876,8 +830,6 @@ class URI
 		return $this->setQuery($query);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a single new element to the query vars.
 	 *
@@ -892,8 +844,6 @@ class URI
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Removes one or more query vars from the URI.
@@ -911,8 +861,6 @@ class URI
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Filters the query variables so that only the keys passed in
@@ -941,8 +889,6 @@ class URI
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the fragment portion of the URI.
 	 *
@@ -958,8 +904,6 @@ class URI
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Encodes any dangerous characters, and removes dot segments.
@@ -986,6 +930,7 @@ class URI
 		{
 			$path = '/' . $path;
 		}
+
 		if (strpos($orig, '../') === 0)
 		{
 			$path = '/' . $path;
@@ -993,15 +938,15 @@ class URI
 
 		// Encode characters
 		$path = preg_replace_callback(
-				'/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function (array $matches) {
-					return rawurlencode($matches[0]);
-				}, $path
+			'/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
+			static function (array $matches) {
+				return rawurlencode($matches[0]);
+			},
+			$path
 		);
 
 		return $path;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Saves our parts from a parse_url call.
@@ -1014,18 +959,22 @@ class URI
 		{
 			$this->host = $parts['host'];
 		}
+
 		if (! empty($parts['user']))
 		{
 			$this->user = $parts['user'];
 		}
+
 		if (isset($parts['path']) && $parts['path'] !== '')
 		{
 			$this->path = $this->filterPath($parts['path']);
 		}
+
 		if (! empty($parts['query']))
 		{
 			$this->setQuery($parts['query']);
 		}
+
 		if (! empty($parts['fragment']))
 		{
 			$this->fragment = $parts['fragment'];
@@ -1044,7 +993,7 @@ class URI
 		// Port
 		if (isset($parts['port']))
 		{
-			if (! is_null($parts['port']))
+			if ($parts['port'] !== null)
 			{
 				// Valid port numbers are enforced by earlier parse_url or setPort()
 				$port       = $parts['port'];
@@ -1065,8 +1014,6 @@ class URI
 			$this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Combines one URI string with this one based on the rules set out in
@@ -1098,8 +1045,8 @@ class URI
 		if (! empty($relative->getAuthority()))
 		{
 			$transformed->setAuthority($relative->getAuthority())
-					->setPath($relative->getPath())
-					->setQuery($relative->getQuery());
+				->setPath($relative->getPath())
+				->setQuery($relative->getQuery());
 		}
 		else
 		{
@@ -1140,8 +1087,6 @@ class URI
 		return $transformed;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Given 2 paths, will merge them according to rules set out in RFC 2986,
 	 * Section 5.2
@@ -1173,8 +1118,6 @@ class URI
 		return implode('/', $path);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used when resolving and merging paths to correctly interpret and
 	 * remove single and double dot segments from the path per
@@ -1184,8 +1127,9 @@ class URI
 	 *
 	 * @param string $path
 	 *
-	 * @return   string
-	 * @internal param \CodeIgniter\HTTP\URI $uri
+	 * @return string
+	 *
+	 * @internal
 	 */
 	public function removeDotSegments(string $path): string
 	{
@@ -1214,7 +1158,7 @@ class URI
 			{
 				array_pop($output);
 			}
-			else if ($segment !== '.' && $segment !== '')
+			elseif ($segment !== '.' && $segment !== '')
 			{
 				array_push($output, $segment);
 			}
@@ -1241,8 +1185,6 @@ class URI
 		return $output;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * This is equivalent to the native PHP parse_str() function.
 	 * This version allows the dot to be used as a key of the query string.
@@ -1256,8 +1198,8 @@ class URI
 		$return = [];
 		$query  = explode('&', $query);
 
-		$params = array_map(function (string $chunk) {
-			return preg_replace_callback('/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/', function (array $match) {
+		$params = array_map(static function (string $chunk) {
+			return preg_replace_callback('/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/', static function (array $match) {
 				return str_replace($match['key'], bin2hex($match['key']), $match[0]);
 			}, urldecode($chunk));
 		}, $query);
@@ -1274,6 +1216,4 @@ class URI
 
 		return $return;
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -39,7 +39,6 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\Database;
 use Exception;
 use SessionHandlerInterface;
 
@@ -51,8 +50,6 @@ class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 {
 	protected static $cache = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
@@ -61,15 +58,14 @@ class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $savePath Path to session files' directory
 	 * @param string $name     Session cookie name
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function open($savePath, $name): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Read
@@ -78,14 +74,12 @@ class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string    Serialized session data
+	 * @return string Serialized session data
 	 */
 	public function read($sessionID): string
 	{
 		return '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Write
@@ -95,28 +89,24 @@ class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $sessionID   Session ID
 	 * @param string $sessionData Serialized session data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function write($sessionID, $sessionData): bool
 	{
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close
 	 *
 	 * Releases locks and closes file descriptor.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function close(): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Destroy
@@ -125,28 +115,24 @@ class ArrayHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function destroy($sessionID): bool
 	{
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Garbage Collector
 	 *
 	 * Deletes expired sessions
 	 *
-	 * @param integer $maxlifetime Maximum lifetime of sessions
+	 * @param int $maxlifetime Maximum lifetime of sessions
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function gc($maxlifetime): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

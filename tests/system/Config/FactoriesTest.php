@@ -2,12 +2,11 @@
 
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Widgets\OtherWidget;
-use Tests\Support\Widgets\SomeWidget;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Widgets\OtherWidget;
+use Tests\Support\Widgets\SomeWidget;
 
 class FactoriesTest extends CIUnitTestCase
 {
@@ -36,8 +35,6 @@ class FactoriesTest extends CIUnitTestCase
 		return $property;
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetsConfigValues()
 	{
 		$result = Factories::getConfig('models');
@@ -60,7 +57,7 @@ class FactoriesTest extends CIUnitTestCase
 		$result = Factories::getConfig('widgets');
 
 		$this->assertEquals('bar', $result['foo']);
-		$this->assertEquals(true, $result['prefersApp']);
+		$this->assertTrue($result['prefersApp']);
 	}
 
 	public function testUsesConfigFileValues()
@@ -112,8 +109,6 @@ class FactoriesTest extends CIUnitTestCase
 		$this->assertArrayHasKey('widgets', $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetsBasenameByBasename()
 	{
 		$this->assertEquals('SomeWidget', Factories::getBasename('SomeWidget'));
@@ -133,8 +128,6 @@ class FactoriesTest extends CIUnitTestCase
 	{
 		$this->assertEquals('', Factories::getBasename('Tests\\Support\\'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCreatesByBasename()
 	{
@@ -188,8 +181,6 @@ class FactoriesTest extends CIUnitTestCase
 		$this->assertInstanceOf(stdClass::class, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRespectsComponentAlias()
 	{
 		Factories::setConfig('tedwigs', ['component' => 'widgets']);
@@ -221,6 +212,7 @@ class FactoriesTest extends CIUnitTestCase
 	{
 		// Create a fake class in App
 		$class = 'App\Widgets\OtherWidget';
+
 		if (! class_exists($class))
 		{
 			class_alias(SomeWidget::class, $class);
@@ -234,6 +226,7 @@ class FactoriesTest extends CIUnitTestCase
 	{
 		// Create a fake class in App
 		$class = 'App\Widgets\OtherWidget';
+
 		if (! class_exists($class))
 		{
 			class_alias(SomeWidget::class, $class);

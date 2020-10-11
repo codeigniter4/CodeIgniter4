@@ -78,7 +78,7 @@ class CreateEntity extends GeneratorCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -93,7 +93,7 @@ class CreateEntity extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
@@ -101,7 +101,7 @@ class CreateEntity extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getTemplate(): string
 	{

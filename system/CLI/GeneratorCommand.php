@@ -48,8 +48,6 @@ use Throwable;
 /**
  * GeneratorCommand can be used as base class
  * for creating commands that generates a file.
- *
- * @package CodeIgniter\CLI
  */
 abstract class GeneratorCommand extends BaseCommand
 {
@@ -85,7 +83,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 *
 	 * @internal
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	private $sortImports = true;
 
@@ -155,6 +153,7 @@ abstract class GeneratorCommand extends BaseCommand
 		// Lastly, we'll build the class based on the details we have. We'll be getting our
 		// file contents from a template and then we'll do the necessary replacements.
 		helper('filesystem');
+
 		if (! write_file($path, $this->sortImports($this->buildClassContents($class))))
 		{
 			CLI::error(lang('CLI.generateFileError') . clean_path($path), 'light_gray', 'red');
@@ -171,7 +170,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 * Allows child generators to modify
 	 * the internal `$sortImports` flag.
 	 *
-	 * @param boolean $sort
+	 * @param bool $sort
 	 *
 	 * @return $this
 	 */
@@ -343,7 +342,7 @@ abstract class GeneratorCommand extends BaseCommand
 			'{ namespace }',
 			'{namespace}',
 		];
-		$classes    = [
+		$classes = [
 			'DummyClass',
 			'{ class }',
 			'{class}',
@@ -379,8 +378,8 @@ abstract class GeneratorCommand extends BaseCommand
 	 * Gets a generator view as defined in the `Config\Generators::$views`,
 	 * with fallback to `$default` when the defined view does not exist.
 	 *
-	 * @param string $default Path to the fallback view.
-	 * @param array  $data    Data to be passed to the view.
+	 * @param string $default Path to the fallback view
+	 * @param array  $data    Data to be passed to the view
 	 *
 	 * @return string
 	 */

@@ -1,9 +1,18 @@
-<?php namespace CodeIgniter;
+<?php
 
+namespace CodeIgniter;
+
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Config\Services;
+use Psr\Log\LoggerInterface;
 
 /**
  * Exercise our core Controller class.
@@ -14,49 +23,45 @@ use Config\App;
  */
 class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $codeigniter;
 
 	/**
-	 * @var \CodeIgniter\Controller
+	 * @var Controller
 	 */
 	protected $controller;
 
 	/**
 	 * Current request.
 	 *
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var RequestInterface
 	 */
 	protected $request;
 
 	/**
 	 * Current response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var ResponseInterface
 	 */
 	protected $response;
+
 	/**
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->config      = new App();
-		$this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger      = \Config\Services::logger();
+		$this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+		$this->response    = new Response($this->config);
+		$this->logger      = Services::logger();
 		$this->codeigniter = new MockCodeIgniter($this->config);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testConstructor()
 	{
@@ -71,8 +76,7 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$original = $_SERVER;
 		$_SERVER  = ['HTTPS' => 'on'];
 		// make sure we can instantiate one
-		$this->controller = new Class() extends Controller
-		{
+		$this->controller      = new class() extends Controller {
 			protected $forceHTTPS = 1;
 		};
 		$this->controller->initController($this->request, $this->response, $this->logger);
@@ -81,7 +85,6 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
-	//--------------------------------------------------------------------
 	public function testCachePage()
 	{
 		$this->controller = new Controller();
@@ -116,8 +119,8 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
 	{
-		$validation                = config('Validation');
-		$validation->signup        = [
+		$validation         = config('Validation');
+		$validation->signup = [
 			'username' => 'required',
 		];
 		$validation->signup_errors = [
@@ -155,11 +158,9 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('You must choose a username.', Services::validation()->getError());
 	}
 
-	//--------------------------------------------------------------------
 	public function testHelpers()
 	{
-		$this->controller = new Class() extends Controller
-		{
+		$this->controller   = new class() extends Controller {
 			protected $helpers = [
 				'cookie',
 				'text',
@@ -169,5 +170,4 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertInstanceOf(Controller::class, $this->controller);
 	}
-
 }

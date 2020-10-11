@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -44,50 +44,43 @@ namespace CodeIgniter\Images;
  */
 interface ImageHandlerInterface
 {
-
 	/**
 	 * Resize the image
 	 *
-	 * @param integer $width
-	 * @param integer $height
-	 * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-	 * @param string  $masterDim
+	 * @param int    $width
+	 * @param int    $height
+	 * @param bool   $maintainRatio if true, will get the closest match possible while keeping aspect ratio true
+	 * @param string $masterDim
 	 *
 	 * @return $this
 	 */
 	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto');
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Crops the image to the desired height and width. If one of the height/width values
 	 * is not provided, that value will be set the appropriate value based on offsets and
 	 * image dimensions.
 	 *
-	 * @param integer|null $width
-	 * @param integer|null $height
-	 * @param integer|null $x             X-axis coord to start cropping from the left of image
-	 * @param integer|null $y             Y-axis coord to start cropping from the top of image
-	 * @param boolean      $maintainRatio
-	 * @param string       $masterDim
+	 * @param int|null $width
+	 * @param int|null $height
+	 * @param int|null $x             X-axis coord to start cropping from the left of image
+	 * @param int|null $y             Y-axis coord to start cropping from the top of image
+	 * @param bool     $maintainRatio
+	 * @param string   $masterDim
 	 *
 	 * @return $this
 	 */
 	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param int $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */
 	public function convert(int $imageType);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Rotates the image on the current canvas.
@@ -98,20 +91,16 @@ interface ImageHandlerInterface
 	 */
 	public function rotate(float $angle);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flattens transparencies, default white background
 	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
 	 *
 	 * @return $this
 	 */
 	public function flatten(int $red = 255, int $green = 255, int $blue = 255);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reads the EXIF information from the image and modifies the orientation
@@ -121,19 +110,15 @@ interface ImageHandlerInterface
 	 */
 	public function reorient();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
-	 * @param string|null $key If specified, will only return this piece of EXIF data.
+	 * @param string|null $key if specified, will only return this piece of EXIF data
 	 *
 	 * @return mixed
 	 */
 	public function getEXIF(string $key = null);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Flip an image horizontally or vertically
@@ -143,8 +128,6 @@ interface ImageHandlerInterface
 	 * @return $this
 	 */
 	public function flip(string $dir = 'vertical');
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Combine cropping and resizing into a single command.
@@ -160,15 +143,13 @@ interface ImageHandlerInterface
 	 *  - bottom
 	 *  - bottom-right
 	 *
-	 * @param integer $width
-	 * @param integer $height
-	 * @param string  $position
+	 * @param int    $width
+	 * @param int    $height
+	 * @param string $position
 	 *
 	 * @return $this
 	 */
 	public function fit(int $width, int $height, string $position);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Overlays a string of text over the image.
@@ -192,8 +173,6 @@ interface ImageHandlerInterface
 	 */
 	public function text(string $text, array $options = []);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves any changes that have been made to file.
 	 *
@@ -201,10 +180,10 @@ interface ImageHandlerInterface
 	 *    $image->resize(100, 200, true)
 	 *          ->save($target);
 	 *
-	 * @param string  $target
-	 * @param integer $quality
+	 * @param string $target
+	 * @param int    $quality
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function save(string $target = null, int $quality = 90);
 }

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
@@ -18,7 +20,7 @@ class ValidModel extends Model
 	];
 
 	protected $validationRules = [
-		'name'  => [
+		'name' => [
 			'required',
 			'min_length[3]',
 		],

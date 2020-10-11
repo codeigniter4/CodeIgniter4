@@ -78,8 +78,6 @@ use InvalidArgumentException;
  *
  *      // register the autoloader
  *      $loader->register();
- *
- * @package CodeIgniter\Autoloader
  */
 class Autoloader
 {
@@ -96,8 +94,6 @@ class Autoloader
 	 * @var array
 	 */
 	protected $classmap = [];
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reads in the configuration array (described above) and stores
@@ -136,8 +132,6 @@ class Autoloader
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Register the loader with the SPL autoloader stack.
 	 */
@@ -151,25 +145,26 @@ class Autoloader
 		spl_autoload_extensions('.php,.inc');
 
 		// Prepend the PSR4  autoloader for maximum performance.
-		spl_autoload_register([$this, 'loadClass'], true, true); // @phpstan-ignore-line
+		// @phpstan-ignore-next-line
+		spl_autoload_register([$this, 'loadClass'], true, true);
 
 		// Now prepend another loader for the files in our class map.
 		$config = $this->classmap;
 
 		// @phpstan-ignore-next-line
-		spl_autoload_register(function ($class) use ($config) {
-			if (empty($config[$class]))
-			{
-				return false;
-			}
+		spl_autoload_register(
+			function ($class) use ($config) {
+				if (empty($config[$class]))
+				{
+					return false;
+				}
 
-			include_once $config[$class];
-		}, true, // Throw exception
+				include_once $config[$class];
+			},
+			true, // Throw exception
 			true // Prepend
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Registers namespaces with the autoloader.
@@ -208,8 +203,6 @@ class Autoloader
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get namespaces with prefixes as keys and paths as values.
 	 *
@@ -229,8 +222,6 @@ class Autoloader
 		return $this->prefixes[trim($prefix, '\\')] ?? [];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Removes a single namespace from the psr4 settings.
 	 *
@@ -248,15 +239,13 @@ class Autoloader
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads the class file for a given class name.
 	 *
-	 * @param string $class The fully qualified class name.
+	 * @param string $class The fully qualified class name
 	 *
-	 * @return string|false The mapped file on success, or boolean false
-	 *                          on failure.
+	 * @return false|string The mapped file on success, or boolean false
+	 *                      on failure
 	 */
 	public function loadClass(string $class)
 	{
@@ -275,14 +264,12 @@ class Autoloader
 		return $mapped_file;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads the class file for a given class name.
 	 *
 	 * @param string $class The fully-qualified class name
 	 *
-	 * @return string|false The mapped file name on success, or boolean false on fail
+	 * @return false|string The mapped file name on success, or boolean false on fail
 	 */
 	protected function loadInNamespace(string $class)
 	{
@@ -323,8 +310,6 @@ class Autoloader
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to load the class from common locations in previous
 	 * version of CodeIgniter, namely 'app/Libraries', and
@@ -332,7 +317,7 @@ class Autoloader
 	 *
 	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
-	 * @return mixed    The mapped file name on success, or boolean false on failure
+	 * @return mixed The mapped file name on success, or boolean false on failure
 	 */
 	protected function loadLegacy(string $class)
 	{
@@ -362,14 +347,12 @@ class Autoloader
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * A central way to include a file. Split out primarily for testing purposes.
 	 *
 	 * @param string $file
 	 *
-	 * @return string|false The filename on success, false if the file is not loaded
+	 * @return false|string The filename on success, false if the file is not loaded
 	 */
 	protected function includeFile(string $file)
 	{
@@ -385,8 +368,6 @@ class Autoloader
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sanitizes a filename, replacing spaces with dashes.
 	 *
@@ -398,7 +379,7 @@ class Autoloader
 	 *
 	 * @param string $filename
 	 *
-	 * @return string       The sanitized filename
+	 * @return string The sanitized filename
 	 */
 	public function sanitizeFilename(string $filename): string
 	{
@@ -410,21 +391,19 @@ class Autoloader
 		$filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
 
 		// Clean up our filename edges.
-		$filename = trim($filename, '.-_');
-
-		return $filename;
+		return trim($filename, '.-_');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Locates all PSR4 compatible namespaces from Composer.
+	 *
+	 * @return void
 	 */
 	protected function discoverComposerNamespaces()
 	{
 		if (! is_file(COMPOSER_PATH))
 		{
-			return false;
+			return;
 		}
 
 		$composer = include COMPOSER_PATH;
@@ -440,6 +419,7 @@ class Autoloader
 
 		// Composer stores namespaces with trailing slash. We don't.
 		$newPaths = [];
+
 		foreach ($paths as $key => $value)
 		{
 			$newPaths[rtrim($key, '\\ ')] = $value;

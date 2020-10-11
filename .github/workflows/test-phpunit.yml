@@ -76,7 +76,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer:v2
-          extensions: imagick
+          extensions: imagick, mbstring, intl
           coverage: xdebug
         env:
           update: true
@@ -97,8 +97,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
-          composer remove --dev rector/rector phpstan/phpstan codeigniter4/codeigniter4-standard squizlabs/php_codesniffer
+          composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
+          composer remove --dev rector/rector phpstan/phpstan friendsofphp/php-cs-fixer liaison/cs-config
           composer update
           php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
         env:
@@ -127,5 +127,5 @@ jobs:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true

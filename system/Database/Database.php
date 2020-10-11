@@ -45,12 +45,9 @@ use InvalidArgumentException;
  * Database Connection Factory
  *
  * Creates and returns an instance of the appropriate DatabaseConnection
- *
- * @package CodeIgniter\Database
  */
 class Database
 {
-
 	/**
 	 * Maintains an array of the instances of all connections
 	 * that have been created. Helps to keep track of all open
@@ -60,8 +57,6 @@ class Database
 	 */
 	protected $connections = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parses the connection binds and returns an instance of
 	 * the driver ready to go.
@@ -69,7 +64,8 @@ class Database
 	 * @param array  $params
 	 * @param string $alias
 	 *
-	 * @return   mixed
+	 * @return mixed
+	 *
 	 * @internal param bool $useBuilder
 	 */
 	public function load(array $params = [], string $alias)
@@ -98,12 +94,10 @@ class Database
 		return $this->connections[$alias];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a new Forge instance for the current database type.
 	 *
-	 * @param ConnectionInterface|BaseConnection $db
+	 * @param BaseConnection|ConnectionInterface $db
 	 *
 	 * @return mixed
 	 */
@@ -120,12 +114,10 @@ class Database
 		return new $className($db);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads the Database Utilities class.
 	 *
-	 * @param ConnectionInterface|BaseConnection $db
+	 * @param BaseConnection|ConnectionInterface $db
 	 *
 	 * @return mixed
 	 */
@@ -142,15 +134,14 @@ class Database
 		return new $className($db);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parse universal DSN string
 	 *
 	 * @param array $params
 	 *
-	 * @return array
 	 * @throws InvalidArgumentException
+	 *
+	 * @return array
 	 */
 	protected function parseDSN(array $params): array
 	{
@@ -187,6 +178,4 @@ class Database
 
 		return array_merge($params, $dsnParams);
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -48,12 +49,11 @@ use ReflectionMethod;
  */
 class Routes extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -61,7 +61,7 @@ class Routes extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
@@ -73,22 +73,19 @@ class Routes extends BaseCollector
 	 */
 	protected $title = 'Routes';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return array
 	 * @throws ReflectionException
+	 *
+	 * @return array
 	 */
 	public function display(): array
 	{
 		$rawRoutes = Services::routes(true);
 		$router    = Services::router(null, null, true);
 
-		/*
-		 * Matched Route
-		 */
+		// Matched Route
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
@@ -114,12 +111,12 @@ class Routes extends BaseCollector
 		$rawParams = $method->getParameters();
 
 		$params = [];
+
 		foreach ($rawParams as $key => $param)
 		{
 			$params[] = [
 				'name'  => $param->getName(),
-				'value' => $router->params()[$key] ??
-					'&lt;empty&gt;&nbsp| default: ' . var_export($param->isDefaultValueAvailable() ? $param->getDefaultValue() : null, true),
+				'value' => $router->params()[$key] ?? '&lt;empty&gt;&nbsp| default: ' . var_export($param->isDefaultValueAvailable() ? $param->getDefaultValue() : null, true),
 			];
 		}
 
@@ -134,9 +131,7 @@ class Routes extends BaseCollector
 			],
 		];
 
-		/*
-		* Defined Routes
-		*/
+		// Defined Routes
 		$routes  = [];
 		$methods = [
 			'get',
@@ -175,12 +170,10 @@ class Routes extends BaseCollector
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a count of all the routes in the system.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getBadgeValue(): int
 	{
@@ -188,8 +181,6 @@ class Routes extends BaseCollector
 
 		return count($rawRoutes->getRoutes());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Display the icon.

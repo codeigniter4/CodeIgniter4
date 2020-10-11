@@ -49,7 +49,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class Router implements RouterInterface
 {
-
 	/**
 	 * A RouteCollection instance.
 	 *
@@ -98,7 +97,7 @@ class Router implements RouterInterface
 	 * Whether dashes in URI's should be converted
 	 * to underscores when determining method names.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $translateURIDashes = false;
 
@@ -131,8 +130,6 @@ class Router implements RouterInterface
 	 */
 	protected $filterInfo;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
@@ -150,14 +147,13 @@ class Router implements RouterInterface
 		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @param string|null $uri
 	 *
-	 * @return mixed|string
 	 * @throws RedirectException
 	 * @throws PageNotFoundException
+	 *
+	 * @return mixed|string
 	 */
 	public function handle(string $uri = null)
 	{
@@ -201,8 +197,6 @@ class Router implements RouterInterface
 		return $this->controllerName();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the filter info for the matched route, if any.
 	 *
@@ -212,8 +206,6 @@ class Router implements RouterInterface
 	{
 		return $this->filterInfo;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the matched controller.
@@ -227,8 +219,6 @@ class Router implements RouterInterface
 			: $this->controller;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the name of the method to run in the
 	 * chosen container.
@@ -241,8 +231,6 @@ class Router implements RouterInterface
 			? str_replace('-', '_', $this->method)
 			: $this->method;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the 404 Override settings from the Collection.
@@ -270,8 +258,6 @@ class Router implements RouterInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the binds that have been matched and collected
 	 * during the parsing process as an array, ready to send to
@@ -283,8 +269,6 @@ class Router implements RouterInterface
 	{
 		return $this->params;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the sub-directory the controller is in,
@@ -299,8 +283,6 @@ class Router implements RouterInterface
 		return ! empty($this->directory) ? $this->directory : '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the routing information that was matched for this
 	 * request, if a route was defined.
@@ -312,8 +294,6 @@ class Router implements RouterInterface
 		return $this->matchedRoute;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns all options set for the matched route
 	 *
@@ -323,8 +303,6 @@ class Router implements RouterInterface
 	{
 		return $this->matchedRouteOptions;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
@@ -343,13 +321,11 @@ class Router implements RouterInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Tells the system whether we should translate URI dashes or not
 	 * in the URI from a dash to an underscore.
 	 *
-	 * @param boolean|false $val
+	 * @param bool|false $val
 	 *
 	 * @return $this
 	 */
@@ -360,20 +336,16 @@ class Router implements RouterInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns true/false based on whether the current route contained
 	 * a {locale} placeholder.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasLocale()
 	{
 		return (bool) $this->detectedLocale;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the detected locale, if any, or null.
@@ -385,8 +357,6 @@ class Router implements RouterInterface
 		return $this->detectedLocale;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Compares the uri string against the routes that the
 	 * RouteCollection class defined for us, attempting to find a match.
@@ -394,8 +364,9 @@ class Router implements RouterInterface
 	 *
 	 * @param string $uri The URI path to compare against the routes
 	 *
-	 * @return boolean Whether the route was matched or not.
 	 * @throws RedirectException
+	 *
+	 * @return bool Whether the route was matched or not
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
@@ -426,7 +397,7 @@ class Router implements RouterInterface
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key));
+				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key), true);
 
 				// Replace it with a regex so it
 				// will actually match.
@@ -491,7 +462,7 @@ class Router implements RouterInterface
 					[
 						$controller,
 						$method,
-					] = explode( '::', $val );
+					] = explode('::', $val);
 
 					// Only replace slashes in the controller, not in the method.
 					$controller = str_replace('/', '\\', $controller);
@@ -514,8 +485,6 @@ class Router implements RouterInterface
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to match a URI path against Controllers and directories
@@ -556,19 +525,21 @@ class Router implements RouterInterface
 
 		$defaultNamespace = $this->collection->getDefaultNamespace();
 		$controllerName   = $this->controllerName();
+
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $defaultNamespace;
+			$controller = '\\' . $defaultNamespace;
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $controllerName;
-			$controller  = strtolower($controller);
-			$methodName  = strtolower($this->methodName());
+			$controller = strtolower($controller);
+			$methodName = strtolower($this->methodName());
 
 			foreach ($this->collection->getRoutes('cli') as $route)
 			{
 				if (is_string($route))
 				{
 					$route = strtolower($route);
+
 					if (strpos($route, $controller . '::' . $methodName) === 0)
 					{
 						throw new PageNotFoundException();
@@ -584,6 +555,7 @@ class Router implements RouterInterface
 
 		// Load the file so that it's available for CodeIgniter.
 		$file = APPPATH . 'Controllers/' . $this->directory . $controllerName . '.php';
+
 		if (is_file($file))
 		{
 			include_once $file;
@@ -597,8 +569,6 @@ class Router implements RouterInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to validate the URI request and determine the controller path.
 	 *
@@ -608,7 +578,7 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments): array
 	{
-		$segments = array_filter($segments, function ($segment) {
+		$segments = array_filter($segments, static function ($segment) {
 			// @phpstan-ignore-next-line
 			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
 		});
@@ -626,6 +596,7 @@ class Router implements RouterInterface
 			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directoryOverride === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
 			{
 				$this->setDirectory(array_shift($segments), true);
+
 				continue;
 			}
 
@@ -636,19 +607,18 @@ class Router implements RouterInterface
 		return $segments;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the sub-directory that the controller is in.
 	 *
-	 * @param string|null   $dir
-	 * @param boolean|false $append
+	 * @param string|null $dir
+	 * @param bool|false  $append
 	 */
 	public function setDirectory(string $dir = null, bool $append = false)
 	{
 		if (empty($dir))
 		{
 			$this->directory = null;
+
 			return;
 		}
 
@@ -663,8 +633,6 @@ class Router implements RouterInterface
 			$this->directory .= str_replace('.', '', trim($dir, '/')) . '/';
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set request route
@@ -684,7 +652,7 @@ class Router implements RouterInterface
 			return;
 		}
 
-		list($controller, $method) = array_pad(explode('::', $segments[0]), 2, null);
+		[$controller, $method] = array_pad(explode('::', $segments[0]), 2, null);
 
 		$this->controller = $controller;
 
@@ -699,8 +667,6 @@ class Router implements RouterInterface
 
 		$this->params = $segments;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the default controller based on the info set in the RouteCollection.
@@ -727,6 +693,4 @@ class Router implements RouterInterface
 
 		log_message('info', 'Used the default controller.');
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -46,8 +46,6 @@ use CodeIgniter\Router\RouteCollection;
  *
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
- *
- * @package CodeIgniter\Test
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {
@@ -72,7 +70,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	/**
 	 * Enabled auto clean op buffer after request call
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $clean = true;
 

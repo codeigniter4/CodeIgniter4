@@ -50,15 +50,12 @@ use Exception;
  */
 class Console
 {
-
 	/**
 	 * Main CodeIgniter instance.
 	 *
 	 * @var CodeIgniter
 	 */
 	protected $app;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Console constructor.
@@ -70,15 +67,14 @@ class Console
 		$this->app = $app;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Runs the current command discovered on the CLI.
 	 *
-	 * @param boolean $useSafeOutput
+	 * @param bool $useSafeOutput
 	 *
-	 * @return RequestInterface|Response|ResponseInterface|mixed
 	 * @throws Exception
+	 *
+	 * @return mixed|RequestInterface|Response|ResponseInterface
 	 */
 	public function run(bool $useSafeOutput = false)
 	{
@@ -90,10 +86,10 @@ class Console
 		return $this->app->useSafeOutput($useSafeOutput)->run();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays basic information about the Console.
+	 *
+	 * @return void
 	 */
 	public function showHeader()
 	{

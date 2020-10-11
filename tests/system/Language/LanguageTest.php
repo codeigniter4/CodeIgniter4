@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Language;
 
 use CodeIgniter\Test\Mock\MockLanguage;
@@ -7,15 +8,12 @@ use Tests\Support\Language\SecondMockLanguage;
 
 class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function testReturnsStringWithNoFileInMessage()
 	{
 		$lang = new MockLanguage('en');
 
 		$this->assertEquals('something', $lang->getLine('something'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetLineReturnsLine()
 	{
@@ -28,8 +26,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('We saved some more', $lang->getLine('books.booksSaved'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetLineReturnsFallbackLine()
 	{
@@ -46,23 +42,26 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		], 'en-US');
 
 		$this->assertEquals(
-				'lay of the land', $lang->getLine('equivalent.lieOfLand')
+			'lay of the land',
+			$lang->getLine('equivalent.lieOfLand')
 		);
 		$this->assertEquals(
-				'slowpoke', $lang->getLine('equivalent.slowcoach')
+			'slowpoke',
+			$lang->getLine('equivalent.slowcoach')
 		);
 		$this->assertEquals(
-				'a new lease of life', $lang->getLine('equivalent.leaseOfLife')
+			'a new lease of life',
+			$lang->getLine('equivalent.leaseOfLife')
 		);
 		$this->assertEquals(
-				'touch wood', $lang->getLine('equivalent.touchWood')
+			'touch wood',
+			$lang->getLine('equivalent.touchWood')
 		);
 		$this->assertEquals(
-				'equivalent.unknown', $lang->getLine('equivalent.unknown')
+			'equivalent.unknown',
+			$lang->getLine('equivalent.unknown')
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetLineArrayReturnsLineArray()
 	{
@@ -81,8 +80,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		], $lang->getLine('books.booksList'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetLineFormatsMessage()
 	{
 		// No intl extension? then we can't test this - go away....
@@ -100,8 +97,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('45 books have been saved.', $lang->getLine('books.bookCount', [91 / 2]));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetLineArrayFormatsMessages()
 	{
 		// No intl extension? Then we can't test this - go away...
@@ -114,14 +109,12 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$lang->setData('books', [
 			'bookList' => [
-				'{0, number, integer} related books.'
+				'{0, number, integer} related books.',
 			],
 		]);
 
 		$this->assertEquals(['45 related books.'], $lang->getLine('books.bookList', [91 / 2]));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/891
@@ -135,8 +128,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Whatever this would be, translated', $str2);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLangDoesntFormat()
 	{
 		$lang = new MockLanguage('en');
@@ -144,14 +135,12 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$lang->setData('books', [
 			'bookList' => [
-				'{0, number, integer} related books.'
+				'{0, number, integer} related books.',
 			],
 		]);
 
 		$this->assertEquals(['{0, number, integer} related books.'], $lang->getLine('books.bookList', [15]));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLanguageDuplicateKey()
 	{
@@ -162,33 +151,27 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('I have a very bad feeling about this', $lang->getLine('More.cannotMove', []));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLanguageFileLoading()
 	{
 		$lang = new SecondMockLanguage('en');
 
 		$result = $lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $lang->loaded()));
+		$this->assertTrue(in_array('More', $lang->loaded(), true));
 		$result = $lang->loadem('More', 'en');
-		$this->assertEquals(1, count($lang->loaded())); // should only be there once
+		$this->assertCount(1, $lang->loaded()); // should only be there once
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLanguageFileLoadingReturns()
 	{
 		$lang = new SecondMockLanguage('en');
 
 		$result = $lang->loadem('More', 'en', true);
-		$this->assertFalse(in_array('More', $lang->loaded()));
-		$this->assertEquals(3, count($result));
+		$this->assertFalse(in_array('More', $lang->loaded(), true));
+		$this->assertCount(3, $result);
 		$result = $lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $lang->loaded()));
-		$this->assertEquals(1, count($lang->loaded()));
+		$this->assertTrue(in_array('More', $lang->loaded(), true));
+		$this->assertCount(1, $lang->loaded());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLanguageSameKeyAndFileName()
 	{
@@ -206,15 +189,11 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Another example', $lang->getLine('another.example'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetLocale()
 	{
 		$language = Services::language('en', false);
 		$this->assertEquals('en', $language->getLocale());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPrioritizedLocator()
 	{
@@ -224,8 +203,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		// and we should have our new message too
 		$this->assertEquals('billions and billions', lang('Core.bazillion', [], 'en'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function MessageBundles()
 	{
@@ -258,6 +235,8 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * but we can at least try loading them ... more accurate code coverage?
 	 *
 	 * @dataProvider MessageBundles
+	 *
+	 * @param mixed $bundle
 	 */
 	public function testBundleUniqueKeys($bundle)
 	{
@@ -266,7 +245,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThan(0, count($messages));
 	}
 
-	//--------------------------------------------------------------------
 	// Testing base locale vs variants
 
 	public function testBaseFallbacks()
@@ -285,7 +263,6 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('More.shootMe', $language->getLine('More.shootMe'));
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Testing base locale vs variants, with fallback to English.
 	 *
@@ -328,5 +305,4 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('The fieldname field is very short.', $lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
 		$this->assertEquals('The fieldname field is very short.', $lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
 	}
-
 }

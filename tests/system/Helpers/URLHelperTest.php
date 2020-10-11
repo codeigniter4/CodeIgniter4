@@ -1,15 +1,17 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class URLHelperTest extends CIUnitTestCase
 {
 	/**
 	 * @var App
@@ -34,15 +36,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		//Config::injectMock('App', $this->config);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
 		$_SERVER = [];
 	}
-
-	//--------------------------------------------------------------------
-	// Test site_url
 
 	public function testSiteURLBasics()
 	{
@@ -185,7 +184,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
 	}
 
-	//--------------------------------------------------------------------
 	// Test base_url
 
 	public function testBaseURLBasics()
@@ -316,9 +314,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/subfolder', base_url());
 	}
 
-	//--------------------------------------------------------------------
-	// Test current_url
-
 	public function testCurrentURLReturnsBasicURL()
 	{
 		// Since we're on a CLI, we must provide our own URI
@@ -409,9 +404,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('8080', $uri->getPort());
 	}
 
-	//--------------------------------------------------------------------
-	// Test previous_url
-
 	public function testPreviousURLUsesSessionFirst()
 	{
 		$uri1 = 'http://example.com/one?two';
@@ -430,8 +422,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($uri2, previous_url());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPreviousURLUsesRefererIfNeeded()
 	{
 		$uri1 = 'http://example.com/one?two';
@@ -448,9 +438,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($uri1, previous_url());
 	}
-
-	//--------------------------------------------------------------------
-	// Test uri_string
 
 	public function testUriStringAbsolute()
 	{
@@ -563,9 +550,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('assets/image.jpg', uri_string(true));
 	}
 
-	//--------------------------------------------------------------------
-	// Test index_page
-
 	public function testIndexPage()
 	{
 		$request      = Services::request($this->config);
@@ -586,9 +570,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('banana.php', index_page($this->config));
 	}
-
-	//--------------------------------------------------------------------
-	// Test anchor
 
 	public function anchorNormalPatterns()
 	{
@@ -635,6 +616,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider anchorNormalPatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $uri
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testAnchor($expected = '', $uri = '', $title = '', $attributes = '')
 	{
@@ -690,6 +676,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider anchorNoindexPatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $uri
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = '')
 	{
@@ -742,6 +733,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider anchorSubpagePatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $uri
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = '')
 	{
@@ -783,6 +779,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider anchorExamplePatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $uri
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
 	{
@@ -793,7 +794,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
 	}
 
-	//--------------------------------------------------------------------
 	// Test anchor_popup
 
 	public function anchorPopupPatterns()
@@ -838,6 +838,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider anchorPopupPatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $uri
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
 	{
@@ -848,7 +853,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, anchor_popup($uri, $title, $attributes, $this->config));
 	}
 
-	//--------------------------------------------------------------------
 	// Test mailto
 
 	public function mailtoPatterns()
@@ -874,6 +878,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider mailtoPatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $email
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testMailto($expected = '', $email, $title = '', $attributes = '')
 	{
@@ -885,7 +894,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, mailto($email, $title, $attributes));
 	}
 
-	//--------------------------------------------------------------------
 	// Test safe_mailto
 
 	public function safeMailtoPatterns()
@@ -911,6 +919,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider safeMailtoPatterns
+	 *
+	 * @param mixed $expected
+	 * @param mixed $email
+	 * @param mixed $title
+	 * @param mixed $attributes
 	 */
 	public function testSafeMailto($expected = '', $email, $title = '', $attributes = '')
 	{
@@ -921,9 +934,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, safe_mailto($email, $title, $attributes));
 	}
-
-	//--------------------------------------------------------------------
-	// Test auto_link
 
 	public function autolinkUrls()
 	{
@@ -965,6 +975,9 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider autolinkUrls
+	 *
+	 * @param mixed $in
+	 * @param mixed $out
 	 */
 	public function testAutoLinkUrl($in, $out)
 	{
@@ -1011,6 +1024,9 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider autolinkEmails
+	 *
+	 * @param mixed $in
+	 * @param mixed $out
 	 */
 	public function testAutoLinkEmail($in, $out)
 	{
@@ -1057,6 +1073,9 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider autolinkBoth
+	 *
+	 * @param mixed $in
+	 * @param mixed $out
 	 */
 	public function testAutolinkBoth($in, $out)
 	{
@@ -1103,14 +1122,14 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider autolinkPopup
+	 *
+	 * @param mixed $in
+	 * @param mixed $out
 	 */
 	public function testAutoLinkPopup($in, $out)
 	{
 		$this->assertEquals($out, auto_link($in, 'url', true));
 	}
-
-	//--------------------------------------------------------------------
-	// Test prep_url
 
 	public function testPrepUrl()
 	{
@@ -1119,9 +1138,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', prep_url());
 		$this->assertEquals('http://www.codeigniter.com', prep_url('http://www.codeigniter.com'));
 	}
-
-	//--------------------------------------------------------------------
-	// Test url_title
 
 	public function testUrlTitle()
 	{
@@ -1150,9 +1166,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals($out, url_title($in, '_'));
 		}
 	}
-
-	//--------------------------------------------------------------------
-	// Test mb_url_title
 
 	public function testMbUrlTitle()
 	{
@@ -1187,8 +1200,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals($out, mb_url_title($in, '_'));
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBasedNoIndex()
 	{
@@ -1269,6 +1280,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlToProvider
+	 *
+	 * @param string $expected
+	 * @param string $input
+	 * @param array  $args
 	 */
 	public function testUrlTo(string $expected, string $input, ...$args)
 	{
@@ -1283,6 +1298,8 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlToMissingRoutesProvider
+	 *
+	 * @param string $route
 	 */
 	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
 	{
@@ -1373,6 +1390,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlIsProvider
+	 *
+	 * @param string $currentPath
+	 * @param string $testPath
+	 * @param bool   $expected
 	 */
 	public function testUrlIs(string $currentPath, string $testPath, bool $expected)
 	{
@@ -1387,6 +1408,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlIsProvider
+	 *
+	 * @param string $currentPath
+	 * @param string $testPath
+	 * @param bool   $expected
 	 */
 	public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
 	{
@@ -1402,6 +1427,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlIsProvider
+	 *
+	 * @param string $currentPath
+	 * @param string $testPath
+	 * @param bool   $expected
 	 */
 	public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
 	{

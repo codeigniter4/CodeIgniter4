@@ -46,12 +46,11 @@ use Config\Services;
  */
 class Timers extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = true;
 
@@ -59,7 +58,7 @@ class Timers extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = false;
 
@@ -70,8 +69,6 @@ class Timers extends BaseCollector
 	 * @var string
 	 */
 	protected $title = 'Timers';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -103,5 +100,4 @@ class Timers extends BaseCollector
 
 		return $data;
 	}
-
 }

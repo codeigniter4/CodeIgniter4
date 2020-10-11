@@ -1,11 +1,17 @@
 <?php
+
 namespace CodeIgniter\Cache;
 
-class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use CodeIgniter\Cache\Handlers\DummyHandler;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
 
+class CacheFactoryTest extends CIUnitTestCase
+{
 	private static $directory = 'CacheFactory';
+
 	private $cacheFactory;
+
 	private $config;
 
 	protected function setUp(): void
@@ -15,11 +21,11 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		if (is_dir($this->config->storePath))
 		{
@@ -82,10 +88,10 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->config->handler = 'dummy';
 
-		$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config));
+		$this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config));
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
@@ -98,18 +104,17 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->config->handler = 'dummy';
 
-		if (stripos('win', php_uname()) === 0)
+		if (mb_stripos('win', php_uname()) === 0)
 		{
 			$this->assertTrue(true); // can't test properly if we are on Windows
 		}
 		else
 		{
-			$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
+			$this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
 		}
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
-
 }

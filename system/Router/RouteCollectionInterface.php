@@ -50,12 +50,9 @@ use Closure;
  *
  * The RouteCollection provides the Router with the routes so that it can determine
  * which controller should be ran.
- *
- * @package CodeIgniter\Router
  */
 interface RouteCollectionInterface
 {
-
 	/**
 	 * Adds a single route to the collection.
 	 *
@@ -67,8 +64,6 @@ interface RouteCollectionInterface
 	 */
 	public function add(string $from, $to, array $options = null);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Registers a new constraint with the system. Constraints are used
 	 * by the routes as placeholders for regular expressions to make defining
@@ -77,14 +72,12 @@ interface RouteCollectionInterface
 	 * You can pass an associative array as $placeholder, and have
 	 * multiple placeholders added at once.
 	 *
-	 * @param string|array $placeholder
+	 * @param array|string $placeholder
 	 * @param string       $pattern
 	 *
 	 * @return mixed
 	 */
 	public function addPlaceholder($placeholder, string $pattern = null);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the default namespace to use for Controllers when no other
@@ -96,8 +89,6 @@ interface RouteCollectionInterface
 	 */
 	public function setDefaultNamespace(string $value);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default controller to use when no other controller has been
 	 * specified.
@@ -107,8 +98,6 @@ interface RouteCollectionInterface
 	 * @return mixed
 	 */
 	public function setDefaultController(string $value);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the default method to call on the controller when no other
@@ -120,8 +109,6 @@ interface RouteCollectionInterface
 	 */
 	public function setDefaultMethod(string $value);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Tells the system whether to convert dashes in URI strings into
 	 * underscores. In some search engines, including Google, dashes
@@ -129,13 +116,11 @@ interface RouteCollectionInterface
 	 * find words and meaning in the URI for better SEO. But it
 	 * doesn't work well with PHP method names....
 	 *
-	 * @param boolean $value
+	 * @param bool $value
 	 *
 	 * @return mixed
 	 */
 	public function setTranslateURIDashes(bool $value);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * If TRUE, the system will attempt to match the URI against
@@ -145,13 +130,11 @@ interface RouteCollectionInterface
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
 	 *
-	 * @param boolean $value
+	 * @param bool $value
 	 *
 	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): self;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the class/method that should be called if routing doesn't
@@ -166,17 +149,13 @@ interface RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): self;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the 404 Override setting, which can be null, a closure
 	 * or the controller/string.
 	 *
-	 * @return string|Closure|null
+	 * @return Closure|string|null
 	 */
 	public function get404Override();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the default controller. With Namespace.
@@ -185,16 +164,12 @@ interface RouteCollectionInterface
 	 */
 	public function getDefaultController();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the name of the default method to use within the controller.
 	 *
 	 * @return string
 	 */
 	public function getDefaultMethod();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the current value of the translateURIDashes setting.
@@ -203,16 +178,12 @@ interface RouteCollectionInterface
 	 */
 	public function shouldTranslateURIDashes();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function shouldAutoRoute();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the raw array of available routes.
@@ -221,16 +192,12 @@ interface RouteCollectionInterface
 	 */
 	public function getRoutes();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current HTTP Verb being used.
 	 *
 	 * @return string
 	 */
 	public function getHTTPVerb();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to look up a route based on it's destination.
@@ -248,31 +215,25 @@ interface RouteCollectionInterface
 	 * @param string $search
 	 * @param array  ...$params
 	 *
-	 * @return string|false
+	 * @return false|string
 	 */
 	public function reverseRoute(string $search, ...$params);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Determines if the route is a redirecting route.
 	 *
 	 * @param string $from
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRedirect(string $from): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Grabs the HTTP status code from a redirecting Route.
 	 *
 	 * @param string $from
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getRedirectCode(string $from): int;
-
-	//--------------------------------------------------------------------
 }

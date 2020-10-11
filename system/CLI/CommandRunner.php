@@ -48,15 +48,12 @@ use ReflectionException;
  */
 class CommandRunner extends Controller
 {
-
 	/**
 	 * The Command Manager
 	 *
 	 * @var Commands
 	 */
 	protected $commands;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -73,8 +70,9 @@ class CommandRunner extends Controller
 	 * @param string $method
 	 * @param array  ...$params
 	 *
-	 * @return mixed
 	 * @throws ReflectionException
+	 *
+	 * @return mixed
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -87,21 +85,20 @@ class CommandRunner extends Controller
 		return $this->index($params);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Default command.
 	 *
 	 * @param array $params
 	 *
-	 * @return mixed
 	 * @throws ReflectionException
+	 *
+	 * @return mixed
 	 */
 	public function index(array $params)
 	{
 		$command = array_shift($params);
 
-		if (is_null($command))
+		if ($command === null)
 		{
 			$command = 'list';
 		}

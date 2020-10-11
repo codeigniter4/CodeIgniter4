@@ -46,7 +46,6 @@ use Config\Database;
  */
 abstract class Migration
 {
-
 	/**
 	 * The name of the database group to use.
 	 *
@@ -68,8 +67,6 @@ abstract class Migration
 	 */
 	protected $forge;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -77,12 +74,9 @@ abstract class Migration
 	 */
 	public function __construct(Forge $forge = null)
 	{
-		$this->forge = ! is_null($forge) ? $forge : Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
-
-		$this->db = $this->forge->getConnection();
+		$this->forge = $forge ?? Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
+		$this->db    = $this->forge->getConnection();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the database group name this migration uses.
@@ -94,19 +88,13 @@ abstract class Migration
 		return $this->DBGroup;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Perform a migration step.
 	 */
 	abstract public function up();
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Revert a migration step.
 	 */
 	abstract public function down();
-
-	//--------------------------------------------------------------------
 }

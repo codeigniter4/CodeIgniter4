@@ -51,7 +51,6 @@ use SessionHandlerInterface;
  */
 class RedisHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * phpRedis instance
 	 *
@@ -76,18 +75,16 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	/**
 	 * Key exists flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $keyExists = false;
 
 	/**
 	 * Number of seconds until the session ends.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $sessionExpiration = 7200;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -136,16 +133,15 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 			: (int) $config->sessionExpiration;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
 	 * Sanitizes save_path and initializes connection.
 	 *
-	 * @param  string $savePath Server path
-	 * @param  string $name     Session cookie name, unused
-	 * @return boolean
+	 * @param string $savePath Server path
+	 * @param string $name     Session cookie name, unused
+	 *
+	 * @return bool
 	 */
 	public function open($savePath, $name): bool
 	{
@@ -171,13 +167,12 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		else
 		{
 			$this->redis = $redis;
+
 			return true;
 		}
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Read
@@ -186,14 +181,14 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string	Serialized session data
+	 * @return string Serialized session data
 	 */
 	public function read($sessionID): string
 	{
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID)) // @phpstan-ignore-line
+			if ($this->sessionID === null)
 			{
 				$this->sessionID = $sessionID;
 			}
@@ -209,8 +204,6 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		return '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Write
 	 *
@@ -219,7 +212,7 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $sessionID   Session ID
 	 * @param string $sessionData Serialized session data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function write($sessionID, $sessionData): bool
 	{
@@ -250,6 +243,7 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 				{
 					$this->fingerprint = $fingerprint;
 					$this->keyExists   = true;
+
 					return true;
 				}
 
@@ -262,14 +256,12 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close
 	 *
 	 * Releases locks and closes connection.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function close(): bool
 	{
@@ -302,8 +294,6 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Destroy
 	 *
@@ -311,7 +301,7 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function destroy($sessionID): bool
 	{
@@ -328,23 +318,20 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Garbage Collector
 	 *
 	 * Deletes expired sessions
 	 *
-	 * @param  integer $maxlifetime Maximum lifetime of sessions
-	 * @return boolean
+	 * @param int $maxlifetime Maximum lifetime of sessions
+	 *
+	 * @return bool
 	 */
 	public function gc($maxlifetime): bool
 	{
 		// Not necessary, Redis takes care of that.
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get lock
@@ -353,7 +340,7 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
@@ -374,23 +361,26 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 			if (($ttl = $this->redis->ttl($lockKey)) > 0)
 			{
 				sleep(1);
+
 				continue;
 			}
 
 			if (! $this->redis->setex($lockKey, 300, (string) time()))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
+
 				return false;
 			}
 
 			$this->lockKey = $lockKey;
+
 			break;
-		}
-		while (++ $attempt < 30);
+		} while (++$attempt < 30);
 
 		if ($attempt === 30)
 		{
 			log_message('error', 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
+
 			return false;
 		}
 
@@ -400,17 +390,16 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 		}
 
 		$this->lock = true;
+
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Release lock
 	 *
 	 * Releases a previously acquired lock
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function releaseLock(): bool
 	{
@@ -419,6 +408,7 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 			if (! $this->redis->del($this->lockKey))
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);
+
 				return false;
 			}
 
@@ -428,6 +418,4 @@ class RedisHandler extends BaseHandler implements SessionHandlerInterface
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

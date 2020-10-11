@@ -46,7 +46,7 @@ use CodeIgniter\CLI\CLI;
  * Deprecated class for the migration
  * creation command.
  *
- * @deprecated Use make:command instead.
+ * @deprecated Use make:command instead
  *
  * @codeCoverageIgnore
  */
@@ -108,7 +108,7 @@ class MigrateCreate extends BaseCommand
 	public function run(array $params)
 	{
 		// Resolve arguments before passing to make:migration
-		$params[0]   = $params[0] ?? CLI::getSegment(2);
+		$params[0]   = $params[0]   ?? CLI::getSegment(2);
 		$params['n'] = $params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
 
 		if (array_key_exists('force', $params) || CLI::getOption('force'))

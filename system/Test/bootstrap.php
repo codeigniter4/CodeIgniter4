@@ -1,5 +1,42 @@
 <?php
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
+ */
+
 use CodeIgniter\Services;
 use Config\Autoload;
 use Config\Modules;
@@ -17,10 +54,10 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
 // Often these constants are pre-defined, but query the current directory structure as a fallback
 defined('HOMEPATH') || define('HOMEPATH', realpath(rtrim(getcwd(), '\\/ ')) . DIRECTORY_SEPARATOR);
 $source = is_dir(HOMEPATH . 'app')
-	   ? HOMEPATH
-	   : (is_dir('vendor/codeigniter4/framework/')
-			   ? 'vendor/codeigniter4/framework/'
-			   : 'vendor/codeigniter4/codeigniter4/');
+	? HOMEPATH
+	: (is_dir('vendor/codeigniter4/framework/')
+		? 'vendor/codeigniter4/framework/'
+		: 'vendor/codeigniter4/codeigniter4/');
 defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') . DIRECTORY_SEPARATOR);
 defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
 unset($source);
@@ -61,7 +98,6 @@ require_once APPPATH . 'Config/Autoload.php';
 require_once APPPATH . 'Config/Constants.php';
 require_once SYSTEMPATH . 'Modules/Modules.php';
 require_once APPPATH . 'Config/Modules.php';
-
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once SYSTEMPATH . 'Config/Services.php';
@@ -74,13 +110,10 @@ if (! class_exists('CodeIgniter\Services', false))
 }
 
 // Launch the autoloader to gather namespaces (includes composer.json's "autoload-dev")
-$loader = Services::autoloader();
-$loader->initialize(new Autoload(), new Modules());
-$loader->register(); // Register the loader with the SPL autoloader stack.
+// Register the loader with the SPL autoloader stack.
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 require_once APPPATH . 'Config/Routes.php';
 
-/**
- * @var \CodeIgniter\Router\RouteCollection $routes
- */
+// @phpstan-ignore-next-line
 $routes->getRoutes('*');

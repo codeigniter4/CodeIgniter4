@@ -8,6 +8,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 class ClearDebugbarTest extends CIUnitTestCase
 {
 	protected $streamFilter;
+
 	protected $time;
 
 	protected function setUp(): void
@@ -15,9 +16,10 @@ class ClearDebugbarTest extends CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-		$this->time                 = time();
+
+		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+		$this->time         = time();
 	}
 
 	protected function tearDown(): void

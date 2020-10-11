@@ -1,19 +1,20 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseCookieTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->server = $_SERVER;
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		$_SERVER = $this->server;
 	}
@@ -25,7 +26,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response             = new Response($config);
 		$response->setCookie('foo', 'bar');
 
-		$this->assertTrue(is_array($response->getCookie('foo')));
+		$this->assertIsArray($response->getCookie('foo'));
 		$this->assertTrue($response->hasCookie('foo'));
 		$this->assertTrue($response->hasCookie('foo', 'bar'));
 		$this->assertTrue($response->hasCookie('foo', 'bar', 'mine'));
@@ -41,7 +42,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setCookie('bee', 'bop');
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(2, count($allCookies));
+		$this->assertCount(2, $allCookies);
 		$this->assertTrue($response->hasCookie('foo'));
 		$this->assertTrue($response->hasCookie('bee'));
 	}
@@ -54,8 +55,8 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setCookie('bee', 'bop');
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(2, count($allCookies));
-		$this->assertEquals(null, $response->getCookie('bogus'));
+		$this->assertCount(2, $allCookies);
+		$this->assertNull($response->getCookie('bogus'));
 	}
 
 	public function testCookieDomain()
@@ -105,17 +106,17 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
-		$this->assertEquals(false, $cookie['secure']);
+		$this->assertFalse($cookie['secure']);
 
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'secure' => true]);
 		$cookie = $response->getCookie('bee');
-		$this->assertEquals(true, $cookie['secure']);
+		$this->assertTrue($cookie['secure']);
 
 		$config->cookieSecure = true;
 		$response             = new Response($config);
 		$response->setCookie('alu', 'la');
 		$cookie = $response->getCookie('alu');
-		$this->assertEquals(true, $cookie['secure']);
+		$this->assertTrue($cookie['secure']);
 	}
 
 	public function testCookieHTTPOnly()
@@ -125,17 +126,17 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
-		$this->assertEquals(false, $cookie['httponly']);
+		$this->assertFalse($cookie['httponly']);
 
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => true]);
 		$cookie = $response->getCookie('bee');
-		$this->assertEquals(true, $cookie['httponly']);
+		$this->assertTrue($cookie['httponly']);
 
 		$config->cookieHTTPOnly = true;
 		$response               = new Response($config);
 		$response->setCookie('alu', 'la');
 		$cookie = $response->getCookie('alu');
-		$this->assertEquals(true, $cookie['httponly']);
+		$this->assertTrue($cookie['httponly']);
 	}
 
 	public function testCookieExpiry()
@@ -246,7 +247,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(1, count($allCookies));
+		$this->assertCount(1, $allCookies);
 		$this->assertIsArray($allCookies[0]);
 		$this->assertArrayHasKey('samesite', $allCookies[0]);
 		$this->assertEquals('Lax', $allCookies[0]['samesite']);
@@ -263,7 +264,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(1, count($allCookies));
+		$this->assertCount(1, $allCookies);
 		$this->assertIsArray($allCookies[0]);
 		$this->assertArrayHasKey('samesite', $allCookies[0]);
 		$this->assertEquals('Strict', $allCookies[0]['samesite']);
@@ -280,7 +281,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(1, count($allCookies));
+		$this->assertCount(1, $allCookies);
 		$this->assertIsArray($allCookies[0]);
 		$this->assertArrayNotHasKey('samesite', $allCookies[0]);
 	}
@@ -296,7 +297,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$allCookies = $response->getCookie();
-		$this->assertEquals(1, count($allCookies));
+		$this->assertCount(1, $allCookies);
 		$this->assertIsArray($allCookies[0]);
 		$this->assertArrayHasKey('samesite', $allCookies[0]);
 		$this->assertEquals('Strict', $allCookies[0]['samesite']);
@@ -316,5 +317,4 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 			'samesite' => 'Invalid',
 		]);
 	}
-
 }

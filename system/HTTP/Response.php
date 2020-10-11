@@ -57,12 +57,9 @@ use InvalidArgumentException;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @package CodeIgniter\HTTP
  */
 class Response extends Message implements ResponseInterface
 {
-
 	/**
 	 * HTTP status codes
 	 *
@@ -153,14 +150,14 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * The current status code for this response.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $statusCode = 200;
 
 	/**
 	 * Whether Content Security Policy is being enforced.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $CSPEnabled = false;
 
@@ -195,14 +192,14 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Cookie will only be set if a secure HTTPS connection exists.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cookieSecure = false;
 
 	/**
 	 * Cookie will only be accessible via HTTP(S) (no javascript)
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cookieHTTPOnly = false;
 
@@ -223,7 +220,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * If true, will not write output. Useful during testing.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $pretend = false;
 
@@ -234,8 +231,6 @@ class Response extends Message implements ResponseInterface
 	 * @var string
 	 */
 	protected $bodyFormat = 'html';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -268,12 +263,10 @@ class Response extends Message implements ResponseInterface
 		$this->setContentType('text/html');
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Turns "pretend" mode on or off to aid in testing.
 	 *
-	 * @param boolean $pretend
+	 * @param bool $pretend
 	 *
 	 * @return $this
 	 */
@@ -290,7 +283,7 @@ class Response extends Message implements ResponseInterface
 	 * The status code is a 3-digit integer result code of the getServer's attempt
 	 * to understand and satisfy the request.
 	 *
-	 * @return integer Status code.
+	 * @return int Status code
 	 */
 	public function getStatusCode(): int
 	{
@@ -302,8 +295,6 @@ class Response extends Message implements ResponseInterface
 		return $this->statusCode;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return an instance with the specified status code and, optionally, reason phrase.
 	 *
@@ -313,13 +304,14 @@ class Response extends Message implements ResponseInterface
 	 * @see http://tools.ietf.org/html/rfc7231#section-6
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
-	 * @param integer $code   The 3-digit integer result code to set.
-	 * @param string  $reason The reason phrase to use with the
-	 *                        provided status code; if none is provided, will
-	 *                        default to the IANA name.
+	 * @param int    $code   The 3-digit integer result code to set
+	 * @param string $reason The reason phrase to use with the
+	 *                       provided status code; if none is provided, will
+	 *                       default to the IANA name
+	 *
+	 * @throws HTTPException For invalid status code arguments
 	 *
 	 * @return $this
-	 * @throws HTTPException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
@@ -349,8 +341,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the response response phrase associated with the status code.
 	 *
@@ -376,7 +366,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets the date header
 	 *
-	 * @param \DateTime $date
+	 * @param DateTime $date
 	 *
 	 * @return Response
 	 */
@@ -388,8 +378,6 @@ class Response extends Message implements ResponseInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set the Link Header
@@ -426,8 +414,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Content Type header for this response with the mime type
 	 * and, optionally, the charset.
@@ -451,13 +437,11 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
 	 * @param array|string $body
-	 * @param boolean      $unencoded
+	 * @param bool         $unencoded
 	 *
 	 * @return $this
 	 */
@@ -468,14 +452,12 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current body, converted to JSON is it isn't already.
 	 *
-	 * @return mixed|string
+	 * @throws InvalidArgumentException if the body property is not array
 	 *
-	 * @throws InvalidArgumentException If the body property is not array.
+	 * @return mixed|string
 	 */
 	public function getJSON()
 	{
@@ -488,8 +470,6 @@ class Response extends Message implements ResponseInterface
 
 		return $body ?: null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Converts $body into XML, and sets the correct Content-Type.
@@ -505,13 +485,12 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieves the current body into XML and returns it.
 	 *
+	 * @throws InvalidArgumentException if the body property is not array
+	 *
 	 * @return mixed|string
-	 * @throws InvalidArgumentException If the body property is not array.
 	 */
 	public function getXML()
 	{
@@ -525,17 +504,16 @@ class Response extends Message implements ResponseInterface
 		return $body;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles conversion of the of the data into the appropriate format,
 	 * and sets the correct Content-Type header for our response.
 	 *
-	 * @param string|array $body
+	 * @param array|string $body
 	 * @param string       $format Valid: json, xml
 	 *
+	 * @throws InvalidArgumentException if the body property is not string or array
+	 *
 	 * @return mixed
-	 * @throws InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
 	{
@@ -552,7 +530,6 @@ class Response extends Message implements ResponseInterface
 		return $body;
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -573,8 +550,6 @@ class Response extends Message implements ResponseInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A shortcut method that allows the developer to set all of the
@@ -634,15 +609,13 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Last-Modified date header.
 	 *
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param \DateTime|string $date
+	 * @param DateTime|string $date
 	 *
 	 * @return Response
 	 */
@@ -661,7 +634,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
@@ -691,8 +663,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sends the headers of this HTTP request to the browser.
 	 *
@@ -708,7 +678,7 @@ class Response extends Message implements ResponseInterface
 
 		// Per spec, MUST be sent with each request, if possible.
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-		if (! isset($this->headers['Date']) && php_sapi_name() !== 'cli-server')
+		if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server')
 		{
 			$this->setDate(DateTime::createFromFormat('U', (string) time()));
 		}
@@ -725,8 +695,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sends the Body of the message to the browser.
 	 *
@@ -738,8 +706,6 @@ class Response extends Message implements ResponseInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Grabs the current body.
@@ -754,12 +720,13 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * @param string  $uri    The URI to redirect to
-	 * @param string  $method
-	 * @param integer $code   The type of redirection, defaults to 302
+	 * @param string $uri    The URI to redirect to
+	 * @param string $method
+	 * @param int    $code   The type of redirection, defaults to 302
+	 *
+	 * @throws HTTPException for invalid status code
 	 *
 	 * @return $this
-	 * @throws HTTPException For invalid status code.
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
@@ -789,9 +756,11 @@ class Response extends Message implements ResponseInterface
 		{
 			case 'refresh':
 				$this->setHeader('Refresh', '0;url=' . $uri);
+
 				break;
 			default:
 				$this->setHeader('Location', $uri);
+
 				break;
 		}
 
@@ -800,22 +769,20 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set a cookie
 	 *
 	 * Accepts an arbitrary number of binds (up to 7) or an associative
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param string|array $name     Cookie name or array containing binds
+	 * @param array|string $name     Cookie name or array containing binds
 	 * @param string       $value    Cookie value
 	 * @param string       $expire   Cookie expiration time in seconds
 	 * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
 	 * @param string       $path     Cookie path (default: '/')
 	 * @param string       $prefix   Cookie name prefix
-	 * @param boolean      $secure   Whether to only transfer cookies via SSL
-	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param bool         $secure   Whether to only transfer cookies via SSL
+	 * @param bool         $httponly Whether only make the cookie accessible via HTTP (no javascript)
 	 * @param string|null  $samesite
 	 *
 	 * @return $this
@@ -830,8 +797,7 @@ class Response extends Message implements ResponseInterface
 		$secure = false,
 		$httponly = false,
 		$samesite = null
-	)
-	{
+	) {
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
@@ -839,7 +805,7 @@ class Response extends Message implements ResponseInterface
 			{
 				if (isset($name[$item]))
 				{
-					$$item = $name[$item];
+					${$item} = $name[$item];
 				}
 			}
 		}
@@ -869,7 +835,7 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if (is_null($samesite))
+		if ($samesite === null)
 		{
 			$samesite = $this->cookieSameSite ?? '';
 		}
@@ -908,8 +874,6 @@ class Response extends Message implements ResponseInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if the Response has a specified cookie or not.
 	 *
@@ -917,7 +881,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string|null $value
 	 * @param string      $prefix
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasCookie(string $name, string $value = null, string $prefix = ''): bool
 	{
@@ -976,6 +940,7 @@ class Response extends Message implements ResponseInterface
 				return $cookie;
 			}
 		}
+
 		return null;
 	}
 
@@ -1004,6 +969,7 @@ class Response extends Message implements ResponseInterface
 		$prefixedName = $prefix . $name;
 
 		$cookieHasFlag = false;
+
 		foreach ($this->cookies as &$cookie)
 		{
 			if ($cookie['name'] === $prefixedName)
@@ -1012,6 +978,7 @@ class Response extends Message implements ResponseInterface
 				{
 					continue;
 				}
+
 				if (! empty($path) && $cookie['path'] !== $path)
 				{
 					continue;
@@ -1019,6 +986,7 @@ class Response extends Message implements ResponseInterface
 				$cookie['value']   = '';
 				$cookie['expires'] = '';
 				$cookieHasFlag     = true;
+
 				break;
 			}
 		}
@@ -1093,7 +1061,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param string      $filename The path to the file to send
 	 * @param string|null $data     The data to be downloaded
-	 * @param boolean     $setMime  Whether to try and send the actual MIME type
+	 * @param bool        $setMime  Whether to try and send the actual MIME type
 	 *
 	 * @return DownloadResponse|null
 	 */
@@ -1105,6 +1073,7 @@ class Response extends Message implements ResponseInterface
 		}
 
 		$filepath = '';
+
 		if ($data === null)
 		{
 			$filepath = $filename;
@@ -1125,5 +1094,4 @@ class Response extends Message implements ResponseInterface
 
 		return $response;
 	}
-
 }

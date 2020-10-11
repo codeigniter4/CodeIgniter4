@@ -44,7 +44,6 @@ namespace CodeIgniter\HTTP;
  */
 class Request extends Message implements RequestInterface
 {
-
 	/**
 	 * IP address of the current user.
 	 *
@@ -55,7 +54,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Proxy IPs
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $proxyIPs;
 
@@ -74,8 +73,6 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $globals = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -91,8 +88,6 @@ class Request extends Message implements RequestInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the user's IP address.
 	 *
@@ -106,6 +101,7 @@ class Request extends Message implements RequestInterface
 		}
 
 		$proxyIps = $this->proxyIPs;
+
 		if (! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
 		{
 			$proxyIps = explode(',', str_replace(' ', '', $this->proxyIPs));
@@ -147,6 +143,7 @@ class Request extends Message implements RequestInterface
 						if ($proxyIp === $this->ipAddress)
 						{
 							$this->ipAddress = $spoof;
+
 							break;
 						}
 
@@ -158,7 +155,8 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxyIp, $separator) === false) // @phpstan-ignore-line
+					// @phpstan-ignore-next-line
+					if (strpos($proxyIp, $separator) === false)
 					{
 						continue;
 					}
@@ -166,14 +164,20 @@ class Request extends Message implements RequestInterface
 					// Convert the REMOTE_ADDR IP address to binary, if needed
 					if (! isset($ip, $sprintf))
 					{
-						if ($separator === ':') // @phpstan-ignore-line
+						// @phpstan-ignore-next-line
+						if ($separator === ':')
 						{
 							// Make sure we're have the "full" IPv6 format
-							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress
-									)
+							$ip = explode(
+								':',
+								str_replace(
+									'::',
+									str_repeat(':', 9 - substr_count($this->ipAddress, ':')),
+									$this->ipAddress
+								)
 							);
 
-							for ($j = 0; $j < 8; $j ++)
+							for ($j = 0; $j < 8; $j++)
 							{
 								$ip[$j] = intval($ip[$j], 16);
 							}
@@ -193,10 +197,12 @@ class Request extends Message implements RequestInterface
 					sscanf($proxyIp, '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
-					if ($separator === ':') // @phpstan-ignore-line
+					// @phpstan-ignore-next-line
+					if ($separator === ':')
 					{
 						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-						for ($i = 0; $i < 8; $i ++)
+
+						for ($i = 0; $i < 8; $i++)
 						{
 							$netaddr[$i] = intval($netaddr[$i], 16);
 						}
@@ -210,6 +216,7 @@ class Request extends Message implements RequestInterface
 					if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0)
 					{
 						$this->ipAddress = $spoof;
+
 						break;
 					}
 				}
@@ -224,15 +231,13 @@ class Request extends Message implements RequestInterface
 		return empty($this->ipAddress) ? '' : $this->ipAddress;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Validate an IP address
 	 *
 	 * @param string $ip    IP Address
 	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
@@ -240,33 +245,32 @@ class Request extends Message implements RequestInterface
 		{
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;
+
 				break;
 			case 'ipv6':
 				$which = FILTER_FLAG_IPV6;
+
 				break;
 			default:
 				$which = null;
+
 				break;
 		}
 
 		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get the request method.
 	 *
-	 * @param boolean $upper Whether to return in upper or lower case.
+	 * @param bool $upper Whether to return in upper or lower case
 	 *
 	 * @return string
 	 */
 	public function getMethod(bool $upper = false): string
 	{
-		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
+		return $upper ? strtoupper($this->method) : strtolower($this->method);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the request method. Used when spoofing the request.
@@ -282,13 +286,11 @@ class Request extends Message implements RequestInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param string|array|null $index  Index for item to be fetched from $_SERVER
-	 * @param integer|null      $filter A filter name to be applied
+	 * @param array|string|null $index  Index for item to be fetched from $_SERVER
+	 * @param int|null          $filter A filter name to be applied
 	 * @param null              $flags
 	 *
 	 * @return mixed
@@ -297,8 +299,6 @@ class Request extends Message implements RequestInterface
 	{
 		return $this->fetchGlobal('server', $index, $filter, $flags);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fetch an item from the $_ENV array.
@@ -313,8 +313,6 @@ class Request extends Message implements RequestInterface
 	{
 		return $this->fetchGlobal('env', $index, $filter, $flags);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
@@ -331,8 +329,6 @@ class Request extends Message implements RequestInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetches one or more items from a global, like cookies, get, post, etc.
 	 * Can optionally filter the input when you retrieve it by passing in
@@ -344,8 +340,8 @@ class Request extends Message implements RequestInterface
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
 	 * @param string            $method Input filter constant
-	 * @param string|array|null $index
-	 * @param integer|null      $filter Filter constant
+	 * @param array|string|null $index
+	 * @param int|null          $filter Filter constant
 	 * @param mixed             $flags
 	 *
 	 * @return mixed
@@ -360,15 +356,16 @@ class Request extends Message implements RequestInterface
 		}
 
 		// Null filters cause null values to return.
-		if (is_null($filter))
+		if ($filter === null)
 		{
 			$filter = FILTER_DEFAULT;
 		}
 
 		// Return all values when $index is null
-		if (is_null($index))
+		if ($index === null)
 		{
 			$values = [];
+
 			foreach ($this->globals[$method] as $key => $value)
 			{
 				$values[$key] = is_array($value)
@@ -396,12 +393,13 @@ class Request extends Message implements RequestInterface
 		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
 		{
 			$value = $this->globals[$method];
+
 			for ($i = 0; $i < $count; $i++)
 			{
 				$key = trim($matches[0][$i], '[]');
 
-				if ($key === '') // Empty notation will return the value as array
-				{
+				if ($key === '')
+				{ // Empty notation will return the value as array
 					break;
 				}
 
@@ -425,7 +423,7 @@ class Request extends Message implements RequestInterface
 		if (is_array($value) && ($filter !== null || $flags !== null))
 		{
 			// Iterate over array and append filter and flags
-			array_walk_recursive($value, function (&$val) use ($filter, $flags) {
+			array_walk_recursive($value, static function (&$val) use ($filter, $flags) {
 				$val = filter_var($val, $filter, $flags);
 			});
 
@@ -433,15 +431,13 @@ class Request extends Message implements RequestInterface
 		}
 
 		// Cannot filter these types of data automatically...
-		if (is_array($value) || is_object($value) || is_null($value))
+		if (is_array($value) || is_object($value) || $value === null)
 		{
 			return $value;
 		}
 
 		return filter_var($value, $filter, $flags);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Saves a copy of the current state of one of several PHP globals
@@ -458,22 +454,27 @@ class Request extends Message implements RequestInterface
 
 		// Don't populate ENV as it might contain
 		// sensitive data that we don't want to get logged.
-		switch($method)
+		switch ($method)
 		{
 			case 'get':
 				$this->globals['get'] = $_GET;
+
 				break;
 			case 'post':
 				$this->globals['post'] = $_POST;
+
 				break;
 			case 'request':
 				$this->globals['request'] = $_REQUEST;
+
 				break;
 			case 'cookie':
 				$this->globals['cookie'] = $_COOKIE;
+
 				break;
 			case 'server':
 				$this->globals['server'] = $_SERVER;
+
 				break;
 		}
 	}

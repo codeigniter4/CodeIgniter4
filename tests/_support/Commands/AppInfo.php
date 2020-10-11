@@ -1,16 +1,20 @@
 <?php
+
 namespace Tests\Support\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
+use RuntimeException;
 
 class AppInfo extends BaseCommand
 {
+	protected $group = 'demo';
 
-	protected $group       = 'demo';
-	protected $name        = 'app:info';
-	protected $arguments   = ['draft' => 'unused'];
+	protected $name = 'app:info';
+
+	protected $arguments = ['draft' => 'unused'];
+
 	protected $description = 'Displays basic application information.';
 
 	public function run(array $params)
@@ -24,7 +28,7 @@ class AppInfo extends BaseCommand
 		{
 			CLI::color('test', 'white', 'Background');
 		}
-		catch (\RuntimeException $oops)
+		catch (RuntimeException $oops)
 		{
 			$this->showError($oops);
 		}

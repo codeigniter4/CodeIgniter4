@@ -15,12 +15,15 @@
 		"psr/log": "^1.1"
 	},
 	"require-dev": {
-		"codeigniter4/codeigniter4-standard": "^1.0",
+		"friendsofphp/php-cs-fixer": "^2.16",
 		"fzaninotto/faker": "^1.9@dev",
+		"liaison/cs-config": "^1.1",
 		"mikey179/vfsstream": "1.6.*",
 		"phpunit/phpunit": "^8.5",
-		"predis/predis": "^1.1",
-		"squizlabs/php_codesniffer": "^3.3"
+		"predis/predis": "^1.1"
+	},
+	"config": {
+		"sort-packages": true
 	},
 	"autoload": {
 		"psr-4": {

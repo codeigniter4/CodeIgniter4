@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Pager;
+<?php
+
+namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Pager;
 use Config\Services;
@@ -9,13 +12,13 @@ use Config\Services;
 /**
  * @backupGlobals enabled
  */
-class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
+class PagerTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\Pager\Pager
 	 */
 	protected $pager;
+
 	protected $config;
 
 	protected function setUp(): void
@@ -226,9 +229,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=3');
+		$expected = (string) $expected->setQuery('page_foo=3');
 
-		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
 	}
 
 	public function testGetNextURIReturnsNullOnLastPage()
@@ -243,7 +246,7 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 1, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=2');
+		$expected = (string) $expected->setQuery('page_foo=2');
 
 		$this->assertEquals($expected, $this->pager->getNextPageURI('foo'));
 	}
@@ -255,9 +258,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=1');
+		$expected = (string) $expected->setQuery('page_foo=1');
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testGetNextURIReturnsNullOnFirstPage()
@@ -275,30 +278,30 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQueryArray($_GET);
+		$expected = (string) $expected->setQueryArray($_GET);
 
 		$this->pager->store('foo', $_GET['page_foo'] - 1, 12, 70);
 
-		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
 	}
 
 	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
 	{
-		$_GET     = [
+		$_GET = [
 			'page_foo' => 1,
 			'status'   => 1,
 		];
 		$expected = current_url(true);
-		$expected = (string)$expected->setQueryArray($_GET);
+		$expected = (string) $expected->setQueryArray($_GET);
 
 		$this->pager->store('foo', $_GET['page_foo'] + 1, 12, 70);
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testGetOnlyQueries()
 	{
-		$_GET        = [
+		$_GET = [
 			'page'     => 2,
 			'search'   => 'foo',
 			'order'    => 'asc',
@@ -316,15 +319,18 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getPreviousPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=1')
+				->getPreviousPageURI(),
+			(string) $uri->setQuery('search=foo&order=asc&page=1')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getNextPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=3')
+				->getNextPageURI(),
+			(string) $uri->setQuery('search=foo&order=asc&page=3')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getPageURI(4), (string)$uri->setQuery('search=foo&order=asc&page=4')
+				->getPageURI(4),
+			(string) $uri->setQuery('search=foo&order=asc&page=4')
 		);
 	}
 
@@ -350,37 +356,48 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testMakeLinks()
 	{
 		$this->assertStringContainsString(
-			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50)
+			'<ul class="pagination">',
+			$this->pager->makeLinks(4, 10, 50)
 		);
 		$this->assertStringContainsString(
-			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50, 'default_full')
+			'<ul class="pagination">',
+			$this->pager->makeLinks(4, 10, 50, 'default_full')
 		);
 		$this->assertStringContainsString(
-			'<ul class="pager">', $this->pager->makeLinks(4, 10, 50, 'default_simple')
+			'<ul class="pager">',
+			$this->pager->makeLinks(4, 10, 50, 'default_simple')
 		);
 		$this->assertStringContainsString(
-			'<link rel="canonical"', $this->pager->makeLinks(4, 10, 50, 'default_head')
+			'<link rel="canonical"',
+			$this->pager->makeLinks(4, 10, 50, 'default_head')
 		);
 		$this->assertStringContainsString(
-			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0)
+			'?page=1',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 0)
 		);
 		$this->assertStringContainsString(
-			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, '')
+			'?page=1',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 0, '')
 		);
 		$this->assertStringContainsString(
-			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default')
+			'?page=1',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default')
 		);
 		$this->assertStringContainsString(
-			'?page_custom=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom')
+			'?page_custom=1',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom')
 		);
 		$this->assertStringContainsString(
-			'?page_custom=1', $this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom')
+			'?page_custom=1',
+			$this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom')
 		);
 		$this->assertStringContainsString(
-			'/1', $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+			'/1',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 1)
 		);
 		$this->assertStringContainsString(
-			'<li class="active">', $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+			'<li class="active">',
+			$this->pager->makeLinks(1, 10, 1, 'default_full', 1)
 		);
 	}
 
@@ -427,9 +444,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=1');
+		$expected = (string) $expected->setQuery('page_foo=1');
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testAccessPageMoreThanPageCountGetLastPage()
@@ -443,5 +460,4 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('default', 10, 1, 10, 1000);
 		$this->assertEquals(1, $this->pager->getCurrentPage());
 	}
-
 }

@@ -48,7 +48,6 @@ use CodeIgniter\Database\PreparedQueryInterface;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -77,19 +76,17 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
 	 *
 	 * @param array $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if ($this->statement === null)
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -100,7 +97,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Determine the type string
 		foreach ($data as $item)
 		{
-			if (is_integer($item))
+			if (is_int($item))
 			{
 				$bindTypes .= 'i';
 			}
@@ -120,8 +117,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this->statement->execute();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result object for the prepared query.
 	 *
@@ -131,6 +126,4 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->statement->get_result();
 	}
-
-	//--------------------------------------------------------------------
 }

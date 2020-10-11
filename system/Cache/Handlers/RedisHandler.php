@@ -50,7 +50,6 @@ use RedisException;
  */
 class RedisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -78,8 +77,6 @@ class RedisHandler implements CacheInterface
 	 */
 	protected $redis;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -102,13 +99,12 @@ class RedisHandler implements CacheInterface
 	 */
 	public function __destruct()
 	{
-		if ($this->redis) // @phpstan-ignore-line
+		// @phpstan-ignore-next-line
+		if ($this->redis)
 		{
 			$this->redis->close();
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes care of any handler-specific setup that must be done.
@@ -130,18 +126,21 @@ class RedisHandler implements CacheInterface
 			{
 				// Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
 				log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+
 				throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
 			}
 
 			if (isset($config['password']) && ! $this->redis->auth($config['password']))
 			{
 				log_message('error', 'Cache: Redis authentication failed.');
+
 				throw new CriticalError('Cache: Redis authentication failed.');
 			}
 
 			if (isset($config['database']) && ! $this->redis->select($config['database']))
 			{
 				log_message('error', 'Cache: Redis select database failed.');
+
 				throw new CriticalError('Cache: Redis select database failed.');
 			}
 		}
@@ -152,8 +151,6 @@ class RedisHandler implements CacheInterface
 			throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -190,14 +187,12 @@ class RedisHandler implements CacheInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -210,6 +205,7 @@ class RedisHandler implements CacheInterface
 			case 'array':
 			case 'object':
 				$value = serialize($value);
+
 				break;
 			case 'boolean':
 			case 'integer':
@@ -235,20 +231,18 @@ class RedisHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes a specific item from the cache store.
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function delete(string $key)
 	{
 		$key = $this->prefix . $key;
 
-		return ($this->redis->del($key) === 1);
+		return $this->redis->del($key) === 1;
 	}
 
 	//--------------------------------------------------------------------
@@ -256,8 +250,8 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -268,13 +262,11 @@ class RedisHandler implements CacheInterface
 		return $this->redis->hIncrBy($key, 'data', $offset);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -285,19 +277,15 @@ class RedisHandler implements CacheInterface
 		return $this->redis->hIncrBy($key, 'data', -$offset);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function clean()
 	{
 		return $this->redis->flushDB();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns information on the entire cache.
@@ -312,12 +300,10 @@ class RedisHandler implements CacheInterface
 		return $this->redis->info();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns detailed information about the specific item in the cache.
 	 *
-	 * @param string $key Cache item name.
+	 * @param string $key cache item name
 	 *
 	 * @return mixed
 	 */
@@ -330,6 +316,7 @@ class RedisHandler implements CacheInterface
 		if ($value !== null)
 		{
 			$time = time();
+
 			return [
 				'expire' => $time + $this->redis->ttl($key),
 				'mtime'  => $time,
@@ -340,17 +327,13 @@ class RedisHandler implements CacheInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSupported(): bool
 	{
 		return extension_loaded('redis');
 	}
-
-	//--------------------------------------------------------------------
 }

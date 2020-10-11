@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -32,7 +33,7 @@
  * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -46,25 +47,18 @@ use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to help provide a UI for a resource.
- *
- * @package CodeIgniter\RESTful
  */
 class ResourcePresenter extends Controller
 {
-
 	/**
-	 *
 	 * @var string|null Name of the model class managing this resource's data
 	 */
 	protected $modelName;
 
 	/**
-	 *
 	 * @var Model|null the model holding this resource's data
 	 */
 	protected $model;
-
-	//--------------------------------------------------------------------
 
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
@@ -73,8 +67,6 @@ class ResourcePresenter extends Controller
 		// instantiate our model, if needed
 		$this->setModel($this->modelName);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Present a view of resource objects
@@ -89,7 +81,8 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return string
 	 */
 	public function show($id = null)
@@ -121,7 +114,8 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return string
 	 */
 	public function remove($id = null)
@@ -132,7 +126,8 @@ class ResourcePresenter extends Controller
 	/**
 	 * Process the deletion of a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return string
 	 */
 	public function delete($id = null)
@@ -143,7 +138,8 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return string
 	 */
 	public function edit($id = null)
@@ -155,7 +151,8 @@ class ResourcePresenter extends Controller
 	 * Process the updating, full or partial, of a specific resource object.
 	 * This should be a POST.
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return string
 	 */
 	public function update($id = null)
@@ -163,13 +160,11 @@ class ResourcePresenter extends Controller
 		return lang('RESTful.notImplemented', ['update']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set or change the model this controller is bound to.
 	 * Given either the name or the object, determine the other.
 	 *
-	 * @param string|object $which
+	 * @param object|string $which
 	 */
 	public function setModel($which = null)
 	{
@@ -203,5 +198,4 @@ class ResourcePresenter extends Controller
 			$this->modelName = get_class($this->model);
 		}
 	}
-
 }

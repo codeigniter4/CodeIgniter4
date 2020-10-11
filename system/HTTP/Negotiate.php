@@ -49,19 +49,15 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * getServer wants.
  *
  * @see     http://tools.ietf.org/html/rfc7231#section-5.3
- * @package CodeIgniter\HTTP
  */
 class Negotiate
 {
-
 	/**
 	 * Request
 	 *
-	 * @var RequestInterface|IncomingRequest
+	 * @var IncomingRequest|RequestInterface
 	 */
 	protected $request;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -70,13 +66,11 @@ class Negotiate
 	 */
 	public function __construct(RequestInterface $request = null)
 	{
-		if (! is_null($request))
+		if ($request !== null)
 		{
 			$this->request = $request;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Stores the request instance to grab the headers from.
@@ -92,8 +86,6 @@ class Negotiate
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the best content-type to use based on the $supported
 	 * types the application says it supports, and the types requested
@@ -102,9 +94,9 @@ class Negotiate
 	 * If no match is found, the first, highest-ranking client requested
 	 * type is returned.
 	 *
-	 * @param array   $supported
-	 * @param boolean $strictMatch If TRUE, will return an empty string when no match found.
-	 *                             If FALSE, will return the first supported element.
+	 * @param array $supported
+	 * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
+	 *                           If FALSE, will return the first supported element.
 	 *
 	 * @return string
 	 */
@@ -112,8 +104,6 @@ class Negotiate
 	{
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Determines the best charset to use based on the $supported
@@ -141,8 +131,6 @@ class Negotiate
 		return $match;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the best encoding type to use based on the $supported
 	 * types the application says it supports, and the types requested
@@ -162,8 +150,6 @@ class Negotiate
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the best language to use based on the $supported
 	 * types the application says it supports, and the types requested
@@ -182,7 +168,6 @@ class Negotiate
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Utility Methods
 	//--------------------------------------------------------------------
 
@@ -192,12 +177,12 @@ class Negotiate
 	 *
 	 * Portions of this code base on Aura.Accept library.
 	 *
-	 * @param array   $supported    App-supported values
-	 * @param string  $header       header string
-	 * @param boolean $enforceTypes If TRUE, will compare media types and sub-types.
-	 * @param boolean $strictMatch  If TRUE, will return empty string on no match.
-	 *                              If FALSE, will return the first supported element.
-	 * @param boolean $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
+	 * @param array  $supported    App-supported values
+	 * @param string $header       header string
+	 * @param bool   $enforceTypes if TRUE, will compare media types and sub-types
+	 * @param bool   $strictMatch  If TRUE, will return empty string on no match.
+	 *                             If FALSE, will return the first supported element.
+	 * @param bool   $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
 	 *
 	 * @return string Best match
 	 */
@@ -243,8 +228,6 @@ class Negotiate
 		return $strictMatch ? '' : $supported[0];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parses an Accept* header into it's multiple values.
 	 *
@@ -273,7 +256,9 @@ class Negotiate
 			{
 				$param = [];
 				preg_match(
-						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
+					'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
+					$pair,
+					$param
 				);
 				$parameters[trim($param['name'])] = trim($param['value']);
 			}
@@ -294,7 +279,7 @@ class Negotiate
 		}
 
 		// Sort to get the highest results first
-		usort($results, function ($a, $b) {
+		usort($results, static function ($a, $b) {
 			if ($a['q'] === $b['q'])
 			{
 				$aAst = substr_count($a['value'], '*');
@@ -332,21 +317,20 @@ class Negotiate
 		return $results;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Match-maker
 	 *
-	 * @param array   $acceptable
-	 * @param string  $supported
-	 * @param boolean $enforceTypes
-	 * @param boolean $matchLocales
+	 * @param array  $acceptable
+	 * @param string $supported
+	 * @param bool   $enforceTypes
+	 * @param bool   $matchLocales
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
 	{
 		$supported = $this->parseHeader($supported);
+
 		if (is_array($supported) && count($supported) === 1)
 		{
 			$supported = $supported[0];
@@ -374,8 +358,6 @@ class Negotiate
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks two Accept values with matching 'values' to see if their
 	 * 'params' are the same.
@@ -383,7 +365,7 @@ class Negotiate
 	 * @param array $acceptable
 	 * @param array $supported
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function matchParameters(array $acceptable, array $supported): bool
 	{
@@ -394,8 +376,7 @@ class Negotiate
 
 		foreach ($supported['params'] as $label => $value)
 		{
-			if (! isset($acceptable['params'][$label]) ||
-					$acceptable['params'][$label] !== $value)
+			if (! isset($acceptable['params'][$label]) || $acceptable['params'][$label] !== $value)
 			{
 				return false;
 			}
@@ -404,8 +385,6 @@ class Negotiate
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Compares the types/subtypes of an acceptable Media type and
 	 * the supported string.
@@ -413,14 +392,14 @@ class Negotiate
 	 * @param array $acceptable
 	 * @param array $supported
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function matchTypes(array $acceptable, array $supported): bool
 	{
 		// PHPDocumentor v2 cannot parse yet the shorter list syntax,
 		// causing no API generation for the file.
-		list($aType, $aSubType) = explode('/', $acceptable['value']);
-		list($sType, $sSubType) = explode('/', $supported['value']);
+		[$aType, $aSubType] = explode('/', $acceptable['value']);
+		[$sType, $sSubType] = explode('/', $supported['value']);
 
 		// If the types don't match, we're done.
 		if ($aType !== $sType)
@@ -438,8 +417,6 @@ class Negotiate
 		return $aSubType === $sSubType;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will match locales against their broader pairs, so that fr-FR would
 	 * match a supported localed of fr
@@ -447,15 +424,15 @@ class Negotiate
 	 * @param array $acceptable
 	 * @param array $supported
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function matchLocales(array $acceptable, array $supported): bool
 	{
-		$aBroad = mb_strpos($acceptable['value'], '-') > 0
-			? mb_substr($acceptable['value'], 0, mb_strpos($acceptable['value'], '-'))
+		$aBroad = strpos($acceptable['value'], '-') > 0
+			? substr($acceptable['value'], 0, strpos($acceptable['value'], '-'))
 			: $acceptable['value'];
-		$sBroad = mb_strpos($supported['value'], '-') > 0
-			? mb_substr($supported['value'], 0, mb_strpos($supported['value'], '-'))
+		$sBroad = strpos($supported['value'], '-') > 0
+			? substr($supported['value'], 0, strpos($supported['value'], '-'))
 			: $supported['value'];
 
 		return strtolower($aBroad) === strtolower($sBroad);

@@ -41,7 +41,6 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Modules;
 use Config\Services;
@@ -50,12 +49,9 @@ use Config\Services;
  * Class RouteCollection
  *
  * @todo Implement nested resource routing (See CakePHP)
- *
- * @package CodeIgniter\Router
  */
 class RouteCollection implements RouteCollectionInterface
 {
-
 	/**
 	 * The namespace to be added to any Controllers.
 	 * Defaults to the global namespaces (\)
@@ -97,7 +93,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * Not used here. Pass-thru value for Router class.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $translateURIDashes = false;
 
@@ -107,7 +103,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * Not used here. Pass-thru value for Router class.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $autoRoute = true;
 
@@ -115,7 +111,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * A callable that will be shown
 	 * when the route cannot be matched.
 	 *
-	 * @var string|Closure
+	 * @var Closure|string
 	 */
 	protected $override404;
 
@@ -209,7 +205,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * A little performance booster.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $didDiscover = false;
 
@@ -227,8 +223,6 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected $moduleConfig;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -241,8 +235,6 @@ class RouteCollection implements RouteCollectionInterface
 		$this->moduleConfig = $moduleConfig;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Registers a new constraint with the system. Constraints are used
 	 * by the routes as placeholders for regular expressions to make defining
@@ -251,7 +243,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * You can pass an associative array as $placeholder, and have
 	 * multiple placeholders added at once.
 	 *
-	 * @param string|array $placeholder
+	 * @param array|string $placeholder
 	 * @param string|null  $pattern
 	 *
 	 * @return RouteCollectionInterface
@@ -267,8 +259,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the default namespace to use for Controllers when no other
@@ -286,8 +276,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default controller to use when no other controller has been
 	 * specified.
@@ -302,8 +290,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the default method to call on the controller when no other
@@ -320,8 +306,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Tells the system whether to convert dashes in URI strings into
 	 * underscores. In some search engines, including Google, dashes
@@ -329,7 +313,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * find words and meaning in the URI for better SEO. But it
 	 * doesn't work well with PHP method names....
 	 *
-	 * @param boolean $value
+	 * @param bool $value
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -340,8 +324,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If TRUE, the system will attempt to match the URI against
 	 * Controllers by matching each segment against folders/files
@@ -350,7 +332,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
 	 *
-	 * @param boolean $value
+	 * @param bool $value
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -360,8 +342,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the class/method that should be called if routing doesn't
@@ -381,20 +361,16 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the 404 Override setting, which can be null, a closure
 	 * or the controller/string.
 	 *
-	 * @return string|Closure|null
+	 * @return Closure|string|null
 	 */
 	public function get404Override()
 	{
 		return $this->override404;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Will attempt to discover any additional routes, either through
@@ -430,8 +406,6 @@ class RouteCollection implements RouteCollectionInterface
 		$this->didDiscover = true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resource' method.
@@ -450,8 +424,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the name of the default controller. With Namespace.
 	 *
@@ -461,8 +433,6 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		return $this->defaultController;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the default method to use within the controller.
@@ -474,8 +444,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this->defaultMethod;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the default namespace as set in the Routes config file.
 	 *
@@ -486,31 +454,25 @@ class RouteCollection implements RouteCollectionInterface
 		return $this->defaultNamespace;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current value of the translateURIDashes setting.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function shouldTranslateURIDashes(): bool
 	{
 		return $this->translateURIDashes;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function shouldAutoRoute(): bool
 	{
 		return $this->autoRoute;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the raw array of available routes.
@@ -543,6 +505,7 @@ class RouteCollection implements RouteCollectionInterface
 				$extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);
 				$collection = array_merge($this->routes[$verb], $extraRules);
 			}
+
 			foreach ($collection as $r)
 			{
 				$key          = key($r['route']);
@@ -552,8 +515,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $routes;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns one or all routes options
@@ -570,8 +531,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $from ? $options[$from] ?? [] : $options;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current HTTP Verb being used.
 	 *
@@ -581,8 +540,6 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		return $this->HTTPVerb;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the current HTTP verb.
@@ -619,8 +576,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a single route to the collection.
 	 *
@@ -640,16 +595,14 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a temporary redirect from one route to another. Used for
 	 * redirecting traffic from old, non-existing routes to the new
 	 * moved routes.
 	 *
-	 * @param string  $from   The pattern to match against
-	 * @param string  $to     Either a route name or a URI to redirect to
-	 * @param integer $status The HTTP status code that should be returned with this redirect
+	 * @param string $from   The pattern to match against
+	 * @param string $to     Either a route name or a URI to redirect to
+	 * @param int    $status The HTTP status code that should be returned with this redirect
 	 *
 	 * @return RouteCollection
 	 */
@@ -670,14 +623,12 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the route is a redirecting route.
 	 *
 	 * @param string $from
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRedirect(string $from): bool
 	{
@@ -693,14 +644,12 @@ class RouteCollection implements RouteCollectionInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Grabs the HTTP status code from a redirecting Route.
 	 *
 	 * @param string $from
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getRedirectCode(string $from): int
 	{
@@ -717,7 +666,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Grouping Routes
 	//--------------------------------------------------------------------
 
@@ -731,7 +679,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *            $route->resource('users');
 	 *     });
 	 *
-	 * @param string         $name      The name to group/prefix the routes with.
+	 * @param string         $name      The name to group/prefix the routes with
 	 * @param array|callable ...$params
 	 *
 	 * @return void
@@ -762,9 +710,9 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// HTTP Verb-based routing
 	//--------------------------------------------------------------------
+	//
 	// Routing works here because, as the routes Config file is read in,
 	// the various HTTP verb-based routes will only be added to the in-memory
 	// routes if it is a call that should respond to that verb.
@@ -802,8 +750,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *      POST		/photos/{id}/delete delete
 	 *      POST        /photos/{id}        update
 	 *
-	 * @param string     $name    The name of the resource/controller to route to.
-	 * @param array|null $options An list of possible ways to customize the routing.
+	 * @param string     $name    The name of the resource/controller to route to
+	 * @param array|null $options A list of possible ways to customize the routing
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -837,6 +785,7 @@ class RouteCollection implements RouteCollectionInterface
 		if (isset($options['except']))
 		{
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+
 			foreach ($methods as $i => $method)
 			{
 				if (in_array($method, $options['except'], true))
@@ -850,27 +799,33 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->get($name, $newName . '::index', $options);
 		}
+
 		if (in_array('new', $methods, true))
 		{
 			$this->get($name . '/new', $newName . '::new', $options);
 		}
+
 		if (in_array('edit', $methods, true))
 		{
 			$this->get($name . '/' . $id . '/edit', $newName . '::edit/$1', $options);
 		}
+
 		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
 		}
+
 		if (in_array('create', $methods, true))
 		{
 			$this->post($name, $newName . '::create', $options);
 		}
+
 		if (in_array('update', $methods, true))
 		{
 			$this->put($name . '/' . $id, $newName . '::update/$1', $options);
 			$this->patch($name . '/' . $id, $newName . '::update/$1', $options);
 		}
+
 		if (in_array('delete', $methods, true))
 		{
 			$this->delete($name . '/' . $id, $newName . '::delete/$1', $options);
@@ -883,6 +838,7 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				$this->post($name . '/' . $id . '/delete', $newName . '::delete/$1', $options);
 			}
+
 			if (in_array('update', $methods, true))
 			{
 				$this->post($name . '/' . $id, $newName . '::update/$1', $options);
@@ -915,8 +871,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *      GET         /photos/remove/{id} remove          show a form to confirm deletion of a specific photo object
 	 *      POST        /photos/delete/{id} delete          deleting the specified photo object
 	 *
-	 * @param string     $name    The name of the controller to route to.
-	 * @param array|null $options An list of possible ways to customize the routing.
+	 * @param string     $name    The name of the controller to route to
+	 * @param array|null $options A list of possible ways to customize the routing
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -950,6 +906,7 @@ class RouteCollection implements RouteCollectionInterface
 		if (isset($options['except']))
 		{
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+
 			foreach ($methods as $i => $method)
 			{
 				if (in_array($method, $options['except'], true))
@@ -963,38 +920,47 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->get($name, $newName . '::index', $options);
 		}
+
 		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/show/' . $id, $newName . '::show/$1', $options);
 		}
+
 		if (in_array('new', $methods, true))
 		{
 			$this->get($name . '/new', $newName . '::new', $options);
 		}
+
 		if (in_array('create', $methods, true))
 		{
 			$this->post($name . '/create', $newName . '::create', $options);
 		}
+
 		if (in_array('edit', $methods, true))
 		{
 			$this->get($name . '/edit/' . $id, $newName . '::edit/$1', $options);
 		}
+
 		if (in_array('update', $methods, true))
 		{
 			$this->post($name . '/update/' . $id, $newName . '::update/$1', $options);
 		}
+
 		if (in_array('remove', $methods, true))
 		{
 			$this->get($name . '/remove/' . $id, $newName . '::remove/$1', $options);
 		}
+
 		if (in_array('delete', $methods, true))
 		{
 			$this->post($name . '/delete/' . $id, $newName . '::delete/$1', $options);
 		}
+
 		if (in_array('show', $methods, true))
 		{
 			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
 		}
+
 		if (in_array('create', $methods, true))
 		{
 			$this->post($name, $newName . '::create', $options);
@@ -1002,8 +968,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Specifies a single route to match for multiple HTTP Verbs.
@@ -1013,7 +977,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param array        $verbs
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1030,13 +994,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to GET requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1048,13 +1010,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to POST requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1066,13 +1026,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to PUT requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1084,13 +1042,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to DELETE requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1102,13 +1058,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to HEAD requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1120,13 +1074,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to PATCH requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1138,13 +1090,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to OPTIONS requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1156,13 +1106,11 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to command-line requests.
 	 *
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 *
 	 * @return RouteCollectionInterface
@@ -1173,8 +1121,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
@@ -1194,8 +1140,6 @@ class RouteCollection implements RouteCollectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to look up a route based on its destination.
 	 *
@@ -1212,7 +1156,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $search
 	 * @param mixed  ...$params
 	 *
-	 * @return string|false
+	 * @return false|string
 	 */
 	public function reverseRoute(string $search, ...$params)
 	{
@@ -1222,6 +1166,7 @@ class RouteCollection implements RouteCollectionInterface
 			if (array_key_exists($search, $collection))
 			{
 				$route = $this->fillRouteParams(key($collection[$search]['route']), $params);
+
 				return $this->localizeRoute($route);
 			}
 		}
@@ -1261,6 +1206,7 @@ class RouteCollection implements RouteCollectionInterface
 				}
 
 				$route = $this->fillRouteParams($from, $params);
+
 				return $this->localizeRoute($route);
 			}
 		}
@@ -1269,8 +1215,6 @@ class RouteCollection implements RouteCollectionInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Replaces the {locale} tag with the current application locale
 	 *
@@ -1278,12 +1222,10 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	protected function localizeRoute(string $route) :string
+	protected function localizeRoute(string $route): string
 	{
 		return strtr($route, ['{locale}' => Services::request()->getLocale()]);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks a route (using the "from") to see if it's filtered or not.
@@ -1291,7 +1233,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string      $search
 	 * @param string|null $verb
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isFiltered(string $search, string $verb = null): bool
 	{
@@ -1299,8 +1241,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return isset($options[$search]['filter']);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the filter that should be applied for a single route, along
@@ -1324,16 +1264,15 @@ class RouteCollection implements RouteCollectionInterface
 		return $options[$search]['filter'] ?? '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Given a
 	 *
 	 * @param string     $from
 	 * @param array|null $params
 	 *
-	 * @return string
 	 * @throws RouterException
+	 *
+	 * @return string
 	 */
 	protected function fillRouteParams(string $from, array $params = null): string
 	{
@@ -1363,8 +1302,6 @@ class RouteCollection implements RouteCollectionInterface
 		return '/' . ltrim($from, '/');
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does the heavy lifting of creating an actual route. You must specify
 	 * the request method(s) that this route will work for. They can be separated
@@ -1372,13 +1309,13 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string       $verb
 	 * @param string       $from
-	 * @param string|array $to
+	 * @param array|string $to
 	 * @param array|null   $options
 	 */
 	protected function create(string $verb, string $from, $to, array $options = null)
 	{
 		$overwrite = false;
-		$prefix    = is_null($this->group) ? '' : $this->group . '/';
+		$prefix    = $this->group === null ? '' : $this->group . '/';
 
 		$from = filter_var($prefix . $from, FILTER_SANITIZE_STRING);
 
@@ -1404,7 +1341,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// Limiting to subdomains?
-		else if (! empty($options['subdomain']))
+		elseif (! empty($options['subdomain']))
 		{
 			// If we don't match the current subdomain, then
 			// we don't need to add the route.
@@ -1424,12 +1361,15 @@ class RouteCollection implements RouteCollectionInterface
 			// Get a constant string to work with.
 			$to = preg_replace('/(\$\d+)/', '$X', $to);
 
-			for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i ++)
+			for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i++)
 			{
 				$to = preg_replace_callback(
-						'/\$X/', function ($m) use ($i) {
-							return '$' . $i;
-						}, $to, 1
+					'/\$X/',
+					static function ($m) use ($i) {
+						return '$' . $i;
+					},
+					$to,
+					1
 				);
 			}
 		}
@@ -1484,15 +1424,13 @@ class RouteCollection implements RouteCollectionInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Compares the subdomain(s) passed in against the current subdomain
 	 * on this page request.
 	 *
 	 * @param mixed $subdomains
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	private function checkSubdomains($subdomains): bool
 	{
@@ -1502,7 +1440,7 @@ class RouteCollection implements RouteCollectionInterface
 			return false;
 		}
 
-		if (is_null($this->currentSubdomain))
+		if ($this->currentSubdomain === null)
 		{
 			$this->currentSubdomain = $this->determineCurrentSubdomain();
 		}
@@ -1514,15 +1452,13 @@ class RouteCollection implements RouteCollectionInterface
 
 		// Routes can be limited to any sub-domain. In that case, though,
 		// it does require a sub-domain to be present.
-		if (! empty($this->currentSubdomain) && in_array('*', $subdomains))
+		if (! empty($this->currentSubdomain) && in_array('*', $subdomains, true))
 		{
 			return true;
 		}
 
 		return in_array($this->currentSubdomain, $subdomains, true);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Examines the HTTP_HOST to get a best match for the subdomain. It
@@ -1539,6 +1475,7 @@ class RouteCollection implements RouteCollectionInterface
 		// on the URL else parse_url will mis-interpret
 		// 'host' as the 'path'.
 		$url = $_SERVER['HTTP_HOST'];
+
 		if (strpos($url, 'http') !== 0)
 		{
 			$url = 'http://' . $url;
@@ -1572,8 +1509,6 @@ class RouteCollection implements RouteCollectionInterface
 		return array_shift($host);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Reset the routes, so that a FeatureTestCase can provide the
 	 * explicit ones needed for it.
@@ -1581,13 +1516,12 @@ class RouteCollection implements RouteCollectionInterface
 	public function resetRoutes()
 	{
 		$this->routes = ['*' => []];
+
 		foreach ($this->defaultHTTPMethods as $verb)
 		{
 			$this->routes[$verb] = [];
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Load routes options based on verb
@@ -1620,5 +1554,4 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $options;
 	}
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -47,12 +46,9 @@ use RecursiveIteratorIterator;
  * Class FileCollection
  *
  * Provides easy access to uploaded files for a request.
- *
- * @package CodeIgniter\HTTP\Files
  */
 class FileCollection
 {
-
 	/**
 	 * An array of UploadedFile instances for any files
 	 * uploaded as part of this request.
@@ -62,8 +58,6 @@ class FileCollection
 	 * @var array|null
 	 */
 	protected $files;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of all uploaded files that were found.
@@ -78,8 +72,6 @@ class FileCollection
 
 		return $this->files;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to get a single file from the collection of uploaded files.
@@ -98,6 +90,7 @@ class FileCollection
 			{
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+
 				return ($uploadedFile instanceof UploadedFile) ?
 					 $uploadedFile : null;
 			}
@@ -105,15 +98,13 @@ class FileCollection
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return  ($uploadedFile instanceof UploadedFile) ?
-					$uploadedFile : null;
+
+				return  ($uploadedFile instanceof UploadedFile) ? $uploadedFile : null;
 			}
 		}
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
@@ -140,15 +131,13 @@ class FileCollection
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
-					$uploadedFile : null;
+
+				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ? $uploadedFile : null;
 			}
 		}
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks whether an uploaded file with name $fileID exists in
@@ -156,7 +145,7 @@ class FileCollection
 	 *
 	 * @param string $fileID The name of the uploaded file (from the input)
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasFile(string $fileID): bool
 	{
@@ -183,8 +172,6 @@ class FileCollection
 
 		return isset($this->files[$fileID]);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Taking information from the $_FILES array, it creates an instance
@@ -214,8 +201,6 @@ class FileCollection
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Given a file array, will create UploadedFile instances. Will
 	 * loop over an array and create objects for each.
@@ -244,11 +229,13 @@ class FileCollection
 		}
 
 		return new UploadedFile(
-				$array['tmp_name'] ?? null, $array['name'] ?? null, $array['type'] ?? null, $array['size'] ?? null, $array['error'] ?? null
+			$array['tmp_name'] ?? null,
+			$array['name'] ?? null,
+			$array['type'] ?? null,
+			$array['size'] ?? null,
+			$array['error'] ?? null
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reformats the odd $_FILES array into something much more like
@@ -276,12 +263,14 @@ class FileCollection
 				if (! is_array($value))
 				{
 					$pointer[$field] = $value;
+
 					continue;
 				}
 
 				$stack    = [&$pointer];
 				$iterator = new RecursiveIteratorIterator(
-						new RecursiveArrayIterator($value), RecursiveIteratorIterator::SELF_FIRST
+					new RecursiveArrayIterator($value),
+					RecursiveIteratorIterator::SELF_FIRST
 				);
 
 				foreach ($iterator as $key => $val)
@@ -290,6 +279,7 @@ class FileCollection
 					$pointer = &$stack[count($stack) - 1];
 					$pointer = &$pointer[$key];
 					$stack[] = &$pointer;
+
 					if (! $iterator->hasChildren())
 					{
 						$pointer[$field] = $val;
@@ -300,8 +290,6 @@ class FileCollection
 
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Navigate through a array looking for a particular index
@@ -317,12 +305,13 @@ class FileCollection
 		{
 			$currentIndex = array_shift($index);
 		}
+
 		if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex])
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
 		}
 
-		return (isset($currentIndex) && isset($value[$currentIndex])) ? $value[$currentIndex] : null;
+		// @phpstan-ignore-next-line
+		return isset($currentIndex, $value[$currentIndex]) ? $value[$currentIndex] : null;
 	}
-
 }

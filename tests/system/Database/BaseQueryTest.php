@@ -1,12 +1,13 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseQueryTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -14,8 +15,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testQueryStoresSQL()
 	{
@@ -28,8 +27,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($sql, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStoresDuration()
 	{
 		$query = new Query($this->db);
@@ -40,8 +37,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(5, $query->getDuration());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetStartTime()
 	{
@@ -54,8 +49,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($start, $query->getStartTime(true));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetStartTimeNumberFormat()
 	{
 		$query = new Query($this->db);
@@ -66,8 +59,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(number_format($start, 6), $query->getStartTime());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testsStoresErrorInformation()
 	{
@@ -83,8 +74,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($code, $query->getErrorCode());
 		$this->assertEquals($msg, $query->getErrorMessage());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSwapPrefix()
 	{
@@ -102,40 +91,38 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($newSQL, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function queryTypes()
 	{
 		return [
-			'select'   => [
+			'select' => [
 				false,
 				'SELECT * FROM users',
 			],
-			'set'      => [
+			'set' => [
 				true,
 				'SET ...',
 			],
-			'insert'   => [
+			'insert' => [
 				true,
 				'INSERT INTO ...',
 			],
-			'update'   => [
+			'update' => [
 				true,
 				'UPDATE ...',
 			],
-			'delete'   => [
+			'delete' => [
 				true,
 				'DELETE ...',
 			],
-			'replace'  => [
+			'replace' => [
 				true,
 				'REPLACE ...',
 			],
-			'create'   => [
+			'create' => [
 				true,
 				'CREATE ...',
 			],
-			'drop'     => [
+			'drop' => [
 				true,
 				'DROP ...',
 			],
@@ -143,49 +130,50 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 				true,
 				'TRUNCATE ...',
 			],
-			'load'     => [
+			'load' => [
 				true,
 				'LOAD ...',
 			],
-			'copy'     => [
+			'copy' => [
 				true,
 				'COPY ...',
 			],
-			'alter'    => [
+			'alter' => [
 				true,
 				'ALTER ...',
 			],
-			'rename'   => [
+			'rename' => [
 				true,
 				'RENAME ...',
 			],
-			'grant'    => [
+			'grant' => [
 				true,
 				'GRANT ...',
 			],
-			'revoke'   => [
+			'revoke' => [
 				true,
 				'REVOKE ...',
 			],
-			'lock'     => [
+			'lock' => [
 				true,
 				'LOCK ...',
 			],
-			'unlock'   => [
+			'unlock' => [
 				true,
 				'UNLOCK ...',
 			],
-			'reindex'  => [
+			'reindex' => [
 				true,
 				'REINDEX ...',
 			],
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider queryTypes
+	 *
+	 * @param mixed $expected
+	 * @param mixed $sql
 	 */
 	public function testIsWriteType($expected, $sql)
 	{
@@ -194,8 +182,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$query->setQuery($sql);
 		$this->assertSame($expected, $query->isWriteType());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSingleBindingOutsideOfArray()
 	{
@@ -208,8 +194,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBindingSingleElementInArray()
 	{
 		$query = new Query($this->db);
@@ -220,8 +204,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBindingMultipleItems()
 	{
@@ -234,8 +216,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBindingAutoEscapesParameters()
 	{
 		$query = new Query($this->db);
@@ -247,8 +227,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNamedBinds()
 	{
 		$query = new Query($this->db);
@@ -259,8 +237,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group single
@@ -277,8 +253,6 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705

@@ -8,6 +8,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 class ClearLogsTest extends CIUnitTestCase
 {
 	protected $streamFilter;
+
 	protected $date;
 
 	protected function setUp(): void
@@ -15,8 +16,9 @@ class ClearLogsTest extends CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 
 		// test runs on other tests may log errors since default threshold
 		// is now 4, so set this to a safe distance

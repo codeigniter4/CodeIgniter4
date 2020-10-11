@@ -5,19 +5,20 @@ namespace CodeIgniter\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
-
 	protected $config;
-	protected $honeypot;
-	protected $request;
-	protected $response;
 
-	//--------------------------------------------------------------------
+	protected $honeypot;
+
+	protected $request;
+
+	protected $response;
 
 	protected function setUp(): void
 	{
@@ -32,8 +33,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response             = Services::response();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAttachHoneypot()
 	{
 		$this->response->setBody('<form></form>');
@@ -44,8 +43,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response->setBody('<div></div>');
 		$this->assertStringNotContainsString($this->config->name, $this->response->getBody());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAttachHoneypotAndContainer()
 	{
@@ -61,22 +58,18 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->response->getBody());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasntContent()
 	{
 		unset($_POST[$this->config->name]);
 		$this->request = Services::request();
 
-		$this->assertEquals(false, $this->honeypot->hasContent($this->request));
+		$this->assertFalse($this->honeypot->hasContent($this->request));
 	}
 
 	public function testHasContent()
 	{
-		$this->assertEquals(true, $this->honeypot->hasContent($this->request));
+		$this->assertTrue($this->honeypot->hasContent($this->request));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testConfigHidden()
 	{
@@ -99,7 +92,6 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->honeypot = new Honeypot($this->config);
 	}
 
-	//--------------------------------------------------------------------
 	public function testHoneypotFilterBefore()
 	{
 		$config = [
@@ -158,5 +150,4 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->getPrivateProperty($honeypot, 'config')->container
 		);
 	}
-
 }

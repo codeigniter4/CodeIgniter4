@@ -23,7 +23,7 @@ class InfoCacheTest extends CIUnitTestCase
 		Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		stream_filter_remove($this->streamFilter);
 
@@ -68,6 +68,6 @@ class InfoCacheTest extends CIUnitTestCase
 		cache()->delete('foo');
 		command('cache:info');
 
-		$this->assertStringNotContainsString ('foo', $this->getBuffer());
+		$this->assertStringNotContainsString('foo', $this->getBuffer());
 	}
 }

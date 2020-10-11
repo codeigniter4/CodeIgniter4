@@ -1,12 +1,13 @@
 <?php
+
 namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileMovingTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -17,6 +18,7 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->start = $this->root->url() . '/';
 
 		$this->destination = $this->start . 'destination';
+
 		if (is_dir($this->destination))
 		{
 			rmdir($this->destination);
@@ -25,20 +27,19 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_FILES = [];
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 		$this->root = null;
 
 		// cleanup folder being left behind (why?)
 		$leftover = WRITEPATH . 'uploads/vfs:';
+
 		if (is_dir($leftover))
 		{
 			rrmdir($leftover);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMove()
 	{
@@ -80,8 +81,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
 		$this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMoveOverwriting()
 	{
@@ -134,8 +133,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFileExists($destination . '/' . $finalFilename . '.txt');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMoved()
 	{
 		$finalFilename = 'fileA';
@@ -167,8 +164,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($file->hasMoved());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStore()
 	{
 		$finalFilename = 'fileA';
@@ -198,8 +193,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$path = $file->store($destination, $file->getName());
 		$this->assertEquals($destination . '/fileA.txt', $path);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAlreadyMoved()
 	{
@@ -233,8 +226,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testInvalidFile()
 	{
 		$_FILES = [
@@ -255,8 +246,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$file->move($destination, $file->getName(), false);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFailedMove()
 	{
@@ -281,8 +270,6 @@ class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$file->move($destination, $file->getName(), false);
 	}
-
-	//--------------------------------------------------------------------
 }
 
 /*
@@ -298,6 +285,7 @@ function is_uploaded_file($filename)
 	{
 		file_put_contents($filename, 'data');
 	}
+
 	return file_exists($filename);
 }
 
@@ -316,11 +304,12 @@ function move_uploaded_file($filename, $destination)
 function rrmdir($src)
 {
 	$dir = opendir($src);
-	while (false !== ( $file = readdir($dir)))
+	while (false !== ($file = readdir($dir)))
 	{
-		if (( $file !== '.' ) && ( $file !== '..' ))
+		if (($file !== '.') && ($file !== '..'))
 		{
 			$full = $src . '/' . $file;
+
 			if (is_dir($full))
 			{
 				rrmdir($full);

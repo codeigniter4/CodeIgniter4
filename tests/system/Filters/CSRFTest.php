@@ -1,25 +1,28 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Filters as FilterConfig;
 
 /**
  * @backupGlobals enabled
  */
-class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
+class CSRFTest extends CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
-		$this->config = new \Config\Filters();
+		$this->config = new FilterConfig();
 	}
 
-	//--------------------------------------------------------------------
 	public function testNormal()
 	{
 		$this->config->globals = [
@@ -38,5 +41,4 @@ class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request  = $filters->run($uri, 'before');
 		$this->assertEquals($expected, $request);
 	}
-
 }

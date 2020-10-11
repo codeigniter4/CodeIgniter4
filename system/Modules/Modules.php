@@ -42,23 +42,21 @@ namespace CodeIgniter\Modules;
 /**
  * Modules Class
  *
- * @package CodeIgniter\Modules
- * @author  EllisLab Dev Team
- * @link    https://codeigniter.com/user_guide/general/modules.html
+ * @see https://codeigniter.com/user_guide/general/modules.html
  */
 class Modules
 {
 	/**
 	 * Auto-Discover
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $enabled = true;
 
 	/**
 	 * Auto-Discovery Within Composer Packages
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $discoverInComposer = true;
 
@@ -74,7 +72,7 @@ class Modules
 	 *
 	 * @param string $alias
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function shouldDiscover(string $alias): bool
 	{

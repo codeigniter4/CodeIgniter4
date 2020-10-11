@@ -47,12 +47,11 @@ use Config\Services;
  */
 class Views extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = true;
 
@@ -60,7 +59,7 @@ class Views extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = false;
 
@@ -68,7 +67,7 @@ class Views extends BaseCollector
 	 * Whether this collector needs to display
 	 * a label or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasLabel = true;
 
@@ -76,7 +75,7 @@ class Views extends BaseCollector
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasVarData = true;
 
@@ -102,8 +101,6 @@ class Views extends BaseCollector
 	 */
 	protected $views = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 */
@@ -111,8 +108,6 @@ class Views extends BaseCollector
 	{
 		$this->viewer = Services::renderer();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -138,8 +133,6 @@ class Views extends BaseCollector
 
 		return $data;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Gets a collection of data that should be shown in the 'Vars' tab.
@@ -167,12 +160,10 @@ class Views extends BaseCollector
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a count of all views.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getBadgeValue(): int
 	{

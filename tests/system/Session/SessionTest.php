@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Session;
+<?php
+
+namespace CodeIgniter\Session;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
@@ -9,9 +12,9 @@ use Config\Logger;
 
 /**
  * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ * @preserveGlobalState disabled
  */
-class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
+class SessionTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -19,10 +22,6 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$_COOKIE  = [];
 		$_SESSION = [];
-	}
-
-	public function tearDown(): void
-	{
 	}
 
 	protected function getInstance($options = [])
@@ -44,9 +43,10 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$config    = array_merge($defaults, $options);
 		$appConfig = new AppConfig();
+
 		foreach ($config as $key => $c)
 		{
-			$appConfig->$key = $c;
+			$appConfig->{$key} = $c;
 		}
 
 		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
@@ -100,7 +100,9 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayNotHasKey('__ci_vars', $_SESSION);
 	}
 
-	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	 */
 	public function testCanSerializeArray()
 	{
 		$session = $this->getInstance();
@@ -182,8 +184,8 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$result = $session->get();
 
-		$this->assertTrue(array_key_exists('foo', $result));
-		$this->assertTrue(array_key_exists('bar', $result));
+		$this->assertArrayHasKey('foo', $result);
+		$this->assertArrayHasKey('bar', $result);
 	}
 
 	public function testGetAsProperty()
@@ -254,10 +256,11 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$session->set('hobbies', ['cooking' => 'baking']);
 		$session->push('hobbies', ['sport' => 'tennis']);
 
-		$this->assertEquals([
-			'cooking' => 'baking',
-			'sport'   => 'tennis',
-		],
+		$this->assertEquals(
+			[
+				'cooking' => 'baking',
+				'sport'   => 'tennis',
+			],
 			$session->get('hobbies')
 		);
 	}
@@ -665,5 +668,4 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(0, $cookies[0][2]['expires']);
 		}
 	}
-
 }

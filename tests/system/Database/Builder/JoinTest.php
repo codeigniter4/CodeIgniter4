@@ -1,14 +1,15 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
+class JoinTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -16,8 +17,6 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testJoinSimple()
 	{
@@ -30,8 +29,6 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testJoinIsNull()
 	{
 		$builder = new BaseBuilder('table1', $this->db);
@@ -42,8 +39,6 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testJoinIsNotNull()
 	{
@@ -56,8 +51,6 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testJoinMultipleConditions()
 	{
 		$builder = new BaseBuilder('table1', $this->db);
@@ -69,8 +62,6 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFullOuterJoin()
 	{
 		$builder = new PostgreBuilder('jobs', $this->db);
@@ -81,7 +72,4 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
-
 }

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
@@ -20,13 +22,20 @@ class EventModel extends Model
 	];
 
 	protected $beforeInsert = ['beforeInsertMethod'];
-	protected $afterInsert  = ['afterInsertMethod'];
+
+	protected $afterInsert = ['afterInsertMethod'];
+
 	protected $beforeUpdate = ['beforeUpdateMethod'];
-	protected $afterUpdate  = ['afterUpdateMethod'];
+
+	protected $afterUpdate = ['afterUpdateMethod'];
+
 	protected $beforeDelete = ['beforeDeleteMethod'];
-	protected $afterDelete  = ['afterDeleteMethod'];
-	protected $beforeFind   = ['beforeFindMethod'];
-	protected $afterFind    = ['afterFindMethod'];
+
+	protected $afterDelete = ['afterDeleteMethod'];
+
+	protected $beforeFind = ['beforeFindMethod'];
+
+	protected $afterFind = ['afterFindMethod'];
 
 	// Cache of the most recent eventData from a trigger
 	public $eventData;
@@ -109,7 +118,6 @@ class EventModel extends Model
 
 	public function hasToken(string $token)
 	{
-		return in_array($token, $this->tokens);
+		return in_array($token, $this->tokens, true);
 	}
-
 }

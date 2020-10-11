@@ -44,7 +44,6 @@ namespace CodeIgniter\Log\Handlers;
  */
 interface HandlerInterface
 {
-
 	/**
 	 * Handles logging the message.
 	 * If the handler returns false, then execution of handlers
@@ -54,11 +53,9 @@ interface HandlerInterface
 	 * @param string $level
 	 * @param string $message
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function handle($level, $message): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks whether the Handler will handle logging items of this
@@ -66,11 +63,9 @@ interface HandlerInterface
 	 *
 	 * @param string $level
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canHandle(string $level): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the preferred date format to use when logging.
@@ -80,6 +75,4 @@ interface HandlerInterface
 	 * @return HandlerInterface
 	 */
 	public function setDateFormat(string $format);
-
-	//--------------------------------------------------------------------
 }

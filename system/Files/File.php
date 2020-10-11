@@ -46,34 +46,29 @@ use SplFileInfo;
 
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.
- *
- * @package CodeIgniter\Files
  */
 class File extends SplFileInfo
 {
-
 	/**
 	 * The files size in bytes
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $size;
 
 	/**
 	 * Original MimeType
 	 *
-	 * @var null|string
+	 * @var string|null
 	 */
-	protected $originalMimeType = null;
-
-	//--------------------------------------------------------------------
+	protected $originalMimeType;
 
 	/**
 	 * Run our SplFileInfo constructor with an optional verification
 	 * that the path is really a file.
 	 *
-	 * @param string  $path
-	 * @param boolean $checkFile
+	 * @param string $path
+	 * @param bool   $checkFile
 	 */
 	public function __construct(string $path, bool $checkFile = false)
 	{
@@ -85,8 +80,6 @@ class File extends SplFileInfo
 		parent::__construct($path);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the file size.
 	 *
@@ -94,7 +87,7 @@ class File extends SplFileInfo
 	 * the file in the $_FILES array if available, as PHP calculates this based
 	 * on the actual size transmitted.
 	 *
-	 * @return integer The file size in bytes
+	 * @return int The file size in bytes
 	 */
 	public function getSize()
 	{
@@ -106,7 +99,7 @@ class File extends SplFileInfo
 	 *
 	 * @param string $unit
 	 *
-	 * @return integer|string
+	 * @return int|string
 	 */
 	public function getSizeByUnit(string $unit = 'b')
 	{
@@ -121,8 +114,6 @@ class File extends SplFileInfo
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to determine the file extension based on the trusted
 	 * getType() method. If the mime type is unknown, will return null.
@@ -134,14 +125,12 @@ class File extends SplFileInfo
 		return Mimes::guessExtensionFromType($this->getMimeType());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the media type of the file. SHOULD not use information from
 	 * the $_FILES array, but should use other methods to more accurately
 	 * determine the type of file, like finfo, or mime_content_type().
 	 *
-	 * @return string The media type we determined it to be.
+	 * @return string the media type we determined it to be
 	 */
 	public function getMimeType(): string
 	{
@@ -155,10 +144,9 @@ class File extends SplFileInfo
 		$finfo    = finfo_open(FILEINFO_MIME_TYPE);
 		$mimeType = finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
 		finfo_close($finfo);
+
 		return $mimeType;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates a random names based on a simple hash and the time, with
@@ -170,17 +158,16 @@ class File extends SplFileInfo
 	{
 		$extension = $this->getExtension();
 		$extension = empty($extension) ? '' : '.' . $extension;
+
 		return time() . '_' . bin2hex(random_bytes(10)) . $extension;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Moves a file to a new location.
 	 *
 	 * @param string      $targetPath
 	 * @param string|null $name
-	 * @param boolean     $overwrite
+	 * @param bool        $overwrite
 	 *
 	 * @return File
 	 */
@@ -195,6 +182,7 @@ class File extends SplFileInfo
 		if (! @rename($oldName, $destination))
 		{
 			$error = error_get_last();
+
 			throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
 		}
 
@@ -203,8 +191,6 @@ class File extends SplFileInfo
 		return new File($destination);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the destination path for the move operation where overwriting is not expected.
 	 *
@@ -212,9 +198,9 @@ class File extends SplFileInfo
 	 * last element is an integer as there may be cases that the delimiter may be present in the filename.
 	 * For the all other cases, it appends an integer starting from zero before the file's extension.
 	 *
-	 * @param string  $destination
-	 * @param string  $delimiter
-	 * @param integer $i
+	 * @param string $destination
+	 * @param string $delimiter
+	 * @param int    $i
 	 *
 	 * @return string
 	 */
@@ -224,28 +210,29 @@ class File extends SplFileInfo
 		{
 			$info      = pathinfo($destination);
 			$extension = isset($info['extension']) ? '.' . $info['extension'] : '';
+
 			if (strpos($info['filename'], $delimiter) !== false)
 			{
 				$parts = explode($delimiter, $info['filename']);
+
 				if (is_numeric(end($parts)))
 				{
 					$i = end($parts);
 					array_pop($parts);
-					array_push($parts, ++ $i);
+					array_push($parts, ++$i);
 					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
 				}
 				else
 				{
-					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
+					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
 				}
 			}
 			else
 			{
-				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
+				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
 			}
 		}
+
 		return $destination;
 	}
-
-	//--------------------------------------------------------------------
 }

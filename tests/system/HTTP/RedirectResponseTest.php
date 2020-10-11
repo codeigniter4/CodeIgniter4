@@ -5,18 +5,20 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
 
-class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class RedirectResponseTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var RouteCollection
 	 */
 	protected $routes;
+
 	protected $request;
+
 	protected $config;
 
 	protected function setUp(): void
@@ -35,8 +37,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $this->request);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectToFullURI()
 	{
 		$response = new RedirectResponse(new App());
@@ -46,8 +46,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRedirectRoute()
 	{
@@ -79,8 +77,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->route('differentRoute');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectRelativeConvertsToFullURI()
 	{
 		$response = new RedirectResponse($this->config);
@@ -90,8 +86,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -113,8 +107,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -126,8 +118,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new RedirectResponse(new App());
 
 		$validation = $this->createMock(Validation::class);
-		$validation->method('getErrors')
-				->willReturn(['foo' => 'bar']);
+		$validation->method('getErrors')->willReturn(['foo' => 'bar']);
 
 		Services::injectMock('validation', $validation);
 
@@ -135,8 +126,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -153,8 +142,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($response, $returned);
 		$this->assertArrayHasKey('foo', $_SESSION);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -267,6 +254,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SESSION = [];
 
 		$baseResponse = service('response');
+
 		foreach ($baseResponse->getHeaders() as $key => $val)
 		{
 			$baseResponse->removeHeader($key);

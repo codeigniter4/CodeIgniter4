@@ -1,21 +1,25 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
-class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Validation;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class FileRulesTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
-		'ruleSets'      => [
+		'ruleSets' => [
 			\CodeIgniter\Validation\Rules::class,
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
 			\Tests\Support\Validation\TestRules::class,
 		],
-		'groupA'        => [
+		'groupA' => [
 			'foo' => 'required|min_length[5]',
 		],
 		'groupA_errors' => [
@@ -25,8 +29,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		],
 	];
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -34,7 +36,7 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->validation->reset();
 
 		$_FILES = [
-			'avatar'  => [
+			'avatar' => [
 				'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 				'name'     => 'my-avatar.png',
 				'size'     => 4614,
@@ -52,7 +54,7 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				'width'    => 640,
 				'height'   => 400,
 			],
-			'photo'   => [
+			'photo' => [
 				'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 				'name'     => 'my-photo.png',
 				'size'     => 4614,
@@ -61,70 +63,68 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				'width'    => 640,
 				'height'   => 400,
 			],
-			'images'  => [
+			'images' => [
 				'tmp_name' => [
 					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 				],
-				'name'     => [
+				'name' => [
 					'my_avatar.png',
 					'my_bigfile.png',
 				],
-				'size'     => [
+				'size' => [
 					4614,
 					1024000,
 				],
-				'type'     => [
+				'type' => [
 					'image/png',
 					'image/png',
 				],
-				'error'    => [
+				'error' => [
 					0,
 					0,
 				],
-				'width'    => [
+				'width' => [
 					640,
 					640,
 				],
-				'height'   => [
+				'height' => [
 					400,
 					400,
 				],
 			],
-			'photos'  => [
+			'photos' => [
 				'tmp_name' => [
 					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
 				],
-				'name'     => [
+				'name' => [
 					'my_avatar.png',
 					'my_bigfile.png',
 				],
-				'size'     => [
+				'size' => [
 					4614,
 					1024000,
 				],
-				'type'     => [
+				'type' => [
 					'image/png',
 					'image/png',
 				],
-				'error'    => [
+				'error' => [
 					1,
 					0,
 				],
-				'width'    => [
+				'width' => [
 					640,
 					640,
 				],
-				'height'   => [
+				'height' => [
 					400,
 					400,
 				],
 			],
 		];
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUploadedTrue()
 	{
@@ -161,8 +161,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->validation->run([]));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMaxSize()
 	{
@@ -215,8 +213,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($this->validation->run([]));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMaxDims()
 	{
 		$this->validation->setRules([
@@ -240,8 +236,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 		$this->assertFalse($this->validation->run([]));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testIsImage()
 	{
@@ -274,8 +268,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($this->validation->run([]));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMimeTypeOk()
 	{
 		$this->validation->setRules([
@@ -300,8 +292,6 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($this->validation->run([]));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExtensionOk()
 	{
 		$this->validation->setRules([
@@ -325,5 +315,4 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 		$this->assertFalse($this->validation->run([]));
 	}
-
 }

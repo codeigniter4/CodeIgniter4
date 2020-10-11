@@ -46,8 +46,40 @@ fi
 
 if [ "$FILES" != "" ]
 then
-	echo "Running Code Sniffer..."
-	./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
+	echo "Disaggregating files for PHP-CS-Fixer"
+	for FILE in $FILES
+	do
+		if [[ $FILE == system* ]] # did this match 'system/**'?
+		then
+			SYSTEM="$SYSTEM $FILE"
+		else
+			OTHERS="$OTHERS $FILE"
+		fi
+	done
 fi
 
-exit $?
+if [ "$SYSTEM" != "" ]
+then
+	echo "Running PHP-CS-Fixer on system files"
+	./vendor/bin/php-cs-fixer fix --config=system.php_cs.dist --verbose --ansi --using-cache=no $SYSTEM
+
+	if [ $? != 0 ]
+	then
+		echo "Code style errors fixed in system. Please stage these changes."
+		exit 1
+	fi
+fi
+
+if [ "$OTHERS" != "" ]
+then
+	echo "Running PHP-CS-Fixer on other PHP files"
+	./vendor/bin/php-cs-fixer fix --config=no_header.php_cs.dist --verbose --ansi --using-cache=no $OTHERS
+
+	if [ $? != 0 ]
+	then
+		echo "Code style errors fixed in other PHP files. Please stage these changes."
+		exit 1
+	fi
+fi
+
+exit 0

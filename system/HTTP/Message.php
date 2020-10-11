@@ -139,6 +139,7 @@ class Message
 	public function populateHeaders(): void
 	{
 		$contentType = $_SERVER['CONTENT_TYPE'] ?? getenv('CONTENT_TYPE');
+
 		if (! empty($contentType))
 		{
 			$this->setHeader('Content-Type', $contentType);
@@ -164,7 +165,7 @@ class Message
 	/**
 	 * Returns an array containing all headers.
 	 *
-	 * @return array        An array of the request headers
+	 * @return array An array of the request headers
 	 */
 	public function getHeaders(): array
 	{
@@ -204,7 +205,7 @@ class Message
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasHeader(string $name): bool
 	{
@@ -244,7 +245,7 @@ class Message
 	 * Sets a header and it's value.
 	 *
 	 * @param string            $name
-	 * @param array|null|string $value
+	 * @param array|string|null $value
 	 *
 	 * @return $this
 	 */
@@ -284,8 +285,7 @@ class Message
 	{
 		$origName = $this->getHeaderName($name);
 
-		unset($this->headers[$origName]);
-		unset($this->headerMap[strtolower($name)]);
+		unset($this->headers[$origName], $this->headerMap[strtolower($name)]);
 
 		return $this;
 	}
@@ -381,7 +381,7 @@ class Message
 	/**
 	 * Determines if this is a json message based on the Content-Type header
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isJSON()
 	{

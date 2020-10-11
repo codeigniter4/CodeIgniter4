@@ -1,16 +1,16 @@
 <?php
+
 namespace CodeIgniter\HTTP\Files;
 
-class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use CodeIgniter\Test\CIUnitTestCase;
 
+class FileCollectionTest extends CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();
 		$_FILES = [];
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAllReturnsArrayWithNoFiles()
 	{
@@ -18,8 +18,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals([], $files->all());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAllReturnsValidSingleFile()
 	{
@@ -44,21 +42,19 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAllReturnsValidMultipleFilesSameName()
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'fileA.txt',
 					'fileB.txt',
 				],
-				'type'     => [
+				'type' => [
 					'text/plain',
 					'text/csv',
 				],
-				'size'     => [
+				'size' => [
 					'124',
 					'248',
 				],
@@ -66,7 +62,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 					'/tmp/fileA.txt',
 					'/tmp/fileB.txt',
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -87,8 +83,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/plain', $file->getClientMimeType());
 		$this->assertEquals(124, $file->getSize());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAllReturnsValidMultipleFilesDifferentName()
 	{
@@ -135,8 +129,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(248, $file->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExtensionGuessing()
 	{
 		$_FILES = [
@@ -167,8 +159,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('csv', $file->guessExtension());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group single
 	 */
@@ -176,17 +166,17 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'foo' => [
 						'bar' => 'fileA.txt',
 					],
 				],
-				'type'     => [
+				'type' => [
 					'foo' => [
 						'bar' => 'text/plain',
 					],
 				],
-				'size'     => [
+				'size' => [
 					'foo' => [
 						'bar' => 124,
 					],
@@ -196,7 +186,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						'bar' => '/tmp/fileA.txt',
 					],
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -217,8 +207,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHasFileWithSingleFile()
 	{
 		$_FILES = [
@@ -236,8 +224,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($collection->hasFile('userfile'));
 		$this->assertFalse($collection->hasFile('foo'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHasFileWithMultipleFilesWithDifferentNames()
 	{
@@ -264,8 +250,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($collection->hasFile('userfile2'));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group single
 	 */
@@ -273,17 +257,17 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'foo' => [
 						'bar' => 'fileA.txt',
 					],
 				],
-				'type'     => [
+				'type' => [
 					'foo' => [
 						'bar' => 'text/plain',
 					],
 				],
-				'size'     => [
+				'size' => [
 					'foo' => [
 						'bar' => 124,
 					],
@@ -293,7 +277,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						'bar' => '/tmp/fileA.txt',
 					],
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -303,8 +287,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($collection->hasFile('userfile.foo'));
 		$this->assertTrue($collection->hasFile('userfile.foo.bar'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testErrorString()
 	{
@@ -365,8 +347,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $file->getErrorString());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testError()
 	{
 		$_FILES = [
@@ -420,8 +400,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(UPLOAD_ERR_OK, $file->getError());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFileReturnsValidSingleFile()
 	{
 		$_FILES = [
@@ -442,8 +420,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFileNoExistSingleFile()
 	{
 		$_FILES = [
@@ -461,21 +437,19 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->AssertNull($file);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFileReturnValidMultipleFiles()
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'fileA.txt',
 					'fileB.txt',
 				],
-				'type'     => [
+				'type' => [
 					'text/plain',
 					'text/csv',
 				],
-				'size'     => [
+				'size' => [
 					'124',
 					'248',
 				],
@@ -483,7 +457,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 					'/tmp/fileA.txt',
 					'/tmp/fileB.txt',
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -506,13 +480,11 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(248, $file_2->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFileWithMultipleFilesNestedName()
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'     => [
+				'name' => [
 					'details' => [
 						'avatars' => [
 							'fileA.txt',
@@ -520,7 +492,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'type'     => [
+				'type' => [
 					'details' => [
 						'avatars' => [
 							'text/plain',
@@ -528,7 +500,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'size'     => [
+				'size' => [
 					'details' => [
 						'avatars' => [
 							125,
@@ -544,7 +516,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'error'    => [
+				'error' => [
 					'details' => [
 						'avatars' => [
 							0,
@@ -574,13 +546,11 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(243, $file_2->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDoesntHaveFile()
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'     => [
+				'name' => [
 					'details' => [
 						'avatars' => [
 							'fileA.txt',
@@ -588,7 +558,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'type'     => [
+				'type' => [
 					'details' => [
 						'avatars' => [
 							'text/plain',
@@ -596,7 +566,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'size'     => [
+				'size' => [
 					'details' => [
 						'avatars' => [
 							125,
@@ -612,7 +582,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'error'    => [
+				'error' => [
 					'details' => [
 						'avatars' => [
 							0,
@@ -629,21 +599,19 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($collection->getFile('my-form.detailz.avatars.0'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFileMultipleHasNoFile()
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'fileA.txt',
 					'fileB.txt',
 				],
-				'type'     => [
+				'type' => [
 					'text/plain',
 					'text/csv',
 				],
-				'size'     => [
+				'size' => [
 					'124',
 					'248',
 				],
@@ -651,7 +619,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 					'/tmp/fileA.txt',
 					'/tmp/fileB.txt',
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -659,16 +627,14 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$files = $collection->getFileMultiple('userfiletest');
 
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFileMultipleReturnValidDotNotationSyntax()
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'     => [
+				'name' => [
 					'details' => [
 						'avatars' => [
 							'fileA.txt',
@@ -676,7 +642,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'type'     => [
+				'type' => [
 					'details' => [
 						'avatars' => [
 							'text/plain',
@@ -684,7 +650,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'size'     => [
+				'size' => [
 					'details' => [
 						'avatars' => [
 							125,
@@ -700,7 +666,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						],
 					],
 				],
-				'error'    => [
+				'error' => [
 					'details' => [
 						'avatars' => [
 							0,
@@ -714,7 +680,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('my-form.details.avatars');
-		$this->assertIsArray( $files);
+		$this->assertIsArray($files);
 		$this->assertCount(2, $files);
 
 		$this->assertInstanceOf(UploadedFile::class, $files[0]);
@@ -732,23 +698,21 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(243, $files[1]->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFileMultipleReturnInvalidDotNotationSyntax()
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'     => [
+				'name' => [
 					'details' => [
 						'avatars' => 'fileA.txt',
 					],
 				],
-				'type'     => [
+				'type' => [
 					'details' => [
 						'avatars' => 'text/plain',
 					],
 				],
-				'size'     => [
+				'size' => [
 					'details' => [
 						'avatars' => 243,
 					],
@@ -758,7 +722,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 						'avatars' => '/tmp/fileA.txt',
 					],
 				],
-				'error'    => [
+				'error' => [
 					'details' => [
 						'avatars' => 0,
 					],
@@ -769,24 +733,22 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('my-form.details.avatars');
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFileMultipleReturnValidMultipleFiles()
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'fileA.txt',
 					'fileB.txt',
 				],
-				'type'     => [
+				'type' => [
 					'text/plain',
 					'text/csv',
 				],
-				'size'     => [
+				'size' => [
 					'124',
 					'248',
 				],
@@ -794,7 +756,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 					'/tmp/fileA.txt',
 					'/tmp/fileB.txt',
 				],
-				'error'    => 0,
+				'error' => 0,
 			],
 		];
 
@@ -802,7 +764,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$files = $collection->getFileMultiple('userfile');
 		$this->assertCount(2, $files);
-		$this->assertIsArray( $files);
+		$this->assertIsArray($files);
 
 		$this->assertInstanceOf(UploadedFile::class, $files[0]);
 		$this->assertEquals(124, $files[0]->getSize());
@@ -819,8 +781,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/csv', $files[1]->getClientMimeType());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFileMultipleReturnInvalidSingleFile()
 	{
 		$_FILES = [
@@ -836,8 +796,6 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('userfile');
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
-
-	//--------------------------------------------------------------------
 }

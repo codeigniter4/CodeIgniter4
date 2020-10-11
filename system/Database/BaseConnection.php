@@ -45,11 +45,10 @@ use CodeIgniter\Events\Events;
 use Throwable;
 
 /**
- * Class BaseConnection
+ * BaseConnection
  */
 abstract class BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Data Source Name / Connect string
 	 *
@@ -60,7 +59,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Database port
 	 *
-	 * @var integer|string
+	 * @var int|string
 	 */
 	protected $port = '';
 
@@ -103,7 +102,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Sub-driver
 	 *
 	 * @used-by CI_DB_pdo_driver
-	 * @var     string
+	 *
+	 * @var string
 	 */
 	protected $subdriver;
 
@@ -117,7 +117,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Persistent connection flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $pConnect = false;
 
@@ -126,7 +126,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Whether to display error messages.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $DBDebug = false;
 
@@ -161,7 +161,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Compression flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $compress = false;
 
@@ -170,7 +170,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Whether we're running in strict SQL mode.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $strictOn;
 
@@ -180,8 +180,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @var array
 	 */
 	protected $failover = [];
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * The last query object that was executed
@@ -194,21 +192,21 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Connection ID
 	 *
-	 * @var object|resource|boolean
+	 * @var bool|object|resource
 	 */
 	public $connID = false;
 
 	/**
 	 * Result ID
 	 *
-	 * @var object|resource|boolean
+	 * @var bool|object|resource
 	 */
 	public $resultID = false;
 
 	/**
 	 * Protect identifiers flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $protectIdentifiers = true;
 
@@ -224,7 +222,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Identifier escape character
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	public $escapeChar = '"';
 
@@ -268,28 +266,28 @@ abstract class BaseConnection implements ConnectionInterface
 	 * If true, no queries will actually be
 	 * ran against the database.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $pretend = false;
 
 	/**
 	 * Transaction enabled flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $transEnabled = true;
 
 	/**
 	 * Strict transaction mode flag
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $transStrict = true;
 
 	/**
 	 * Transaction depth level
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $transDepth = 0;
 
@@ -298,7 +296,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Used with transactions to determine if a rollback should occur.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $transStatus = true;
 
@@ -307,7 +305,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Used with transactions to determine if a transaction has failed.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $transFailure = false;
 
@@ -318,8 +316,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $aliasedTables = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves our connection settings.
 	 *
@@ -329,21 +325,21 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		foreach ($params as $key => $value)
 		{
-			$this->$key = $value;
+			$this->{$key} = $value;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Initializes the database connection/settings.
 	 *
-	 * @return mixed|void
 	 * @throws DatabaseException
+	 *
+	 * @return void
 	 */
 	public function initialize()
 	{
-		/* If an established connection is available, then there's
+		/*
+		 * If an established connection is available, then there's
 		 * no need to connect and select the database.
 		 *
 		 * Depending on the database driver, conn_id can be either
@@ -353,8 +349,6 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			return;
 		}
-
-		//--------------------------------------------------------------------
 
 		$this->connectTime = microtime(true);
 
@@ -382,7 +376,7 @@ abstract class BaseConnection implements ConnectionInterface
 					{
 						if (property_exists($this, $key))
 						{
-							$this->$key = $val;
+							$this->{$key} = $val;
 						}
 					}
 
@@ -414,17 +408,14 @@ abstract class BaseConnection implements ConnectionInterface
 		$this->connectDuration = microtime(true) - $this->connectTime;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Connect to the database.
 	 *
-	 * @param  boolean $persistent
+	 * @param bool $persistent
+	 *
 	 * @return mixed
 	 */
 	abstract public function connect(bool $persistent = false);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Close the database connection.
@@ -440,16 +431,12 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Platform dependent way method for closing the connection.
 	 *
 	 * @return mixed
 	 */
 	abstract protected function _close();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Create a persistent database connection.
@@ -461,8 +448,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->connect(true);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
@@ -470,8 +455,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 */
 	abstract public function reconnect();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the actual connection object. If both a 'read' and 'write'
@@ -482,14 +465,13 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param string|null $alias
 	 *
 	 * @return mixed
+	 *
+	 * @todo work with read/write connections
 	 */
 	public function getConnection(string $alias = null)
 	{
-		//@todo work with read/write connections
 		return $this->connID;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.
@@ -500,8 +482,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	abstract public function setDatabase(string $databaseName);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the name of the current database being used.
 	 *
@@ -511,8 +491,6 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		return empty($this->database) ? '' : $this->database;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set DB Prefix
@@ -528,8 +506,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->DBPrefix = $prefix;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the database prefix.
 	 *
@@ -539,8 +515,6 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		return $this->DBPrefix;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * The name of the platform in use (MySQLi, mssql, etc)
@@ -552,16 +526,12 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->DBDriver;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
 	 * @return string
 	 */
 	abstract public function getVersion(): string;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the Table Aliases to use. These are typically
@@ -578,8 +548,6 @@ abstract class BaseConnection implements ConnectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Add a table alias to our list.
@@ -607,8 +575,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	abstract protected function execute(string $sql);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
@@ -617,12 +583,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param string  $sql
-	 * @param mixed   ...$binds
-	 * @param boolean $setEscapeFlags
-	 * @param string  $queryClass
+	 * @param string $sql
+	 * @param mixed  ...$binds
+	 * @param bool   $setEscapeFlags
+	 * @param string $queryClass
 	 *
-	 * @return BaseResult|Query|false
+	 * @return BaseResult|false|Query
 	 */
 	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
@@ -631,7 +597,7 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
+		$resultClass = str_replace('Connection', 'Result', static::class);
 		/**
 		 * @var Query $query
 		 */
@@ -675,6 +641,7 @@ abstract class BaseConnection implements ConnectionInterface
 					if ($transDepth === $this->transDepth)
 					{
 						log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
+
 						break;
 					}
 				}
@@ -705,8 +672,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->pretend ? $query : new $resultClass($this->connID, $this->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs a basic query against the database. No binding or caching
 	 * is performed, nor are transactions handled. Simply takes a raw
@@ -726,8 +691,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->execute($sql);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Disable Transactions
 	 *
@@ -740,8 +703,6 @@ abstract class BaseConnection implements ConnectionInterface
 		$this->transEnabled = false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Enable/disable Transaction Strict Mode
 	 *
@@ -752,7 +713,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * If strict mode is disabled, each group is treated autonomously,
 	 * meaning a failure of one group will not affect any others
 	 *
-	 * @param boolean $mode = true
+	 * @param bool $mode = true
 	 *
 	 * @return $this
 	 */
@@ -763,13 +724,12 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Start Transaction
 	 *
-	 * @param  boolean $testMode = FALSE
-	 * @return boolean
+	 * @param bool $testMode = FALSE
+	 *
+	 * @return bool
 	 */
 	public function transStart(bool $testMode = false): bool
 	{
@@ -781,12 +741,10 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->transBegin($testMode);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Complete Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function transComplete(): bool
 	{
@@ -815,25 +773,22 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->transCommit();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Lets you retrieve the transaction flag to determine if it has failed
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function transStatus(): bool
 	{
 		return $this->transStatus;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @param  boolean $testMode
-	 * @return boolean
+	 * @param bool $testMode
+	 *
+	 * @return bool
 	 */
 	public function transBegin(bool $testMode = false): bool
 	{
@@ -845,7 +800,8 @@ abstract class BaseConnection implements ConnectionInterface
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->transDepth > 0)
 		{
-			$this->transDepth ++;
+			$this->transDepth++;
+
 			return true;
 		}
 
@@ -861,19 +817,18 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if ($this->_transBegin())
 		{
-			$this->transDepth ++;
+			$this->transDepth++;
+
 			return true;
 		}
 
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function transCommit(): bool
 	{
@@ -885,19 +840,18 @@ abstract class BaseConnection implements ConnectionInterface
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->transDepth > 1 || $this->_transCommit())
 		{
-			$this->transDepth --;
+			$this->transDepth--;
+
 			return true;
 		}
 
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function transRollback(): bool
 	{
@@ -909,49 +863,43 @@ abstract class BaseConnection implements ConnectionInterface
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->transDepth > 1 || $this->_transRollback())
 		{
-			$this->transDepth --;
+			$this->transDepth--;
+
 			return true;
 		}
 
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	abstract protected function _transBegin(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Commit Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	abstract protected function _transCommit(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	abstract protected function _transRollback(): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string|array $tableName
+	 * @param array|string $tableName
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return BaseBuilder
-	 * @throws DatabaseException
 	 */
 	public function table($tableName)
 	{
@@ -960,12 +908,10 @@ abstract class BaseConnection implements ConnectionInterface
 			throw new DatabaseException('You must set the database table to be used with your query.');
 		}
 
-		$className = str_replace('Connection', 'Builder', get_class($this));
+		$className = str_replace('Connection', 'Builder', static::class);
 
 		return new $className($tableName, $this);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Creates a prepared statement with the database that can then
@@ -1001,11 +947,11 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if ($sql instanceof QueryInterface)
 		{
-			// @phpstan-ignore-next-line
+			/** @phpstan-ignore-next-line */
 			$sql = $sql->getOriginalQuery();
 		}
 
-		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		$class = str_ireplace('Connection', 'PreparedQuery', static::class);
 		/**
 		 * @var BasePreparedQuery $class
 		 */
@@ -1013,8 +959,6 @@ abstract class BaseConnection implements ConnectionInterface
 
 		return $class->prepare($sql, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last query's statement object.
@@ -1026,8 +970,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->lastQuery;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a string representation of the last query's statement object.
 	 *
@@ -1037,8 +979,6 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		return (string) $this->lastQuery;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the time we started to connect to this database in
@@ -1053,15 +993,13 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->connectTime;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the number of seconds with microseconds that it took
 	 * to connect to the database.
 	 *
 	 * Used by the Debug Toolbar's timeline.
 	 *
-	 * @param integer $decimals
+	 * @param int $decimals
 	 *
 	 * @return string
 	 */
@@ -1069,8 +1007,6 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		return number_format($this->connectDuration, $decimals);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Protect Identifiers
@@ -1092,12 +1028,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
 	 *
-	 * @param string|array $item
-	 * @param boolean      $prefixSingle
-	 * @param boolean      $protectIdentifiers
-	 * @param boolean      $fieldExists
+	 * @param array|string $item
+	 * @param bool         $prefixSingle
+	 * @param bool         $protectIdentifiers
+	 * @param bool         $fieldExists
 	 *
-	 * @return string|array
+	 * @return array|string
 	 */
 	public function protectIdentifiers($item, bool $prefixSingle = false, bool $protectIdentifiers = null, bool $fieldExists = true)
 	{
@@ -1109,6 +1045,7 @@ abstract class BaseConnection implements ConnectionInterface
 		if (is_array($item))
 		{
 			$escapedArray = [];
+
 			foreach ($item as $k => $v)
 			{
 				$escapedArray[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle, $protectIdentifiers, $fieldExists);
@@ -1261,8 +1198,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $item . $alias;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Escape the SQL Identifiers
 	 *
@@ -1292,7 +1227,7 @@ abstract class BaseConnection implements ConnectionInterface
 		// Avoid breaking functions and literal values inside queries
 		if (ctype_digit($item)
 			|| $item[0] === "'"
-			|| ( $this->escapeChar !== '"' && $item[0] === '"')
+			|| ($this->escapeChar !== '"' && $item[0] === '"')
 			|| strpos($item, '(') !== false)
 		{
 			return $item;
@@ -1329,8 +1264,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return preg_replace('/' . $pregEc[0] . '?([^' . $pregEc[1] . '\.]+)' . $pregEc[1] . '?(\.)?/i', $pregEc[2] . '$1' . $pregEc[3] . '$2', $item);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * DB Prefix
 	 *
@@ -1338,8 +1271,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $table the table
 	 *
-	 * @return string
 	 * @throws DatabaseException
+	 *
+	 * @return string
 	 */
 	public function prefixTable(string $table = ''): string
 	{
@@ -1351,16 +1285,12 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->DBPrefix . $table;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	abstract public function affectedRows(): int;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * "Smart" Escape String
@@ -1379,7 +1309,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return array_map([&$this, 'escape'], $str);
 		}
 
-		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || (is_object($str) && method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}
@@ -1402,13 +1332,12 @@ abstract class BaseConnection implements ConnectionInterface
 		return $str;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Escape String
 	 *
-	 * @param  string|string[] $str  Input string
-	 * @param  boolean         $like Whether or not the string will be used in a LIKE condition
+	 * @param string|string[] $str  Input string
+	 * @param bool            $like Whether or not the string will be used in a LIKE condition
+	 *
 	 * @return string|string[]
 	 */
 	public function escapeString($str, bool $like = false)
@@ -1428,22 +1357,23 @@ abstract class BaseConnection implements ConnectionInterface
 		// escape LIKE condition wildcards
 		if ($like === true)
 		{
-			return str_replace([
-				$this->likeEscapeChar,
-				'%',
-				'_',
-			], [
-				$this->likeEscapeChar . $this->likeEscapeChar,
-				$this->likeEscapeChar . '%',
-				$this->likeEscapeChar . '_',
-			], $str
+			return str_replace(
+				[
+					$this->likeEscapeChar,
+					'%',
+					'_',
+				],
+				[
+					$this->likeEscapeChar . $this->likeEscapeChar,
+					$this->likeEscapeChar . '%',
+					$this->likeEscapeChar . '_',
+				],
+				$str
 			);
 		}
 
 		return $str;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Escape LIKE String
@@ -1451,15 +1381,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Calls the individual driver for platform
 	 * specific escaping for LIKE conditions
 	 *
-	 * @param  string|string[] $str
+	 * @param string|string[] $str
+	 *
 	 * @return string|string[]
 	 */
 	public function escapeLikeString($str)
 	{
 		return $this->escapeString($str, true);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform independent string escape.
@@ -1475,8 +1404,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return str_replace("'", "''", remove_invisible_characters($str, false));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * This function enables you to call PHP database functions that are not natively included
 	 * in CodeIgniter, in a platform independent manner.
@@ -1484,8 +1411,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param string $functionName
 	 * @param array  ...$params
 	 *
-	 * @return boolean
 	 * @throws DatabaseException
+	 *
+	 * @return bool
 	 */
 	public function callFunction(string $functionName, ...$params): bool
 	{
@@ -1511,16 +1439,17 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// META Methods
 	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of table names
 	 *
-	 * @param  boolean $constrainByPrefix = FALSE
-	 * @return boolean|array
+	 * @param bool $constrainByPrefix = FALSE
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return array|bool
 	 */
 	public function listTables(bool $constrainByPrefix = false)
 	{
@@ -1538,6 +1467,7 @@ abstract class BaseConnection implements ConnectionInterface
 			{
 				throw new DatabaseException('This feature is not available for the database you are using.');
 			}
+
 			return false;
 		}
 
@@ -1575,28 +1505,26 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->dataCache['table_names'];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determine if a particular table exists
 	 *
-	 * @param  string $tableName
-	 * @return boolean
+	 * @param string $tableName
+	 *
+	 * @return bool
 	 */
 	public function tableExists(string $tableName): bool
 	{
 		return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
 	 * @param string $table Table name
 	 *
-	 * @return array|false
 	 * @throws DatabaseException
+	 *
+	 * @return array|false
 	 */
 	public function getFieldNames(string $table)
 	{
@@ -1617,6 +1545,7 @@ abstract class BaseConnection implements ConnectionInterface
 			{
 				throw new DatabaseException('This feature is not available for the database you are using.');
 			}
+
 			return false;
 		}
 
@@ -1649,26 +1578,24 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->dataCache['field_names'][$table];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determine if a particular field exists
 	 *
-	 * @param  string $fieldName
-	 * @param  string $tableName
-	 * @return boolean
+	 * @param string $fieldName
+	 * @param string $tableName
+	 *
+	 * @return bool
 	 */
 	public function fieldExists(string $fieldName, string $tableName): bool
 	{
 		return in_array($fieldName, $this->getFieldNames($tableName), true);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
-	 * @param  string $table the table name
+	 * @param string $table the table name
+	 *
 	 * @return array
 	 */
 	public function getFieldData(string $table)
@@ -1676,12 +1603,11 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an object with key data
 	 *
-	 * @param  string $table the table name
+	 * @param string $table the table name
+	 *
 	 * @return array
 	 */
 	public function getIndexData(string $table)
@@ -1689,20 +1615,17 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->_indexData($this->protectIdentifiers($table, true, false, false));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an object with foreign key data
 	 *
-	 * @param  string $table the table name
+	 * @param string $table the table name
+	 *
 	 * @return array
 	 */
 	public function getForeignKeyData(string $table)
 	{
 		return $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Disables foreign key checks temporarily.
@@ -1714,8 +1637,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->query($sql);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Enables foreign key checks temporarily.
 	 */
@@ -1726,15 +1647,13 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this->query($sql);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Allows the engine to be set into a mode where queries are not
 	 * actually executed, but they are still generated, timed, etc.
 	 *
 	 * This is primarily used by the prepared query functionality.
 	 *
-	 * @param boolean $pretend
+	 * @param bool $pretend
 	 *
 	 * @return $this
 	 */
@@ -1744,8 +1663,6 @@ abstract class BaseConnection implements ConnectionInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Empties our data cache. Especially helpful during testing.
@@ -1759,8 +1676,6 @@ abstract class BaseConnection implements ConnectionInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the last error code and message.
 	 *
@@ -1772,71 +1687,63 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	abstract public function error(): array;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
-	 * @return integer|string
+	 * @return int|string
 	 */
 	abstract public function insertID();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param boolean $constrainByPrefix
+	 * @param bool $constrainByPrefix
 	 *
-	 * @return string|false
+	 * @return false|string
 	 */
 	abstract protected function _listTables(bool $constrainByPrefix = false);
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates a platform-specific query string so that the column names can be fetched.
 	 *
 	 * @param string $table
 	 *
-	 * @return string|false
+	 * @return false|string
 	 */
 	abstract protected function _listColumns(string $table = '');
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform-specific field data information.
 	 *
-	 * @param  string $table
-	 * @see    getFieldData()
+	 * @param string $table
+	 *
 	 * @return array
+	 *
+	 * @see getFieldData()
 	 */
 	abstract protected function _fieldData(string $table): array;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform-specific index data.
 	 *
-	 * @param  string $table
-	 * @see    getIndexData()
+	 * @param string $table
+	 *
 	 * @return array
+	 *
+	 * @see getIndexData()
 	 */
 	abstract protected function _indexData(string $table): array;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform-specific foreign keys data.
 	 *
-	 * @param  string $table
-	 * @see    getForeignKeyData()
+	 * @param string $table
+	 *
 	 * @return array
+	 *
+	 * @see getForeignKeyData()
 	 */
 	abstract protected function _foreignKeyData(string $table): array;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Accessor for properties if they exist.
@@ -1849,26 +1756,21 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		if (property_exists($this, $key))
 		{
-			return $this->$key;
+			return $this->{$key};
 		}
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checker for properties existence.
 	 *
 	 * @param string $key
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function __isset(string $key): bool
 	{
 		return property_exists($this, $key);
 	}
-
-	//--------------------------------------------------------------------
-
 }

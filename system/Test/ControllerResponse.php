@@ -46,8 +46,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 /**
  * Testable response from a controller
  */
-class ControllerResponse {
-
+class ControllerResponse
+{
 	/**
 	 * The request.
 	 *
@@ -175,7 +175,7 @@ class ControllerResponse {
 	 * Boils down the possible responses into a boolean valid/not-valid
 	 * response type.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isOK(): bool
 	{
@@ -198,7 +198,7 @@ class ControllerResponse {
 	/**
 	 * Returns whether or not the Response was a redirect or RedirectResponse
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRedirect(): bool
 	{
@@ -214,8 +214,9 @@ class ControllerResponse {
 	/**
 	 * Forward any unrecognized method calls to our DOMParser instance.
 	 *
-	 * @param  string $function Method name
-	 * @param  mixed  $params   Any method parameters
+	 * @param string $function Method name
+	 * @param mixed  $params   Any method parameters
+	 *
 	 * @return mixed
 	 */
 	public function __call($function, $params)
@@ -225,5 +226,4 @@ class ControllerResponse {
 			return $this->dom->{$function}(...$params);
 		}
 	}
-
 }

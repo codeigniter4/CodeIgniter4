@@ -4,7 +4,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
-use CodeIgniter\Validation\Rules;
+use stdClass;
 
 class RulesTest extends CIDatabaseTestCase
 {
@@ -14,15 +14,16 @@ class RulesTest extends CIDatabaseTestCase
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
-		'ruleSets'      => [
+		'ruleSets' => [
 			\CodeIgniter\Validation\Rules::class,
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
 			\Tests\Support\Validation\TestRules::class,
 		],
-		'groupA'        => [
+		'groupA' => [
 			'foo' => 'required|min_length[5]',
 		],
 		'groupA_errors' => [
@@ -32,13 +33,11 @@ class RulesTest extends CIDatabaseTestCase
 		],
 	];
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -61,8 +60,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequiredTrueString()
 	{
 		$data = [
@@ -75,8 +72,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRequiredFalseString()
 	{
@@ -92,8 +87,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequiredTrueArray()
 	{
 		$data = [
@@ -106,8 +99,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRequiredFalseArray()
 	{
@@ -122,12 +113,10 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequiredObject()
 	{
 		$data = [
-			'foo' => new \stdClass(),
+			'foo' => new stdClass(),
 		];
 
 		$this->validation->setRules([
@@ -136,8 +125,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @dataProvider ifExistProvider
@@ -152,8 +139,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function ifExistProvider()
 	{
@@ -182,8 +167,6 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider emptysProvider
 	 *
@@ -197,8 +180,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function emptysProvider()
 	{
@@ -348,8 +329,6 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMatchesNull()
 	{
 		$data = [
@@ -363,8 +342,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMatchesTrue()
 	{
@@ -380,8 +357,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMatchesFalse()
 	{
 		$data = [
@@ -395,8 +370,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMatcheNestedsTrue()
 	{
@@ -414,8 +387,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMatchesNestedFalse()
 	{
 		$data = [
@@ -432,8 +403,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDiffersNull()
 	{
 		$data = [
@@ -447,8 +416,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDiffersTrue()
 	{
@@ -464,8 +431,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDiffersFalse()
 	{
 		$data = [
@@ -479,8 +444,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDiffersNestedTrue()
 	{
@@ -498,8 +461,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDiffersNestedFalse()
 	{
 		$data = [
@@ -516,8 +477,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEqualsNull()
 	{
 		$data = [
@@ -530,8 +489,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEqualsEmptyIsEmpty()
 	{
@@ -546,8 +503,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEqualsReturnsFalseOnFailure()
 	{
 		$data = [
@@ -560,8 +515,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEqualsReturnsTrueOnSuccess()
 	{
@@ -576,8 +529,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEqualsReturnsFalseOnCaseMismatch()
 	{
 		$data = [
@@ -590,8 +541,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotEqualsNull()
 	{
@@ -606,8 +555,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNotEqualsEmptyIsEmpty()
 	{
 		$data = [
@@ -620,8 +567,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotEqualsReturnsFalseOnFailure()
 	{
@@ -636,8 +581,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNotEqualsReturnsTrueOnSuccess()
 	{
 		$data = [
@@ -650,8 +593,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotEqualsReturnsTrueOnCaseMismatch()
 	{
@@ -666,8 +607,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -675,11 +614,11 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db = Database::connect();
 		$db->table('user')
-		   ->insert([
-			   'name'    => 'Derek Travis',
-			   'email'   => 'derek@world.com',
-			   'country' => 'Elbonia',
-		   ]);
+			->insert([
+				'name'    => 'Derek Travis',
+				'email'   => 'derek@world.com',
+				'country' => 'Elbonia',
+			]);
 
 		$data = [
 			'email' => 'derek@world.com',
@@ -691,8 +630,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group DatabaseLive
@@ -710,8 +647,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -719,15 +654,15 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db   = Database::connect();
 		$user = $db->table('user')
-				   ->insert([
-					   'name'    => 'Developer A',
-					   'email'   => 'deva@example.com',
-					   'country' => 'Elbonia',
-				   ]);
-		$row  = $db->table('user')
-				   ->limit(1)
-				   ->get()
-				   ->getRow();
+			->insert([
+				'name'    => 'Developer A',
+				'email'   => 'deva@example.com',
+				'country' => 'Elbonia',
+			]);
+		$row = $db->table('user')
+			->limit(1)
+			->get()
+			->getRow();
 
 		$data = [
 			'email' => 'derek@world.co.uk',
@@ -739,8 +674,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group DatabaseLive
@@ -755,9 +688,9 @@ class RulesTest extends CIDatabaseTestCase
 
 		$db  = Database::connect();
 		$row = $db->table('user')
-				  ->limit(1)
-				  ->get()
-				  ->getRow();
+			->limit(1)
+			->get()
+			->getRow();
 
 		$data = [
 			'id'    => $row->id,
@@ -771,8 +704,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -780,16 +711,14 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db = Database::connect();
 		$db->table('user')
-				   ->insert([
-					   'name'    => 'Developer A',
-					   'email'   => 'deva@example.com',
-					   'country' => 'Elbonia',
-				   ]);
+			->insert([
+				'name'    => 'Developer A',
+				'email'   => 'deva@example.com',
+				'country' => 'Elbonia',
+			]);
 
 		$this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group DatabaseLive
@@ -798,11 +727,11 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db = Database::connect();
 		$db->table('user')
-		   ->insert([
-			   'name'    => 'Derek Travis',
-			   'email'   => 'derek@world.com',
-			   'country' => 'Elbonia',
-		   ]);
+			->insert([
+				'name'    => 'Derek Travis',
+				'email'   => 'derek@world.com',
+				'country' => 'Elbonia',
+			]);
 
 		$data = [
 			'email' => 'derek1@world.com',
@@ -815,8 +744,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -824,11 +751,11 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db = Database::connect();
 		$db->table('user')
-		   ->insert([
-			   'name'    => 'Derek Travis',
-			   'email'   => 'derek@world.com',
-			   'country' => 'Elbonia',
-		   ]);
+			->insert([
+				'name'    => 'Derek Travis',
+				'email'   => 'derek@world.com',
+				'country' => 'Elbonia',
+			]);
 
 		$data = [
 			'email' => 'derek@world.com',
@@ -841,8 +768,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -850,15 +775,15 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db   = Database::connect();
 		$user = $db->table('user')
-				   ->insert([
-					   'name'    => 'Developer A',
-					   'email'   => 'deva@example.com',
-					   'country' => 'Elbonia',
-				   ]);
-		$row  = $db->table('user')
-				   ->limit(1)
-				   ->get()
-				   ->getRow();
+			->insert([
+				'name'    => 'Developer A',
+				'email'   => 'deva@example.com',
+				'country' => 'Elbonia',
+			]);
+		$row = $db->table('user')
+			->limit(1)
+			->get()
+			->getRow();
 
 		$data = [
 			'email' => 'derek@world.co.uk',
@@ -870,8 +795,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group DatabaseLive
@@ -886,9 +809,9 @@ class RulesTest extends CIDatabaseTestCase
 
 		$db  = Database::connect();
 		$row = $db->table('user')
-				  ->limit(1)
-				  ->get()
-				  ->getRow();
+			->limit(1)
+			->get()
+			->getRow();
 
 		$data = [
 			'id'    => $row->id,
@@ -902,8 +825,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group DatabaseLive
 	 */
@@ -911,16 +832,14 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		$db = Database::connect();
 		$db->table('user')
-				   ->insert([
-					   'name'    => 'Developer A',
-					   'email'   => 'deva@example.com',
-					   'country' => 'Elbonia',
-				   ]);
+			->insert([
+				'name'    => 'Developer A',
+				'email'   => 'deva@example.com',
+				'country' => 'Elbonia',
+			]);
 
 		$this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMinLengthNull()
 	{
@@ -935,8 +854,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMinLengthReturnsTrueWithSuccess()
 	{
 		$data = [
@@ -949,8 +866,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMinLengthReturnsTrueWithExactLength()
 	{
@@ -965,8 +880,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMinLengthReturnsFalseWhenWrong()
 	{
 		$data = [
@@ -979,8 +892,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMaxLengthNull()
 	{
@@ -995,8 +906,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMaxLengthReturnsFalseWithNonNumericVal()
 	{
 		$data = [
@@ -1009,8 +918,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMaxLengthReturnsTrueWithSuccess()
 	{
@@ -1025,8 +932,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMaxLengthReturnsTrueWithExactLength()
 	{
 		$data = [
@@ -1039,8 +944,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMaxLengthReturnsFalseWhenWrong()
 	{
@@ -1055,8 +958,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExactLengthNull()
 	{
 		$data = [
@@ -1069,8 +970,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testExactLengthReturnsTrueOnSuccess()
 	{
@@ -1085,8 +984,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertTrue($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExactLengthDetectsBadLength()
 	{
 		$data = [
@@ -1099,8 +996,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testExactLengthReturnsFalseWhenShort()
 	{
@@ -1115,8 +1010,6 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExactLengthReturnsFalseWhenLong()
 	{
 		$data = [
@@ -1130,13 +1023,13 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertFalse($this->validation->run($data));
 	}
 
-	//-------------------------------------------------------------------
-
 	/**
 	 * @dataProvider greaterThanProvider
 	 *
 	 * @param $str
 	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $second
 	 */
 	public function testGreaterThan($first, $second, $expected)
 	{
@@ -1150,8 +1043,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function greaterThanProvider()
 	{
@@ -1189,13 +1080,13 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//-------------------------------------------------------------------
-
 	/**
 	 * @dataProvider greaterThanEqualProvider
 	 *
 	 * @param $str
 	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $second
 	 */
 	public function testGreaterThanEqual($first, $second, $expected)
 	{
@@ -1209,8 +1100,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function greaterThanEqualProvider()
 	{
@@ -1253,13 +1142,13 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//-------------------------------------------------------------------
-
 	/**
 	 * @dataProvider lessThanProvider
 	 *
 	 * @param $str
 	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $second
 	 */
 	public function testLessThan($first, $second, $expected)
 	{
@@ -1273,8 +1162,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function lessThanProvider()
 	{
@@ -1317,13 +1204,13 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//-------------------------------------------------------------------
-
 	/**
 	 * @dataProvider lessThanEqualProvider
 	 *
 	 * @param $str
 	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $second
 	 */
 	public function testLessEqualThan($first, $second, $expected)
 	{
@@ -1337,8 +1224,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function lessThanEqualProvider()
 	{
@@ -1386,14 +1271,12 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//-------------------------------------------------------------------
-
 	/**
 	 * @dataProvider inListProvider
 	 *
-	 * @param string  $first
-	 * @param string  $second
-	 * @param boolean $expected
+	 * @param string $first
+	 * @param string $second
+	 * @param bool   $expected
 	 */
 	public function testInList($first, $second, $expected)
 	{
@@ -1408,14 +1291,12 @@ class RulesTest extends CIDatabaseTestCase
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider inListProvider
 	 *
-	 * @param string  $first
-	 * @param string  $second
-	 * @param boolean $expected
+	 * @param string $first
+	 * @param string $second
+	 * @param bool   $expected
 	 */
 	public function testNotInList($first, $second, $expected)
 	{
@@ -1431,8 +1312,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function inListProvider()
 	{
@@ -1485,13 +1364,12 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider requiredWithProvider
 	 *
 	 * @param $check
 	 * @param $expected
+	 * @param mixed $field
 	 */
 	public function testRequiredWith($field, $check, $expected = false)
 	{
@@ -1499,7 +1377,7 @@ class RulesTest extends CIDatabaseTestCase
 			'foo' => 'bar',
 			'bar' => 'something',
 			'baz' => null,
-			'ar'  => [],// Was running into issues with array values
+			'ar'  => [], // Was running into issues with array values
 		];
 
 		$this->validation->setRules([
@@ -1508,8 +1386,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function requiredWithProvider()
 	{
@@ -1547,13 +1423,12 @@ class RulesTest extends CIDatabaseTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider requiredWithoutProvider
 	 *
 	 * @param $check
 	 * @param $expected
+	 * @param mixed $field
 	 */
 	public function testRequiredWithout($field, $check, $expected = false)
 	{
@@ -1569,8 +1444,6 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function requiredWithoutProvider()
 	{
@@ -1602,6 +1475,4 @@ class RulesTest extends CIDatabaseTestCase
 			],
 		];
 	}
-
-	//--------------------------------------------------------------------
 }

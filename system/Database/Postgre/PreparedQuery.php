@@ -49,7 +49,6 @@ use Exception;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * Stores the name this query can be
 	 * used under by postgres. Only used internally.
@@ -62,11 +61,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * The result resource from a successful
 	 * pg_exec. Or false.
 	 *
-	 * @var Result|boolean
+	 * @var bool|Result
 	 */
 	protected $result;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -79,8 +76,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * @param array  $options Passed to the connection's prepare statement.
 	 *                        Unused in the MySQLi driver.
 	 *
-	 * @return mixed
 	 * @throws Exception
+	 *
+	 * @return mixed
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
@@ -101,19 +99,17 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
 	 *
 	 * @param array $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if ($this->statement === null)
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -122,8 +118,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
 		return (bool) $this->result;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result object for the prepared query.
@@ -134,8 +128,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->result;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Replaces the ? placeholders with $1, $2, etc parameters for use
@@ -150,11 +142,10 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Track our current value
 		$count = 0;
 
-		return preg_replace_callback('/\?/', function ($matches) use (&$count) {
-			$count ++;
+		return preg_replace_callback('/\?/', static function ($matches) use (&$count) {
+			$count++;
+
 			return "\${$count}";
 		}, $sql);
 	}
-
-	//--------------------------------------------------------------------
 }

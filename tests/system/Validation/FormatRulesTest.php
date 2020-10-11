@@ -2,25 +2,28 @@
 
 namespace CodeIgniter\Validation;
 
-class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use CodeIgniter\Test\CIUnitTestCase;
 
-	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
-	const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
+class FormatRulesTest extends CIUnitTestCase
+{
+	public const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
+
+	public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
-		'ruleSets'      => [
+		'ruleSets' => [
 			\CodeIgniter\Validation\Rules::class,
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
 			\Tests\Support\Validation\TestRules::class,
 		],
-		'groupA'        => [
+		'groupA' => [
 			'foo' => 'required|min_length[5]',
 		],
 		'groupA_errors' => [
@@ -71,6 +74,9 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider urlProvider
+	 *
+	 * @param string|null $url
+	 * @param bool        $expected
 	 */
 	public function testValidURL(string $url = null, bool $expected)
 	{
@@ -391,8 +397,8 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * Test alpha with spaces.
 	 *
-	 * @param mixed   $value    Value.
-	 * @param boolean $expected Expected.
+	 * @param mixed $value    value
+	 * @param bool  $expected expected
 	 *
 	 * @dataProvider alphaSpaceProvider
 	 */
@@ -850,8 +856,8 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider naturalProvider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $expected
 	 */
 	public function testNatural($first, $expected)
 	{
@@ -895,8 +901,8 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider naturalZeroProvider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $expected
 	 */
 	public function testNaturalNoZero($first, $expected)
 	{
@@ -940,8 +946,8 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider base64Provider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $expected
 	 */
 	public function testBase64($first, $expected)
 	{
@@ -977,8 +983,8 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider jsonProvider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param mixed $first
+	 * @param mixed $expected
 	 */
 	public function testJson($first, $expected)
 	{
@@ -1261,5 +1267,4 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 	}
-
 }

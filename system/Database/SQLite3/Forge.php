@@ -47,11 +47,10 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * UNSIGNED support
 	 *
-	 * @var boolean|array
+	 * @var array|bool
 	 */
 	protected $_unsigned = false;
 
@@ -61,8 +60,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var string
 	 */
 	protected $_null = 'NULL';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -80,15 +77,13 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Create database
 	 *
-	 * @param string  $dbName
-	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
+	 * @param string $dbName
+	 * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function createDatabase(string $dbName, bool $ifNotExists = false): bool
 	{
@@ -97,15 +92,14 @@ class Forge extends \CodeIgniter\Database\Forge
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Drop database
 	 *
 	 * @param string $dbName
 	 *
-	 * @return boolean
 	 * @throws DatabaseException
+	 *
+	 * @return bool
 	 */
 	public function dropDatabase(string $dbName): bool
 	{
@@ -122,6 +116,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		// We need to close the pseudo-connection first
 		$this->db->close();
+
 		if (! @unlink($dbName))
 		{
 			if ($this->db->DBDebug)
@@ -135,6 +130,7 @@ class Forge extends \CodeIgniter\Database\Forge
 		if (! empty($this->db->dataCache['db_names']))
 		{
 			$key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
+
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['db_names'][$key]);
@@ -144,8 +140,6 @@ class Forge extends \CodeIgniter\Database\Forge
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -153,7 +147,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $table     Table name
 	 * @param mixed  $field     Column definition
 	 *
-	 * @return string|array|null
+	 * @return array|string|null
 	 */
 	protected function _alterTable(string $alterType, string $table, $field)
 	{
@@ -170,17 +164,13 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'CHANGE':
 				$sqlTable = new Table($this->db, $this);
 
-				$sqlTable->fromTable($table)
-						 ->modifyColumn($field)
-						 ->run();
+				$sqlTable->fromTable($table)->modifyColumn($field)->run();
 
 				return null;
 			default:
 				return parent::_alterTable($alterType, $table, $field);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process column
@@ -205,8 +195,6 @@ class Forge extends \CodeIgniter\Database\Forge
 			   . $field['default'];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Process indexes
 	 *
@@ -220,7 +208,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
+			$this->keys[$i] = (array) $this->keys[$i];
 
 			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{
@@ -229,6 +217,7 @@ class Forge extends \CodeIgniter\Database\Forge
 					unset($this->keys[$i][$i2]);
 				}
 			}
+
 			if (count($this->keys[$i]) <= 0)
 			{
 				continue;
@@ -239,6 +228,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
 						  . ' ON ' . $this->db->escapeIdentifiers($table)
 						  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+
 				continue;
 			}
 
@@ -249,8 +239,6 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sqls;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Field attribute TYPE
@@ -268,13 +256,12 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'ENUM':
 			case 'SET':
 				$attributes['TYPE'] = 'TEXT';
+
 				break;
 			default:
 				break;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Field attribute AUTO_INCREMENT
@@ -299,16 +286,15 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Foreign Key Drop
 	 *
 	 * @param string $table       Table name
 	 * @param string $foreignName Foreign name
 	 *
-	 * @return boolean
 	 * @throws DatabaseException
+	 *
+	 * @return bool
 	 */
 	public function dropForeignKey(string $table, string $foreignName): bool
 	{
@@ -322,11 +308,6 @@ class Forge extends \CodeIgniter\Database\Forge
 		// without the foreign key being involved now
 		$sqlTable = new Table($this->db, $this);
 
-		return $sqlTable->fromTable($this->db->DBPrefix . $table)
-			->dropForeignKey($foreignName)
-			->run();
+		return $sqlTable->fromTable($this->db->DBPrefix . $table)->dropForeignKey($foreignName)->run();
 	}
-
-	//--------------------------------------------------------------------
-
 }

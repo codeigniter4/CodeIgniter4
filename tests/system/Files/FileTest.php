@@ -1,8 +1,11 @@
-<?php namespace CodeIgniter\Files;
+<?php
 
-class FileTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Files;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class FileTest extends CIUnitTestCase
 {
-
 	public function testNewGoodChecked()
 	{
 		$path = SYSTEMPATH . 'Common.php';
@@ -74,5 +77,4 @@ class FileTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$file = new File(SYSTEMPATH . 'Commoner.php', true);
 	}
-
 }

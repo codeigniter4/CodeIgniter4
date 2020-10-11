@@ -30,20 +30,14 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
  * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 1.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
-/**
- * CodeIgniter File System Helpers
- *
- * @package CodeIgniter
- */
-// ------------------------------------------------------------------------
+// CodeIgniter File System Helpers
 
 if (! function_exists('directory_map'))
 {
@@ -54,10 +48,10 @@ if (! function_exists('directory_map'))
 	 * representation of it. Sub-folders contained with the
 	 * directory will be mapped as well.
 	 *
-	 * @param string  $sourceDir      Path to source
-	 * @param integer $directoryDepth Depth of directories to traverse
-	 *                                 (0 = fully recursive, 1 = current dir, etc)
-	 * @param boolean $hidden         Whether to show hidden files
+	 * @param string $sourceDir      Path to source
+	 * @param int    $directoryDepth Depth of directories to traverse
+	 *                               (0 = fully recursive, 1 = current dir, etc)
+	 * @param bool   $hidden         Whether to show hidden files
 	 *
 	 * @return array
 	 */
@@ -92,6 +86,7 @@ if (! function_exists('directory_map'))
 			}
 
 			closedir($fp);
+
 			return $fileData;
 		}
 		catch (Throwable $e)
@@ -100,8 +95,6 @@ if (! function_exists('directory_map'))
 		}
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('write_file'))
 {
@@ -115,7 +108,7 @@ if (! function_exists('write_file'))
 	 * @param string $data Data to write
 	 * @param string $mode fopen() mode (default: 'wb')
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	function write_file(string $path, string $data, string $mode = 'wb'): bool
 	{
@@ -145,8 +138,6 @@ if (! function_exists('write_file'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('delete_files'))
 {
 	/**
@@ -157,12 +148,12 @@ if (! function_exists('delete_files'))
 	 * If the second parameter is set to true, any directories contained
 	 * within the supplied base directory will be nuked as well.
 	 *
-	 * @param string  $path   File path
-	 * @param boolean $delDir Whether to delete any directories found in the path
-	 * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
-	 * @param boolean $hidden Whether to include hidden files (files beginning with a period)
+	 * @param string $path   File path
+	 * @param bool   $delDir Whether to delete any directories found in the path
+	 * @param bool   $htdocs Whether to skip deleting .htaccess and index page files
+	 * @param bool   $hidden Whether to include hidden files (files beginning with a period)
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	function delete_files(string $path, bool $delDir = false, bool $htdocs = false, bool $hidden = false): bool
 	{
@@ -177,6 +168,7 @@ if (! function_exists('delete_files'))
 			) as $object)
 			{
 				$filename = $object->getFilename();
+
 				if (! $hidden && $filename[0] === '.')
 				{
 					continue;
@@ -185,11 +177,14 @@ if (! function_exists('delete_files'))
 				if (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
 					$isDir = $object->isDir();
+
 					if ($isDir && $delDir)
 					{
 						@rmdir($object->getPathname());
+
 						continue;
 					}
+
 					if (! $isDir)
 					{
 						@unlink($object->getPathname());
@@ -206,8 +201,6 @@ if (! function_exists('delete_files'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('get_filenames'))
 {
 	/**
@@ -216,9 +209,9 @@ if (! function_exists('get_filenames'))
 	 * Reads the specified directory and builds an array containing the filenames.
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string       $sourceDir   Path to source
-	 * @param boolean|null $includePath Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
-	 * @param boolean      $hidden      Whether to include hidden files (files beginning with a period)
+	 * @param string    $sourceDir   Path to source
+	 * @param bool|null $includePath Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
+	 * @param bool      $hidden      Whether to include hidden files (files beginning with a period)
 	 *
 	 * @return array
 	 */
@@ -232,11 +225,12 @@ if (! function_exists('get_filenames'))
 		try
 		{
 			foreach (new RecursiveIteratorIterator(
-					new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS),
-					RecursiveIteratorIterator::SELF_FIRST
-				) as $name => $object)
+				new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS),
+				RecursiveIteratorIterator::SELF_FIRST
+			) as $name => $object)
 			{
 				$basename = pathinfo($name, PATHINFO_BASENAME);
+
 				if (! $hidden && $basename[0] === '.')
 				{
 					continue;
@@ -246,7 +240,7 @@ if (! function_exists('get_filenames'))
 				{
 					$files[] = $basename;
 				}
-				elseif (is_null($includePath))
+				elseif ($includePath === null)
 				{
 					$files[] = str_replace($sourceDir, '', $name);
 				}
@@ -267,8 +261,6 @@ if (! function_exists('get_filenames'))
 	}
 }
 
-// --------------------------------------------------------------------
-
 if (! function_exists('get_dir_file_info'))
 {
 	/**
@@ -279,9 +271,9 @@ if (! function_exists('get_dir_file_info'))
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $sourceDir    Path to source
-	 * @param boolean $topLevelOnly Look only at the top level directory specified?
-	 * @param boolean $recursion    Internal variable to determine recursion status - do not use in calls
+	 * @param string $sourceDir    Path to source
+	 * @param bool   $topLevelOnly Look only at the top level directory specified?
+	 * @param bool   $recursion    Internal variable to determine recursion status - do not use in calls
 	 *
 	 * @return array
 	 */
@@ -292,17 +284,17 @@ if (! function_exists('get_dir_file_info'))
 
 		try
 		{
-			$fp = @opendir($sourceDir); {
-				// reset the array and make sure $source_dir has a trailing slash on the initial call
+			$fp = @opendir($sourceDir);
+			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
-				{
+			{
 				$fileData  = [];
 				$sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
-				// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
+			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
 			while (false !== ($file = readdir($fp)))
-				{
+			{
 				if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false)
 				{
 					get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
@@ -314,9 +306,9 @@ if (! function_exists('get_dir_file_info'))
 				}
 			}
 
-				closedir($fp);
-				return $fileData;
-			}
+			closedir($fp);
+
+			return $fileData;
 		}
 		catch (Throwable $fe)
 		{
@@ -324,8 +316,6 @@ if (! function_exists('get_dir_file_info'))
 		}
 	}
 }
-
-// --------------------------------------------------------------------
 
 if (! function_exists('get_file_info'))
 {
@@ -359,27 +349,35 @@ if (! function_exists('get_file_info'))
 			switch ($key) {
 				case 'name':
 					$fileInfo['name'] = basename($file);
+
 					break;
 				case 'server_path':
 					$fileInfo['server_path'] = $file;
+
 					break;
 				case 'size':
 					$fileInfo['size'] = filesize($file);
+
 					break;
 				case 'date':
 					$fileInfo['date'] = filemtime($file);
+
 					break;
 				case 'readable':
 					$fileInfo['readable'] = is_readable($file);
+
 					break;
 				case 'writable':
 					$fileInfo['writable'] = is_really_writable($file);
+
 					break;
 				case 'executable':
 					$fileInfo['executable'] = is_executable($file);
+
 					break;
 				case 'fileperms':
 					$fileInfo['fileperms'] = fileperms($file);
+
 					break;
 			}
 		}
@@ -387,8 +385,6 @@ if (! function_exists('get_file_info'))
 		return $fileInfo; // @phpstan-ignore-line
 	}
 }
-
-// --------------------------------------------------------------------
 
 if (! function_exists('symbolic_permissions'))
 {
@@ -398,7 +394,8 @@ if (! function_exists('symbolic_permissions'))
 	 * Takes a numeric value representing a file's permissions and returns
 	 * standard symbolic notation representing that value
 	 *
-	 * @param  integer $perms Permissions
+	 * @param int $perms Permissions
+	 *
 	 * @return string
 	 */
 	function symbolic_permissions(int $perms): string
@@ -439,23 +436,21 @@ if (! function_exists('symbolic_permissions'))
 		// Owner
 		$symbolic .= (($perms & 0x0100) ? 'r' : '-')
 				. (($perms & 0x0080) ? 'w' : '-')
-				. (($perms & 0x0040) ? (($perms & 0x0800) ? 's' : 'x' ) : (($perms & 0x0800) ? 'S' : '-'));
+				. (($perms & 0x0040) ? (($perms & 0x0800) ? 's' : 'x') : (($perms & 0x0800) ? 'S' : '-'));
 
 		// Group
 		$symbolic .= (($perms & 0x0020) ? 'r' : '-')
 				. (($perms & 0x0010) ? 'w' : '-')
-				. (($perms & 0x0008) ? (($perms & 0x0400) ? 's' : 'x' ) : (($perms & 0x0400) ? 'S' : '-'));
+				. (($perms & 0x0008) ? (($perms & 0x0400) ? 's' : 'x') : (($perms & 0x0400) ? 'S' : '-'));
 
 		// World
 		$symbolic .= (($perms & 0x0004) ? 'r' : '-')
 				. (($perms & 0x0002) ? 'w' : '-')
-				. (($perms & 0x0001) ? (($perms & 0x0200) ? 't' : 'x' ) : (($perms & 0x0200) ? 'T' : '-'));
+				. (($perms & 0x0001) ? (($perms & 0x0200) ? 't' : 'x') : (($perms & 0x0200) ? 'T' : '-'));
 
 		return $symbolic;
 	}
 }
-
-// --------------------------------------------------------------------
 
 if (! function_exists('octal_permissions'))
 {
@@ -465,7 +460,8 @@ if (! function_exists('octal_permissions'))
 	 * Takes a numeric value representing a file's permissions and returns
 	 * a three character string representing the file's octal permissions
 	 *
-	 * @param  integer $perms Permissions
+	 * @param int $perms Permissions
+	 *
 	 * @return string
 	 */
 	function octal_permissions(int $perms): string
@@ -474,15 +470,13 @@ if (! function_exists('octal_permissions'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('set_realpath'))
 {
 	/**
 	 * Set Realpath
 	 *
-	 * @param string  $path
-	 * @param boolean $checkExistence Checks to see if the path exists
+	 * @param string $path
+	 * @param bool   $checkExistence Checks to see if the path exists
 	 *
 	 * @return string
 	 */

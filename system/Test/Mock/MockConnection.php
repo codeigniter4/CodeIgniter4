@@ -1,4 +1,43 @@
-<?php namespace CodeIgniter\Test\Mock;
+<?php
+
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
+ */
+
+namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\BaseConnection;
@@ -13,16 +52,12 @@ class MockConnection extends BaseConnection
 
 	public $lastQuery;
 
-	//--------------------------------------------------------------------
-
 	public function shouldReturn(string $method, $return)
 	{
 		$this->returnValues[$method] = $return;
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Orchestrates a query against the database. Queries must use
@@ -32,16 +67,16 @@ class MockConnection extends BaseConnection
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param string  $sql
-	 * @param mixed   ...$binds
-	 * @param boolean $setEscapeFlags
-	 * @param string  $queryClass
+	 * @param string $sql
+	 * @param mixed  ...$binds
+	 * @param bool   $setEscapeFlags
+	 * @param string $queryClass
 	 *
-	 * @return BaseResult|Query|false
+	 * @return BaseResult|false|Query
 	 */
 	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
-		$queryClass = str_replace('Connection', 'Query', get_class($this));
+		$queryClass = str_replace('Connection', 'Query', static::class);
 
 		$query = new $queryClass($this);
 
@@ -68,17 +103,15 @@ class MockConnection extends BaseConnection
 
 		$query->setDuration($startTime);
 
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
+		$resultClass = str_replace('Connection', 'Result', static::class);
 
 		return new $resultClass($this->connID, $this->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Connect to the database.
 	 *
-	 * @param boolean $persistent
+	 * @param bool $persistent
 	 *
 	 * @return mixed
 	 */
@@ -96,20 +129,16 @@ class MockConnection extends BaseConnection
 		return $return;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function reconnect(): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.
@@ -125,8 +154,6 @@ class MockConnection extends BaseConnection
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
@@ -136,8 +163,6 @@ class MockConnection extends BaseConnection
 	{
 		return CodeIgniter::CI_VERSION;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Executes the query against the database.
@@ -151,19 +176,15 @@ class MockConnection extends BaseConnection
 		return $this->returnValues['execute'];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
 		return 1;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last error code and message.
@@ -182,24 +203,20 @@ class MockConnection extends BaseConnection
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function insertID(): int
 	{
 		return $this->connID->insert_id; // @phpstan-ignore-line
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param boolean $constrainByPrefix
+	 * @param bool $constrainByPrefix
 	 *
 	 * @return string
 	 */
@@ -207,8 +224,6 @@ class MockConnection extends BaseConnection
 	{
 		return '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates a platform-specific query string so that the column names can be fetched.
@@ -223,7 +238,8 @@ class MockConnection extends BaseConnection
 	}
 
 	/**
-	 * @param  string $table
+	 * @param string $table
+	 *
 	 * @return array
 	 */
 	protected function _fieldData(string $table): array
@@ -232,7 +248,8 @@ class MockConnection extends BaseConnection
 	}
 
 	/**
-	 * @param  string $table
+	 * @param string $table
+	 *
 	 * @return array
 	 */
 	protected function _indexData(string $table): array
@@ -241,15 +258,14 @@ class MockConnection extends BaseConnection
 	}
 
 	/**
-	 * @param  string $table
+	 * @param string $table
+	 *
 	 * @return array
 	 */
 	protected function _foreignKeyData(string $table): array
 	{
 		return [];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Close the connection.
@@ -258,41 +274,33 @@ class MockConnection extends BaseConnection
 	{
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transBegin(): bool
 	{
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transCommit(): bool
 	{
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transRollback(): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

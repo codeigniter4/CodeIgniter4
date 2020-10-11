@@ -1,19 +1,23 @@
-<?php namespace Config;
+<?php
 
-class MimesTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace Config;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class MimesTest extends CIUnitTestCase
 {
 	public function extensionsList()
 	{
 		return [
-			'null'      => [
+			'null' => [
 				null,
 				'xkadjflkjdsf',
 			],
-			'single'    => [
+			'single' => [
 				'cpt',
 				'application/mac-compactpro',
 			],
-			'trimmed'   => [
+			'trimmed' => [
 				'cpt',
 				' application/mac-compactpro ',
 			],
@@ -28,37 +32,33 @@ class MimesTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider extensionsList
 	 *
-	 * @param $expected
-	 * @param $ext
+	 * @param mixed $expected
+	 * @param mixed $mime
 	 */
 	public function testGuessExtensionFromType($expected, $mime)
 	{
 		$this->assertEquals($expected, Mimes::guessExtensionFromType($mime));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function mimesList()
 	{
 		return [
-			'null'      => [
+			'null' => [
 				null,
 				'xalkjdlfkj',
 			],
-			'single'    => [
+			'single' => [
 				'audio/midi',
 				'mid',
 			],
-			'many'      => [
+			'many' => [
 				'image/bmp',
 				'bmp',
 			],
-			'trimmed'   => [
+			'trimmed' => [
 				'image/bmp',
 				'.bmp',
 			],
@@ -69,16 +69,14 @@ class MimesTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider mimesList
+	 *
+	 * @param mixed $expected
+	 * @param mixed $ext
 	 */
 	public function testGuessTypeFromExtension($expected, $ext)
 	{
 		$this->assertEquals($expected, Mimes::guessTypeFromExtension($ext));
 	}
-
-	//--------------------------------------------------------------------
-
 }

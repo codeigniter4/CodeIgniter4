@@ -1,6 +1,8 @@
-<?php namespace CodeIgniter;
+<?php
 
-use CIUnitTestCase;
+namespace CodeIgniter;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services as ConfigServices;
 
 /**
@@ -13,9 +15,7 @@ class Services
 	 *
 	 * @var array
 	 */
-	static protected $mocks = [];
-
-	//--------------------------------------------------------------------
+	protected static $mocks = [];
 
 	/**
 	 * Reset shared instances and mocks for testing.
@@ -27,8 +27,6 @@ class Services
 		CIUnitTestCase::setPrivateProperty(ConfigServices::class, 'instances', []);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Inject mock object for testing.
 	 *
@@ -37,11 +35,9 @@ class Services
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name                 = strtolower($name);
+		$name                 = mb_strtolower($name);
 		static::$mocks[$name] = $mock;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a service
@@ -51,7 +47,7 @@ class Services
 	 */
 	public static function __callStatic(string $name, array $arguments)
 	{
-		$name = strtolower($name);
+		$name = mb_strtolower($name);
 
 		// Returns mock if exists
 		if (isset(static::$mocks[$name]))
@@ -64,7 +60,4 @@ class Services
 			return ConfigServices::$name(...$arguments);
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }

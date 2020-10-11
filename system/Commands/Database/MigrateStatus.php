@@ -153,7 +153,7 @@ class MigrateStatus extends BaseCommand
 
 			foreach ($migrations as $uid => $migration)
 			{
-				$migrations[$uid]->name = mb_substr($migration->name, mb_strpos($migration->name, $uid . '_'));
+				$migrations[$uid]->name = substr($migration->name, strpos($migration->name, $uid . '_'));
 
 				$date  = '---';
 				$group = '---';

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -23,8 +25,6 @@ class InsertTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Grocery Sales']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testInsertBatch()
 	{
 		$job_data = [
@@ -44,8 +44,6 @@ class InsertTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReplaceWithNoMatchingData()
 	{
 		$data = [
@@ -57,13 +55,11 @@ class InsertTest extends CIDatabaseTestCase
 		$this->db->table('job')->replace($data);
 
 		$row = $this->db->table('job')
-						->getwhere(['id' => 5])
-						->getRow();
+			->getwhere(['id' => 5])
+			->getRow();
 
 		$this->assertEquals('Cab Driver', $row->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testReplaceWithMatchingData()
 	{
@@ -76,17 +72,15 @@ class InsertTest extends CIDatabaseTestCase
 		$this->db->table('job')->replace($data);
 
 		$row = $this->db->table('job')
-						->getwhere(['id' => 1])
-						->getRow();
+			->getwhere(['id' => 1])
+			->getRow();
 
 		$this->assertEquals('Cab Driver', $row->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBug302()
 	{
-		$code = "my code \'CodeIgniter\Autoloader\'";
+		$code = "my code \\'CodeIgniter\\Autoloader\\'";
 
 		$this->db->table('misc')->insert([
 			'key'   => 'test',
@@ -108,5 +102,4 @@ class InsertTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('misc', ['value' => $hash]);
 	}
-
 }

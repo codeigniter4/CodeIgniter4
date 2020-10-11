@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -68,20 +69,15 @@ use ReflectionMethod;
  *         class Class {
  *             function method(array $params=null)
  *         }
- *
- * @package CodeIgniter\View
  */
 class Cell
 {
-
 	/**
 	 * Instance of the current Cache Instance
 	 *
 	 * @var CacheInterface
 	 */
 	protected $cache;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Cell constructor.
@@ -93,22 +89,21 @@ class Cell
 		$this->cache = $cache;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Render a cell, returning its body as a string.
 	 *
 	 * @param string      $library
 	 * @param null        $params
-	 * @param integer     $ttl
+	 * @param int         $ttl
 	 * @param string|null $cacheName
 	 *
-	 * @return string
 	 * @throws ReflectionException
+	 *
+	 * @return string
 	 */
 	public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
-		list($class, $method) = $this->determineClass($library);
+		[$class, $method] = $this->determineClass($library);
 
 		// Is it cached?
 		$cacheName = ! empty($cacheName)
@@ -149,10 +144,8 @@ class Cell
 
 			$output = $instance->{$method}();
 		}
-		elseif (($paramCount === 1) && (
-				( ! array_key_exists($refParams[0]->name, $paramArray)) ||
-				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
-		)
+		elseif (($paramCount === 1)
+			&& ((! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1)))
 		{
 			$output = $instance->{$method}($paramArray);
 		}
@@ -164,6 +157,7 @@ class Cell
 			foreach ($refParams as $arg)
 			{
 				$methodParams[$arg->name] = true;
+
 				if (array_key_exists($arg->name, $paramArray))
 				{
 					$fireArgs[$arg->name] = $paramArray[$arg->name];
@@ -178,17 +172,16 @@ class Cell
 				}
 			}
 
-			$output = $instance->$method(...array_values($fireArgs));
+			$output = $instance->{$method}(...array_values($fireArgs));
 		}
 		// Can we cache it?
 		if (! empty($this->cache) && $ttl !== 0)
 		{
 			$this->cache->save($cacheName, $output, $ttl);
 		}
+
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parses the params attribute. If an array, returns untouched.
@@ -201,7 +194,7 @@ class Cell
 	 */
 	public function prepareParams($params)
 	{
-		if (empty($params) || ( ! is_string($params) && ! is_array($params)))
+		if (empty($params) || (! is_string($params) && ! is_array($params)))
 		{
 			return [];
 		}
@@ -223,7 +216,7 @@ class Cell
 			{
 				if (! empty($p))
 				{
-					list($key, $val)       = explode('=', $p);
+					[$key, $val]           = explode('=', $p);
 					$newParams[trim($key)] = trim($val, ', ');
 				}
 			}
@@ -241,8 +234,6 @@ class Cell
 		return $params;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Given the library string, attempts to determine the class and method
 	 * to call.
@@ -257,7 +248,7 @@ class Cell
 		// by default, so convert any double colons.
 		$library = str_replace('::', ':', $library);
 
-		list($class, $method) = explode(':', $library);
+		[$class, $method] = explode(':', $library);
 
 		if (empty($class))
 		{
@@ -279,6 +270,4 @@ class Cell
 			$method,
 		];
 	}
-
-	//--------------------------------------------------------------------
 }

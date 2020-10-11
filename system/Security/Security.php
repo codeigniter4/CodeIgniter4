@@ -50,7 +50,6 @@ use Exception;
  */
 class Security
 {
-
 	/**
 	 * CSRF Hash
 	 *
@@ -66,7 +65,7 @@ class Security
 	 * Expiration time for Cross Site Request Forgery protection cookie.
 	 * Defaults to two hours (in seconds).
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $CSRFExpire = 7200;
 
@@ -103,7 +102,7 @@ class Security
 	 * If true, the CSRF Token will be regenerated on every request.
 	 * If false, will stay the same for the life of the cookie.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $CSRFRegenerate = true;
 
@@ -124,7 +123,7 @@ class Security
 	/**
 	 * Cookie will only be set if a secure HTTPS connection exists.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cookieSecure = false;
 
@@ -174,8 +173,6 @@ class Security
 		'%3d',       // =
 	];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Security constructor.
 	 *
@@ -189,12 +186,12 @@ class Security
 	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFExpire     = $config->CSRFExpire ?? $this->CSRFExpire;
-		$this->CSRFTokenName  = $config->CSRFTokenName ?? $this->CSRFTokenName;
+		$this->CSRFExpire     = $config->CSRFExpire     ?? $this->CSRFExpire;
+		$this->CSRFTokenName  = $config->CSRFTokenName  ?? $this->CSRFTokenName;
 		$this->CSRFHeaderName = $config->CSRFHeaderName ?? $this->CSRFHeaderName;
 		$this->CSRFCookieName = $config->CSRFCookieName ?? $this->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate ?? $this->CSRFRegenerate;
-		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
+		$this->CSRFSameSite   = $config->CSRFSameSite   ?? $this->CSRFSameSite;
 
 		if (isset($config->cookiePrefix))
 		{
@@ -207,7 +204,7 @@ class Security
 		}
 
 		// Store cookie-related settings
-		$this->cookiePath   = $config->cookiePath ?? $this->cookiePath;
+		$this->cookiePath   = $config->cookiePath   ?? $this->cookiePath;
 		$this->cookieDomain = $config->cookieDomain ?? $this->cookieDomain;
 		$this->cookieSecure = $config->cookieSecure ?? $this->cookieSecure;
 
@@ -216,15 +213,14 @@ class Security
 		unset($config);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * CSRF Verify
 	 *
 	 * @param RequestInterface $request
 	 *
-	 * @return $this|false
 	 * @throws Exception
+	 *
+	 * @return $this|false
 	 */
 	public function CSRFVerify(RequestInterface $request)
 	{
@@ -235,17 +231,16 @@ class Security
 		}
 
 		// Do the tokens exist in _POST, HEADER or optionally php:://input - json data
-		$CSRFTokenValue = $_POST[$this->CSRFTokenName] ??
-			(! is_null($request->getHeader($this->CSRFHeaderName)) && ! empty($request->getHeader($this->CSRFHeaderName)->getValue()) ?
-				$request->getHeader($this->CSRFHeaderName)->getValue() :
-				(! empty($request->getBody()) && ! empty($json = json_decode($request->getBody())) && json_last_error() === JSON_ERROR_NONE ?
-					($json->{$this->CSRFTokenName} ?? null) :
-					null));
+		$CSRFTokenValue = $_POST[$this->CSRFTokenName] ?? ($request->getHeader($this->CSRFHeaderName) !== null && ! empty($request->getHeader($this->CSRFHeaderName)->getValue())
+			? $request->getHeader($this->CSRFHeaderName)->getValue()
+			: (! empty($request->getBody()) && ! empty($json = json_decode($request->getBody())) && json_last_error() === JSON_ERROR_NONE
+				? ($json->{$this->CSRFTokenName} ?? null)
+				: null));
 
 		// Do the tokens exist in both the _POST/POSTed JSON and _COOKIE arrays?
-		if (! isset($CSRFTokenValue, $_COOKIE[$this->CSRFCookieName]) || $CSRFTokenValue !== $_COOKIE[$this->CSRFCookieName]
-		) // Do the tokens match?
+		if (! isset($CSRFTokenValue, $_COOKIE[$this->CSRFCookieName]) || $CSRFTokenValue !== $_COOKIE[$this->CSRFCookieName])
 		{
+			// Do the tokens match?
 			throw SecurityException::forDisallowedAction();
 		}
 
@@ -278,16 +273,14 @@ class Security
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * CSRF Set Cookie
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param RequestInterface|IncomingRequest $request
+	 * @param IncomingRequest|RequestInterface $request
 	 *
-	 * @return Security|false
+	 * @return false|Security
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{
@@ -303,6 +296,7 @@ class Security
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
 			$samesite = '';
+
 			if ($this->CSRFSameSite !== '')
 			{
 				$samesite = '; samesite=' . $this->CSRFSameSite;
@@ -326,7 +320,7 @@ class Security
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $secureCookie,
-				'httponly' => true,// Enforce HTTP only cookie for security
+				'httponly' => true, // Enforce HTTP only cookie for security
 			];
 
 			if ($this->CSRFSameSite !== '')
@@ -346,8 +340,6 @@ class Security
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current CSRF Hash.
 	 *
@@ -357,8 +349,6 @@ class Security
 	{
 		return $this->CSRFHash;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the CSRF Token Name.
@@ -370,13 +360,12 @@ class Security
 		return $this->CSRFTokenName;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the CSRF Hash and cookie.
 	 *
-	 * @return string
 	 * @throws Exception
+	 *
+	 * @return string
 	 */
 	protected function CSRFSetHash(): string
 	{
@@ -387,8 +376,7 @@ class Security
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
 			if (isset($_COOKIE[$this->CSRFCookieName]) && is_string($_COOKIE[$this->CSRFCookieName]) && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
-			)
-			{
+			) {
 				return $this->CSRFHash = $_COOKIE[$this->CSRFCookieName];
 			}
 
@@ -398,8 +386,6 @@ class Security
 
 		return $this->CSRFHash;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sanitize Filename
@@ -412,8 +398,8 @@ class Security
 	 * e.g. file/in/some/approved/folder.txt, you can set the second optional
 	 * parameter, $relative_path to TRUE.
 	 *
-	 * @param string  $str          Input file name
-	 * @param boolean $relativePath Whether to preserve paths
+	 * @param string $str          Input file name
+	 * @param bool   $relativePath Whether to preserve paths
 	 *
 	 * @return string
 	 */
@@ -433,11 +419,8 @@ class Security
 		{
 			$old = $str;
 			$str = str_replace($bad, '', $str);
-		}
-		while ($old !== $str);
+		} while ($old !== $str);
 
 		return stripslashes($str);
 	}
-
-	//--------------------------------------------------------------------
 }

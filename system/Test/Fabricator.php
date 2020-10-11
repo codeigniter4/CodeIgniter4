@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -115,12 +116,10 @@ class Fabricator
 	 */
 	public $defaultFormatter = 'word';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Store the model instance and initialize Faker to the locale.
 	 *
-	 * @param string|object $model      Instance or classname of the model to use
+	 * @param object|string $model      Instance or classname of the model to use
 	 * @param array|null    $formatters Array of property => formatter
 	 * @param string|null   $locale     Locale for Faker provider
 	 *
@@ -142,7 +141,7 @@ class Fabricator
 		$this->model = $model;
 
 		// If no locale was specified then use the App default
-		if (is_null($locale))
+		if ($locale === null)
 		{
 			$locale = config('App')->defaultLocale;
 		}
@@ -156,17 +155,15 @@ class Fabricator
 		// Determine eligible date fields
 		foreach (['createdField', 'updatedField', 'deletedField'] as $field)
 		{
-			if (! empty($this->model->$field))
+			if (! empty($this->model->{$field}))
 			{
-				$this->dateFields[] = $this->model->$field;
+				$this->dateFields[] = $this->model->{$field};
 			}
 		}
 
 		// Set the formatters
 		$this->setFormatters($formatters);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Reset internal counts
@@ -181,7 +178,7 @@ class Fabricator
 	 *
 	 * @param string $table Name of the target table
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public static function getCount(string $table): int
 	{
@@ -191,14 +188,15 @@ class Fabricator
 	/**
 	 * Set the count for a specific table
 	 *
-	 * @param string  $table Name of the target table
-	 * @param integer $count Count value
+	 * @param string $table Name of the target table
+	 * @param int    $count Count value
 	 *
-	 * @return integer  The new count value
+	 * @return int The new count value
 	 */
 	public static function setCount(string $table, int $count): int
 	{
 		self::$tableCounts[$table] = $count;
+
 		return $count;
 	}
 
@@ -207,7 +205,7 @@ class Fabricator
 	 *
 	 * @param string $table Name of the target table
 	 *
-	 * @return integer  The new count value
+	 * @return int The new count value
 	 */
 	public static function upCount(string $table): int
 	{
@@ -219,19 +217,17 @@ class Fabricator
 	 *
 	 * @param string $table Name of the target table
 	 *
-	 * @return integer  The new count value
+	 * @return int The new count value
 	 */
 	public static function downCount(string $table): int
 	{
 		return self::setCount($table, self::getCount($table) - 1);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the model instance
 	 *
-	 * @return object  Framework or compatible model
+	 * @return object Framework or compatible model
 	 */
 	public function getModel()
 	{
@@ -258,8 +254,6 @@ class Fabricator
 		return $this->faker;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return and reset tempOverrides
 	 *
@@ -277,8 +271,8 @@ class Fabricator
 	/**
 	 * Set the overrides, once or persistent
 	 *
-	 * @param array   $overrides Array of [field => value]
-	 * @param boolean $persist   Whether these overrides should persist through the next operation
+	 * @param array $overrides Array of [field => value]
+	 * @param bool  $persist   Whether these overrides should persist through the next operation
 	 *
 	 * @return $this
 	 */
@@ -293,8 +287,6 @@ class Fabricator
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the current formatters
@@ -315,7 +307,7 @@ class Fabricator
 	 */
 	public function setFormatters(array $formatters = null): self
 	{
-		if (! is_null($formatters))
+		if ($formatters !== null)
 		{
 			$this->formatters = $formatters;
 		}
@@ -356,7 +348,7 @@ class Fabricator
 	 *
 	 * @param string $field Name of the field
 	 *
-	 * @return string  Name of the formatter
+	 * @return string Name of the formatter
 	 */
 	protected function guessFormatter($field): string
 	{
@@ -364,6 +356,7 @@ class Fabricator
 		try
 		{
 			$this->faker->getFormatter($field);
+
 			return $field;
 		}
 		catch (InvalidArgumentException $e)
@@ -407,19 +400,17 @@ class Fabricator
 		return $this->defaultFormatter;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generate new entities with faked data
 	 *
-	 * @param integer|null $count Optional number to create a collection
+	 * @param int|null $count Optional number to create a collection
 	 *
-	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 * @return array|object An array or object (based on returnType), or an array of returnTypes
 	 */
 	public function make(int $count = null)
 	{
 		// If a singleton was requested then go straight to it
-		if (is_null($count))
+		if ($count === null)
 		{
 			return $this->model->returnType === 'array'
 				? $this->makeArray()
@@ -441,13 +432,13 @@ class Fabricator
 	/**
 	 * Generate an array of faked data
 	 *
-	 * @return array  An array of faked data
-	 *
 	 * @throws RuntimeException
+	 *
+	 * @return array An array of faked data
 	 */
 	public function makeArray()
 	{
-		if (! is_null($this->formatters))
+		if ($this->formatters !== null)
 		{
 			$result = [];
 
@@ -489,13 +480,13 @@ class Fabricator
 	 *
 	 * @param string|null $className Class name of the object to create; null to use model default
 	 *
-	 * @return object  An instance of the class with faked data
-	 *
 	 * @throws RuntimeException
+	 *
+	 * @return object An instance of the class with faked data
 	 */
 	public function makeObject(string $className = null): object
 	{
-		if (is_null($className))
+		if ($className === null)
 		{
 			if ($this->model->returnType === 'object' || $this->model->returnType === 'array')
 			{
@@ -508,7 +499,7 @@ class Fabricator
 		}
 
 		// If using the model's fake() method then check it for the correct return type
-		if (is_null($this->formatters) && method_exists($this->model, 'fake'))
+		if ($this->formatters === null && method_exists($this->model, 'fake'))
 		{
 			$result = $this->model->fake($this->faker);
 
@@ -544,15 +535,13 @@ class Fabricator
 		return $object;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generate new entities from the database
 	 *
-	 * @param integer|null $count Optional number to create a collection
-	 * @param boolean      $mock  Whether to execute or mock the insertion
+	 * @param int|null $count Optional number to create a collection
+	 * @param bool     $mock  Whether to execute or mock the insertion
 	 *
-	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 * @return array|object An array or object (based on returnType), or an array of returnTypes
 	 */
 	public function create(int $count = null, bool $mock = false)
 	{
@@ -580,15 +569,15 @@ class Fabricator
 			$this->model->withDeleted();
 		}
 
-		return $this->model->find(is_null($count) ? reset($ids) : $ids);
+		return $this->model->find($count === null ? reset($ids) : $ids);
 	}
 
 	/**
 	 * Generate new database entities without actually inserting them
 	 *
-	 * @param integer|null $count Optional number to create a collection
+	 * @param int|null $count Optional number to create a collection
 	 *
-	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 * @return array|object An array or object (based on returnType), or an array of returnTypes
 	 */
 	protected function createMock(int $count = null)
 	{
@@ -596,8 +585,12 @@ class Fabricator
 		{
 			case 'datetime':
 				$datetime = date('Y-m-d H:i:s');
+
+				break;
 			case 'date':
 				$datetime = date('Y-m-d');
+
+				break;
 			default:
 				$datetime = time();
 		}
@@ -618,6 +611,7 @@ class Fabricator
 
 		// Iterate over new entities and add the necessary fields
 		$return = [];
+
 		foreach ($this->make($count ?? 1) as $i => $result)
 		{
 			// Set the ID
@@ -639,6 +633,6 @@ class Fabricator
 			$return[] = $result;
 		}
 
-		return is_null($count) ? reset($return) : $return;
+		return $count === null ? reset($return) : $return;
 	}
 }

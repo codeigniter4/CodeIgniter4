@@ -1,14 +1,15 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
+class SelectTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -16,8 +17,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleSelect()
 	{
@@ -27,8 +26,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectOnlyOneColumn()
 	{
@@ -41,8 +38,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectAcceptsArray()
 	{
 		$builder = new BaseBuilder('users', $this->db);
@@ -53,8 +48,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectAcceptsMultipleColumns()
 	{
@@ -67,8 +60,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectKeepsAliases()
 	{
 		$builder = new BaseBuilder('users', $this->db);
@@ -79,8 +70,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectWorksWithComplexSelects()
 	{
@@ -93,8 +82,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectMinWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -105,8 +92,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectMinWithAlias()
 	{
@@ -119,8 +104,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectMaxWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -131,8 +114,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectMaxWithAlias()
 	{
@@ -145,8 +126,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectAvgWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -157,8 +136,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectAvgWithAlias()
 	{
@@ -171,8 +148,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectSumWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -183,8 +158,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectSumWithAlias()
 	{
@@ -197,8 +170,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectCountWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -209,8 +180,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectCountWithAlias()
 	{
@@ -223,8 +192,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectMinThrowsExceptionOnEmptyValue()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
@@ -234,8 +201,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$builder->selectSum('');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSelectMaxWithDotNameAndNoAlias()
 	{
@@ -248,8 +213,6 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSelectMinThrowsExceptionOnMultipleColumn()
 	{
 		$builder = new BaseBuilder('users', $this->db);
@@ -259,7 +222,4 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$builder->selectSum('name,role');
 	}
-
-	//--------------------------------------------------------------------
-
 }

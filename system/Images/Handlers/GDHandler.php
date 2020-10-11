@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -30,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -46,35 +47,33 @@ use Config\Images;
  */
 class GDHandler extends BaseHandler
 {
-
 	/**
 	 * Constructor.
 	 *
-	 * @param  Images|null $config
+	 * @param Images|null $config
+	 *
 	 * @throws ImageException
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
 
 		// We should never see this, so can't test it
-		// @codeCoverageIgnoreStart
 		if (! extension_loaded('gd'))
 		{
 			throw ImageException::forMissingExtension('GD');
 		}
-		// @codeCoverageIgnoreEnd
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles the rotation of an image resource.
 	 * Doesn't save the image, but replaces the current resource.
 	 *
-	 * @param integer $angle
+	 * @param int $angle
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _rotate(int $angle): bool
 	{
@@ -99,14 +98,12 @@ class GDHandler extends BaseHandler
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flattens transparencies
 	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
 	 *
 	 * @return $this
 	 */
@@ -139,8 +136,6 @@ class GDHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flips an image along it's vertical or horizontal axis.
 	 *
@@ -161,8 +156,6 @@ class GDHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get GD version
 	 *
@@ -180,10 +173,10 @@ class GDHandler extends BaseHandler
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Resizes the image.
+	 *
+	 * @param bool $maintainRatio
 	 *
 	 * @return GDHandler
 	 */
@@ -191,8 +184,6 @@ class GDHandler extends BaseHandler
 	{
 		return $this->process('resize');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Crops the image.
@@ -203,8 +194,6 @@ class GDHandler extends BaseHandler
 	{
 		return $this->process('crop');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles all of the grunt work of resizing, etc.
@@ -262,8 +251,6 @@ class GDHandler extends BaseHandler
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves any changes that have been made to file. If no new filename is
 	 * provided, the existing image is overwritten, otherwise a copy of the
@@ -274,9 +261,9 @@ class GDHandler extends BaseHandler
 	 *          ->save();
 	 *
 	 * @param string|null $target
-	 * @param integer     $quality
+	 * @param int         $quality
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function save(string $target = null, int $quality = 90): bool
 	{
@@ -312,6 +299,7 @@ class GDHandler extends BaseHandler
 				{
 					throw ImageException::forSaveFailed();
 				}
+
 				break;
 			case IMAGETYPE_JPEG:
 				if (! function_exists('imagejpeg'))
@@ -323,6 +311,7 @@ class GDHandler extends BaseHandler
 				{
 					throw ImageException::forSaveFailed();
 				}
+
 				break;
 			case IMAGETYPE_PNG:
 				if (! function_exists('imagepng'))
@@ -334,6 +323,7 @@ class GDHandler extends BaseHandler
 				{
 					throw ImageException::forSaveFailed();
 				}
+
 				break;
 			case IMAGETYPE_WEBP:
 				if (! function_exists('imagewebp'))
@@ -345,6 +335,7 @@ class GDHandler extends BaseHandler
 				{
 					throw ImageException::forSaveFailed();
 				}
+
 				break;
 			default:
 				throw ImageException::forInvalidImageCreate();
@@ -357,8 +348,6 @@ class GDHandler extends BaseHandler
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Create Image Resource
 	 *
@@ -368,7 +357,7 @@ class GDHandler extends BaseHandler
 	 * @param string $path
 	 * @param string $imageType
 	 *
-	 * @return resource|boolean
+	 * @return bool|resource
 	 */
 	protected function createImage(string $path = '', string $imageType = '')
 	{
@@ -390,8 +379,6 @@ class GDHandler extends BaseHandler
 		return $this->getImageResource($path, $imageType);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Make the image resource object if needed
 	 */
@@ -401,21 +388,21 @@ class GDHandler extends BaseHandler
 		{
 			// if valid image type, make corresponding image resource
 			$this->resource = $this->getImageResource(
-				$this->image()->getPathname(), $this->image()->imageType
+				$this->image()->getPathname(),
+				$this->image()->imageType
 			);
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Check if image type is supported and return image resource
 	 *
-	 * @param string  $path      Image path
-	 * @param integer $imageType Image type
+	 * @param string $path      Image path
+	 * @param int    $imageType Image type
 	 *
-	 * @return resource|boolean
 	 * @throws ImageException
+	 *
+	 * @return bool|resource
 	 */
 	protected function getImageResource(string $path, int $imageType)
 	{
@@ -454,8 +441,6 @@ class GDHandler extends BaseHandler
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Add text overlay to an image.
 	 *
@@ -472,7 +457,6 @@ class GDHandler extends BaseHandler
 		// further down. We want the reverse, so we'll
 		// invert the offset. Note: The horizontal
 		// offset flips itself automatically
-
 		if ($options['vAlign'] === 'bottom')
 		{
 			$options['vOffset'] = $options['vOffset'] * -1;
@@ -551,14 +535,12 @@ class GDHandler extends BaseHandler
 		$this->textOverlay($text, $options);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handler-specific method for overlaying text on an image.
 	 *
-	 * @param string  $text
-	 * @param array   $options
-	 * @param boolean $isShadow Whether we are drawing the dropshadow or actual text
+	 * @param string $text
+	 * @param array  $options
+	 * @param bool   $isShadow Whether we are drawing the dropshadow or actual text
 	 *
 	 * @return void
 	 */
@@ -604,12 +586,10 @@ class GDHandler extends BaseHandler
 		$this->resource = $src;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return image width.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function _getWidth()
 	{
@@ -619,11 +599,10 @@ class GDHandler extends BaseHandler
 	/**
 	 * Return image height.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function _getHeight()
 	{
 		return imagesy($this->resource);
 	}
-
 }

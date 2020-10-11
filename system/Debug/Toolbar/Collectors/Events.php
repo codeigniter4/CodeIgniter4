@@ -47,12 +47,11 @@ use Config\Services;
  */
 class Events extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -60,7 +59,7 @@ class Events extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
@@ -68,7 +67,7 @@ class Events extends BaseCollector
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasVarData = false;
 
@@ -87,8 +86,6 @@ class Events extends BaseCollector
 	 */
 	protected $viewer;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 */
@@ -96,8 +93,6 @@ class Events extends BaseCollector
 	{
 		$this->viewer = Services::renderer();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -123,8 +118,6 @@ class Events extends BaseCollector
 
 		return $data;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
@@ -164,19 +157,15 @@ class Events extends BaseCollector
 		return $data;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getBadgeValue(): int
 	{
 		return count(\CodeIgniter\Events\Events::getPerformanceLogs());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Display the icon.

@@ -2,15 +2,17 @@
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 use Tests\Support\Commands\ParamsReveal;
 
-class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
+class CommandTest extends CIUnitTestCase
 {
-
 	private $streamFilter;
+
 	protected $logger;
+
 	protected $commands;
 
 	protected function setUp(): void
@@ -18,8 +20,9 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 
 		$this->logger   = Services::logger();
 		$this->commands = Services::commands();
@@ -120,6 +123,9 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider commandArgsProvider
+	 *
+	 * @param string $input
+	 * @param array  $expected
 	 */
 	public function testCommandParsesArgsCorrectly(string $input, array $expected)
 	{
@@ -187,7 +193,7 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 				'reveal as -df "using mixed \'quotes\'\" here\""',
 				[
 					'as',
-					'df' => 'using mixed \'quotes\'" here"'
+					'df' => 'using mixed \'quotes\'" here"',
 				],
 			],
 		];

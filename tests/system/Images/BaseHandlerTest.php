@@ -1,6 +1,9 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -11,14 +14,14 @@ use org\bovigo\vfs\vfsStream;
  * most work, and the virtual file system will be used for
  * testing saving only.
  */
-class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseHandlerTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		if (! extension_loaded('gd'))
 		{
 			$this->markTestSkipped('The GD extension is not available.');
+
 			return;
 		}
 
@@ -40,8 +43,6 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->start = $this->root->url() . '/';
 		$this->path  = $this->start . 'ci-logo.png';
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNew()
 	{
@@ -103,7 +104,6 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($image instanceof Image);
 	}
 
-	//--------------------------------------------------------------------
 	// Something handled by our Image
 	public function testImageHandled()
 	{
@@ -111,5 +111,4 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$handler->withFile($this->path);
 		$this->assertEquals($this->path, $handler->getPathname());
 	}
-
 }

@@ -1,12 +1,13 @@
-<?php namespace Builder;
+<?php
 
+namespace Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class GetTest extends \CodeIgniter\Test\CIUnitTestCase
+class GetTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -14,8 +15,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGet()
 	{
@@ -25,8 +24,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2141
@@ -44,8 +41,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
 	 */
@@ -62,8 +57,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetWhereWithLimitAndOffset()
 	{
 		$builder = $this->db->table('users');
@@ -76,8 +69,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetWhereWithWhereConditionOnly()
 	{
@@ -92,8 +83,6 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetWhereWithoutArgs()
 	{
 		$builder = $this->db->table('users');
@@ -103,5 +92,4 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
 	}
-
 }

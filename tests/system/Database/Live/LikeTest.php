@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -20,8 +22,6 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals('Developer', $job->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLikeBefore()
 	{
 		$job = $this->db->table('job')->like('name', 'veloper', 'before')->get();
@@ -30,8 +30,6 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals(1, $job->id);
 		$this->assertEquals('Developer', $job->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeAfter()
 	{
@@ -42,8 +40,6 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals('Developer', $job->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLikeBoth()
 	{
 		$job = $this->db->table('job')->like('name', 'veloper', 'both')->get();
@@ -52,8 +48,6 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals(1, $job->id);
 		$this->assertEquals('Developer', $job->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeCaseInsensitive()
 	{
@@ -64,14 +58,12 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals('Developer', $job->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrLike()
 	{
 		$jobs = $this->db->table('job')->like('name', 'ian')
-						->orLike('name', 'veloper')
-						->get()
-						->getResult();
+			->orLike('name', 'veloper')
+			->get()
+			->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -79,38 +71,32 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertEquals('Musician', $jobs[2]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNotLike()
 	{
 		$jobs = $this->db->table('job')
-						 ->notLike('name', 'veloper')
-						 ->get()
-						 ->getResult();
+			->notLike('name', 'veloper')
+			->get()
+			->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrNotLike()
 	{
 		$jobs = $this->db->table('job')
-						 ->like('name', 'ian')
-						 ->orNotLike('name', 'veloper')
-						 ->get()
-						 ->getResult();
+			->like('name', 'ian')
+			->orNotLike('name', 'veloper')
+			->get()
+			->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeSpacesOrTabs()
 	{
@@ -121,7 +107,4 @@ class LikeTest extends CIDatabaseTestCase
 		$this->assertCount(1, $spaces);
 		$this->assertCount(1, $tabs);
 	}
-
-	//--------------------------------------------------------------------
-
 }

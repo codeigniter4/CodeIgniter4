@@ -74,6 +74,7 @@ class FeatureResponse extends TestCase
 		$this->response = $response;
 
 		$body = $response->getBody();
+
 		if (! empty($body) && is_string($body))
 		{
 			$this->domParser = (new DOMParser())->withString($body);
@@ -88,7 +89,7 @@ class FeatureResponse extends TestCase
 	 * Boils down the possible responses into a bolean valid/not-valid
 	 * response type.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isOK(): bool
 	{
@@ -113,7 +114,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Returns whether or not the Response was a redirect or RedirectResponse
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRedirect(): bool
 	{
@@ -160,7 +161,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Asserts that the status is a specific value.
 	 *
-	 * @param integer $code
+	 * @param int $code
 	 *
 	 * @throws Exception
 	 */
@@ -193,7 +194,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertSessionHas(string $key, $value = null)
 	{
-		$this->assertTrue(array_key_exists($key, $_SESSION), "'{$key}' is not in the current \$_SESSION");
+		$this->assertArrayHasKey($key, $_SESSION, "'{$key}' is not in the current \$_SESSION");
 
 		if ($value !== null)
 		{
@@ -210,7 +211,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertSessionMissing(string $key)
 	{
-		$this->assertFalse(array_key_exists($key, $_SESSION), "'{$key}' should not be present in \$_SESSION.");
+		$this->assertArrayNotHasKey($key, $_SESSION, "'{$key}' should not be present in \$_SESSION.");
 	}
 
 	//--------------------------------------------------------------------
@@ -376,13 +377,13 @@ class FeatureResponse extends TestCase
 	/**
 	 * Returns the response's body as JSON
 	 *
-	 * @return mixed|false
+	 * @return false|mixed
 	 */
 	public function getJSON()
 	{
 		$response = $this->response->getJSON();
 
-		if (is_null($response))
+		if ($response === null)
 		{
 			return false;
 		}
@@ -393,8 +394,8 @@ class FeatureResponse extends TestCase
 	/**
 	 * Test that the response contains a matching JSON fragment.
 	 *
-	 * @param array   $fragment
-	 * @param boolean $strict
+	 * @param array $fragment
+	 * @param bool  $strict
 	 *
 	 * @throws Exception
 	 */
@@ -417,7 +418,7 @@ class FeatureResponse extends TestCase
 	 * Asserts that the JSON exactly matches the passed in data.
 	 * If the value being passed in is a string, it must be a json_encoded string.
 	 *
-	 * @param string|array $test
+	 * @param array|string $test
 	 *
 	 * @throws Exception
 	 */
@@ -446,5 +447,4 @@ class FeatureResponse extends TestCase
 	{
 		return $this->response->getXML();
 	}
-
 }

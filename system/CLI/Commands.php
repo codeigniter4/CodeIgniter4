@@ -48,8 +48,6 @@ use ReflectionException;
  * Class Commands
  *
  * Core functionality for running, listing, etc commands.
- *
- * @package CodeIgniter\CLI
  */
 class Commands
 {
@@ -140,6 +138,7 @@ class Commands
 		foreach ($files as $file)
 		{
 			$className = Services::locator()->findQualifiedNameFromPath($file);
+
 			if (empty($className) || ! class_exists($className))
 			{
 				continue;
@@ -157,7 +156,7 @@ class Commands
 				$class = new $className($this->logger, $this);
 
 				// Store it!
-				if (! is_null($class->group))
+				if ($class->group !== null)
 				{
 					$this->commands[$class->name] = [
 						'class'       => $className,
@@ -186,7 +185,7 @@ class Commands
 	 * @param string $command
 	 * @param array  $commands
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function verifyCommand(string $command, array $commands): bool
 	{

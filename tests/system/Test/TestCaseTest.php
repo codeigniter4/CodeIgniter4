@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
@@ -6,9 +7,8 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\App;
 
-class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
+class TestCaseTest extends CIUnitTestCase
 {
-
 	//  protected function tearDown(): void
 	//  {
 	//      $buffer = ob_clean();
@@ -25,19 +25,15 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('secret', $actual);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogging()
 	{
 		log_message('error', 'Some variable did not contain a value.');
 		$this->assertLogged('error', 'Some variable did not contain a value.');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEventTriggering()
 	{
-		Events::on('foo', function ($arg) use (&$result) {
+		Events::on('foo', static function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
@@ -45,8 +41,6 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEventTriggered('foo');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testStreamFilter()
 	{
@@ -58,7 +52,6 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		stream_filter_remove($this->stream_filter);
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * PHPunit emits headers before we get nominal control of
 	 * the output stream, making header testing awkward, to say
@@ -85,7 +78,6 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
 	}
 
-	//--------------------------------------------------------------------
 	public function testCloseEnough()
 	{
 		$this->assertCloseEnough(1, 1);
@@ -105,5 +97,4 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $this->assertCloseEnoughString('apples & oranges', 'apples');
 		$this->assertFalse($result, 'Different string lengths should have returned false');
 	}
-
 }

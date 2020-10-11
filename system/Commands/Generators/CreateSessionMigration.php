@@ -44,8 +44,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a migration file for database sessions.
- *
- * @package CodeIgniter\Commands
  */
 class CreateSessionMigration extends GeneratorCommand
 {
@@ -81,7 +79,7 @@ class CreateSessionMigration extends GeneratorCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -91,7 +89,7 @@ class CreateSessionMigration extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
@@ -99,7 +97,7 @@ class CreateSessionMigration extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function modifyBasename(string $filename): string
 	{
@@ -107,7 +105,7 @@ class CreateSessionMigration extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getTemplate(): string
 	{

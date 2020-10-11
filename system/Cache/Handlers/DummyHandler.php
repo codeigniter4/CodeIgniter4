@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -45,7 +46,6 @@ use CodeIgniter\Cache\CacheInterface;
  */
 class DummyHandler implements CacheInterface
 {
-
 	/**
 	 * Takes care of any handler-specific setup that must be done.
 	 */
@@ -53,8 +53,6 @@ class DummyHandler implements CacheInterface
 	{
 		// Nothing to see here...
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -68,14 +66,12 @@ class DummyHandler implements CacheInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -84,27 +80,23 @@ class DummyHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes a specific item from the cache store.
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function delete(string $key)
 	{
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -113,13 +105,11 @@ class DummyHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -128,19 +118,15 @@ class DummyHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function clean()
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns information on the entire cache.
@@ -155,12 +141,10 @@ class DummyHandler implements CacheInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns detailed information about the specific item in the cache.
 	 *
-	 * @param string $key Cache item name.
+	 * @param string $key Cache item name
 	 *
 	 * @return mixed
 	 */
@@ -169,17 +153,13 @@ class DummyHandler implements CacheInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSupported(): bool
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

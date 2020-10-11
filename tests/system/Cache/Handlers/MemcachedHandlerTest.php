@@ -1,11 +1,21 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class MemcachedHandlerTest extends CIUnitTestCase
 {
 	private $memcachedHandler;
+
 	private static $key1 = 'key1';
+
 	private static $key2 = 'key2';
+
 	private static $key3 = 'key3';
+
 	private static function getKeyArray()
 	{
 		return [
@@ -16,15 +26,17 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	private static $dummy = 'dymmy';
+
 	private $config;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->memcachedHandler = new MemcachedHandler($this->config);
+
 		if (! $this->memcachedHandler->isSupported())
 		{
 			$this->markTestSkipped('Not support memcached and memcache');
@@ -33,7 +45,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->memcachedHandler->initialize();
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		foreach (self::getKeyArray() as $key)
 		{
@@ -53,7 +65,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->memcachedHandler->get(self::$key1));
 		$this->assertNull($this->memcachedHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->memcachedHandler->get(self::$key1));
 	}
 
@@ -76,7 +88,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->increment(self::$key1, 10));
 
-		$config                   = new \Config\Cache();
+		$config                   = new Cache();
 		$config->memcached['raw'] = true;
 		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
@@ -95,7 +107,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->decrement(self::$key1, 1));
 
-		$config                   = new \Config\Cache();
+		$config                   = new Cache();
 		$config->memcached['raw'] = true;
 		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();

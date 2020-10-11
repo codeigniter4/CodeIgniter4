@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
@@ -18,12 +20,12 @@ class ValidErrorsModel extends Model
 	];
 
 	protected $validationRules = [
-		'name'  => [
+		'name' => [
 			'required',
 			'min_length[10]',
 			'errors' => [
 				'min_length' => 'Minimum Length Error',
-			]
+			],
 		],
 		'token' => 'in_list[{id}]',
 	];

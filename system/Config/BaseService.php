@@ -82,7 +82,7 @@ class BaseService
 	/**
 	 * Have we already discovered other Services?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $discovered = false;
 
@@ -92,8 +92,6 @@ class BaseService
 	 * @var array
 	 */
 	protected static $services = [];
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a shared instance of any of the class' services.
@@ -126,13 +124,11 @@ class BaseService
 		return static::$instances[$key];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The Autoloader class is the central class that handles our
 	 * spl_autoload_register method, and helper methods.
 	 *
-	 * @param boolean $getShared
+	 * @param bool $getShared
 	 *
 	 * @return Autoloader
 	 */
@@ -151,14 +147,12 @@ class BaseService
 		return new Autoloader();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The file locator provides utility methods for looking for non-classes
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.
 	 *
-	 * @param boolean $getShared
+	 * @param bool $getShared
 	 *
 	 * @return FileLocator
 	 */
@@ -176,8 +170,6 @@ class BaseService
 
 		return new FileLocator(static::autoloader());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Provides the ability to perform case-insensitive calling of service
@@ -200,12 +192,10 @@ class BaseService
 		return static::discoverServices($name, $arguments);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Reset shared instances and mocks for testing.
 	 *
-	 * @param boolean $initAutoloader Initializes autoloader instance
+	 * @param bool $initAutoloader Initializes autoloader instance
 	 */
 	public static function reset(bool $initAutoloader = false)
 	{
@@ -219,8 +209,6 @@ class BaseService
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Inject mock object for testing.
 	 *
@@ -231,8 +219,6 @@ class BaseService
 	{
 		static::$mocks[strtolower($name)] = $mock;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Will scan all psr4 namespaces registered with system to look

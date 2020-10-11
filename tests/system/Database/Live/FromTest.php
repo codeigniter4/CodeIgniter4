@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -18,8 +20,6 @@ class FromTest extends CIDatabaseTestCase
 		$this->assertCount(12, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFromCanOverride()
 	{
 		$result = $this->db->table('job')->from('misc', true)->get()->getResult();
@@ -27,15 +27,10 @@ class FromTest extends CIDatabaseTestCase
 		$this->assertCount(3, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFromWithWhere()
 	{
 		$result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
 
 		$this->assertCount(4, $result);
 	}
-
-	//--------------------------------------------------------------------
-
 }

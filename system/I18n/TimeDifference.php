@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -44,8 +44,6 @@ use IntlCalendar;
 
 /**
  * Class TimeDifference
- *
- * @package CodeIgniter\I18n
  */
 class TimeDifference
 {
@@ -76,47 +74,53 @@ class TimeDifference
 	 * @var float
 	 */
 	protected $years = 0;
+
 	/**
 	 * Months.
 	 *
 	 * @var float
 	 */
 	protected $months = 0;
+
 	/**
 	 * Weeks.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $weeks = 0;
+
 	/**
 	 * Days.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $days = 0;
+
 	/**
 	 * Hours.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $hours = 0;
+
 	/**
 	 * Minutes.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $minutes = 0;
+
 	/**
 	 * Seconds.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $seconds = 0;
 
 	/**
 	 * Difference in seconds.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $difference;
 
@@ -131,22 +135,16 @@ class TimeDifference
 	{
 		$this->difference = $currentTime->getTimestamp() - $testTime->getTimestamp();
 
-		$current = IntlCalendar::fromDateTime($currentTime->format('Y-m-d H:i:s'));
-		$time    = IntlCalendar::fromDateTime($testTime->format('Y-m-d H:i:s'))
-						->getTime();
-
-		$this->currentTime = $current;
-		$this->testTime    = $time;
+		$this->currentTime = IntlCalendar::fromDateTime($currentTime->format('Y-m-d H:i:s'));
+		$this->testTime    = IntlCalendar::fromDateTime($testTime->format('Y-m-d H:i:s'))->getTime();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the number of years of difference between the two.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getYears(bool $raw = false)
 	{
@@ -155,16 +153,17 @@ class TimeDifference
 			return $this->difference / YEAR;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_YEAR);
 	}
 
 	/**
 	 * Returns the number of months difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getMonths(bool $raw = false)
 	{
@@ -173,16 +172,17 @@ class TimeDifference
 			return $this->difference / MONTH;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MONTH);
 	}
 
 	/**
 	 * Returns the number of weeks difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getWeeks(bool $raw = false)
 	{
@@ -191,16 +191,17 @@ class TimeDifference
 			return $this->difference / WEEK;
 		}
 
-		$time = clone($this->currentTime);
-		return (int)($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
+		$time = clone $this->currentTime;
+
+		return (int) ($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
 	}
 
 	/**
 	 * Returns the number of days difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getDays(bool $raw = false)
 	{
@@ -209,16 +210,17 @@ class TimeDifference
 			return $this->difference / DAY;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR);
 	}
 
 	/**
 	 * Returns the number of hours difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getHours(bool $raw = false)
 	{
@@ -227,16 +229,17 @@ class TimeDifference
 			return $this->difference / HOUR;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_HOUR_OF_DAY);
 	}
 
 	/**
 	 * Returns the number of minutes difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return float|integer
+	 * @return float|int
 	 */
 	public function getMinutes(bool $raw = false)
 	{
@@ -245,16 +248,17 @@ class TimeDifference
 			return $this->difference / MINUTE;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MINUTE);
 	}
 
 	/**
 	 * Returns the number of seconds difference between the two dates.
 	 *
-	 * @param boolean $raw
+	 * @param bool $raw
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getSeconds(bool $raw = false)
 	{
@@ -263,7 +267,8 @@ class TimeDifference
 			return $this->difference;
 		}
 
-		$time = clone($this->currentTime);
+		$time = clone $this->currentTime;
+
 		return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_SECOND);
 	}
 
@@ -276,7 +281,7 @@ class TimeDifference
 	 */
 	public function humanize(string $locale = null): string
 	{
-		$current = clone($this->currentTime);
+		$current = clone $this->currentTime;
 
 		$years   = $current->fieldDifference($this->testTime, IntlCalendar::FIELD_YEAR);
 		$months  = $current->fieldDifference($this->testTime, IntlCalendar::FIELD_MONTH);
@@ -352,7 +357,7 @@ class TimeDifference
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function __isset($name)
 	{

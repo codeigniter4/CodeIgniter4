@@ -1,13 +1,14 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
+class LikeTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +16,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleLike()
 	{
@@ -36,8 +35,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLikeNoSide()
 	{
 		$builder = new BaseBuilder('job', $this->db);
@@ -55,8 +52,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeBeforeOnly()
 	{
@@ -76,8 +71,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLikeAfterOnly()
 	{
 		$builder = new BaseBuilder('job', $this->db);
@@ -96,8 +89,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrLike()
 	{
 		$builder = new BaseBuilder('job', $this->db);
@@ -106,7 +97,7 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" LIKE '%ian%' ESCAPE '!'";
 		$expectedBinds = [
-			'name'  => [
+			'name' => [
 				'%veloper%',
 				true,
 			],
@@ -119,8 +110,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotLike()
 	{
@@ -140,8 +129,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrNotLike()
 	{
 		$builder = new BaseBuilder('job', $this->db);
@@ -150,7 +137,7 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" NOT LIKE '%ian%' ESCAPE '!'";
 		$expectedBinds = [
-			'name'  => [
+			'name' => [
 				'%veloper%',
 				true,
 			],
@@ -163,8 +150,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group single
@@ -186,6 +171,4 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 }

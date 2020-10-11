@@ -1,21 +1,23 @@
 <?php
 
+namespace CodeIgniter\View;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use CodeIgniter\View\Parser;
+use Config\Services;
+use Config\View;
+use stdClass;
 
-class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
+class ParserTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->loader   = \CodeIgniter\Config\Services::locator();
+		$this->loader   = Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
+		$this->config   = new View();
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testSetDelimiters()
 	{
@@ -40,8 +42,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('}', $parser->rightDelimiter);
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testParseSimple()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -50,8 +50,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = "<h1>Hello World</h1>\n";
 		$this->assertEquals($expected, $parser->render('template1'));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testParseString()
 	{
@@ -69,8 +67,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testParseStringMissingData()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -86,8 +82,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testParseStringUnusedData()
 	{
@@ -106,15 +100,11 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testParseNoTemplate()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$this->assertEquals('', $parser->renderString(''));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testParseArraySingle()
 	{
@@ -186,15 +176,15 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$eagle->home = 'Rockies';
 		$data        = [
 			'birds' => [[
-							'pop'  => $eagle,
-							'mom'  => 'Owl',
-							'kids' => [
-								'Tom',
-								'Dick',
-								'Harry',
-							],
-							'home' => opendir('.'),
-						],
+				'pop'  => $eagle,
+				'mom'  => 'Owl',
+				'kids' => [
+					'Tom',
+					'Dick',
+					'Harry',
+				],
+				'home' => opendir('.'),
+			],
 			],
 		];
 
@@ -203,8 +193,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('Owl and Class: stdClass work at Resource', $parser->renderString($template));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testParseLoop()
 	{
@@ -249,13 +237,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals("Super Heroes\nTom Dick Henry ", $parser->renderString($template));
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testParseLoopEntityProperties()
 	{
-		$power = new class extends \CodeIgniter\Entity {
-			public $foo    = 'bar';
+		$power       = new class() extends \CodeIgniter\Entity {
+			public $foo = 'bar';
+
 			protected $bar = 'baz';
+
 			public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 			{
 				return [
@@ -267,14 +255,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 					],
 				];
 			}
-
 		};
 
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data   = [
 			'title'  => 'Super Heroes',
 			'powers' => [
-				$power
+				$power,
 			],
 		];
 
@@ -286,8 +273,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testParseLoopEntityObjectProperties()
 	{
-		$power = new class extends \CodeIgniter\Entity
-		{
+		$power                 = new class() extends \CodeIgniter\Entity {
 			protected $attributes = [
 				'foo'     => 'bar',
 				'bar'     => 'baz',
@@ -313,7 +299,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$data   = [
 			'title'  => 'Super Heroes',
 			'powers' => [
-				$power
+				$power,
 			],
 		];
 
@@ -322,8 +308,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data, 'html');
 		$this->assertEquals("Super Heroes\n bar baz first second ", $parser->renderString($template));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testMismatchedVarPair()
 	{
@@ -350,9 +334,9 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function escValueTypes()
 	{
 		return [
-			'scalar'      => [42],
-			'string'      => ['George'],
-			'scalarlist'  => [
+			'scalar'     => [42],
+			'string'     => ['George'],
+			'scalarlist' => [
 				[
 					1,
 					2,
@@ -360,7 +344,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 					-4,
 				],
 			],
-			'stringlist'  => [
+			'stringlist' => [
 				[
 					'George',
 					'Paul',
@@ -374,7 +358,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 					'role' => 'guitar',
 				],
 			],
-			'compound'    => [
+			'compound' => [
 				[
 					'name'    => 'George',
 					'address' => [
@@ -383,7 +367,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 					],
 				],
 			],
-			'pseudo'      => [
+			'pseudo' => [
 				[
 					'name'   => 'George',
 					'emails' => [
@@ -403,6 +387,9 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider escValueTypes
+	 *
+	 * @param mixed      $value
+	 * @param mixed|null $expected
 	 */
 	public function testEscHandling($value, $expected = null)
 	{
@@ -412,8 +399,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 		$this->assertEquals($expected, \esc($value, 'html'));
 	}
-
-	//------------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3726
@@ -495,10 +480,8 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setData(['foo' => 'http://foo.com'], 'unknown');
 
-		$this->assertEquals(false, $parser->shouldAddEscaping('{ foo | noescape }'));
+		$this->assertFalse($parser->shouldAddEscaping('{ foo | noescape }'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFilterWithNoArgument()
 	{
@@ -530,8 +513,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(date('Y-m-d', $date), $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testParserEscapesDataDefaultsToHTML()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -561,8 +542,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('<script>Heroes</script>', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testIgnoresComments()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -583,8 +562,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNoParse()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -604,8 +581,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testIfConditionalTrue()
 	{
@@ -661,8 +636,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Welcome', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testConditionalBadSyntax()
 	{
 		$this->expectException(ViewException::class);
@@ -679,8 +652,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testWontParsePHP()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -688,8 +659,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$template = "<?php echo 'Foo' ?> - <?= 'Bar' ?>";
 		$this->assertEquals('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testParseHandlesSpaces()
 	{
@@ -707,8 +676,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	// --------------------------------------------------------------------
-
 	public function testParseRuns()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -725,15 +692,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
 	public function testCanAddAndRemovePlugins()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('first', function ($str) {
+		$parser->addPlugin('first', static function ($str) {
 			return $str;
 		});
 
@@ -748,8 +713,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayNotHasKey('first', $setParsers);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
@@ -762,15 +725,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('hit:it', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
 	public function testParserPluginNoParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('hit:it', function ($str) {
+		$parser->addPlugin('hit:it', static function ($str) {
 			return str_replace('here', 'Hip to the Hop', $str);
 		}, true);
 
@@ -779,15 +740,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(' stuff Hip to the Hop ', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
 	public function testParserPluginClosure()
 	{
 		$config                   = $this->config;
-		$config->plugins['hello'] = function (array $params = []) {
+		$config->plugins['hello'] = static function (array $params = []) {
 			return 'Hello, ' . trim($params[0]);
 		};
 
@@ -798,21 +757,19 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Hello, world', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
 	public function testParserPluginParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('growth', function ($str, array $params) {
-			$step  = $params['step'] ?? 1;
+		$parser->addPlugin('growth', static function ($str, array $params) {
+			$step = $params['step'] ?? 1;
 			$count = $params['count'] ?? 2;
 
 			$out = '';
 
-			for ($i = 1; $i <= $count; $i ++)
+			for ($i = 1; $i <= $count; $i++)
 			{
 				$out .= ' ' . $i * $step;
 			}
@@ -825,15 +782,13 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(' 2 4 6 8', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @group parserplugins
 	 */
 	public function testParserSingleTag()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('hit:it', function () {
+		$parser->addPlugin('hit:it', static function () {
 			return 'Hip to the Hop';
 		}, false);
 
@@ -848,7 +803,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testParserSingleTagWithParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('hit:it', function (array $params = []) {
+		$parser->addPlugin('hit:it', static function (array $params = []) {
 			return "{$params['first']} to the {$params['last']}";
 		}, false);
 
@@ -863,7 +818,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testParserSingleTagWithSingleParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('hit:it', function (array $params = []) {
+		$parser->addPlugin('hit:it', static function (array $params = []) {
 			return "{$params[0]} to the {$params[1]}";
 		}, false);
 
@@ -878,7 +833,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testParserSingleTagWithQuotedParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('count', function (array $params = []) {
+		$parser->addPlugin('count', static function (array $params = []) {
 			$out = '';
 
 			foreach ($params as $index => $param)
@@ -900,7 +855,7 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testParserSingleTagWithNamedParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$parser->addPlugin('read_params', function (array $params = []) {
+		$parser->addPlugin('read_params', static function (array $params = []) {
 			$out = '';
 
 			foreach ($params as $index => $param)
@@ -915,8 +870,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('title: Hello world. page: 5. email: test@test.net. ', $parser->renderString($template));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/705
@@ -936,8 +889,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('<p>Price $: 12.50</p>', $parser->renderString($template));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCachedRender()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -948,8 +899,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		// this second renderings should go thru the cache
 		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRenderFindsView()
 	{
@@ -969,8 +918,6 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = '<h1>Hello World</h1>';
 		$result   = $parser->render('Simplest');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRenderSavingData()
 	{
@@ -1008,5 +955,4 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = '<h1>Hello World</h1>';
 		$this->assertEquals($expected, $parser->render('Simpler.html'));
 	}
-
 }

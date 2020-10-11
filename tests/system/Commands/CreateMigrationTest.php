@@ -4,6 +4,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use Throwable;
 
 class CreateMigrationTest extends CIUnitTestCase
 {
@@ -21,7 +22,7 @@ class CreateMigrationTest extends CIUnitTestCase
 		stream_filter_remove($this->streamFilter);
 
 		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-		$file   = trim(substr($result, 14));
+		$file   = trim(mb_substr($result, 14));
 		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
 		file_exists($file) && unlink($file);
 	}
@@ -59,7 +60,7 @@ class CreateMigrationTest extends CIUnitTestCase
 		{
 			command('make:migration migrateTwo -n CodeIgnite');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			ob_end_clean();
 			$this->assertInstanceOf('RuntimeException', $e);
@@ -75,7 +76,7 @@ class CreateMigrationTest extends CIUnitTestCase
 
 		// cleanup
 		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-		$file   = trim(substr($result, 14));
+		$file   = trim(mb_substr($result, 14));
 		$file   = str_replace('SYSTEMPATH' . DIRECTORY_SEPARATOR, SYSTEMPATH, $file);
 		$dir    = dirname($file);
 		file_exists($file) && unlink($file);

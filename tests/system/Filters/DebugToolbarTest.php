@@ -1,16 +1,18 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 
 /**
  * @backupGlobals enabled
  */
-class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
+class DebugToolbarTest extends CIUnitTestCase
 {
-
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -20,8 +22,6 @@ class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request  = Services::request();
 		$this->response = Services::response();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDebugToolbarFilter()
 	{
@@ -46,5 +46,4 @@ class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 		$filter->after($this->request, $this->response);
 		$this->assertEquals($expectedAfter, $this->response);
 	}
-
 }

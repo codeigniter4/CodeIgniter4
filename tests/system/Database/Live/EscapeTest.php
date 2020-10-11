@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -18,8 +20,6 @@ class EscapeTest extends CIDatabaseTestCase
 		$this->char = $this->db->DBDriver === 'MySQLi' ? '\\' : "'";
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Ensures we don't have escaped - values...
 	 *
@@ -30,8 +30,6 @@ class EscapeTest extends CIDatabaseTestCase
 		$this->assertEquals("'-100'", $this->db->escape(-100));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEscape()
 	{
 		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
@@ -39,8 +37,6 @@ class EscapeTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, $sql);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEscapeString()
 	{
@@ -50,8 +46,6 @@ class EscapeTest extends CIDatabaseTestCase
 		$this->assertEquals($expected, $sql);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEscapeLikeString()
 	{
 		$expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
@@ -60,13 +54,11 @@ class EscapeTest extends CIDatabaseTestCase
 		$this->assertEquals($expected, $sql);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testEscapeLikeStringDirect()
 	{
 		if ($this->db->DBDriver === 'MySQLi')
 		{
-			$expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\_chars%'";
+			$expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
 			$sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 
 			$this->assertEquals($expected, $sql);

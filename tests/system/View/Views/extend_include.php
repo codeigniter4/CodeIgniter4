@@ -1,7 +1,7 @@
-<?= $this->extend('layout') ?>
+<?= $this->extend('layout'); ?>
 
-<?= $this->section('content') ?>
+<?= $this->section('content'); ?>
 
-	<?= $this->include('simple') ?>
+	<?= $this->include('simple'); ?>
 
-<?= $this->endSection() ?>
+<?= $this->endSection(); ?>

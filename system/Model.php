@@ -65,13 +65,13 @@ use stdClass;
  * makes working with a database table less painful.
  *
  * It will:
- *      - automatically connect to database
- *      - allow intermingling calls between db connection, the builder,
- *          and methods in this class.
- *      - simplifies pagination
- *      - removes the need to use Result object directly in most cases
- *      - allow specifying the return type (array, object, etc) with each call
- *      - ensure validation is run against objects when saving items
+ * - automatically connect to database
+ * - allow intermingling calls between db connection, the builder,
+ *     and methods in this class.
+ * - simplifies pagination
+ * - removes the need to use Result object directly in most cases
+ * - allow specifying the return type (array, object, etc) with each call
+ * - ensure validation is run against objects when saving items
  *
  * @mixin BaseBuilder
  */
@@ -102,14 +102,14 @@ class Model
 	/**
 	 * Whether primary key uses auto increment.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useAutoIncrement = true;
 
 	/**
 	 * Last insert ID
 	 *
-	 * @var integer|string
+	 * @var int|string
 	 */
 	protected $insertID = 0;
 
@@ -134,7 +134,7 @@ class Model
 	 * simply set a date when rows are deleted, or
 	 * do hard deletes.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useSoftDeletes = false;
 
@@ -150,7 +150,7 @@ class Model
 	 * If true, will set created_at, and updated_at
 	 * values during insert and update routines.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useTimestamps = false;
 
@@ -182,7 +182,7 @@ class Model
 	 * Used by withDeleted to override the
 	 * model's softDelete setting.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $tempUseSoftDeletes;
 
@@ -205,7 +205,7 @@ class Model
 	 * Whether we should limit fields in inserts
 	 * and updates to those available in $allowedFields or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $protectFields = true;
 
@@ -244,7 +244,7 @@ class Model
 	 * Skip the model's validation. Used in conjunction with skipValidation()
 	 * to skip data validation for any future calls.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $skipValidation = false;
 
@@ -252,7 +252,7 @@ class Model
 	 * Whether rules should be removed that do not exist
 	 * in the passed in data. Used between inserts/updates.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cleanValidationRules = true;
 
@@ -279,7 +279,7 @@ class Model
 	/**
 	 * Whether to trigger the defined callbacks
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $allowCallbacks = true;
 
@@ -287,7 +287,7 @@ class Model
 	 * Used by allowCallbacks() to override the
 	 * model's allowCallbacks setting.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $tempAllowCallbacks;
 
@@ -381,9 +381,9 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param array|integer|string|null $id One primary key or an array of primary keys
+	 * @param array|int|string|null $id One primary key or an array of primary keys
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|object|null the resulting row of data, or null
 	 */
 	public function find($id = null)
 	{
@@ -452,8 +452,9 @@ class Model
 	 *
 	 * @param string $columnName
 	 *
-	 * @return array|null   The resulting row of data, or null if no data found.
 	 * @throws DataException
+	 *
+	 * @return array|null the resulting row of data, or null if no data found
 	 */
 	public function findColumn(string $columnName)
 	{
@@ -471,8 +472,8 @@ class Model
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *
-	 * @param integer $limit
-	 * @param integer $offset
+	 * @param int $limit
+	 * @param int $offset
 	 *
 	 * @return array
 	 */
@@ -502,8 +503,8 @@ class Model
 		}
 
 		$row = $builder->limit($limit, $offset)
-				->get()
-				->getResult($this->tempReturnType);
+			->get()
+			->getResult($this->tempReturnType);
 
 		$eventData = [
 			'data'      => $row,
@@ -591,9 +592,9 @@ class Model
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed   $key    Field name, or an array of field/value pairs
-	 * @param string  $value  Field value, if $key is a single field
-	 * @param boolean $escape Whether to escape values and identifiers
+	 * @param mixed  $key    Field name, or an array of field/value pairs
+	 * @param string $value  Field value, if $key is a single field
+	 * @param bool   $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
@@ -616,8 +617,9 @@ class Model
 	 *
 	 * @param array|object $data
 	 *
-	 * @return boolean
 	 * @throws ReflectionException
+	 *
+	 * @return bool
 	 */
 	public function save($data): bool
 	{
@@ -676,13 +678,14 @@ class Model
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
-	 * @param string|object $data
+	 * @param object|string $data
 	 * @param string|null   $primaryKey
 	 * @param string        $dateFormat
-	 * @param boolean       $onlyChanged
+	 * @param bool          $onlyChanged
+	 *
+	 * @throws ReflectionException
 	 *
 	 * @return array
-	 * @throws ReflectionException
 	 */
 	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
 	{
@@ -724,12 +727,15 @@ class Model
 					{
 						case 'datetime':
 							$converted = $value->format('Y-m-d H:i:s');
+
 							break;
 						case 'date':
 							$converted = $value->format('Y-m-d');
+
 							break;
 						case 'int':
 							$converted = $value->getTimestamp();
+
 							break;
 						default:
 							$converted = (string) $value;
@@ -746,7 +752,7 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer|string
+	 * @return int|string
 	 */
 	public function getInsertID()
 	{
@@ -758,10 +764,11 @@ class Model
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object $data
-	 * @param boolean      $returnID Whether insert ID should be returned or not.
+	 * @param bool         $returnID whether insert ID should be returned or not
 	 *
-	 * @return BaseResult|integer|string|false
 	 * @throws ReflectionException
+	 *
+	 * @return BaseResult|false|int|string
 	 */
 	public function insert($data = null, bool $returnID = true)
 	{
@@ -771,7 +778,7 @@ class Model
 
 		if (empty($data))
 		{
-			$data           = $this->tempData['data'] ?? null;
+			$data           = $this->tempData['data']   ?? null;
 			$escape         = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
@@ -884,12 +891,12 @@ class Model
 	/**
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
 	 *
-	 * @param array   $set       An associative array of insert values
-	 * @param boolean $escape    Whether to escape values and identifiers
-	 * @param integer $batchSize The size of the batch to run
-	 * @param boolean $testing   True means only number of records is returned, false will execute the query
+	 * @param array $set       An associative array of insert values
+	 * @param bool  $escape    Whether to escape values and identifiers
+	 * @param int   $batchSize The size of the batch to run
+	 * @param bool  $testing   True means only number of records is returned, false will execute the query
 	 *
-	 * @return integer|boolean Number of rows inserted or FALSE on failure
+	 * @return bool|int Number of rows inserted or FALSE on failure
 	 */
 	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
@@ -952,11 +959,12 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string|null $id
-	 * @param array|object|null         $data
+	 * @param array|int|string|null $id
+	 * @param array|object|null     $data
 	 *
-	 * @return boolean
 	 * @throws ReflectionException
+	 *
+	 * @return bool
 	 */
 	public function update($id = null, $data = null): bool
 	{
@@ -969,7 +977,7 @@ class Model
 
 		if (empty($data))
 		{
-			$data           = $this->tempData['data'] ?? null;
+			$data           = $this->tempData['data']   ?? null;
 			$escape         = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
@@ -1059,13 +1067,14 @@ class Model
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param array   $set       An associative array of update values
-	 * @param string  $index     The where key
-	 * @param integer $batchSize The size of the batch to run
-	 * @param boolean $returnSQL True means SQL is returned, false will execute the query
+	 * @param array  $set       An associative array of update values
+	 * @param string $index     The where key
+	 * @param int    $batchSize The size of the batch to run
+	 * @param bool   $returnSQL True means SQL is returned, false will execute the query
 	 *
-	 * @return mixed    Number of rows affected or FALSE on failure
 	 * @throws DatabaseException
+	 *
+	 * @return mixed Number of rows affected or FALSE on failure
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
@@ -1122,11 +1131,12 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param integer|string|array|null $id    The rows primary key(s)
-	 * @param boolean                   $purge Allows overriding the soft deletes setting.
+	 * @param array|int|string|null $id    The rows primary key(s)
+	 * @param bool                  $purge allows overriding the soft deletes setting
 	 *
-	 * @return BaseResult|boolean
 	 * @throws DatabaseException
+	 *
+	 * @return BaseResult|bool
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
@@ -1199,7 +1209,7 @@ class Model
 	 * Permanently deletes all rows that have been marked as deleted
 	 * through soft deletes (deleted = 1)
 	 *
-	 * @return boolean|mixed
+	 * @return bool|mixed
 	 */
 	public function purgeDeleted()
 	{
@@ -1217,7 +1227,7 @@ class Model
 	 * Sets $useSoftDeletes value so that we can temporarily override
 	 * the softdeletes settings. Can be used for all find* methods.
 	 *
-	 * @param boolean $val
+	 * @param bool $val
 	 *
 	 * @return $this
 	 */
@@ -1248,7 +1258,7 @@ class Model
 	 * Compiles a replace into string and runs the query
 	 *
 	 * @param array|null $data
-	 * @param boolean    $returnSQL
+	 * @param bool       $returnSQL
 	 *
 	 * @return mixed
 	 */
@@ -1301,7 +1311,7 @@ class Model
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
 	 *
-	 * @param integer $size
+	 * @param int     $size
 	 * @param Closure $userFunc
 	 *
 	 * @throws DataException
@@ -1345,10 +1355,10 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param integer|null $perPage
-	 * @param string       $group   Will be used by the pagination library to identify a unique pagination set.
-	 * @param integer|null $page    Optional page number (useful when the page number is provided in different way)
-	 * @param integer      $segment Optional URI segment number (if page number is provided by URI segment)
+	 * @param int|null $perPage
+	 * @param string   $group   will be used by the pagination library to identify a unique pagination set
+	 * @param int|null $page    Optional page number (useful when the page number is provided in different way)
+	 * @param int      $segment Optional URI segment number (if page number is provided by URI segment)
 	 *
 	 * @return array|null
 	 */
@@ -1377,7 +1387,7 @@ class Model
 	 * Sets whether or not we should whitelist data set during
 	 * updates or inserts against $this->availableFields.
 	 *
-	 * @param boolean $protect
+	 * @param bool $protect
 	 *
 	 * @return $this
 	 */
@@ -1393,8 +1403,9 @@ class Model
 	 *
 	 * @param string $table
 	 *
+	 * @throws ModelException
+	 *
 	 * @return BaseBuilder
-	 * @throws ModelException ;
 	 */
 	protected function builder(string $table = null)
 	{
@@ -1433,8 +1444,9 @@ class Model
 	 *
 	 * @param array $data
 	 *
-	 * @return array
 	 * @throws DataException
+	 *
+	 * @return array
 	 */
 	protected function doProtectFields(array $data): array
 	{
@@ -1445,7 +1457,7 @@ class Model
 
 		if (empty($this->allowedFields))
 		{
-			throw DataException::forInvalidAllowedFields(get_class($this));
+			throw DataException::forInvalidAllowedFields(static::class);
 		}
 
 		foreach ($data as $key => $val)
@@ -1470,10 +1482,11 @@ class Model
 	 *  - 'datetime' - Stores the data in the SQL datetime format
 	 *  - 'date'     - Stores the date (only) in the SQL date format.
 	 *
-	 * @param integer $userData An optional PHP timestamp to be converted.
+	 * @param int $userData an optional PHP timestamp to be converted
+	 *
+	 * @throws ModelException ;
 	 *
 	 * @return mixed
-	 * @throws ModelException ;
 	 */
 	protected function setDate(int $userData = null)
 	{
@@ -1511,7 +1524,7 @@ class Model
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
 	 *
-	 * @param boolean $forceDB Always grab the db error, not validation
+	 * @param bool $forceDB Always grab the db error, not validation
 	 *
 	 * @return array|null
 	 */
@@ -1554,7 +1567,7 @@ class Model
 	/**
 	 * Set the value of the skipValidation flag.
 	 *
-	 * @param boolean $skip
+	 * @param bool $skip
 	 *
 	 * @return $this
 	 */
@@ -1616,7 +1629,7 @@ class Model
 	 * It could be used when you have to change default or override current validate rules.
 	 *
 	 * @param string       $field
-	 * @param string|array $fieldRules
+	 * @param array|string $fieldRules
 	 *
 	 * @return $this
 	 */
@@ -1631,7 +1644,7 @@ class Model
 	 * Should validation rules be removed before saving?
 	 * Most handy when doing updates.
 	 *
-	 * @param boolean $choice
+	 * @param bool $choice
 	 *
 	 * @return $this
 	 */
@@ -1648,7 +1661,7 @@ class Model
 	 *
 	 * @param array|object $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validate($data): bool
 	{
@@ -1723,14 +1736,14 @@ class Model
 	 *
 	 *  'required|is_unique[users,email,id,13]'
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @deprecated use fillPlaceholders($rules, $data) from Validation instead
 	 *
 	 * @param array $rules
 	 * @param array $data
 	 *
 	 * @return array
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected function fillPlaceholders(array $rules, array $data): array
 	{
@@ -1814,8 +1827,8 @@ class Model
 	/**
 	 * Override countAllResults to account for soft deleted accounts.
 	 *
-	 * @param boolean $reset
-	 * @param boolean $test
+	 * @param bool $reset
+	 * @param bool $test
 	 *
 	 * @return mixed
 	 */
@@ -1840,7 +1853,7 @@ class Model
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
 	 * the setting. Resets after the next method that uses triggers.
 	 *
-	 * @param boolean $val
+	 * @param bool $val
 	 *
 	 * @return $this
 	 */
@@ -1869,8 +1882,9 @@ class Model
 	 * @param string $event
 	 * @param array  $eventData
 	 *
-	 * @return mixed
 	 * @throws DataException
+	 *
+	 * @return mixed
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
@@ -1908,17 +1922,17 @@ class Model
 	{
 		if (property_exists($this, $name))
 		{
-			return $this->$name;
+			return $this->{$name};
 		}
 
-		if (isset($this->db->$name))
+		if (isset($this->db->{$name}))
 		{
-			return $this->db->$name;
+			return $this->db->{$name};
 		}
 
-		if (isset($this->builder()->$name))
+		if (isset($this->builder()->{$name}))
 		{
-			return $this->builder()->$name;
+			return $this->builder()->{$name};
 		}
 
 		return null;
@@ -1929,7 +1943,7 @@ class Model
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function __isset(string $name): bool
 	{
@@ -1938,12 +1952,12 @@ class Model
 			return true;
 		}
 
-		if (isset($this->db->$name))
+		if (isset($this->db->{$name}))
 		{
 			return true;
 		}
 
-		if (isset($this->builder()->$name))
+		if (isset($this->builder()->{$name}))
 		{
 			return true;
 		}
@@ -1982,7 +1996,7 @@ class Model
 			{
 				$className = static::class;
 
-				throw new BadMethodCallException("Call to undefined method $className::$name");
+				throw new BadMethodCallException("Call to undefined method {$className}::{$name}");
 			}
 
 			return $result;

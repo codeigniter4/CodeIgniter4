@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -30,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -48,7 +49,6 @@ use Config\Images;
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {
-
 	/**
 	 * Configuration settings.
 	 *
@@ -66,42 +66,42 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Whether the image file has been confirmed.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $verified = false;
 
 	/**
 	 * Image width.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $width = 0;
 
 	/**
 	 * Image height.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $height = 0;
 
 	/**
 	 * File permission mask.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $filePermissions = 0644;
 
 	/**
 	 * X-axis.
 	 *
-	 * @var integer|null
+	 * @var int|null
 	 */
 	protected $xAxis = 0;
 
 	/**
 	 * Y-axis.
 	 *
-	 * @var integer|null
+	 * @var int|null
 	 */
 	protected $yAxis = 0;
 
@@ -149,8 +149,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected $resource;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -160,8 +158,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		$this->config = $config ?? new Images();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets another image for this handler to work on.
@@ -187,14 +183,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Make the image resource object if needed
 	 */
-	protected abstract function ensureResource();
-
-	//--------------------------------------------------------------------
+	abstract protected function ensureResource();
 
 	/**
 	 * Returns the image instance.
@@ -209,8 +201,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Verifies that a file has been supplied and it is an image.
 	 *
-	 * @return Image  The image instance
 	 * @throws ImageException
+	 *
+	 * @return Image The image instance
 	 */
 	protected function image(): Image
 	{
@@ -243,8 +236,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this->image;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the temporary image used during the image processing.
 	 * Good for extending the system or doing things this library
@@ -255,10 +246,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	public function getResource()
 	{
 		$this->ensureResource();
+
 		return $this->resource;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Load the temporary image used during the image processing.
@@ -270,18 +260,17 @@ abstract class BaseHandler implements ImageHandlerInterface
 	public function withResource()
 	{
 		$this->ensureResource();
+
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Resize the image
 	 *
-	 * @param integer $width
-	 * @param integer $height
-	 * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-	 * @param string  $masterDim
+	 * @param int    $width
+	 * @param int    $height
+	 * @param bool   $maintainRatio if true, will get the closest match possible while keeping aspect ratio true
+	 * @param string $masterDim
 	 *
 	 * @return BaseHandler
 	 */
@@ -305,19 +294,17 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this->_resize($maintainRatio);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Crops the image to the desired height and width. If one of the height/width values
 	 * is not provided, that value will be set the appropriate value based on offsets and
 	 * image dimensions.
 	 *
-	 * @param integer|null $width
-	 * @param integer|null $height
-	 * @param integer|null $x             X-axis coord to start cropping from the left of image
-	 * @param integer|null $y             Y-axis coord to start cropping from the top of image
-	 * @param boolean      $maintainRatio
-	 * @param string       $masterDim
+	 * @param int|null $width
+	 * @param int|null $height
+	 * @param int|null $x             X-axis coord to start cropping from the left of image
+	 * @param int|null $y             Y-axis coord to start cropping from the top of image
+	 * @param bool     $maintainRatio
+	 * @param string   $masterDim
 	 *
 	 * @return $this
 	 */
@@ -342,23 +329,20 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $result;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param int $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */
 	public function convert(int $imageType)
 	{
 		$this->image()->imageType = $imageType;
+
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Rotates the image on the current canvas.
@@ -398,14 +382,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Flattens transparencies, default white background
 	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
 	 *
 	 * @return $this
 	 */
@@ -417,32 +399,27 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this->_flatten($red, $green, $blue);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handler-specific method to flattening an image's transparencies.
 	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
 	 *
-	 * @return   $this
+	 * @return $this
+	 *
 	 * @internal
 	 */
-	protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);
-
-	//--------------------------------------------------------------------
+	abstract protected function _flatten(int $red = 255, int $green = 255, int $blue = 255);
 
 	/**
 	 * Handler-specific method to handle rotating an image in 90 degree increments.
 	 *
-	 * @param integer $angle
+	 * @param int $angle
 	 *
 	 * @return mixed
 	 */
-	protected abstract function _rotate(int $angle);
-
-	//--------------------------------------------------------------------
+	abstract protected function _rotate(int $angle);
 
 	/**
 	 * Flips an image either horizontally or vertically.
@@ -463,8 +440,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this->_flip($dir);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handler-specific method to handle flipping an image along its
 	 * horizontal or vertical axis.
@@ -473,9 +448,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return $this
 	 */
-	protected abstract function _flip(string $direction);
-
-	//--------------------------------------------------------------------
+	abstract protected function _flip(string $direction);
 
 	/**
 	 * Overlays a string of text over the image.
@@ -508,55 +481,43 @@ abstract class BaseHandler implements ImageHandlerInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handler-specific method for overlaying text on an image.
 	 *
 	 * @param string $text
 	 * @param array  $options
 	 */
-	protected abstract function _text(string $text, array $options = []);
-
-	//--------------------------------------------------------------------
+	abstract protected function _text(string $text, array $options = []);
 
 	/**
 	 * Handles the actual resizing of the image.
 	 *
-	 * @param boolean $maintainRatio
+	 * @param bool $maintainRatio
 	 *
 	 * @return $this
 	 */
-	public abstract function _resize(bool $maintainRatio = false);
-
-	//--------------------------------------------------------------------
+	abstract public function _resize(bool $maintainRatio = false);
 
 	/**
 	 * Crops the image.
 	 *
 	 * @return $this
 	 */
-	public abstract function _crop();
-
-	//--------------------------------------------------------------------
+	abstract public function _crop();
 
 	/**
 	 * Return image width.
 	 *
-	 * @return integer
+	 * @return int
 	 */
-	public abstract function _getWidth();
-
-	//--------------------------------------------------------------------
+	abstract public function _getWidth();
 
 	/**
 	 * Return the height of an image.
 	 *
-	 * @return integer
+	 * @return int
 	 */
-	public abstract function _getHeight();
-
-	//--------------------------------------------------------------------
+	abstract public function _getHeight();
 
 	/**
 	 * Reads the EXIF information from the image and modifies the orientation
@@ -564,7 +525,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * with images taken by smartphones who always store the image up-right,
 	 * but set the orientation flag to display it correctly.
 	 *
-	 * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+	 * @param bool $silent if true, will ignore exceptions when PHP doesn't support EXIF
 	 *
 	 * @return $this
 	 */
@@ -579,16 +540,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 			case 3:
 				return $this->rotate(180);
 			case 4:
-				return $this->rotate(180)
-								->flip('horizontal');
+				return $this->rotate(180)->flip('horizontal');
 			case 5:
-				return $this->rotate(270)
-								->flip('horizontal');
+				return $this->rotate(270)->flip('horizontal');
 			case 6:
 				return $this->rotate(270);
 			case 7:
 				return $this->rotate(90)
-								->flip('horizontal');
+					->flip('horizontal');
 			case 8:
 				return $this->rotate(90);
 			default:
@@ -596,16 +555,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
 	 * EXIF data is only supported fr JPEG & TIFF formats.
 	 *
-	 * @param string|null $key    If specified, will only return this piece of EXIF data.
-	 * @param boolean     $silent If true, will not throw our own exceptions.
+	 * @param string|null $key    If specified, will only return this piece of EXIF data
+	 * @param bool        $silent If true, will not throw our own exceptions
 	 *
 	 * @throws ImageException
 	 *
@@ -624,12 +581,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 
 		$exif = null; // default
+
 		switch ($this->image()->imageType)
 		{
 			case IMAGETYPE_JPEG:
 			case IMAGETYPE_TIFF_II:
 				$exif = @exif_read_data($this->image()->getPathname());
-				if (! is_null($key) && is_array($exif))
+
+				if ($key !== null && is_array($exif))
 				{
 					$exif = $exif[$key] ?? false;
 				}
@@ -637,8 +596,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		return $exif;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Combine cropping and resizing into a single command.
@@ -654,9 +611,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *  - bottom
 	 *  - bottom-right
 	 *
-	 * @param integer $width
-	 * @param integer $height
-	 * @param string  $position
+	 * @param int    $width
+	 * @param int    $height
+	 * @param string $position
 	 *
 	 * @return BaseHandler
 	 */
@@ -665,28 +622,25 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$origWidth  = $this->image()->origWidth;
 		$origHeight = $this->image()->origHeight;
 
-		list($cropWidth, $cropHeight) = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
+		[$cropWidth, $cropHeight] = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
-		if (is_null($height))
+		if ($height === null)
 		{
 			$height = ceil(($width / $cropWidth) * $cropHeight);
 		}
 
-		list($x, $y) = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
+		[$x, $y] = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
-		return $this->crop($cropWidth, $cropHeight, $x, $y)
-						->resize($width, $height);
+		return $this->crop($cropWidth, $cropHeight, $x, $y)->resize($width, $height);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Calculate image aspect ratio.
 	 *
-	 * @param integer|float      $width
-	 * @param integer|float|null $height
-	 * @param integer|float      $origWidth
-	 * @param integer|float      $origHeight
+	 * @param float|int      $width
+	 * @param float|int|null $height
+	 * @param float|int      $origWidth
+	 * @param float|int      $origHeight
 	 *
 	 * @return array
 	 */
@@ -694,7 +648,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		// If $height is null, then we have it easy.
 		// Calc based on full image size and be done.
-		if (is_null($height))
+		if ($height === null)
 		{
 			$height = ($width / $origWidth) * $origHeight;
 
@@ -704,7 +658,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			];
 		}
 
-		$xRatio = $width / $origWidth;
+		$xRatio = $width  / $origWidth;
 		$yRatio = $height / $origHeight;
 
 		if ($xRatio > $yRatio)
@@ -721,62 +675,69 @@ abstract class BaseHandler implements ImageHandlerInterface
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Based on the position, will determine the correct x/y coords to
 	 * crop the desired portion from the image.
 	 *
-	 * @param integer|float $width
-	 * @param integer|float $height
-	 * @param integer|float $origWidth
-	 * @param integer|float $origHeight
-	 * @param string        $position
+	 * @param float|int $width
+	 * @param float|int $height
+	 * @param float|int $origWidth
+	 * @param float|int $origHeight
+	 * @param string    $position
 	 *
 	 * @return array
 	 */
 	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
 	{
 		$position = strtolower($position);
-		$x        = $y = 0;
+		$x        = $y        = 0;
 
 		switch ($position)
 		{
 			case 'top-left':
 				$x = 0;
 				$y = 0;
+
 				break;
 			case 'top':
 				$x = floor(($origWidth - $width) / 2);
 				$y = 0;
+
 				break;
 			case 'top-right':
 				$x = $origWidth - $width;
 				$y = 0;
+
 				break;
 			case 'left':
 				$x = 0;
 				$y = floor(($origHeight - $height) / 2);
+
 				break;
 			case 'center':
 				$x = floor(($origWidth - $width) / 2);
 				$y = floor(($origHeight - $height) / 2);
+
 				break;
 			case 'right':
 				$x = ($origWidth - $width);
 				$y = floor(($origHeight - $height) / 2);
+
 				break;
 			case 'bottom-left':
 				$x = 0;
 				$y = $origHeight - $height;
+
 				break;
 			case 'bottom':
 				$x = floor(($origWidth - $width) / 2);
 				$y = $origHeight - $height;
+
 				break;
 			case 'bottom-right':
 				$x = ($origWidth - $width);
 				$y = $origHeight - $height;
+
 				break;
 		}
 
@@ -786,16 +747,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get the version of the image library in use.
 	 *
 	 * @return string
 	 */
-	public abstract function getVersion();
-
-	//--------------------------------------------------------------------
+	abstract public function getVersion();
 
 	/**
 	 * Saves any changes that have been made to file.
@@ -805,13 +762,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *          ->save($target);
 	 *
 	 * @param string|null $target
-	 * @param integer     $quality
+	 * @param int         $quality
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public abstract function save(string $target = null, int $quality = 90);
-
-	//--------------------------------------------------------------------
+	abstract public function save(string $target = null, int $quality = 90);
 
 	/**
 	 * Does the driver-specific processing of the image.
@@ -820,9 +775,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	protected abstract function process(string $action);
-
-	//--------------------------------------------------------------------
+	abstract protected function process(string $action);
 
 	/**
 	 * Provide access to the Image class' methods if they don't exist
@@ -837,11 +790,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		if (method_exists($this->image(), $name))
 		{
-			return $this->image()->$name(...$args);
+			return $this->image()->{$name}(...$args);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Re-proportion Image Width/Height
@@ -857,13 +808,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) ||
-				$this->image()->origWidth === 0 ||
-				$this->image()->origHeight === 0 ||
-				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
-				! ctype_digit((string) $this->image()->origWidth) ||
-				! ctype_digit((string) $this->image()->origHeight)
-		)
+		if (($this->width === 0 && $this->height === 0) || $this->image()->origWidth === 0 || $this->image()->origHeight === 0 || (! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image()->origWidth) || ! ctype_digit((string) $this->image()->origHeight))
 		{
 			return;
 		}
@@ -883,8 +828,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 				$this->masterDim = ($this->height === 0) ? 'width' : 'height';
 			}
 		}
-		elseif (($this->masterDim === 'width' && $this->width === 0) || ($this->masterDim === 'height' && $this->height === 0)
-		)
+		elseif (($this->masterDim === 'width' && $this->width === 0) || ($this->masterDim === 'height' && $this->height === 0))
 		{
 			return;
 		}
@@ -899,14 +843,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return image width.
 	 *
 	 * accessor for testing; not part of interface
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getWidth()
 	{
@@ -918,11 +860,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * accessor for testing; not part of interface
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getHeight()
 	{
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;
 	}
-
 }

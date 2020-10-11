@@ -1,13 +1,14 @@
 <?php
+
 namespace CodeIgniter\Log\Handlers;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 
-class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileHandlerTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -25,8 +26,6 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBasicHandle()
 	{
@@ -52,7 +51,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('This is a test log');
 		$logger->handle('warning', 'This is a test log');
 
-		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
 		$line = fgets($fp);
 		fclose($fp);
 
@@ -71,12 +70,11 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = 'log-' . date('Y-m-d') . '.log';
 		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('Test message');
 		$logger->handle('debug', 'Test message');
-		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 
 		$expectedResult = 'Test message';
 		$this->assertStringContainsString($expectedResult, $line);
 	}
-
 }

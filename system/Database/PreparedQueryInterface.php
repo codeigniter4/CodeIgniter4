@@ -44,7 +44,6 @@ namespace CodeIgniter\Database;
  */
 interface PreparedQueryInterface
 {
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
@@ -55,27 +54,21 @@ interface PreparedQueryInterface
 	 */
 	public function execute(...$data);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
 	 *
 	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
+	 * @param array  $options Passed to the connection's prepare statement
 	 *
 	 * @return mixed
 	 */
 	public function prepare(string $sql, array $options = []);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Explicity closes the statement.
 	 */
 	public function close();
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the SQL that has been prepared.
@@ -84,16 +77,12 @@ interface PreparedQueryInterface
 	 */
 	public function getQueryString(): string;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getErrorCode(): int;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error message created while executing this statement.
@@ -101,6 +90,4 @@ interface PreparedQueryInterface
 	 * @return string
 	 */
 	public function getErrorMessage(): string;
-
-	//--------------------------------------------------------------------
 }

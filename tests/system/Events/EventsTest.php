@@ -1,12 +1,13 @@
 <?php
+
 namespace CodeIgniter\Events;
 
 use CodeIgniter\Config\Config;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
 
-class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
+class EventsTest extends CIUnitTestCase
 {
-
 	/**
 	 * Accessible event manager instance
 	 */
@@ -25,8 +26,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		Events::simulate(false);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -57,12 +56,10 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPerformance()
 	{
 		$result = null;
-		Events::on('foo', function ($arg) use (&$result) {
+		Events::on('foo', static function ($arg) use (&$result) {
 			$result = $arg;
 		});
 		Events::trigger('foo', 'bar');
@@ -72,14 +69,10 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThan(0, count($logged));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testListeners()
 	{
-		$callback1 = function () {
-		};
-		$callback2 = function () {
-		};
+		$callback1 = static function () {};
+		$callback2 = static function () {};
 
 		Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
 		Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
@@ -87,13 +80,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([$callback2, $callback1], Events::listeners('foo'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHandleEvent()
 	{
 		$result = null;
 
-		Events::on('foo', function ($arg) use (&$result) {
+		Events::on('foo', static function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
@@ -102,19 +93,18 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('bar', $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCancelEvent()
 	{
 		$result = 0;
 
 		// This should cancel the flow of events, and leave
 		// $result = 1.
-		Events::on('foo', function ($arg) use (&$result) {
+		Events::on('foo', static function ($arg) use (&$result) {
 			$result = 1;
+
 			return false;
 		});
-		Events::on('foo', function ($arg) use (&$result) {
+		Events::on('foo', static function ($arg) use (&$result) {
 			$result = 2;
 		});
 
@@ -122,20 +112,20 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPriority()
 	{
 		$result = 0;
 
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result = 1;
+
 			return false;
 		}, EVENT_PRIORITY_NORMAL);
 		// Since this has a higher priority, it will
 		// run first.
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result = 2;
+
 			return false;
 		}, EVENT_PRIORITY_HIGH);
 
@@ -143,25 +133,23 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(2, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPriorityWithMultiple()
 	{
 		$result = [];
 
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result[] = 'a';
 		}, EVENT_PRIORITY_NORMAL);
 
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result[] = 'b';
 		}, EVENT_PRIORITY_LOW);
 
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result[] = 'c';
 		}, EVENT_PRIORITY_HIGH);
 
-		Events::on('foo', function () use (&$result) {
+		Events::on('foo', static function () use (&$result) {
 			$result[] = 'd';
 		}, 75);
 
@@ -169,13 +157,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['c', 'd', 'a', 'b'], $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveListener()
 	{
 		$result = false;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result = true;
 		};
 
@@ -191,13 +177,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveListenerTwice()
 	{
 		$result = false;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result = true;
 		};
 
@@ -214,13 +198,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveUnknownListener()
 	{
 		$result = false;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result = true;
 		};
 
@@ -236,13 +218,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveAllListenersWithSingleEvent()
 	{
 		$result = false;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result = true;
 		};
 
@@ -255,13 +235,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], $listeners);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveAllListenersWithMultipleEvents()
 	{
 		$result = false;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result = true;
 		};
 
@@ -274,8 +252,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], Events::listeners('bar'));
 	}
 
-	//--------------------------------------------------------------------
-
 	// Basically if it doesn't crash this should be good...
 	public function testHandleEventCallableInternalFunc()
 	{
@@ -285,8 +261,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertTrue(Events::trigger('foo', 'bar'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHandleEventCallableClass()
 	{
@@ -308,13 +282,11 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('bar', $box->logged);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSimulate()
 	{
 		$result = 0;
 
-		$callback = function () use (&$result) {
+		$callback = static function () use (&$result) {
 			$result += 2;
 		};
 

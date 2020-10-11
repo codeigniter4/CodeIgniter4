@@ -57,8 +57,9 @@ trait ReflectionHelper
 	 * @param object|string $obj    object or class name
 	 * @param string        $method method name
 	 *
-	 * @return Closure
 	 * @throws ReflectionException
+	 *
+	 * @return Closure
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
 	{
@@ -66,8 +67,9 @@ trait ReflectionHelper
 		$refMethod->setAccessible(true);
 		$obj = (gettype($obj) === 'object') ? $obj : null;
 
-		return function () use ($obj, $refMethod) {
+		return static function () use ($obj, $refMethod) {
 			$args = func_get_args();
+
 			return $refMethod->invokeArgs($obj, $args);
 		};
 	}
@@ -78,8 +80,9 @@ trait ReflectionHelper
 	 * @param object|string $obj
 	 * @param string        $property
 	 *
-	 * @return ReflectionProperty
 	 * @throws ReflectionException
+	 *
+	 * @return ReflectionProperty
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
@@ -119,13 +122,14 @@ trait ReflectionHelper
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 *
-	 * @return mixed value
 	 * @throws ReflectionException
+	 *
+	 * @return mixed value
 	 */
 	public static function getPrivateProperty($obj, $property)
 	{
 		$refProperty = self::getAccessibleRefProperty($obj, $property);
+
 		return $refProperty->getValue($obj);
 	}
-
 }

@@ -3,12 +3,12 @@
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
+class LoggerTest extends CIUnitTestCase
 {
-
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
 		$config           = new LoggerConfig();
@@ -19,8 +19,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$logger = new Logger($config);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogThrowsExceptionOnInvalidLevel()
 	{
@@ -34,8 +32,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logger->log('foo', '');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogReturnsFalseWhenLogNotHandled()
 	{
 		$config            = new LoggerConfig();
@@ -45,8 +41,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($logger->log('debug', ''));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogActuallyLogs()
 	{
@@ -65,8 +59,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogDoesnotLogUnhandledLevels()
 	{
 		$config                                                                = new LoggerConfig();
@@ -80,8 +72,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertCount(0, $logs);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogInterpolatesMessage()
 	{
@@ -98,8 +88,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogInterpolatesPost()
 	{
@@ -118,8 +106,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogInterpolatesGet()
 	{
 		$config = new LoggerConfig();
@@ -136,8 +122,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogInterpolatesSession()
 	{
@@ -156,8 +140,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogInterpolatesCurrentEnvironment()
 	{
 		$config = new LoggerConfig();
@@ -173,8 +155,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogInterpolatesEnvironmentVars()
 	{
@@ -194,8 +174,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLogInterpolatesFileAndLine()
 	{
 		$config = new LoggerConfig();
@@ -206,14 +184,12 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$logger->log('debug', 'Test message {file} {line}');
 		$line     = __LINE__ - 1;
-		$expected = "LoggerTest.php $line";
+		$expected = "LoggerTest.php {$line}";
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertTrue(strpos($logs[0], $expected) > 1);
+		$this->assertTrue(mb_strpos($logs[0], $expected) > 1);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogInterpolatesExceptions()
 	{
@@ -234,10 +210,8 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logs = TestHandler::getLogs();
 
 		$this->assertCount(1, $logs);
-		$this->assertTrue(strpos($logs[0], $expected) === 0);
+		$this->assertTrue(mb_strpos($logs[0], $expected) === 0);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testEmergencyLogsCorrectly()
 	{
@@ -254,8 +228,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAlertLogsCorrectly()
 	{
 		$config = new LoggerConfig();
@@ -270,8 +242,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCriticalLogsCorrectly()
 	{
@@ -288,8 +258,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testErrorLogsCorrectly()
 	{
 		$config = new LoggerConfig();
@@ -304,8 +272,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWarningLogsCorrectly()
 	{
@@ -322,8 +288,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNoticeLogsCorrectly()
 	{
 		$config = new LoggerConfig();
@@ -338,8 +302,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testInfoLogsCorrectly()
 	{
@@ -356,8 +318,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDebugLogsCorrectly()
 	{
 		$config = new LoggerConfig();
@@ -372,8 +332,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLogLevels()
 	{
@@ -390,8 +348,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNonStringMessage()
 	{
 		$config = new LoggerConfig();
@@ -406,8 +362,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString($expected, $logs[0]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
@@ -418,8 +372,6 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $logger->cleanup($ohoh));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDetermineFileNoStackTrace()
 	{

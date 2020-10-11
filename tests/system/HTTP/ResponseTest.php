@@ -4,15 +4,15 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
 
-class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseTest extends CIUnitTestCase
 {
-
 	protected $server;
 
 	protected function setUp(): void
@@ -21,7 +21,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->server = $_SERVER;
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		$_SERVER = $this->server;
 		Config::reset();
@@ -36,8 +36,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(200, $response->getStatusCode());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetStatusCodeThrowsExceptionForBadCodes()
 	{
 		$response = new Response(new App());
@@ -45,8 +43,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$response->setStatusCode(54322);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testConstructWithCSPEnabled()
 	{
@@ -57,8 +53,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response instanceof Response);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetStatusCodeSetsReason()
 	{
 		$response = new Response(new App());
@@ -67,8 +61,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('OK', $response->getReason());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanSetCustomReasonCode()
 	{
@@ -79,8 +71,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Not the mama', $response->getReason());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequiresMessageWithUnknownStatusCode()
 	{
 		$response = new Response(new App());
@@ -89,8 +79,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectExceptionMessage(lang('HTTP.unknownStatusCode', [115]));
 		$response->setStatusCode(115);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRequiresMessageWithSmallStatusCode()
 	{
@@ -101,8 +89,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setStatusCode(95);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRequiresMessageWithLargeStatusCode()
 	{
 		$response = new Response(new App());
@@ -111,8 +97,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
 		$response->setStatusCode(695);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetStatusCodeInterpretsReason()
 	{
@@ -123,8 +107,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Multiple Choices', $response->getReason());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetStatusCodeSavesCustomReason()
 	{
 		$response = new Response(new App());
@@ -134,16 +116,12 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('My Little Pony', $response->getReason());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetReasonDefaultsToOK()
 	{
 		$response = new Response(new App());
 
 		$this->assertEquals('OK', $response->getReason());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetDateRemembersDateInUTC()
 	{
@@ -158,8 +136,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetLink()
 	{
@@ -196,8 +172,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetContentType()
 	{
 		$response = new Response(new App());
@@ -207,8 +181,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNoCache()
 	{
 		$response = new Response(new App());
@@ -217,8 +189,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetCache()
 	{
@@ -230,7 +200,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 			'etag'          => '12345678',
 			'last-modified' => $date,
 			'max-age'       => 300,
-			'must-revalidate'
+			'must-revalidate',
 		];
 
 		$response->setCache($options);
@@ -253,8 +223,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetLastModifiedWithDateTimeObject()
 	{
 		$response = new Response(new App());
@@ -269,8 +237,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectSetsDefaultCodeAndLocationHeader()
 	{
 		$response = new Response(new App());
@@ -281,8 +247,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
 		$this->assertEquals(302, $response->getStatusCode());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRedirectSetsCode()
 	{
@@ -295,8 +259,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(307, $response->getStatusCode());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectWithIIS()
 	{
 		$_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
@@ -304,8 +266,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->redirect('example.com', 'auto', 307);
 		$this->assertEquals('0;url=example.com', $response->getHeaderLine('Refresh'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetCookieFails()
 	{
@@ -340,11 +300,9 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($response->hasCookie('foo', null, 'nak'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testJSONWithArray()
 	{
-		$body     = [
+		$body = [
 			'foo' => 'bar',
 			'bar' => [
 				1,
@@ -358,12 +316,12 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setJSON($body);
 
 		$this->assertEquals($expected, $response->getJSON());
-		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
+		$this->assertTrue(mb_strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
 	}
 
 	public function testJSONGetFromNormalBody()
 	{
-		$body     = [
+		$body = [
 			'foo' => 'bar',
 			'bar' => [
 				1,
@@ -379,11 +337,9 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $response->getJSON());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testXMLWithArray()
 	{
-		$body     = [
+		$body = [
 			'foo' => 'bar',
 			'bar' => [
 				1,
@@ -397,12 +353,12 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->setXML($body);
 
 		$this->assertEquals($expected, $response->getXML());
-		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
+		$this->assertTrue(mb_strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
 	}
 
 	public function testXMLGetFromNormalBody()
 	{
-		$body     = [
+		$body = [
 			'foo' => 'bar',
 			'bar' => [
 				1,
@@ -417,8 +373,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $response->getXML());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetDownloadResponseByData()
 	{
@@ -465,8 +419,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($actual);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPretendMode()
 	{
 		$response = new MockResponse(new App());
@@ -484,8 +436,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$response->getStatusCode();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testTemporaryRedirect11()
 	{
@@ -511,8 +461,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(307, $response->getStatusCode());
 	}
 
-	//--------------------------------------------------------------------
-
 	// Make sure cookies are set by RedirectResponse this way
 	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	public function testRedirectResponseCookies()
@@ -521,14 +469,12 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response = new Response(new App());
 		$answer1  = $response->redirect('/login')
-				->setCookie('foo', 'bar', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+			->setCookie('foo', 'bar', YEAR)
+			->setCookie('login_time', $login_time, YEAR);
 
 		$this->assertTrue($answer1->hasCookie('foo'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
 	}
-
-	//--------------------------------------------------------------------
 
 	// Make sure we don't blow up if pretending to send headers
 	public function testPretendOutput()

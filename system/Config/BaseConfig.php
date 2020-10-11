@@ -56,7 +56,6 @@ use RuntimeException;
  */
 class BaseConfig
 {
-
 	/**
 	 * An optional array of classes that will act as Registrars
 	 * for rapidly setting config class properties.
@@ -68,7 +67,7 @@ class BaseConfig
 	/**
 	 * Has module discovery happened yet?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $didDiscovery = false;
 
@@ -90,33 +89,31 @@ class BaseConfig
 		static::$moduleConfig = config('Modules');
 
 		$properties  = array_keys(get_object_vars($this));
-		$prefix      = get_class($this);
+		$prefix      = static::class;
 		$slashAt     = strrpos($prefix, '\\');
 		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
 		foreach ($properties as $property)
 		{
-			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
+			$this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
 
 			if ($shortPrefix === 'encryption' && $property === 'key')
 			{
 				// Handle hex2bin prefix
-				if (strpos($this->$property, 'hex2bin:') === 0)
+				if (strpos($this->{$property}, 'hex2bin:') === 0)
 				{
-					$this->$property = hex2bin(substr($this->$property, 8));
+					$this->{$property} = hex2bin(substr($this->{$property}, 8));
 				}
 				// Handle base64 prefix
-				elseif (strpos($this->$property, 'base64:') === 0)
+				elseif (strpos($this->{$property}, 'base64:') === 0)
 				{
-					$this->$property = base64_decode(substr($this->$property, 7), true);
+					$this->{$property} = base64_decode(substr($this->{$property}, 7), true);
 				}
 			}
 		}
 
 		$this->registerProperties();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Initialization an environment-specific configuration setting
@@ -141,7 +138,7 @@ class BaseConfig
 		{
 			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false)
 			{
-				if (! is_null($value))
+				if ($value !== null)
 				{
 					if ($value === 'false')
 					{
@@ -156,10 +153,9 @@ class BaseConfig
 				}
 			}
 		}
+
 		return $property;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve an environment-specific configuration setting
@@ -173,6 +169,7 @@ class BaseConfig
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
 		$shortPrefix = ltrim($shortPrefix, '\\');
+
 		switch (true)
 		{
 			case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
@@ -185,11 +182,10 @@ class BaseConfig
 				return $_SERVER["{$prefix}.{$property}"];
 			default:
 				$value = getenv($property);
+
 				return $value === false ? null : $value;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Provides external libraries a simple way to register one or more
@@ -240,17 +236,15 @@ class BaseConfig
 
 			foreach ($properties as $property => $value)
 			{
-				if (isset($this->$property) && is_array($this->$property) && is_array($value))
+				if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value))
 				{
-					$this->$property = array_merge($this->$property, $value);
+					$this->{$property} = array_merge($this->{$property}, $value);
 				}
 				else
 				{
-					$this->$property = $value;
+					$this->{$property} = $value;
 				}
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 }

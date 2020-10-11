@@ -10,5 +10,4 @@ class SomeEntity extends Entity
 		'foo' => null,
 		'bar' => null,
 	];
-
 }

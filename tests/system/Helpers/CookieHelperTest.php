@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Config\Services;
@@ -6,15 +7,18 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 
-final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+final class CookieHelperTest extends CIUnitTestCase
 {
-
 	private $name;
+
 	private $value;
+
 	private $expire;
+
 	private $response;
 
 	protected function setUp(): void
@@ -33,8 +37,6 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		helper('cookie');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetCookie()
 	{
 		set_cookie($this->name, $this->value, $this->expire);
@@ -43,8 +45,6 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		delete_cookie($this->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetCookieByArrayParameters()
 	{
@@ -60,14 +60,12 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		delete_cookie($this->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetCookieSecured()
 	{
 		$pre       = 'Hello, I try to';
 		$pst       = 'your site';
-		$unsec     = "$pre <script>alert('Hack');</script> $pst";
-		$sec       = "$pre [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] $pst";
+		$unsec     = "{$pre} <script>alert('Hack');</script> {$pst}";
+		$sec       = "{$pre} [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] {$pst}";
 		$unsecured = 'unsecured';
 		$secured   = 'secured';
 
@@ -81,8 +79,6 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		delete_cookie($secured);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDeleteCookie()
 	{
 		$this->response->setCookie($this->name, $this->value, $this->expire);
@@ -95,8 +91,6 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $cookie['value']);
 		$this->assertEquals('', $cookie['expires']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetCookie()
 	{
@@ -174,5 +168,4 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		delete_cookie($this->name);
 	}
-
 }

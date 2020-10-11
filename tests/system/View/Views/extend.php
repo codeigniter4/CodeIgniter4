@@ -1,5 +1,5 @@
-<?= $this->extend('layout') ?>
+<?= $this->extend('layout'); ?>
 
-<?= $this->section('content') ?>
-<h1><?= $testString ?></h1>
-<?= $this->endSection() ?>
+<?= $this->section('content'); ?>
+<h1><?= $testString; ?></h1>
+<?= $this->endSection(); ?>

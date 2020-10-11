@@ -46,12 +46,11 @@ use Config\Services;
  */
 class Logs extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -59,7 +58,7 @@ class Logs extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
@@ -78,8 +77,6 @@ class Logs extends BaseCollector
 	 */
 	protected $data;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
@@ -92,12 +89,10 @@ class Logs extends BaseCollector
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this collector actually have any data to display?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isEmpty(): bool
 	{
@@ -105,8 +100,6 @@ class Logs extends BaseCollector
 
 		return empty($this->data);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Display the icon.
@@ -120,8 +113,6 @@ class Logs extends BaseCollector
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVEhLYxgFJIHU1FSjtLS0i0D8AYj7gEKMEBkqAaAFF4D4ERCvAFrwH4gDoFIMKSkpFkB+OTEYqgUTACXfA/GqjIwMQyD9H2hRHlQKJFcBEiMGQ7VgAqCBvUgK32dmZspCpagGGNPT0/1BLqeF4bQHQJePpiIwhmrBBEADR1MRfgB0+WgqAmOoFkwANHA0FY0CUgEDAwCQ0PUpNB3kqwAAAABJRU5ErkJggg==';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Ensures the data has been collected.
 	 */
@@ -134,6 +125,4 @@ class Logs extends BaseCollector
 
 		return $this->data = Services::logger(true)->logCache ?? [];
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -48,15 +48,12 @@ use Config\Services;
  */
 class FileRules
 {
-
 	/**
 	 * Request instance. So we can get access to the files.
 	 *
 	 * @var \CodeIgniter\HTTP\RequestInterface
 	 */
 	protected $request;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
@@ -65,15 +62,8 @@ class FileRules
 	 */
 	public function __construct(RequestInterface $request = null)
 	{
-		if (is_null($request))
-		{
-			$request = Services::request();
-		}
-
-		$this->request = $request;
+		$this->request = $request ?? Services::request();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Verifies that $name is the name of a valid uploaded file.
@@ -81,7 +71,7 @@ class FileRules
 	 * @param string $blank
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function uploaded(string $blank = null, string $name): bool
 	{
@@ -92,7 +82,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -119,15 +109,13 @@ class FileRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Verifies if the file's size in Kilobytes is no larger than the parameter.
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function max_size(string $blank = null, string $params): bool
 	{
@@ -143,7 +131,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -167,8 +155,6 @@ class FileRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Uses the mime config file to determine if a file is considered an "image",
 	 * which for our purposes basically means that it's a raster image or svg.
@@ -176,7 +162,7 @@ class FileRules
 	 * @param string|null $blank
 	 * @param string      $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function is_image(string $blank = null, string $params): bool
 	{
@@ -192,7 +178,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -206,7 +192,7 @@ class FileRules
 			// start with `image` even when then are multiple accepted types.
 			$type = Mimes::guessTypeFromExtension($file->getExtension());
 
-			if (mb_strpos($type, 'image') !== 0)
+			if (strpos($type, 'image') !== 0)
 			{
 				return false;
 			}
@@ -215,15 +201,13 @@ class FileRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if an uploaded file's mime type matches one in the parameter.
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function mime_in(string $blank = null, string $params): bool
 	{
@@ -239,7 +223,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -258,15 +242,13 @@ class FileRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if an uploaded file's extension matches one in the parameter.
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function ext_in(string $blank = null, string $params): bool
 	{
@@ -282,7 +264,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -301,8 +283,6 @@ class FileRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks an uploaded file to verify that the dimensions are within
 	 * a specified allowable dimension.
@@ -310,7 +290,7 @@ class FileRules
 	 * @param string|null $blank
 	 * @param string      $params
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function max_dims(string $blank = null, string $params): bool
 	{
@@ -326,7 +306,7 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			if (is_null($file))
+			if ($file === null)
 			{
 				return false;
 			}
@@ -353,6 +333,4 @@ class FileRules
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

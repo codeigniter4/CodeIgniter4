@@ -1,10 +1,12 @@
-<?php namespace CodeIgniter\Throttle;
+<?php
 
+namespace CodeIgniter\Throttle;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 
-class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
+class ThrottleTest extends CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -120,5 +122,4 @@ class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE, 0));
 		$this->assertEquals(10, round($this->cache->get('throttler_127.0.0.1')));
 	}
-
 }

@@ -1,22 +1,26 @@
-<?php namespace CodeIgniter\Database;
+<?php
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 class MigrationTest extends CIDatabaseTestCase
 {
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
 
 	public function testDBGroup()
 	{
-		$migration = new class extends Migration {
+		$migration          = new class() extends Migration {
 			protected $DBGroup = 'tests';
-			function up()
+
+			public function up()
 			{
 			}
-			function down()
+
+			public function down()
 			{
 			}
 		};

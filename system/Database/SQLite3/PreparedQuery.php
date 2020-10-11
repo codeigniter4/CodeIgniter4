@@ -46,18 +46,14 @@ use CodeIgniter\Database\PreparedQueryInterface;
 /**
  * Prepared query for SQLite3
  */
-
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * The SQLite3Result resource, or false.
 	 *
-	 * @var Result|boolean
+	 * @var bool|Result
 	 */
 	protected $result;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -84,8 +80,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
@@ -94,11 +88,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if ($this->statement === null)
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -106,7 +100,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		foreach ($data as $key => $item)
 		{
 			// Determine the type string
-			if (is_integer($item))
+			if (is_int($item))
 			{
 				$bindType = SQLITE3_INTEGER;
 			}
@@ -128,8 +122,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this->result !== false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result object for the prepared query.
 	 *
@@ -139,7 +131,4 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->result;
 	}
-
-	//--------------------------------------------------------------------
-
 }

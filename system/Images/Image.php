@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -47,18 +47,17 @@ use CodeIgniter\Images\Exceptions\ImageException;
  */
 class Image extends File
 {
-
 	/**
 	 * The original image width in pixels.
 	 *
-	 * @var integer|float
+	 * @var float|int
 	 */
 	public $origWidth;
 
 	/**
 	 * The original image height in pixels.
 	 *
-	 * @var integer|float
+	 * @var float|int
 	 */
 	public $origHeight;
 
@@ -67,7 +66,7 @@ class Image extends File
 	 *
 	 * @see http://php.net/manual/en/image.constants.php
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	public $imageType;
 
@@ -91,16 +90,16 @@ class Image extends File
 	 * it will use the existing filename.
 	 *
 	 * @param string      $targetPath The directory to store the file in
-	 * @param string|null $targetName The new name of the copied file.
-	 * @param integer     $perms      File permissions to be applied after copy.
+	 * @param string|null $targetName the new name of the copied file
+	 * @param int         $perms      file permissions to be applied after copy
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
 	{
 		$targetPath = rtrim($targetPath, '/ ') . '/';
 
-		$targetName = is_null($targetName) ? $this->getFilename() : $targetName;
+		$targetName = $targetName === null ? $this->getFilename() : $targetName;
 
 		if (empty($targetName))
 		{
@@ -122,16 +121,14 @@ class Image extends File
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get image properties
 	 *
 	 * A helper function that gets info about the file
 	 *
-	 * @param boolean $return
+	 * @param bool $return
 	 *
-	 * @return array|boolean
+	 * @return array|bool
 	 */
 	public function getProperties(bool $return = false)
 	{
@@ -170,6 +167,4 @@ class Image extends File
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

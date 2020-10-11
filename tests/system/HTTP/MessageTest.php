@@ -3,10 +3,10 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 
-class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
+class MessageTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var CodeIgniter\HTTP\Message
 	 */
@@ -19,15 +19,12 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message = new Message();
 	}
 
-	//--------------------------------------------------------------------
-
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		$this->message = null;
-		unset($this->message);
+		$this->message = null;
 	}
 
-	//--------------------------------------------------------------------
 	// We can only test the headers retrieved from $_SERVER
 	// This test might fail under apache.
 	public function testHeadersRetrievesHeaders()
@@ -44,8 +41,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabSingleHeader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
@@ -56,8 +51,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('daisyduke.com', $header->getValue());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCaseInsensitiveGetHeader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
@@ -65,8 +58,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('daisyduke.com', $this->message->getHeader('host')->getValue());
 		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST')->getValue());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanSetHeaders()
 	{
@@ -76,8 +67,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('kiss', $this->message->getHeader('FIRST')->getValue());
 		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second')->getValue());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetHeaderOverwritesPrevious()
 	{
@@ -96,8 +85,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('daisyduke.com', $this->message->getHeader('Host')->getValueLine());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanRemoveHeader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
@@ -106,8 +93,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('', $this->message->getHeader('host'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanAppendHeader()
 	{
@@ -118,8 +103,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept')->getValue());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanPrependHeader()
 	{
 		$this->message->setHeader('accept', ['json', 'html']);
@@ -129,16 +112,12 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['xml', 'json', 'html'], $this->message->getHeader('accept')->getValue());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetProtocolWorks()
 	{
 		$this->message->setProtocolVersion('1.1');
 
 		$this->assertEquals('1.1', $this->message->getProtocolVersion());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetProtocolWorksWithNonNumericVersion()
 	{
@@ -147,15 +126,11 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('1.1', $this->message->getProtocolVersion());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
 	{
 		$this->expectException(HTTPException::class);
 		$this->message->setProtocolVersion('1.2');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBodyBasics()
 	{
@@ -166,8 +141,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($body, $this->message->getBody());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAppendBody()
 	{
 		$this->message->setBody('moo');
@@ -176,8 +149,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('moo' . '\n', $this->message->getBody());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetHeaderReplacingHeader()
 	{
@@ -206,7 +177,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->message->setHeader('Accept', ['json', 'html', 'xml']);
 
-			$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
 
 	public function provideArrayHeaderValue()
@@ -219,7 +190,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 					'xml',
 				],
 			],
-			'existing for next append'     => [
+			'existing for next append' => [
 				[
 					'json',
 					'html',
@@ -230,6 +201,8 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideArrayHeaderValue
+	 *
+	 * @param mixed $arrayHeaderValue
 	 */
 	public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue)
 	{
@@ -241,6 +214,8 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideArrayHeaderValue
+	 *
+	 * @param mixed $arrayHeaderValue
 	 */
 	public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue)
 	{
@@ -258,8 +233,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPopulateHeadersWithoutContentType()
 	{
 		// fail path, if the CONTENT_TYPE doesn't exist
@@ -271,12 +244,10 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->populateHeaders();
 
 		$this->assertNull($this->message->getHeader('content-type'));
-		putenv("CONTENT_TYPE=$original_env");
+		putenv("CONTENT_TYPE={$original_env}");
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutHTTP()
 	{
@@ -294,8 +265,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPopulateHeadersKeyNotExists()
 	{
 		// Success path, if array key is not exists, assign empty string to it's value
@@ -311,8 +280,6 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->removeHeader('accept-charset');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPopulateHeaders()
 	{
@@ -348,5 +315,4 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('Content-Type', 'application/json');
 		$this->assertTrue($this->message->isJSON());
 	}
-
 }

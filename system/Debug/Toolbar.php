@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -56,12 +57,9 @@ use Config\Toolbar as ToolbarConfig;
  * Displays a toolbar with bits of stats to aid a developer in debugging.
  *
  * Inspiration: http://prophiler.fabfuel.de
- *
- * @package CodeIgniter\Debug
  */
 class Toolbar
 {
-
 	/**
 	 * Toolbar configuration settings.
 	 *
@@ -76,8 +74,6 @@ class Toolbar
 	 */
 	protected $collectors = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -91,16 +87,14 @@ class Toolbar
 		{
 			if (! class_exists($collector))
 			{
-				log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
-						'please check $collectors in the Config\Toolbar.php file.');
+				log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' . 'please check $collectors in the Config\Toolbar.php file.');
+
 				continue;
 			}
 
 			$this->collectors[] = new $collector();
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns all the data required by Debug Bar
@@ -211,17 +205,14 @@ class Toolbar
 		return json_encode($data);
 	}
 
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-
 	/**
 	 * Called within the view to display the timeline itself.
 	 *
-	 * @param array   $collectors
-	 * @param float   $startTime
-	 * @param integer $segmentCount
-	 * @param integer $segmentDuration
-	 * @param array   $styles
+	 * @param array $collectors
+	 * @param float $startTime
+	 * @param int   $segmentCount
+	 * @param int   $segmentDuration
+	 * @param array $styles
 	 *
 	 * @return string
 	 */
@@ -241,20 +232,18 @@ class Toolbar
 			$output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
 
 			$offset = ((((float) $row['start'] - $startTime) * 1000) / $displayTime) * 100;
-			$length = (((float) $row['duration'] * 1000) / $displayTime) * 100;
+			$length = (((float) $row['duration'] * 1000) / $displayTime)             * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output                                     .= '</td>';
-			$output                                     .= '</tr>';
+			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output .= '</td>';
+			$output .= '</tr>';
 
-			$styleCount ++;
+			$styleCount++;
 		}
 
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a sorted array of timeline data arrays from the collectors.
@@ -283,8 +272,6 @@ class Toolbar
 		return $data;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of data from all of the modules
 	 * that should be displayed in the 'Vars' tab.
@@ -308,13 +295,11 @@ class Toolbar
 		return $data;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Rounds a number to the nearest incremental value.
 	 *
-	 * @param float   $number
-	 * @param integer $increments
+	 * @param float $number
+	 * @param int   $increments
 	 *
 	 * @return float
 	 */
@@ -322,17 +307,17 @@ class Toolbar
 	{
 		$increments = 1 / $increments;
 
-		return (ceil($number * $increments) / $increments);
+		return ceil($number * $increments) / $increments;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Prepare for debugging..
+	 * Prepare for debugging
 	 *
-	 * @param  RequestInterface  $request
-	 * @param  ResponseInterface $response
-	 * @global \CodeIgniter\CodeIgniter $app
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 *
+	 * @global CodeIgniter $app
+	 *
 	 * @return void
 	 */
 	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
@@ -341,7 +326,7 @@ class Toolbar
 		{
 			global $app;
 
-			$request  = $request ?? Services::request();
+			$request  = $request  ?? Services::request();
 			$response = $response ?? Services::response();
 
 			// Disable the toolbar for downloads
@@ -353,10 +338,10 @@ class Toolbar
 			$toolbar = Services::toolbar(config(Toolbar::class));
 			$stats   = $app->getPerformanceStats();
 			$data    = $toolbar->run(
-					$stats['startTime'],
-					$stats['totalTime'],
-					$request,
-					$response
+				$stats['startTime'],
+				$stats['totalTime'],
+				$request,
+				$response
 			);
 
 			helper('filesystem');
@@ -378,9 +363,9 @@ class Toolbar
 			// for this response
 			if ($request->isAJAX() || strpos($format, 'html') === false)
 			{
-				$response->setHeader('Debugbar-Time', "$time")
-						->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
-						->getBody();
+				$response->setHeader('Debugbar-Time', "{$time}")
+					->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
+					->getBody();
 
 				return;
 			}
@@ -395,9 +380,7 @@ class Toolbar
 
 			if (strpos($response->getBody(), '<head>') !== false)
 			{
-				$response->setBody(
-						str_replace('<head>', '<head>' . $script, $response->getBody())
-				);
+				$response->setBody(str_replace('<head>', '<head>' . $script, $response->getBody()));
 
 				return;
 			}
@@ -406,10 +389,10 @@ class Toolbar
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Inject debug toolbar into the response.
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function respond()
 	{
@@ -418,7 +401,6 @@ class Toolbar
 			return;
 		}
 
-		// @codeCoverageIgnoreStart
 		$request = Services::request();
 
 		// If the request contains '?debugbar then we're
@@ -429,7 +411,7 @@ class Toolbar
 			header('Content-Type: application/javascript');
 
 			ob_start();
-			include($this->config->viewsPath . 'toolbarloader.js.php');
+			include $this->config->viewsPath . 'toolbarloader.js.php';
 			$output = ob_get_clean();
 
 			exit($output);
@@ -463,7 +445,6 @@ class Toolbar
 			http_response_code(404);
 			exit; // Exit here is needed to avoid load the index page
 		}
-		// @codeCoverageIgnoreEnd
 	}
 
 	/**
@@ -482,8 +463,8 @@ class Toolbar
 		{
 			$history = new History();
 			$history->setFiles(
-					Services::request()->getGet('debugbar_time'),
-					$this->config->maxHistory
+				Services::request()->getGet('debugbar_time'),
+				$this->config->maxHistory
 			);
 
 			$data['collectors'][] = $history->getAsArray();
@@ -498,20 +479,22 @@ class Toolbar
 				extract($data);
 				$parser = Services::parser($this->config->viewsPath, null, false);
 				ob_start();
-				include($this->config->viewsPath . 'toolbar.tpl.php');
+				include $this->config->viewsPath . 'toolbar.tpl.php';
 				$output = ob_get_clean();
+
 				break;
 			case 'json':
 				$formatter = new JSONFormatter();
 				$output    = $formatter->format($data);
+
 				break;
 			case 'xml':
-				$formatter = new XMLFormatter;
+				$formatter = new XMLFormatter();
 				$output    = $formatter->format($data);
+
 				break;
 		}
 
 		return $output;
 	}
-
 }

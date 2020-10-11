@@ -159,7 +159,7 @@ class CLIRequest extends Request
 	 *
 	 *      getOptionString() = '-foo bar -baz "queue some stuff"'
 	 *
-	 * @param boolean $useLongOpts
+	 * @param bool $useLongOpts
 	 *
 	 * @return string
 	 */
@@ -174,7 +174,7 @@ class CLIRequest extends Request
 
 		foreach ($this->options as $name => $value)
 		{
-			if ($useLongOpts && mb_strlen($name) > 1)
+			if ($useLongOpts && strlen($name) > 1)
 			{
 				$out .= "--{$name} ";
 			}
@@ -185,7 +185,7 @@ class CLIRequest extends Request
 
 			// If there's a space, we need to group
 			// so it will pass correctly.
-			if (mb_strpos($value, ' ') !== false)
+			if (strpos($value, ' ') !== false)
 			{
 				$out .= '"' . $value . '" ';
 			}
@@ -197,8 +197,6 @@ class CLIRequest extends Request
 
 		return trim($out);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parses the command line it was called from and collects all options
@@ -216,7 +214,7 @@ class CLIRequest extends Request
 
 		foreach ($args as $i => $arg)
 		{
-			if (mb_strpos($arg, '-') !== 0)
+			if (strpos($arg, '-') !== 0)
 			{
 				if ($optionValue)
 				{
@@ -233,7 +231,7 @@ class CLIRequest extends Request
 			$arg   = filter_var(ltrim($arg, '-'), FILTER_SANITIZE_STRING);
 			$value = null;
 
-			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
+			if (isset($args[$i + 1]) && strpos($args[$i + 1], '-') !== 0)
 			{
 				$value       = filter_var($args[$i + 1], FILTER_SANITIZE_STRING);
 				$optionValue = true;
@@ -243,17 +241,13 @@ class CLIRequest extends Request
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if this request was made from the command line (CLI).
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isCLI(): bool
 	{
 		return is_cli();
 	}
-
-	//--------------------------------------------------------------------
 }

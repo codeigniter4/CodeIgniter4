@@ -1,0 +1,21 @@
+<?php
+
+use Liaison\CS\Config\Factory;
+use Liaison\CS\Config\Ruleset\CodeIgniter4;
+use PhpCsFixer\Finder;
+
+$overrides = [
+	'mb_str_functions'     => false,
+	'no_unset_on_property' => false,
+];
+
+return Factory::create(new CodeIgniter4(), $overrides, [
+	'finder' => Finder::create()
+		->in([
+			__DIR__ . '/app',
+			__DIR__ . '/public',
+			__DIR__ . '/tests',
+		])
+		->notName(['**Foobar.php']),
+	'indent' => "\t",
+]);

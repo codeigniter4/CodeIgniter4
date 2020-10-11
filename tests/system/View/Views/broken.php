@@ -1,4 +1,4 @@
-<?= $this->extend('layout') ?>
+<?= $this->extend('layout'); ?>
 
-<h1><?= $testString ?></h1>
-<?= $this->endSection() ?>
+<h1><?= $testString; ?></h1>
+<?= $this->endSection(); ?>

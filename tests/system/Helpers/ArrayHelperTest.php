@@ -1,6 +1,10 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
 
-class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Helpers;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class ArrayHelperTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -79,7 +83,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'buzz' => [
 					'fizz' => 11,
 				],
-				'bar'  => [
+				'bar' => [
 					'baz' => 23,
 				],
 			],
@@ -96,7 +100,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'buzz' => [
 					'fizz' => 11,
 				],
-				'bar'  => [
+				'bar' => [
 					'baz' => 23,
 				],
 			],
@@ -120,6 +124,9 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider deepSearchProvider
+	 *
+	 * @param mixed $key
+	 * @param mixed $expected
 	 */
 	public function testArrayDeepSearch($key, $expected)
 	{
@@ -153,8 +160,6 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertNull(array_deep_search('key644', $data));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function deepSearchProvider()
 	{

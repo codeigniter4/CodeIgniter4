@@ -55,7 +55,6 @@ use PHPUnit\Framework\TestCase;
  */
 class CIUnitTestCase extends TestCase
 {
-
 	use ReflectionHelper;
 
 	/**
@@ -100,14 +99,14 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if (! $this->app) // @phpstan-ignore-line
+		if (! isset($this->app))
 		{
 			$this->app = $this->createApplication();
 		}
 
 		foreach ($this->setUpMethods as $method)
 		{
-			$this->$method();
+			$this->{$method}();
 		}
 	}
 
@@ -117,7 +116,7 @@ class CIUnitTestCase extends TestCase
 
 		foreach ($this->tearDownMethods as $method)
 		{
-			$this->$method();
+			$this->{$method}();
 		}
 	}
 
@@ -181,14 +180,16 @@ class CIUnitTestCase extends TestCase
 	 * @param string      $level
 	 * @param string|null $expectedMessage
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function assertLogged(string $level, $expectedMessage = null)
 	{
 		$result = TestLogger::didLog($level, $expectedMessage);
 
 		$this->assertTrue($result);
+
 		return $result;
 	}
 
@@ -198,8 +199,9 @@ class CIUnitTestCase extends TestCase
 	 *
 	 * @param string $eventName
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function assertEventTriggered(string $eventName): bool
 	{
@@ -214,10 +216,12 @@ class CIUnitTestCase extends TestCase
 			}
 
 			$found = true;
+
 			break;
 		}
 
 		$this->assertTrue($found);
+
 		return $found;
 	}
 
@@ -225,8 +229,8 @@ class CIUnitTestCase extends TestCase
 	 * Hooks into xdebug's headers capture, looking for a specific header
 	 * emitted
 	 *
-	 * @param string  $header     The leading portion of the header we are looking for
-	 * @param boolean $ignoreCase
+	 * @param string $header     The leading portion of the header we are looking for
+	 * @param bool   $ignoreCase
 	 *
 	 * @throws Exception
 	 */
@@ -244,6 +248,7 @@ class CIUnitTestCase extends TestCase
 			$found = $ignoreCase ?
 					(stripos($emitted, $header) === 0) :
 					(strpos($emitted, $header) === 0);
+
 			if ($found)
 			{
 				break;
@@ -257,8 +262,8 @@ class CIUnitTestCase extends TestCase
 	 * Hooks into xdebug's headers capture, looking for a specific header
 	 * emitted
 	 *
-	 * @param string  $header     The leading portion of the header we don't want to find
-	 * @param boolean $ignoreCase
+	 * @param string $header     The leading portion of the header we don't want to find
+	 * @param bool   $ignoreCase
 	 *
 	 * @throws Exception
 	 */
@@ -276,6 +281,7 @@ class CIUnitTestCase extends TestCase
 			$found = $ignoreCase ?
 					(stripos($emitted, $header) === 0) :
 					(strpos($emitted, $header) === 0);
+
 			if ($found)
 			{
 				break;
@@ -292,10 +298,10 @@ class CIUnitTestCase extends TestCase
 	 * where the result is close but not exactly equal to the
 	 * expected time, for reasons beyond our control.
 	 *
-	 * @param integer $expected
-	 * @param mixed   $actual
-	 * @param string  $message
-	 * @param integer $tolerance
+	 * @param int    $expected
+	 * @param mixed  $actual
+	 * @param string $message
+	 * @param int    $tolerance
 	 *
 	 * @throws Exception
 	 */
@@ -312,18 +318,20 @@ class CIUnitTestCase extends TestCase
 	 * where the result is close but not exactly equal to the
 	 * expected time, for reasons beyond our control.
 	 *
-	 * @param mixed   $expected
-	 * @param mixed   $actual
-	 * @param string  $message
-	 * @param integer $tolerance
+	 * @param mixed  $expected
+	 * @param mixed  $actual
+	 * @param string $message
+	 * @param int    $tolerance
 	 *
-	 * @return void|boolean
 	 * @throws Exception
+	 *
+	 * @return bool|void
 	 */
 	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
 	{
 		$expected = (string) $expected;
 		$actual   = (string) $actual;
+
 		if (strlen($expected) !== strlen($actual))
 		{
 			return false;
@@ -357,14 +365,15 @@ class CIUnitTestCase extends TestCase
 	{
 		$path = __DIR__ . '/../bootstrap.php';
 		$path = realpath($path) ?: $path;
+
 		return require $path;
 	}
 
 	/**
 	 * Return first matching emitted header.
 	 *
-	 * @param string  $header     Identifier of the header of interest
-	 * @param boolean $ignoreCase
+	 * @param string $header     Identifier of the header of interest
+	 * @param bool   $ignoreCase
 	 *
 	 * @return string|null The value of the header found, null if not found
 	 */
@@ -382,6 +391,7 @@ class CIUnitTestCase extends TestCase
 			$found = $ignoreCase ?
 					(stripos($emitted, $header) === 0) :
 					(strpos($emitted, $header) === 0);
+
 			if ($found)
 			{
 				return $emitted;

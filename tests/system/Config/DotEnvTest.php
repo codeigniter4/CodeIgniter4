@@ -2,17 +2,15 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
  * @backupGlobals enabled
  */
-class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
+class DotEnvTest extends CIUnitTestCase
 {
-
 	protected $fixturesFolder;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -35,15 +33,11 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->root = null;
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReturnsFalseIfCannotFindFile()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'bogus');
 		$this->assertFalse($dotenv->load());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLoadsVars()
 	{
@@ -54,8 +48,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('with spaces', getenv('SPACED'));
 		$this->assertEquals('', getenv('NULL'));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -71,8 +63,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('OpenSSL', getenv('encryption.driver'));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -86,8 +76,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('OpenSSL', getenv('encryption.driver'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLoadsNoneStringFiles()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 2);
@@ -97,8 +85,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('with spaces', getenv('SPACED'));
 		$this->assertEquals('', getenv('NULL'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCommentedLoadsVars()
 	{
@@ -113,8 +99,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', getenv('CNULL'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testLoadsUnreadableFile()
 	{
 		$file = 'unreadable.env';
@@ -125,8 +109,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, $file);
 		$dotenv->load();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testQuotedDotenvLoadsEnvironmentVars()
 	{
@@ -140,8 +122,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('test some escaped characters like a quote (") or maybe a backslash (\\)', getenv('QESCAPED'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSpacedValuesWithoutQuotesThrowsException()
 	{
 		$this->expectException('InvalidArgumentException');
@@ -150,8 +130,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new Dotenv($this->fixturesFolder, 'spaced-wrong.env');
 		$dotenv->load();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLoadsServerGlobals()
 	{
@@ -164,8 +142,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $_SERVER['NULL']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNamespacedVariables()
 	{
 		$dotenv = new Dotenv($this->fixturesFolder, '.env');
@@ -173,8 +149,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('complex', $_SERVER['simple.name']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLoadsGetServerVar()
 	{
@@ -184,8 +158,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('TT', $_ENV['NVAR7']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLoadsEnvGlobals()
 	{
@@ -197,8 +169,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $_ENV['NULL']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNestedEnvironmentVars()
 	{
 		$dotenv = new Dotenv($this->fixturesFolder, 'nested.env');
@@ -207,8 +177,6 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Hello World!', $_ENV['NVAR4']);
 		$this->assertEquals('$NVAR1 {NVAR2}', $_ENV['NVAR5']); // not resolved
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDotenvAllowsSpecialCharacters()
 	{
@@ -220,6 +188,4 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('22222:22#2^{', getenv('SPVAR4'));
 		$this->assertEquals('test some escaped characters like a quote " or maybe a backslash \\', getenv('SPVAR5'));
 	}
-
-	//--------------------------------------------------------------------
 }

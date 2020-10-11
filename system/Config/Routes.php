@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -38,7 +39,7 @@
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-/**
+/*
  * System URI Routing
  *
  * This file contains any routing to system tools, such as command-line
@@ -48,7 +49,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
  * already loaded up and ready for us to use.
  */
 // Prevent access to BaseController
-$routes->add('basecontroller(:any)', function () {
+$routes->add('basecontroller(:any)', static function () {
 	throw PageNotFoundException::forPageNotFound();
 });
 
@@ -61,6 +62,6 @@ $routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
 
 // Prevent access to initController method
-$routes->add('(:any)/initController', function () {
+$routes->add('(:any)/initController', static function () {
 	throw PageNotFoundException::forPageNotFound();
 });

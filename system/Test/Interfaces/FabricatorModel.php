@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -59,9 +60,9 @@ interface FabricatorModel
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array|null $id One primary key or an array of primary keys
+	 * @param array|mixed|null $id One primary key or an array of primary keys
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|object|null the resulting row of data, or null
 	 */
 	public function find($id = null);
 
@@ -70,14 +71,15 @@ interface FabricatorModel
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object $data
-	 * @param boolean      $returnID Whether insert ID should be returned or not.
+	 * @param bool         $returnID whether insert ID should be returned or not
 	 *
-	 * @return integer|string|boolean
 	 * @throws ReflectionException
+	 *
+	 * @return bool|int|string
 	 */
 	public function insert($data = null, bool $returnID = true);
 
-	/**
+	/*
 	 * The following properties and methods are optional, but if present should
 	 * adhere to their definitions.
 	 *
@@ -99,7 +101,7 @@ interface FabricatorModel
 	 */
 	// public function withDeleted($val = true);
 
-	/**
+	/*
 	 * Faked data for Fabricator.
 	 *
 	 * @param Generator $faker

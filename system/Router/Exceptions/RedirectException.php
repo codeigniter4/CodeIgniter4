@@ -49,7 +49,7 @@ class RedirectException extends Exception
 	/**
 	 * Status code for redirects
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $code = 302;
 }

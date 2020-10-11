@@ -1,15 +1,16 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 
-class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class DownloadResponseTest extends CIUnitTestCase
 {
-
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		if (isset($_SERVER['HTTP_USER_AGENT']))
 		{
@@ -262,14 +263,12 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->sendBody();
 	}
 
-	//--------------------------------------------------------------------
 	public function testGetReason()
 	{
 		$response = new DownloadResponse('unit-test.php', false);
 		$this->assertEquals('OK', $response->getReason());
 	}
 
-	//--------------------------------------------------------------------
 	public function testPretendOutput()
 	{
 		$response = new DownloadResponse('unit-test.php', false);
@@ -285,7 +284,6 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame(file_get_contents(__FILE__), $actual);
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -301,6 +299,7 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->send();
 
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
@@ -310,5 +309,4 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Content-Length: ' . filesize(__FILE__));
 		$this->assertHeaderEmitted('Date:');
 	}
-
 }

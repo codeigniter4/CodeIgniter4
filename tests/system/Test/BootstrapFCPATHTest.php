@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 /**
  * Class BootstrapFCPATHTest
@@ -10,12 +12,13 @@
  * then compares its echo FCPATH; to the correct FCPATH returned
  * from correctFCPATH();
  */
-
-class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
+class BootstrapFCPATHTest extends CIUnitTestCase
 {
-	private $currentDir = __dir__;
-	private $dir1       = '/tmp/dir1';
-	private $file1      = '/tmp/dir1/testFile.php';
+	private $currentDir = __DIR__;
+
+	private $dir1 = '/tmp/dir1';
+
+	private $file1 = '/tmp/dir1/testFile.php';
 
 	protected function setUp(): void
 	{
@@ -26,7 +29,7 @@ class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->writeFiles();
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 		$this->deleteFiles();
@@ -37,45 +40,45 @@ class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$result1     = $this->readOutput($this->file1);
 		$correctPath = $this->correctFCPATH();
-		self::assertEquals($correctPath, $result1);
+		$this->assertEquals($correctPath, $result1);
 	}
 
 	private function correctFCPATH()
 	{
-		return realpath(__dir__ . '/../../../public') . DIRECTORY_SEPARATOR;
+		return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
 	}
 
-	private function buildDirectories() : void
+	private function buildDirectories(): void
 	{
-		mkdir( $this->dir1, 0777, true);
+		mkdir($this->dir1, 0777, true);
 	}
 
-	private function deleteDirectories() : void
+	private function deleteDirectories(): void
 	{
 		// these need to be executed in reverse order: dir 2 in inside dir1
 		if (is_dir($this->dir1))
 		{
-			rmdir( $this->dir1 );
+			rmdir($this->dir1);
 		}
 	}
 
-	private function writeFiles() : void
+	private function writeFiles(): void
 	{
-		file_put_contents( $this->file1, $this->fileContents());
+		file_put_contents($this->file1, $this->fileContents());
 		chmod($this->file1, 0777);
 	}
 
-	private function deleteFiles() : void
+	private function deleteFiles(): void
 	{
 		if (file_exists($this->file1))
 		{
-			unlink( $this->file1 );
+			unlink($this->file1);
 		}
 	}
 
 	private function fileContents()
 	{
-		$fileContents  = '';
+		$fileContents = '';
 		$fileContents .= '<?php' . PHP_EOL;
 		$fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . PHP_EOL;
 		$fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . PHP_EOL;
@@ -92,7 +95,7 @@ class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		ob_start();
 		system('php -f ' . $file);
+
 		return ob_get_clean();
 	}
-
 }

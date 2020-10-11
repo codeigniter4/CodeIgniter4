@@ -1,8 +1,11 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseConnectionTest extends CIUnitTestCase
 {
 	protected $options = [
 		'DSN'      => '',
@@ -42,8 +45,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'failover' => [],
 	];
 
-	//--------------------------------------------------------------------
-
 	public function testSavesConfigOptions()
 	{
 		$db = new MockConnection($this->options);
@@ -64,8 +65,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame([], $db->failover);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testConnectionThrowExceptionWhenCannotConnect()
 	{
 		$db = new MockConnection($this->options);
@@ -77,8 +76,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			->initialize();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanConnectAndStoreConnection()
 	{
 		$db = new MockConnection($this->options);
@@ -88,8 +85,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertSame(123, $db->getConnection());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
@@ -102,14 +97,11 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$db = new MockConnection($options);
 
-		$db->shouldReturn('connect', [false, 345])
-		   ->initialize();
+		$db->shouldReturn('connect', [false, 345])->initialize();
 
 		$this->assertSame(345, $db->getConnection());
 		$this->assertSame('failover', $db->username);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testStoresConnectionTimings()
 	{
@@ -123,16 +115,12 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThan(0.0, $db->getConnectDuration());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMagicIssetTrue()
 	{
 		$db = new MockConnection($this->options);
 
 		$this->assertTrue(isset($db->charset));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMagicIssetFalse()
 	{
@@ -141,16 +129,12 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse(isset($db->foobar));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMagicGet()
 	{
 		$db = new MockConnection($this->options);
 
 		$this->assertEquals('utf8', $db->charset);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMagicGetMissing()
 	{

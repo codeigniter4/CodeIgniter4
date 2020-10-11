@@ -38,16 +38,9 @@
  */
 
 use Config\App;
-
-/**
- * CodeIgniter Form Helpers
- *
- * @package CodeIgniter
- */
-
 use Config\Services;
 
-//--------------------------------------------------------------------
+// CodeIgniter Form Helpers
 
 if (! function_exists('form_open'))
 {
@@ -92,17 +85,17 @@ if (! function_exists('form_open'))
 		{
 			$attributes .= ' method="post"';
 		}
+
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config      = config(App::class);
+			$config = config(App::class);
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = Services::filters()
-						  ->getFilters()['before'];
+		$before = Services::filters()->getFilters()['before'];
 
 		if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{
@@ -120,8 +113,6 @@ if (! function_exists('form_open'))
 		return $form;
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_open_multipart'))
 {
@@ -151,8 +142,6 @@ if (! function_exists('form_open_multipart'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_hidden'))
 {
 	/**
@@ -161,9 +150,9 @@ if (! function_exists('form_hidden'))
 	 * Generates hidden fields. You can pass a simple key/value string or
 	 * an associative array with multiple values.
 	 *
-	 * @param string|array $name      Field name or associative array to create multiple fields
-	 * @param string|array $value     Field value
-	 * @param boolean      $recursing
+	 * @param array|string $name      Field name or associative array to create multiple fields
+	 * @param array|string $value     Field value
+	 * @param bool         $recursing
 	 *
 	 * @return string
 	 */
@@ -203,8 +192,6 @@ if (! function_exists('form_hidden'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_input'))
 {
 	/**
@@ -230,8 +217,6 @@ if (! function_exists('form_input'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_password'))
 {
 	/**
@@ -254,8 +239,6 @@ if (! function_exists('form_password'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_upload'))
 {
 	/**
@@ -271,7 +254,7 @@ if (! function_exists('form_upload'))
 	 */
 	function form_upload($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults                = [
+		$defaults = [
 			'type' => 'file',
 			'name' => '',
 		];
@@ -281,8 +264,6 @@ if (! function_exists('form_upload'))
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_textarea'))
 {
@@ -302,6 +283,7 @@ if (! function_exists('form_textarea'))
 			'cols' => '40',
 			'rows' => '10',
 		];
+
 		if (! is_array($data) || ! isset($data['value']))
 		{
 			$val = $value;
@@ -329,8 +311,6 @@ if (! function_exists('form_textarea'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_multiselect'))
 {
 	/**
@@ -356,8 +336,6 @@ if (! function_exists('form_multiselect'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_dropdown'))
 {
 	/**
@@ -373,6 +351,7 @@ if (! function_exists('form_dropdown'))
 	function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
 	{
 		$defaults = [];
+
 		if (is_array($data))
 		{
 			if (isset($data['selected']))
@@ -380,6 +359,7 @@ if (! function_exists('form_dropdown'))
 				$selected = $data['selected'];
 				unset($data['selected']); // select tags don't have a selected attribute
 			}
+
 			if (isset($data['options']))
 			{
 				$options = $data['options'];
@@ -392,7 +372,7 @@ if (! function_exists('form_dropdown'))
 		}
 
 		is_array($selected) || $selected = [$selected]; // @phpstan-ignore-line
-		is_array($options) || $options   = [$options]; // @phpstan-ignore-line
+		is_array($options)  || $options  = [$options]; // @phpstan-ignore-line
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -413,9 +393,11 @@ if (! function_exists('form_dropdown'))
 		$extra    = stringify_attributes($extra);
 		$multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
 		$form     = '<select ' . rtrim(parse_form_attributes($data, $defaults)) . $extra . $multiple . ">\n";
+
 		foreach ($options as $key => $val)
 		{
 			$key = (string) $key;
+
 			if (is_array($val))
 			{
 				if (empty($val))
@@ -423,9 +405,10 @@ if (! function_exists('form_dropdown'))
 					continue;
 				}
 				$form .= '<optgroup label="' . $key . "\">\n";
+
 				foreach ($val as $optgroupKey => $optgroupVal)
 				{
-					$sel   = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
+					$sel = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
 					$form .= '<option value="' . htmlspecialchars($optgroupKey) . '"' . $sel . '>'
 							. $optgroupVal . "</option>\n";
 				}
@@ -443,17 +426,15 @@ if (! function_exists('form_dropdown'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_checkbox'))
 {
 	/**
 	 * Checkbox Field
 	 *
-	 * @param mixed   $data
-	 * @param string  $value
-	 * @param boolean $checked
-	 * @param mixed   $extra
+	 * @param mixed  $data
+	 * @param string $value
+	 * @param bool   $checked
+	 * @param mixed  $extra
 	 *
 	 * @return string
 	 */
@@ -461,13 +442,14 @@ if (! function_exists('form_checkbox'))
 	{
 		$defaults = [
 			'type'  => 'checkbox',
-			'name'  => ( ! is_array($data) ? $data : ''),
+			'name'  => (! is_array($data) ? $data : ''),
 			'value' => $value,
 		];
 
 		if (is_array($data) && array_key_exists('checked', $data))
 		{
 			$checked = $data['checked'];
+
 			if ($checked === false)
 			{
 				unset($data['checked']);
@@ -494,17 +476,15 @@ if (! function_exists('form_checkbox'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_radio'))
 {
 	/**
 	 * Radio Button
 	 *
-	 * @param mixed   $data
-	 * @param string  $value
-	 * @param boolean $checked
-	 * @param mixed   $extra
+	 * @param mixed  $data
+	 * @param string $value
+	 * @param bool   $checked
+	 * @param mixed  $extra
 	 *
 	 * @return string
 	 */
@@ -516,8 +496,6 @@ if (! function_exists('form_radio'))
 		return form_checkbox($data, $value, $checked, $extra);
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_submit'))
 {
@@ -542,8 +520,6 @@ if (! function_exists('form_submit'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_reset'))
 {
 	/**
@@ -566,8 +542,6 @@ if (! function_exists('form_reset'))
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_button'))
 {
@@ -598,8 +572,6 @@ if (! function_exists('form_button'))
 				. "</button>\n";
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_label'))
 {
@@ -633,8 +605,6 @@ if (! function_exists('form_label'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_datalist'))
 {
 	/**
@@ -659,19 +629,17 @@ if (! function_exists('form_datalist'))
 			'value' => $value,
 		];
 
-		$out  = form_input($data) . "\n";
+		$out = form_input($data) . "\n";
 		$out .= "<datalist id='" . $name . '_list' . "'>";
 
 		foreach ($options as $option)
 		{
-			$out .= "<option value='$option'>" . "\n";
+			$out .= "<option value='{$option}'>" . "\n";
 		}
 
 		return $out . ('</datalist>' . "\n");
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_fieldset'))
 {
@@ -699,8 +667,6 @@ if (! function_exists('form_fieldset'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_fieldset_close'))
 {
 	/**
@@ -715,8 +681,6 @@ if (! function_exists('form_fieldset_close'))
 		return '</fieldset>' . $extra;
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_close'))
 {
@@ -733,8 +697,6 @@ if (! function_exists('form_close'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('set_value'))
 {
 	/**
@@ -743,9 +705,9 @@ if (! function_exists('set_value'))
 	 * Grabs a value from the POST array for the specified field so you can
 	 * re-populate an input field or textarea
 	 *
-	 * @param string  $field      Field name
-	 * @param string  $default    Default value
-	 * @param boolean $htmlEscape Whether to escape HTML special characters or not
+	 * @param string $field      Field name
+	 * @param string $default    Default value
+	 * @param bool   $htmlEscape Whether to escape HTML special characters or not
 	 *
 	 * @return string
 	 */
@@ -765,8 +727,6 @@ if (! function_exists('set_value'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('set_select'))
 {
 	/**
@@ -775,9 +735,9 @@ if (! function_exists('set_select'))
 	 * Let's you set the selected value of a <select> menu via data in the POST array.
 	 * If Form Validation is active it retrieves the info from the validation class
 	 *
-	 * @param string  $field
-	 * @param string  $value
-	 * @param boolean $default
+	 * @param string $field
+	 * @param string $value
+	 * @param bool   $default
 	 *
 	 * @return string
 	 */
@@ -816,8 +776,6 @@ if (! function_exists('set_select'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('set_checkbox'))
 {
 	/**
@@ -826,9 +784,9 @@ if (! function_exists('set_checkbox'))
 	 * Let's you set the selected value of a checkbox via the value in the POST array.
 	 * If Form Validation is active it retrieves the info from the validation class
 	 *
-	 * @param string  $field
-	 * @param string  $value
-	 * @param boolean $default
+	 * @param string $field
+	 * @param string $value
+	 * @param bool   $default
 	 *
 	 * @return string
 	 */
@@ -868,8 +826,6 @@ if (! function_exists('set_checkbox'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('set_radio'))
 {
 	/**
@@ -878,9 +834,9 @@ if (! function_exists('set_radio'))
 	 * Let's you set the selected value of a radio field via info in the POST array.
 	 * If Form Validation is active it retrieves the info from the validation class
 	 *
-	 * @param string  $field
-	 * @param string  $value
-	 * @param boolean $default
+	 * @param string $field
+	 * @param string $value
+	 * @param bool   $default
 	 *
 	 * @return string
 	 */
@@ -890,6 +846,7 @@ if (! function_exists('set_radio'))
 
 		// Try any old input data we may have first
 		$input = $request->getOldInput($field);
+
 		if ($input === null)
 		{
 			$input = $request->getPost($field) ?? $default;
@@ -911,6 +868,7 @@ if (! function_exists('set_radio'))
 
 		// Unchecked checkbox and radio inputs are not even submitted by browsers ...
 		$result = '';
+
 		if ((string) $input === '0' || ! empty($input = $request->getPost($field)) || ! empty($input = old($field)))
 		{
 			$result = ($input === $value) ? ' checked="checked"' : '';
@@ -920,11 +878,10 @@ if (! function_exists('set_radio'))
 		{
 			$result = ($default === true) ? ' checked="checked"' : '';
 		}
+
 		return $result;
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('parse_form_attributes'))
 {
@@ -933,7 +890,7 @@ if (! function_exists('parse_form_attributes'))
 	 *
 	 * Helper function used by some of the form helpers
 	 *
-	 * @param string|array $attributes List of attributes
+	 * @param array|string $attributes List of attributes
 	 * @param array        $default    Default values
 	 *
 	 * @return string
@@ -950,6 +907,7 @@ if (! function_exists('parse_form_attributes'))
 					unset($attributes[$key]);
 				}
 			}
+
 			if (! empty($attributes))
 			{
 				$default = array_merge($default, $attributes);
@@ -980,6 +938,4 @@ if (! function_exists('parse_form_attributes'))
 
 		return $att;
 	}
-
-	//--------------------------------------------------------------------
 }

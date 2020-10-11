@@ -31,25 +31,22 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 1.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
-/**
- * CodeIgniter XML Helpers
- *
- * @package CodeIgniter
- */
+// CodeIgniter XML Helpers
 
 if (! function_exists('xml_convert'))
 {
 	/**
 	 * Convert Reserved XML characters to Entities
 	 *
-	 * @param  string  $str
-	 * @param  boolean $protectAll
+	 * @param string $str
+	 * @param bool   $protectAll
+	 *
 	 * @return string
 	 */
 	function xml_convert(string $str, bool $protectAll = false): string

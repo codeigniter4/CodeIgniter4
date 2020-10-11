@@ -1,26 +1,27 @@
 <?php
 
-use CodeIgniter\View\View;
+namespace CodeIgniter\View;
 
-class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
+use RuntimeException;
+
+class ViewTest extends CIUnitTestCase
 {
-
 	protected $loader;
-	protected $viewsDir;
-	protected $config;
 
-	//--------------------------------------------------------------------
+	protected $viewsDir;
+
+	protected $config;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->loader   = \CodeIgniter\Config\Services::locator();
+		$this->loader   = Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
+		$this->config   = new \Config\View();
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetVarStoresData()
 	{
@@ -40,8 +41,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(['foo' => 'baz'], $view->getData());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetDataStoresValue()
 	{
@@ -94,8 +93,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $view->getData());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetVarWillEscape()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -122,8 +119,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $view->getData());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRenderFindsView()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -133,8 +128,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString($expected, $view->render('simple'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRenderString()
 	{
@@ -152,8 +145,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('test string', $view->renderString('test string'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRendersThrowsExceptionIfFileNotFound()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -164,8 +155,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$view->render('missing');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRenderScrapsData()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -175,8 +164,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEmpty($view->getData());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRenderCanSaveData()
 	{
@@ -204,8 +191,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $view->getData());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanDeleteData()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -218,8 +203,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], $view->getData());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCachedRender()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
@@ -231,8 +214,6 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		// this second renderings should go thru the cache
 		$this->assertStringContainsString($expected, $view->render('simple', ['cache' => 10]));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRenderStringSavingData()
 	{
@@ -249,30 +230,28 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('testString', $view->getData());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPerformanceLogging()
 	{
 		// Make sure debugging is on for our view
 		$view = new View($this->config, $this->viewsDir, $this->loader, true);
-		$this->assertEquals(0, count($view->getPerformanceData()));
+		$this->assertCount(0, $view->getPerformanceData());
 
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
 		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertEquals(1, count($view->getPerformanceData()));
+		$this->assertCount(1, $view->getPerformanceData());
 	}
 
 	public function testPerformanceNonLogging()
 	{
 		// Make sure debugging is on for our view
 		$view = new View($this->config, $this->viewsDir, $this->loader, false);
-		$this->assertEquals(0, count($view->getPerformanceData()));
+		$this->assertCount(0, $view->getPerformanceData());
 
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
 		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertEquals(0, count($view->getPerformanceData()));
+		$this->assertCount(0, $view->getPerformanceData());
 	}
 
 	public function testRenderLayoutExtendsCorrectly()
@@ -326,9 +305,9 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$content = $view->render('extend_include');
 
-		$this->assertTrue(strpos($content, '<p>Open</p>') !== false);
-		$this->assertTrue(strpos($content, '<h1>Hello World</h1>') !== false);
-		$this->assertEquals(2, substr_count($content, 'Hello World'));
+		$this->assertTrue(mb_strpos($content, '<p>Open</p>') !== false);
+		$this->assertTrue(mb_strpos($content, '<h1>Hello World</h1>') !== false);
+		$this->assertEquals(2, mb_substr_count($content, 'Hello World'));
 	}
 
 	public function testRenderLayoutBroken()
@@ -338,7 +317,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$view->setVar('testString', 'Hello World');
 		$expected = '';
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$this->assertStringContainsString($expected, $view->render('broken'));
 	}
 
@@ -358,7 +337,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->setPrivateProperty($view, 'saveData', true);
 		$view->setVar('testString', 'test');
 		$view->render('simple', null, false);
-		$this->assertEquals(true, $this->getPrivateProperty($view, 'saveData'));
+		$this->assertTrue($this->getPrivateProperty($view, 'saveData'));
 	}
 
 	public function testRenderSaveDataUseAflterSaveDataFalse()

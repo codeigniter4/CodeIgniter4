@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -50,18 +51,15 @@ use stdClass;
  */
 class Result extends BaseResult implements ResultInterface
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getFieldCount(): int
 	{
 		return $this->resultID->numColumns(); // @phpstan-ignore-line
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of column names in the result set.
@@ -71,15 +69,14 @@ class Result extends BaseResult implements ResultInterface
 	public function getFieldNames(): array
 	{
 		$fieldNames = [];
-		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
+
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++)
 		{
 			$fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
 		}
 
 		return $fieldNames;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates an array of objects representing field meta-data.
@@ -99,13 +96,13 @@ class Result extends BaseResult implements ResultInterface
 		$retVal = [];
 		$this->resultID->fetchArray(SQLITE3_NUM); // @phpstan-ignore-line
 
-		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++)
 		{
 			$retVal[$i]             = new stdClass();
-			$retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
+			$retVal[$i]->name       = $this->resultID->columnName($i); /** @phpstan-ignore-line */
 			$type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
 			$retVal[$i]->type       = $type;
-			$retVal[$i]->type_name  = isset($dataTypes[$type]) ? $dataTypes[$type] : null;
+			$retVal[$i]->type_name  = $dataTypes[$type] ?? null;
 			$retVal[$i]->max_length = null;
 			$retVal[$i]->length     = null;
 		}
@@ -113,8 +110,6 @@ class Result extends BaseResult implements ResultInterface
 
 		return $retVal;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Frees the current result.
@@ -130,17 +125,16 @@ class Result extends BaseResult implements ResultInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Moves the internal pointer to the desired offset. This is called
 	 * internally before fetching results to make sure the result set
 	 * starts at zero.
 	 *
-	 * @param integer $n
+	 * @param int $n
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return mixed
-	 * @throws DatabaseException
 	 */
 	public function dataSeek(int $n = 0)
 	{
@@ -151,8 +145,6 @@ class Result extends BaseResult implements ResultInterface
 
 		return $this->resultID->reset(); // @phpstan-ignore-line
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result set as an array.
@@ -166,8 +158,6 @@ class Result extends BaseResult implements ResultInterface
 		return $this->resultID->fetchArray(SQLITE3_ASSOC); // @phpstan-ignore-line
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result set as an object.
 	 *
@@ -175,7 +165,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object|boolean
+	 * @return bool|object
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
@@ -197,16 +187,19 @@ class Result extends BaseResult implements ResultInterface
 			return $classObj->setAttributes($row);
 		}
 
-		$classSet = Closure::bind(function ($key, $value) {
-			$this->$key = $value;
-		}, $classObj, $className
+		$classSet = Closure::bind(
+			function ($key, $value) {
+				$this->{$key} = $value;
+			},
+			$classObj,
+			$className
 		);
+
 		foreach (array_keys($row) as $key)
 		{
 			$classSet($key, $row[$key]);
 		}
+
 		return $classObj;
 	}
-
-	//--------------------------------------------------------------------
 }

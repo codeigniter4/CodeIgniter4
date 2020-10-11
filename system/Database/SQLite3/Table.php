@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -48,8 +49,6 @@ use CodeIgniter\Database\Exceptions\DataException;
  * These are needed in order to support migrations during testing
  * when another database is used as the primary engine, but
  * SQLite in memory databases are used for faster test execution.
- *
- * @package CodeIgniter\Database\SQLite3
  */
 class Table
 {
@@ -130,6 +129,7 @@ class Table
 		// Remove the prefix, if any, since it's
 		// already been added by the time we get here...
 		$prefix = $this->db->DBPrefix; // @phpstan-ignore-line
+
 		if (! empty($prefix))
 		{
 			if (strpos($table, $prefix) === 0)
@@ -160,7 +160,7 @@ class Table
 	 * table with modifications, and copies the data over to the new table.
 	 * Resets the connection dataCache to be sure changes are collected.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function run(): bool
 	{
@@ -190,7 +190,7 @@ class Table
 	/**
 	 * Drops columns from the table.
 	 *
-	 * @param string|array $columns
+	 * @param array|string $columns
 	 *
 	 * @return Table
 	 */
@@ -206,6 +206,7 @@ class Table
 		foreach ($columns as $column)
 		{
 			$column = trim($column);
+
 			if (isset($this->fields[$column]))
 			{
 				unset($this->fields[$column]);
@@ -281,11 +282,13 @@ class Table
 
 		// Handle any modified columns.
 		$fields = [];
+
 		foreach ($this->fields as $name => $field)
 		{
 			if (isset($field['new_name']))
 			{
 				$fields[$field['new_name']] = $field;
+
 				continue;
 			}
 
@@ -303,19 +306,21 @@ class Table
 				{
 					case 'primary':
 						$this->forge->addPrimaryKey($key['fields']);
+
 						break;
 					case 'unique':
 						$this->forge->addUniqueKey($key['fields']);
+
 						break;
 					case 'index':
 						$this->forge->addKey($key['fields']);
+
 						break;
 				}
 			}
 		}
 
 		// Foreign Keys
-
 		return $this->forge->createTable($this->tableName);
 	}
 
@@ -357,7 +362,7 @@ class Table
 	 * Converts fields retrieved from the database to
 	 * the format needed for creating fields with Forge.
 	 *
-	 * @param array|boolean $fields
+	 * @param array|bool $fields
 	 *
 	 * @return mixed
 	 */
@@ -422,7 +427,7 @@ class Table
 	 * Attempts to drop all indexes and constraints
 	 * from the database for this table.
 	 *
-	 * @return null|void
+	 * @return void|null
 	 */
 	protected function dropIndexes()
 	{

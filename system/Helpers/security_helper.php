@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -39,11 +39,7 @@
 
 use Config\Services;
 
-/**
- * CodeIgniter Security Helpers
- *
- * @package CodeIgniter
- */
+// CodeIgniter Security Helpers
 
 if (! function_exists('sanitize_filename'))
 {
@@ -60,8 +56,6 @@ if (! function_exists('sanitize_filename'))
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('strip_image_tags'))
 {
 	/**
@@ -73,15 +67,16 @@ if (! function_exists('strip_image_tags'))
 	 */
 	function strip_image_tags(string $str): string
 	{
-		return preg_replace([
-			'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
-			'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
-		], '\\2', $str
+		return preg_replace(
+			[
+				'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
+				'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
+			],
+			'\\2',
+			$str
 		);
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('encode_php_tags'))
 {
@@ -97,5 +92,3 @@ if (! function_exists('encode_php_tags'))
 		return str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
 	}
 }
-
-//--------------------------------------------------------------------

@@ -49,7 +49,6 @@ use SessionHandlerInterface;
  */
 class FileHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * Where to save the session files to.
 	 *
@@ -74,14 +73,14 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	/**
 	 * Whether this is a new file.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $fileNew;
 
 	/**
 	 * Whether IP addresses should be matched.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $matchIP = false;
 
@@ -91,8 +90,6 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 * @var string
 	 */
 	protected $sessionIDRegex = '';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -126,8 +123,6 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		$this->configureSessionIDRegex();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Open
 	 *
@@ -136,8 +131,9 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $savePath Path to session files' directory
 	 * @param string $name     Session cookie name
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function open($savePath, $name): bool
 	{
@@ -161,8 +157,6 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Read
 	 *
@@ -170,7 +164,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string|boolean    Serialized session data
+	 * @return bool|string Serialized session data
 	 */
 	public function read($sessionID)
 	{
@@ -197,7 +191,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 			}
 
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID)) // @phpstan-ignore-line
+			if ($this->sessionID === null)
 			{
 				$this->sessionID = $sessionID;
 			}
@@ -217,6 +211,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 
 		$sessionData = '';
 		clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
+
 		for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
 			if (($buffer = fread($this->fileHandle, $length - $read)) === false)
@@ -232,8 +227,6 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return $sessionData;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Write
 	 *
@@ -242,7 +235,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 * @param string $sessionID   Session ID
 	 * @param string $sessionData Serialized session data
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function write($sessionID, $sessionData): bool
 	{
@@ -278,7 +271,8 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 				}
 			}
 
-			if (! is_int($result)) // @phpstan-ignore-line
+			// @phpstan-ignore-next-line
+			if (! is_int($result))
 			{
 				$this->fingerprint = md5(substr($sessionData, 0, $written));
 				$this->logger->error('Session: Unable to write data.');
@@ -292,14 +286,12 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close
 	 *
 	 * Releases locks and closes file descriptor.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function close(): bool
 	{
@@ -317,8 +309,6 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Destroy
 	 *
@@ -326,7 +316,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionId Session ID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function destroy($sessionId): bool
 	{
@@ -347,16 +337,14 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Garbage Collector
 	 *
 	 * Deletes expired sessions
 	 *
-	 * @param integer $maxlifetime Maximum lifetime of sessions
+	 * @param int $maxlifetime Maximum lifetime of sessions
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function gc($maxlifetime): bool
 	{
@@ -385,8 +373,7 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 				|| ! is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
 				|| ($mtime = filemtime($this->savePath . DIRECTORY_SEPARATOR . $file)) === false
 				|| $mtime > $ts
-			)
-			{
+			) {
 				continue;
 			}
 
@@ -398,20 +385,18 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Configure Session ID regular expression
 	 */
 	protected function configureSessionIDRegex()
 	{
-		$bitsPerCharacter = (int)ini_get('session.sid_bits_per_character');
-		$SIDLength        = (int)ini_get('session.sid_length');
+		$bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
+		$SIDLength        = (int) ini_get('session.sid_length');
 
 		if (($bits = $SIDLength * $bitsPerCharacter) < 160)
 		{
 			// Add as many more characters as necessary to reach at least 160 bits
-			$SIDLength += (int)ceil((160 % $bits) / $bitsPerCharacter);
+			$SIDLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
 			ini_set('session.sid_length', (string) $SIDLength);
 		}
 
@@ -420,12 +405,15 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 		{
 			case 4:
 				$this->sessionIDRegex = '[0-9a-f]';
+
 				break;
 			case 5:
 				$this->sessionIDRegex = '[0-9a-v]';
+
 				break;
 			case 6:
 				$this->sessionIDRegex = '[0-9a-zA-Z,-]';
+
 				break;
 		}
 

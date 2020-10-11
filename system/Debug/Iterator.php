@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -45,7 +46,6 @@ use Closure;
  */
 class Iterator
 {
-
 	/**
 	 * Stores the tests that we are to run.
 	 *
@@ -59,8 +59,6 @@ class Iterator
 	 * @var array
 	 */
 	protected $results = [];
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Adds a test to run.
@@ -82,15 +80,13 @@ class Iterator
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Runs through all of the tests that have been added, recording
 	 * time to execute the desired number of iterations, and the approximate
 	 * memory usage used during those iterations.
 	 *
-	 * @param integer $iterations
-	 * @param boolean $output
+	 * @param int  $iterations
+	 * @param bool $output
 	 *
 	 * @return string|null
 	 */
@@ -104,7 +100,7 @@ class Iterator
 			$start    = microtime(true);
 			$startMem = $maxMemory = memory_get_usage(true);
 
-			for ($i = 0; $i < $iterations; $i ++)
+			for ($i = 0; $i < $iterations; $i++)
 			{
 				$result = $test();
 
@@ -127,8 +123,6 @@ class Iterator
 
 		return null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get results.
@@ -175,7 +169,4 @@ class Iterator
 
 		return $tpl . '<br/>';
 	}
-
-	//--------------------------------------------------------------------
-
 }

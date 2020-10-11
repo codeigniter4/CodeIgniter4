@@ -35,10 +35,6 @@
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
- *
- * This filter is not intended to be used from the command line.
- *
- * @codeCoverageIgnore
  */
 
 namespace CodeIgniter\Filters;
@@ -58,7 +54,6 @@ use Config\Services;
  */
 class CSRF implements FilterInterface
 {
-
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during
@@ -69,11 +64,12 @@ class CSRF implements FilterInterface
 	 * sent back to the client, allowing for error pages,
 	 * redirects, etc.
 	 *
-	 * @param RequestInterface|IncomingRequest $request
+	 * @param IncomingRequest|RequestInterface $request
 	 * @param array|null                       $arguments
 	 *
-	 * @return mixed
 	 * @throws SecurityException
+	 *
+	 * @return mixed
 	 */
 	public function before(RequestInterface $request, $arguments = null)
 	{
@@ -99,13 +95,11 @@ class CSRF implements FilterInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * We don't have anything to do here.
 	 *
-	 * @param RequestInterface|IncomingRequest             $request
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param IncomingRequest|RequestInterface             $request
+	 * @param \CodeIgniter\HTTP\Response|ResponseInterface $response
 	 * @param array|null                                   $arguments
 	 *
 	 * @return mixed
@@ -113,6 +107,4 @@ class CSRF implements FilterInterface
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 	}
-
-	//--------------------------------------------------------------------
 }

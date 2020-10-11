@@ -1,17 +1,18 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class IncomingRequestTest extends CIUnitTestCase
 {
-
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -23,8 +24,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanGrabRequestVars()
 	{
@@ -58,8 +57,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(5, $this->request->getPostGet('TEST'));
 		$this->assertEquals(3, $this->request->getGetPost('TEST'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNoOldInput()
 	{
@@ -98,7 +95,9 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->request->getOldInput('pineapple.name'));
 	}
 
-	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	 */
 	public function testCanGetOldInputArray()
 	{
 		$_SESSION['_ci_old_input'] = [
@@ -110,8 +109,8 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['name' => 'foo'], $this->request->getOldInput('banana'));
 	}
 
-	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
 	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
@@ -122,13 +121,11 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'BC' => 'British Columbia',
 			'SK' => 'Saskatchewan',
 		];
-		$session   = service('session');
+		$session = service('session');
 		$session->set(['_ci_old_input' => ['post' => ['location' => $locations]]]);
 
 		$this->assertEquals($locations, $this->request->getOldInput('location'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanGrabServerVars()
 	{
@@ -158,8 +155,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->request->getCookie('TESTY'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStoresDefaultLocale()
 	{
 		$config = new App();
@@ -175,8 +170,8 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'en',
 			'es',
 		];
-		$config->defaultLocale    = 'es';
-		$config->baseURL          = 'http://example.com/';
+		$config->defaultLocale = 'es';
+		$config->baseURL       = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -191,16 +186,14 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'en',
 			'es',
 		];
-		$config->defaultLocale    = 'es';
-		$config->baseURL          = 'http://example.com/';
+		$config->defaultLocale = 'es';
+		$config->baseURL       = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
 		$request->setLocale('xx');
 		$this->assertEquals('es', $request->getLocale());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
@@ -215,7 +208,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'fr',
 			'en',
 		];
-		$config->baseURL          = 'http://example.com/';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -233,7 +226,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'fr',
 			'en',
 		];
-		$config->baseURL          = 'http://example.com/';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -258,7 +251,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		//      $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
 		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-		$this->assertEquals(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
+		$this->assertEquals(mb_strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
 	}
 
 	public function testNegotiatesMedia()
@@ -278,8 +271,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
 		$this->assertEquals('en', $this->request->negotiate('language', ['en', 'da']));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanGrabGetRawJSON()
 	{
@@ -316,8 +307,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $request->getRawInput());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testIsCLI()
 	{
 		// this should be the case in unit testing
@@ -329,8 +318,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request->appendHeader('X-Requested-With', 'XMLHttpRequest');
 		$this->assertTrue($this->request->isAJAX());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testIsSecure()
 	{
@@ -350,8 +337,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($this->request->isSecure());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUserAgent()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
@@ -359,8 +344,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request                    = new IncomingRequest($config, new URI(), null, new UserAgent());
 		$this->assertEquals('Mozilla', $request->getUserAgent());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testFileCollectionFactory()
 	{
@@ -384,21 +367,19 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFileMultiple()
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     => [
+				'name' => [
 					'someFile.txt',
 					'someFile2.txt',
 				],
-				'type'     => [
+				'type' => [
 					'text/plain',
 					'text/plain',
 				],
-				'size'     => [
+				'size' => [
 					'124',
 					'125',
 				],
@@ -406,7 +387,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 					'/tmp/myTempFile.txt',
 					'/tmp/myTempFile2.txt',
 				],
-				'error'    => [
+				'error' => [
 					0,
 					0,
 				],
@@ -417,8 +398,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(124, $gotit[0]->getSize());
 		$this->assertEquals(125, $gotit[1]->getSize());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFile()
 	{
@@ -435,8 +414,6 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$gotit = $this->request->getFile('userfile');
 		$this->assertEquals(124, $gotit->getSize());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSpoofing()
 	{

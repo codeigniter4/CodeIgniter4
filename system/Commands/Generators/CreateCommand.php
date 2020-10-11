@@ -86,7 +86,7 @@ class CreateCommand extends GeneratorCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -101,7 +101,7 @@ class CreateCommand extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
@@ -109,7 +109,7 @@ class CreateCommand extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getTemplate(): string
 	{
@@ -119,14 +119,14 @@ class CreateCommand extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function setReplacements(string $template, string $class): string
 	{
 		// Get options
 		$commandName  = $this->params['command'] ?? CLI::getOption('command');
-		$commandGroup = $this->params['group'] ?? CLI::getOption('group');
-		$commandType  = $this->params['type'] ?? CLI::getOption('type');
+		$commandGroup = $this->params['group']   ?? CLI::getOption('group');
+		$commandType  = $this->params['type']    ?? CLI::getOption('type');
 
 		// Resolve options
 		if (! is_string($commandName))
@@ -167,19 +167,21 @@ class CreateCommand extends GeneratorCommand
 		// Do the replacements
 		$template = parent::setReplacements($template, $class);
 
-		return str_replace([
-			'{useStatement}',
-			'{extends}',
-			'{commandGroup}',
-			'{commandName}',
-			'{commandAbstractMethodsToImplement}',
-		], [
-			$useStatement,
-			$extends,
-			$commandGroup,
-			$commandName,
-			$commandAbstractMethodsToImplement,
-		],
+		return str_replace(
+			[
+				'{useStatement}',
+				'{extends}',
+				'{commandGroup}',
+				'{commandName}',
+				'{commandAbstractMethodsToImplement}',
+			],
+			[
+				$useStatement,
+				$extends,
+				$commandGroup,
+				$commandName,
+				$commandAbstractMethodsToImplement,
+			],
 			$template
 		);
 	}
@@ -188,6 +190,7 @@ class CreateCommand extends GeneratorCommand
 	 * Gets the proper class property for group name.
 	 *
 	 * @param string $type
+	 * @param string $group
 	 *
 	 * @return string
 	 */

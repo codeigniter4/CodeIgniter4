@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -18,14 +20,10 @@ class EmptyTest extends CIDatabaseTestCase
 		$this->assertEquals(0, $this->db->table('misc')->countAll());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testTruncate()
 	{
 		$this->db->table('misc')->truncate();
 
 		$this->assertEquals(0, $this->db->table('misc')->countAll());
 	}
-
-	//--------------------------------------------------------------------
 }

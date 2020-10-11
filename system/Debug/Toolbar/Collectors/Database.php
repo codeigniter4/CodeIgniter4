@@ -46,25 +46,24 @@ use CodeIgniter\Database\Query;
  */
 class Database extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has timeline data.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = true;
 
 	/**
 	 * Whether this collector should display its own tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
 	/**
 	 * Whether this collector has data for the Vars tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasVarData = false;
 
@@ -90,8 +89,6 @@ class Database extends BaseCollector
 	 */
 	protected static $queries = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 */
@@ -99,8 +96,6 @@ class Database extends BaseCollector
 	{
 		$this->connections = \Config\Database::getConnections();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * The static method used during Events to collect
@@ -123,12 +118,10 @@ class Database extends BaseCollector
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns timeline data formatted for the toolbar.
 	 *
-	 * @return array The formatted data or an empty array.
+	 * @return array The formatted data or an empty array
 	 */
 	protected function formatTimelineData(): array
 	{
@@ -157,8 +150,6 @@ class Database extends BaseCollector
 
 		return $data;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
@@ -224,24 +215,20 @@ class Database extends BaseCollector
 		return $data;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getBadgeValue(): int
 	{
 		return count(static::$queries);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Information to be displayed next to the title.
 	 *
-	 * @return string The number of queries (in parentheses) or an empty string.
+	 * @return string the number of queries (in parentheses) or an empty string
 	 */
 	public function getTitleDetails(): string
 	{
@@ -249,19 +236,15 @@ class Database extends BaseCollector
 				($countConnection > 1 ? 's' : '') . ')';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this collector have any data collected?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isEmpty(): bool
 	{
 		return empty(static::$queries);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Display the icon.
@@ -274,5 +257,4 @@ class Database extends BaseCollector
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
 	}
-
 }

@@ -2,18 +2,18 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
+class NegotiateTest extends CIUnitTestCase
 {
-
 	/**
-	 * @var CodeIgniter\HTTP\Request
+	 * @var Request
 	 */
 	protected $request;
 
 	/**
-	 * @var \CodeIgniter\HTTP\Negotiate
+	 * @var Negotiate
 	 */
 	protected $negotiate;
 
@@ -26,15 +26,11 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->negotiate = new Negotiate($this->request);
 	}
 
-	//--------------------------------------------------------------------
-
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
-		$this->request = $this->negotiate = null;
-		unset($this->request, $this->negotiate);
+		$this->request   = null;
+		$this->negotiate = null;
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNegotiateMediaFindsHighestMatch()
 	{
@@ -50,8 +46,6 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/md', $this->negotiate->media(['text/md']));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testParseHeaderDeterminesCorrectPrecedence()
 	{
 		$header = $this->negotiate->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
@@ -62,16 +56,12 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('*/*', $header[3]['value']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNegotiateMediaReturnsSupportedMatchWhenAsterisksInAvailable()
 	{
 		$this->request->setHeader('Accept', 'image/*, text/*');
 
 		$this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNegotiateMediaRecognizesMediaTypes()
 	{
@@ -81,8 +71,6 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNegotiateMediaSupportsStrictMatching()
 	{
 		// Image has a higher specificity, but is the wrong type...
@@ -91,8 +79,6 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
 		$this->assertEquals('', $this->negotiate->media(['text/plain'], true));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group single
@@ -108,14 +94,10 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('utf-8', $this->negotiate->charset(['iso-8859', 'unicode-1-2']));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testNegotiateEncodingReturnsFirstIfNoAcceptHeaderExists()
 	{
 		$this->assertEquals('compress', $this->negotiate->encoding(['compress', 'gzip']));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNegotiatesEncodingBasics()
 	{
@@ -126,8 +108,6 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('identity', $this->negotiate->encoding());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAcceptLanguageBasics()
 	{
 		$this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
@@ -136,8 +116,6 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('en-gb', $this->negotiate->language(['en-gb', 'en']));
 		$this->assertEquals('en', $this->negotiate->language(['en']));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
@@ -196,5 +174,4 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('popcorn/cheddar;a=2', $this->negotiate->media(['popcorn/cheddar;a=2'], false));
 		$this->assertEquals('popcorn/cheddar;a=0', $this->negotiate->media(['popcorn/cheddar;a=0', 'popcorn/cheddar;a=2;b=1'], false));
 	}
-
 }

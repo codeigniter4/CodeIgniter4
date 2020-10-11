@@ -97,20 +97,16 @@ class CreateScaffold extends BaseCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function run(array $params)
 	{
 		// Resolve options
 		$bare       = array_key_exists('bare', $params) || CLI::getOption('bare');
-		$rest       = array_key_exists('restful', $params)
-						? ($params['restful'] ?? true)
-						: CLI::getOption('restful');
-		$group      = array_key_exists('dbgroup', $params)
-						? ($params['dbgroup'] ?? 'default')
-						: CLI::getOption('dbgroup');
+		$rest       = array_key_exists('restful', $params) ? ($params['restful'] ?? true) : CLI::getOption('restful');
+		$group      = array_key_exists('dbgroup', $params) ? ($params['dbgroup'] ?? 'default') : CLI::getOption('dbgroup');
 		$tableModel = $params['table'] ?? CLI::getOption('table');
-		$namespace  = $params['n'] ?? CLI::getOption('n');
+		$namespace  = $params['n']     ?? CLI::getOption('n');
 		$force      = array_key_exists('force', $params) || CLI::getOption('force');
 
 		// Sets additional options

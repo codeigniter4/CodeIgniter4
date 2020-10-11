@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Commands;
+<?php
+
+namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -16,12 +18,12 @@ class SessionsCommandsTest extends CIUnitTestCase
 		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		stream_filter_remove($this->streamFilter);
 
 		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-		$file   = trim(substr($result, 14));
+		$file   = trim(mb_substr($result, 14));
 		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
 		file_exists($file) && unlink($file);
 	}
@@ -62,5 +64,4 @@ class SessionsCommandsTest extends CIUnitTestCase
 
 		chmod(APPPATH . 'Database/Migrations', 0755);
 	}
-
 }

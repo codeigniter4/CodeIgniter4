@@ -1,9 +1,9 @@
 <?php
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureResponse;
 use Config\App;
 use Config\Services;
 
@@ -347,7 +347,7 @@ class FeatureResponseTest extends CIUnitTestCase
 
 			if (method_exists($this->response, $method))
 			{
-				$this->response = $this->response->$method($value);
+				$this->response = $this->response->{$method}($value);
 			}
 		}
 

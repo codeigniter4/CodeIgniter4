@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\ModelFactory;
-use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -28,8 +31,6 @@ class FabricatorTest extends CIUnitTestCase
 		Fabricator::resetCounts();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testConstructorWithString()
 	{
 		$fabricator = new Fabricator(UserModel::class);
@@ -48,10 +49,10 @@ class FabricatorTest extends CIUnitTestCase
 
 	public function testConstructorWithInvalid()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
-		$fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
+		new Fabricator('SillyRabbit\Models\AreForKids');
 	}
 
 	public function testConstructorSetsFormatters()
@@ -84,8 +85,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($locale, $fabricator->getLocale());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testModelUsesNewInstance()
 	{
 		// Inject the wrong model for UserModel to show it is ignored by Fabricator
@@ -114,8 +113,6 @@ class FabricatorTest extends CIUnitTestCase
 
 		$this->assertIsNumeric($faker->randomDigit);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetFormattersChangesFormatters()
 	{
@@ -149,8 +146,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($this->formatters, $fabricator->getFormatters());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetOverridesSets()
 	{
 		$overrides  = ['name' => 'Steve'];
@@ -182,8 +177,6 @@ class FabricatorTest extends CIUnitTestCase
 
 		$this->assertEquals([], $fabricator->getOverrides());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGuessFormattersReturnsActual()
 	{
@@ -245,8 +238,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($fabricator->defaultFormatter, $formatter);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMakeArrayReturnsArray()
 	{
 		$fabricator = new Fabricator(UserModel::class, $this->formatters);
@@ -286,8 +277,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMakeObjectReturnsModelReturnType()
 	{
 		$fabricator = new Fabricator(EntityModel::class);
@@ -314,7 +303,7 @@ class FabricatorTest extends CIUnitTestCase
 
 		$result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
+		$this->assertInstanceOf(stdClass::class, $result);
 	}
 
 	public function testMakeObjectReturnsStdClassForObjectReturnType()
@@ -323,7 +312,7 @@ class FabricatorTest extends CIUnitTestCase
 
 		$result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
+		$this->assertInstanceOf(stdClass::class, $result);
 	}
 
 	public function testMakeObjectUsesOverrides()
@@ -356,8 +345,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMakeReturnsSingleton()
 	{
 		$fabricator = new Fabricator(UserModel::class);
@@ -377,8 +364,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertIsArray($result);
 		$this->assertCount($count, $result);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCreateMockReturnsSingleton()
 	{
@@ -413,8 +398,6 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertObjectHasAttribute('deleted_at', $result);
 		$this->assertNull($result->deleted_at);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetCountReturnsCount()
 	{

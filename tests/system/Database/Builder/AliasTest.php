@@ -1,12 +1,13 @@
-<?php namespace Builder;
+<?php
 
+namespace Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
+class AliasTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -14,8 +15,6 @@ class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testAlias()
 	{
@@ -26,8 +25,6 @@ class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAliasSupportsArrayOfNames()
 	{
 		$builder = $this->db->table(['jobs j', 'users u']);
@@ -37,8 +34,6 @@ class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testAliasSupportsStringOfNames()
 	{
 		$builder = $this->db->table('jobs j, users u');
@@ -47,8 +42,6 @@ class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599

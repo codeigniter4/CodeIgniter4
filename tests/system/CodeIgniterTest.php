@@ -1,6 +1,8 @@
-<?php namespace CodeIgniter;
+<?php
 
-use \CodeIgniter\Config\Services;
+namespace CodeIgniter;
+
+use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
@@ -17,8 +19,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected $routes;
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -31,17 +31,15 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
-		if (count( ob_list_handlers() ) > 1)
+		if (count(ob_list_handlers()) > 1)
 		{
 			ob_end_clean();
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRunEmptyDefaultRoute()
 	{
@@ -57,11 +55,9 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRunClosureRoute()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'pages/about',
 		];
@@ -70,7 +66,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function ($segment) {
+		$routes->add('pages/(:segment)', static function ($segment) {
 			echo 'You want to see "' . esc($segment) . '" page.';
 		});
 		$router = Services::router($routes, Services::request());
@@ -82,8 +78,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('You want to see "about" page.', $output);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRun404Override()
 	{
@@ -107,8 +101,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRun404OverrideByClosure()
 	{
 		$_SERVER['argv'] = [
@@ -120,7 +112,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		// Inject mock router.
 		$routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		$routes->setAutoRoute(false);
-		$routes->set404Override(function () {
+		$routes->set404Override(static function () {
 			echo '404 Override by Closure.';
 		});
 		$router = Services::router($routes, Services::request());
@@ -133,11 +125,9 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('404 Override by Closure.', $output);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testControllersCanReturnString()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'pages/about',
 		];
@@ -146,7 +136,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function ($segment) {
+		$routes->add('pages/(:segment)', static function ($segment) {
 			return 'You want to see "' . esc($segment) . '" page.';
 		});
 		$router = Services::router($routes, Services::request());
@@ -159,11 +149,9 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('You want to see "about" page.', $output);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testControllersCanReturnResponseObject()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'pages/about',
 		];
@@ -172,9 +160,10 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function ($segment) {
+		$routes->add('pages/(:segment)', static function ($segment) {
 			$response = Services::response();
-			$string   = "You want to see 'about' page.";
+			$string = "You want to see 'about' page.";
+
 			return $response->setBody($string);
 		});
 		$router = Services::router($routes, Services::request());
@@ -186,8 +175,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString("You want to see 'about' page.", $output);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testResponseConfigEmpty()
 	{
@@ -201,8 +188,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRoutesIsEmpty()
 	{
@@ -225,7 +210,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testTransfersCorrectHTTPVersion()
 	{
-		$_SERVER['argv']            = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'/',
 		];
@@ -257,8 +242,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRunForceSecure()
 	{
 		$_SERVER['argv'] = [
@@ -286,7 +269,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRunRedirectionWithNamed()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'example',
 		];
@@ -295,7 +278,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/named', function () {
+		$routes->add('pages/named', static function () {
 		}, ['as' => 'name']);
 		$routes->addRedirect('example', 'name');
 
@@ -311,7 +294,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRunRedirectionWithURI()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'example',
 		];
@@ -320,7 +303,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/uri', function () {
+		$routes->add('pages/uri', static function () {
 		});
 		$routes->addRedirect('example', 'pages/uri');
 
@@ -339,7 +322,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testRunRedirectionWithURINotSet()
 	{
-		$_SERVER['argv']        = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'example',
 		];
@@ -362,7 +345,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRunRedirectionWithHTTPCode303()
 	{
-		$_SERVER['argv']            = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'example',
 		];
@@ -387,7 +370,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRunRedirectionWithHTTPCode301()
 	{
-		$_SERVER['argv']            = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'example',
 		];
@@ -429,5 +412,4 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
-
 }

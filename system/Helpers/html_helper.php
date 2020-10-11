@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -41,13 +41,8 @@ use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Config\DocTypes;
 use Config\Mimes;
 
-// --------------------------------------------------------------------
+// CodeIgniter HTML Helpers
 
-/**
- * CodeIgniter HTML Helpers
- *
- * @package CodeIgniter
- */
 if (! function_exists('ul'))
 {
 	/**
@@ -67,8 +62,6 @@ if (! function_exists('ul'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('ol'))
 {
 	/**
@@ -87,8 +80,6 @@ if (! function_exists('ol'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('_list'))
 {
 	/**
@@ -96,10 +87,10 @@ if (! function_exists('_list'))
 	 *
 	 * Generates an HTML ordered list from an single or multi-dimensional array.
 	 *
-	 * @param string  $type
-	 * @param mixed   $list
-	 * @param mixed   $attributes string, array, object
-	 * @param integer $depth
+	 * @param string $type
+	 * @param mixed  $list
+	 * @param mixed  $attributes string, array, object
+	 * @param int    $depth
 	 *
 	 * @return string
 	 */
@@ -114,6 +105,7 @@ if (! function_exists('_list'))
 		// encountered we will recursively call _list()
 
 		static $_last_list_item = '';
+
 		foreach ($list as $key => $val)
 		{
 			$_last_list_item = $key;
@@ -140,8 +132,6 @@ if (! function_exists('_list'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('img'))
 {
 	/**
@@ -149,9 +139,9 @@ if (! function_exists('img'))
 	 *
 	 * Generates an image element
 	 *
-	 * @param string|array        $src        Image source URI, or array of attributes and values
-	 * @param boolean             $indexPage  Whether to treat $src as a routed URI string
-	 * @param string|array|object $attributes Additional HTML attributes
+	 * @param array|string        $src        Image source URI, or array of attributes and values
+	 * @param bool                $indexPage  Whether to treat $src as a routed URI string
+	 * @param array|object|string $attributes Additional HTML attributes
 	 *
 	 * @return string
 	 */
@@ -161,10 +151,12 @@ if (! function_exists('img'))
 		{
 			$src = ['src' => $src];
 		}
+
 		if (! isset($src['src']))
 		{
 			$src['src'] = $attributes['src'] ?? '';
 		}
+
 		if (! isset($src['alt']))
 		{
 			$src['alt'] = $attributes['alt'] ?? '';
@@ -237,8 +229,6 @@ if (! function_exists('img_data'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('doctype'))
 {
 	/**
@@ -258,11 +248,10 @@ if (! function_exists('doctype'))
 	{
 		$config   = new DocTypes();
 		$doctypes = $config->list;
+
 		return $doctypes[$type] ?? false;
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('script_tag'))
 {
@@ -271,14 +260,15 @@ if (! function_exists('script_tag'))
 	 *
 	 * Generates link to a JS file
 	 *
-	 * @param mixed   $src       Script source or an array
-	 * @param boolean $indexPage Should indexPage be added to the JS path
+	 * @param mixed $src       Script source or an array
+	 * @param bool  $indexPage Should indexPage be added to the JS path
 	 *
 	 * @return string
 	 */
 	function script_tag($src = '', bool $indexPage = false): string
 	{
 		$script = '<script ';
+
 		if (! is_array($src))
 		{
 			$src = ['src' => $src];
@@ -307,8 +297,6 @@ if (! function_exists('script_tag'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('link_tag'))
 {
 	/**
@@ -316,13 +304,13 @@ if (! function_exists('link_tag'))
 	 *
 	 * Generates link to a CSS file
 	 *
-	 * @param mixed   $href      Stylesheet href or an array
-	 * @param string  $rel
-	 * @param string  $type
-	 * @param string  $title
-	 * @param string  $media
-	 * @param boolean $indexPage should indexPage be added to the CSS path.
-	 * @param string  $hreflang
+	 * @param mixed  $href      Stylesheet href or an array
+	 * @param string $rel
+	 * @param string $type
+	 * @param string $title
+	 * @param string $media
+	 * @param bool   $indexPage should indexPage be added to the CSS path
+	 * @param string $hreflang
 	 *
 	 * @return string
 	 */
@@ -333,13 +321,13 @@ if (! function_exists('link_tag'))
 		// extract fields if needed
 		if (is_array($href))
 		{
-			$rel       = $href['rel'] ?? $rel;
-			$type      = $href['type'] ?? $type;
-			$title     = $href['title'] ?? $title;
-			$media     = $href['media'] ?? $media;
-			$hreflang  = $href['hreflang'] ?? '';
+			$rel       = $href['rel']       ?? $rel;
+			$type      = $href['type']      ?? $type;
+			$title     = $href['title']     ?? $title;
+			$media     = $href['media']     ?? $media;
+			$hreflang  = $href['hreflang']  ?? '';
 			$indexPage = $href['indexPage'] ?? $indexPage;
-			$href      = $href['href'] ?? '';
+			$href      = $href['href']      ?? '';
 		}
 
 		if (! preg_match('#^([a-z]+:)?//#i', $href))
@@ -384,8 +372,6 @@ if (! function_exists('link_tag'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('video'))
 {
 	/**
@@ -394,11 +380,11 @@ if (! function_exists('video'))
 	 * Generates a video element to embed videos. The video element can
 	 * contain one or more video sources
 	 *
-	 * @param mixed   $src                Either a source string or an array of sources
-	 * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser
-	 * @param string  $attributes         HTML attributes
-	 * @param array   $tracks
-	 * @param boolean $indexPage
+	 * @param mixed  $src                Either a source string or an array of sources
+	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser
+	 * @param string $attributes         HTML attributes
+	 * @param array  $tracks
+	 * @param bool   $indexPage
 	 *
 	 * @return string
 	 */
@@ -450,8 +436,6 @@ if (! function_exists('video'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('audio'))
 {
 	/**
@@ -459,11 +443,11 @@ if (! function_exists('audio'))
 	 *
 	 * Generates an audio element to embed sounds
 	 *
-	 * @param mixed   $src                Either a source string or an array of sources
-	 * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser.
-	 * @param string  $attributes         HTML attributes
-	 * @param array   $tracks
-	 * @param boolean $indexPage
+	 * @param mixed  $src                Either a source string or an array of sources
+	 * @param string $unsupportedMessage the message to display if the media tag is not supported by the browser
+	 * @param string $attributes         HTML attributes
+	 * @param array  $tracks
+	 * @param bool   $indexPage
 	 *
 	 * @return string
 	 */
@@ -513,8 +497,6 @@ if (! function_exists('audio'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('_media'))
 {
 	/**
@@ -522,7 +504,7 @@ if (! function_exists('_media'))
 	 *
 	 * @param string $name
 	 * @param array  $types
-	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser.
+	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser
 	 * @param string $attributes
 	 * @param array  $tracks
 	 *
@@ -565,8 +547,6 @@ if (! function_exists('_media'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('source'))
 {
 	/**
@@ -575,10 +555,10 @@ if (! function_exists('source'))
 	 * Generates a source element that specifies multiple media resources
 	 * for either audio or video element
 	 *
-	 * @param string  $src        The path of the media resource
-	 * @param string  $type       The MIME-type of the resource with optional codecs parameters
-	 * @param string  $attributes HTML attributes
-	 * @param boolean $indexPage
+	 * @param string $src        The path of the media resource
+	 * @param string $type       The MIME-type of the resource with optional codecs parameters
+	 * @param string $attributes HTML attributes
+	 * @param bool   $indexPage
 	 *
 	 * @return string
 	 */
@@ -608,8 +588,6 @@ if (! function_exists('source'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('track'))
 {
 	/**
@@ -635,8 +613,6 @@ if (! function_exists('track'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('object'))
 {
 	/**
@@ -646,11 +622,11 @@ if (! function_exists('object'))
 	 * as either image or a resource plugin such as audio, video,
 	 * Java applets, ActiveX, PDF and Flash
 	 *
-	 * @param string  $data       A resource URL
-	 * @param string  $type       Content-type of the resource
-	 * @param string  $attributes HTML attributes
-	 * @param array   $params
-	 * @param boolean $indexPage
+	 * @param string $data       A resource URL
+	 * @param string $type       Content-type of the resource
+	 * @param string $attributes HTML attributes
+	 * @param array  $params
+	 * @param bool   $indexPage
 	 *
 	 * @return string
 	 */
@@ -685,8 +661,6 @@ if (! function_exists('object'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('param'))
 {
 	/**
@@ -711,8 +685,6 @@ if (! function_exists('param'))
 	}
 }
 
-	// ------------------------------------------------------------------------
-
 if (! function_exists('embed'))
 {
 	/**
@@ -720,10 +692,10 @@ if (! function_exists('embed'))
 	 *
 	 * Generates an embed element
 	 *
-	 * @param string  $src        The path of the resource to embed
-	 * @param string  $type       MIME-type
-	 * @param string  $attributes HTML attributes
-	 * @param boolean $indexPage
+	 * @param string $src        The path of the resource to embed
+	 * @param string $type       MIME-type
+	 * @param string $attributes HTML attributes
+	 * @param bool   $indexPage
 	 *
 	 * @return string
 	 */
@@ -747,8 +719,6 @@ if (! function_exists('embed'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('_has_protocol'))
 {
 	/**
@@ -756,7 +726,7 @@ if (! function_exists('_has_protocol'))
 	 *
 	 * @param string $url
 	 *
-	 * @return false|integer
+	 * @return false|int
 	 */
 	function _has_protocol(string $url)
 	{
@@ -764,14 +734,12 @@ if (! function_exists('_has_protocol'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('_space_indent'))
 {
 	/**
 	 * Provide space indenting.
 	 *
-	 * @param integer $depth
+	 * @param int $depth
 	 *
 	 * @return string
 	 */
@@ -780,5 +748,3 @@ if (! function_exists('_space_indent'))
 		return str_repeat(' ', $depth);
 	}
 }
-
-// ------------------------------------------------------------------------

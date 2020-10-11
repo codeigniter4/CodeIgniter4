@@ -46,12 +46,9 @@ use RuntimeException;
  *
  * Provides a simple way to measure the amount of time
  * that elapses between two points.
- *
- * @package CodeIgniter\Debug
  */
 class Timer
 {
-
 	/**
 	 * List of all timers.
 	 *
@@ -59,16 +56,14 @@ class Timer
 	 */
 	protected $timers = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Starts a timer running.
 	 *
 	 * Multiple calls can be made to this method so that several
 	 * execution points can be measured.
 	 *
-	 * @param string $name The name of this timer.
-	 * @param float  $time Allows user to provide time.
+	 * @param string $name The name of this timer
+	 * @param float  $time Allows user to provide time
 	 *
 	 * @return Timer
 	 */
@@ -82,15 +77,13 @@ class Timer
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Stops a running timer.
 	 *
 	 * If the timer is not stopped before the timers() method is called,
 	 * it will be automatically stopped at that point.
 	 *
-	 * @param string $name The name of this timer.
+	 * @param string $name the name of this timer
 	 *
 	 * @return Timer
 	 */
@@ -108,17 +101,15 @@ class Timer
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the duration of a recorded timer.
 	 *
-	 * @param string  $name     The name of the timer.
-	 * @param integer $decimals Number of decimal places.
+	 * @param string $name     The name of the timer
+	 * @param int    $decimals Number of decimal places
 	 *
-	 * @return null|float       Returns null if timer exists by that name.
-	 *                          Returns a float representing the number of
-	 *                          seconds elapsed while that timer was running.
+	 * @return float|null Returns null if timer exists by that name.
+	 *                    Returns a float representing the number of
+	 *                    seconds elapsed while that timer was running.
 	 */
 	public function getElapsedTime(string $name, int $decimals = 4)
 	{
@@ -139,12 +130,10 @@ class Timer
 		return (float) number_format($timer['end'] - $timer['start'], $decimals);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the array of timers, with the duration pre-calculated for you.
 	 *
-	 * @param integer $decimals Number of decimal places
+	 * @param int $decimals Number of decimal places
 	 *
 	 * @return array
 	 */
@@ -165,19 +154,15 @@ class Timer
 		return $timers;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks whether or not a timer with the specified name exists.
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function has(string $name): bool
 	{
 		return array_key_exists(strtolower($name), $this->timers);
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live\SQLite;
+<?php
+
+namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -26,7 +28,7 @@ class AlterTableTest extends CIDatabaseTestCase
 	 */
 	protected $forge;
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -40,7 +42,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->table = new Table($this->db, $this->forge);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -67,29 +69,29 @@ class AlterTableTest extends CIDatabaseTestCase
 		$fields = $this->getPrivateProperty($this->table, 'fields');
 
 		$this->assertCount(4, $fields);
-		$this->assertTrue(array_key_exists('id', $fields));
+		$this->assertArrayHasKey('id', $fields);
 		$this->assertNull($fields['id']['default']);
 		$this->assertTrue($fields['id']['nullable']);
-		$this->assertEquals('integer', strtolower($fields['id']['type']));
+		$this->assertEquals('integer', mb_strtolower($fields['id']['type']));
 
-		$this->assertTrue(array_key_exists('name', $fields));
+		$this->assertArrayHasKey('name', $fields);
 		$this->assertNull($fields['name']['default']);
 		$this->assertFalse($fields['name']['nullable']);
-		$this->assertEquals('varchar', strtolower($fields['name']['type']));
+		$this->assertEquals('varchar', mb_strtolower($fields['name']['type']));
 
-		$this->assertTrue(array_key_exists('email', $fields));
+		$this->assertArrayHasKey('email', $fields);
 		$this->assertNull($fields['email']['default']);
 		$this->assertTrue($fields['email']['nullable']);
-		$this->assertEquals('varchar', strtolower($fields['email']['type']));
+		$this->assertEquals('varchar', mb_strtolower($fields['email']['type']));
 
 		$keys = $this->getPrivateProperty($this->table, 'keys');
 
 		$this->assertCount(3, $keys);
-		$this->assertTrue(array_key_exists('foo_name', $keys));
+		$this->assertArrayHasKey('foo_name', $keys);
 		$this->assertEquals(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
-		$this->assertTrue(array_key_exists('id', $keys));
+		$this->assertArrayHasKey('id', $keys);
 		$this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
-		$this->assertTrue(array_key_exists('id', $keys));
+		$this->assertArrayHasKey('id', $keys);
 		$this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
 	}
 
@@ -106,9 +108,9 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$columns = $this->db->getFieldNames('foo');
 
-		$this->assertFalse(in_array('name', $columns));
-		$this->assertTrue(in_array('id', $columns));
-		$this->assertTrue(in_array('email', $columns));
+		$this->assertFalse(in_array('name', $columns, true));
+		$this->assertTrue(in_array('id', $columns, true));
+		$this->assertTrue(in_array('email', $columns, true));
 	}
 
 	public function testDropColumnMaintainsKeys()
@@ -117,8 +119,8 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$oldKeys = $this->db->getIndexData('foo');
 
-		$this->assertTrue(array_key_exists('foo_name', $oldKeys));
-		$this->assertTrue(array_key_exists('foo_email', $oldKeys));
+		$this->assertArrayHasKey('foo_name', $oldKeys);
+		$this->assertArrayHasKey('foo_email', $oldKeys);
 
 		$result = $this->table
 			->fromTable('foo')
@@ -127,8 +129,8 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$newKeys = $this->db->getIndexData('foo');
 
-		$this->assertFalse(array_key_exists('foo_name', $newKeys));
-		$this->assertTrue(array_key_exists('foo_email', $newKeys));
+		$this->assertArrayNotHasKey('foo_name', $newKeys);
+		$this->assertArrayHasKey('foo_email', $newKeys);
 
 		$this->assertTrue($result);
 	}
@@ -171,7 +173,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->assertTrue($result);
 
 		$keys = $this->db->getForeignKeyData('aliens');
-		$this->assertTrue(empty($keys));
+		$this->assertEmpty($keys);
 	}
 
 	public function testProcessCopiesOldData()
@@ -205,7 +207,7 @@ class AlterTableTest extends CIDatabaseTestCase
 	{
 		// Create support table for foreign keys
 		$this->forge->addField([
-			'id'   => [
+			'id' => [
 				'type'           => 'integer',
 				'constraint'     => 11,
 				'unsigned'       => true,
@@ -221,18 +223,18 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		// Create main table
 		$this->forge->addField([
-			'id'     => [
+			'id' => [
 				'type'           => 'integer',
 				'constraint'     => 11,
 				'unsigned'       => true,
 				'auto_increment' => true,
 			],
-			'name'   => [
+			'name' => [
 				'type'       => 'varchar',
 				'constraint' => 255,
 				'null'       => false,
 			],
-			'email'  => [
+			'email' => [
 				'type'       => 'varchar',
 				'constraint' => 255,
 				'null'       => true,

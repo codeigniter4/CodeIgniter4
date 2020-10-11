@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\API;
 
 use CodeIgniter\Format\JSONFormatter;
@@ -7,11 +8,12 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
+use stdClass;
 
 class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $request;
+
 	protected $response;
 
 	/**
@@ -46,7 +48,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$config = array_merge($config, $userConfig);
 
-		if (is_null($this->request))
+		if ($this->request === null)
 		{
 			$this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
 			$this->response = new MockResponse((object) $config);
@@ -61,6 +63,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 		foreach ($headers as $key => $value)
 		{
 			$this->request->setHeader($key, $value);
+
 			if (($key === 'Accept') && ! is_array($value))
 			{
 				$this->response->setContentType($value);
@@ -68,13 +71,13 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 
 		// Create the controller class finally.
-		$controller = new class($this->request, $this->response, $this->formatter)
-		{
-
+		$controller = new class($this->request, $this->response, $this->formatter) {
 			use ResponseTrait;
 
 			protected $request;
+
 			protected $response;
+
 			protected $formatter;
 
 			public function __construct(&$request, &$response, &$formatter)
@@ -97,7 +100,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
 		$this->assertEquals(201, $this->response->getStatusCode());
 
-		$expected = <<<EOH
+		$expected = <<<'EOH'
 {
     "id": 3
 }
@@ -119,7 +122,7 @@ EOH;
 		$this->formatter = null;
 		$controller      = $this->makeController();
 		$payload         = ['answer' => 42];
-		$expected        = <<<EOH
+		$expected        = <<<'EOH'
 {
     "answer": 42
 }
@@ -137,7 +140,7 @@ EOH;
 			2,
 			3,
 		];
-		$expected        = <<<EOH
+		$expected = <<<'EOH'
 [
     1,
     2,
@@ -152,16 +155,16 @@ EOH;
 	{
 		$this->formatter = null;
 		$controller      = $this->makeController();
-		$payload         = new \stdClass();
+		$payload         = new stdClass();
 		$payload->name   = 'Tom';
 		$payload->id     = 1;
-		$expected        = <<<EOH
+		$expected        = <<<'EOH'
 {
     "name": "Tom",
     "id": 1
 }
 EOH;
-		$controller->respond((array)$payload);
+		$controller->respond((array) $payload);
 		$this->assertEquals($expected, $this->response->getBody());
 	}
 
@@ -413,7 +416,8 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+
+		for ($i = 0; $i < count($goodMimes); $i++)
 		{
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
 		}
@@ -441,7 +445,8 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+
+		for ($i = 0; $i < count($goodMimes); $i++)
 		{
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
 		}
@@ -455,7 +460,7 @@ EOH;
 		$this->assertEquals('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
 
 		$controller->respondCreated(['id' => 3], 'A Custom Reason');
-		$expected = <<<EOH
+		$expected = <<<'EOH'
 <?xml version="1.0"?>
 <response><id>3</id></response>
 
@@ -484,11 +489,11 @@ EOH;
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
 		$response = new MockResponse((object) $config);
 
-		$controller = new class($request, $response)
-		{
+		$controller = new class($request, $response) {
 			use ResponseTrait;
 
 			protected $request;
+
 			protected $response;
 
 			public function __construct(&$request, &$response)

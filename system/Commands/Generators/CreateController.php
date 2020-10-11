@@ -88,7 +88,7 @@ class CreateController extends GeneratorCommand
 	];
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getClassName(): string
 	{
@@ -103,7 +103,7 @@ class CreateController extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
@@ -111,7 +111,7 @@ class CreateController extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getTemplate(): string
 	{
@@ -121,7 +121,7 @@ class CreateController extends GeneratorCommand
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function setReplacements(string $template, string $class): string
 	{
@@ -138,15 +138,17 @@ class CreateController extends GeneratorCommand
 
 		$template = parent::setReplacements($template, $class);
 
-		return str_replace([
-			'{useStatement}',
-			'{extends}',
-			'{restfulMethods}',
-		], [
-			$useStatement,
-			$extends,
-			$restfulMethods,
-		],
+		return str_replace(
+			[
+				'{useStatement}',
+				'{extends}',
+				'{restfulMethods}',
+			],
+			[
+				$useStatement,
+				$extends,
+				$restfulMethods,
+			],
 			$template
 		);
 	}
@@ -154,8 +156,8 @@ class CreateController extends GeneratorCommand
 	/**
 	 * Gets the appropriate parent class to extend.
 	 *
-	 * @param boolean|null        $bare
-	 * @param string|boolean|null $rest
+	 * @param bool|null        $bare
+	 * @param bool|string|null $rest
 	 *
 	 * @return array
 	 */

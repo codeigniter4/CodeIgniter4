@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -49,12 +48,9 @@ use InvalidArgumentException;
  *
  * A lightweight HTTP client for sending synchronous HTTP requests
  * via cURL.
- *
- * @package CodeIgniter\HTTP
  */
 class CURLRequest extends Request
 {
-
 	/**
 	 * The response object associated with this request
 	 *
@@ -104,8 +100,6 @@ class CURLRequest extends Request
 	 */
 	protected $delay = 0.0;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes an array of options to set the following possible class properties:
 	 *
@@ -122,10 +116,8 @@ class CURLRequest extends Request
 	{
 		if (! function_exists('curl_version'))
 		{
-			// we won't see this during travis-CI
-			// @codeCoverageIgnoreStart
-			throw HTTPException::forMissingCurl();
-			// @codeCoverageIgnoreEnd
+			// we won't see this during testing
+			throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
 		}
 
 		parent::__construct($config);
@@ -135,8 +127,6 @@ class CURLRequest extends Request
 
 		$this->parseOptions($options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sends an HTTP request to the specified $url. If this is a relative
@@ -161,8 +151,6 @@ class CURLRequest extends Request
 		return $this->response;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a GET request.
 	 *
@@ -175,8 +163,6 @@ class CURLRequest extends Request
 	{
 		return $this->request('get', $url, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Convenience method for sending a DELETE request.
@@ -191,8 +177,6 @@ class CURLRequest extends Request
 		return $this->request('delete', $url, $options);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a HEAD request.
 	 *
@@ -205,8 +189,6 @@ class CURLRequest extends Request
 	{
 		return $this->request('head', $url, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Convenience method for sending an OPTIONS request.
@@ -221,8 +203,6 @@ class CURLRequest extends Request
 		return $this->request('options', $url, $options);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a PATCH request.
 	 *
@@ -235,8 +215,6 @@ class CURLRequest extends Request
 	{
 		return $this->request('patch', $url, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Convenience method for sending a POST request.
@@ -251,8 +229,6 @@ class CURLRequest extends Request
 		return $this->request('post', $url, $options);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a PUT request.
 	 *
@@ -265,8 +241,6 @@ class CURLRequest extends Request
 	{
 		return $this->request('put', $url, $options);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set the HTTP Authentication.
@@ -288,13 +262,11 @@ class CURLRequest extends Request
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set form data to be sent.
 	 *
-	 * @param array   $params
-	 * @param boolean $multipart Set TRUE if you are sending CURLFiles
+	 * @param array $params
+	 * @param bool  $multipart Set TRUE if you are sending CURLFiles
 	 *
 	 * @return $this
 	 */
@@ -312,8 +284,6 @@ class CURLRequest extends Request
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set JSON data to be sent.
 	 *
@@ -327,8 +297,6 @@ class CURLRequest extends Request
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the correct settings based on the options array
@@ -368,8 +336,6 @@ class CURLRequest extends Request
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If the $url is a relative URL, will attempt to create
 	 * a full URL by prepending $this->baseURI to it.
@@ -391,13 +357,11 @@ class CURLRequest extends Request
 		return (string) $uri;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get the request method. Overrides the Request class' method
 	 * since users expect a different answer here.
 	 *
-	 * @param boolean|false $upper Whether to return in upper or lower case.
+	 * @param bool|false $upper whether to return in upper or lower case
 	 *
 	 * @return string
 	 */
@@ -405,8 +369,6 @@ class CURLRequest extends Request
 	{
 		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fires the actual cURL request.
@@ -457,10 +419,10 @@ class CURLRequest extends Request
 			$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
-		 // If request and response have Digest
+		// If request and response have Digest
 		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
-				$output = substr($output, strpos($output, $breakString) + 4);
+			$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
 		// Split out our headers and body
@@ -484,8 +446,6 @@ class CURLRequest extends Request
 
 		return $this->response;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes all headers current part of this request and adds them
@@ -524,8 +484,6 @@ class CURLRequest extends Request
 		return $curlOptions;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Apply method
 	 *
@@ -552,20 +510,18 @@ class CURLRequest extends Request
 		if ($method === 'PUT' || $method === 'POST')
 		{
 			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
-			if (is_null($this->getHeader('content-length')) && ! isset($this->config['multipart']))
+			if ($this->getHeader('content-length') === null && ! isset($this->config['multipart']))
 			{
 				$this->setHeader('Content-Length', '0');
 			}
 		}
-		else if ($method === 'HEAD')
+		elseif ($method === 'HEAD')
 		{
 			$curlOptions[CURLOPT_NOBODY] = 1;
 		}
 
 		return $curlOptions;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Apply body
@@ -584,8 +540,6 @@ class CURLRequest extends Request
 		return $curlOptions;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Parses the header retrieved from the cURL response into
 	 * our Response object.
@@ -603,7 +557,7 @@ class CURLRequest extends Request
 
 				$this->response->setHeader($title, $value);
 			}
-			else if (strpos($header, 'HTTP') === 0)
+			elseif (strpos($header, 'HTTP') === 0)
 			{
 				preg_match('#^HTTP\/([12](?:\.[01])?) ([0-9]+) (.+)#', $header, $matches);
 
@@ -620,15 +574,15 @@ class CURLRequest extends Request
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set CURL options
 	 *
-	 * @param  array $curlOptions
-	 * @param  array $config
-	 * @return array
+	 * @param array $curlOptions
+	 * @param array $config
+	 *
 	 * @throws InvalidArgumentException
+	 *
+	 * @return array
 	 */
 	protected function setCURLOptions(array $curlOptions = [], array $config = [])
 	{
@@ -681,7 +635,7 @@ class CURLRequest extends Request
 				$curlOptions[CURLOPT_CAINFO]         = $file;
 				$curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
 			}
-			else if (is_bool($config['verify']))
+			elseif (is_bool($config['verify']))
 			{
 				$curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
 			}
@@ -691,7 +645,7 @@ class CURLRequest extends Request
 		if ($config['debug'])
 		{
 			$curlOptions[CURLOPT_VERBOSE] = 1;
-			$curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://stderr', 'w');
+			$curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
 		}
 
 		// Decode Content
@@ -735,6 +689,7 @@ class CURLRequest extends Request
 				}
 
 				$protocols = 0;
+
 				foreach ($settings['protocols'] as $proto)
 				{
 					$protocols += constant('CURLPROTO_' . strtoupper($proto));
@@ -789,7 +744,7 @@ class CURLRequest extends Request
 			{
 				$curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 			}
-			else if ($config['version'] === 1.1)
+			elseif ($config['version'] === 1.1)
 			{
 				$curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
 			}
@@ -804,8 +759,6 @@ class CURLRequest extends Request
 
 		return $curlOptions;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Does the actual work of initializing cURL, setting the options,
@@ -835,6 +788,4 @@ class CURLRequest extends Request
 
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 }

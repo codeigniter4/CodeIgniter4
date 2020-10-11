@@ -1,20 +1,21 @@
-<?php namespace CodeIgniter\Security;
+<?php
+
+namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
-
-//--------------------------------------------------------------------
 
 /**
  * @backupGlobals enabled
  */
-class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
-
+class SecurityTest extends CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -22,19 +23,15 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$_COOKIE = [];
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBasicConfigIsSaved()
 	{
 		$security = new Security(new MockAppConfig());
 
 		$hash = $security->getCSRFHash();
 
-		$this->assertEquals(32, strlen($hash));
+		$this->assertEquals(32, mb_strlen($hash));
 		$this->assertEquals('csrf_test_name', $security->getCSRFTokenName());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHashIsReadFromCookie()
 	{
@@ -47,8 +44,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->assertEquals('8b9218a55906f9dcc1dc263dce7f005a', $security->getCSRFHash());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifySetsCookieWhenNotPOST()
 	{
 		$security = new MockSecurity(new MockAppConfig());
@@ -59,8 +54,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 		$this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getCSRFHash());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
 	{
@@ -76,8 +69,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->expectException(SecurityException::class);
 		$security->CSRFVerify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyPostReturnsSelfOnMatch()
 	{
@@ -97,8 +88,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->assertTrue(count($_POST) === 1);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
@@ -107,15 +96,14 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_COOKIE                   = [
+
+		$_COOKIE = [
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b',
 		];
 
 		$this->expectException(SecurityException::class);
 		$security->CSRFVerify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyHeaderReturnsSelfOnMatch()
 	{
@@ -136,8 +124,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->assertTrue(count($_POST) === 1);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
@@ -146,15 +132,14 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}');
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_COOKIE                   = [
+
+		$_COOKIE = [
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b',
 		];
 
 		$this->expectException(SecurityException::class);
 		$security->CSRFVerify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyJsonReturnsSelfOnMatch()
 	{
@@ -164,7 +149,8 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_COOKIE                   = [
+
+		$_COOKIE = [
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a',
 		];
 
@@ -174,8 +160,6 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->assertTrue($request->getBody() === '{"foo":"bar"}');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSanitizeFilename()
 	{
 		$security = new MockSecurity(new MockAppConfig());
@@ -184,7 +168,4 @@ class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 		$this->assertEquals('foo', $security->sanitizeFilename($filename));
 	}
-
-	//--------------------------------------------------------------------
-
 }

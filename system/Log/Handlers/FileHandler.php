@@ -47,7 +47,6 @@ use Exception;
  */
 class FileHandler extends BaseHandler implements HandlerInterface
 {
-
 	/**
 	 * Folder to hold logs
 	 *
@@ -65,11 +64,9 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	/**
 	 * Permissions for new log files
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $filePermissions;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -88,8 +85,6 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		$this->filePermissions = $config['filePermissions'] ?? 0644;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Handles logging the message.
 	 * If the handler returns false, then execution of handlers
@@ -99,8 +94,9 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * @param string $level
 	 * @param string $message
 	 *
-	 * @return boolean
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function handle($level, $message): bool
 	{
@@ -146,9 +142,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 			if (($result = fwrite($fp, substr($msg, $written))) === false)
 			{
 				// if we get this far, we'll never see this during travis-ci
-				// @codeCoverageIgnoreStart
-				break;
-				// @codeCoverageIgnoreEnd
+				break; // @codeCoverageIgnore
 			}
 		}
 
@@ -162,6 +156,4 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		return is_int($result); // @phpstan-ignore-line
 	}
-
-	//--------------------------------------------------------------------
 }

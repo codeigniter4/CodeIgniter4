@@ -43,6 +43,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
+use MySQLi;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
@@ -58,6 +59,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var string
 	 */
 	public $DBDriver = 'MySQLi';
+
 	/**
 	 * DELETE hack flag
 	 *
@@ -65,34 +67,34 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * of affected rows to be shown. Uses a preg_replace when enabled,
 	 * adding a bit more processing to all queries.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $deleteHack = true;
-	// --------------------------------------------------------------------
+
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
 	public $escapeChar = '`';
-	// --------------------------------------------------------------------
+
 	/**
 	 * MySQLi object
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
 	 *
-	 * @var \MySQLi
+	 * @var MySQLi
 	 */
 	public $mysqli;
-	//--------------------------------------------------------------------
 
 	/**
 	 * Connect to the database.
 	 *
-	 * @param boolean $persistent
+	 * @param bool $persistent
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return mixed
-	 * @throws DatabaseException
 	 */
 	public function connect(bool $persistent = false)
 	{
@@ -121,12 +123,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if ($this->strictOn)
 			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
+				$this->mysqli->options(
+					MYSQLI_INIT_COMMAND,
+					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")'
+				);
 			}
 			else
 			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode =
+				$this->mysqli->options(
+					MYSQLI_INIT_COMMAND,
+					'SET SESSION sql_mode =
 						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
 												@@sql_mode,
 												"STRICT_ALL_TABLES,", ""),
@@ -142,9 +148,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if (is_array($this->encrypt))
 		{
 			$ssl                                                  = [];
-			empty($this->encrypt['ssl_key']) || $ssl['key']       = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) || $ssl['cert']     = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) || $ssl['ca']         = $this->encrypt['ssl_ca'];
+			empty($this->encrypt['ssl_key'])    || $ssl['key']    = $this->encrypt['ssl_key'];
+			empty($this->encrypt['ssl_cert'])   || $ssl['cert']   = $this->encrypt['ssl_cert'];
+			empty($this->encrypt['ssl_ca'])     || $ssl['ca']     = $this->encrypt['ssl_ca'];
 			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
 			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
 
@@ -154,8 +160,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				{
 					if ($this->encrypt['ssl_verify'])
 					{
-						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') && $this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -171,24 +176,32 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				$clientFlags += MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
-					$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
-					$ssl['capath'] ?? null, $ssl['cipher'] ?? null
+					$ssl['key'] ?? null,
+					$ssl['cert'] ?? null,
+					$ssl['ca'] ?? null,
+					$ssl['capath'] ?? null,
+					$ssl['cipher'] ?? null
 				);
 			}
 		}
 
 		try
 		{
-			if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
-				$this->database, $port, $socket, $clientFlags)
+			if ($this->mysqli->real_connect(
+				$hostname,
+				$this->username,
+				$this->password,
+				$this->database,
+				$port,
+				$socket,
+				$clientFlags
 			)
-			{
+			) {
 				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
 				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
 					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-										  ->fetch_object()->Value)
-				)
-				{
+						->fetch_object()->Value)
+				) {
 					$this->mysqli->close();
 					$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
 					log_message('error', $message);
@@ -203,8 +216,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				if (! $this->mysqli->set_charset($this->charset))
 				{
-					log_message('error',
-						"Database: Unable to set the configured connection charset ('{$this->charset}').");
+					log_message(
+						'error',
+						"Database: Unable to set the configured connection charset ('{$this->charset}')."
+					);
 					$this->mysqli->close();
 
 					if ($this->DBDebug)
@@ -232,8 +247,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
@@ -246,8 +259,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$this->initialize();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close the database connection.
 	 *
@@ -258,14 +269,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$this->connID->close();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Select a specific database table to use.
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function setDatabase(string $databaseName): bool
 	{
@@ -289,8 +298,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
@@ -311,8 +318,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $this->dataCache['version'] = $this->mysqli->server_info;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Executes the query against the database.
 	 *
@@ -325,11 +330,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		while ($this->connID->more_results())
 		{
 			$this->connID->next_result();
+
 			if ($res = $this->connID->store_result())
 			{
 				$res->free();
 			}
 		}
+
 		try
 		{
 			return $this->connID->query($this->prepQuery($sql));
@@ -337,15 +344,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 		catch (mysqli_sql_exception $e)
 		{
 			log_message('error', $e);
+
 			if ($this->DBDebug)
 			{
 				throw $e;
 			}
 		}
+
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prep the query
@@ -368,24 +375,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
 		return $this->connID->affected_rows ?? 0;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Platform-dependant string escape
 	 *
-	 * @param  string $str
+	 * @param string $str
+	 *
 	 * @return string
 	 */
 	protected function _escapeString(string $str): string
@@ -398,15 +402,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $this->connID->real_escape_string($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Escape Like String Direct
 	 * There are a few instances where MySQLi queries cannot take the
 	 * additional "ESCAPE x" parameter for specifying the escape character
 	 * in "LIKE" strings, and this handles those directly with a backslash.
 	 *
-	 * @param  string|string[] $str Input string
+	 * @param string|string[] $str Input string
+	 *
 	 * @return string|string[]
 	 */
 	public function escapeLikeStringDirect($str)
@@ -424,25 +427,26 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$str = $this->_escapeString($str);
 
 		// Escape LIKE condition wildcards
-		return str_replace([
-			$this->likeEscapeChar,
-			'%',
-			'_',
-		], [
-			'\\' . $this->likeEscapeChar,
-			'\\' . '%',
-			'\\' . '_',
-		], $str
+		return str_replace(
+			[
+				$this->likeEscapeChar,
+				'%',
+				'_',
+			],
+			[
+				'\\' . $this->likeEscapeChar,
+				'\\' . '%',
+				'\\' . '_',
+			],
+			$str
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 * Uses escapeLikeStringDirect().
 	 *
-	 * @param boolean $prefixLimit
+	 * @param bool $prefixLimit
 	 *
 	 * @return string
 	 */
@@ -458,8 +462,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates a platform-specific query string so that the column names can be fetched.
 	 *
@@ -472,14 +474,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, true, null, false);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with field data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _fieldData(string $table): array
 	{
@@ -492,6 +494,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
+
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
 			$retVal[$i]       = new stdClass();
@@ -501,21 +504,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
 		}
 
 		return $retVal;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with index data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
 	 * @throws LogicException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _indexData(string $table): array
 	{
@@ -573,14 +576,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $keys;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with Foreign key data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _foreignKeyData(string $table): array
 	{
@@ -608,6 +611,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
+
 		foreach ($query as $row)
 		{
 			$obj                      = new stdClass();
@@ -623,8 +627,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $retVal;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns platform-specific SQL to disable foreign key checks.
 	 *
@@ -635,8 +637,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SET FOREIGN_KEY_CHECKS=0';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns platform-specific SQL to enable foreign key checks.
 	 *
@@ -646,8 +646,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		return 'SET FOREIGN_KEY_CHECKS=1';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last error code and message.
@@ -674,24 +672,20 @@ class Connection extends BaseConnection implements ConnectionInterface
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transBegin(): bool
 	{
@@ -700,12 +694,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $this->connID->begin_transaction();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transCommit(): bool
 	{
@@ -719,12 +711,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transRollback(): bool
 	{
@@ -737,5 +727,4 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return false;
 	}
-	//--------------------------------------------------------------------
 }

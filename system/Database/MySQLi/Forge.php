@@ -44,7 +44,6 @@ namespace CodeIgniter\Database\MySQLi;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * CREATE DATABASE statement
 	 *
@@ -72,7 +71,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * Whether table keys are created from within the
 	 * CREATE TABLE statement.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $createTableKeys = true;
 
@@ -118,12 +117,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected $_null = 'NULL';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * CREATE TABLE attributes
 	 *
-	 * @param  array $attributes Associative array of table attributes
+	 * @param array $attributes Associative array of table attributes
+	 *
 	 * @return string
 	 */
 	protected function _createTableAttributes(array $attributes): string
@@ -160,14 +158,13 @@ class Forge extends \CodeIgniter\Database\Forge
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param  string $alterType ALTER type
-	 * @param  string $table     Table name
-	 * @param  mixed  $field     Column definition
+	 * @param string $alterType ALTER type
+	 * @param string $table     Table name
+	 * @param mixed  $field     Column definition
+	 *
 	 * @return string|string[]
 	 */
 	protected function _alterTable(string $alterType, string $table, $field)
@@ -178,6 +175,7 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+
 		foreach ($field as $i => $data)
 		{
 			if ($data['_literal'] !== false)
@@ -202,12 +200,11 @@ class Forge extends \CodeIgniter\Database\Forge
 		return [$sql . implode(',', $field)];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Process column
 	 *
-	 * @param  array $field
+	 * @param array $field
+	 *
 	 * @return string
 	 */
 	protected function _processColumn(array $field): string
@@ -231,27 +228,27 @@ class Forge extends \CodeIgniter\Database\Forge
 				. $extraClause;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Process indexes
 	 *
-	 * @param  string $table (ignored)
+	 * @param string $table (ignored)
+	 *
 	 * @return string
 	 */
 	protected function _processIndexes(string $table): string
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
+		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
 			if (is_array($this->keys[$i]))
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
+				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 				{
 					if (! isset($this->fields[$this->keys[$i][$i2]]))
 					{
 						unset($this->keys[$i][$i2]);
+
 						continue;
 					}
 				}
@@ -259,6 +256,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			elseif (! isset($this->fields[$this->keys[$i]]))
 			{
 				unset($this->keys[$i]);
+
 				continue;
 			}
 
@@ -275,6 +273,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 }

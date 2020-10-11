@@ -47,14 +47,13 @@ use InvalidArgumentException;
  */
 class Config extends BaseConfig
 {
-
 	/**
 	 * Cache for instance of any connections that
 	 * have been requested as a "shared" instance.
 	 *
 	 * @var array
 	 */
-	static protected $instances = [];
+	protected static $instances = [];
 
 	/**
 	 * The main instance used to manage all of
@@ -62,16 +61,14 @@ class Config extends BaseConfig
 	 *
 	 * @var Database|null
 	 */
-	static protected $factory;
-
-	//--------------------------------------------------------------------
+	protected static $factory;
 
 	/**
 	 * Creates the default
 	 *
-	 * @param string|array $group     The name of the connection group to use,
-	 *                                or an array of configuration settings.
-	 * @param boolean      $getShared Whether to return a shared instance of the connection.
+	 * @param array|string $group     The name of the connection group to use,
+	 *                                or an array of configuration settings
+	 * @param bool         $getShared Whether to return a shared instance of the connection
 	 *
 	 * @return BaseConnection
 	 */
@@ -96,7 +93,7 @@ class Config extends BaseConfig
 			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0)
+		if (is_string($group) && ! isset($config->{$group}) && strpos($group, 'custom-') !== 0)
 		{
 			throw new InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
@@ -108,9 +105,9 @@ class Config extends BaseConfig
 
 		static::ensureFactory();
 
-		if (isset($config->$group))
+		if (isset($config->{$group}))
 		{
-			$config = $config->$group;
+			$config = $config->{$group};
 		}
 
 		$connection = static::$factory->load($config, $group);
@@ -119,8 +116,6 @@ class Config extends BaseConfig
 
 		return $connection;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of all db connections currently made.
@@ -132,13 +127,11 @@ class Config extends BaseConfig
 		return static::$instances;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads and returns an instance of the Forge for the specified
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
-	 * @param ConnectionInterface|string|array|null $group
+	 * @param array|ConnectionInterface|string|null $group
 	 *
 	 * @return Forge
 	 */
@@ -149,12 +142,10 @@ class Config extends BaseConfig
 		return static::$factory->loadForge($db);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a new instance of the Database Utilities class.
 	 *
-	 * @param string|array|null $group
+	 * @param array|string|null $group
 	 *
 	 * @return BaseUtils
 	 */
@@ -164,8 +155,6 @@ class Config extends BaseConfig
 
 		return static::$factory->loadUtils($db);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a new instance of the Database Seeder.
@@ -181,8 +170,6 @@ class Config extends BaseConfig
 		return new Seeder($config, static::connect($group));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
 	 */
@@ -195,6 +182,4 @@ class Config extends BaseConfig
 
 		static::$factory = new Database();
 	}
-
-	//--------------------------------------------------------------------
 }

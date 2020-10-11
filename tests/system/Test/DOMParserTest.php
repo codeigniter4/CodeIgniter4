@@ -1,9 +1,11 @@
 <?php
+
 namespace CodeIgniter\Test;
 
-class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use InvalidArgumentException;
 
+class DOMParserTest extends CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -76,6 +78,8 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideText
+	 *
+	 * @param mixed $text
 	 */
 	public function testSeeText($text)
 	{
@@ -109,6 +113,8 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * @dataProvider provideText
+	 *
+	 * @param mixed $text
 	 */
 	public function testSeeElement($text)
 	{
@@ -366,7 +372,7 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filename = APPPATH . 'bogus.html';
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$dom->withFile($filename);
 	}
 
@@ -385,5 +391,4 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($dom->see(null, '*[ name = user ]'));
 		$this->assertFalse($dom->see(null, '*[ name = notthere ]'));
 	}
-
 }

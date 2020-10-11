@@ -48,7 +48,7 @@ class History extends BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -56,7 +56,7 @@ class History extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
@@ -64,7 +64,7 @@ class History extends BaseCollector
 	 * Whether this collector needs to display
 	 * a label or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasLabel = true;
 
@@ -81,13 +81,11 @@ class History extends BaseCollector
 	 */
 	protected $files = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Specify time limit & file count for debug history.
 	 *
-	 * @param integer $current Current history time
-	 * @param integer $limit   Max history files
+	 * @param int $current Current history time
+	 * @param int $limit   Max history files
 	 */
 	public function setFiles(int $current, int $limit = 20)
 	{
@@ -104,6 +102,7 @@ class History extends BaseCollector
 			if ($limit >= 0 && $counter > $limit)
 			{
 				unlink($filename);
+
 				continue;
 			}
 
@@ -111,10 +110,11 @@ class History extends BaseCollector
 			$contents = file_get_contents($filename);
 
 			$contents = @json_decode($contents);
+
 			if (json_last_error() === JSON_ERROR_NONE)
 			{
 				preg_match_all('/\d+/', $filename, $time);
-				$time = (int)end($time[0]);
+				$time = (int) end($time[0]);
 
 				// Debugbar files shown in History Collector
 				$files[] = [
@@ -133,8 +133,6 @@ class History extends BaseCollector
 		$this->files = $files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
@@ -145,12 +143,10 @@ class History extends BaseCollector
 		return ['files' => $this->files];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Displays the number of included files as a badge in the tab button.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function getBadgeValue(): int
 	{
@@ -160,14 +156,12 @@ class History extends BaseCollector
 	/**
 	 * Return true if there are no history files.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isEmpty(): bool
 	{
 		return empty($this->files);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Display the icon.

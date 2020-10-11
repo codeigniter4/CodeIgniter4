@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -45,12 +46,11 @@ use CodeIgniter\Debug\Exceptions;
  */
 class BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -58,7 +58,7 @@ class BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = false;
 
@@ -66,7 +66,7 @@ class BaseCollector
 	 * Whether this collector needs to display
 	 * a label or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasLabel = false;
 
@@ -74,7 +74,7 @@ class BaseCollector
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasVarData = false;
 
@@ -86,12 +86,11 @@ class BaseCollector
 	 */
 	protected $title = '';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the Collector's title.
 	 *
-	 * @param  boolean $safe
+	 * @param bool $safe
+	 *
 	 * @return string
 	 */
 	public function getTitle(bool $safe = false): string
@@ -104,8 +103,6 @@ class BaseCollector
 		return $this->title;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns any information that should be shown next to the title.
 	 *
@@ -116,43 +113,35 @@ class BaseCollector
 		return '';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this collector need it's own tab?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasTabContent(): bool
 	{
 		return (bool) $this->hasTabContent;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this collector have a label?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasLabel(): bool
 	{
 		return (bool) $this->hasLabel;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this collector have information for the timeline?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasTimelineData(): bool
 	{
 		return (bool) $this->hasTimeline;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Grabs the data for the timeline, properly formatted,
@@ -170,20 +159,16 @@ class BaseCollector
 		return $this->formatTimelineData();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Does this Collector have data that should be shown in the
 	 * 'Vars' tab?
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasVarData(): bool
 	{
 		return (bool) $this->hasVarData;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Gets a collection of data that should be shown in the 'Vars' tab.
@@ -206,8 +191,6 @@ class BaseCollector
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Child classes should implement this to return the timeline data
 	 * formatted for correct usage.
@@ -228,8 +211,6 @@ class BaseCollector
 		return [];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
@@ -239,8 +220,6 @@ class BaseCollector
 	{
 		return [];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Clean Path
@@ -269,7 +248,7 @@ class BaseCollector
 	 *
 	 * If not, then the toolbar button won't get shown.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isEmpty(): bool
 	{
@@ -310,5 +289,4 @@ class BaseCollector
 			'timelineData'    => $this->timelineData(),
 		];
 	}
-
 }

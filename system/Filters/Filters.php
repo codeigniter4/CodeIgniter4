@@ -51,7 +51,6 @@ use Config\Services;
  */
 class Filters
 {
-
 	/**
 	 * The processed filters that will
 	 * be used to check against.
@@ -106,7 +105,7 @@ class Filters
 	 * Whether we've done initial processing
 	 * on the filter lists.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $initialized = false;
 
@@ -189,8 +188,9 @@ class Filters
 	 * @param string $uri
 	 * @param string $position
 	 *
-	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws FilterException
+	 *
+	 * @return mixed|RequestInterface|ResponseInterface
 	 */
 	public function run(string $uri, string $position = 'before')
 	{
@@ -212,6 +212,7 @@ class Filters
 				if ($result instanceof RequestInterface)
 				{
 					$this->request = $result;
+
 					continue;
 				}
 
@@ -281,12 +282,9 @@ class Filters
 		$this->processFilters($uri);
 
 		// Set the toolbar filter to the last position to be executed
-		if (in_array('toolbar', $this->filters['after'], true) &&
-			($count = count($this->filters['after'])) > 1 &&
-			$this->filters['after'][$count - 1] !== 'toolbar'
-		)
+		if (in_array('toolbar', $this->filters['after'], true) && ($count = count($this->filters['after'])) > 1 && $this->filters['after'][$count - 1] !== 'toolbar')
 		{
-			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after']), 1);
+			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
 			$this->filters['after'][] = 'toolbar';
 		}
 
@@ -368,10 +366,10 @@ class Filters
 		// Get parameters and clean name
 		if (strpos($name, ':') !== false)
 		{
-			list($name, $params) = explode(':', $name);
+			[$name, $params] = explode(':', $name);
 
 			$params = explode(',', $params);
-			array_walk($params, function (&$item) {
+			array_walk($params, static function (&$item) {
 				$item = trim($item);
 			});
 
@@ -408,7 +406,7 @@ class Filters
 	 */
 	public function getArguments(string $key = null)
 	{
-		return is_null($key) ? $this->arguments : $this->arguments[$key];
+		return $key === null ? $this->arguments : $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------
@@ -445,6 +443,7 @@ class Filters
 				foreach ($this->config->globals[$set] as $alias => $rules)
 				{
 					$keep = true;
+
 					if (is_array($rules))
 					{
 						// see if it should be excluded
@@ -452,6 +451,7 @@ class Filters
 						{
 							// grab the exclusion rules
 							$check = $rules['except'];
+
 							if ($this->pathApplies($uri, $check))
 							{
 								$keep = false;
@@ -490,6 +490,7 @@ class Filters
 		if (array_key_exists($method, $this->config->methods))
 		{
 			$this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+
 			return;
 		}
 	}
@@ -517,6 +518,7 @@ class Filters
 			if (isset($settings['before']))
 			{
 				$path = $settings['before'];
+
 				if ($this->pathApplies($uri, $path))
 				{
 					$this->filters['before'][] = $alias;
@@ -526,6 +528,7 @@ class Filters
 			if (isset($settings['after']))
 			{
 				$path = $settings['after'];
+
 				if ($this->pathApplies($uri, $path))
 				{
 					$this->filters['after'][] = $alias;
@@ -536,6 +539,8 @@ class Filters
 
 	/**
 	 * Maps filter aliases to the equivalent filter classes
+	 *
+	 * @param string $position
 	 *
 	 * @throws FilterException
 	 *
@@ -572,7 +577,7 @@ class Filters
 	 * @param string $uri   URI to test against
 	 * @param mixed  $paths The path patterns to test
 	 *
-	 * @return boolean True if any of the paths apply to the URI
+	 * @return bool True if any of the paths apply to the URI
 	 */
 	private function pathApplies(string $uri, $paths)
 	{

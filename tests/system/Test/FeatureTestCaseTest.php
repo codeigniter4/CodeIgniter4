@@ -1,17 +1,17 @@
 <?php
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestCase;
+use CodeIgniter\HTTP\Response;
 
 /**
- * @group                       DatabaseLive
+ * @group DatabaseLive
  * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ * @preserveGlobalState disabled
  */
 class FeatureTestCaseTest extends FeatureTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -25,7 +25,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				function () {
+				static function () {
 					return 'Hello World';
 				},
 			],
@@ -42,7 +42,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'add',
 				'home',
-				function () {
+				static function () {
 					return 'Hello Earth';
 				},
 			],
@@ -50,7 +50,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response = $this->call('get', 'home');
 
 		$this->assertInstanceOf(FeatureResponse::class, $response);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\Response::class, $response->response);
+		$this->assertInstanceOf(Response::class, $response->response);
 		$this->assertTrue($response->isOK());
 		$this->assertEquals('Hello Earth', $response->response->getBody());
 		$this->assertEquals(200, $response->response->getStatusCode());
@@ -62,7 +62,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'post',
 				'home',
-				function () {
+				static function () {
 					return 'Hello Mars';
 				},
 			],
@@ -78,7 +78,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'post',
 				'home',
-				function () {
+				static function () {
 					return 'Hello ' . service('request')->getPost('foo') . '!';
 				},
 			],
@@ -94,7 +94,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'put',
 				'home',
-				function () {
+				static function () {
 					return 'Hello Pluto';
 				},
 			],
@@ -110,7 +110,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'patch',
 				'home',
-				function () {
+				static function () {
 					return 'Hello Jupiter';
 				},
 			],
@@ -126,7 +126,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'options',
 				'home',
-				function () {
+				static function () {
 					return 'Hello George';
 				},
 			],
@@ -142,7 +142,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'delete',
 				'home',
-				function () {
+				static function () {
 					return 'Hello Wonka';
 				},
 			],
@@ -158,14 +158,14 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				function () {
+				static function () {
 					return 'Home';
 				},
 			],
 		])->withSession([
-			  'fruit'    => 'apple',
-			  'greeting' => 'hello',
-		  ])->get('home');
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		])->get('home');
 
 		$response->assertSessionHas('fruit', 'apple');
 		$response->assertSessionMissing('popcorn');
@@ -182,7 +182,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				function () {
+				static function () {
 					return 'Home';
 				},
 			],
@@ -255,17 +255,17 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function provideRoutesData()
 	{
 		return [
-			'non parameterized cli'                => [
+			'non parameterized cli' => [
 				'hello',
 				'Hello::index',
 				'Hello',
 			],
-			'parameterized cli'                    => [
+			'parameterized cli' => [
 				'hello/(:any)',
 				'Hello::index/$1',
 				'Hello/index/samsonasik',
 			],
-			'default method index'                 => [
+			'default method index' => [
 				'hello',
 				'Hello',
 				'Hello',
@@ -280,6 +280,10 @@ class FeatureTestCaseTest extends FeatureTestCase
 
 	/**
 	 * @dataProvider provideRoutesData
+	 *
+	 * @param mixed $from
+	 * @param mixed $to
+	 * @param mixed $httpGet
 	 */
 	public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
 	{

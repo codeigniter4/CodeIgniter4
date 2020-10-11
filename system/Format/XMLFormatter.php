@@ -53,7 +53,7 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @param mixed $data
 	 *
-	 * @return string|boolean (XML string | false)
+	 * @return bool|string (XML string | false)
 	 */
 	public function format($data)
 	{
@@ -84,8 +84,8 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @see http://www.codexworld.com/convert-array-to-xml-in-php/
 	 *
-	 * @param array             $data
-	 * @param \SimpleXMLElement $output
+	 * @param array            $data
+	 * @param SimpleXMLElement $output
 	 */
 	protected function arrayToXML(array $data, &$output)
 	{
@@ -94,13 +94,13 @@ class XMLFormatter implements FormatterInterface
 			if (is_array($value))
 			{
 				$key     = $this->normalizeXMLTag($key);
-				$subnode = $output->addChild("$key");
+				$subnode = $output->addChild("{$key}");
 				$this->arrayToXML($value, $subnode);
 			}
 			else
 			{
 				$key = $this->normalizeXMLTag($key);
-				$output->addChild("$key", htmlspecialchars("$value"));
+				$output->addChild("{$key}", htmlspecialchars("{$value}"));
 			}
 		}
 	}
@@ -109,7 +109,7 @@ class XMLFormatter implements FormatterInterface
 	 * Normalizes tags into the allowed by W3C.
 	 * Regex adopted from this StackOverflow answer.
 	 *
-	 * @param string|integer $key
+	 * @param int|string $key
 	 *
 	 * @return string
 	 *

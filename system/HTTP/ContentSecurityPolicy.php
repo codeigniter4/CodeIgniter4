@@ -51,11 +51,9 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  * @see     http://www.html5rocks.com/en/tutorials/security/content-security-policy/
  * @see     http://content-security-policy.com/
  * @see     https://www.owasp.org/index.php/Content_Security_Policy
- * @package CodeIgniter\HTTP
  */
 class ContentSecurityPolicy
 {
-
 	/**
 	 * Used for security enforcement
 	 *
@@ -171,14 +169,14 @@ class ContentSecurityPolicy
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $upgradeInsecureRequests = false;
 
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $reportOnly = false;
 
@@ -217,8 +215,6 @@ class ContentSecurityPolicy
 	 */
 	protected $reportOnlyHeaders = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * ContentSecurityPolicy constructor.
 	 *
@@ -228,7 +224,7 @@ class ContentSecurityPolicy
 	 */
 	public function __construct(ContentSecurityPolicyConfig $config)
 	{
-		foreach ($config as $setting => $value) // @phpstan-ignore-line
+		foreach (get_object_vars($config) as $setting => $value)
 		{
 			if (isset($this->{$setting}))
 			{
@@ -236,8 +232,6 @@ class ContentSecurityPolicy
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Compiles and sets the appropriate headers in the request.
@@ -253,8 +247,6 @@ class ContentSecurityPolicy
 		$this->buildHeaders($response);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * If TRUE, nothing will be restricted. Instead all violations will
 	 * be reported to the reportURI for monitoring. This is useful when
@@ -262,7 +254,7 @@ class ContentSecurityPolicy
 	 * determine what errors need to be addressed before you turn on
 	 * all filtering.
 	 *
-	 * @param boolean|true $value
+	 * @param bool $value
 	 *
 	 * @return $this
 	 */
@@ -273,8 +265,6 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new base_uri value. Can be either a URI class or a simple string.
 	 *
@@ -282,8 +272,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -293,8 +283,6 @@ class ContentSecurityPolicy
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Adds a new valid endpoint for a form's action. Can be either
@@ -306,8 +294,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-child-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -318,8 +306,6 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for a form's action. Can be either
 	 * a URI class or a simple string.
@@ -329,8 +315,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -341,8 +327,6 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for a form's action. Can be either
 	 * a URI class or a simple string.
@@ -352,8 +336,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-default-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -364,8 +348,6 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for a form's action. Can be either
 	 * a URI class or a simple string.
@@ -374,8 +356,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-font-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -386,16 +368,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for a form's action. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-form-action
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -406,16 +386,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new resource that should allow embedding the resource using
 	 * <frame>, <iframe>, <object>, <embed>, or <applet>
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -426,16 +404,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for valid image sources. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-img-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -446,16 +422,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for valid video and audio. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-media-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -466,16 +440,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for manifest sources. Can be either
 	 * a URI class or simple string.
 	 *
 	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -486,16 +458,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for Flash and other plugin sources. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-object-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -506,16 +476,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Limits the types of plugins that can be used. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
 	 *
-	 * @param string|array $mime              One or more plugin mime types, separate by spaces
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $mime              One or more plugin mime types, separate by spaces
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -525,8 +493,6 @@ class ContentSecurityPolicy
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Specifies a URL where a browser will send reports when a content
@@ -545,26 +511,23 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * specifies an HTML sandbox policy that the user agent applies to
 	 * the protected resource.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-sandbox
 	 *
-	 * @param string|array $flags             An array of sandbox flags that can be added to the directive.
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $flags             an array of sandbox flags that can be added to the directive
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
 	public function addSandbox($flags, bool $explicitReporting = null)
 	{
 		$this->addOption($flags, 'sandbox', $explicitReporting ?? $this->reportOnly);
+
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Adds a new valid endpoint for javascript file sources. Can be either
@@ -572,8 +535,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -584,16 +547,14 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a new valid endpoint for CSS file sources. Can be either
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param string|array $uri
-	 * @param boolean|null $explicitReporting
+	 * @param array|string $uri
+	 * @param bool|null    $explicitReporting
 	 *
 	 * @return $this
 	 */
@@ -604,13 +565,11 @@ class ContentSecurityPolicy
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets whether the user agents should rewrite URL schemes, changing
 	 * HTTP to HTTPS.
 	 *
-	 * @param boolean $value
+	 * @param bool $value
 	 *
 	 * @return $this
 	 */
@@ -628,9 +587,9 @@ class ContentSecurityPolicy
 	/**
 	 * DRY method to add an string or array to a class property.
 	 *
-	 * @param string|array $options
+	 * @param array|string $options
 	 * @param string       $target
-	 * @param boolean|null $explicitReporting
+	 * @param bool|null    $explicitReporting
 	 */
 	protected function addOption($options, string $target, bool $explicitReporting = null)
 	{
@@ -653,14 +612,12 @@ class ContentSecurityPolicy
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Scans the body of the request message and replaces any nonce
 	 * placeholders with actual nonces, that we'll then add to our
 	 * headers.
 	 *
-	 * @param ResponseInterface|Response $response
+	 * @param Response|ResponseInterface $response
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
@@ -675,6 +632,7 @@ class ContentSecurityPolicy
 		{
 			$this->styleSrc = [$this->styleSrc];
 		}
+
 		if (! is_array($this->scriptSrc))
 		{
 			$this->scriptSrc = [$this->scriptSrc];
@@ -682,37 +640,39 @@ class ContentSecurityPolicy
 
 		// Replace style placeholders with nonces
 		$body = preg_replace_callback(
-				'/{csp-style-nonce}/', function ($matches) {
-					$nonce = bin2hex(random_bytes(12));
+			'/{csp-style-nonce}/',
+			function ($matches) {
+				$nonce = bin2hex(random_bytes(12));
 
-					$this->styleSrc[] = 'nonce-' . $nonce;
+				$this->styleSrc[] = 'nonce-' . $nonce;
 
-					return "nonce=\"{$nonce}\"";
-				}, $body
+				return "nonce=\"{$nonce}\"";
+			},
+			$body
 		);
 
 		// Replace script placeholders with nonces
 		$body = preg_replace_callback(
-				'/{csp-script-nonce}/', function ($matches) {
-					$nonce = bin2hex(random_bytes(12));
+			'/{csp-script-nonce}/',
+			function ($matches) {
+				$nonce = bin2hex(random_bytes(12));
 
-					$this->scriptSrc[] = 'nonce-' . $nonce;
+				$this->scriptSrc[] = 'nonce-' . $nonce;
 
-					return "nonce=\"{$nonce}\"";
-				}, $body
+				return "nonce=\"{$nonce}\"";
+			},
+			$body
 		);
 
 		$response->setBody($body);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Based on the current state of the elements, will add the appropriate
 	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
 	 * with their values to the response object.
 	 *
-	 * @param ResponseInterface|Response $response
+	 * @param Response|ResponseInterface $response
 	 */
 	protected function buildHeaders(ResponseInterface &$response)
 	{
@@ -744,6 +704,7 @@ class ContentSecurityPolicy
 		{
 			$this->baseURI = 'self';
 		}
+
 		if (empty($this->defaultSrc))
 		{
 			$this->defaultSrc = 'self';
@@ -764,6 +725,7 @@ class ContentSecurityPolicy
 		if (! empty($this->tempHeaders))
 		{
 			$header = '';
+
 			foreach ($this->tempHeaders as $name => $value)
 			{
 				$header .= " {$name} {$value};";
@@ -780,6 +742,7 @@ class ContentSecurityPolicy
 		if (! empty($this->reportOnlyHeaders))
 		{
 			$header = '';
+
 			foreach ($this->reportOnlyHeaders as $name => $value)
 			{
 				$header .= " {$name} {$value};";
@@ -790,8 +753,6 @@ class ContentSecurityPolicy
 		$this->tempHeaders       = [];
 		$this->reportOnlyHeaders = [];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Adds a directive and it's options to the appropriate header. The $values
@@ -846,6 +807,4 @@ class ContentSecurityPolicy
 			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
 		}
 	}
-
-	//--------------------------------------------------------------------
 }

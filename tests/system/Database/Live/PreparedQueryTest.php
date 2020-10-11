@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Query;
@@ -13,11 +15,9 @@ class PreparedQueryTest extends CIDatabaseTestCase
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	//--------------------------------------------------------------------
-
 	public function testPrepareReturnsPreparedQuery()
 	{
-		$query = $this->db->prepare(function ($db) {
+		$query = $this->db->prepare(static function ($db) {
 			return $db->table('user')->insert([
 				'name'  => 'a',
 				'email' => 'b@example.com',
@@ -44,7 +44,7 @@ class PreparedQueryTest extends CIDatabaseTestCase
 
 	public function testPrepareReturnsManualPreparedQuery()
 	{
-		$query = $this->db->prepare(function ($db) {
+		$query = $this->db->prepare(static function ($db) {
 			$sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
 			return (new Query($db))->setQuery($sql);
@@ -67,11 +67,9 @@ class PreparedQueryTest extends CIDatabaseTestCase
 		$query->close();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testExecuteRunsQueryAndReturnsResultObject()
 	{
-		$query = $this->db->prepare(function ($db) {
+		$query = $this->db->prepare(static function ($db) {
 			return $db->table('user')->insert([
 				'name'    => 'a',
 				'email'   => 'b@example.com',
@@ -90,7 +88,7 @@ class PreparedQueryTest extends CIDatabaseTestCase
 
 	public function testExecuteRunsQueryAndReturnsManualResultObject()
 	{
-		$query = $this->db->prepare(function ($db) {
+		$query = $this->db->prepare(static function ($db) {
 			$sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
 			return (new Query($db))->setQuery($sql);
@@ -104,7 +102,4 @@ class PreparedQueryTest extends CIDatabaseTestCase
 
 		$query->close();
 	}
-
-	//--------------------------------------------------------------------
-
 }

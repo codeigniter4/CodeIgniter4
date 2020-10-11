@@ -1,11 +1,11 @@
 <?php
+
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\Config;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
-class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
+class ConfigTest extends CIUnitTestCase
 {
 	use ReflectionHelper;
 
@@ -125,10 +125,10 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('3306', $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals('MySQLi', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('test_', $this->getPrivateProperty($conn, 'DBPrefix'));
-		$this->assertEquals(true, $this->getPrivateProperty($conn, 'pConnect'));
+		$this->assertTrue($this->getPrivateProperty($conn, 'pConnect'));
 		$this->assertEquals('latin1', $this->getPrivateProperty($conn, 'charset'));
 		$this->assertEquals('latin1_swedish_ci', $this->getPrivateProperty($conn, 'DBCollat'));
-		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
+		$this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
 
@@ -145,10 +145,10 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('5432', $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('test_', $this->getPrivateProperty($conn, 'DBPrefix'));
-		$this->assertEquals(false, $this->getPrivateProperty($conn, 'pConnect'));
+		$this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
 		$this->assertEquals('utf8', $this->getPrivateProperty($conn, 'charset'));
 		$this->assertEquals('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
-		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
+		$this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 		$this->assertEquals('5', $this->getPrivateProperty($conn, 'connect_timeout'));
 		$this->assertEquals('1', $this->getPrivateProperty($conn, 'sslmode'));
@@ -173,11 +173,10 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('5432', $this->getPrivateProperty($conn, 'port'));
 		$this->assertEquals('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
 		$this->assertEquals('t_', $this->getPrivateProperty($conn, 'DBPrefix'));
-		$this->assertEquals(false, $this->getPrivateProperty($conn, 'pConnect'));
+		$this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
 		$this->assertEquals('utf8', $this->getPrivateProperty($conn, 'charset'));
 		$this->assertEquals('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
-		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
+		$this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
-
 }

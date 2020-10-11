@@ -48,7 +48,6 @@ use Config\Cache;
  */
 class FileHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -63,17 +62,17 @@ class FileHandler implements CacheInterface
 	 */
 	protected $path;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param  Cache $config
+	 * @param Cache $config
+	 *
 	 * @throws CacheException
 	 */
 	public function __construct(Cache $config)
 	{
 		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
+
 		if (! is_really_writable($path))
 		{
 			throw CacheException::forUnableToWrite($path);
@@ -83,17 +82,13 @@ class FileHandler implements CacheInterface
 		$this->path   = rtrim($path, '/') . '/';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes care of any handler-specific setup that must be done.
 	 */
 	public function initialize()
 	{
-		// Not to see here...
+		// Nothing to see here...
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -104,23 +99,20 @@ class FileHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = $this->prefix . $key;
 		$data = $this->getItem($key);
 
 		return is_array($data) ? $data['data'] : null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
@@ -142,14 +134,12 @@ class FileHandler implements CacheInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes a specific item from the cache store.
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function delete(string $key)
 	{
@@ -158,13 +148,11 @@ class FileHandler implements CacheInterface
 		return is_file($this->path . $key) && unlink($this->path . $key);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -191,13 +179,11 @@ class FileHandler implements CacheInterface
 		return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param string $key    Cache ID
+	 * @param int    $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -224,19 +210,15 @@ class FileHandler implements CacheInterface
 		return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function clean()
 	{
 		return $this->deleteFiles($this->path, false, true);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns information on the entire cache.
@@ -251,12 +233,10 @@ class FileHandler implements CacheInterface
 		return $this->getDirFileInfo($this->path);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns detailed information about the specific item in the cache.
 	 *
-	 * @param string $key Cache item name.
+	 * @param string $key Cache item name
 	 *
 	 * @return mixed
 	 */
@@ -290,19 +270,15 @@ class FileHandler implements CacheInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSupported(): bool
 	{
 		return is_writable($this->path);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Does the heavy lifting of actually retrieving the file and
@@ -310,7 +286,7 @@ class FileHandler implements CacheInterface
 	 *
 	 * @param string $key
 	 *
-	 * @return boolean|mixed
+	 * @return bool|mixed
 	 */
 	protected function getItem(string $key)
 	{
@@ -337,7 +313,6 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// SUPPORT METHODS FOR FILES
 	//--------------------------------------------------------------------
 
@@ -348,7 +323,7 @@ class FileHandler implements CacheInterface
 	 * @param string $data
 	 * @param string $mode
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
@@ -373,8 +348,6 @@ class FileHandler implements CacheInterface
 		return is_int($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Delete Files
 	 *
@@ -383,12 +356,12 @@ class FileHandler implements CacheInterface
 	 * If the second parameter is set to TRUE, any directories contained
 	 * within the supplied base directory will be nuked as well.
 	 *
-	 * @param string  $path   File path
-	 * @param boolean $delDir Whether to delete any directories found in the path
-	 * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
-	 * @param integer $_level Current directory depth level (default: 0; internal use only)
+	 * @param string $path   File path
+	 * @param bool   $delDir Whether to delete any directories found in the path
+	 * @param bool   $htdocs Whether to skip deleting .htaccess and index page files
+	 * @param int    $_level Current directory depth level (default: 0; internal use only)
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function deleteFiles(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
 	{
@@ -420,8 +393,6 @@ class FileHandler implements CacheInterface
 		return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get Directory File Information
 	 *
@@ -430,9 +401,9 @@ class FileHandler implements CacheInterface
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $sourceDir    Path to source
-	 * @param boolean $topLevelOnly Look only at the top level directory specified?
-	 * @param boolean $_recursion   Internal variable to determine recursion status - do not use in calls
+	 * @param string $sourceDir    Path to source
+	 * @param bool   $topLevelOnly Look only at the top level directory specified?
+	 * @param bool   $_recursion   Internal variable to determine recursion status - do not use in calls
 	 *
 	 * @return array|false
 	 */
@@ -472,8 +443,6 @@ class FileHandler implements CacheInterface
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get File Info
 	 *
@@ -505,33 +474,39 @@ class FileHandler implements CacheInterface
 			{
 				case 'name':
 					$fileInfo['name'] = basename($file);
+
 					break;
 				case 'server_path':
 					$fileInfo['server_path'] = $file;
+
 					break;
 				case 'size':
 					$fileInfo['size'] = filesize($file);
+
 					break;
 				case 'date':
 					$fileInfo['date'] = filemtime($file);
+
 					break;
 				case 'readable':
 					$fileInfo['readable'] = is_readable($file);
+
 					break;
 				case 'writable':
 					$fileInfo['writable'] = is_writable($file);
+
 					break;
 				case 'executable':
 					$fileInfo['executable'] = is_executable($file);
+
 					break;
 				case 'fileperms':
 					$fileInfo['fileperms'] = fileperms($file);
+
 					break;
 			}
 		}
 
 		return $fileInfo; // @phpstan-ignore-line
 	}
-
-	//--------------------------------------------------------------------
 }

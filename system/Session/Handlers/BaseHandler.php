@@ -48,7 +48,6 @@ use SessionHandlerInterface;
  */
 abstract class BaseHandler implements SessionHandlerInterface
 {
-
 	use LoggerAwareTrait;
 
 	/**
@@ -89,7 +88,7 @@ abstract class BaseHandler implements SessionHandlerInterface
 	/**
 	 * Cookie secure?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $cookieSecure = false;
 
@@ -103,7 +102,7 @@ abstract class BaseHandler implements SessionHandlerInterface
 	/**
 	 * Match IP addresses for cookies?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $matchIP = false;
 
@@ -118,7 +117,7 @@ abstract class BaseHandler implements SessionHandlerInterface
 	 * The 'save path' for the session
 	 * varies between
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $savePath;
 
@@ -128,8 +127,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 	 * @var string
 	 */
 	protected $ipAddress;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -149,22 +146,24 @@ abstract class BaseHandler implements SessionHandlerInterface
 		$this->ipAddress    = $ipAddress;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Internal method to force removal of a cookie by the client
 	 * when session_destroy() is called.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function destroyCookie(): bool
 	{
 		return setcookie(
-				$this->cookieName, '', 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
+			$this->cookieName,
+			'',
+			1,
+			$this->cookiePath,
+			$this->cookieDomain,
+			$this->cookieSecure,
+			true
 		);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A dummy method allowing drivers with no locking functionality
@@ -173,20 +172,19 @@ abstract class BaseHandler implements SessionHandlerInterface
 	 *
 	 * @param string $sessionID
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
 		$this->lock = true;
+
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Releases the lock, if any.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function releaseLock(): bool
 	{
@@ -194,8 +192,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fail
@@ -208,7 +204,7 @@ abstract class BaseHandler implements SessionHandlerInterface
 	 * so that the INI is set just in time for the error message to
 	 * be properly generated.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function fail(): bool
 	{

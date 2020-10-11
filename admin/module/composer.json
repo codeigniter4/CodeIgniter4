@@ -7,10 +7,14 @@
 		"php": ">=7.2"
 	},
 	"require-dev": {
-		"codeigniter4/codeigniter4": "dev-develop",
+		"friendsofphp/php-cs-fixer": "^2.16",
 		"fzaninotto/faker": "^1.9@dev",
+		"liaison/cs-config": "^1.1",
 		"mikey179/vfsstream": "1.6.*",
 		"phpunit/phpunit": "^8.5"
+	},
+	"config": {
+		"sort-packages": true
 	},
 	"autoload-dev": {
 		"psr-4": {

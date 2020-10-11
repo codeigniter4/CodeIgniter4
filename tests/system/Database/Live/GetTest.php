@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -15,8 +17,8 @@ class GetTest extends CIDatabaseTestCase
 	public function testGet()
 	{
 		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getResult();
+			->get()
+			->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -25,80 +27,68 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('Musician', $jobs[3]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetWitLimit()
 	{
 		$jobs = $this->db->table('job')
-						 ->get(2, 2)
-						 ->getResult();
+			->get(2, 2)
+			->getResult();
 
 		$this->assertCount(2, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
 		$this->assertEquals('Musician', $jobs[1]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetWhereArray()
 	{
 		$jobs = $this->db->table('job')
-						 ->getWhere(['id' => 1])
-						 ->getResult();
+			->getWhere(['id' => 1])
+			->getResult();
 
 		$this->assertCount(1, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetWhereWithLimits()
 	{
 		$jobs = $this->db->table('job')
-						 ->getWhere('id > 1', 1, 1)
-						 ->getResult();
+			->getWhere('id > 1', 1, 1)
+			->getResult();
 
 		$this->assertCount(1, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFieldCount()
 	{
 		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldCount();
+			->get()
+			->getFieldCount();
 
 		$this->assertEquals(6, $jobs);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetFieldNames()
 	{
 		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldNames();
+			->get()
+			->getFieldNames();
 
-		$this->assertTrue(in_array('name', $jobs));
-		$this->assertTrue(in_array('description', $jobs));
+		$this->assertTrue(in_array('name', $jobs, true));
+		$this->assertTrue(in_array('description', $jobs, true));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFieldData()
 	{
 		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldData();
+			->get()
+			->getFieldData();
 
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
 
 		$type_test = $this->db->table('type_test')
-							  ->get()
-							  ->getFieldData();
+			->get()
+			->getFieldData();
 
 		if ($this->db->DBDriver === 'SQLite3')
 		{
@@ -123,6 +113,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('float', $type_test[18]->type_name);  //DECIMAL
 			$this->assertEquals('text', $type_test[19]->type_name);  //BLOB
 		}
+
 		if ($this->db->DBDriver === 'MySQLi')
 		{
 			$this->assertEquals('long', $type_test[0]->type_name); //INTEGER AUTOINC
@@ -146,6 +137,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('newdecimal', $type_test[18]->type_name);  //DECIMAL
 			$this->assertEquals('blob', $type_test[19]->type_name);  //BLOB
 		}
+
 		if ($this->db->DBDriver === 'Postgre')
 		{
 			$this->assertEquals('int4', $type_test[0]->type_name); //INTEGER AUTOINC
@@ -164,12 +156,9 @@ class GetTest extends CIDatabaseTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetDataSeek()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
 		if ($this->db->DBDriver === 'SQLite3')
 		{
@@ -183,11 +172,9 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('Musician', $details[0]->name);
 	}
 
-	//--------------------------------------------------------------------
 	public function testGetAnotherDataSeek()
 	{
-		$data = $this->db->table('job')
-						 ->get();
+		$data = $this->db->table('job')->get();
 
 		$data->dataSeek(0);
 
@@ -199,13 +186,11 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('Musician', $details[3]->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFreeResult()
 	{
 		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+			->where('id', 4)
+			->get();
 
 		$details = $data->getResult();
 
@@ -216,86 +201,71 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertFalse($data->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetRowWithColumnName()
 	{
 		$name = $this->db->table('user')
-						 ->get()
-						 ->getRow('name', 'array');
+			->get()
+			->getRow('name', 'array');
 
 		$this->assertEquals('Derek Jones', $name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetRowWithReturnType()
 	{
 		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, 'array');
+			->get()
+			->getRow(0, 'array');
 
 		$this->assertEquals('Derek Jones', $user['name']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetRowWithCustomReturnType()
 	{
-		$testClass = new class { };
+		$testClass = new class() {
+		};
 
 		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, get_class($testClass));
+			->get()
+			->getRow(0, get_class($testClass));
 
 		$this->assertEquals('Derek Jones', $user->name);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetFirstRow()
 	{
 		$user = $this->db->table('user')
-						 ->get()
-						 ->getFirstRow();
+			->get()
+			->getFirstRow();
 
 		$this->assertEquals('Derek Jones', $user->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetLastRow()
 	{
 		$user = $this->db->table('user')
-						 ->get()
-						 ->getLastRow();
+			->get()
+			->getLastRow();
 
 		$this->assertEquals('Chris Martin', $user->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetNextRow()
 	{
 		$user = $this->db->table('user')
-						 ->get()
-						 ->getNextRow();
+			->get()
+			->getNextRow();
 
 		$this->assertEquals('Ahmadinejad', $user->name);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetPreviousRow()
 	{
 		$user = $this->db->table('user')
-						 ->get();
+			->get();
 
 		$user->currentRow = 3;
 		$user             = $user->getPreviousRow();
 
 		$this->assertEquals('Richard A Causey', $user->name);
 	}
-
-	//--------------------------------------------------------------------
 }

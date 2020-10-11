@@ -46,15 +46,12 @@ use InvalidArgumentException;
  */
 class DotEnv
 {
-
 	/**
 	 * The directory where the .env file can be located.
 	 *
 	 * @var string
 	 */
 	protected $path;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Builds the path to our file.
@@ -67,23 +64,19 @@ class DotEnv
 		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The main entry point, will load the .env file and process it
 	 * so that we end up with all settings in the PHP environment vars
 	 * (i.e. getenv(), $_ENV, and $_SERVER)
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function load(): bool
 	{
 		$vars = $this->parse();
 
-		return ($vars === null ? false : true);
+		return $vars === null ? false : true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parse the .env file into an array of key => value
@@ -119,16 +112,14 @@ class DotEnv
 			// If there is an equal sign, then we know we are assigning a variable.
 			if (strpos($line, '=') !== false)
 			{
-				list($name, $value) = $this->normaliseVariable($line);
-				$vars[$name]        = $value;
+				[$name, $value] = $this->normaliseVariable($line);
+				$vars[$name]    = $value;
 				$this->setVariable($name, $value);
 			}
 		}
 
 		return $vars;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the variable into the environment. Will parse the string
@@ -142,7 +133,7 @@ class DotEnv
 	{
 		if (! getenv($name, true))
 		{
-			putenv("$name=$value");
+			putenv("{$name}={$value}");
 		}
 
 		if (empty($_ENV[$name]))
@@ -155,8 +146,6 @@ class DotEnv
 			$_SERVER[$name] = $value;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parses for assignment, cleans the $name and $value, and ensures
@@ -172,7 +161,7 @@ class DotEnv
 		// Split our compound string into its parts.
 		if (strpos($name, '=') !== false)
 		{
-			list($name, $value) = explode('=', $name, 2);
+			[$name, $value] = explode('=', $name, 2);
 		}
 
 		$name  = trim($name);
@@ -192,8 +181,6 @@ class DotEnv
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Strips quotes from the environment variable value.
 	 *
@@ -202,8 +189,9 @@ class DotEnv
 	 *
 	 * @param string $value
 	 *
-	 * @return string
 	 * @throws InvalidArgumentException
+	 *
+	 * @return string
 	 */
 	protected function sanitizeValue(string $value): string
 	{
@@ -218,22 +206,24 @@ class DotEnv
 			// value starts with a quote
 			$quote        = $value[0];
 			$regexPattern = sprintf(
-					'/^
-					%1$s          # match a quote at the start of the value
-					(             # capturing sub-pattern used
-								  (?:          # we do not need to capture this
-								   [^%1$s\\\\] # any character other than a quote or backslash
-								   |\\\\\\\\   # or two backslashes together
-								   |\\\\%1$s   # or an escaped quote e.g \"
-								  )*           # as many characters that match the previous rules
-					)             # end of the capturing sub-pattern
-					%1$s          # and the closing quote
-					.*$           # and discard any string after the closing quote
-					/mx', $quote
+				'/^
+				%1$s          # match a quote at the start of the value
+				(             # capturing sub-pattern used
+				 (?:          # we do not need to capture this
+				  [^%1$s\\\\] # any character other than a quote or backslash
+				  |\\\\\\\\   # or two backslashes together
+				  |\\\\%1$s   # or an escaped quote e.g \"
+				 )*           # as many characters that match the previous rules
+				)             # end of the capturing sub-pattern
+				%1$s          # and the closing quote
+				.*$           # and discard any string after the closing quote
+				/mx',
+				$quote
 			);
-			$value        = preg_replace($regexPattern, '$1', $value);
-			$value        = str_replace("\\$quote", $quote, $value);
-			$value        = str_replace('\\\\', '\\', $value);
+
+			$value = preg_replace($regexPattern, '$1', $value);
+			$value = str_replace("\\{$quote}", $quote, $value);
+			$value = str_replace('\\\\', '\\', $value);
 		}
 		else
 		{
@@ -250,8 +240,6 @@ class DotEnv
 
 		return $value;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 *  Resolve the nested variables.
@@ -275,7 +263,7 @@ class DotEnv
 				function ($matchedPatterns) {
 					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 
-					if (is_null($nestedVariable))
+					if ($nestedVariable === null)
 					{
 						return $matchedPatterns[0];
 					}
@@ -288,8 +276,6 @@ class DotEnv
 
 		return $value;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Search the different places for environment variables and return first value found.
@@ -316,6 +302,4 @@ class DotEnv
 				return $value === false ? null : $value;
 		}
 	}
-
-	//--------------------------------------------------------------------
 }

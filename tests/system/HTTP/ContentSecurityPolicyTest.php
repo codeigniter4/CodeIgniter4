@@ -1,6 +1,8 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,9 +11,8 @@ use Config\App;
  * See https://apimirror.com/http/headers/content-security-policy
  * See https://cspvalidator.org/
  */
-class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
+class ContentSecurityPolicyTest extends CIUnitTestCase
 {
-
 	// Having this method as setUp() doesn't work - can't find Config\App !?
 	protected function prepare(bool $CSPEnabled = true)
 	{
@@ -31,14 +32,14 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 		ob_start();
 		$this->response->send();
 		$buffer = ob_clean();
+
 		if (ob_get_level() > 0)
 		{
 			ob_end_clean();
 		}
+
 		return $buffer;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -52,8 +53,6 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Content-Security-Policy:');
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -66,8 +65,6 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertHeaderEmitted('Content-Security-Policy:');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -87,8 +84,6 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString("script-src 'self';", $result);
 		$this->assertStringContainsString("style-src 'self';", $result);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -309,8 +304,6 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -462,8 +455,6 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('nonce-', $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -502,5 +493,4 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertHeaderNotEmitted('content-security-policy', true);
 	}
-
 }

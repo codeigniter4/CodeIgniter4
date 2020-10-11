@@ -46,7 +46,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 abstract class BaseUtils
 {
-
 	/**
 	 * Database object
 	 *
@@ -54,30 +53,26 @@ abstract class BaseUtils
 	 */
 	protected $db;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * List databases statement
 	 *
-	 * @var string|boolean
+	 * @var bool|string
 	 */
 	protected $listDatabases = false;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
-	 * @var string|boolean
+	 * @var bool|string
 	 */
 	protected $optimizeTable = false;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
-	 * @var string|boolean
+	 * @var bool|string
 	 */
 	protected $repairTable = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Class constructor
@@ -86,16 +81,15 @@ abstract class BaseUtils
 	 */
 	public function __construct(ConnectionInterface &$db)
 	{
-		$this->db = & $db;
+		$this->db = &$db;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * List databases
 	 *
-	 * @return array|boolean
 	 * @throws DatabaseException
+	 *
+	 * @return array|bool
 	 */
 	public function listDatabases()
 	{
@@ -111,18 +105,20 @@ abstract class BaseUtils
 			{
 				throw new DatabaseException('Unsupported feature of the database platform you are using.');
 			}
+
 			return false;
 		}
 
 		$this->db->dataCache['db_names'] = [];
 
 		$query = $this->db->query($this->listDatabases);
+
 		if ($query === false)
 		{
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++)
+		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i++)
 		{
 			$this->db->dataCache['db_names'][] = current($query[$i]);
 		}
@@ -130,27 +126,26 @@ abstract class BaseUtils
 		return $this->db->dataCache['db_names'];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determine if a particular database exists
 	 *
-	 * @param  string $databaseName
-	 * @return boolean
+	 * @param string $databaseName
+	 *
+	 * @return bool
 	 */
 	public function databaseExists(string $databaseName): bool
 	{
 		return in_array($databaseName, $this->listDatabases(), true);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Optimize Table
 	 *
-	 * @param  string $tableName
-	 * @return mixed
+	 * @param string $tableName
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return mixed
 	 */
 	public function optimizeTable(string $tableName)
 	{
@@ -160,26 +155,28 @@ abstract class BaseUtils
 			{
 				throw new DatabaseException('Unsupported feature of the database platform you are using.');
 			}
+
 			return false;
 		}
 
 		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
+
 		if ($query !== false)
 		{
 			$query = $query->getResultArray();
+
 			return current($query);
 		}
 
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Optimize Database
 	 *
-	 * @return mixed
 	 * @throws DatabaseException
+	 *
+	 * @return mixed
 	 */
 	public function optimizeDatabase()
 	{
@@ -189,13 +186,16 @@ abstract class BaseUtils
 			{
 				throw new DatabaseException('Unsupported feature of the database platform you are using.');
 			}
+
 			return false;
 		}
 
 		$result = [];
+
 		foreach ($this->db->listTables() as $tableName)
 		{
 			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
+
 			if (is_bool($res))
 			{
 				return $res;
@@ -224,14 +224,14 @@ abstract class BaseUtils
 		return $result;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Repair Table
 	 *
-	 * @param  string $tableName
-	 * @return mixed
+	 * @param string $tableName
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return mixed
 	 */
 	public function repairTable(string $tableName)
 	{
@@ -241,20 +241,21 @@ abstract class BaseUtils
 			{
 				throw new DatabaseException('Unsupported feature of the database platform you are using.');
 			}
+
 			return false;
 		}
 
 		$query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($tableName)));
+
 		if (is_bool($query))
 		{
 			return $query;
 		}
 
 		$query = $query->getResultArray();
+
 		return current($query);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generate CSV from a query result object
@@ -281,6 +282,7 @@ abstract class BaseUtils
 		while ($row = $query->getUnbufferedRow('array'))
 		{
 			$line = [];
+
 			foreach ($row as $item)
 			{
 				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
@@ -290,8 +292,6 @@ abstract class BaseUtils
 
 		return $out;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Generate XML data from a query result object
@@ -325,9 +325,10 @@ abstract class BaseUtils
 		while ($row = $query->getUnbufferedRow())
 		{
 			$xml .= $tab . '<' . $element . '>' . $newline;
+
 			foreach ($row as $key => $val)
 			{
-				$val  = (! empty($val)) ? xml_convert($val) : '';
+				$val = (! empty($val)) ? xml_convert($val) : '';
 				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
 			}
 			$xml .= $tab . '</' . $element . '>' . $newline;
@@ -336,14 +337,14 @@ abstract class BaseUtils
 		return $xml . '</' . $root . '>' . $newline;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Database Backup
 	 *
-	 * @param  array|string $params
-	 * @return mixed
+	 * @param array|string $params
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return mixed
 	 */
 	public function backup($params = [])
 	{
@@ -404,15 +405,14 @@ abstract class BaseUtils
 			$prefs['format'] = 'txt';
 		}
 
-		if ($prefs['format'] === 'txt') // Was a text file requested?
+		if ($prefs['format'] === 'txt')
 		{
+			// Was a text file requested?
 			return $this->_backup($prefs);
 		}
 
 		return gzencode($this->_backup($prefs));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Platform dependent version of the backup function.
@@ -422,6 +422,4 @@ abstract class BaseUtils
 	 * @return mixed
 	 */
 	abstract public function _backup(array $prefs = null);
-
-	//--------------------------------------------------------------------
 }

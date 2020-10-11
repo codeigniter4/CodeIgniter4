@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -49,15 +50,12 @@ use stdClass;
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Database driver
 	 *
 	 * @var string
 	 */
 	public $DBDriver = 'Postgre';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Database schema
@@ -73,12 +71,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public $escapeChar = '"';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Connect to the database.
 	 *
-	 * @param  boolean $persistent
+	 * @param bool $persistent
+	 *
 	 * @return mixed
 	 */
 	public function connect(bool $persistent = false)
@@ -89,9 +86,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		// Strip pgsql if exists
-		if (mb_strpos($this->DSN, 'pgsql:') === 0)
+		if (strpos($this->DSN, 'pgsql:') === 0)
 		{
-			$this->DSN = mb_substr($this->DSN, 6);
+			$this->DSN = substr($this->DSN, 6);
 		}
 
 		// Convert semicolons to spaces.
@@ -101,8 +98,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ($this->connID !== false)
 		{
-			if ($persistent === true && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD && pg_ping($this->connID) === false
-			)
+			if ($persistent === true && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD && pg_ping($this->connID) === false)
 			{
 				return false;
 			}
@@ -118,8 +114,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $this->connID;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
@@ -134,8 +128,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Close the database connection.
 	 *
@@ -146,21 +138,17 @@ class Connection extends BaseConnection implements ConnectionInterface
 		pg_close($this->connID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Select a specific database table to use.
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function setDatabase(string $databaseName): bool
 	{
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a string containing the version of the database being used.
@@ -175,15 +163,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		// @phpstan-ignore-next-line
-		if (! $this->connID || ( $pgVersion = pg_version($this->connID)) === false)
+		if (! $this->connID || ($pgVersion = pg_version($this->connID)) === false)
 		{
 			$this->initialize();
 		}
 
 		return isset($pgVersion['server']) ? $this->dataCache['version'] = $pgVersion['server'] : false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Executes the query against the database.
@@ -201,34 +187,33 @@ class Connection extends BaseConnection implements ConnectionInterface
 		catch (ErrorException $e)
 		{
 			log_message('error', $e);
+
 			if ($this->DBDebug)
 			{
 				throw $e;
 			}
 		}
+
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
 		return pg_affected_rows($this->resultID);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * "Smart" Escape String
 	 *
 	 * Escapes data based on type
 	 *
-	 * @param  mixed $str
+	 * @param mixed $str
+	 *
 	 * @return mixed
 	 */
 	public function escape($str)
@@ -238,7 +223,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || (is_object($str) && method_exists($str, '__toString')))
 		{
 			return pg_escape_literal($this->connID, $str);
 		}
@@ -251,12 +236,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return parent::escape($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Platform-dependant string escape
 	 *
-	 * @param  string $str
+	 * @param string $str
+	 *
 	 * @return string
 	 */
 	protected function _escapeString(string $str): string
@@ -269,12 +253,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return pg_escape_string($this->connID, $str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param boolean $prefixLimit
+	 * @param bool $prefixLimit
 	 *
 	 * @return string
 	 */
@@ -292,8 +274,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $sql;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Generates a platform-specific query string so that the column names can be fetched.
 	 *
@@ -309,14 +289,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 				. $this->escape($this->DBPrefix . strtolower($table));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with field data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _fieldData(string $table): array
 	{
@@ -332,7 +312,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
-		for ($i = 0, $c = count($query); $i < $c; $i ++)
+
+		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
 			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $query[$i]->column_name;
@@ -344,14 +325,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $retVal;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with index data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _indexData(string $table): array
 	{
@@ -367,12 +348,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
+
 		foreach ($query as $row)
 		{
 			$obj         = new stdClass();
 			$obj->name   = $row->indexname;
 			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
-			$obj->fields = array_map(function ($v) {
+			$obj->fields = array_map(static function ($v) {
 				return trim($v);
 			}, $_fields);
 
@@ -391,14 +373,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $retVal;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of objects with Foreign key data
 	 *
-	 * @param  string $table
-	 * @return stdClass[]
+	 * @param string $table
+	 *
 	 * @throws DatabaseException
+	 *
+	 * @return stdClass[]
 	 */
 	public function _foreignKeyData(string $table): array
 	{
@@ -421,6 +403,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
+
 		foreach ($query as $row)
 		{
 			$obj                      = new stdClass();
@@ -435,8 +418,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return $retVal;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns platform-specific SQL to disable foreign key checks.
 	 *
@@ -447,8 +428,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SET CONSTRAINTS ALL DEFERRED';
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns platform-specific SQL to enable foreign key checks.
 	 *
@@ -458,8 +437,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		return 'SET CONSTRAINTS ALL IMMEDIATE;';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last error code and message.
@@ -478,12 +455,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
-	 * @return integer|string
+	 * @return int|string
 	 */
 	public function insertID()
 	{
@@ -522,10 +497,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		$query = $this->query($sql);
 		$query = $query->getRow();
+
 		return (int) $query->ins_id;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Build a DSN from the provided parameters
@@ -555,7 +529,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			// An empty password is valid!
 			// password must be set to null to ignore it.
-
 			$this->password === null || $this->DSN .= "password='{$this->password}' ";
 		}
 
@@ -577,54 +550,45 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$this->DSN = rtrim($this->DSN);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set client encoding
 	 *
-	 * @param  string $charset The client encoding to which the data will be converted.
-	 * @return boolean
+	 * @param string $charset the client encoding to which the data will be converted
+	 *
+	 * @return bool
 	 */
 	protected function setClientEncoding(string $charset): bool
 	{
 		return pg_set_client_encoding($this->connID, $charset) === 0;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transBegin(): bool
 	{
 		return (bool) pg_query($this->connID, 'BEGIN');
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transCommit(): bool
 	{
 		return (bool) pg_query($this->connID, 'COMMIT');
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function _transRollback(): bool
 	{
 		return (bool) pg_query($this->connID, 'ROLLBACK');
 	}
-
-	// --------------------------------------------------------------------
 }

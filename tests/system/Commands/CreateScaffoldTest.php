@@ -44,7 +44,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
-		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
 		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
 		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
@@ -76,7 +76,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		command('make:scaffold fixer -bare');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
-		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
 		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
 		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
@@ -88,6 +88,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 			'Models',
 			'Entities',
 		];
+
 		foreach ($paths as $path)
 		{
 			$this->assertFileExists(APPPATH . $path . '/Fixer.php');
@@ -113,7 +114,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		command('make:scaffold user -restful -dbgroup testing -force -table utilisateur');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
-		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
 		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
 		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
@@ -125,6 +126,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 			'Models',
 			'Entities',
 		];
+
 		foreach ($paths as $path)
 		{
 			$this->assertFileExists(APPPATH . $path . '/User.php');

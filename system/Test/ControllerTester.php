@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -65,7 +64,6 @@ use Throwable;
  */
 trait ControllerTester
 {
-
 	/**
 	 * Controller configuration.
 	 *
@@ -79,30 +77,35 @@ trait ControllerTester
 	 * @var Request
 	 */
 	protected $request;
+
 	/**
 	 * Response.
 	 *
 	 * @var Response
 	 */
 	protected $response;
+
 	/**
 	 * Message logger.
 	 *
 	 * @var LoggerInterface
 	 */
 	protected $logger;
+
 	/**
 	 * Initialized controller.
 	 *
 	 * @var Controller
 	 */
 	protected $controller;
+
 	/**
 	 * URI of this request.
 	 *
 	 * @var string
 	 */
 	protected $uri = 'http://example.com';
+
 	/**
 	 * Request or response body.
 	 *
@@ -161,7 +164,7 @@ trait ControllerTester
 	 * @param string $method
 	 * @param array  $params
 	 *
-	 * @return ControllerResponse|\InvalidArgumentException
+	 * @return ControllerResponse|InvalidArgumentException
 	 */
 	public function execute(string $method, ...$params)
 	{
@@ -175,10 +178,11 @@ trait ControllerTester
 		helper('url');
 
 		$result = (new ControllerResponse())
-				->setRequest($this->request)
-				->setResponse($this->response);
+			->setRequest($this->request)
+			->setResponse($this->response);
 
 		$response = null;
+
 		try
 		{
 			ob_start();
@@ -187,8 +191,7 @@ trait ControllerTester
 		}
 		catch (Throwable $e)
 		{
-			$result->response()
-					->setStatusCode($e->getCode());
+			$result->response()->setStatusCode($e->getCode());
 		}
 		finally
 		{
@@ -312,5 +315,4 @@ trait ControllerTester
 
 		return $this;
 	}
-
 }

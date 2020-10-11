@@ -47,7 +47,6 @@ use CodeIgniter\HTTP\ResponseInterface;
  */
 interface FilterInterface
 {
-
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during
@@ -65,8 +64,6 @@ interface FilterInterface
 	 */
 	public function before(RequestInterface $request, $arguments = null);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Allows After filters to inspect and modify the response
 	 * object as needed. This method does not allow any way
@@ -80,6 +77,4 @@ interface FilterInterface
 	 * @return mixed
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null);
-
-	//--------------------------------------------------------------------
 }

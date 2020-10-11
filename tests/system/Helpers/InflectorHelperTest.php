@@ -1,17 +1,17 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
-final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
-{
+use CodeIgniter\Test\CIUnitTestCase;
 
+final class InflectorHelperTest extends CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		helper('inflector');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSingular()
 	{
@@ -51,8 +51,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPlural()
 	{
 		$strings = [
@@ -90,8 +88,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCounted()
 	{
 		$triplets = [
@@ -113,8 +109,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCamelize()
 	{
 		$strings = [
@@ -128,8 +122,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals($camelized, $camelizedString);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPascalize()
 	{
@@ -145,8 +137,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUnderscore()
 	{
 		$strings = [
@@ -161,15 +151,13 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHumanize()
 	{
 		$underscored = [
 			'Hello_From_CodeIgniter_4',
 			'Hello From CodeIgniter 4',
 		];
-		$dashed      = [
+		$dashed = [
 			'hello-world',
 			'Hello World',
 		];
@@ -180,8 +168,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($humanizedUnderscore, $underscored[1]);
 		$this->assertEquals($humanizedDash, $dashed[1]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testIsCountable()
 	{
@@ -201,8 +187,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDasherize()
 	{
 		$strings = [
@@ -216,8 +200,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals($dasherized, $dashed);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrdinal()
 	{
@@ -241,8 +223,6 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testOrdinalize()
 	{
 		$suffixedNumbers = [
@@ -264,5 +244,4 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals($suffixed, $ordinalized);
 		}
 	}
-
 }
