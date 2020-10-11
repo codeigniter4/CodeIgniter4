@@ -5,8 +5,8 @@ namespace Config;
 /**
  * Paths
  *
- * Holds the paths that are used by the system to
- * locate the main directories, app, system, etc.
+ * Holds the paths that are used by the framework to locate the main
+ * directories "app, system, etc...".
  *
  * Modifying these allows you to restructure your application,
  * share a system folder between multiple applications, and more.
@@ -18,6 +18,22 @@ class Paths
 {
 	/**
 	 * ---------------------------------------------------------------
+	 * APPLICATION FOLDER NAME
+	 * ---------------------------------------------------------------
+	 *
+	 * If you want this front controller to use a different "app"
+	 * folder than the default one you can set its name here.
+	 * The folder can also be renamed or relocated anywhere on your
+	 * getServer. If you do, use a full getServer path.
+	 *
+	 * @see http://codeigniter.com/user_guide/general/managing_apps.html
+	 *
+	 * @var string
+	 */
+	public $appDirectory = __DIR__ . '/..';
+	
+	/**
+	 * ---------------------------------------------------------------
 	 * SYSTEM FOLDER NAME
 	 * ---------------------------------------------------------------
 	 *
@@ -27,22 +43,6 @@ class Paths
 	 * @var string
 	 */
 	public $systemDirectory = __DIR__ . '/../../system';
-
-	/**
-	 * ---------------------------------------------------------------
-	 * APPLICATION FOLDER NAME
-	 * ---------------------------------------------------------------
-	 *
-	 * If you want this front controller to use a different "app"
-	 * folder than the default one you can set its name here. The folder
-	 * can also be renamed or relocated anywhere on your getServer. If
-	 * you do, use a full getServer path.
-	 *
-	 * @see http://codeigniter.com/user_guide/general/managing_apps.html
-	 *
-	 * @var string
-	 */
-	public $appDirectory = __DIR__ . '/..';
 
 	/**
 	 * ---------------------------------------------------------------
@@ -83,4 +83,16 @@ class Paths
 	 * @var string
 	 */
 	public $viewDirectory = __DIR__ . '/../Views';
+
+	/**
+	 *---------------------------------------------------------------
+	 * ROOT FOLDER NAME
+	 *---------------------------------------------------------------
+	 *
+	 * This directory holds the framework's main folders
+	 * "app, public, system, tests, writable"
+	 *
+	 * @var string
+	 */
+	public $rootDirectory = __DIR__ . '/../../';
 }
