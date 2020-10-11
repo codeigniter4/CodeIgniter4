@@ -41,7 +41,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use Config\Database;
 use Throwable;
@@ -157,7 +157,7 @@ class CreateDatabase extends BaseCommand
 				// then reset the altered Config\Database instance
 				$db = Database::connect(null, false);
 				$db->connect();
-				Config::reset();
+				Factories::reset('config');
 
 				if (! is_file($db->getDatabase()) && strpos($name, ':memory:') === false)
 				{
