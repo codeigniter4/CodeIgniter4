@@ -41,6 +41,9 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
+use Config\Cache;
+use Redis;
+use RedisException;
 
 /**
  * Redis cache handler
@@ -71,7 +74,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Redis connection
 	 *
-	 * @var \Redis
+	 * @var Redis
 	 */
 	protected $redis;
 
@@ -80,9 +83,9 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
 		$this->prefix = $config->prefix ?: '';
 
@@ -114,7 +117,7 @@ class RedisHandler implements CacheInterface
 	{
 		$config = $this->config;
 
-		$this->redis = new \Redis();
+		$this->redis = new Redis();
 
 		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
 		// so that the CacheFactory can attempt to initiate the next cache handler.
@@ -142,7 +145,7 @@ class RedisHandler implements CacheInterface
 				throw new CriticalError('Cache: Redis select database failed.');
 			}
 		}
-		catch (\RedisException $e)
+		catch (RedisException $e)
 		{
 			// $this->redis->connect() can sometimes throw a RedisException.
 			// We need to convert the exception into a CriticalError exception and throw it.

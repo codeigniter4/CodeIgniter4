@@ -94,7 +94,7 @@ if (! function_exists('directory_map'))
 			closedir($fp);
 			return $fileData;
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			return [];
 		}
@@ -138,7 +138,7 @@ if (! function_exists('write_file'))
 
 			return is_int($result);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			return false;
 		}
@@ -199,7 +199,7 @@ if (! function_exists('delete_files'))
 
 			return true;
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			return false;
 		}
@@ -256,7 +256,7 @@ if (! function_exists('get_filenames'))
 				}
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			return [];
 		}
@@ -318,7 +318,7 @@ if (! function_exists('get_dir_file_info'))
 				return $fileData;
 			}
 		}
-		catch (\Throwable $fe)
+		catch (Throwable $fe)
 		{
 			return [];
 		}

@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Exceptions;
 
+use RuntimeException;
+
 /**
  * Class FrameworkException
  *
@@ -8,8 +10,7 @@
  *
  * @package CodeIgniter\Exceptions
  */
-
-class FrameworkException extends \RuntimeException implements ExceptionInterface
+class FrameworkException extends RuntimeException implements ExceptionInterface
 {
 	public static function forEnabledZlibOutputCompression()
 	{

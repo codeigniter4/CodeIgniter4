@@ -40,6 +40,8 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
+use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
@@ -174,7 +176,7 @@ class URI
 	 *
 	 * @param string $uri
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(string $uri = null)
 	{
@@ -596,7 +598,7 @@ class URI
 		// If hosted in a sub-folder, we will have additional
 		// segments that show up prior to the URI path we just
 		// grabbed from the request, so add it on if necessary.
-		$config   = config(\Config\App::class);
+		$config   = config(App::class);
 		$baseUri  = new self($config->baseURL);
 		$basePath = trim($baseUri->getPath(), '/') . '/';
 		$path     = $this->getPath();
@@ -865,7 +867,7 @@ class URI
 	 *
 	 * @param array $query
 	 *
-	 * @return \CodeIgniter\HTTP\URI
+	 * @return URI
 	 */
 	public function setQueryArray(array $query)
 	{
@@ -1074,7 +1076,7 @@ class URI
 	 *
 	 * @param string $uri
 	 *
-	 * @return \CodeIgniter\HTTP\URI
+	 * @return URI
 	 */
 	public function resolveRelativeURI(string $uri)
 	{

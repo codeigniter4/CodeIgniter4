@@ -40,6 +40,9 @@
 
 namespace CodeIgniter\HTTP\Files;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+
 /**
  * Class FileCollection
  *
@@ -277,8 +280,8 @@ class FileCollection
 				}
 
 				$stack    = [&$pointer];
-				$iterator = new \RecursiveIteratorIterator(
-						new \RecursiveArrayIterator($value), \RecursiveIteratorIterator::SELF_FIRST
+				$iterator = new RecursiveIteratorIterator(
+						new RecursiveArrayIterator($value), RecursiveIteratorIterator::SELF_FIRST
 				);
 
 				foreach ($iterator as $key => $val)

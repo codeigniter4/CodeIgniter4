@@ -257,6 +257,7 @@ class Query implements QueryInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.

@@ -78,7 +78,7 @@ class RedirectResponse extends Response
 	 * @param integer $code
 	 * @param string  $method
 	 *
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @throws HTTPException
 	 *
 	 * @return $this
 	 */

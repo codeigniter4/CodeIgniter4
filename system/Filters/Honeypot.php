@@ -54,8 +54,8 @@ class Honeypot implements FilterInterface
 	 * Checks if Honeypot field is empty; if not
 	 * then the requester is a bot
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 * @param array|null                         $arguments
+	 * @param RequestInterface $request
+	 * @param array|null       $arguments
 	 *
 	 * @return void
 	 */
@@ -71,9 +71,9 @@ class Honeypot implements FilterInterface
 	/**
 	 * Attach a honeypot to the current response.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
-	 * @param array|null                          $arguments
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 * @param array|null        $arguments
 	 *
 	 * @return void
 	 */

@@ -39,6 +39,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -63,21 +64,21 @@ class Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var \CodeIgniter\HTTP\RequestInterface
+	 * @var RequestInterface
 	 */
 	protected $request;
 
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var \CodeIgniter\HTTP\ResponseInterface
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
 	/**
 	 * Instance of logger to use.
 	 *
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -96,15 +97,14 @@ class Controller
 	protected $validator;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
-	 * @param \Psr\Log\LoggerInterface 	      $logger
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 * @param LoggerInterface   $logger
 	 *
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @throws HTTPException
 	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
@@ -133,7 +133,7 @@ class Controller
 	 *                          considered secure for. Only with HSTS header.
 	 *                          Default value is 1 year.
 	 *
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @throws HTTPException
 	 */
 	protected function forceHTTPS(int $duration = 31536000)
 	{
@@ -166,7 +166,7 @@ class Controller
 		{
 			return;
 		}
-		
+
 		helper($this->helpers);
 	}
 

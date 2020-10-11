@@ -40,6 +40,7 @@
 namespace CodeIgniter\CLI;
 
 use Psr\Log\LoggerInterface;
+use ReflectionException;
 use Throwable;
 
 /**
@@ -96,7 +97,7 @@ abstract class BaseCommand
 	/**
 	 * The Logger to use for a command
 	 *
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -104,7 +105,7 @@ abstract class BaseCommand
 	 * Instance of Commands so
 	 * commands can call other commands.
 	 *
-	 * @var \CodeIgniter\CLI\Commands
+	 * @var Commands
 	 */
 	protected $commands;
 
@@ -113,8 +114,8 @@ abstract class BaseCommand
 	/**
 	 * BaseCommand constructor.
 	 *
-	 * @param \Psr\Log\LoggerInterface  $logger
-	 * @param \CodeIgniter\CLI\Commands $commands
+	 * @param LoggerInterface $logger
+	 * @param Commands        $commands
 	 */
 	public function __construct(LoggerInterface $logger, Commands $commands)
 	{
@@ -141,7 +142,7 @@ abstract class BaseCommand
 	 * @param array  $params
 	 *
 	 * @return mixed
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	protected function call(string $command, array $params = [])
 	{

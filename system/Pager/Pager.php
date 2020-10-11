@@ -39,8 +39,10 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\View\RendererInterface;
+use Config\Pager as PagerConfig;
 
 /**
  * Class Pager
@@ -72,7 +74,7 @@ class Pager implements PagerInterface
 	/**
 	 * Our configuration instance.
 	 *
-	 * @var \Config\Pager
+	 * @var PagerConfig
 	 */
 	protected $config;
 
@@ -95,10 +97,10 @@ class Pager implements PagerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Pager     $config
+	 * @param PagerConfig       $config
 	 * @param RendererInterface $view
 	 */
-	public function __construct($config, RendererInterface $view)
+	public function __construct(PagerConfig $config, RendererInterface $view)
 	{
 		$this->config = $config;
 		$this->view   = $view;
@@ -577,7 +579,7 @@ class Pager implements PagerInterface
 			{
 				$this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
 			}
-			catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e)
+			catch (HTTPException $e)
 			{
 				$this->groups[$group]['currentPage'] = 1;
 			}

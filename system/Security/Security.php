@@ -39,8 +39,11 @@
 
 namespace CodeIgniter\Security;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\App;
+use Exception;
 
 /**
  * HTTP security handler.
@@ -179,9 +182,9 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct($config)
 	{
@@ -221,7 +224,7 @@ class Security
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function CSRFVerify(RequestInterface $request)
 	{
@@ -282,7 +285,7 @@ class Security
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param RequestInterface|IncomingRequest $request
 	 *
 	 * @return Security|false
 	 */
@@ -373,7 +376,7 @@ class Security
 	 * Sets the CSRF Hash and cookie.
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function CSRFSetHash(): string
 	{
@@ -397,6 +400,7 @@ class Security
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Sanitize Filename
 	 *

@@ -42,6 +42,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
+use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
 use function error_reporting;
 use ErrorException;
@@ -73,21 +74,21 @@ class Exceptions
 	/**
 	 * Config for debug exceptions.
 	 *
-	 * @var \Config\Exceptions
+	 * @var ExceptionsConfig
 	 */
 	protected $config;
 
 	/**
 	 * The incoming request.
 	 *
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
 	/**
 	 * The outgoing response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var Response
 	 */
 	protected $response;
 
@@ -96,11 +97,11 @@ class Exceptions
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Exceptions                $config
-	 * @param \CodeIgniter\HTTP\IncomingRequest $request
-	 * @param \CodeIgniter\HTTP\Response        $response
+	 * @param ExceptionsConfig $config
+	 * @param IncomingRequest  $request
+	 * @param Response         $response
 	 */
-	public function __construct(\Config\Exceptions $config, IncomingRequest $request, Response $response)
+	public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
 	{
 		$this->ob_level = ob_get_level();
 
@@ -138,7 +139,7 @@ class Exceptions
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
-	 * @param \Throwable $exception
+	 * @param Throwable $exception
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -190,7 +191,7 @@ class Exceptions
 	 * @param string|null  $file
 	 * @param integer|null $line
 	 *
-	 * @throws \ErrorException
+	 * @throws ErrorException
 	 */
 	public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
 	{
@@ -227,12 +228,13 @@ class Exceptions
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Determines the view to display based on the exception thrown,
 	 * whether an HTTP or CLI request, etc.
 	 *
-	 * @param \Throwable $exception
-	 * @param string     $templatePath
+	 * @param Throwable $exception
+	 * @param string    $templatePath
 	 *
 	 * @return string       The path and filename of the view file to use
 	 */
@@ -267,8 +269,8 @@ class Exceptions
 	/**
 	 * Given an exception and status code will display the error to the client.
 	 *
-	 * @param \Throwable $exception
-	 * @param integer    $statusCode
+	 * @param Throwable $exception
+	 * @param integer   $statusCode
 	 */
 	protected function render(Throwable $exception, int $statusCode)
 	{
@@ -315,8 +317,8 @@ class Exceptions
 	/**
 	 * Gathers the variables that will be made available to the view.
 	 *
-	 * @param \Throwable $exception
-	 * @param integer    $statusCode
+	 * @param Throwable $exception
+	 * @param integer   $statusCode
 	 *
 	 * @return array
 	 */
@@ -336,7 +338,7 @@ class Exceptions
 	/**
 	 * Determines the HTTP status code and the exit status code for this request.
 	 *
-	 * @param \Throwable $exception
+	 * @param Throwable $exception
 	 *
 	 * @return array
 	 */

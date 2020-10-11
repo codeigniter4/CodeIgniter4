@@ -41,6 +41,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
+use ReflectionException;
 use ReflectionMethod;
 
 /**
@@ -85,7 +86,7 @@ class Cell
 	/**
 	 * Cell constructor.
 	 *
-	 * @param \CodeIgniter\Cache\CacheInterface $cache
+	 * @param CacheInterface $cache
 	 */
 	public function __construct(CacheInterface $cache)
 	{
@@ -103,7 +104,7 @@ class Cell
 	 * @param string|null $cacheName
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{

@@ -39,6 +39,12 @@
 
 namespace CodeIgniter\Config;
 
+use Config\Modules;
+use Config\Services;
+use ReflectionClass;
+use ReflectionException;
+use RuntimeException;
+
 /**
  * Class BaseConfig
  *
@@ -69,7 +75,7 @@ class BaseConfig
 	/**
 	 * The modules configuration.
 	 *
-	 * @var \Config\Modules
+	 * @var Modules
 	 */
 	protected static $moduleConfig;
 
@@ -189,7 +195,7 @@ class BaseConfig
 	 * Provides external libraries a simple way to register one or more
 	 * options into a config file.
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	protected function registerProperties()
 	{
@@ -200,7 +206,7 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator         = \Config\Services::locator();
+			$locator         = Services::locator();
 			$registrarsFiles = $locator->search('Config/Registrar.php');
 
 			foreach ($registrarsFiles as $file)
@@ -212,7 +218,7 @@ class BaseConfig
 			static::$didDiscovery = true;
 		}
 
-		$shortName = (new \ReflectionClass($this))->getShortName();
+		$shortName = (new ReflectionClass($this))->getShortName();
 
 		// Check the registrar class for a method named after this class' shortName
 		foreach (static::$registrars as $callable)
@@ -229,7 +235,7 @@ class BaseConfig
 
 			if (! is_array($properties))
 			{
-				throw new \RuntimeException('Registrars must return an array of properties and their values.');
+				throw new RuntimeException('Registrars must return an array of properties and their values.');
 			}
 
 			foreach ($properties as $property => $value)

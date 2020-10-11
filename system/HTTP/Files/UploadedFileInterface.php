@@ -39,6 +39,9 @@
 
 namespace CodeIgniter\HTTP\Files;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * Value object representing a single file uploaded through an
  * HTTP request. Used by the IncomingRequest class to
@@ -89,9 +92,9 @@ interface UploadedFileInterface
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
 	 *
-	 * @throws \InvalidArgumentException if the $path specified is invalid.
-	 * @throws \RuntimeException on any error during the move operation.
-	 * @throws \RuntimeException on the second or subsequent call to the method.
+	 * @throws InvalidArgumentException if the $path specified is invalid.
+	 * @throws RuntimeException on any error during the move operation.
+	 * @throws RuntimeException on the second or subsequent call to the method.
 	 */
 	public function move(string $targetPath, string $name = null);
 

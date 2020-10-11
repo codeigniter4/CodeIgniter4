@@ -39,6 +39,9 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use Config\Services;
+use ReflectionException;
+use ReflectionFunction;
+use ReflectionMethod;
 
 /**
  * Routes collector
@@ -76,7 +79,7 @@ class Routes extends BaseCollector
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function display(): array
 	{
@@ -92,19 +95,19 @@ class Routes extends BaseCollector
 		// Closure routes
 		if (is_callable($router->controllerName()))
 		{
-			$method = new \ReflectionFunction($router->controllerName());
+			$method = new ReflectionFunction($router->controllerName());
 		}
 		else
 		{
 			try
 			{
-				$method = new \ReflectionMethod($router->controllerName(), $router->methodName());
+				$method = new ReflectionMethod($router->controllerName(), $router->methodName());
 			}
-			catch (\ReflectionException $e)
+			catch (ReflectionException $e)
 			{
 				// If we're here, the method doesn't exist
 				// and is likely calculated in _remap.
-				$method = new \ReflectionMethod($router->controllerName(), '_remap');
+				$method = new ReflectionMethod($router->controllerName(), '_remap');
 			}
 		}
 

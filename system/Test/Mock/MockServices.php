@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Test\Mock;
 
 use \CodeIgniter\Config\BaseService;
+use CodeIgniter\Autoloader\FileLocator;
 
 class MockServices extends BaseService
 {
@@ -21,7 +22,7 @@ class MockServices extends BaseService
 	//--------------------------------------------------------------------
 	public static function locator(bool $getShared = true)
 	{
-		return new \CodeIgniter\Autoloader\FileLocator(static::autoloader());
+		return new FileLocator(static::autoloader());
 	}
 
 }

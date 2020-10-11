@@ -97,6 +97,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * ALTER TABLE
 	 *
@@ -231,6 +232,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Drop Table
 	 *

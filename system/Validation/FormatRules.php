@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Validation;
 
+use DateTime;
+
 /**
  * Format validation Rules.
  *
@@ -393,9 +395,9 @@ class FormatRules
 			return (bool) strtotime($str);
 		}
 
-		$date = \DateTime::createFromFormat($format, $str);
+		$date = DateTime::createFromFormat($format, $str);
 
-		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
+		return (bool) $date && DateTime::getLastErrors()['warning_count'] === 0 && DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 }

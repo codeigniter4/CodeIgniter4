@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Exceptions;
 
-class PageNotFoundException extends \OutOfBoundsException implements ExceptionInterface
+use OutOfBoundsException;
+
+class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface
 {
 	/**
 	 * Error code

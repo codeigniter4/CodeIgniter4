@@ -39,12 +39,14 @@
 
 namespace CodeIgniter\Test\Filters;
 
+use php_user_filter;
+
 /**
  * Class to extract an output snapshot.
  * Used to capture output during unit testing, so that it can
  * be used in assertions.
  */
-class CITestStreamFilter extends \php_user_filter
+class CITestStreamFilter extends php_user_filter
 {
 
 	/**

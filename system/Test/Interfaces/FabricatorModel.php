@@ -39,6 +39,7 @@
 namespace CodeIgniter\Test\Interfaces;
 
 use Faker\Generator;
+use ReflectionException;
 
 /**
  * FabricatorModel
@@ -72,7 +73,7 @@ interface FabricatorModel
 	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return integer|string|boolean
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true);
 

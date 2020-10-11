@@ -42,6 +42,10 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use LogicException;
+use mysqli_sql_exception;
+use stdClass;
+use Throwable;
 
 /**
  * Connection for MySQLi
@@ -88,7 +92,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param boolean $persistent
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function connect(bool $persistent = false)
 	{
@@ -214,7 +218,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				return $this->mysqli;
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			// Clean sensitive information from errors.
 			$msg = $e->getMessage();
@@ -330,7 +334,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return $this->connID->query($this->prepQuery($sql));
 		}
-		catch (\mysqli_sql_exception $e)
+		catch (mysqli_sql_exception $e)
 		{
 			log_message('error', $e);
 			if ($this->DBDebug)
@@ -474,7 +478,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -490,7 +494,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retVal[$i]       = new \stdClass();
+			$retVal[$i]       = new stdClass();
 			$retVal[$i]->name = $query[$i]->Field;
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
@@ -509,9 +513,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
-	 * @throws \LogicException
+	 * @throws LogicException
 	 */
 	public function _indexData(string $table): array
 	{
@@ -533,7 +537,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if (empty($keys[$index['Key_name']]))
 			{
-				$keys[$index['Key_name']]       = new \stdClass();
+				$keys[$index['Key_name']]       = new stdClass();
 				$keys[$index['Key_name']]->name = $index['Key_name'];
 
 				if ($index['Key_name'] === 'PRIMARY')
@@ -575,7 +579,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _foreignKeyData(string $table): array
@@ -606,7 +610,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj                      = new \stdClass();
+			$obj                      = new stdClass();
 			$obj->constraint_name     = $row->CONSTRAINT_NAME;
 			$obj->table_name          = $row->TABLE_NAME;
 			$obj->column_name         = $row->COLUMN_NAME;

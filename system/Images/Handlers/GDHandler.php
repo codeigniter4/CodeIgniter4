@@ -39,6 +39,7 @@
 namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Exceptions\ImageException;
+use Config\Images;
 
 /**
  * Image handler for GD package
@@ -49,7 +50,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  \Config\Images|null $config
+	 * @param  Images|null $config
 	 * @throws ImageException
 	 */
 	public function __construct($config = null)
@@ -184,7 +185,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Resizes the image.
 	 *
-	 * @return \CodeIgniter\Images\Handlers\GDHandler
+	 * @return GDHandler
 	 */
 	public function _resize(bool $maintainRatio = false)
 	{
@@ -196,7 +197,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Crops the image.
 	 *
-	 * @return \CodeIgniter\Images\Handlers\GDHandler
+	 * @return GDHandler
 	 */
 	public function _crop()
 	{

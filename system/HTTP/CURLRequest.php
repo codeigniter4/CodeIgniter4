@@ -42,6 +42,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use InvalidArgumentException;
 
 /**
  * Class OutgoingRequest
@@ -145,7 +146,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function request($method, string $url, array $options = []): ResponseInterface
 	{
@@ -168,7 +169,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function get(string $url, array $options = []): ResponseInterface
 	{
@@ -183,7 +184,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function delete(string $url, array $options = []): ResponseInterface
 	{
@@ -213,7 +214,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function options(string $url, array $options = []): ResponseInterface
 	{
@@ -228,7 +229,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function patch(string $url, array $options = []): ResponseInterface
 	{
@@ -243,7 +244,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function post(string $url, array $options = []): ResponseInterface
 	{
@@ -258,7 +259,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function put(string $url, array $options = []): ResponseInterface
 	{
@@ -413,7 +414,7 @@ class CURLRequest extends Request
 	 * @param string $method
 	 * @param string $url
 	 *
-	 * @return \CodeIgniter\HTTP\ResponseInterface
+	 * @return ResponseInterface
 	 */
 	public function send(string $method, string $url)
 	{
@@ -485,6 +486,7 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Takes all headers current part of this request and adds them
 	 * to the cURL request.
@@ -523,6 +525,7 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Apply method
 	 *
@@ -563,6 +566,7 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Apply body
 	 *
@@ -617,13 +621,14 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Set CURL options
 	 *
 	 * @param  array $curlOptions
 	 * @param  array $config
 	 * @return array
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function setCURLOptions(array $curlOptions = [], array $config = [])
 	{
@@ -801,6 +806,7 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Does the actual work of initializing cURL, setting the options,
 	 * and grabbing the output.

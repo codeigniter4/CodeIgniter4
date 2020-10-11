@@ -42,6 +42,10 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use ErrorException;
+use Exception;
+use SQLite3;
+use stdClass;
 
 /**
  * Connection for SQLite3
@@ -82,7 +86,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param boolean $persistent
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function connect(bool $persistent = false)
 	{
@@ -98,10 +102,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 			}
 
 			return (! $this->password)
-				? new \SQLite3($this->database)
-				: new \SQLite3($this->database, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->password);
+				? new SQLite3($this->database)
+				: new SQLite3($this->database, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->password);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
 		}
@@ -161,7 +165,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
-		$version = \SQLite3::version();
+		$version = SQLite3::version();
 
 		return $this->dataCache['version'] = $version['versionString'];
 	}
@@ -183,7 +187,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				? $this->connID->exec($sql)
 				: $this->connID->query($sql);
 		}
-		catch (\ErrorException $e)
+		catch (ErrorException $e)
 		{
 			log_message('error', $e);
 			if ($this->DBDebug)
@@ -315,7 +319,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -334,7 +338,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retVal[$i]              = new \stdClass();
+			$retVal[$i]              = new stdClass();
 			$retVal[$i]->name        = $query[$i]->name;
 			$retVal[$i]->type        = $query[$i]->type;
 			$retVal[$i]->max_length  = null;
@@ -352,7 +356,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _indexData(string $table): array
@@ -369,7 +373,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj       = new \stdClass();
+			$obj       = new stdClass();
 			$obj->name = $row->name;
 
 			// Get fields for index
@@ -397,7 +401,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 */
 	public function _foreignKeyData(string $table): array
 	{
@@ -421,7 +425,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			foreach ($query as $row)
 			{
-				$obj                     = new \stdClass();
+				$obj                     = new stdClass();
 				$obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
 				$obj->table_name         = $table;
 				$obj->foreign_table_name = $row->table;

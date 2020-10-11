@@ -77,7 +77,7 @@ class UserAgent
 	/**
 	 * Holds the config file contents.
 	 *
-	 * @var \Config\UserAgents
+	 * @var UserAgents
 	 */
 	protected $config;
 
@@ -130,7 +130,7 @@ class UserAgent
 	 *
 	 * Sets the User Agent and runs the compilation routine
 	 *
-	 * @param null|\Config\UserAgents $config
+	 * @param null|UserAgents $config
 	 */
 	public function __construct(UserAgents $config = null)
 	{

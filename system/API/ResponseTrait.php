@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Format\FormatterInterface;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Services;
 
@@ -49,8 +51,8 @@ use Config\Services;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property \CodeIgniter\HTTP\IncomingRequest $request
- * @property \CodeIgniter\HTTP\Response        $response
+ * @property IncomingRequest $request
+ * @property Response        $response
  *
  * @package CodeIgniter\API
  */
@@ -105,7 +107,7 @@ trait ResponseTrait
 	/**
 	 * Current Formatter instance. This is usually set by ResponseTrait::format
 	 *
-	 * @var \CodeIgniter\Format\FormatterInterface
+	 * @var FormatterInterface
 	 */
 	protected $formatter;
 

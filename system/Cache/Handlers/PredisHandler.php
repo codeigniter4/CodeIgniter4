@@ -40,6 +40,9 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
+use Config\Cache;
+use Exception;
+use Predis\Client;
 
 /**
  * Predis cache handler
@@ -70,7 +73,7 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Predis connection
 	 *
-	 * @var \Predis\Client
+	 * @var Client
 	 */
 	protected $redis;
 
@@ -79,9 +82,9 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
 		$this->prefix = $config->prefix ?: '';
 
@@ -103,12 +106,12 @@ class PredisHandler implements CacheInterface
 		try
 		{
 			// Create a new instance of Predis\Client
-			$this->redis = new \Predis\Client($this->config, ['prefix' => $this->prefix]);
+			$this->redis = new Client($this->config, ['prefix' => $this->prefix]);
 
 			// Check if the connection is valid by trying to get the time.
 			$this->redis->time();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			// thrown if can't connect to redis server.
 			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');

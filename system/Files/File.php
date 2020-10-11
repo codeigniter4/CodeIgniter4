@@ -41,6 +41,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use Config\Mimes;
 use SplFileInfo;
 
 /**
@@ -130,7 +131,7 @@ class File extends SplFileInfo
 	 */
 	public function guessExtension(): ?string
 	{
-		return \Config\Mimes::guessExtensionFromType($this->getMimeType());
+		return Mimes::guessExtensionFromType($this->getMimeType());
 	}
 
 	//--------------------------------------------------------------------
@@ -181,7 +182,7 @@ class File extends SplFileInfo
 	 * @param string|null $name
 	 * @param boolean     $overwrite
 	 *
-	 * @return \CodeIgniter\Files\File
+	 * @return File
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{

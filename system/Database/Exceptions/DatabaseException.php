@@ -38,7 +38,9 @@
 
 namespace CodeIgniter\Database\Exceptions;
 
-class DatabaseException extends \Error implements ExceptionInterface
+use Error;
+
+class DatabaseException extends Error implements ExceptionInterface
 {
 	/**
 	 * Exit status code

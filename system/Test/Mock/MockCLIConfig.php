@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Test\Mock;
 
-class MockCLIConfig extends \Config\App
+use Config\App;
+
+class MockCLIConfig extends App
 {
 	public $baseURL = 'http://example.com/';
 
