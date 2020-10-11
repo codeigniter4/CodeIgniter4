@@ -42,6 +42,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use InvalidArgumentException;
 use RuntimeException;
+use Throwable;
 
 /**
  * Class Forge
@@ -265,7 +266,7 @@ class Forge
 
 			return true;
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			if ($this->db->DBDebug)
 			{
