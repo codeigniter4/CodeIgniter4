@@ -39,6 +39,9 @@
 
 namespace CodeIgniter\HTTP;
 
+use DateTime;
+use InvalidArgumentException;
+
 /**
  * Representation of an outgoing, getServer-side response.
  *
@@ -158,7 +161,7 @@ interface ResponseInterface
 	 *                        default to the IANA name.
 	 *
 	 * @return self
-	 * @throws \InvalidArgumentException For invalid status code arguments.
+	 * @throws InvalidArgumentException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '');
 
@@ -186,7 +189,7 @@ interface ResponseInterface
 	 *
 	 * @return ResponseInterface
 	 */
-	public function setDate(\DateTime $date);
+	public function setDate(DateTime $date);
 
 	//--------------------------------------------------------------------
 

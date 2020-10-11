@@ -40,6 +40,8 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
+use Config\View as ViewConfig;
+use ParseError;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -93,13 +95,13 @@ class Parser extends View
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View    $config
+	 * @param ViewConfig      $config
 	 * @param string          $viewPath
 	 * @param mixed           $loader
 	 * @param boolean         $debug
 	 * @param LoggerInterface $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		// Ensure user plugins override core plugins.
 		$this->plugins = $config->plugins ?? [];
@@ -558,7 +560,7 @@ class Parser extends View
 		{
 			eval('?>' . $template . '<?php ');
 		}
-		catch (\ParseError $e)
+		catch (ParseError $e)
 		{
 			ob_end_clean();
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));

@@ -38,6 +38,7 @@
  */
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use Config\DocTypes;
 use Config\Mimes;
 
 // --------------------------------------------------------------------
@@ -255,7 +256,7 @@ if (! function_exists('doctype'))
 	 */
 	function doctype(string $type = 'html5'): string
 	{
-		$config   = new \Config\DocTypes();
+		$config   = new DocTypes();
 		$doctypes = $config->list;
 		return $doctypes[$type] ?? false;
 	}

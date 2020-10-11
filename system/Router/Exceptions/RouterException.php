@@ -51,7 +51,7 @@ class RouterException extends FrameworkException implements ExceptionInterface
 	 * Thrown when the actual parameter type does not match
 	 * the expected types.
 	 *
-	 * @return \CodeIgniter\Router\Exceptions\RouterException
+	 * @return RouterException
 	 */
 	public static function forInvalidParameterType()
 	{
@@ -61,7 +61,7 @@ class RouterException extends FrameworkException implements ExceptionInterface
 	/**
 	 * Thrown when a default route is not set.
 	 *
-	 * @return \CodeIgniter\Router\Exceptions\RouterException
+	 * @return RouterException
 	 */
 	public static function forMissingDefaultRoute()
 	{

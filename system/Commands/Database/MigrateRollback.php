@@ -42,6 +42,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use Throwable;
 
 /**
  * Runs all of the migrations in reverse order, until they have
@@ -139,7 +140,7 @@ class MigrateRollback extends BaseCommand
 			CLI::write('Done rolling back migrations.', 'green');
 		}
 		// @codeCoverageIgnoreStart
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->showError($e);
 		}

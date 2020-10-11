@@ -42,6 +42,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use InvalidArgumentException;
 
 /**
  * Class BaseBuilder
@@ -508,8 +509,8 @@ class BaseBuilder
 	 * @param string $type
 	 *
 	 * @return BaseBuilder
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DataException
+	 * @throws DatabaseException
 	 */
 	protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
 	{
@@ -757,6 +758,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * WHERE, HAVING
 	 *
@@ -1013,7 +1015,7 @@ class BaseBuilder
 	 * @param  string             $type
 	 * @param  boolean            $escape
 	 * @param  string             $clause (Internal use only)
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1023,7 +1025,7 @@ class BaseBuilder
 		{
 			if (CI_DEBUG)
 			{
-				throw new \InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
 			}
 			// @codeCoverageIgnoreStart
 			return $this;
@@ -1034,7 +1036,7 @@ class BaseBuilder
 		{
 			if (CI_DEBUG)
 			{
-				throw new \InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
+				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
 			}
 			// @codeCoverageIgnoreStart
 			return $this;
@@ -1996,6 +1998,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Get compiled 'where' condition string
 	 *
@@ -2525,7 +2528,7 @@ class BaseBuilder
 	 * chosen to be update.
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	protected function validateUpdate(): bool
 	{
@@ -2555,7 +2558,7 @@ class BaseBuilder
 	 * @param integer $batchSize The size of the batch to run
 	 *
 	 * @return mixed    Number of rows affected, SQL string, or FALSE on failure
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100)
 	{
@@ -2682,7 +2685,7 @@ class BaseBuilder
 	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder|null
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function setUpdateBatch($key, string $index = '', bool $escape = null)
 	{
@@ -2814,6 +2817,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Delete
 	 *
@@ -2824,7 +2828,7 @@ class BaseBuilder
 	 * @param boolean $resetData
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function delete($where = '', int $limit = null, bool $resetData = true)
 	{
@@ -2969,6 +2973,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Compile the SELECT statement
 	 *
@@ -3061,6 +3066,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Compile WHERE, HAVING statements
 	 *
@@ -3336,6 +3342,7 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Resets the query builder values.  Called by the get() function
 	 *

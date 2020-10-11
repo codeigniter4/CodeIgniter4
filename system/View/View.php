@@ -39,9 +39,14 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
+use Config\Toolbar;
+use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 /**
  * Class View
@@ -82,7 +87,7 @@ class View implements RendererInterface
 	 * we need to attempt to find a view
 	 * that's not in standard place.
 	 *
-	 * @var \CodeIgniter\Autoloader\FileLocator
+	 * @var FileLocator
 	 */
 	protected $loader;
 
@@ -109,7 +114,7 @@ class View implements RendererInterface
 	protected $performanceData = [];
 
 	/**
-	 * @var \Config\View
+	 * @var ViewConfig
 	 */
 	protected $config;
 
@@ -155,13 +160,13 @@ class View implements RendererInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View                             $config
-	 * @param string|null                              $viewPath
-	 * @param \CodeIgniter\Autoloader\FileLocator|null $loader
-	 * @param boolean|null                             $debug
-	 * @param \Psr\Log\LoggerInterface                 $logger
+	 * @param ViewConfig       $config
+	 * @param string|null      $viewPath
+	 * @param FileLocator|null $loader
+	 * @param boolean|null     $debug
+	 * @param LoggerInterface  $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		$this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
@@ -181,9 +186,9 @@ class View implements RendererInterface
 	 *     - cache 		number of seconds to cache for
 	 *  - cache_name	Name to use for cache
 	 *
-	 * @param string  $view
-	 * @param array   $options
-	 * @param boolean $saveData
+	 * @param string       $view
+	 * @param array|null   $options
+	 * @param boolean|null $saveData
 	 *
 	 * @return string
 	 */
@@ -203,11 +208,15 @@ class View implements RendererInterface
 		// Was it cached?
 		if (isset($this->renderVars['options']['cache']))
 		{
-			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = str_replace(['\\', '/'], '', $cacheName);
+
+			$this->renderVars['cacheName'] = $cacheName;
 
 			if ($output = cache($this->renderVars['cacheName']))
 			{
 				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+
 				return $output;
 			}
 		}
@@ -261,11 +270,11 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-              if (($this->debug && (! isset($options['debug']) || $options['debug'] === true)) && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true))
+		if (($this->debug && (! isset($options['debug']) || $options['debug'] === true)) && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true))
 		{
-			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
+			$toolbarCollectors = config(Toolbar::class)->collectors;
 
-			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors, true))
+			if (in_array(Views::class, $toolbarCollectors, true))
 			{
 				// Clean up our path names to make them a little cleaner
 				$this->renderVars['file'] = clean_path($this->renderVars['file']);
@@ -452,7 +461,7 @@ class View implements RendererInterface
 	/**
 	 *
 	 *
-	 * @throws \Laminas\Escaper\Exception\RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function endSection()
 	{
@@ -460,7 +469,7 @@ class View implements RendererInterface
 
 		if (empty($this->currentSection))
 		{
-			throw new \RuntimeException('View themes, no current section.');
+			throw new RuntimeException('View themes, no current section.');
 		}
 
 		// Ensure an array exists so we can store multiple entries for this.

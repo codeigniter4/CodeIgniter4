@@ -37,6 +37,11 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
+use Config\Services;
+
 /**
  * CodeIgniter URL Helpers
  *
@@ -48,13 +53,13 @@ if (! function_exists('site_url'))
 	/**
 	 * Return a site URL to use in views
 	 *
-	 * @param mixed            $uri       URI string or array of URI segments
-	 * @param string|null      $protocol
-	 * @param \Config\App|null $altConfig Alternate configuration to use
+	 * @param mixed       $uri       URI string or array of URI segments
+	 * @param string|null $protocol
+	 * @param App|null    $altConfig Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function site_url($uri = '', string $protocol = null, \Config\App $altConfig = null): string
+	function site_url($uri = '', string $protocol = null, App $altConfig = null): string
 	{
 		// convert segment array to string
 		if (is_array($uri))
@@ -63,7 +68,7 @@ if (! function_exists('site_url'))
 		}
 
 		// use alternate config if provided, else default one
-		$config = $altConfig ?? config(\Config\App::class);
+		$config = $altConfig ?? config(App::class);
 
 		$fullPath = rtrim(base_url(), '/') . '/';
 
@@ -77,7 +82,7 @@ if (! function_exists('site_url'))
 			$fullPath .= '/' . $uri;
 		}
 
-		$url = new \CodeIgniter\HTTP\URI($fullPath);
+		$url = new URI($fullPath);
 
 		// allow the scheme to be over-ridden; else, use default
 		if (! empty($protocol))
@@ -112,7 +117,7 @@ if (! function_exists('base_url'))
 		// We should be using the configured baseURL that the user set;
 		// otherwise get rid of the path, because we have
 		// no way of knowing the intent...
-		$config = \Config\Services::request()->config;
+		$config = Services::request()->config;
 
 		// If baseUrl does not have a trailing slash it won't resolve
 		// correctly for users hosting in a subfolder.
@@ -120,7 +125,7 @@ if (! function_exists('base_url'))
 			? rtrim($config->baseURL, '/ ') . '/'
 			: $config->baseURL;
 
-		$url = new \CodeIgniter\HTTP\URI($baseUrl);
+		$url = new URI($baseUrl);
 		unset($config);
 
 		// Merge in the path set by the user, if any
@@ -131,7 +136,7 @@ if (! function_exists('base_url'))
 
 		// If the scheme wasn't provided, check to
 		// see if it was a secure request
-		if (empty($protocol) && \Config\Services::request()->isSecure())
+		if (empty($protocol) && Services::request()->isSecure())
 		{
 			$protocol = 'https';
 		}
@@ -161,7 +166,7 @@ if (! function_exists('current_url'))
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		$uri = clone \Config\Services::request()->uri;
+		$uri = clone Services::request()->uri;
 
 		// Since we're basing off of the IncomingRequest URI,
 		// we are guaranteed to have a host based on our own configs.
@@ -181,18 +186,18 @@ if (! function_exists('previous_url'))
 	 *
 	 * @param boolean $returnObject
 	 *
-	 * @return \CodeIgniter\HTTP\URI|mixed|string
+	 * @return URI|mixed|string
 	 */
 	function previous_url(bool $returnObject = false)
 	{
 		// Grab from the session first, if we have it,
 		// since it's more reliable and safer.
 		// Otherwise, grab a sanitized version from $_SERVER.
-		$referer = $_SESSION['_ci_previous_url'] ?? \Config\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+		$referer = $_SESSION['_ci_previous_url'] ?? Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
 		$referer = $referer ?? site_url('/');
 
-		return $returnObject ? new \CodeIgniter\HTTP\URI($referer) : $referer;
+		return $returnObject ? new URI($referer) : $referer;
 	}
 }
 
@@ -211,7 +216,7 @@ if (! function_exists('uri_string'))
 	 */
 	function uri_string(bool $relative = false): string
 	{
-		$request = \Config\Services::request();
+		$request = Services::request();
 		$uri     = $request->uri;
 
 		// An absolute path is equivalent to getPath()
@@ -240,10 +245,10 @@ if (! function_exists('index_page'))
 	 * @param  \Config\App|null $altConfig Alternate configuration to use
 	 * @return string
 	 */
-	function index_page(\Config\App $altConfig = null): string
+	function index_page(App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = $altConfig ?? config(\Config\App::class);
+		$config = $altConfig ?? config(App::class);
 
 		return $config->indexPage;
 	}
@@ -258,17 +263,17 @@ if (! function_exists('anchor'))
 	 *
 	 * Creates an anchor based on the local URL.
 	 *
-	 * @param mixed            $uri        URI string or array of URI segments
-	 * @param string           $title      The link title
-	 * @param mixed            $attributes Any attributes
-	 * @param \Config\App|null $altConfig  Alternate configuration to use
+	 * @param mixed    $uri        URI string or array of URI segments
+	 * @param string   $title      The link title
+	 * @param mixed    $attributes Any attributes
+	 * @param App|null $altConfig  Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function anchor($uri = '', string $title = '', $attributes = '', \Config\App $altConfig = null): string
+	function anchor($uri = '', string $title = '', $attributes = '', App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = $altConfig ?? config(\Config\App::class);
+		$config = $altConfig ?? config(App::class);
 
 		$siteUrl = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
@@ -298,17 +303,17 @@ if (! function_exists('anchor_popup'))
 	 * Creates an anchor based on the local URL. The link
 	 * opens a new window based on the attributes specified.
 	 *
-	 * @param string           $uri        the URL
-	 * @param string           $title      the link title
-	 * @param mixed            $attributes any attributes
-	 * @param \Config\App|null $altConfig  Alternate configuration to use
+	 * @param string   $uri        the URL
+	 * @param string   $title      the link title
+	 * @param mixed    $attributes any attributes
+	 * @param App|null $altConfig  Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function anchor_popup($uri = '', string $title = '', $attributes = false, \Config\App $altConfig = null): string
+	function anchor_popup($uri = '', string $title = '', $attributes = false, App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = $altConfig ?? config(\Config\App::class);
+		$config = $altConfig ?? config(App::class);
 
 		$siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
 		$siteUrl = rtrim($siteUrl, '/');
@@ -650,7 +655,7 @@ if (! function_exists('url_to'))
 	 * @param string $controller
 	 * @param mixed  ...$args
 	 *
-	 * @throws \CodeIgniter\Router\Exceptions\RouterException
+	 * @throws RouterException
 	 *
 	 * @return string
 	 */
@@ -662,10 +667,10 @@ if (! function_exists('url_to'))
 
 			if (isset($explode[1]))
 			{
-				throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
+				throw new RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
 			}
 
-			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
+			throw new RouterException(lang('HTTP.invalidRoute', [$controller]));
 		}
 
 		return site_url($route);

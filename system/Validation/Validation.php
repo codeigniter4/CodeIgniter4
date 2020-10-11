@@ -38,9 +38,12 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
+use Config\Validation as ValidationConfig;
+use InvalidArgumentException;
 
 /**
  * Validator
@@ -97,7 +100,7 @@ class Validation implements ValidationInterface
 	/**
 	 * Our configuration.
 	 *
-	 * @var \Config\Validation
+	 * @var ValidationConfig
 	 */
 	protected $config;
 
@@ -113,8 +116,8 @@ class Validation implements ValidationInterface
 	/**
 	 * Validation constructor.
 	 *
-	 * @param \Config\Validation $config
-	 * @param RendererInterface  $view
+	 * @param ValidationConfig  $config
+	 * @param RendererInterface $view
 	 */
 	public function __construct($config, RendererInterface $view)
 	{
@@ -126,6 +129,7 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Runs the validation process, returning true/false determining whether
 	 * validation was successful or not.
@@ -358,9 +362,9 @@ class Validation implements ValidationInterface
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param RequestInterface|IncomingRequest $request
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
@@ -439,7 +443,7 @@ class Validation implements ValidationInterface
 	 * @param array $rules
 	 * @param array $errors // An array of custom error messages
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function setRules(array $rules, array $errors = []): ValidationInterface
 	{
@@ -497,7 +501,7 @@ class Validation implements ValidationInterface
 	 *
 	 * @return string[] Rule group.
 	 *
-	 * @throws \InvalidArgumentException If group not found.
+	 * @throws InvalidArgumentException If group not found.
 	 */
 	public function getRuleGroup(string $group): array
 	{
@@ -521,7 +525,7 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string $group Group.
 	 *
-	 * @throws \InvalidArgumentException If group not found.
+	 * @throws InvalidArgumentException If group not found.
 	 */
 	public function setRuleGroup(string $group)
 	{
@@ -780,7 +784,7 @@ class Validation implements ValidationInterface
 	 * @param string $field
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function setError(string $field, string $error): ValidationInterface
 	{
@@ -857,7 +861,7 @@ class Validation implements ValidationInterface
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
 	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
+	 * @return ValidationInterface
 	 */
 	public function reset(): ValidationInterface
 	{

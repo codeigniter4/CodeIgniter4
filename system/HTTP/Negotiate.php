@@ -57,7 +57,7 @@ class Negotiate
 	/**
 	 * Request
 	 *
-	 * @var \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest
+	 * @var RequestInterface|IncomingRequest
 	 */
 	protected $request;
 
@@ -66,7 +66,7 @@ class Negotiate
 	/**
 	 * Constructor
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface|null $request
+	 * @param RequestInterface|null $request
 	 */
 	public function __construct(RequestInterface $request = null)
 	{

@@ -40,6 +40,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use Config\Cache;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.
@@ -61,9 +62,9 @@ class WincacheHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
 		$this->prefix = $config->prefix ?: '';
 	}

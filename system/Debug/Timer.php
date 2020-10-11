@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Debug;
 
+use RuntimeException;
+
 /**
  * Class Timer
  *
@@ -98,7 +100,7 @@ class Timer
 
 		if (empty($this->timers[$name]))
 		{
-			throw new \RuntimeException('Cannot stop timer: invalid name given.');
+			throw new RuntimeException('Cannot stop timer: invalid name given.');
 		}
 
 		$this->timers[$name]['end'] = microtime(true);

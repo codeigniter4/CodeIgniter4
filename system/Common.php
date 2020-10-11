@@ -37,8 +37,11 @@
  * @filesource
  */
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -93,7 +96,7 @@ if (! function_exists('cache'))
 	 *
 	 * @param string|null $key
 	 *
-	 * @return \CodeIgniter\Cache\CacheInterface|mixed
+	 * @return CacheInterface|mixed
 	 */
 	function cache(string $key = null)
 	{
@@ -346,10 +349,10 @@ if (! function_exists('db_connect'))
 	 * If $getShared === false then a new connection instance will be provided,
 	 * otherwise it will all calls will return the same instance.
 	 *
-	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
-	 * @param boolean                                                $getShared
+	 * @param ConnectionInterface|array|string|null $db
+	 * @param boolean                               $getShared
 	 *
-	 * @return \CodeIgniter\Database\BaseConnection
+	 * @return BaseConnection
 	 */
 	function db_connect($db = null, bool $getShared = true)
 	{
@@ -433,7 +436,7 @@ if (! function_exists('esc'))
 	 * @param string       $encoding
 	 *
 	 * @return string|array
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	function esc($data, string $context = 'html', string $encoding = null)
 	{
@@ -494,7 +497,7 @@ if (! function_exists('force_https'))
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * @throws HTTPException
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -594,7 +597,7 @@ if (! function_exists('helper'))
 	 *   3. system/Helpers
 	 *
 	 * @param  string|array $filenames
-	 * @throws \CodeIgniter\Files\Exceptions\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	function helper($filenames)
 	{
@@ -718,7 +721,7 @@ if (! function_exists('is_really_writable'))
 	 *
 	 * @return boolean
 	 *
-	 * @throws             \Exception
+	 * @throws             Exception
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable(string $file): bool
@@ -876,7 +879,7 @@ if (! function_exists('redirect'))
 	 *
 	 * @param string|null $uri
 	 *
-	 * @return \CodeIgniter\HTTP\RedirectResponse
+	 * @return RedirectResponse
 	 */
 	function redirect(string $uri = null): RedirectResponse
 	{
@@ -961,7 +964,7 @@ if (! function_exists('session'))
 	 *
 	 * @param string $val
 	 *
-	 * @return \CodeIgniter\Session\Session|mixed|null
+	 * @return Session|mixed|null
 	 */
 	function session(string $val = null)
 	{
@@ -1092,7 +1095,7 @@ if (! function_exists('timer'))
 	 *
 	 * @param string|null $name
 	 *
-	 * @return \CodeIgniter\Debug\Timer|mixed
+	 * @return Timer|mixed
 	 */
 	function timer(string $name = null)
 	{
@@ -1167,7 +1170,7 @@ if (! function_exists('view_cell'))
 	 * @param string|null $cacheName
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{

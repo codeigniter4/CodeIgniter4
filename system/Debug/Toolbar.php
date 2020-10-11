@@ -40,6 +40,7 @@
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 use CodeIgniter\Debug\Toolbar\Collectors\Config;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
@@ -72,7 +73,7 @@ class Toolbar
 	/**
 	 * Collectors to be used and displayed.
 	 *
-	 * @var \CodeIgniter\Debug\Toolbar\Collectors\BaseCollector[]
+	 * @var BaseCollector[]
 	 */
 	protected $collectors = [];
 
@@ -105,10 +106,10 @@ class Toolbar
 	/**
 	 * Returns all the data required by Debug Bar
 	 *
-	 * @param float                               $startTime App start time
-	 * @param float                               $totalTime
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param float             $startTime App start time
+	 * @param float             $totalTime
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
 	 *
 	 * @return string JSON encoded data
 	 */

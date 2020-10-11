@@ -52,7 +52,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Config\Images
+	 * @var Images
 	 */
 	protected $config;
 
@@ -154,7 +154,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Images|null $config
+	 * @param Images|null $config
 	 */
 	public function __construct($config = null)
 	{
@@ -199,7 +199,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Returns the image instance.
 	 *
-	 * @return \CodeIgniter\Images\Image
+	 * @return Image
 	 */
 	public function getFile()
 	{
@@ -607,7 +607,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 * @param boolean     $silent If true, will not throw our own exceptions.
 	 *
-	 * @throws \CodeIgniter\Images\Exceptions\ImageException
+	 * @throws ImageException
 	 *
 	 * @return mixed
 	 */

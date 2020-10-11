@@ -43,6 +43,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Model;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -64,7 +65,7 @@ class ResourceController extends Controller
 	/**
 	 * The model holding this resource's data
 	 *
-	 * @var \CodeIgniter\Model
+	 * @var Model
 	 */
 	protected $model;
 

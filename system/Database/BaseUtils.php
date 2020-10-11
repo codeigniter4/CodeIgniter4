@@ -95,7 +95,7 @@ abstract class BaseUtils
 	 * List databases
 	 *
 	 * @return array|boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function listDatabases()
 	{
@@ -131,6 +131,7 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Determine if a particular database exists
 	 *
@@ -143,12 +144,13 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Optimize Table
 	 *
 	 * @param  string $tableName
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function optimizeTable(string $tableName)
 	{
@@ -177,7 +179,7 @@ abstract class BaseUtils
 	 * Optimize Database
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function optimizeDatabase()
 	{
@@ -223,12 +225,13 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Repair Table
 	 *
 	 * @param  string $tableName
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function repairTable(string $tableName)
 	{
@@ -340,7 +343,7 @@ abstract class BaseUtils
 	 *
 	 * @param  array|string $params
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function backup($params = [])
 	{

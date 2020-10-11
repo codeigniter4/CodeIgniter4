@@ -42,6 +42,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -59,7 +60,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * DOM for the body.
 	 *
-	 * @var \CodeIgniter\Test\DOMParser
+	 * @var DOMParser
 	 */
 	protected $domParser;
 
@@ -124,7 +125,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Assert that the given response was a redirect.
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertRedirect()
 	{
@@ -161,7 +162,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param integer $code
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertStatus(int $code)
 	{
@@ -171,7 +172,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Asserts that the Response is considered OK.
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertOK()
 	{
@@ -188,7 +189,7 @@ class FeatureResponse extends TestCase
 	 * @param string      $key
 	 * @param string|null $value
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSessionHas(string $key, $value = null)
 	{
@@ -205,7 +206,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $key
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSessionMissing(string $key)
 	{
@@ -222,7 +223,7 @@ class FeatureResponse extends TestCase
 	 * @param string      $key
 	 * @param string|null $value
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertHeader(string $key, $value = null)
 	{
@@ -239,7 +240,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $key
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertHeaderMissing(string $key)
 	{
@@ -257,7 +258,7 @@ class FeatureResponse extends TestCase
 	 * @param string|null $value
 	 * @param string      $prefix
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertCookie(string $key, $value = null, string $prefix = '')
 	{
@@ -280,7 +281,7 @@ class FeatureResponse extends TestCase
 	 * @param string $key
 	 * @param string $prefix
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertCookieExpired(string $key, string $prefix = '')
 	{
@@ -298,7 +299,7 @@ class FeatureResponse extends TestCase
 	 * @param string|null $search
 	 * @param string|null $element
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSee(string $search = null, string $element = null)
 	{
@@ -311,7 +312,7 @@ class FeatureResponse extends TestCase
 	 * @param string|null $search
 	 * @param string|null $element
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertDontSee(string $search = null, string $element = null)
 	{
@@ -323,7 +324,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $search
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSeeElement(string $search)
 	{
@@ -335,7 +336,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $search
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertDontSeeElement(string $search)
 	{
@@ -348,7 +349,7 @@ class FeatureResponse extends TestCase
 	 * @param string      $text
 	 * @param string|null $details
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSeeLink(string $text, string $details = null)
 	{
@@ -361,7 +362,7 @@ class FeatureResponse extends TestCase
 	 * @param string      $field
 	 * @param string|null $value
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertSeeInField(string $field, string $value = null)
 	{
@@ -395,7 +396,7 @@ class FeatureResponse extends TestCase
 	 * @param array   $fragment
 	 * @param boolean $strict
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertJSONFragment(array $fragment, bool $strict = false)
 	{
@@ -418,7 +419,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string|array $test
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertJSONExact($test)
 	{

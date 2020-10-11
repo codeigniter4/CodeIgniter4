@@ -1,5 +1,11 @@
 <?php
 
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Services;
+use Config\Autoload;
+use Config\Modules;
+
 /**
  * CodeIgniter
  *
@@ -137,8 +143,8 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-$loader = CodeIgniter\Services::autoloader();
-$loader->initialize(new Config\Autoload(), new Config\Modules());
+$loader = Services::autoloader();
+$loader->initialize(new Autoload(), new Modules());
 $loader->register(); // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
@@ -161,7 +167,7 @@ if (is_file(COMPOSER_PATH))
 // into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
-$env = new CodeIgniter\Config\DotEnv(ROOTPATH);
+$env = new DotEnv(ROOTPATH);
 $env->load();
 
 // Always load the URL helper -
@@ -179,7 +185,7 @@ helper('url');
  */
 
 $appConfig = config('Config\App');
-$app       = new CodeIgniter\CodeIgniter($appConfig);
+$app       = new CodeIgniter($appConfig);
 $app->initialize();
 
 return $app;

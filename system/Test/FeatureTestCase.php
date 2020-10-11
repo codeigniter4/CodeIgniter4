@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Router\RouteCollection;
+
 /**
  * Class FeatureTestCase
  *
@@ -55,7 +57,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * If present, will override application
 	 * routes when using call().
 	 *
-	 * @var \CodeIgniter\Router\RouteCollection
+	 * @var RouteCollection
 	 */
 	protected $routes;
 

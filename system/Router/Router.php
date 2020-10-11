@@ -156,8 +156,8 @@ class Router implements RouterInterface
 	 * @param string|null $uri
 	 *
 	 * @return mixed|string
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \CodeIgniter\Exceptions\PageNotFoundException
+	 * @throws RedirectException
+	 * @throws PageNotFoundException
 	 */
 	public function handle(string $uri = null)
 	{
@@ -395,7 +395,7 @@ class Router implements RouterInterface
 	 * @param string $uri The URI path to compare against the routes
 	 *
 	 * @return boolean Whether the route was matched or not.
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @throws RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{

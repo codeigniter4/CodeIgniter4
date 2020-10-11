@@ -39,7 +39,10 @@
 namespace CodeIgniter\Session;
 
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use SessionHandlerInterface;
 
 /**
  * Implementation of CodeIgniter session container.
@@ -55,7 +58,7 @@ class Session implements SessionInterface
 	/**
 	 * Instance of the driver to use.
 	 *
-	 * @var \SessionHandlerInterface
+	 * @var SessionHandlerInterface
 	 */
 	protected $driver;
 
@@ -164,7 +167,7 @@ class Session implements SessionInterface
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -175,10 +178,10 @@ class Session implements SessionInterface
 	 *
 	 * Extract configuration settings and save them here.
 	 *
-	 * @param \SessionHandlerInterface $driver
-	 * @param \Config\App              $config
+	 * @param SessionHandlerInterface $driver
+	 * @param App                     $config
 	 */
-	public function __construct(\SessionHandlerInterface $driver, $config)
+	public function __construct(SessionHandlerInterface $driver, $config)
 	{
 		$this->driver = $driver;
 

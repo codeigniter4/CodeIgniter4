@@ -37,13 +37,15 @@
  * @filesource
  */
 
-use Config\Services;
+use Config\App;
 
 /**
  * CodeIgniter Form Helpers
  *
  * @package CodeIgniter
  */
+
+use Config\Services;
 
 //--------------------------------------------------------------------
 
@@ -92,7 +94,7 @@ if (! function_exists('form_open'))
 		}
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config      = config(\Config\App::class);
+			$config      = config(App::class);
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 

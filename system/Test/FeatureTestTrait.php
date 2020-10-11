@@ -44,8 +44,11 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use Config\App;
 use Config\Services;
+use Exception;
+use ReflectionException;
 
 /**
  * Trait FeatureTestTrait
@@ -141,9 +144,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function call(string $method, string $path, array $params = null)
 	{
@@ -211,9 +214,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function get(string $path, array $params = null)
 	{
@@ -226,9 +229,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function post(string $path, array $params = null)
 	{
@@ -241,9 +244,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function put(string $path, array $params = null)
 	{
@@ -256,9 +259,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function patch(string $path, array $params = null)
 	{
@@ -271,9 +274,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function delete(string $path, array $params = null)
 	{
@@ -286,9 +289,9 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return FeatureResponse
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function options(string $path, array $params = null)
 	{
@@ -302,7 +305,7 @@ trait FeatureTestTrait
 	 * @param string      $method
 	 * @param string|null $path
 	 *
-	 * @return \CodeIgniter\HTTP\IncomingRequest
+	 * @return IncomingRequest
 	 */
 	protected function setupRequest(string $method, string $path = null): IncomingRequest
 	{
@@ -326,9 +329,9 @@ trait FeatureTestTrait
 	/**
 	 * Setup the custom request's headers
 	 *
-	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param IncomingRequest $request
 	 *
-	 * @return \CodeIgniter\HTTP\IncomingRequest
+	 * @return IncomingRequest
 	 */
 	protected function setupHeaders(IncomingRequest $request)
 	{
@@ -349,12 +352,12 @@ trait FeatureTestTrait
 	 *
 	 * Always populate the GET vars based on the URI.
 	 *
-	 * @param string                    $method
-	 * @param \CodeIgniter\HTTP\Request $request
-	 * @param array|null                $params
+	 * @param string     $method
+	 * @param Request    $request
+	 * @param array|null $params
 	 *
-	 * @return \CodeIgniter\HTTP\Request
-	 * @throws \ReflectionException
+	 * @return Request
+	 * @throws ReflectionException
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{

@@ -37,6 +37,9 @@
  * @filesource
  */
 
+use Config\App;
+use Config\Services;
+
 // --------------------------------------------------------------------
 
 /**
@@ -62,7 +65,7 @@ if (! function_exists('set_cookie'))
 	 * @param boolean      $secure   True makes the cookie secure
 	 * @param boolean      $httpOnly True makes the cookie accessible via
 	 *                                 http(s) only (no javascript)
-       * @param string|null  $sameSite The cookie SameSite value
+	 * @param string|null  $sameSite The cookie SameSite value
 	 *
 	 * @see (\Config\Services::response())->setCookie()
 	 * @see \CodeIgniter\HTTP\Response::setCookie()
@@ -81,7 +84,7 @@ if (! function_exists('set_cookie'))
 	{
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
-		$response = \Config\Services::response();
+		$response = Services::response();
 		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
 	}
 }
@@ -103,11 +106,11 @@ if (! function_exists('get_cookie'))
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
-		$app             = config(\Config\App::class);
+		$app             = config(App::class);
 		$appCookiePrefix = $app->cookiePrefix;
 		$prefix          = isset($_COOKIE[$index]) ? '' : $appCookiePrefix;
 
-		$request = \Config\Services::request();
+		$request = Services::request();
 		$filter  = true === $xssClean ? FILTER_SANITIZE_STRING : null;
 
 		return $request->getCookie($prefix . $index, $filter);
@@ -133,6 +136,6 @@ if (! function_exists('delete_cookie'))
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{
-		\Config\Services::response()->deleteCookie($name, $domain, $path, $prefix);
+		Services::response()->deleteCookie($name, $domain, $path, $prefix);
 	}
 }

@@ -39,10 +39,12 @@
 
 namespace CodeIgniter\Security;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App as AppConfig;
 use Config\Security as SecurityConfig;
+use Exception;
 
 /**
  * HTTP Security Handler.

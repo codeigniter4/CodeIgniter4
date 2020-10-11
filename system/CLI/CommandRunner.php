@@ -41,6 +41,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\Controller;
 use Config\Services;
+use ReflectionException;
 
 /**
  * Command runner
@@ -73,7 +74,7 @@ class CommandRunner extends Controller
 	 * @param array  ...$params
 	 *
 	 * @return mixed
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -94,7 +95,7 @@ class CommandRunner extends Controller
 	 * @param array $params
 	 *
 	 * @return mixed
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function index(array $params)
 	{

@@ -50,14 +50,14 @@ class Format
 	/**
 	 * Configuration instance
 	 *
-	 * @var \Config\Format
+	 * @var FormatConfig
 	 */
 	protected $config;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Format $config
+	 * @param FormatConfig $config
 	 */
 	public function __construct(FormatConfig $config)
 	{
@@ -67,7 +67,7 @@ class Format
 	/**
 	 * Returns the current configuration instance.
 	 *
-	 * @return \Config\Format
+	 * @return FormatConfig
 	 */
 	public function getConfig()
 	{
@@ -79,9 +79,9 @@ class Format
 	 *
 	 * @param string $mime
 	 *
-	 * @throws \CodeIgniter\Format\Exceptions\FormatException
+	 * @throws FormatException
 	 *
-	 * @return \CodeIgniter\Format\FormatterInterface
+	 * @return FormatterInterface
 	 */
 	public function getFormatter(string $mime): FormatterInterface
 	{

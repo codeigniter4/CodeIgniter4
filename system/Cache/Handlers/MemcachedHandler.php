@@ -40,6 +40,10 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
+use Config\Cache;
+use Exception;
+use Memcache;
+use Memcached;
 
 /**
  * Mamcached cache handler
@@ -57,7 +61,7 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * The memcached object
 	 *
-	 * @var \Memcached|\Memcache
+	 * @var Memcached|Memcache
 	 */
 	protected $memcached;
 
@@ -78,9 +82,9 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
 		$this->prefix = $config->prefix ?: '';
 
@@ -97,11 +101,11 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function __destruct()
 	{
-		if ($this->memcached instanceof \Memcached)
+		if ($this->memcached instanceof Memcached)
 		{
 			$this->memcached->quit();
 		}
-		elseif ($this->memcached instanceof \Memcache)
+		elseif ($this->memcached instanceof Memcache)
 		{
 			$this->memcached->close();
 		}
@@ -118,13 +122,13 @@ class MemcachedHandler implements CacheInterface
 		// so that the CacheFactory can attempt to initiate the next cache handler.
 		try
 		{
-			if (class_exists('\Memcached'))
+			if (class_exists(Memcached::class))
 			{
-				// Create new instance of \Memcached
-				$this->memcached = new \Memcached();
+				// Create new instance of Memcached
+				$this->memcached = new Memcached();
 				if ($this->config['raw'])
 				{
-					$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+					$this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
 				}
 
 				// Add server
@@ -142,10 +146,10 @@ class MemcachedHandler implements CacheInterface
 					throw new CriticalError('Cache: Memcached connection failed.');
 				}
 			}
-			elseif (class_exists('\Memcache'))
+			elseif (class_exists(Memcache::class))
 			{
-				// Create new instance of \Memcache
-				$this->memcached = new \Memcache();
+				// Create new instance of Memcache
+				$this->memcached = new Memcache();
 
 				// Check if we can connect to the server
 				$canConnect = $this->memcached->connect(
@@ -173,7 +177,7 @@ class MemcachedHandler implements CacheInterface
 			// If a CriticalError exception occurs, throw it up.
 			throw $e;
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			// If an \Exception occurs, convert it into a CriticalError exception and throw it.
 			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
@@ -193,17 +197,17 @@ class MemcachedHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		if ($this->memcached instanceof \Memcached)
+		if ($this->memcached instanceof Memcached)
 		{
 			$data = $this->memcached->get($key);
 
 			// check for unmatched key
-			if ($this->memcached->getResultCode() === \Memcached::RES_NOTFOUND)
+			if ($this->memcached->getResultCode() === Memcached::RES_NOTFOUND)
 			{
 				return null;
 			}
 		}
-		elseif ($this->memcached instanceof \Memcache)
+		elseif ($this->memcached instanceof Memcache)
 		{
 			$flags = false;
 			$data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
@@ -242,12 +246,12 @@ class MemcachedHandler implements CacheInterface
 			];
 		}
 
-		if ($this->memcached instanceof \Memcached)
+		if ($this->memcached instanceof Memcached)
 		{
 			return $this->memcached->set($key, $value, $ttl);
 		}
 
-		if ($this->memcached instanceof \Memcache)
+		if ($this->memcached instanceof Memcache)
 		{
 			return $this->memcached->set($key, $value, 0, $ttl);
 		}

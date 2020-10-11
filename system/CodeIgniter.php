@@ -48,14 +48,19 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
+use Config\App;
 use Config\Cache;
 use Config\Services;
 use Exception;
+use Kint;
+use Kint\Renderer\CliRenderer;
+use Kint\Renderer\RichRenderer;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -108,7 +113,7 @@ class CodeIgniter
 	/**
 	 * Current response.
 	 *
-	 * @var HTTP\ResponseInterface
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
@@ -167,9 +172,9 @@ class CodeIgniter
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct(App $config)
 	{
 		$this->startTime = microtime(true);
 		$this->config    = $config;
@@ -208,7 +213,7 @@ class CodeIgniter
 		if (! CI_DEBUG)
 		{
 			// @codeCoverageIgnoreStart
-			\Kint::$enabled_mode = false;
+			Kint::$enabled_mode = false;
 			// @codeCoverageIgnoreEnd
 		}
 	}
@@ -280,31 +285,31 @@ class CodeIgniter
 		 */
 		$config = config('Config\Kint');
 
-		\Kint::$max_depth           = $config->maxDepth;
-		\Kint::$display_called_from = $config->displayCalledFrom;
-		\Kint::$expanded            = $config->expanded;
+		Kint::$max_depth           = $config->maxDepth;
+		Kint::$display_called_from = $config->displayCalledFrom;
+		Kint::$expanded            = $config->expanded;
 
 		if (! empty($config->plugins) && is_array($config->plugins))
 		{
-			\Kint::$plugins = $config->plugins;
+			Kint::$plugins = $config->plugins;
 		}
 
-		\Kint\Renderer\RichRenderer::$theme  = $config->richTheme;
-		\Kint\Renderer\RichRenderer::$folder = $config->richFolder;
-		\Kint\Renderer\RichRenderer::$sort   = $config->richSort;
+		RichRenderer::$theme  = $config->richTheme;
+		RichRenderer::$folder = $config->richFolder;
+		RichRenderer::$sort   = $config->richSort;
 		if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins))
 		{
-			\Kint\Renderer\RichRenderer::$object_plugins = $config->richObjectPlugins;
+			RichRenderer::$object_plugins = $config->richObjectPlugins;
 		}
 		if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins))
 		{
-			\Kint\Renderer\RichRenderer::$tab_plugins = $config->richTabPlugins;
+			RichRenderer::$tab_plugins = $config->richTabPlugins;
 		}
 
-		\Kint\Renderer\CliRenderer::$cli_colors         = $config->cliColors;
-		\Kint\Renderer\CliRenderer::$force_utf8         = $config->cliForceUTF8;
-		\Kint\Renderer\CliRenderer::$detect_width       = $config->cliDetectWidth;
-		\Kint\Renderer\CliRenderer::$min_terminal_width = $config->cliMinWidth;
+		CliRenderer::$cli_colors         = $config->cliColors;
+		CliRenderer::$force_utf8         = $config->cliForceUTF8;
+		CliRenderer::$detect_width       = $config->cliDetectWidth;
+		CliRenderer::$min_terminal_width = $config->cliMinWidth;
 	}
 
 	//--------------------------------------------------------------------
@@ -317,12 +322,12 @@ class CodeIgniter
 	 * tries to route the response, loads the controller and generally
 	 * makes all of the pieces work together.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
-	 * @param boolean                                           $returnResponse
+	 * @param RouteCollectionInterface|null $routes
+	 * @param boolean                       $returnResponse
 	 *
-	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return boolean|RequestInterface|Response|ResponseInterface|mixed
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
 	{
@@ -397,12 +402,12 @@ class CodeIgniter
 	/**
 	 * Handles the main request logic and fires the controller.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
-	 * @param Cache                                             $cacheConfig
-	 * @param boolean                                           $returnResponse
+	 * @param RouteCollectionInterface|null $routes
+	 * @param Cache                         $cacheConfig
+	 * @param boolean                       $returnResponse
 	 *
-	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @return RequestInterface|\CodeIgniter\HTTP\Response|ResponseInterface|mixed
+	 * @throws RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
 	{
@@ -578,9 +583,9 @@ class CodeIgniter
 	 * Sets a Request object to be used for this request.
 	 * Used when running certain tests.
 	 *
-	 * @param \CodeIgniter\HTTP\Request $request
+	 * @param Request $request
 	 *
-	 * @return \CodeIgniter\CodeIgniter
+	 * @return $this
 	 */
 	public function setRequest(Request $request)
 	{
@@ -664,13 +669,13 @@ class CodeIgniter
 	/**
 	 * Determines if a response has been cached for the given URI.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 *
-	 * @return boolean|\CodeIgniter\HTTP\ResponseInterface
+	 * @return boolean|ResponseInterface
 	 */
-	public function displayCache($config)
+	public function displayCache(Cache $config)
 	{
 		if ($cachedResponse = cache()->get($this->generateCacheName($config)))
 		{
@@ -724,7 +729,7 @@ class CodeIgniter
 	 * Caches the full response from the current request. Used for
 	 * full-page caching for very high performance.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 *
 	 * @return mixed
 	 */
@@ -817,7 +822,7 @@ class CodeIgniter
 	 *                                         of the config file.
 	 *
 	 * @return string|null
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @throws RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
@@ -1093,7 +1098,7 @@ class CodeIgniter
 	 *
 	 * This helps provider safer, more reliable previous_url() detection.
 	 *
-	 * @param \CodeIgniter\HTTP\URI|string $uri
+	 * @param URI|string $uri
 	 */
 	public function storePreviousURL($uri)
 	{

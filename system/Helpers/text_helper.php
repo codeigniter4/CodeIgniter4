@@ -38,6 +38,8 @@
  * @filesource
  */
 
+use Config\ForeignCharacters;
+
 /**
  * CodeIgniter Text Helpers
  *
@@ -427,7 +429,7 @@ if (! function_exists('convert_accented_characters'))
 
 		if (! is_array($arrayFrom))
 		{
-			$config = new Config\ForeignCharacters();
+			$config = new ForeignCharacters();
 
 			if (empty($config->characterList) || ! is_array($config->characterList))
 			{

@@ -39,6 +39,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Exceptions\ConfigException;
 use Config\Database;
@@ -306,7 +307,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return void
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
@@ -328,7 +329,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
@@ -375,7 +376,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array   $where
 	 *
 	 * @return void
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{

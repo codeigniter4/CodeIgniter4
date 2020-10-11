@@ -41,6 +41,7 @@ namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
 use Config\Modules;
+use InvalidArgumentException;
 
 /**
  * CodeIgniter Autoloader
@@ -102,8 +103,8 @@ class Autoloader
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param \Config\Autoload $config
-	 * @param \Config\Modules  $modules
+	 * @param Autoload $config
+	 * @param Modules  $modules
 	 *
 	 * @return $this
 	 */
@@ -113,7 +114,7 @@ class Autoloader
 		// to have both present in order to work.
 		if (empty($config->psr4) && empty($config->classmap))
 		{
-			throw new \InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
+			throw new InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
 		}
 
 		if (isset($config->psr4))

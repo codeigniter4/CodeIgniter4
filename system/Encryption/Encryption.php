@@ -54,7 +54,7 @@ class Encryption
 	/**
 	 * The encrypter we create
 	 *
-	 * @var \CodeIgniter\Encryption\EncrypterInterface
+	 * @var EncrypterInterface
 	 */
 	protected $encrypter;
 
@@ -106,9 +106,9 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param \Config\Encryption $config Configuration parameters
+	 * @param EncryptionConfig $config Configuration parameters
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
 	 *
 	 * @return void
 	 */
@@ -138,11 +138,11 @@ class Encryption
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param \Config\Encryption $config Configuration parameters
+	 * @param EncryptionConfig $config Configuration parameters
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
 	 *
-	 * @return \CodeIgniter\Encryption\EncrypterInterface
+	 * @return EncrypterInterface
 	 */
 	public function initialize(EncryptionConfig $config = null)
 	{

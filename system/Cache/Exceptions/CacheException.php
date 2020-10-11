@@ -38,17 +38,19 @@
 
 namespace CodeIgniter\Cache\Exceptions;
 
+use RuntimeException;
+
 /**
  * CacheException
  */
-class CacheException extends \RuntimeException implements ExceptionInterface
+class CacheException extends RuntimeException implements ExceptionInterface
 {
 	/**
 	 * Thrown when handler has no permission to write cache.
 	 *
 	 * @param string $path
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return CacheException
 	 */
 	public static function forUnableToWrite(string $path)
 	{
@@ -58,7 +60,7 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	/**
 	 * Thrown when an unrecognized handler is used.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return CacheException
 	 */
 	public static function forInvalidHandlers()
 	{
@@ -68,7 +70,7 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	/**
 	 * Thrown when no backup handler is setup in config.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return CacheException
 	 */
 	public static function forNoBackup()
 	{
@@ -78,7 +80,7 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	/**
 	 * Thrown when specified handler was not found.
 	 *
-	 * @return \CodeIgniter\Cache\Exceptions\CacheException
+	 * @return CacheException
 	 */
 	public static function forHandlerNotFound()
 	{

@@ -121,7 +121,7 @@ class Table
 	 *
 	 * @param string $table
 	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
+	 * @return Table
 	 */
 	public function fromTable(string $table)
 	{
@@ -192,7 +192,7 @@ class Table
 	 *
 	 * @param string|array $columns
 	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
+	 * @return Table
 	 */
 	public function dropColumn($columns)
 	{
@@ -221,7 +221,7 @@ class Table
 	 *
 	 * @param array $field
 	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
+	 * @return Table
 	 */
 	public function modifyColumn(array $field)
 	{
@@ -241,7 +241,7 @@ class Table
 	 *
 	 * @param string $column
 	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
+	 * @return Table
 	 */
 	public function dropForeignKey(string $column)
 	{

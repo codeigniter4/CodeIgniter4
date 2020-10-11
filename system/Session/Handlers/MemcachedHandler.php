@@ -40,17 +40,19 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Memcached;
+use SessionHandlerInterface;
 
 /**
  * Session handler using Memcache for persistence
  */
-class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
+class MemcachedHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
 	 * Memcached instance
 	 *
-	 * @var \Memcached|null
+	 * @var Memcached|null
 	 */
 	protected $memcached;
 
@@ -82,7 +84,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param  AppConfig $config
 	 * @param  string    $ipAddress
-	 * @throws \CodeIgniter\Session\Exceptions\SessionException
+	 * @throws SessionException
 	 */
 	public function __construct(AppConfig $config, string $ipAddress)
 	{
@@ -107,6 +109,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Open
 	 *
@@ -119,8 +122,8 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function open($savePath, $name): bool
 	{
-		$this->memcached = new \Memcached();
-		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
+		$this->memcached = new Memcached();
+		$this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
 
 		$serverList = [];
 
@@ -279,6 +282,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Destroy
 	 *
@@ -385,7 +389,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached, $this->lockKey) && $this->lock)
 		{
 			if (! $this->memcached->delete($this->lockKey) &&
-					$this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND
+					$this->memcached->getResultCode() !== Memcached::RES_NOTFOUND
 			)
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);

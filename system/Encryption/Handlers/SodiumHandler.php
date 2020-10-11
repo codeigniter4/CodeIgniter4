@@ -146,7 +146,7 @@ class SodiumHandler extends BaseHandler
 	 *
 	 * @param array|string|null $params
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException If key is empty
+	 * @throws EncryptionException If key is empty
 	 *
 	 * @return void
 	 */

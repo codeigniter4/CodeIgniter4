@@ -2,6 +2,8 @@
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Query;
 
 class MockConnection extends BaseConnection
 {
@@ -35,9 +37,8 @@ class MockConnection extends BaseConnection
 	 * @param boolean $setEscapeFlags
 	 * @param string  $queryClass
 	 *
-	 * @return \CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false
+	 * @return BaseResult|Query|false
 	 */
-
 	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));

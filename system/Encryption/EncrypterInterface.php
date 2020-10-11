@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Encryption;
 
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
+
 /**
  * CodeIgniter Encryption Handler
  *
@@ -52,7 +54,7 @@ interface EncrypterInterface
 	 * @param string            $data   Input data
 	 * @param array|string|null $params Overridden parameters, specifically the key
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
 	 *
 	 * @return string
 	 */
@@ -64,7 +66,7 @@ interface EncrypterInterface
 	 * @param string            $data   Encrypted data
 	 * @param array|string|null $params Overridden parameters, specifically the key
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
 	 *
 	 * @return string
 	 */

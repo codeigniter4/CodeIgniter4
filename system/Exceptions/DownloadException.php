@@ -1,12 +1,13 @@
 <?php namespace CodeIgniter\Exceptions;
 
+use RuntimeException;
+
 /**
  * Class DownloadException
  *
  * @package CodeIgniter\Exceptions
  */
-
-class DownloadException extends \RuntimeException implements ExceptionInterface
+class DownloadException extends RuntimeException implements ExceptionInterface
 {
 
 	public static function forCannotSetFilePath(string $path)

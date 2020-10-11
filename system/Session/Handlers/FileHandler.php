@@ -41,11 +41,13 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Exception;
+use SessionHandlerInterface;
 
 /**
  * Session handler using file system for storage
  */
-class FileHandler extends BaseHandler implements \SessionHandlerInterface
+class FileHandler extends BaseHandler implements SessionHandlerInterface
 {
 
 	/**
@@ -135,7 +137,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param string $name     Session cookie name
 	 *
 	 * @return boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function open($savePath, $name): bool
 	{
@@ -316,6 +318,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Destroy
 	 *

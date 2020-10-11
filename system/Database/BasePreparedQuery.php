@@ -38,8 +38,10 @@
 
 namespace CodeIgniter\Database;
 
+use BadMethodCallException;
 use CodeIgniter\Database\MySQLi\Connection;
 use CodeIgniter\Events\Events;
+use mysqli_stmt;
 
 /**
  * Base prepared query
@@ -50,7 +52,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The prepared statement itself.
 	 *
-	 * @var resource|\mysqli_stmt
+	 * @var resource|mysqli_stmt
 	 */
 	protected $statement;
 
@@ -79,7 +81,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * A reference to the db connection to use.
 	 *
-	 * @var BaseConnection|MySQLi\Connection
+	 * @var BaseConnection|Connection
 	 */
 	protected $db;
 
@@ -88,7 +90,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 * @param ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface $db)
 	{
@@ -228,7 +230,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	{
 		if (! $this->query instanceof QueryInterface)
 		{
-			throw new \BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
+			throw new BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
 		}
 
 		return $this->query->getQuery();
