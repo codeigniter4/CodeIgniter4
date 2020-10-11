@@ -126,7 +126,7 @@ Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 if (is_file(COMPOSER_PATH))
 {
 	// The path to the vendor directory.
-	defined('VENDORPATH')) || define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
+	defined('VENDORPATH') || define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 	require_once COMPOSER_PATH;
 }
