@@ -252,7 +252,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * multiple placeholders added at once.
 	 *
 	 * @param string|array $placeholder
-	 * @param string       $pattern
+	 * @param string|null  $pattern
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -515,11 +515,11 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the raw array of available routes.
 	 *
-	 * @param mixed $verb
+	 * @param string|null $verb
 	 *
 	 * @return array
 	 */
-	public function getRoutes($verb = null): array
+	public function getRoutes(string $verb = null): array
 	{
 		if (empty($verb))
 		{
@@ -558,13 +558,16 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns one or all routes options
 	 *
-	 * @param string $from
+	 * @param string|null $from
+	 * @param string|null $verb
 	 *
 	 * @return array
 	 */
-	public function getRoutesOptions(string $from = null): array
+	public function getRoutesOptions(string $from = null, string $verb = null): array
 	{
-		return $from ? $this->routesOptions[$from] ?? [] : $this->routesOptions;
+		$options = $this->loadRoutesOptions($verb);
+
+		return $from ? $options[$from] ?? [] : $options;
 	}
 
 	//--------------------------------------------------------------------
@@ -601,8 +604,8 @@ class RouteCollection implements RouteCollectionInterface
 	 * It does not allow any options to be set on the route, or to
 	 * define the method used.
 	 *
-	 * @param array $routes
-	 * @param array $options
+	 * @param array      $routes
+	 * @param array|null $options
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -1285,13 +1288,16 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Checks a route (using the "from") to see if it's filtered or not.
 	 *
-	 * @param string $search
+	 * @param string      $search
+	 * @param string|null $verb
 	 *
 	 * @return boolean
 	 */
-	public function isFiltered(string $search): bool
+	public function isFiltered(string $search, string $verb = null): bool
 	{
-		return isset($this->routesOptions[$search]['filter']);
+		$options = $this->loadRoutesOptions($verb);
+
+		return isset($options[$search]['filter']);
 	}
 
 	//--------------------------------------------------------------------
@@ -1306,18 +1312,16 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * has a filter of "role", with parameters of ['admin', 'manager'].
 	 *
-	 * @param string $search
+	 * @param string      $search
+	 * @param string|null $verb
 	 *
 	 * @return string
 	 */
-	public function getFilterForRoute(string $search): string
+	public function getFilterForRoute(string $search, string $verb = null): string
 	{
-		if (! $this->isFiltered($search))
-		{
-			return '';
-		}
+		$options = $this->loadRoutesOptions($verb);
 
-		return $this->routesOptions[$search]['filter'];
+		return $options[$search]['filter'] ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -1471,7 +1475,7 @@ class RouteCollection implements RouteCollectionInterface
 			'route' => [$from => $to],
 		];
 
-		$this->routesOptions[$from] = $options;
+		$this->routesOptions[$verb][$from] = $options;
 
 		// Is this a redirect?
 		if (isset($options['redirect']) && is_numeric($options['redirect']))
@@ -1581,6 +1585,40 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->routes[$verb] = [];
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Load routes options based on verb
+	 *
+	 * @param string|null $verb
+	 *
+	 * @return array
+	 */
+	protected function loadRoutesOptions(string $verb = null): array
+	{
+		$verb = $verb ?: $this->getHTTPVerb();
+
+		$options = $this->routesOptions[$verb] ?? [];
+
+		if (isset($this->routesOptions['*']))
+		{
+			foreach ($this->routesOptions['*'] as $key => $val)
+			{
+				if (isset($options[$key]))
+				{
+					$extraOptions  = array_diff_key($val, $options[$key]);
+					$options[$key] = array_merge($options[$key], $extraOptions);
+				}
+				else
+				{
+					$options[$key] = $val;
+				}
+			}
+		}
+
+		return $options;
 	}
 
 }
