@@ -192,8 +192,8 @@ if (! function_exists('command'))
 			else
 			{
 				throw new InvalidArgumentException(
-          sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)) // @codeCoverageIgnoreLine
-        );
+					sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)) // @codeCoverageIgnoreLine
+				);
 			}
 
 			$cursor += strlen($match[0]);
@@ -492,8 +492,8 @@ if (! function_exists('force_https'))
 	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 	 *
 	 * @param integer                             $duration How long should
-   *                                            the SSL header be set for?
-   *                                            Defaults to 1 year. (in seconds) 
+	 *                                            the SSL header be set for?
+	 *                                            Defaults to 1 year. (in seconds) 
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
@@ -501,8 +501,8 @@ if (! function_exists('force_https'))
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-    $request  = $request ?? Services::request();
-    $response = $response ?? Services::response();
+		$request  = $request ?? Services::request();
+		$response = $response ?? Services::response();
 
 		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
@@ -649,7 +649,6 @@ if (! function_exists('helper'))
 					{
 						if (strpos($path, APPPATH) === 0)
 						{
-							
 							$appHelper = $path; // @codeCoverageIgnoreLine
 						}
 						elseif (strpos($path, SYSTEMPATH) === 0)
