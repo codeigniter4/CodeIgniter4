@@ -1,11 +1,5 @@
 <?php
 
-use CodeIgniter\CodeIgniter;
-use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Services;
-use Config\Autoload;
-use Config\Modules;
-
 /**
  * CodeIgniter
  *
@@ -37,11 +31,18 @@ use Config\Modules;
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
  */
+
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Services;
+use Config\App;
+use Config\Autoload;
+use Config\Modules;
 
 /*
  * ---------------------------------------------------------------
@@ -51,49 +52,24 @@ use Config\Modules;
  * The path constants provide convenient access to the folders
  * throughout the application. We have to setup them up here
  * so they are available in the config files that are loaded.
+ *
+ * @var \Config\Paths $paths
  */
 
 // The path to the application directory.
-if (! defined('APPPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('APPPATH') || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
-// The path to the project root directory. Just above APPPATH.
-if (! defined('ROOTPATH'))
-{
-	define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
-}
+// The path to the project root directory.
+defined('ROOTPATH') || define('ROOTPATH', realpath(rtrim($paths->rootDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 // The path to the system directory.
-if (! defined('SYSTEMPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('SYSTEMPATH') || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+
+// The path to the tests directory.
+defined('TESTPATH') || define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 // The path to the writable directory.
-if (! defined('WRITEPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
-
-// The path to the tests directory
-if (! defined('TESTPATH'))
-{
-	/**
-	 * @var \Config\Paths $paths
-	 */
-	define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-}
+defined('WRITEPATH') || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
 /*
  * ---------------------------------------------------------------
@@ -105,7 +81,7 @@ if (! defined('APP_NAMESPACE'))
 	require_once APPPATH . 'Config/Constants.php';
 }
 
-// Let's see if an app/Common.php file exists
+// Require app/Common.php if exists
 if (file_exists(APPPATH . 'Common.php'))
 {
 	require_once APPPATH . 'Common.php';
@@ -123,7 +99,6 @@ require_once SYSTEMPATH . 'Common.php';
  * in the framework. We have to load it here, though, so
  * that the config files can use the path constants.
  */
-
 if (! class_exists('Config\Autoload', false))
 {
 	require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
@@ -143,38 +118,29 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-$loader = Services::autoloader();
-$loader->initialize(new Autoload(), new Modules());
-$loader->register(); // Register the loader with the SPL autoloader stack.
+ // Initialize and Register the loader with the SPL autoloader stack.
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
+// We do not want to enforce this, so set the constant if Composer was used.
 if (is_file(COMPOSER_PATH))
 {
-	/*
-	 * The path to the vendor directory.
-	 *
-	 * We do not want to enforce this, so set the constant if Composer was used.
-	 */
-	if (! defined('VENDORPATH'))
-	{
-		define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
-	}
+	// The path to the vendor directory.
+	defined('VENDORPATH')) || define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 	require_once COMPOSER_PATH;
 }
 
-// Load environment settings from .env files
-// into $_SERVER and $_ENV
+// Load environment settings from .env files into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
 $env = new DotEnv(ROOTPATH);
 $env->load();
 
-// Always load the URL helper -
-// it should be used in 90% of apps.
+// Always load the URL helper - it should be used in most of apps.
 helper('url');
 
-/*
+/**
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE
  * ---------------------------------------------------------------
@@ -182,10 +148,10 @@ helper('url');
  * The CodeIgniter class contains the core functionality to make
  * the application run, and does all of the dirty work to get
  * the pieces all working together.
+ *
+ * @var \CodeIgniter\CodeIgniter $app
  */
-
-$appConfig = config('Config\App');
-$app       = new CodeIgniter($appConfig);
+$app = new CodeIgniter(new App());
 $app->initialize();
 
 return $app;
