@@ -347,13 +347,17 @@
 you need to populate the database with sample data that you can develop against, but it is not limited to that.
 Seeds can contain static data that you don’t want to include in a migration, like countries, or geo-coding tables,
 event or setting information, and more.</p>
-<p>Database seeds are simple classes that must have a <strong>run()</strong> method, and extend <strong>CodeIgniterDatabaseSeeder</strong>.
+<p>Database seeds are simple classes that must have a <strong>run()</strong> method, and extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Seeder</span></code>.
 Within the <strong>run()</strong> the class can create any form of data that it needs to. It has access to the database
 connection and the forge through <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
 stored within the <strong>app/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
+<span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Seeder</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
         <span class="p">{</span>
@@ -363,9 +367,7 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
                 <span class="p">];</span>
 
                 <span class="c1">// Simple Queries</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span>
-                        <span class="nv">$data</span>
-                <span class="p">);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
                 <span class="c1">// Using Query Builder</span>
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -377,9 +379,13 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 <h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline">¶</a></h2>
 <p>Seeders can call other seeders, with the <strong>call()</strong> method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
+<span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Seeder</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
         <span class="p">{</span>
@@ -400,6 +406,38 @@ anywhere the autoloader can find them. This is great for more modular code bases
 </pre></div>
 </div>
 </div>
+<div class="section" id="using-faker">
+<h2>Using Faker<a class="headerlink" href="#using-faker" title="Permalink to this headline">¶</a></h2>
+<p>If you want to automate the generation of seed data, you can use
+the <a class="reference external" href="https://github.com/fzaninotto/faker">Faker library</a>.</p>
+<p>To install Faker into your project:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="o">--</span><span class="nx">dev</span> <span class="nx">fzaninotto</span><span class="o">/</span><span class="nx">faker</span>
+</pre></div>
+</div>
+<p>After installation, an instance of <code class="docutils literal notranslate"><span class="pre">Faker\Generator</span></code> is available in the main <code class="docutils literal notranslate"><span class="pre">Seeder</span></code>
+class and is accessible by all child seeders. You must use the static method <code class="docutils literal notranslate"><span class="pre">faker()</span></code>
+to access the instance.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Seeder</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
+<span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+
+                <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+                        <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
+                        <span class="s1">&#39;ip_address&#39;</span> <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">ipv4</span><span class="p">,</span>
+                <span class="p">]);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="using-seeders">
 <h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline">¶</a></h2>
 <p>You can grab a copy of the main seeder through the database config class:</p>
@@ -414,6 +452,22 @@ a dedicated controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="creating-seed-files">
+<h3>Creating Seed Files<a class="headerlink" href="#creating-seed-files" title="Permalink to this headline">¶</a></h3>
+<p>Using the command line, you can easily generate seed files.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// This command will create a UserSeeder seed file</span>
+<span class="c1">// located at app/Database/Seeds/ directory.</span>
+<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">UserSeeder</span>
+</pre></div>
+</div>
+<p>You can supply the <strong>root</strong> namespace where the seed file will be stored by supplying the <code class="docutils literal notranslate"><span class="pre">-n</span></code> option:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Acme\Blog</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> is mapped to <code class="docutils literal notranslate"><span class="pre">app/Blog</span></code> directory, then this command will save the
+seed file to <code class="docutils literal notranslate"><span class="pre">app/Blog/Database/Seeds/</span></code>.</p>
+<p>Supplying the <code class="docutils literal notranslate"><span class="pre">--force</span></code> option will overwrite existing files in destination.</p>
 </div>
 </div>
 </div>
@@ -441,7 +495,7 @@ a dedicated controller:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Oct 10, 2020.
+        Last updated on Oct 11, 2020.
       </span>
 
     </p>
