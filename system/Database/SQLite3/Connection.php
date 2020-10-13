@@ -70,17 +70,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * ORDER BY random keyword
-	 *
-	 * @var array
-	 */
-	protected $_random_keyword = [
-		'RANDOM()',
-	];
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Connect to the database.
 	 *
 	 * @param boolean $persistent
