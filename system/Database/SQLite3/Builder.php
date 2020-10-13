@@ -64,6 +64,15 @@ class Builder extends BaseBuilder
 	protected $canLimitWhereUpdates = false;
 
 	/**
+	 * ORDER BY random keyword
+	 *
+	 * @var array
+	 */
+	protected $randomKeyword = [
+		'RANDOM()',
+	];
+
+	/**
 	 * @var array
 	 */
 	protected $supportedIgnoreStatements = [
