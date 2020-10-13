@@ -360,8 +360,8 @@ class Entity implements JsonSerializable
 	 *      $this->my_property = $p;
 	 *      $this->setMyProperty() = $p;
 	 *
-	 * @param string $key
-	 * @param null   $value
+	 * @param string     $key
+	 * @param mixed|null $value
 	 *
 	 * @return $this
 	 * @throws Exception
