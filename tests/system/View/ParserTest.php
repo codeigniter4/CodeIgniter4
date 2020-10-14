@@ -416,6 +416,40 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 	//------------------------------------------------------------------------
 
 	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3726
+	 */
+	public function testParseSimilarVariableNames()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$template = '{ foo } { foo_bar}';
+
+		$parser->setData(['foo' => 'bar', 'foo_bar' => 'foo-bar'], 'raw');
+		$this->assertEquals('bar foo-bar', $parser->renderString($template));
+	}
+
+	public function testParsePairSimilarVariableNames()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'title'  => '<script>Heroes</script>',
+			'powers' => [
+				[
+					'link'        => "<a href='test'>Link</a>",
+					'link_second' => "<a href='test2'>Link second</a>",
+				],
+			],
+		];
+
+		$template = '{title} {powers}{link} {link_second}{/powers}';
+		$parser->setData($data);
+		$this->assertEquals('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt; &lt;a href=&#039;test2&#039;&gt;Link second&lt;/a&gt;', $parser->renderString($template));
+	}
+
+	//------------------------------------------------------------------------
+
+	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/788
 	 */
 	public function testEscapingRespectsSetDataRaw()

@@ -335,7 +335,7 @@ class Parser extends View
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#ms';
+		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#ms';
 
 		return [$pattern => $val];
 	}
@@ -417,7 +417,7 @@ class Parser extends View
 						$val = 'Resource';
 					}
 
-					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
+					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
@@ -634,9 +634,9 @@ class Parser extends View
 
 		// Our regex earlier will leave all chained values on a single line
 		// so we need to break them apart so we can apply them all.
-		$filters = isset($matches[0]) ? explode('|', $matches[0]) : [];
+		$filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
 
-		if ($escape && ! isset($matches[0]))
+		if ($escape && empty($filters))
 		{
 			if ($context = $this->shouldAddEscaping($orig))
 			{
