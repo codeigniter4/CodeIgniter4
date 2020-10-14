@@ -41,6 +41,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
 use Config\Services;
+use Throwable;
 
 /**
  * Set of static methods useful for CLI request handling.
@@ -727,50 +728,63 @@ class CLI
 	 */
 	public static function generateDimensions()
 	{
-		if (static::isWindows())
+		try
 		{
-			// Shells such as `Cygwin` and `Git bash` returns incorrect values
-			// when executing `mode CON`, so we use `tput` instead
-			// @codeCoverageIgnoreStart
-			if (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell) || getenv('TERM'))
+			if (static::isWindows())
 			{
-				static::$height = (int) exec('tput lines');
-				static::$width  = (int) exec('tput cols');
-			}
-			else
-			{
-				$return = -1;
-				$output = [];
-				exec('mode CON', $output, $return);
-
-				if ($return === 0 && $output)
+				// Shells such as `Cygwin` and `Git bash` returns incorrect values
+				// when executing `mode CON`, so we use `tput` instead
+				// @codeCoverageIgnoreStart
+				if (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell) || getenv('TERM'))
 				{
-					// Look for the next lines ending in ": <number>"
-					// Searching for "Columns:" or "Lines:" will fail on non-English locales
-					if (preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
+					static::$height = (int) exec('tput lines');
+					static::$width  = (int) exec('tput cols');
+				}
+				else
+				{
+					$return = -1;
+					$output = [];
+					exec('mode CON', $output, $return);
+
+					if ($return === 0 && $output)
 					{
-						static::$height = (int) $matches[1];
-						static::$width  = (int) $matches[2];
+						// Look for the next lines ending in ": <number>"
+						// Searching for "Columns:" or "Lines:" will fail on non-English locales
+						if (preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
+						{
+							static::$height = (int) $matches[1];
+							static::$width  = (int) $matches[2];
+						}
 					}
 				}
-			}
-			// @codeCoverageIgnoreEnd
-		}
-		else
-		{
-			if (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
-			{
-				static::$height = (int) $matches[1];
-				static::$width  = (int) $matches[2];
+				// @codeCoverageIgnoreEnd
 			}
 			else
 			{
-				// @codeCoverageIgnoreStart
-				static::$height = (int) exec('tput lines');
-				static::$width  = (int) exec('tput cols');
-				// @codeCoverageIgnoreEnd
+				if (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
+				{
+					static::$height = (int) $matches[1];
+					static::$width  = (int) $matches[2];
+				}
+				else
+				{
+					// @codeCoverageIgnoreStart
+					static::$height = (int) exec('tput lines');
+					static::$width  = (int) exec('tput cols');
+					// @codeCoverageIgnoreEnd
+				}
 			}
 		}
+		// @codeCoverageIgnoreStart
+		catch (Throwable $e)
+		{
+			// Reset the dimensions so that the default values will be returned later.
+			// Then let the developer know of the error.
+			static::$height = null;
+			static::$width  = null;
+			log_message('error', $e->getMessage());
+		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
