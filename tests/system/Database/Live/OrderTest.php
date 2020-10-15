@@ -72,6 +72,10 @@ class OrderTest extends CIDatabaseTestCase
 		{
 			$key = 'RAND()';
 		}
+		elseif ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$key = 'NEWID()';
+		}
 
 		$expected = 'SELECT * FROM ' . $this->db->protectIdentifiers('job', true) . ' ORDER BY ' . $key;
 
