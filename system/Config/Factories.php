@@ -156,7 +156,7 @@ class Factories
 	protected static function locateClass(array $config, string $name): ?string
 	{
 		// Check for low-hanging fruit
-		if (class_exists($name) && self::verifyPrefersApp($config, $name) && self::verifyInstanceOf($config, $name))
+		if (class_exists($name, false) && self::verifyPrefersApp($config, $name) && self::verifyInstanceOf($config, $name))
 		{
 			return $name;
 		}
