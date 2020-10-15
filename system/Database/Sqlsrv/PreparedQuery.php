@@ -39,8 +39,10 @@
 
 namespace CodeIgniter\Database\Sqlsrv;
 
+use BadMethodCallException;
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
+use Exception;
 
 /**
  * Prepared query for Postgre
@@ -63,7 +65,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	protected $result;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -75,7 +76,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * @param array  $options Options takes an associative array;
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
@@ -109,7 +110,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		if (is_null($this->statement))
 		{
-			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
+			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
 		foreach ($data as $key => $value)

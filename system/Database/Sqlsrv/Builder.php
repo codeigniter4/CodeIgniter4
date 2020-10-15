@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Database\Sqlsrv;
 
+use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -623,7 +624,7 @@ class Builder extends BaseBuilder
 					$k .= " $op";
 				}
 
-				if ($v instanceof \Closure)
+				if ($v instanceof Closure)
 				{
 					$builder = $this->cleanClone();
 					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
