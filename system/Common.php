@@ -636,6 +636,8 @@ if (! function_exists('helper'))
 	 */
 	function helper($filenames)
 	{
+		static $loaded = [];
+
 		$loader = Services::locator(true);
 
 		if (! is_array($filenames))
@@ -659,6 +661,12 @@ if (! function_exists('helper'))
 				$filename .= '_helper';
 			}
 
+			// Check if this helper has already been loaded
+			if (in_array($filename, $loaded))
+			{
+				continue;
+			}
+
 			// If the file is namespaced, we'll just grab that
 			// file and not search for any others
 			if (strpos($filename, '\\') !== false)
@@ -671,6 +679,7 @@ if (! function_exists('helper'))
 				}
 
 				$includes[] = $path;
+				$loaded[]   = $filename;
 			}
 
 			// No namespaces, so search in all available locations
@@ -695,6 +704,7 @@ if (! function_exists('helper'))
 						else
 						{
 							$localIncludes[] = $path;
+							$loaded[]        = $filename;
 						}
 					}
 				}
@@ -704,6 +714,7 @@ if (! function_exists('helper'))
 				{
 					// @codeCoverageIgnoreStart
 					$includes[] = $appHelper;
+					$loaded[]   = $filename;
 					// @codeCoverageIgnoreEnd
 				}
 
@@ -714,6 +725,7 @@ if (! function_exists('helper'))
 				if (! empty($systemHelper))
 				{
 					$includes[] = $systemHelper;
+					$loaded[]   = $filename;
 				}
 			}
 		}
