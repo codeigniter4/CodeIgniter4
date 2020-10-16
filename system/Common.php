@@ -256,7 +256,7 @@ if (! function_exists('config'))
 	 */
 	function config(string $name, bool $getShared = true)
 	{
-		return Factories::config($name, $getShared);
+		return Factories::config($name, ['getShared' => $getShared]);
 	}
 }
 
@@ -884,7 +884,7 @@ if (! function_exists('model'))
 	 */
 	function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
 	{
-		return Factories::models($name, $getShared, $conn);
+		return Factories::models($name, ['getShared' => $getShared], $conn);
 	}
 }
 

@@ -57,7 +57,7 @@ class Config
 	 */
 	public static function get(string $name, bool $getShared = true)
 	{
-		return Factories::config($name, $getShared);
+		return Factories::config($name, ['getShared' => $getShared]);
 	}
 
 	/**

@@ -138,35 +138,35 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testCreatesByBasename()
 	{
-		$result = Factories::widgets('SomeWidget', false);
+		$result = Factories::widgets('SomeWidget', ['getShared' => false]);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesByClassname()
 	{
-		$result = Factories::widgets(SomeWidget::class, false);
+		$result = Factories::widgets(SomeWidget::class, ['getShared' => false]);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesByAbsoluteClassname()
 	{
-		$result = Factories::models('\Tests\Support\Models\UserModel', false);
+		$result = Factories::models('\Tests\Support\Models\UserModel', ['getShared' => false]);
 
 		$this->assertInstanceOf('Tests\Support\Models\UserModel', $result);
 	}
 
 	public function testCreatesInvalid()
 	{
-		$result = Factories::widgets('gfnusvjai', false);
+		$result = Factories::widgets('gfnusvjai', ['getShared' => false]);
 
 		$this->assertNull($result);
 	}
 
 	public function testIgnoresNonClass()
 	{
-		$result = Factories::widgets('NopeWidget', false);
+		$result = Factories::widgets('NopeWidget', ['getShared' => false]);
 
 		$this->assertNull($result);
 	}
@@ -215,6 +215,14 @@ class FactoriesTest extends CIUnitTestCase
 
 		$result = Factories::widgets('OtherWidget');
 		$this->assertNull($result);
+	}
+
+	public function testPrioritizesParameterOptions()
+	{
+		Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+
+		$result = Factories::widgets('OtherWidget', ['instanceOf' => null]);
+		$this->assertInstanceOf(OtherWidget::class, $result);
 	}
 
 	public function testFindsAppFirst()
