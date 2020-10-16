@@ -59,6 +59,7 @@ class Factory extends BaseConfig
 	public static $default = [
 		'component'  => null,
 		'path'       => null,
+		'getShared'  => true,
 		'instanceOf' => null,
 		'preferApp'  => true,
 	];

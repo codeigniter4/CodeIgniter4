@@ -68,7 +68,7 @@ class Factories
 	 *
 	 * @var array<string, mixed>
 	 */
-	private static $optionsOptions = [
+	private static $configOptions = [
 		'component'  => 'config',
 		'path'       => 'Config',
 		'getShared'  => true,
@@ -107,14 +107,14 @@ class Factories
 	 */
 	public static function __callStatic(string $component, array $arguments)
 	{
-		// Load the component-specific options
-		$options = self::getOptions(strtolower($component));
+		// First argument is the name, second is options
+		$name    = trim(array_shift($arguments), '\\ ');
+		$options = array_shift($arguments) ?? [];
 
-		// First argument is the name, second is whether to use a shared instance
-		$name      = trim(array_shift($arguments), '\\ ');
-		$getShared = array_shift($arguments) ?? true;
+		// Determine the component-specific options
+		$options = array_merge(self::getOptions(strtolower($component)), $options);
 
-		if (! $getShared)
+		if (! $options['getShared'])
 		{
 			if ($class = self::locateClass($options, $name))
 			{
@@ -157,7 +157,7 @@ class Factories
 	protected static function locateClass(array $options, string $name): ?string
 	{
 		// Check for low-hanging fruit
-		if (class_exists($name, false) && self::verifypreferApp($options, $name) && self::verifyInstanceOf($options, $name))
+		if (class_exists($name, false) && self::verifyPreferApp($options, $name) && self::verifyInstanceOf($options, $name))
 		{
 			return $name;
 		}
@@ -168,7 +168,7 @@ class Factories
 			? 'Config\\' . $basename
 			: rtrim(APP_NAMESPACE, '\\') . '\\' . $options['path'] . '\\' . $basename;
 
-		// If an App version was requested see if it verifies
+		// If an App version was requested then see if it verifies
 		if ($options['preferApp'] && class_exists($appname) && self::verifyInstanceOf($options, $name))
 		{
 			return $appname;
@@ -227,7 +227,7 @@ class Factories
 	 *
 	 * @return boolean
 	 */
-	protected static function verifypreferApp(array $options, string $name): bool
+	protected static function verifyPreferApp(array $options, string $name): bool
 	{
 		// Anything without that restriction passes
 		if (! $options['preferApp'])
@@ -285,7 +285,7 @@ class Factories
 		// Handle Config as a special case to prevent logic loops
 		if ($component === 'config')
 		{
-			$values = self::$optionsOptions;
+			$values = self::$configOptions;
 		}
 		// Load values from the best Factory configuration (will include Registrars)
 		else
