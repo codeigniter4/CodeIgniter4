@@ -71,8 +71,8 @@ class Factories
 	private static $configOptions = [
 		'component'  => 'config',
 		'path'       => 'Config',
-		'getShared'  => true,
 		'instanceOf' => null,
+		'getShared'  => true,
 		'preferApp'  => true,
 	];
 
