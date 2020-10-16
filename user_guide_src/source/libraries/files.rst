@@ -61,12 +61,9 @@ method. This is especially useful to rename files when moving it so that the fil
 
 **getSize()**
 
-Returns the size of the uploaded file in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
-the results in kilobytes or megabytes, respectively::
+Returns the size of the uploaded file in bytes::
 
-	$bytes     = $file->getSize();      // 256901
-	$kilobytes = $file->getSize('kb');  // 250.880
-	$megabytes = $file->getSize('mb');  // 0.245
+	$size     = $file->getSize();      // 256901
 
 **getSizeByUnit()**
 
