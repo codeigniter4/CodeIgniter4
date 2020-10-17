@@ -49,7 +49,6 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
@@ -431,20 +430,17 @@ class CodeIgniter
 		if (! defined('SPARKED'))
 		{
 			$possibleRedirect = $filters->run($uri, 'before');
-			if ($possibleRedirect instanceof RedirectResponse)
-			{
-				return $possibleRedirect->send();
-			}
+
 			// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
-			if ($possibleRedirect instanceof ResponseInterface)
+			if ($possibleRedirect instanceof ResponseInterface || $possibleRedirect instanceof RedirectResponse)
 			{
 				return $possibleRedirect->send();
 			}
 			// If a Request instance is returned, set the current request to the one that was returned
 			if ($possibleRedirect instanceof RequestInterface)
 			{
-    				$this->request = $possibleRedirect;
-			}    
+					$this->request = $possibleRedirect;
+			}
 		}
 
 		$returned = $this->startController();
