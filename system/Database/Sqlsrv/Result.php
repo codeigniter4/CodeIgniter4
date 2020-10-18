@@ -41,6 +41,7 @@ namespace CodeIgniter\Database\Sqlsrv;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Entity;
 use stdClass;
 
 /**
@@ -200,10 +201,14 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean|Entity
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
+		if (is_subclass_of($className, Entity::class))
+		{
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+		}
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
 
