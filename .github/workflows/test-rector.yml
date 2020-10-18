@@ -10,6 +10,8 @@ on:
     paths:
       - 'app/**'
       - 'system/**'
+      - '.github/workflows/test-rector.yml'
+      - 'rector.php'
   push:
     branches:
       - 'develop'
@@ -17,6 +19,8 @@ on:
     paths:
       - 'app/**'
       - 'system/**'
+      - '.github/workflows/test-rector.yml'
+      - 'rector.php'
 
 jobs:
   build:

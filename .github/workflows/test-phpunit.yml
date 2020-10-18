@@ -98,10 +98,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer install --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
-          composer remove --dev phpstan/phpstan
-          composer remove --dev rector/rector
-          composer remove --dev codeigniter4/codeigniter4-standard
-          composer remove --dev squizlabs/php_codesniffer
+          composer remove --dev rector/rector phpstan/phpstan codeigniter4/codeigniter4-standard squizlabs/php_codesniffer
           composer update
           php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
         env:
@@ -113,14 +110,15 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - name: Run Coveralls
+      - if: matrix.php-versions == '7.4'
+        name: Run Coveralls
         run: |
           composer global require php-coveralls/php-coveralls:^2.4
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }}
+          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
   coveralls-finish:
     needs: [tests]
@@ -129,5 +127,5 @@ jobs:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true

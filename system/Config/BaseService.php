@@ -171,7 +171,7 @@ class BaseService
 				static::$instances['locator'] = new FileLocator(static::autoloader());
 			}
 
-			return static::$instances['locator'];
+			return static::$mocks['locator'] ?? static::$instances['locator'];
 		}
 
 		return new FileLocator(static::autoloader());

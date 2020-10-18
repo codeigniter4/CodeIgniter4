@@ -34,6 +34,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		UnderscoreToCamelCaseVariableNameRector::class => [__DIR__ . '/system/Autoloader/Autoloader.php'],
 	]);
 
+	$parameters->set(Option::ENABLE_CACHE, true);
+
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
 	$services->set(SimplifyUselessVariableRector::class);

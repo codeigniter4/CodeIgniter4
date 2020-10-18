@@ -43,8 +43,9 @@ use CodeIgniter\Services;
 use Config\App;
 use Config\Autoload;
 use Config\Modules;
+use Config\Autoload;
+use Config\Modules;
 
-/**
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
  * ---------------------------------------------------------------

@@ -1,9 +1,16 @@
+services:
+	-
+		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
+		tags:
+			- phpstan.rules.rule
+
 parameters:
 	tmpDir: build/phpstan
 	level: 5
 	paths:
 		- app
 		- system
+		- utils/PHPStan
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- system/Test/bootstrap.php
@@ -26,7 +33,6 @@ parameters:
 		- '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::(tableExists|protectIdentifiers|setAliasedTables|escapeIdentifiers|affectedRows|addTableAlias)\(\)#'
 		- '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getRoutesOptions)\(\)#'
-		- '#Call to an undefined method CodeIgniter\\Validation\\ValidationInterface::loadRuleGroup\(\)#'
 		- '#Call to function is_null\(\) with mysqli_stmt\|resource will always evaluate to false#'
 		- '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
 		- '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'

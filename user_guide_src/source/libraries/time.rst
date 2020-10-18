@@ -1,5 +1,5 @@
 ###############
-Dates and Times
+Times and Dates
 ###############
 
 CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTime object, but uses the Intl
