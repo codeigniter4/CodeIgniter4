@@ -1,9 +1,16 @@
+services:
+	-
+		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
+		tags:
+			- phpstan.rules.rule
+
 parameters:
 	tmpDir: build/phpstan
 	level: 5
 	paths:
 		- app
 		- system
+		- utils/PHPStan
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- system/Test/bootstrap.php

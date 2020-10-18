@@ -1,11 +1,5 @@
 <?php
 
-use CodeIgniter\CodeIgniter;
-use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Services;
-use Config\Autoload;
-use Config\Modules;
-
 /**
  * CodeIgniter
  *
@@ -42,6 +36,12 @@ use Config\Modules;
  * @since      Version 4.0.0
  * @filesource
  */
+
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Services;
+use Config\Autoload;
+use Config\Modules;
 
 /*
  * ---------------------------------------------------------------
