@@ -87,7 +87,7 @@ Options can be applied in one of three ways (listed in ascending priority):
 Configurations
 --------------
 
-To set default component options, create a new COnfig files at **app/Config/Factory.php**
+To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component. For example,
 if you wanted to ensure that all Filters used by your app were valid framework instances,
 your **Factories.php** file might look like this::
@@ -111,10 +111,10 @@ setOptions Method
 -----------------
 
 The ``Factories`` class has a static method to allow runtime option configuration: simply
-supply the desired array of options using the ``setConfig()`` method and they will be
+supply the desired array of options using the ``setOptions()`` method and they will be
 merged with the default values and stored for the next call::
 
-	Factories::setConfig('filters', [
+	Factories::setOptions('filters', [
 		'instanceOf' => FilterInterface::class,
 		'prefersApp' => false,
 	]);
