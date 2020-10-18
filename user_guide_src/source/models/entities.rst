@@ -356,9 +356,9 @@ the value whenever the property is set::
     class User extends Entity
     {
         protected $casts = [
-            'options' => 'array',
-	    'options_object' => 'json',
-	    'options_array' => 'json-array'
+            'options'        => 'array',
+	        'options_object' => 'json',
+	        'options_array'  => 'json-array'
         ];
     }
 
@@ -369,6 +369,25 @@ the value whenever the property is set::
 
     $user->options = $options;
     $userModel->save($user);
+
+CSV Casting
+-----------
+
+If you know you have a array of simple values, encoding them as a serialized or JSON string
+may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
+a simpler alternative will result in a string that uses less space and is more easily read
+by humans::
+
+    class Widget extends Entity
+    {
+        protected $casts = [
+            'colors' => 'csv',
+        ];
+    }
+
+    $widget->colors = ['red', 'yellow', 'green']; // Stored in the database as "red,yellow,green"
+
+.. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
 Checking for Changed Attributes
 -------------------------------
