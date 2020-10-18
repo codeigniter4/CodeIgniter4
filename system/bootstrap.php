@@ -43,9 +43,8 @@ use CodeIgniter\Services;
 use Config\App;
 use Config\Autoload;
 use Config\Modules;
-use Config\Autoload;
-use Config\Modules;
 
+/**
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
  * ---------------------------------------------------------------
@@ -72,11 +71,9 @@ defined('TESTPATH') || define('TESTPATH', realpath(rtrim($paths->testsDirectory,
 // The path to the writable directory.
 defined('WRITEPATH') || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 
-/*
- * ---------------------------------------------------------------
- * GRAB OUR CONSTANTS & COMMON
- * ---------------------------------------------------------------
- */
+// ---------------------------------------------------------------
+// GRAB OUR CONSTANTS & COMMON
+// ---------------------------------------------------------------
 if (! defined('APP_NAMESPACE'))
 {
 	require_once APPPATH . 'Config/Constants.php';
@@ -91,14 +88,14 @@ if (file_exists(APPPATH . 'Common.php'))
 // Require system/Common.php
 require_once SYSTEMPATH . 'Common.php';
 
-/*
+/**
  * ---------------------------------------------------------------
  * LOAD OUR AUTOLOADER
  * ---------------------------------------------------------------
  *
- * The autoloader allows all of the pieces to work together
- * in the framework. We have to load it here, though, so
- * that the config files can use the path constants.
+ * Autoloader makes all pieces works together in the framework.
+ * We have to load it here, though, so that the config files can
+ * use the path constants.
  */
 if (! class_exists('Config\Autoload', false))
 {
