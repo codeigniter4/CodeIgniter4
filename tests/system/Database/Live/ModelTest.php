@@ -360,13 +360,14 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 1,
+
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
+
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 2,
+
 					 'key'   => 'bar',
 					 'value' => 'baz',
 				 ]);
@@ -438,7 +439,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'id'          => 1,
 			'name'        => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
@@ -478,8 +478,14 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
-		$data->id          = 1;
+		$data = new \stdClass();
+
+		// Sqlsrv does not allow forcing an ID into an autoincrement field.
+		if ($this->db->DBDriver !== 'Sqlsrv')
+		{
+			$data->id = 1;
+		}
+
 		$data->name        = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
@@ -1545,7 +1551,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 1,
+
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);

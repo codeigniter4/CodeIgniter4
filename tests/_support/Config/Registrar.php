@@ -71,6 +71,25 @@ class Registrar
 			'failover' => [],
 			'port'     => 3306,
 		],
+		'Sqlsrv'  => [
+			'DSN'      => '',
+			'hostname' => 'localhost',
+			'username' => 'sa',
+			'password' => '1Secure*Password1',
+			'database' => 'test',
+			'DBDriver' => 'Sqlsrv',
+			'DBPrefix' => 'db_',
+			'pConnect' => false,
+			'DBDebug'  => (ENVIRONMENT !== 'production'),
+			'charset'  => 'utf8',
+			'DBCollat' => 'utf8_general_ci',
+			'swapPre'  => '',
+			'encrypt'  => false,
+			'compress' => false,
+			'strictOn' => false,
+			'failover' => [],
+			'port'     => 1433,
+		],
 	];
 
 	/**

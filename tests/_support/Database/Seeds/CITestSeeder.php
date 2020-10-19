@@ -1,10 +1,6 @@
-<?php
+<?php namespace Tests\Support\Database\Seeds;
 
-namespace Tests\Support\Database\Seeds;
-
-use CodeIgniter\Database\Seeder;
-
-class CITestSeeder extends Seeder
+class CITestSeeder extends \CodeIgniter\Database\Seeder
 {
 	public function run()
 	{
@@ -109,7 +105,8 @@ class CITestSeeder extends Seeder
 			 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
 			 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
 		}
-		elseif ($this->db->DBDriver === 'Postgre')
+
+		if ($this->db->DBDriver === 'Postgre')
 		{
 			$data['type_test'][0]['type_time'] = '15:22:00';
 			unset($data['type_test'][0]['type_enum']);
@@ -118,6 +115,19 @@ class CITestSeeder extends Seeder
 			unset($data['type_test'][0]['type_real']);
 			unset($data['type_test'][0]['type_double']);
 			unset($data['type_test'][0]['type_decimal']);
+			unset($data['type_test'][0]['type_blob']);
+		}
+
+		if ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$data['type_test'][0]['type_date']     = '2020-01-11';
+			$data['type_test'][0]['type_time']     = '15:22:00.000';
+			$data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
+			unset($data['type_test'][0]['type_timestamp']);
+			unset($data['type_test'][0]['type_enum']);
+			unset($data['type_test'][0]['type_set']);
+			unset($data['type_test'][0]['type_mediumtext']);
+			unset($data['type_test'][0]['type_double']);
 			unset($data['type_test'][0]['type_blob']);
 		}
 
@@ -131,4 +141,7 @@ class CITestSeeder extends Seeder
 			}
 		}
 	}
+
+	//--------------------------------------------------------------------
+
 }
