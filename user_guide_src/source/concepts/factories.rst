@@ -41,43 +41,29 @@ you get back the instance as before::
 		...
 	}
 
-Factories Behavior
+Factory Parameters
 ==================
 
-The default behavior might not work for every component. For example, say your component
-name and its path do not align, or you need limit returns to a certain type of class, or
-your component classes require additional parameters to their constructor. This section
-covers configuring behavior for a specific Factories component.
+``Factories`` takes as a second parameter an array of option values (described below).
+These directives will override the default options configured for each component.
 
-Factory Parameters
-------------------
-
-By default, ``Factories`` assumes that you want to locate a shared instance of a component
-with the provided name. The convenience of ``Factories`` for locating classes is sometimes
-desirable without using its shared instance storage. By adding a second parameter to the
-magic static call, you can control whether ``Factories`` will return a new or shared instance
-each time::
-
-	$users = Factories::models('UserModel', true); // Default; will always be the same instance
-	$other = Factories::models('UserModel', false); // Will always create a new instance
-
-Additionally, any more parameters passed at the same time will be forwarded on to the class
-constructor, making it easy to configure your shared instance on-the-fly. For example, say
+Any more parameters passed at the same time will be forwarded on to the class
+constructor, making it easy to configure your class instance on-the-fly. For example, say
 your app uses a separate database for authentication and you want to be sure that any attempts
 to access user records always go through that connection::
 
 	$conn  = db_connect('AuthDatabase');
-	$users = Factories::models('UserModel', true, $conn);
+	$users = Factories::models('UserModel', [], $conn);
 
-Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning the
-shared instance that uses the alternate database connection.
+Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
+class instance that uses the alternate database connection.
 
-Factory Configuration
----------------------
+Factories Options
+==================
 
-What works for one component may not work for all. ``Factories`` supports alternate behavior
-at the component level via configurations. A configuration consists of any of the settings,
-which will fall back on the default if not provided.
+The default behavior might not work for every component. For example, say your component
+name and its path do not align, or you need to limit instances to a certain type of class.
+Each component takes a set of options to direct discovery and instantiation.
 
 ========== ============== ==================================================================================================================== ===================================================
 Key        Type           Description                                                                                                          Default
@@ -85,14 +71,26 @@ Key        Type           Description                                           
 component  string or null The name of the component (if different than the static method). This can be used to alias one component to another. ``null`` (defaults to the component name)
 path       string or null The relative path within the namespace/folder to look for classes.                                                   ``null`` (defaults to the component name)
 instanceOf string or null A required class name to match on the returned instance.                                                             ``null`` (no filtering)
-prefersApp boolean        Whether a class with the same basename in the App namespace overrides other explicit class requests.                 ``true``
+getShared  boolean        Whether to return a shared instance of the class or load a fresh one.                                                ``true``
+preferApp  boolean        Whether a class with the same basename in the App namespace overrides other explicit class requests.                 ``true``
 ========== ============== ==================================================================================================================== ===================================================
 
-Configurations can be applied in one of two ways: through a configuration file or at runtime.
-To use the file, create a new configuration at **app/Config/Factory.php** that supplies
-configuration settings in a property matching the configuration name. For example, if you
-wanted to ensure that all Filters used by your app were really valid your **Factories.php**
-file might look like this::
+Factories Behavior
+==================
+
+Options can be applied in one of three ways (listed in ascending priority):
+
+* A configuration file ``Factory`` with a component property.
+* The static method ``Factories::setOptions``.
+* Passing options directly at call time with a parameter.
+
+Configurations
+--------------
+
+To set default component options, create a new Config files at **app/Config/Factory.php**
+that supplies options as an array property that matches the name of the component. For example,
+if you wanted to ensure that all Filters used by your app were valid framework instances,
+your **Factories.php** file might look like this::
 
 	<?php namespace Config;
 
@@ -109,11 +107,29 @@ file might look like this::
 This would prevent conflict of an unrelated third-party module which happened to have an
 unrelated "Filters" path in its namespace.
 
-Runtime configuration is even easier: simply supply the desired configuration values to
-``Factories`` using the ``setConfig()`` method and they will be merged with the default
-values and stored for the next call::
+setOptions Method
+-----------------
 
-	Factories::setConfig('filters', [
+The ``Factories`` class has a static method to allow runtime option configuration: simply
+supply the desired array of options using the ``setOptions()`` method and they will be
+merged with the default values and stored for the next call::
+
+	Factories::setOptions('filters', [
 		'instanceOf' => FilterInterface::class,
 		'prefersApp' => false,
 	]);
+
+Parameter Options
+-----------------
+
+``Factories``'s magic static call takes as a second parameter an array of option values.
+These directives will override the stored options configured for each component and can be
+used at call time to get exactly what you need. The input should be an array with option
+names as keys to each overriding value.
+
+For example, by default ``Factories`` assumes that you want to locate a shared instance of
+a component. By adding a second parameter to the magic static call, you can control whether
+that single call will return a new or shared instance::
+
+	$users = Factories::models('UserModel', ['getShared' => true]); // Default; will always be the same instance
+	$other = Factories::models('UserModel', ['getShared' => false]); // Will always create a new instance

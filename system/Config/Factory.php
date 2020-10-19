@@ -51,8 +51,8 @@ namespace CodeIgniter\Config;
 class Factory extends BaseConfig
 {
 	/**
-	 * Supplies a default configuration to merge for
-	 * all unspecified factory configuration values.
+	 * Supplies a default set of options to merge for
+	 * all unspecified factory components.
 	 *
 	 * @var array
 	 */
@@ -60,7 +60,8 @@ class Factory extends BaseConfig
 		'component'  => null,
 		'path'       => null,
 		'instanceOf' => null,
-		'prefersApp' => true,
+		'getShared'  => true,
+		'preferApp'  => true,
 	];
 
 	/**

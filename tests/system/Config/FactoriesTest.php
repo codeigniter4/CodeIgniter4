@@ -38,44 +38,44 @@ class FactoriesTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testGetsConfigValues()
+	public function testGetsOptions()
 	{
-		$result = Factories::getConfig('models');
+		$result = Factories::getOptions('models');
 
-		$this->assertTrue($result['prefersApp']);
+		$this->assertTrue($result['preferApp']);
 	}
 
-	public function testGetsConfigDefaults()
+	public function testGetsDefaultOptions()
 	{
-		$result = Factories::getConfig('blahblahs');
+		$result = Factories::getOptions('blahblahs');
 
-		$this->assertTrue($result['prefersApp']);
+		$this->assertTrue($result['preferApp']);
 		$this->assertEquals('Blahblahs', $result['path']);
 	}
 
-	public function testSetsConfigValues()
+	public function testSetsOptions()
 	{
-		Factories::setConfig('widgets', ['foo' => 'bar']);
+		Factories::setOptions('widgets', ['foo' => 'bar']);
 
-		$result = Factories::getConfig('widgets');
+		$result = Factories::getOptions('widgets');
 
 		$this->assertEquals('bar', $result['foo']);
-		$this->assertEquals(true, $result['prefersApp']);
+		$this->assertEquals(true, $result['preferApp']);
 	}
 
-	public function testUsesConfigFileValues()
+	public function testUsesConfigOptions()
 	{
 		// Simulate having a $widgets property in App\Config\Factory
 		$config          = new Factory();
 		$config->widgets = ['bar' => 'bam'];
 		Factories::injectMock('config', Factory::class, $config);
 
-		$result = Factories::getConfig('widgets');
+		$result = Factories::getOptions('widgets');
 
 		$this->assertEquals('bam', $result['bar']);
 	}
 
-	public function testSetConfigResets()
+	public function testSetOptionsResets()
 	{
 		Factories::injectMock('widgets', 'Banana', new stdClass());
 
@@ -83,7 +83,7 @@ class FactoriesTest extends CIUnitTestCase
 		$this->assertIsArray($result);
 		$this->assertArrayHasKey('widgets', $result);
 
-		Factories::setConfig('widgets', []);
+		Factories::setOptions('widgets', []);
 
 		$result = $this->getFactoriesStaticProperty('instances');
 		$this->assertIsArray($result);
@@ -92,22 +92,22 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testResetsAll()
 	{
-		Factories::setConfig('widgets', ['foo' => 'bar']);
+		Factories::setOptions('widgets', ['foo' => 'bar']);
 
 		Factories::reset();
 
-		$result = $this->getFactoriesStaticProperty('configs');
+		$result = $this->getFactoriesStaticProperty('options');
 		$this->assertEquals([], $result);
 	}
 
 	public function testResetsComponentOnly()
 	{
-		Factories::setConfig('widgets', ['foo' => 'bar']);
-		Factories::setConfig('spigots', ['bar' => 'bam']);
+		Factories::setOptions('widgets', ['foo' => 'bar']);
+		Factories::setOptions('spigots', ['bar' => 'bam']);
 
 		Factories::reset('spigots');
 
-		$result = $this->getFactoriesStaticProperty('configs');
+		$result = $this->getFactoriesStaticProperty('options');
 		$this->assertIsArray($result);
 		$this->assertArrayHasKey('widgets', $result);
 	}
@@ -138,35 +138,35 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testCreatesByBasename()
 	{
-		$result = Factories::widgets('SomeWidget', false);
+		$result = Factories::widgets('SomeWidget', ['getShared' => false]);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesByClassname()
 	{
-		$result = Factories::widgets(SomeWidget::class, false);
+		$result = Factories::widgets(SomeWidget::class, ['getShared' => false]);
 
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testCreatesByAbsoluteClassname()
 	{
-		$result = Factories::models('\Tests\Support\Models\UserModel', false);
+		$result = Factories::models('\Tests\Support\Models\UserModel', ['getShared' => false]);
 
 		$this->assertInstanceOf('Tests\Support\Models\UserModel', $result);
 	}
 
 	public function testCreatesInvalid()
 	{
-		$result = Factories::widgets('gfnusvjai', false);
+		$result = Factories::widgets('gfnusvjai', ['getShared' => false]);
 
 		$this->assertNull($result);
 	}
 
 	public function testIgnoresNonClass()
 	{
-		$result = Factories::widgets('NopeWidget', false);
+		$result = Factories::widgets('NopeWidget', ['getShared' => false]);
 
 		$this->assertNull($result);
 	}
@@ -192,7 +192,7 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testRespectsComponentAlias()
 	{
-		Factories::setConfig('tedwigs', ['component' => 'widgets']);
+		Factories::setOptions('tedwigs', ['component' => 'widgets']);
 
 		$result = Factories::tedwigs('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
@@ -200,7 +200,7 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testRespectsPath()
 	{
-		Factories::setConfig('models', ['path' => 'Widgets']);
+		Factories::setOptions('models', ['path' => 'Widgets']);
 
 		$result = Factories::models('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
@@ -208,13 +208,21 @@ class FactoriesTest extends CIUnitTestCase
 
 	public function testRespectsInstanceOf()
 	{
-		Factories::setConfig('widgets', ['instanceOf' => stdClass::class]);
+		Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
 
 		$result = Factories::widgets('SomeWidget');
 		$this->assertInstanceOf(SomeWidget::class, $result);
 
 		$result = Factories::widgets('OtherWidget');
 		$this->assertNull($result);
+	}
+
+	public function testPrioritizesParameterOptions()
+	{
+		Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+
+		$result = Factories::widgets('OtherWidget', ['instanceOf' => null]);
+		$this->assertInstanceOf(OtherWidget::class, $result);
 	}
 
 	public function testFindsAppFirst()
@@ -230,7 +238,7 @@ class FactoriesTest extends CIUnitTestCase
 		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
-	public function testPrefersAppOverridesClassname()
+	public function testpreferAppOverridesClassname()
 	{
 		// Create a fake class in App
 		$class = 'App\Widgets\OtherWidget';
@@ -242,7 +250,7 @@ class FactoriesTest extends CIUnitTestCase
 		$result = Factories::widgets(OtherWidget::class);
 		$this->assertInstanceOf(SomeWidget::class, $result);
 
-		Factories::setConfig('widgets', ['prefersApp' => false]);
+		Factories::setOptions('widgets', ['preferApp' => false]);
 
 		$result = Factories::widgets(OtherWidget::class);
 		$this->assertInstanceOf(OtherWidget::class, $result);
