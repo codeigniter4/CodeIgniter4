@@ -373,7 +373,7 @@ the value whenever the property is set::
 CSV Casting
 -----------
 
-If you know you have a array of simple values, encoding them as a serialized or JSON string
+If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
 a simpler alternative will result in a string that uses less space and is more easily read
 by humans::
