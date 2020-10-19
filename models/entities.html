@@ -364,7 +364,8 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <li><p><a class="reference internal" href="#date-mutators" id="id10">Date Mutators</a></p></li>
 <li><p><a class="reference internal" href="#property-casting" id="id11">Property Casting</a></p></li>
 <li><p><a class="reference internal" href="#array-json-casting" id="id12">Array/Json Casting</a></p></li>
-<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id13">Checking for Changed Attributes</a></p></li>
+<li><p><a class="reference internal" href="#csv-casting" id="id13">CSV Casting</a></p></li>
+<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id14">Checking for Changed Attributes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -689,9 +690,9 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;options_object&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;options_array&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json-array&#39;</span>
+        <span class="s1">&#39;options&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;options_object&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;options_array&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;json-array&#39;</span>
     <span class="p">];</span>
 <span class="p">}</span>
 
@@ -705,8 +706,29 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="csv-casting">
+<h3><a class="toc-backref" href="#id13">CSV Casting</a><a class="headerlink" href="#csv-casting" title="Permalink to this headline">¶</a></h3>
+<p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string
+may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
+a simpler alternative will result in a string that uses less space and is more easily read
+by humans:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Widget</span> <span class="k">extends</span> <span class="nx">Entity</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+
+<span class="nv">$widget</span><span class="o">-&gt;</span><span class="na">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">];</span> <span class="c1">// Stored in the database as &quot;red,yellow,green&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Casting as CSV uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode</span></code> and <code class="docutils literal notranslate"><span class="pre">explode</span></code> methods and assumes all values are string-safe and free of commas. For more complex data casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+</div>
+</div>
 <div class="section" id="checking-for-changed-attributes">
-<h3><a class="toc-backref" href="#id13">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline">¶</a></h3>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">();</span>
