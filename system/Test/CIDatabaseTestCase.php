@@ -49,7 +49,7 @@ use Config\Services;
 /**
  * CIDatabaseTestCase
  */
-class CIDatabaseTestCase extends CIUnitTestCase
+abstract class CIDatabaseTestCase extends CIUnitTestCase
 {
 	/**
 	 * Should the db be refreshed before
