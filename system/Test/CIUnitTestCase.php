@@ -53,7 +53,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * PHPunit test case.
  */
-class CIUnitTestCase extends TestCase
+abstract class CIUnitTestCase extends TestCase
 {
 
 	use ReflectionHelper;
