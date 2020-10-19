@@ -387,6 +387,12 @@ class Entity implements JsonSerializable
 
 		if (! $isNullable || ! is_null($value))
 		{
+			// CSV casts need to be imploded.
+			if ($castTo === 'csv')
+			{
+				$value = implode(',', $value);
+			}
+
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
@@ -569,24 +575,27 @@ class Entity implements JsonSerializable
 		switch($type)
 		{
 			case 'int':
-			case 'integer': //alias for 'integer'
-				$value = (int)$value;
+			case 'integer': // alias for 'integer'
+				$value = (int) $value;
 				break;
 			case 'float':
-				$value = (float)$value;
+				$value = (float) $value;
 				break;
 			case 'double':
-				$value = (double)$value;
+				$value = (double) $value;
 				break;
 			case 'string':
-				$value = (string)$value;
+				$value = (string) $value;
 				break;
 			case 'bool':
-			case 'boolean': //alias for 'boolean'
-				$value = (bool)$value;
+			case 'boolean': // alias for 'boolean'
+				$value = (bool) $value;
+				break;
+			case 'csv':
+				$value = explode(',', $value);
 				break;
 			case 'object':
-				$value = (object)$value;
+				$value = (object) $value;
 				break;
 			case 'array':
 				if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
@@ -594,7 +603,7 @@ class Entity implements JsonSerializable
 					$value = unserialize($value);
 				}
 
-				$value = (array)$value;
+				$value = (array) $value;
 				break;
 			case 'json':
 				$value = $this->castAsJson($value);
