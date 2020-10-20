@@ -142,32 +142,32 @@ class Security
 	 * Stores our configuration and fires off the init() method to setup
 	 * initial state.
 	 *
-	 * @param \Config\Security $config
+	 * @param \Config\App $config
 	 *
 	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
 	 */
-	public function __construct(SecurityConfig $config)
+	public function __construct(AppConfig $config)
 	{
 		/**
 		 * @deprecated Use `Config\Security` instead of using `Config\App`.
 		 */
-		$appConfig = new AppConfig();
+		$security = new SecurityConfig();
 		// Store our CSRF-related configuration.
-		$this->tokenName  = $appConfig->CSRFTokenName ?? $config->tokenName ?? $this->tokenName;
-		$this->headerName = $appConfig->CSRFHeaderName ?? $config->headerName ?? $this->headerName;
-		$this->cookieName = $appConfig->CSRFCookieName ?? $config->cookieName ?? $this->cookieName;
-		$this->expire     = $appConfig->CSRFExpire ?? $config->expire ?? $this->expire;
-		$this->regenerate = $appConfig->CSRFRegenerate ?? $config->regenerate ?? $this->regenerate;
-		$this->samesite   = $appConfig->CSRFSameSite ?? $config->samesite ?? $this->samesite;
+		$this->tokenName  = $config->CSRFTokenName ?? $security->tokenName ?? $this->tokenName;
+		$this->headerName = $config->CSRFHeaderName ?? $security->headerName ?? $this->headerName;
+		$this->cookieName = $config->CSRFCookieName ?? $security->cookieName ?? $this->cookieName;
+		$this->expire     = $config->CSRFExpire ?? $security->expire ?? $this->expire;
+		$this->regenerate = $config->CSRFRegenerate ?? $security->regenerate ?? $this->regenerate;
+		$this->samesite   = $config->CSRFSameSite ?? $security->samesite ?? $this->samesite;
 
 		if (! in_array(strtolower($this->samesite), ['', 'none', 'lax', 'strict'], true))
 		{
 			throw SecurityException::forInvalidSameSite($this->samesite);
 		}
 
-		if (isset($appConfig->cookiePrefix))
+		if (isset($config->cookiePrefix))
 		{
-			$this->cookieName = $appConfig->cookiePrefix . $this->cookieName;
+			$this->cookieName = $config->cookiePrefix . $this->cookieName;
 		}
 
 		$this->generateHash();
