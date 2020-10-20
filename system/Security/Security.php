@@ -42,7 +42,7 @@ namespace CodeIgniter\Security;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use Config\App as AppConfig;
+use Config\App as App;
 use Config\Security as SecurityConfig;
 use Exception;
 
@@ -146,7 +146,7 @@ class Security
 	 *
 	 * @throws SecurityException
 	 */
-	public function __construct(AppConfig $config)
+	public function __construct(App $config)
 	{
 		/**
 		 * @deprecated Use `Config\Security` instead of using `Config\App`.
@@ -422,7 +422,7 @@ class Security
 	 */
 	protected function sendCookie(RequestInterface $request)
 	{
-		$config = new AppConfig();
+		$config = new App();
 
 		$expire = $this->expire === 0 ? $this->expire : time() + $this->expire;
 		$path   = $config->cookiePath ?? '/';
