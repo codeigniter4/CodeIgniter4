@@ -239,7 +239,7 @@ class Services extends BaseService
 	 * @param EncryptionConfig|null $config
 	 * @param boolean               $getShared
 	 *
-	 * @return EncrypterInterface Encryption handler
+	 * @return EncrypterInterface
 	 */
 	public static function encrypter(EncryptionConfig $config = null, $getShared = false)
 	{
@@ -449,7 +449,7 @@ class Services extends BaseService
 	/**
 	 * Return the appropriate Migration runner.
 	 *
-	 * @param Migrations|null          $config
+	 * @param MigrationsConfig|null    $config
 	 * @param ConnectionInterface|null $db
 	 * @param boolean                  $getShared
 	 *
@@ -684,8 +684,8 @@ class Services extends BaseService
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 *
-	 * @param \Config\App|null $config
-	 * @param boolean          $getShared
+	 * @param App|null $config
+	 * @param boolean  $getShared
 	 *
 	 * @return Security
 	 * @deprecated Use `Config\Security` instead of using `Config\App`.
