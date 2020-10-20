@@ -90,6 +90,7 @@ use Config\Filters as FiltersConfig;
 use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images as ImagesConfig;
+use Config\Logger as LoggerConfig;
 use Config\Migrations as MigrationsConfig;
 use Config\Modules as ModulesConfig;
 use Config\Pager as PagerConfig;
