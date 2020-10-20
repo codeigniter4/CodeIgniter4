@@ -142,9 +142,9 @@ class Security
 	 * Stores our configuration and fires off the init() method to setup
 	 * initial state.
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 *
-	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
+	 * @throws SecurityException
 	 */
 	public function __construct(AppConfig $config)
 	{
@@ -178,10 +178,10 @@ class Security
 	/**
 	 * CSRF Verify
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
+	 * @throws SecurityException
 	 *
 	 * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
 	 */
@@ -223,10 +223,10 @@ class Security
 	/**
 	 * CSRF Verify
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
+	 * @throws SecurityException
 	 */
 	public function verify(RequestInterface $request)
 	{
@@ -415,7 +415,7 @@ class Security
 	/**
 	 * CSRF Send Cookie
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface $request
 	 *
 	 * @return Security|false
 	 * @codeCoverageIgnore
