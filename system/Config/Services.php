@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -91,6 +91,7 @@ use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images as ImagesConfig;
 use Config\Migrations as MigrationsConfig;
+use Config\Modules as ModulesConfig;
 use Config\Pager as PagerConfig;
 use Config\Security as SecurityConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -686,6 +687,7 @@ class Services extends BaseService
 	 * @param boolean          $getShared
 	 *
 	 * @return Security
+	 * @deprecated Use `Config\Security` instead of using `Config\App`.
 	 */
 	public static function security(App $config = null, bool $getShared = true)
 	{
