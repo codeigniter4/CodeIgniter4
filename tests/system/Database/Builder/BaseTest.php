@@ -45,13 +45,4 @@ class BaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $builder->getTable();
 		$this->assertEquals('jobs', $result);
 	}
-
-	public function testGetTableRespectsFrom()
-	{
-		$builder = $this->db->table('jobs');
-
-		$builder->from('foo', true);
-		$result = $builder->getTable();
-		$this->assertEquals('foo', $result);
-	}
 }
