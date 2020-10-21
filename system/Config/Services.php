@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -82,15 +82,17 @@ use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
 use Config\App;
-use Config\Cache;
+use Config\Cache as CacheConfig;
 use Config\Email as EmailConfig;
 use Config\Encryption as EncryptionConfig;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Filters as FiltersConfig;
 use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
-use Config\Images;
-use Config\Migrations;
+use Config\Images as ImagesConfig;
+use Config\Logger as LoggerConfig;
+use Config\Migrations as MigrationsConfig;
+use Config\Modules as ModulesConfig;
 use Config\Pager as PagerConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
@@ -116,22 +118,22 @@ use Config\View as ViewConfig;
 class Services extends BaseService
 {
 	/**
-	 * The cache class provides a simple way to store and retrieve
-	 * complex data for later.
+	 * The cache class provides a simple way to store and retrieve complex
+	 * data for later.
 	 *
-	 * @param Cache|null $config
-	 * @param boolean    $getShared
+	 * @param CacheConfig|null $config
+	 * @param boolean	   $getShared
 	 *
 	 * @return CacheInterface
 	 */
-	public static function cache(Cache $config = null, bool $getShared = true)
+	public static function cache(CacheConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('cache', $config);
 		}
 
-		$config = $config ?? new Cache();
+		$config = $config ?? new CacheConfig();
 
 		return CacheFactory::getHandler($config);
 	}
@@ -139,8 +141,7 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The CLI Request class provides for ways to interact with
-	 * a command line request.
+	 * The CLI Request class provides for ways to interact with a cli request.
 	 *
 	 * @param App|null $config
 	 * @param boolean  $getShared
@@ -154,7 +155,7 @@ class Services extends BaseService
 			return static::getSharedInstance('clirequest', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new App();
 
 		return new CLIRequest($config);
 	}
@@ -178,6 +179,8 @@ class Services extends BaseService
 		return new Commands();
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * The CURL Request class acts as a simple HTTP client for interacting
 	 * with other servers, typically through APIs.
@@ -191,20 +194,15 @@ class Services extends BaseService
 	 */
 	public static function curlrequest(array $options = [], ResponseInterface $response = null, App $config = null, bool $getShared = true)
 	{
-		if ($getShared === true)
+		if ($getShared)
 		{
 			return static::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		$config   = $config ?? config('App');
+		$config   = $config ?? new App();
 		$response = $response ?? new Response($config);
 
-		return new CURLRequest(
-			$config,
-			new URI($options['base_uri'] ?? null),
-			$response,
-			$options
-		);
+		return new CURLRequest($config, new URI($options['base_uri'] ?? null), $response, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -226,11 +224,13 @@ class Services extends BaseService
 
 		if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig))
 		{
-			$config = config('Email');
+			$config = new EmailConfig();
 		}
 
 		return new Email($config);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Encryption class provides two-way encryption.
@@ -242,12 +242,12 @@ class Services extends BaseService
 	 */
 	public static function encrypter(EncryptionConfig $config = null, $getShared = false)
 	{
-		if ($getShared === true)
+		if ($getShared)
 		{
 			return static::getSharedInstance('encrypter', $config);
 		}
 
-		$config     = $config ?? config('Encryption');
+		$config     = $config ?? new EncryptionConfig();
 		$encryption = new Encryption($config);
 
 		return $encryption->initialize($config);
@@ -269,19 +269,14 @@ class Services extends BaseService
 	 *
 	 * @return Exceptions
 	 */
-	public static function exceptions(
-		ExceptionsConfig $config = null,
-		IncomingRequest $request = null,
-		Response $response = null,
-		bool $getShared = true
-	)
+	public static function exceptions(ExceptionsConfig $config = null, IncomingRequest $request = null, Response $response = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('exceptions', $config, $request, $response);
 		}
 
-		$config   = $config ?? config('Exceptions');
+		$config   = $config ?? new ExceptionsConfig();
 		$request  = $request ?? static::request();
 		$response = $response ?? static::response();
 
@@ -308,7 +303,7 @@ class Services extends BaseService
 			return static::getSharedInstance('filters', $config);
 		}
 
-		$config = $config ?? config('Filters');
+		$config = $config ?? new FiltersConfig();
 
 		return new Filters($config, static::request(), static::response());
 	}
@@ -330,7 +325,7 @@ class Services extends BaseService
 			return static::getSharedInstance('format', $config);
 		}
 
-		$config = $config ?? config('Format');
+		$config = $config ?? new FormatConfig();
 
 		return new Format($config);
 	}
@@ -353,7 +348,7 @@ class Services extends BaseService
 			return static::getSharedInstance('honeypot', $config);
 		}
 
-		$config = $config ?? config('Honeypot');
+		$config = $config ?? new HoneypotConfig();
 
 		return new Honeypot($config);
 	}
@@ -370,14 +365,14 @@ class Services extends BaseService
 	 *
 	 * @return BaseHandler
 	 */
-	public static function image(string $handler = null, Images $config = null, bool $getShared = true)
+	public static function image(string $handler = null, ImagesConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('image', $handler, $config);
 		}
 
-		$config  = $config ?? config('Images');
+		$config  = $config ?? new ImagesConfig();
 		$handler = $handler ?: $config->defaultHandler;
 		$class   = $config->handlers[$handler];
 
@@ -445,7 +440,7 @@ class Services extends BaseService
 			return static::getSharedInstance('logger');
 		}
 
-		return new Logger(config('Logger'));
+		return new Logger(new LoggerConfig());
 	}
 
 	//--------------------------------------------------------------------
@@ -453,20 +448,20 @@ class Services extends BaseService
 	/**
 	 * Return the appropriate Migration runner.
 	 *
-	 * @param Migrations|null          $config
+	 * @param MigrationsConfig|null    $config
 	 * @param ConnectionInterface|null $db
 	 * @param boolean                  $getShared
 	 *
 	 * @return MigrationRunner
 	 */
-	public static function migrations(Migrations $config = null, ConnectionInterface $db = null, bool $getShared = true)
+	public static function migrations(MigrationsConfig $config = null, ConnectionInterface $db = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('migrations', $config, $db);
 		}
 
-		$config = $config ?? config('Migrations');
+		$config = $config ?? new MigrationsConfig();
 
 		return new MigrationRunner($config, $db);
 	}
@@ -513,7 +508,7 @@ class Services extends BaseService
 			return static::getSharedInstance('pager', $config, $view);
 		}
 
-		$config = $config ?? config('Pager');
+		$config = $config ?? new PagerConfig();
 		$view   = $view ?? static::renderer();
 
 		return new Pager($config, $view);
@@ -538,7 +533,7 @@ class Services extends BaseService
 		}
 
 		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
-		$config   = $config ?? config('View');
+		$config   = $config ?? new ViewConfig();
 
 		return new Parser($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
@@ -564,7 +559,7 @@ class Services extends BaseService
 		}
 
 		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
-		$config   = $config ?? config('View');
+		$config   = $config ?? new ViewConfig();
 
 		return new View($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
@@ -586,14 +581,9 @@ class Services extends BaseService
 			return static::getSharedInstance('request', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new App();
 
-		return new IncomingRequest(
-			$config,
-			static::uri(),
-			'php://input',
-			new UserAgent()
-		);
+		return new IncomingRequest($config, static::uri(), 'php://input', new UserAgent());
 	}
 
 	//--------------------------------------------------------------------
@@ -613,7 +603,7 @@ class Services extends BaseService
 			return static::getSharedInstance('response', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new App();
 
 		return new Response($config);
 	}
@@ -635,7 +625,7 @@ class Services extends BaseService
 			return static::getSharedInstance('redirectResponse', $config);
 		}
 
-		$config   = $config ?? config('App');
+		$config   = $config ?? new App();
 		$response = new RedirectResponse($config);
 		$response->setProtocolVersion(static::request()->getProtocolVersion());
 
@@ -659,14 +649,14 @@ class Services extends BaseService
 			return static::getSharedInstance('routes');
 		}
 
-		return new RouteCollection(static::locator(), config('Modules'));
+		return new RouteCollection(static::locator(), new ModulesConfig());
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Router class uses a RouteCollection's array of routes, and determines
-	 * the correct Controller and Method to execute.
+	 * The Router class uses a RouteCollection's array of routes,
+	 * and determines the correct Controller and Method to execute.
 	 *
 	 * @param RouteCollectionInterface|null $routes
 	 * @param Request|null                  $request
@@ -705,7 +695,7 @@ class Services extends BaseService
 			return static::getSharedInstance('security', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? new App();
 
 		return new Security($config);
 	}
@@ -727,15 +717,14 @@ class Services extends BaseService
 			return static::getSharedInstance('session', $config);
 		}
 
-		$config = $config ?? config('App');
-		$logger = static::logger();
+		$config = $config ?? new App();
 
 		$driverName = $config->sessionDriver;
 		$driver     = new $driverName($config, static::request()->getIPAddress());
-		$driver->setLogger($logger);
+		$driver->setLogger(static::logger());
 
 		$session = new Session($driver, $config);
-		$session->setLogger($logger);
+		$session->setLogger(static::logger());
 
 		if (session_status() === PHP_SESSION_NONE)
 		{
@@ -748,8 +737,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Throttler class provides a simple method for implementing
-	 * rate limiting in your applications.
+	 * The Throttler class provides a simple method for implementing rate
+	 * limiting in your applications.
 	 *
 	 * @param boolean $getShared
 	 *
@@ -802,7 +791,7 @@ class Services extends BaseService
 			return static::getSharedInstance('toolbar', $config);
 		}
 
-		$config = $config ?? config('Toolbar');
+		$config = $config ?? new ToolbarConfig();
 
 		return new Toolbar($config);
 	}
@@ -844,7 +833,7 @@ class Services extends BaseService
 			return static::getSharedInstance('validation', $config);
 		}
 
-		$config = $config ?? config('Validation');
+		$config = $config ?? new ValidationConfig();
 
 		return new Validation($config, static::renderer());
 	}
@@ -852,8 +841,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * View cells are intended to let you insert HTML into view
-	 * that has been generated by any callable in the system.
+	 * View cells are intended to let you insert HTML into view that has
+	 * been generated by any callable in the system.
 	 *
 	 * @param boolean $getShared
 	 *
@@ -872,7 +861,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Typography class provides a way to format text in semantically relevant ways.
+	 * The Typography class provides a way to format text in semantically
+	 * relevant ways.
 	 *
 	 * @param boolean $getShared
 	 *
@@ -887,6 +877,4 @@ class Services extends BaseService
 
 		return new Typography();
 	}
-
-	//--------------------------------------------------------------------
 }
