@@ -738,7 +738,7 @@ class Response extends Message implements ResponseInterface
 		}
 
     // Verifying if CORS is not already sent and if is enabled
-    if (!in_array('Access-Control-Allow-Origin', headers_list()) && $this->CORSEnabled) {
+    if (! in_array('Access-Control-Allow-Origin', headers_list(), true) && $this->CORSEnabled) {
       // Send CORS headers
       foreach ($this->CORS->headerList as $name => $value) {
         header($name . ': ' . $value, true, $this->statusCode);
