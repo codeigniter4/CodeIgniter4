@@ -24,6 +24,9 @@
 		"rector/rector": "^0.8",
 		"squizlabs/php_codesniffer": "^3.3"
 	},
+	"config": {
+		"sort-packages": true
+	},
 	"autoload": {
 		"psr-4": {
 			"CodeIgniter\\": "system/"
@@ -46,8 +49,5 @@
 		"forum": "http://forum.codeigniter.com/",
 		"source": "https://github.com/codeigniter4/CodeIgniter4",
 		"slack": "https://codeigniterchat.slack.com"
-	},
-	"config": {
-        "sort-packages": true
-    }
+	}
 }
