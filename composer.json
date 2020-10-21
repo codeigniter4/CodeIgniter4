@@ -24,6 +24,9 @@
 		"rector/rector": "^0.8",
 		"squizlabs/php_codesniffer": "^3.3"
 	},
+	"config": {
+		"sort-packages": true
+	},
 	"autoload": {
 		"psr-4": {
 			"CodeIgniter\\": "system/"
