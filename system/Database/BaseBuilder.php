@@ -1506,7 +1506,7 @@ class BaseBuilder
 	{
 		$this->QBWhereGroupStarted = false;
 		$where                     = [
-			'condition' => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
+			'condition' => str_repeat(' ', $this->QBWhereGroupCount--) . ')',
 			'escape'    => false,
 		];
 
@@ -2993,7 +2993,7 @@ class BaseBuilder
 		}
 		else
 		{
-			$sql = ( ! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+			$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
 			if (empty($this->QBSelect))
 			{

@@ -800,7 +800,7 @@ if (! function_exists('is_really_writable'))
 			return true;
 		}
 
-		if (! is_file($file) || ( $fp = @fopen($file, 'ab')) === false)
+		if (! is_file($file) || ($fp = @fopen($file, 'ab')) === false)
 		{
 			return false;
 		}

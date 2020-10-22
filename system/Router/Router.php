@@ -491,7 +491,7 @@ class Router implements RouterInterface
 					[
 						$controller,
 						$method,
-					] = explode( '::', $val );
+					] = explode('::', $val);
 
 					// Only replace slashes in the controller, not in the method.
 					$controller = str_replace('/', '\\', $controller);

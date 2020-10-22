@@ -150,8 +150,8 @@ class Cell
 			$output = $instance->{$method}();
 		}
 		elseif (($paramCount === 1) && (
-				( ! array_key_exists($refParams[0]->name, $paramArray)) ||
-				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+				(! array_key_exists($refParams[0]->name, $paramArray)) ||
+				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1))
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -201,7 +201,7 @@ class Cell
 	 */
 	public function prepareParams($params)
 	{
-		if (empty($params) || ( ! is_string($params) && ! is_array($params)))
+		if (empty($params) || (! is_string($params) && ! is_array($params)))
 		{
 			return [];
 		}

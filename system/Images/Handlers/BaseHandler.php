@@ -860,7 +860,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		if (($this->width === 0 && $this->height === 0) ||
 				$this->image()->origWidth === 0 ||
 				$this->image()->origHeight === 0 ||
-				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
+				(! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
 				! ctype_digit((string) $this->image()->origWidth) ||
 				! ctype_digit((string) $this->image()->origHeight)
 		)
