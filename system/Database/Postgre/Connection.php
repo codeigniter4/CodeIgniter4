@@ -175,7 +175,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		// @phpstan-ignore-next-line
-		if (! $this->connID || ( $pgVersion = pg_version($this->connID)) === false)
+		if (! $this->connID || ($pgVersion = pg_version($this->connID)) === false)
 		{
 			$this->initialize();
 		}
@@ -238,7 +238,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || (is_object($str) && method_exists($str, '__toString')))
 		{
 			return pg_escape_literal($this->connID, $str);
 		}

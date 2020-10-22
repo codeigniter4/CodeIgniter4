@@ -402,8 +402,9 @@ class Parser extends View
 
 						if (! empty($pair))
 						{
-							$pairs[array_keys( $pair )[0]] = true;
-							$temp                          = array_merge($temp, $pair);
+							$pairs[array_keys($pair)[0]] = true;
+
+							$temp = array_merge($temp, $pair);
 						}
 
 						continue;
@@ -423,7 +424,7 @@ class Parser extends View
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = $this->replaceSingle($pattern, $content, $out, ! isset( $pairs[$pattern] ) );
+					$out = $this->replaceSingle($pattern, $content, $out, ! isset($pairs[$pattern]));
 				}
 
 				$str .= $out;

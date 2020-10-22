@@ -157,9 +157,9 @@ class ComposerScripts
 		$dir = opendir($source);
 		@mkdir($dest);
 
-		while (false !== ( $file = readdir($dir)))
+		while (false !== ($file = readdir($dir)))
 		{
-			if (( $file !== '.' ) && ( $file !== '..' ))
+			if (($file !== '.') && ($file !== '..'))
 			{
 				if (is_dir($source . '/' . $file))
 				{

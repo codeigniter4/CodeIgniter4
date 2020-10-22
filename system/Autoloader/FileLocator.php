@@ -207,7 +207,7 @@ class FileLocator
 			}
 		}
 
-		if (empty( $className ))
+		if (empty($className))
 		{
 			return '';
 		}

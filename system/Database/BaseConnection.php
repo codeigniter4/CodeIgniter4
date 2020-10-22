@@ -1292,7 +1292,7 @@ abstract class BaseConnection implements ConnectionInterface
 		// Avoid breaking functions and literal values inside queries
 		if (ctype_digit($item)
 			|| $item[0] === "'"
-			|| ( $this->escapeChar !== '"' && $item[0] === '"')
+			|| ($this->escapeChar !== '"' && $item[0] === '"')
 			|| strpos($item, '(') !== false)
 		{
 			return $item;
@@ -1379,7 +1379,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return array_map([&$this, 'escape'], $str);
 		}
 
-		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || (is_object($str) && method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}

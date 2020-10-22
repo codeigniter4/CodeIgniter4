@@ -797,7 +797,7 @@ class IncomingRequest extends Request
 		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
-			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
+			if ((! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}
