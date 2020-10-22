@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Events;
 
+use Config\Modules;
 use Config\Services;
 
 define('EVENT_PRIORITY_LOW', 200);
@@ -50,7 +51,6 @@ define('EVENT_PRIORITY_HIGH', 10);
  */
 class Events
 {
-
 	/**
 	 * The list of listeners.
 	 *
@@ -78,21 +78,21 @@ class Events
 	 * Stores information about the events
 	 * for display in the debug toolbar.
 	 *
-	 * @var array
+	 * @var array<array<string, float|string>>
 	 */
 	protected static $performanceLog = [];
 
 	/**
 	 * A list of found files.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected static $files = [];
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Ensures that we have a events file ready.
+	 *
+	 * @return void
 	 */
 	public static function initialize()
 	{
@@ -102,30 +102,36 @@ class Events
 			return;
 		}
 
+		/**
+		 * @var Modules
+		 */
 		$config = config('Modules');
-
-		$files = [APPPATH . 'Config/Events.php'];
+		$events = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php';
+		$files  = [];
 
 		if ($config->shouldDiscover('events'))
 		{
-			$locator = Services::locator();
-			$files   = $locator->search('Config/Events.php');
+			$files = Services::locator()->search('Config/Events.php');
 		}
 
-		static::$files = $files;
+		$files = array_filter(array_map(static function (string $file) {
+			if (is_file($file))
+			{
+				return realpath($file) ?: $file;
+			}
+
+			return false; // @codeCoverageIgnore
+		}, $files));
+
+		static::$files = array_unique(array_merge($files, [$events]));
 
 		foreach (static::$files as $file)
 		{
-			if (is_file($file))
-			{
-				include $file;
-			}
+			include $file;
 		}
 
 		static::$initialized = true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Registers an action to happen on an event. The action can be any sort
@@ -139,6 +145,8 @@ class Events
 	 * @param string   $eventName
 	 * @param callable $callback
 	 * @param integer  $priority
+	 *
+	 * @return void
 	 */
 	public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
@@ -158,8 +166,6 @@ class Events
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Runs through all subscribed methods running them one at a time,
 	 * until either:
@@ -173,7 +179,7 @@ class Events
 	 */
 	public static function trigger($eventName, ...$arguments): bool
 	{
-		// Read in our Config/events file so that we have them all!
+		// Read in our Config/Events file so that we have them all!
 		if (! static::$initialized)
 		{
 			static::initialize();
@@ -205,14 +211,9 @@ class Events
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an array of listeners for a single event. They are
 	 * sorted by priority.
-	 *
-	 * If the listener could not be found, returns FALSE, or TRUE if
-	 * it was removed.
 	 *
 	 * @param string $eventName
 	 *
@@ -237,8 +238,6 @@ class Events
 
 		return static::$listeners[$eventName][2];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Removes a single listener from an event.
@@ -272,8 +271,6 @@ class Events
 		return false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Removes all listeners.
 	 *
@@ -281,6 +278,8 @@ class Events
 	 * removed, otherwise all listeners for all events are removed.
 	 *
 	 * @param string|null $eventName
+	 *
+	 * @return void
 	 */
 	public static function removeAllListeners($eventName = null)
 	{
@@ -294,31 +293,27 @@ class Events
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the path to the file that routes are read from.
 	 *
 	 * @param array $files
+	 *
+	 * @return void
 	 */
 	public static function setFiles(array $files)
 	{
 		static::$files = $files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the files that were found/loaded during this request.
 	 *
-	 * @return mixed
+	 * @return string[]
 	 */
 	public function getFiles()
 	{
 		return static::$files;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Turns simulation on or off. When on, events will not be triggered,
@@ -326,23 +321,21 @@ class Events
 	 * the tests to run.
 	 *
 	 * @param boolean $choice
+	 *
+	 * @return void
 	 */
 	public static function simulate(bool $choice = true)
 	{
 		static::$simulate = $choice;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Getter for the performance log records.
 	 *
-	 * @return array
+	 * @return array<array<string, float|string>>
 	 */
 	public static function getPerformanceLogs()
 	{
 		return static::$performanceLog;
 	}
-
-	//--------------------------------------------------------------------
 }
