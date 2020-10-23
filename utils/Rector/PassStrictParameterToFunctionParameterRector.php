@@ -65,7 +65,7 @@ CODE_SAMPLE
 			return null;
 		}
 
-		$position = $functions[$currentFunctionName];
+		$position = self::FUNCTION_WITH_ARG_POSITION[$currentFunctionName];
 
 		if (isset($node->args[$position]))
 		{
