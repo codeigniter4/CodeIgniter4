@@ -14,13 +14,18 @@ use Rector\Core\RectorDefinition\CodeSample;
 use Rector\Core\RectorDefinition\RectorDefinition;
 
 /**
- * Pass true to 3rd parameter of in_array when no value provided
+ * Pass strict to function parameter on specific position argument when no value provided
  */
-final class PassTrueToThirdParameterInArrayRector extends AbstractRector
+final class PassStrictParameterToFunctionParameterRector extends AbstractRector
 {
+	private const FUNCTION_WITH_ARG_POSITION = [
+		// position start from 0
+		'in_array' => 2,
+	];
+
 	public function getDefinition(): RectorDefinition
 	{
-		return new RectorDefinition('Pass true to 3rd parameter of in_array if no value provided', [
+		return new RectorDefinition('Pass strict to function parameter on specific position argument when no value provided', [
 			new CodeSample(
 				<<<'CODE_SAMPLE'
 in_array('a', $array);
@@ -52,18 +57,23 @@ CODE_SAMPLE
 			return null;
 		}
 
-		if ($name->toString() !== 'in_array')
+		$functions           = array_keys(self::FUNCTION_WITH_ARG_POSITION);
+		$currentFunctionName = $name->toString();
+
+		if (! in_array($currentFunctionName, $functions, true))
 		{
 			return null;
 		}
 
-		if (isset($node->args[2]))
+		$position = $functions[$currentFunctionName];
+
+		if (isset($node->args[$position]))
 		{
 			return null;
 		}
 
-		$name          = new Name('true');
-		$node->args[2] = new Arg(new ConstFetch($name));
+		$name                  = new Name('true');
+		$node->args[$position] = new Arg(new ConstFetch($name));
 
 		return $node;
 	}
