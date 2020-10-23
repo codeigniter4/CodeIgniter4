@@ -557,7 +557,7 @@ class CURLRequest extends Request
 				$this->setHeader('Content-Length', '0');
 			}
 		}
-		else if ($method === 'HEAD')
+		elseif ($method === 'HEAD')
 		{
 			$curlOptions[CURLOPT_NOBODY] = 1;
 		}
@@ -603,7 +603,7 @@ class CURLRequest extends Request
 
 				$this->response->setHeader($title, $value);
 			}
-			else if (strpos($header, 'HTTP') === 0)
+			elseif (strpos($header, 'HTTP') === 0)
 			{
 				preg_match('#^HTTP\/([12](?:\.[01])?) ([0-9]+) (.+)#', $header, $matches);
 
@@ -681,7 +681,7 @@ class CURLRequest extends Request
 				$curlOptions[CURLOPT_CAINFO]         = $file;
 				$curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
 			}
-			else if (is_bool($config['verify']))
+			elseif (is_bool($config['verify']))
 			{
 				$curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
 			}
@@ -789,7 +789,7 @@ class CURLRequest extends Request
 			{
 				$curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 			}
-			else if ($config['version'] === 1.1)
+			elseif ($config['version'] === 1.1)
 			{
 				$curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
 			}

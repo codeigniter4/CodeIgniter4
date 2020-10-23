@@ -1404,7 +1404,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// Limiting to subdomains?
-		else if (! empty($options['subdomain']))
+		elseif (! empty($options['subdomain']))
 		{
 			// If we don't match the current subdomain, then
 			// we don't need to add the route.

@@ -157,17 +157,17 @@ if (! function_exists('number_to_amount'))
 			$suffix = lang('Number.trillion', [], $generalLocale);
 			$num    = round(($num / 1000000000000), $precision);
 		}
-		else if ($num > 1000000000)
+		elseif ($num > 1000000000)
 		{
 			$suffix = lang('Number.billion', [], $generalLocale);
 			$num    = round(($num / 1000000000), $precision);
 		}
-		else if ($num > 1000000)
+		elseif ($num > 1000000)
 		{
 			$suffix = lang('Number.million', [], $generalLocale);
 			$num    = round(($num / 1000000), $precision);
 		}
-		else if ($num > 1000)
+		elseif ($num > 1000)
 		{
 			$suffix = lang('Number.thousand', [], $generalLocale);
 			$num    = round(($num / 1000), $precision);

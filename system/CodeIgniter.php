@@ -991,7 +991,7 @@ class CodeIgniter
 			{
 				echo $override($e->getMessage());
 			}
-			else if (is_array($override))
+			elseif (is_array($override))
 			{
 				$this->benchmark->start('controller');
 				$this->benchmark->start('controller_constructor');

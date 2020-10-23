@@ -221,12 +221,12 @@ class Header
 			{
 				$options[] = $key . '=' . $value;
 			}
-			else if (is_array($value))
+			elseif (is_array($value))
 			{
 				$key       = key($value);
 				$options[] = $key . '=' . $value[$key];
 			}
-			else if (is_numeric($key))
+			elseif (is_numeric($key))
 			{
 				$options[] = $value;
 			}

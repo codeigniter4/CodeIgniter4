@@ -330,7 +330,7 @@ class Entity implements JsonSerializable
 
 		// Otherwise return the protected property
 		// if it exists.
-		else if (array_key_exists($key, $this->attributes))
+		elseif (array_key_exists($key, $this->attributes))
 		{
 			$result = $this->attributes[$key];
 		}
@@ -341,7 +341,7 @@ class Entity implements JsonSerializable
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if ($this->_cast && ! empty($this->casts[$key]))
+		elseif ($this->_cast && ! empty($this->casts[$key]))
 		{
 			$result = $this->castAs($result, $this->casts[$key]);
 		}
