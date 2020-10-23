@@ -224,6 +224,7 @@ class Services extends BaseService
 			return static::getSharedInstance('email', $config);
 		}
 
+		// @phpstan-ignore-next-line
 		if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig))
 		{
 			$config = config('Email');
