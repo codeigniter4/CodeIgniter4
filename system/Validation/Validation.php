@@ -249,7 +249,7 @@ class Validation implements ValidationInterface
 			$rules = array_diff($rules, ['if_exist']);
 		}
 
-		if (in_array('permit_empty', $rules))
+		if (in_array('permit_empty', $rules, true))
 		{
 			if (! in_array('required', $rules, true) && (is_array($value) ? empty($value) : (trim($value) === '')))
 			{
