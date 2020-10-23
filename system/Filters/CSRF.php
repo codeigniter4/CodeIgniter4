@@ -35,10 +35,6 @@
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
- *
- * This filter is not intended to be used from the command line.
- *
- * @codeCoverageIgnore
  */
 
 namespace CodeIgniter\Filters;
