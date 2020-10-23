@@ -1514,7 +1514,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// Routes can be limited to any sub-domain. In that case, though,
 		// it does require a sub-domain to be present.
-		if (! empty($this->currentSubdomain) && in_array('*', $subdomains))
+		if (! empty($this->currentSubdomain) && in_array('*', $subdomains, true))
 		{
 			return true;
 		}

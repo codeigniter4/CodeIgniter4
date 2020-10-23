@@ -662,7 +662,7 @@ if (! function_exists('helper'))
 			}
 
 			// Check if this helper has already been loaded
-			if (in_array($filename, $loaded))
+			if (in_array($filename, $loaded, true))
 			{
 				continue;
 			}

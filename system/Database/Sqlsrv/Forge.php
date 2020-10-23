@@ -301,12 +301,12 @@ class Forge extends \CodeIgniter\Database\Forge
 						. ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
 						. ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
+				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))
 				{
 					$sql .= ' ON DELETE ' . $fkey['onDelete'];
 				}
 
-				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions))
+				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true))
 				{
 					$sql .= ' ON UPDATE ' . $fkey['onUpdate'];
 				}
