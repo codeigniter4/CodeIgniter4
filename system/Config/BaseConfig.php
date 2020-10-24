@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Config;
 
+use Config\Encryption;
 use Config\Modules;
 use Config\Services;
 use ReflectionClass;
@@ -56,7 +57,6 @@ use RuntimeException;
  */
 class BaseConfig
 {
-
 	/**
 	 * An optional array of classes that will act as Registrars
 	 * for rapidly setting config class properties.
@@ -90,7 +90,7 @@ class BaseConfig
 		static::$moduleConfig = config('Modules');
 
 		$properties  = array_keys(get_object_vars($this));
-		$prefix      = get_class($this);
+		$prefix      = static::class;
 		$slashAt     = strrpos($prefix, '\\');
 		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
@@ -98,7 +98,7 @@ class BaseConfig
 		{
 			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
 
-			if ($shortPrefix === 'encryption' && $property === 'key')
+			if ($this instanceof Encryption && $property === 'key')
 			{
 				// Handle hex2bin prefix
 				if (strpos($this->$property, 'hex2bin:') === 0)
@@ -115,8 +115,6 @@ class BaseConfig
 
 		$this->registerProperties();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Initialization an environment-specific configuration setting
@@ -159,8 +157,6 @@ class BaseConfig
 		return $property;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Retrieve an environment-specific configuration setting
 	 *
@@ -188,8 +184,6 @@ class BaseConfig
 				return $value === false ? null : $value;
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Provides external libraries a simple way to register one or more
@@ -251,6 +245,4 @@ class BaseConfig
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
 }
