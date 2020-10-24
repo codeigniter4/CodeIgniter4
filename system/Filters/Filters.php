@@ -286,7 +286,7 @@ class Filters
 			$this->filters['after'][$count - 1] !== 'toolbar'
 		)
 		{
-			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after']), 1);
+			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
 			$this->filters['after'][] = 'toolbar';
 		}
 

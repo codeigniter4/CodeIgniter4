@@ -61,12 +61,11 @@ use Throwable;
  */
 class Logger implements LoggerInterface
 {
-
 	/**
 	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
 	 *
-	 * @var array
+	 * @var array<string, integer>
 	 */
 	protected $logLevels = [
 		'emergency' => 1,
@@ -160,7 +159,7 @@ class Logger implements LoggerInterface
 			$temp = [];
 			foreach ($this->loggableLevels as $level)
 			{
-				$temp[] = array_search((int) $level, $this->logLevels);
+				$temp[] = array_search((int) $level, $this->logLevels, true);
 			}
 
 			$this->loggableLevels = $temp;
@@ -331,7 +330,7 @@ class Logger implements LoggerInterface
 	{
 		if (is_numeric($level))
 		{
-			$level = array_search((int) $level, $this->logLevels);
+			$level = array_search((int) $level, $this->logLevels, true);
 		}
 
 		// Is the level a valid level?

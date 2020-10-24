@@ -259,7 +259,7 @@ class FormatRules
 	 */
 	public function valid_base64(string $str = null): bool
 	{
-		return (base64_encode(base64_decode($str)) === $str);
+		return (base64_encode(base64_decode($str, true)) === $str);
 	}
 
 	/**

@@ -204,7 +204,7 @@ class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 		}
 		else
 		{
-			$result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data)) : $result->data;
+			$result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data), true) : $result->data;
 		}
 
 		$this->fingerprint = md5($result);
