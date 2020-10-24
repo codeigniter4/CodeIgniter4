@@ -163,7 +163,7 @@ class Autoloader
 				return false;
 			}
 
-			include_once $config[$class];
+			include $config[$class];
 		}, true, // Throw exception
 			true // Prepend
 		);
@@ -377,7 +377,7 @@ class Autoloader
 
 		if (is_file($file))
 		{
-			include_once $file;
+			include $file;
 
 			return $file;
 		}
