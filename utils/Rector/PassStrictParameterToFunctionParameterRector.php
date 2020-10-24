@@ -28,15 +28,9 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
 	public function getDefinition(): RectorDefinition
 	{
 		return new RectorDefinition('Pass strict to function parameter on specific position argument when no value provided', [
-			new CodeSample(
-				<<<'CODE_SAMPLE'
-in_array('a', $array);
-CODE_SAMPLE
-,
-				<<<'CODE_SAMPLE'
-in_array('a', $array, true);
-CODE_SAMPLE
-			),
+			new CodeSample('array_search($value, $array);', 'array_search($value, $array, true);'),
+			new CodeSample('base64_decode($string);', 'base64_decode($string, true);'),
+			new CodeSample("in_array('a', \$array);", "in_array('a', \$array, true);"),
 		]);
 	}
 
