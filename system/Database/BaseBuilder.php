@@ -186,6 +186,15 @@ class BaseBuilder
 	protected $db;
 
 	/**
+	 * Name of the primary table for this instance.
+	 * Tracked separately because $QBFrom gets escaped
+	 * and prefixed.
+	 *
+	 * @var string
+	 */
+	protected $tableName;
+
+	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var array
@@ -286,6 +295,7 @@ class BaseBuilder
 
 		$this->db = $db;
 
+		$this->tableName = $tableName;
 		$this->from($tableName);
 
 		if (! empty($options))
@@ -326,6 +336,18 @@ class BaseBuilder
 		$this->testMode = $mode;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the name of the primary table.
+	 *
+	 * @return string
+	 */
+	public function getTable(): string
+	{
+		return $this->tableName;
 	}
 
 	//--------------------------------------------------------------------

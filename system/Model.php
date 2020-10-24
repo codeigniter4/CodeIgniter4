@@ -1394,12 +1394,19 @@ class Model
 	 * @param string $table
 	 *
 	 * @return BaseBuilder
-	 * @throws ModelException ;
+	 * @throws ModelException
 	 */
-	protected function builder(string $table = null)
+	public function builder(string $table = null)
 	{
+		// Check for an existing Builder
 		if ($this->builder instanceof BaseBuilder)
 		{
+			// Make sure the requested table matches the builder
+			if ($table && $this->builder->getTable() !== $table)
+			{
+				return $this->db->table($table);
+			}
+
 			return $this->builder;
 		}
 
@@ -1419,9 +1426,15 @@ class Model
 			$this->db = Database::connect($this->DBGroup);
 		}
 
-		$this->builder = $this->db->table($table);
+		$builder = $this->db->table($table);
 
-		return $this->builder;
+		// Only consider it "shared" if the table is correct
+		if ($table === $this->table)
+		{
+			$this->builder = $builder;
+		}
+
+		return $builder;
 	}
 
 	/**
@@ -1973,10 +1986,7 @@ class Model
 			$result = $builder->{$name}(...$params);
 		}
 
-		// Don't return the builder object unless specifically requested
-		//, since that will interrupt the usability flow
-		// and break intermingling of model and builder methods.
-		if ($name !== 'builder' && empty($result))
+		if (empty($result))
 		{
 			if (! method_exists($this->builder(), $name))
 			{
@@ -1988,7 +1998,7 @@ class Model
 			return $result;
 		}
 
-		if ($name !== 'builder' && ! $result instanceof BaseBuilder)
+		if (! $result instanceof BaseBuilder)
 		{
 			return $result;
 		}

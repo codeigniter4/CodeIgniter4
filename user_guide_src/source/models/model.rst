@@ -670,7 +670,10 @@ need it::
 
 	$builder = $userModel->builder();
 
-This builder is already set up with the model's $table.
+This builder is already set up with the model's $table. If you need access to another table
+you can pass it in as a parameter, but be aware that this will not return a shared instance::
+
+	$groupBuilder = $userModel->builder('groups');
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::

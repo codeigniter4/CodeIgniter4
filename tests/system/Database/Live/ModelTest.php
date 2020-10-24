@@ -2487,19 +2487,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model->undefinedMethodCall();
 	}
 
-	public function testUndefinedMethodInBuilder()
-	{
-		$model = new JobModel($this->db);
-
-		$model->find(1);
-
-		$this->expectException(BadMethodCallException::class);
-		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
-
-		$binds = $model->builder()
-			->getBindings();
-	}
-
 	/**
 	 * @dataProvider provideAggregateAndGroupBy
 	 */
@@ -2642,5 +2629,38 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->setAllowedFields($allowed2);
 		$this->assertSame($allowed2, $this->getPrivateProperty($model, 'allowedFields'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testBuilderUsesModelTable()
+	{
+		$model   = new UserModel($this->db);
+		$builder = $model->builder();
+
+		$this->assertEquals('user', $builder->getTable());
+	}
+
+	public function testBuilderRespectsTableParameter()
+	{
+		$model    = new UserModel($this->db);
+		$builder1 = $model->builder('jobs');
+		$builder2 = $model->builder();
+
+		$this->assertEquals('jobs', $builder1->getTable());
+		$this->assertEquals('user', $builder2->getTable());
+	}
+
+	public function testBuilderWithParameterIgnoresShared()
+	{
+		$model = new UserModel($this->db);
+
+		$builder1 = $model->builder();
+		$builder2 = $model->builder('jobs');
+		$builder3 = $model->builder();
+
+		$this->assertEquals('user', $builder1->getTable());
+		$this->assertEquals('jobs', $builder2->getTable());
+		$this->assertEquals('user', $builder3->getTable());
 	}
 }

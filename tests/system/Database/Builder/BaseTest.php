@@ -26,4 +26,23 @@ class BaseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertInstanceOf(MockConnection::class, $result);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetTableReturnsTable()
+	{
+		$builder = $this->db->table('jobs');
+
+		$result = $builder->getTable();
+		$this->assertEquals('jobs', $result);
+	}
+
+	public function testGetTableIgnoresFrom()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->from('foo');
+		$result = $builder->getTable();
+		$this->assertEquals('jobs', $result);
+	}
 }
