@@ -480,7 +480,7 @@ class Query implements QueryInterface
 			}
 		}
 		// Number of binds must match bindMarkers in the string.
-		else if (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
+		elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
 		{
 			return $sql;
 		}

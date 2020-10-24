@@ -267,14 +267,14 @@ class DOMParser
 				: "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
 		}
 		// By Class
-		else if (! empty($selector['class']))
+		elseif (! empty($selector['class']))
 		{
 			$path = empty($selector['tag'])
 				? "//*[@class=\"{$selector['class']}\"]"
 				: "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
 		}
 		// By tag only
-		else if (! empty($selector['tag']))
+		elseif (! empty($selector['tag']))
 		{
 			$path = "//body//{$selector['tag']}";
 		}

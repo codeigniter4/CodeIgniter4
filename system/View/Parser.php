@@ -385,7 +385,7 @@ class Parser extends View
 					$row = $row->toArray();
 				}
 				// Otherwise, cast as an array and it will grab public properties.
-				else if (is_object($row))
+				elseif (is_object($row))
 				{
 					$row = (array)$row;
 				}
@@ -409,11 +409,12 @@ class Parser extends View
 
 						continue;
 					}
+
 					if (is_object($val))
 					{
 						$val = 'Class: ' . get_class($val);
 					}
-					else if (is_resource($val))
+					elseif (is_resource($val))
 					{
 						$val = 'Resource';
 					}
@@ -858,7 +859,7 @@ class Parser extends View
 			$value = $value->toArray();
 		}
 		// Otherwise, cast as an array and it will grab public properties.
-		else if (is_object($value))
+		elseif (is_object($value))
 		{
 			$value = (array)$value;
 		}

@@ -1214,7 +1214,7 @@ class URI
 			{
 				array_pop($output);
 			}
-			else if ($segment !== '.' && $segment !== '')
+			elseif ($segment !== '.' && $segment !== '')
 			{
 				array_push($output, $segment);
 			}
