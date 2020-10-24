@@ -20,7 +20,9 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
 {
 	private const FUNCTION_WITH_ARG_POSITION = [
 		// position start from 0
-		'in_array' => 2,
+		'array_search'  => 2,
+		'base64_decode' => 1,
+		'in_array'      => 2,
 	];
 
 	public function getDefinition(): RectorDefinition

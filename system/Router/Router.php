@@ -426,7 +426,7 @@ class Router implements RouterInterface
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key));
+				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key), true);
 
 				// Replace it with a regex so it
 				// will actually match.
