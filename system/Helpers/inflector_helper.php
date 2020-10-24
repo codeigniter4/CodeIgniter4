@@ -31,7 +31,7 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
+ * @license    https://opensource.org/licenses/MIT - MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
@@ -350,7 +350,7 @@ if (! function_exists('is_pluralizable'))
 if (! function_exists('dasherize'))
 {
 	/**
-	 * Replaces underscores with dashes in the string.
+	 * Replaces whitespaces and underscores in the string with dashes.
 	 *
 	 * @param string $string Input string
 	 *
@@ -358,7 +358,7 @@ if (! function_exists('dasherize'))
 	 */
 	function dasherize(string $string): string
 	{
-		return str_replace('_', '-', $string);
+		return str_replace([' ', '_'], '-', $string);
 	}
 }
 
