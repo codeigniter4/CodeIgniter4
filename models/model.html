@@ -1011,7 +1011,11 @@ need it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This builder is already set up with the model’s $table.</p>
+<p>This builder is already set up with the model’s $table. If you need access to another table
+you can pass it in as a parameter, but be aware that this will not return a shared instance:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>You can also use Query Builder methods and the Model’s CRUD methods in the same chained call, allowing for
 very elegant use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
@@ -1259,7 +1263,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Oct 23, 2020.
+        Last updated on Oct 24, 2020.
       </span>
 
     </p>
