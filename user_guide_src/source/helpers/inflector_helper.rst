@@ -122,9 +122,9 @@ The following functions are available:
 	:returns:	Dasherized string
 	:rtype:	string
 
-	Replaces underscores with dashes in the string. Example::
+	Replaces whitespaces and underscores in the string with dashes. Example::
 
-		dasherize('hello_world'); // Returns 'hello-world'
+		dasherize('my dog_spot'); // Output 'my-dog-spot'
 
 .. php:function:: ordinal($integer)
 
