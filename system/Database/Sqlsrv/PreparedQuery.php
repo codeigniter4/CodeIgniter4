@@ -49,7 +49,6 @@ use Exception;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * Parameters array used to store the dynamic variables.
 	 *
@@ -64,7 +63,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	protected $result;
 
-	//--------------------------------------------------------------------
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -108,7 +106,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if (! isset($this->statement))
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -154,5 +152,4 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
 		return $params;
 	}
-
 }

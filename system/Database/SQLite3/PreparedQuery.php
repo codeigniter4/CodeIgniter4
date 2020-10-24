@@ -49,15 +49,12 @@ use CodeIgniter\Database\PreparedQueryInterface;
 
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * The SQLite3Result resource, or false.
 	 *
 	 * @var Result|boolean
 	 */
 	protected $result;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -74,17 +71,14 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		// @phpstan-ignore-next-line
 		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{
-			$this->errorCode   = $this->db->connID->lastErrorCode(); // @phpstan-ignore-line
-			$this->errorString = $this->db->connID->lastErrorMsg(); // @phpstan-ignore-line
+			$this->errorCode   = $this->db->connID->lastErrorCode();
+			$this->errorString = $this->db->connID->lastErrorMsg();
 		}
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Takes a new set of data and runs it against the currently
@@ -98,7 +92,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if (! isset($this->statement))
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -128,8 +122,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this->result !== false;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the result object for the prepared query.
 	 *
@@ -139,7 +131,4 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->result;
 	}
-
-	//--------------------------------------------------------------------
-
 }
