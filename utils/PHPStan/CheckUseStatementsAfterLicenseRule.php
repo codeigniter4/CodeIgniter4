@@ -18,6 +18,11 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 	 */
 	private const ERROR_MESSAGE = 'Use statement must be located after license docblock';
 
+	/**
+	 * @var string
+	 */
+	private const COPYRIGHT_REGEX = '/\* \(c\) CodeIgniter Foundation <admin@codeigniter\.com>/m';
+
 	public function getNodeType(): string
 	{
 		return Stmt::class;
@@ -29,6 +34,7 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 	public function processNode(Node $node, Scope $scope): array
 	{
 		$comments = $node->getAttribute('comments');
+
 		if ($comments === [])
 		{
 			return [];
@@ -41,13 +47,13 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 				continue;
 			}
 
-			$text = $comment->getText();
-			if (! preg_match('/\* Copyright \(c\) 2019-\d{4,} CodeIgniter Foundation\n/', $text))
+			if (! preg_match(self::COPYRIGHT_REGEX, $comment->getText()))
 			{
 				continue;
 			}
 
 			$previous = $node->getAttribute('previous');
+
 			while ($previous)
 			{
 				if ($previous instanceof Use_)
