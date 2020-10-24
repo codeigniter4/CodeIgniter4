@@ -12,6 +12,7 @@ Enhancements:
 - New URL helper function ``url_is()`` which allows you to check the current URL to see if matches the given string.
 - Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.
 - Support for setting SameSate attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is ``Lax``.
+- Inflector helper function ``dasherize()`` now replaces whitespaces and underscores with dashes.
 
 Bugs Fixed:
 
