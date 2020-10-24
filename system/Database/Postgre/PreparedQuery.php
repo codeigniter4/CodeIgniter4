@@ -49,7 +49,6 @@ use Exception;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * Stores the name this query can be
 	 * used under by postgres. Only used internally.
@@ -65,8 +64,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * @var Result|boolean
 	 */
 	protected $result;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -101,8 +98,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
@@ -113,7 +108,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _execute(array $data): bool
 	{
-		if (is_null($this->statement))
+		if (! isset($this->statement))
 		{
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -122,8 +117,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
 		return (bool) $this->result;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the result object for the prepared query.
@@ -134,8 +127,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		return $this->result;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Replaces the ? placeholders with $1, $2, etc parameters for use
@@ -155,6 +146,4 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			return "\${$count}";
 		}, $sql);
 	}
-
-	//--------------------------------------------------------------------
 }
