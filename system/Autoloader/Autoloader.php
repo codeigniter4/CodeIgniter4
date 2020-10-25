@@ -163,7 +163,7 @@ class Autoloader
 				return false;
 			}
 
-			include $config[$class];
+			include_once $config[$class];
 		}, true, // Throw exception
 			true // Prepend
 		);
