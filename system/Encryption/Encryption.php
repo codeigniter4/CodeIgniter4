@@ -114,7 +114,7 @@ class Encryption
 	 */
 	public function __construct(EncryptionConfig $config = null)
 	{
-		$config = $config ?? new EncryptionConfig();
+		$config = $config ?? config('Encryption');
 		// Handle hex2bin prefix
 		if (strpos($config->key, 'hex2bin:') === 0)
 		{
