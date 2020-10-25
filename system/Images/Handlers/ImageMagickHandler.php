@@ -42,6 +42,7 @@ namespace CodeIgniter\Images\Handlers;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use Exception;
+use Imagick;
 
 /**
  * Class ImageMagickHandler
@@ -390,7 +391,7 @@ class ImageMagickHandler extends BaseHandler
 		switch ($this->image()->imageType)
 		{
 			case IMAGETYPE_WEBP:
-				if (! in_array('WEBP', \Imagick::queryFormats(), true))
+				if (! in_array('WEBP', Imagick::queryFormats(), true))
 				{
 					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
 				}

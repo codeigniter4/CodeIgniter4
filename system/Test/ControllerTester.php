@@ -161,7 +161,9 @@ trait ControllerTester
 	 * @param string $method
 	 * @param array  $params
 	 *
-	 * @return ControllerResponse|\InvalidArgumentException
+	 * @throws InvalidArgumentException
+	 *
+	 * @return ControllerResponse
 	 */
 	public function execute(string $method, ...$params)
 	{
@@ -187,8 +189,7 @@ trait ControllerTester
 		}
 		catch (Throwable $e)
 		{
-			$result->response()
-					->setStatusCode($e->getCode());
+			$result->response()->setStatusCode($e->getCode());
 		}
 		finally
 		{

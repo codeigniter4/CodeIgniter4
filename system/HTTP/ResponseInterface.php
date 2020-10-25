@@ -185,7 +185,7 @@ interface ResponseInterface
 	/**
 	 * Sets the date header
 	 *
-	 * @param \DateTime $date
+	 * @param DateTime $date
 	 *
 	 * @return ResponseInterface
 	 */
@@ -257,7 +257,7 @@ interface ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param string|\DateTime $date
+	 * @param string|DateTime $date
 	 */
 	public function setLastModified($date);
 

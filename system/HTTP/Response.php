@@ -376,7 +376,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets the date header
 	 *
-	 * @param \DateTime $date
+	 * @param DateTime $date
 	 *
 	 * @return Response
 	 */
@@ -642,7 +642,7 @@ class Response extends Message implements ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param \DateTime|string $date
+	 * @param DateTime|string $date
 	 *
 	 * @return Response
 	 */
