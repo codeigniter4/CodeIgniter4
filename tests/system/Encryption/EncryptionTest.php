@@ -139,4 +139,24 @@ class EncryptionTest extends CIUnitTestCase
 	{
 		$this->assertNull($this->encryption->bogus);
 	}
+
+	public function testHex2binConfig()
+	{
+		$config         = new EncryptionConfig();
+		$config->driver = 'OpenSSL';
+		$config->key    = 'hex2bin:f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6';
+
+		$encrypter = Services::encrypter($config, true);
+		$this->assertEquals('anything', $encrypter->key);
+	}
+
+	public function testBase64Config()
+	{
+		$config         = new EncryptionConfig();
+		$config->driver = 'OpenSSL';
+		$config->key    = 'base64:L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=';
+
+		$encrypter = Services::encrypter($config, true);
+		$this->assertEquals('anything', $encrypter->key);
+	}
 }
