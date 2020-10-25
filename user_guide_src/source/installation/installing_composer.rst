@@ -133,7 +133,7 @@ phpunit and its dependencies by adding the "--no-dev" argument to the "composer 
 Set Up
 -------------------------------------------------------
 
-Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework``
+Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
 to your project root
 
 Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
