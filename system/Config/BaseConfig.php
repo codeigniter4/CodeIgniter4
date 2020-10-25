@@ -39,7 +39,6 @@
 
 namespace CodeIgniter\Config;
 
-use Config\Encryption;
 use Config\Modules;
 use Config\Services;
 use ReflectionClass;
@@ -97,20 +96,6 @@ class BaseConfig
 		foreach ($properties as $property)
 		{
 			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
-
-			if ($this instanceof Encryption && $property === 'key')
-			{
-				// Handle hex2bin prefix
-				if (strpos($this->$property, 'hex2bin:') === 0)
-				{
-					$this->$property = hex2bin(substr($this->$property, 8));
-				}
-				// Handle base64 prefix
-				elseif (strpos($this->$property, 'base64:') === 0)
-				{
-					$this->$property = base64_decode(substr($this->$property, 7), true);
-				}
-			}
 		}
 
 		$this->registerProperties();

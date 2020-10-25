@@ -115,6 +115,16 @@ class Encryption
 	public function __construct(EncryptionConfig $config = null)
 	{
 		$config = $config ?? new EncryptionConfig();
+		// Handle hex2bin prefix
+		if (strpos($config->key, 'hex2bin:') === 0)
+		{
+			$config->key = hex2bin(substr($config->key, 8));
+		}
+		// Handle base64 prefix
+		elseif (strpos($config->key, 'base64:') === 0)
+		{
+			$config->key = base64_decode(substr($config->key, 7), true);
+		}
 
 		$this->key    = $config->key;
 		$this->driver = $config->driver;
