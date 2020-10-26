@@ -122,7 +122,7 @@ class ResourcePresenter extends Controller
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
 	 * @param  mixed $id
-	 * @return string
+	 * @return mixed
 	 */
 	public function remove($id = null)
 	{
