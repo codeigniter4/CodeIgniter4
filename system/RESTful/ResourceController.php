@@ -84,7 +84,7 @@ class ResourceController extends Controller
 	/**
 	 * Return an array of resource objects, themselves in array format
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function index()
 	{
@@ -94,7 +94,7 @@ class ResourceController extends Controller
 	/**
 	 * Return the properties of a resource object
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function show($id = null)
 	{
@@ -104,7 +104,7 @@ class ResourceController extends Controller
 	/**
 	 * Return a new resource object, with default properties
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function new()
 	{
@@ -114,7 +114,7 @@ class ResourceController extends Controller
 	/**
 	 * Create a new resource object, from "posted" parameters
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function create()
 	{
@@ -124,7 +124,7 @@ class ResourceController extends Controller
 	/**
 	 * Return the editable properties of a resource object
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function edit($id = null)
 	{
@@ -134,7 +134,7 @@ class ResourceController extends Controller
 	/**
 	 * Add or update a model resource, from "posted" properties
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function update($id = null)
 	{
@@ -144,7 +144,7 @@ class ResourceController extends Controller
 	/**
 	 * Delete the designated resource object from the model
 	 *
-	 * @return array	an array
+	 * @return mixed
 	 */
 	public function delete($id = null)
 	{

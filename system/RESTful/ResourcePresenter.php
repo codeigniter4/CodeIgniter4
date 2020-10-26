@@ -79,7 +79,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view of resource objects
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	public function index()
 	{
@@ -90,7 +90,7 @@ class ResourcePresenter extends Controller
 	 * Present a view to present a specific resource object
 	 *
 	 * @param  mixed $id
-	 * @return string
+	 * @return mixed
 	 */
 	public function show($id = null)
 	{
@@ -100,7 +100,7 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a new single resource object
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	public function new()
 	{
@@ -111,7 +111,7 @@ class ResourcePresenter extends Controller
 	 * Process the creation/insertion of a new resource object.
 	 * This should be a POST.
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	public function create()
 	{
@@ -133,7 +133,7 @@ class ResourcePresenter extends Controller
 	 * Process the deletion of a specific resource object
 	 *
 	 * @param  mixed $id
-	 * @return string
+	 * @return mixed
 	 */
 	public function delete($id = null)
 	{
@@ -144,7 +144,7 @@ class ResourcePresenter extends Controller
 	 * Present a view to edit the properties of a specific resource object
 	 *
 	 * @param  mixed $id
-	 * @return string
+	 * @return mixed
 	 */
 	public function edit($id = null)
 	{
@@ -156,7 +156,7 @@ class ResourcePresenter extends Controller
 	 * This should be a POST.
 	 *
 	 * @param  mixed $id
-	 * @return string
+	 * @return mixed
 	 */
 	public function update($id = null)
 	{
