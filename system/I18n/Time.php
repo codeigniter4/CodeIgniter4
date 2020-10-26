@@ -334,7 +334,7 @@ class Time extends DateTime
 	/**
 	 * Takes an instance of DateTime and returns an instance of Time with it's same values.
 	 *
-	 * @param \DateTime   $dateTime
+	 * @param DateTime    $dateTime
 	 * @param string|null $locale
 	 *
 	 * @return Time
@@ -353,7 +353,7 @@ class Time extends DateTime
 	/**
 	 * Converts the current instance to a mutable DateTime object.
 	 *
-	 * @return \DateTime
+	 * @return DateTime
 	 * @throws Exception
 	 */
 	public function toDateTime()
@@ -1256,7 +1256,7 @@ class Time extends DateTime
 	 * @param mixed       $time
 	 * @param string|null $timezone
 	 *
-	 * @return \DateTime|static
+	 * @return DateTime|static
 	 * @throws Exception
 	 */
 	public function getUTCObject($time, string $timezone = null)
@@ -1290,7 +1290,7 @@ class Time extends DateTime
 	 * Primarily used internally to provide the difference and comparison functions,
 	 * but available for public consumption if they need it.
 	 *
-	 * @return \IntlCalendar
+	 * @return IntlCalendar
 	 * @throws Exception
 	 */
 	public function getCalendar()

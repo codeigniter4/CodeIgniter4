@@ -43,6 +43,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
+use MySQLi;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
@@ -81,7 +82,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
 	 *
-	 * @var \MySQLi
+	 * @var MySQLi
 	 */
 	public $mysqli;
 	//--------------------------------------------------------------------

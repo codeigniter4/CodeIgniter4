@@ -127,7 +127,7 @@ class CodeIgniter
 	/**
 	 * Controller to use.
 	 *
-	 * @var string|\Closure
+	 * @var string|Closure
 	 */
 	protected $controller;
 

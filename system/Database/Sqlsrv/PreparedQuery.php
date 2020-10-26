@@ -40,8 +40,8 @@
 namespace CodeIgniter\Database\Sqlsrv;
 
 use BadMethodCallException;
-use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\PreparedQueryInterface;
 use Exception;
 
 /**
