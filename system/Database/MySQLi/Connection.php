@@ -43,10 +43,10 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
+use MySQLi;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
-use MySQLi;
 
 /**
  * Connection for MySQLi
