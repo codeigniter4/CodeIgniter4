@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use CodeIgniter\Services;
 use Config\Autoload;
 use Config\Modules;
@@ -17,10 +26,10 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
 // Often these constants are pre-defined, but query the current directory structure as a fallback
 defined('HOMEPATH') || define('HOMEPATH', realpath(rtrim(getcwd(), '\\/ ')) . DIRECTORY_SEPARATOR);
 $source = is_dir(HOMEPATH . 'app')
-	   ? HOMEPATH
-	   : (is_dir('vendor/codeigniter4/framework/')
-			   ? 'vendor/codeigniter4/framework/'
-			   : 'vendor/codeigniter4/codeigniter4/');
+	? HOMEPATH
+	: (is_dir('vendor/codeigniter4/framework/')
+		? 'vendor/codeigniter4/framework/'
+		: 'vendor/codeigniter4/codeigniter4/');
 defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') . DIRECTORY_SEPARATOR);
 defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
 unset($source);

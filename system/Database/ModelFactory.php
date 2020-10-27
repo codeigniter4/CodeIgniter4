@@ -1,7 +1,17 @@
-<?php namespace CodeIgniter\Database;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\Factories;
-use Config\Services;
 
 /**
  * Returns new or shared Model instances

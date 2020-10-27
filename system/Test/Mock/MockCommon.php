@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Common Functions for testing
+ * This file is part of the CodeIgniter 4 framework.
  *
- * Several application-wide utility methods.
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * @package  CodeIgniter
- * @category Common Functions
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 if (! function_exists('is_cli'))
@@ -33,5 +33,3 @@ if (! function_exists('is_cli'))
 		return $returnValue;
 	}
 }
-
-//--------------------------------------------------------------------
