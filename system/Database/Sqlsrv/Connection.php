@@ -374,7 +374,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public function _fieldData(string $table): array
 	{
 		$sql = 'SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, COLUMN_DEFAULT
-			FROM INFORMATION_SCHEMA.Columns
+			FROM INFORMATION_SCHEMA.COLUMNS
 			WHERE TABLE_NAME= ' . $this->escape(($table));
 
 		if (($query = $this->query($sql)) === false)
