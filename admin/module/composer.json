@@ -8,8 +8,8 @@
 	},
 	"require-dev": {
 		"codeigniter4/codeigniter4": "dev-develop",
-		"fzaninotto/faker": "^1.9@dev",
-		"mikey179/vfsstream": "1.6.*",
+		"fakerphp/faker": "^1.9",
+		"mikey179/vfsstream": "^1.6",
 		"phpunit/phpunit": "^8.5"
 	},
 	"autoload-dev": {
