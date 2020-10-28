@@ -22,8 +22,6 @@ use Closure;
  *
  * The RouteCollection provides the Router with the routes so that it can determine
  * which controller should be ran.
- *
- * @package CodeIgniter\Router
  */
 interface RouteCollectionInterface
 {

@@ -15,8 +15,6 @@ use Config\Database;
 
 /**
  * Validation Rules.
- *
- * @package CodeIgniter\Validation
  */
 class Rules
 {

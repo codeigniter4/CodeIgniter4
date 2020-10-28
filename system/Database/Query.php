@@ -13,8 +13,6 @@ namespace CodeIgniter\Database;
 
 /**
  * Query builder
- *
- * @package CodeIgniter\Database
  */
 class Query implements QueryInterface
 {

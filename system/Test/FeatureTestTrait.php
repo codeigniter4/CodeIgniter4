@@ -27,8 +27,6 @@ use ReflectionException;
  *
  * Provides additional utilities for doing full HTTP testing
  * against your application in trait format.
- *
- * @package CodeIgniter\Test
  */
 trait FeatureTestTrait
 {

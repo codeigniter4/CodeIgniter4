@@ -13,8 +13,6 @@ use Config\Services;
 
 /**
  * CodeIgniter Security Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('sanitize_filename'))

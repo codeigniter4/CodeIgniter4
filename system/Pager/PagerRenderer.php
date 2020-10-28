@@ -17,8 +17,6 @@ namespace CodeIgniter\Pager;
  * This class is passed to the view that describes the pagination,
  * and is used to get the link information and provide utility
  * methods needed to work with pagination.
- *
- * @package CodeIgniter\Pager
  */
 class PagerRenderer
 {

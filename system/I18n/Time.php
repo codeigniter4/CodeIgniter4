@@ -28,8 +28,6 @@ use Locale;
  *
  * Requires the intl PHP extension.
  *
- * @package CodeIgniter\I18n
- *
  * @property string $date
  */
 class Time extends DateTime

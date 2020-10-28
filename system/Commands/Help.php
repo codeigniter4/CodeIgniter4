@@ -18,8 +18,6 @@ use CodeIgniter\CLI\BaseCommand;
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
  */
 class Help extends BaseCommand
 {

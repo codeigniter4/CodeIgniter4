@@ -25,14 +25,6 @@ use Config\Services;
 use Config\View;
 use Laminas\Escaper\Escaper;
 
-/**
- * Common Functions
- *
- * Several application-wide utility methods.
- *
- * @package  CodeIgniter
- * @category Common Functions
- */
 //--------------------------------------------------------------------
 // Services Convenience Functions
 //--------------------------------------------------------------------

@@ -23,8 +23,6 @@ use Config\Pager as PagerConfig;
  * pagination links and reading the current url's query variable, "page"
  * to determine the current page. This class can support multiple
  * paginations on a single page.
- *
- * @package CodeIgniter\Pager
  */
 class Pager implements PagerInterface
 {

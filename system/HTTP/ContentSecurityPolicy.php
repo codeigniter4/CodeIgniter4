@@ -19,11 +19,10 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  * Provides tools for working with the Content-Security-Policy header
  * to help defeat XSS attacks.
  *
- * @see     http://www.w3.org/TR/CSP/
- * @see     http://www.html5rocks.com/en/tutorials/security/content-security-policy/
- * @see     http://content-security-policy.com/
- * @see     https://www.owasp.org/index.php/Content_Security_Policy
- * @package CodeIgniter\HTTP
+ * @see http://www.w3.org/TR/CSP/
+ * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+ * @see http://content-security-policy.com/
+ * @see https://www.owasp.org/index.php/Content_Security_Policy
  */
 class ContentSecurityPolicy
 {

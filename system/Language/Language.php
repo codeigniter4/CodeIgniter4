@@ -18,8 +18,6 @@ use MessageFormatter;
  * Handle system messages and localization.
  *
  * Locale-based, built on top of PHP internationalization.
- *
- * @package CodeIgniter\Language
  */
 class Language
 {

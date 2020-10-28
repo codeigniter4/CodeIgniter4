@@ -11,8 +11,6 @@
 
 /**
  * CodeIgniter Date Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('now'))

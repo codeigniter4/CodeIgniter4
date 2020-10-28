@@ -17,8 +17,6 @@ use InvalidArgumentException;
  * Database Connection Factory
  *
  * Creates and returns an instance of the appropriate DatabaseConnection
- *
- * @package CodeIgniter\Database
  */
 class Database
 {

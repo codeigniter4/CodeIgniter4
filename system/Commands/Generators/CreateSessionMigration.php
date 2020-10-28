@@ -16,8 +16,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a migration file for database sessions.
- *
- * @package CodeIgniter\Commands
  */
 class CreateSessionMigration extends GeneratorCommand
 {

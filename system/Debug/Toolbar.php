@@ -29,8 +29,6 @@ use Config\Toolbar as ToolbarConfig;
  * Displays a toolbar with bits of stats to aid a developer in debugging.
  *
  * Inspiration: http://prophiler.fabfuel.de
- *
- * @package CodeIgniter\Debug
  */
 class Toolbar
 {

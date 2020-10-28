@@ -13,8 +13,6 @@
 
 /**
  * CodeIgniter Inflector Helpers
- *
- * @package CodeIgniter
  */
 if (! function_exists('singular'))
 {

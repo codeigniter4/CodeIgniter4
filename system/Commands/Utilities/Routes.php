@@ -19,8 +19,6 @@ use Config\Services;
  * Lists all of the user-defined routes. This will include any Routes files
  * that can be discovered, but will NOT include any routes that are not defined
  * in a routes file, but are instead discovered through auto-routing.
- *
- * @package CodeIgniter\Commands
  */
 class Routes extends BaseCommand
 {

@@ -26,8 +26,6 @@ use Imagick;
  * hmm - the width & height accessors at the end use the imagick extension.
  *
  * FIXME - This needs conversion & unit testing, to use the imagick extension
- *
- * @package CodeIgniter\Images\Handlers
  */
 class ImageMagickHandler extends BaseHandler
 {

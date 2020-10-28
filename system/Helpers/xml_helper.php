@@ -11,8 +11,6 @@
 
 /**
  * CodeIgniter XML Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('xml_convert'))

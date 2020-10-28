@@ -41,8 +41,6 @@ use ReflectionMethod;
  *         class Class {
  *             function method(array $params=null)
  *         }
- *
- * @package CodeIgniter\View
  */
 class Cell
 {

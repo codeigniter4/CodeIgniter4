@@ -15,8 +15,6 @@ use RuntimeException;
 
 /**
  * Class DownloadException
- *
- * @package CodeIgniter\Exceptions
  */
 class DownloadException extends RuntimeException implements ExceptionInterface
 {

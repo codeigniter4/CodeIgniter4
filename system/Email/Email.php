@@ -19,12 +19,6 @@ use ErrorException;
  * CodeIgniter Email Class
  *
  * Permits email to be sent using Mail, Sendmail, or SMTP.
- *
- * @package    CodeIgniter
- * @subpackage Libraries
- * @category   Libraries
- * @author     EllisLab Dev Team
- * @link       https://codeigniter.com/user_guide/libraries/email.html
  */
 class Email
 {

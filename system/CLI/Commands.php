@@ -20,8 +20,6 @@ use ReflectionException;
  * Class Commands
  *
  * Core functionality for running, listing, etc commands.
- *
- * @package CodeIgniter\CLI
  */
 class Commands
 {

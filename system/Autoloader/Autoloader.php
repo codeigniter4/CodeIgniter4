@@ -50,8 +50,6 @@ use InvalidArgumentException;
  *
  *      // register the autoloader
  *      $loader->register();
- *
- * @package CodeIgniter\Autoloader
  */
 class Autoloader
 {

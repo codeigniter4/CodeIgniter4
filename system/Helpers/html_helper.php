@@ -17,8 +17,6 @@ use Config\Mimes;
 
 /**
  * CodeIgniter HTML Helpers
- *
- * @package CodeIgniter
  */
 if (! function_exists('ul'))
 {

@@ -13,8 +13,6 @@ use Config\ForeignCharacters;
 
 /**
  * CodeIgniter Text Helpers
- *
- * @package CodeIgniter
  */
 //--------------------------------------------------------------------
 
