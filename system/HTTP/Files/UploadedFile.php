@@ -24,8 +24,6 @@ use RuntimeException;
  * provide files.
  *
  * Typically, implementors will extend the SplFileInfo class.
- *
- * @package CodeIgniter\HTTP
  */
 class UploadedFile extends File implements UploadedFileInterface
 {

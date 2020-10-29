@@ -22,8 +22,6 @@ use RuntimeException;
 
 /**
  * Class View
- *
- * @package CodeIgniter\View
  */
 class View implements RendererInterface
 {
@@ -431,8 +429,6 @@ class View implements RendererInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
-	 *
 	 * @throws RuntimeException
 	 */
 	public function endSection()

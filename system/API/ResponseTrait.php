@@ -25,8 +25,6 @@ use Config\Services;
  *
  * @property IncomingRequest $request
  * @property Response        $response
- *
- * @package CodeIgniter\API
  */
 trait ResponseTrait
 {

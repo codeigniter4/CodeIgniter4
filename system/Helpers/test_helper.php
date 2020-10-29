@@ -13,8 +13,6 @@ use CodeIgniter\Test\Fabricator;
 
 /**
  * CodeIgniter Test Helpers
- *
- * @package CodeIgniter
  */
 //--------------------------------------------------------------------
 

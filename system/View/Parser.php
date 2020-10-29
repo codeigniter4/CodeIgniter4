@@ -20,8 +20,6 @@ use Psr\Log\LoggerInterface;
  * Class Parser
  *
  *  ClassFormerlyKnownAsTemplateParser
- *
- * @package CodeIgniter\View
  */
 class Parser extends View
 {

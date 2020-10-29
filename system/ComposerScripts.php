@@ -23,7 +23,6 @@ use ReflectionException;
  * download
  *
  * @codeCoverageIgnore
- * @package            CodeIgniter
  */
 class ComposerScripts
 {

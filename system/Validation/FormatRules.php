@@ -15,8 +15,6 @@ use DateTime;
 
 /**
  * Format validation Rules.
- *
- * @package CodeIgniter\Validation
  */
 class FormatRules
 {

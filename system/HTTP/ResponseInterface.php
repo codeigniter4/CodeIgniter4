@@ -25,8 +25,7 @@ use InvalidArgumentException;
  * - Headers
  * - Message body
  *
- * @package CodeIgniter\HTTP
- * @mixin   \CodeIgniter\HTTP\RedirectResponse
+ * @mixin \CodeIgniter\HTTP\RedirectResponse
  */
 interface ResponseInterface
 {

@@ -13,8 +13,6 @@ use Config\App;
 
 /**
  * CodeIgniter Form Helpers
- *
- * @package CodeIgniter
  */
 
 use Config\Services;

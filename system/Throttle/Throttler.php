@@ -24,8 +24,6 @@ use CodeIgniter\Cache\CacheInterface;
  * for the purposes of this implementation.
  *
  * @see https://en.wikipedia.org/wiki/Token_bucket
- *
- * @package CodeIgniter\Throttle
  */
 class Throttler implements ThrottlerInterface
 {

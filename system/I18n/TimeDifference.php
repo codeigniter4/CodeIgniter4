@@ -16,8 +16,6 @@ use IntlCalendar;
 
 /**
  * Class TimeDifference
- *
- * @package CodeIgniter\I18n
  */
 class TimeDifference
 {

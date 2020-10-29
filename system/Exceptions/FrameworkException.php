@@ -18,8 +18,6 @@ use RuntimeException;
  *
  * A collection of exceptions thrown by the framework
  * that can only be determined at run time.
- *
- * @package CodeIgniter\Exceptions
  */
 class FrameworkException extends RuntimeException implements ExceptionInterface
 {

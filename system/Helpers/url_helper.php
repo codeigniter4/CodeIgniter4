@@ -16,8 +16,6 @@ use Config\Services;
 
 /**
  * CodeIgniter URL Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('site_url'))

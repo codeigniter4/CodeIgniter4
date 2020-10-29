@@ -19,20 +19,16 @@ use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to help provide a UI for a resource.
- *
- * @package CodeIgniter\RESTful
  */
 class ResourcePresenter extends Controller
 {
 
 	/**
-	 *
 	 * @var string|null Name of the model class managing this resource's data
 	 */
 	protected $modelName;
 
 	/**
-	 *
 	 * @var Model|null the model holding this resource's data
 	 */
 	protected $model;

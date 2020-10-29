@@ -29,8 +29,6 @@ use InvalidArgumentException;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @package CodeIgniter\HTTP
  */
 class Response extends Message implements ResponseInterface
 {

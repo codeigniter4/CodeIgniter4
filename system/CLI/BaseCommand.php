@@ -17,8 +17,6 @@ use Throwable;
 
 /**
  * Class BaseCommand
- *
- * @package CodeIgniter\CLI
  */
 abstract class BaseCommand
 {

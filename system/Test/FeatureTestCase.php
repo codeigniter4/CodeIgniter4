@@ -18,8 +18,6 @@ use CodeIgniter\Router\RouteCollection;
  *
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
- *
- * @package CodeIgniter\Test
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {

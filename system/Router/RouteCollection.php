@@ -22,8 +22,6 @@ use Config\Services;
  * Class RouteCollection
  *
  * @todo Implement nested resource routing (See CakePHP)
- *
- * @package CodeIgniter\Router
  */
 class RouteCollection implements RouteCollectionInterface
 {

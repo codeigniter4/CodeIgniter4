@@ -20,8 +20,6 @@ use Throwable;
 /**
  * GeneratorCommand can be used as base class
  * for creating commands that generates a file.
- *
- * @package CodeIgniter\CLI
  */
 abstract class GeneratorCommand extends BaseCommand
 {

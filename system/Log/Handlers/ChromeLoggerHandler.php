@@ -21,8 +21,6 @@ use Config\Services;
  * Requires the ChromeLogger extension installed in your browser.
  *
  * @see https://craig.is/writing/chrome-logger
- *
- * @package CodeIgniter\Log\Handlers
  */
 class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 {

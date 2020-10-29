@@ -23,8 +23,7 @@ use InvalidArgumentException;
  * Database-specific Builders might need to override
  * certain methods to make them work.
  *
- * @package CodeIgniter\Database
- * @mixin   \CodeIgniter\Model
+ * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {

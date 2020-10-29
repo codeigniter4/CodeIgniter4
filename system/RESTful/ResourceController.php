@@ -20,8 +20,6 @@ use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
- *
- * @package CodeIgniter\RESTful
  */
 class ResourceController extends Controller
 {

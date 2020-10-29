@@ -11,8 +11,6 @@
 
 /**
  * CodeIgniter Array Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('dot_array_search'))
