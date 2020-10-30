@@ -12,6 +12,7 @@ on:
       - 'tests/**'
       - composer.json
       - spark
+      - phpunit.xml.dist
       - '**.php'
       - .github/workflows/test-phpunit.yml
   pull_request:
@@ -25,6 +26,7 @@ on:
       - 'tests/**'
       - composer.json
       - spark
+      - phpunit.xml.dist
       - '**.php'
       - .github/workflows/test-phpunit.yml
 
@@ -38,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.3', '7.4']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'Sqlsrv']
 
     services:
