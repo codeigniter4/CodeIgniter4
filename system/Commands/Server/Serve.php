@@ -24,6 +24,13 @@ use CodeIgniter\CLI\CLI;
 class Serve extends BaseCommand
 {
 	/**
+	 * Minimum PHP version
+	 *
+	 * @var string
+	 */
+	protected $minPHPVersion = '7.3';
+
+	/**
 	 * Group
 	 *
 	 * @var string
