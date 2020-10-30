@@ -254,7 +254,7 @@ class Security
 		$this->generateHash();
 		$this->sendCookie($request);
 
-		log_message('info', 'CSRF token verifie.');
+		log_message('info', 'CSRF token verified.');
 
 		return $this;
 	}
