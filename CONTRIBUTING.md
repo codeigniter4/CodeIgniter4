@@ -47,7 +47,7 @@ If you change anything that requires a change to documentation, then you will ne
 
 ### Compatibility
 
-CodeIgniter4 requires [PHP 7.2](https://php.net/releases/7_2_0.php).
+CodeIgniter4 requires [PHP 7.3](https://php.net/releases/7_3_0.php).
 
 ### Branching
 
