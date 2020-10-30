@@ -81,7 +81,7 @@ Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/
 
 ## Server Requirements
 
-PHP version 7.2 or higher is required, with the following extensions installed:
+PHP version 7.3 or higher is required, with the following extensions installed:
 
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
