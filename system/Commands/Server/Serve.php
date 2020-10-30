@@ -28,7 +28,7 @@ class Serve extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $minPHPVersion = '7.2';
+	protected $minPHPVersion = '7.3';
 
 	/**
 	 * Group
