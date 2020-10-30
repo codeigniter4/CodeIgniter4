@@ -397,7 +397,7 @@ class Table
 	 */
 	protected function dropIndexes()
 	{
-		if (! is_array($this->keys) || ! count($this->keys))
+		if (! is_array($this->keys) || $this->keys === [])
 		{
 			return;
 		}
