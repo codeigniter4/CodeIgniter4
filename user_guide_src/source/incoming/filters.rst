@@ -7,7 +7,7 @@ Controller Filters
     :depth: 2
 
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </extending/events>`,
-you can very simply choose which URI's in your application have the filters applied to them. Incoming filters may
+you can very simply choose which URIs in your application have the filters applied to them. Incoming filters may
 modify the Request, while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:
 
@@ -27,7 +27,9 @@ They contain two methods: ``before()`` and ``after()`` which hold the code that
 will run before and after the controller respectively. Your class must contain both methods
 but may leave the methods empty if they are not needed. A skeleton filter class looks like::
 
-    <?php namespace App\Filters;
+    <?php
+
+    namespace App\Filters;
 
     use CodeIgniter\HTTP\RequestInterface;
     use CodeIgniter\HTTP\ResponseInterface;
@@ -39,8 +41,6 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
         {
             // Do something here
         }
-
-        //--------------------------------------------------------------------
 
         public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
         {
@@ -55,7 +55,12 @@ From any filter, you can return the ``$request`` object and it will replace the 
 to make changes that will still be present when the controller executes.
 
 Since before filters are executed prior to your controller being executed, you may at times want to stop the
-actions in the controller from happening. You can do this by passing back anything that is not the request object.
+actions in the controller from happening. Also, when you have a series of filters you may also want to
+stop the execution of the later filters after a certain filter. You can easily do this by returning
+**any non-empty** result. If the before filter returns an empty result, the controller actions or the later
+filters will still be executed. An exception to the non-empty result rule is the ``Request`` instance.
+Returning it in the before filter will not stop the execution but only replace the current ``$request`` object.
+
 This is typically used to perform redirects, like in this example::
 
     public function before(RequestInterface $request, $arguments = null)
@@ -68,8 +73,8 @@ This is typically used to perform redirects, like in this example::
         }
     }
 
-If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API's. See :doc:`Throttler </libraries/throttler>` for an
+If a ``Response`` instance is returned, the Response will be sent back to the client and script execution will stop.
+This can be useful for implementing rate limiting for APIs. See :doc:`Throttler </libraries/throttler>` for an
 example.
 
 After Filters
@@ -94,7 +99,7 @@ The ``$aliases`` array is used to associate a simple name with one or more fully
 filters to run::
 
     public $aliases = [
-        'csrf' => \CodeIgniter\Filters\CSRF::class
+        'csrf' => \CodeIgniter\Filters\CSRF::class,
     ];
 
 Aliases are mandatory and if you try to use a full class name later, the system will throw an error. Defining them
@@ -106,7 +111,7 @@ You can combine multiple filters into one alias, making complex sets of filters 
     public $aliases = [
         'apiPrep' => [
             \App\Filters\Negotiate::class,
-            \App\Filters\ApiAuth::class
+            \App\Filters\ApiAuth::class,
         ]
     ];
 
@@ -121,9 +126,9 @@ run on every request. Filters can be specified by adding their alias to either t
 
     public $globals = [
         'before' => [
-            'csrf'
+            'csrf',
         ],
-        'after'  => []
+        'after'  => [],
     ];
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
@@ -133,9 +138,9 @@ an array with the 'except' key and a uri to match as the value alongside the ali
 
     public $globals = [
         'before' => [
-            'csrf' => ['except' => 'api/*']
+            'csrf' => ['except' => 'api/*'],
         ],
-        'after'  => []
+        'after'  => [],
     ];
 
 Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
@@ -145,9 +150,9 @@ URI's you can use an array of URI patterns::
 
     public $globals = [
         'before' => [
-            'csrf' => ['except' => ['foo/*', 'bar/*']]
+            'csrf' => ['except' => ['foo/*', 'bar/*']],
         ],
-        'after'  => []
+        'after'  => [],
     ];
 
 $methods
@@ -159,7 +164,7 @@ specify the method name in lowercase. It's value would be an array of filters to
 
     public $methods = [
         'post' => ['foo', 'bar'],
-        'get'  => ['baz']
+        'get'  => ['baz'],
     ]
 
 In addition to the standard HTTP methods, this also supports two special cases: 'cli', and 'ajax'. The names are
@@ -176,7 +181,7 @@ a list of URI patterns that filter should apply to::
 
     public filters = [
         'foo' => ['before' => ['admin/*'], 'after' => ['users/*']],
-        'bar' => ['before' => ['api/*', 'admin/*']]
+        'bar' => ['before' => ['api/*', 'admin/*']],
     ];
 
 Filter arguments
