@@ -7,8 +7,8 @@ Controller Filters
     :depth: 2
 
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </extending/events>`,
-you can very simply choose which URIs in your application have the filters applied to them. Incoming filters may
-modify the Request, while after filters can act on and even modify the Response, allowing for a lot of flexibility
+you can choose the specific URIs in which the filters will be applied to. Incoming filters may
+modify the Request while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:
 
 * Performing CSRF protection on the incoming requests
