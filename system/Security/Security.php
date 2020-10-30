@@ -35,7 +35,7 @@ class Security
 	protected $hash = null;
 
 	/**
-	 * CSRF Token name
+	 * CSRF Token Name
 	 *
 	 * Token name for Cross Site Request Forgery protection cookie.
 	 *
@@ -44,7 +44,7 @@ class Security
 	protected $tokenName = 'CSRFToken';
 
 	/**
-	 * CSRF Header name
+	 * CSRF Header Name
 	 *
 	 * Token name for Cross Site Request Forgery protection cookie.
 	 *
@@ -53,7 +53,7 @@ class Security
 	protected $headerName = 'CSRFToken';
 
 	/**
-	 * CSRF Cookie name
+	 * CSRF Cookie Name
 	 *
 	 * Cookie name for Cross Site Request Forgery protection cookie.
 	 *
