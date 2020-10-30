@@ -123,7 +123,7 @@ class SecurityTest extends CIUnitTestCase
 		$_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
 		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->verify($request));
-		$this->assertLogged('info', 'CSRF token verified');
+		$this->assertLogged('info', 'CSRF token verified.');
 
 		$this->assertTrue(count($_POST) === 1);
 	}
