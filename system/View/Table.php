@@ -160,7 +160,7 @@ class Table
 	 */
 	public function makeColumns($array = [], $columnLimit = 0)
 	{
-		if (! is_array($array) || count($array) === 0 || ! is_int($columnLimit))
+		if (! is_array($array) || $array === [] || ! is_int($columnLimit))
 		{
 			return false;
 		}

@@ -502,7 +502,7 @@ class Forge
 
 		$table = $this->db->DBPrefix . $table;
 
-		if (count($this->fields) === 0)
+		if ($this->fields === [])
 		{
 			throw new RuntimeException('Field information is required.');
 		}
@@ -853,7 +853,7 @@ class Forge
 			$this->addField([$k => $field[$k]]);
 		}
 
-		if (count($this->fields) === 0)
+		if ($this->fields === [])
 		{
 			throw new RuntimeException('Field information is required');
 		}
@@ -1211,7 +1211,7 @@ class Forge
 			}
 		}
 
-		if (count($this->primaryKeys) > 0)
+		if ($this->primaryKeys !== [])
 		{
 			$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
 					. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
@@ -1286,7 +1286,7 @@ class Forge
 			'SET DEFAULT',
 		];
 
-		if (count($this->foreignKeys) > 0)
+		if ($this->foreignKeys !== [])
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{

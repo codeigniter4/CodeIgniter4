@@ -2,6 +2,7 @@
 
 use Rector\Core\Configuration\Option;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
+use Rector\Performance\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -42,4 +43,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(SimplifyUselessVariableRector::class);
 	$services->set(RemoveAlwaysElseRector::class);
 	$services->set(PassStrictParameterToFunctionParameterRector::class);
+	$services->set(CountArrayToEmptyArrayComparisonRector::class);
 };
