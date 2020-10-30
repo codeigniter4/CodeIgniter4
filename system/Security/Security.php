@@ -118,13 +118,14 @@ class Security
 	 */
 	public function __construct($config)
 	{
+		$security = config('Security');
 		// Store CSRF-related configurations
-		$this->tokenName  = $config->CSRFTokenName ?? $config->tokenName ?? $this->tokenName;
-		$this->headerName = $config->CSRFHeaderName ?? $config->headerName ?? $this->headerName;
-		$this->cookieName = $config->CSRFCookieName ?? $config->cookieName ?? $this->cookieName;
-		$this->expires    = $config->CSRFExpire ?? $config->expires ?? $this->expires;
-		$this->regenerate = $config->CSRFRegenerate ?? $config->regenerate ?? $this->regenerate;
-		$this->samesite   = $config->CSRFSameSite ?? $config->samesite ?? $this->samesite;
+		$this->tokenName  = $config->CSRFTokenName ?? $security->tokenName ?? $this->tokenName;
+		$this->headerName = $config->CSRFHeaderName ?? $security->headerName ?? $this->headerName;
+		$this->cookieName = $config->CSRFCookieName ?? $security->cookieName ?? $this->cookieName;
+		$this->expires    = $config->CSRFExpire ?? $security->expires ?? $this->expires;
+		$this->regenerate = $config->CSRFRegenerate ?? $security->regenerate ?? $this->regenerate;
+		$this->samesite   = $config->CSRFSameSite ?? $security->samesite ?? $this->samesite;
 
 		if (! in_array(strtolower($this->samesite), ['none', 'lax', 'strict', ''], true))
 		{
