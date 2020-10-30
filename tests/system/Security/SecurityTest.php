@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use CodeIgniter\Test\Mock\MockSecurityConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 
 /**
