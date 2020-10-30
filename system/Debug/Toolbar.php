@@ -417,7 +417,7 @@ class Toolbar
 			]);
 			$format = explode('/', $format)[1];
 
-			$file     = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
+			$file     = Services::security()->sanitizeFilename('debugbar_' . $request->getGet('debugbar_time'));
 			$filename = WRITEPATH . 'debugbar/' . $file . '.json';
 
 			// Show the toolbar
