@@ -364,8 +364,8 @@
 </ul>
 </div>
 <p>Controller Filters allow you to perform actions either before or after the controllers execute. Unlike <a class="reference internal" href="../extending/events.html"><span class="doc">events</span></a>,
-you can very simply choose which URI’s in your application have the filters applied to them. Incoming filters may
-modify the Request, while after filters can act on and even modify the Response, allowing for a lot of flexibility
+you can choose the specific URIs in which the filters will be applied to. Incoming filters may
+modify the Request while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:</p>
 <ul class="simple">
 <li><p>Performing CSRF protection on the incoming requests</p></li>
@@ -381,7 +381,9 @@ and power. Some common examples of tasks that might be performed with filters ar
 They contain two methods: <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> which hold the code that
 will run before and after the controller respectively. Your class must contain both methods
 but may leave the methods empty if they are not needed. A skeleton filter class looks like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Filters</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Filters</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
@@ -393,8 +395,6 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
     <span class="p">{</span>
         <span class="c1">// Do something here</span>
     <span class="p">}</span>
-
-    <span class="c1">//--------------------------------------------------------------------</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
@@ -408,8 +408,12 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
 <p>From any filter, you can return the <code class="docutils literal notranslate"><span class="pre">$request</span></code> object and it will replace the current Request, allowing you
 to make changes that will still be present when the controller executes.</p>
 <p>Since before filters are executed prior to your controller being executed, you may at times want to stop the
-actions in the controller from happening. You can do this by passing back anything that is not the request object.
-This is typically used to perform redirects, like in this example:</p>
+actions in the controller from happening. Also, when you have a series of filters you may also want to
+stop the execution of the later filters after a certain filter. You can easily do this by returning
+<strong>any non-empty</strong> result. If the before filter returns an empty result, the controller actions or the later
+filters will still be executed. An exception to the non-empty result rule is the <code class="docutils literal notranslate"><span class="pre">Request</span></code> instance.
+Returning it in the before filter will not stop the execution but only replace the current <code class="docutils literal notranslate"><span class="pre">$request</span></code> object.</p>
+<p>This is typically used to perform redirects, like in this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
@@ -421,8 +425,8 @@ This is typically used to perform redirects, like in this example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API’s. See <a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for an
+<p>If a <code class="docutils literal notranslate"><span class="pre">Response</span></code> instance is returned, the Response will be sent back to the client and script execution will stop.
+This can be useful for implementing rate limiting for APIs. See <a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for an
 example.</p>
 </div>
 <div class="section" id="after-filters">
@@ -442,7 +446,7 @@ This file contains four properties that allow you to configure exactly when the 
 <p>The <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> array is used to associate a simple name with one or more fully-qualified class names that are the
 filters to run:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\CSRF</span><span class="o">::</span><span class="na">class</span>
+    <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\CSRF</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -453,7 +457,7 @@ different authentication system since you only change the filter’s class and y
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;apiPrep&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="nx">\App\Filters\Negotiate</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\App\Filters\ApiAuth</span><span class="o">::</span><span class="na">class</span>
+        <span class="nx">\App\Filters\ApiAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="p">];</span>
 </pre></div>
@@ -467,9 +471,9 @@ You should take care with how many you use here, since it could have performance
 run on every request. Filters can be specified by adding their alias to either the before or after array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;csrf&#39;</span>
+        <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[]</span>
+    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -479,9 +483,9 @@ third-party websites to hit one or two specific URI’s, while keeping the rest 
 an array with the ‘except’ key and a uri to match as the value alongside the alias:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api/*&#39;</span><span class="p">]</span>
+        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api/*&#39;</span><span class="p">],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[]</span>
+    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -491,9 +495,9 @@ would be exempted from CSRF protection, but the site’s forms would all be prot
 URI’s you can use an array of URI patterns:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo/*&#39;</span><span class="p">,</span> <span class="s1">&#39;bar/*&#39;</span><span class="p">]]</span>
+        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo/*&#39;</span><span class="p">,</span> <span class="s1">&#39;bar/*&#39;</span><span class="p">]],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[]</span>
+    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -505,7 +509,7 @@ specify the method name in lowercase. It’s value would be an array of filters 
 <code class="docutils literal notranslate"><span class="pre">$filters</span></code> properties, these will only run as before filters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;baz&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;baz&#39;</span><span class="p">],</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -523,7 +527,7 @@ would apply to every AJAX request.</p>
 a list of URI patterns that filter should apply to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">filters</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin/*&#39;</span><span class="p">],</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;users/*&#39;</span><span class="p">]],</span>
-    <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/*&#39;</span><span class="p">,</span> <span class="s1">&#39;admin/*&#39;</span><span class="p">]]</span>
+    <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/*&#39;</span><span class="p">,</span> <span class="s1">&#39;admin/*&#39;</span><span class="p">]],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -570,7 +574,7 @@ a list of URI patterns that filter should apply to:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Oct 25, 2020.
+        Last updated on Oct 31, 2020.
       </span>
 
     </p>
