@@ -258,7 +258,10 @@ class Parser extends View
 		// Remove any possible PHP tags since we don't support it
 		// and parseConditionals needs it clean anyway...
 		$template = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $template);
-
+		
+		// Replace color coding with temporary values
+		$template = $this->parseHtmlColors($template);
+		
 		$template = $this->parseComments($template);
 		$template = $this->extractNoparse($template);
 
@@ -290,6 +293,8 @@ class Parser extends View
 				$template = $this->replaceSingle($pattern, $content, $template, $escape);
 			}
 		}
+		
+		$template = $this->unParseHtmlColors($template);
 
 		return $this->insertNoparse($template);
 	}
@@ -424,6 +429,58 @@ class Parser extends View
 	protected function parseComments(string $template): string
 	{
 		return preg_replace('/\{#.*?#\}/s', '', $template);
+	}
+	
+	/**
+	 * Replaces html colors with temporary value so it does not affect parsing regex
+	 * 
+	 * Takes ..color:#fff, background-color:#993399 and color=#0284D0> 
+	 * Returns ..color{{color:fff}}, background-color{{color:993399}}, and color{{color=0284D0}}
+	 * 
+	 * @param string $template
+	 * 
+	 * @return string
+	 */
+	function parseHtmlColors(string $template) : string
+	{
+		preg_match_all("/(:|=)(| )#(?:[a-f0-9]{3}|[a-f0-9]{6})\b/uim", $template, $matches);
+		if (!empty($matches)) {
+			foreach ($matches['0'] as $match) {
+				if (trim($match) != "") {
+					$template = str_replace($match, "{{color" . str_replace("#", "", $match) . "}}", $template);
+				}
+			}
+		}
+		return $template;
+	}
+
+	/**
+	 * Restores html colors to their original state
+	 *
+	 * @param string $parsedTemplate
+	 * @return string
+	 */
+	function unParseHtmlColors(string $parsedTemplate) : string
+	{
+		preg_match_all("/{{color(:|=)(?:[a-f0-9]{3}|[a-f0-9]{6})\b}}/uim", $parsedTemplate, $matches);
+		foreach ($matches as $match) {
+			if (is_array($match)) {
+				foreach ($match as $matchIn) {
+					if (trim($matchIn) != "") {
+						$matchInReplacement = str_replace("{{color:", ":#", $matchIn);
+						$matchInReplacement = str_replace("{{color=", "=#", $matchInReplacement);
+						$matchInReplacement = str_replace("}}", "", $matchInReplacement);
+						$parsedTemplate = str_replace($matchIn, $matchInReplacement, $parsedTemplate);
+					}
+				}
+			} else if (trim($match) != "") {
+				$matchInReplacement = str_replace("{{color:", ":#", $match);
+				$matchInReplacement = str_replace("{{color=", "=#", $matchInReplacement);
+				$matchInReplacement = str_replace("}}", "", $matchInReplacement);
+				$parsedTemplate = str_replace($match, $matchInReplacement, $parsedTemplate);
+			}
+		}
+		return $parsedTemplate;
 	}
 
 	//--------------------------------------------------------------------
