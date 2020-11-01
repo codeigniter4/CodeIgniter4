@@ -783,7 +783,7 @@ class CLI
 			$thisStep   = abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
-			$percent = intval(($thisStep / $totalSteps) * 100);
+			$percent = (int) (($thisStep / $totalSteps) * 100);
 			$step    = (int) round($percent / 10);
 
 			// Write the progress bar

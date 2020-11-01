@@ -333,7 +333,7 @@ class Forge
 	{
 		if ($primary === true)
 		{
-			foreach ((array)$key as $one)
+			foreach ((array) $key as $one)
 			{
 				$this->primaryKeys[] = $one;
 			}
@@ -981,7 +981,7 @@ class Forge
 				}
 				elseif (isset($attributes['FIRST']))
 				{
-					$field['first'] = (bool)$attributes['FIRST'];
+					$field['first'] = (bool) $attributes['FIRST'];
 				}
 			}
 
@@ -1235,7 +1235,7 @@ class Forge
 
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
+			$this->keys[$i] = (array) $this->keys[$i];
 
 			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{

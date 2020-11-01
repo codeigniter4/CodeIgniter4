@@ -867,7 +867,7 @@ class MigrationRunner
 			? end($batch)->batch
 			: 0;
 
-		return (int)$batch;
+		return (int) $batch;
 	}
 
 	//--------------------------------------------------------------------

@@ -667,6 +667,6 @@ if (! function_exists('url_is'))
 		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
 		$currentPath = '/' . trim(uri_string(true), '/ ');
 
-		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
+		return (bool) preg_match("|^{$path}$|", $currentPath, $matches);
 	}
 }

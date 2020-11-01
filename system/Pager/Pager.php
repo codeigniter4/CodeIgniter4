@@ -186,8 +186,9 @@ class Pager implements PagerInterface
 			$page = $this->groups[$group]['currentPage'];
 		}
 
-		$perPage                             = $perPage ?? $this->config->perPage;
-		$pageCount                           = (int)ceil($total / $perPage);
+		$perPage   = $perPage ?? $this->config->perPage;
+		$pageCount = (int) ceil($total / $perPage);
+
 		$this->groups[$group]['currentPage'] = $page > $pageCount ? $pageCount : $page;
 		$this->groups[$group]['perPage']     = $perPage;
 		$this->groups[$group]['total']       = $total;
@@ -314,7 +315,7 @@ class Pager implements PagerInterface
 			return null;
 		}
 
-		return (int)ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
+		return (int) ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
 	}
 
 	//--------------------------------------------------------------------
