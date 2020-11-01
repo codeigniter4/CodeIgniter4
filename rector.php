@@ -29,13 +29,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 	// auto import fully qualified class names
 	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
-
-	$parameters->set(Option::SKIP, [
-		// skipped for UnderscoreToCamelCaseVariableNameRector rule
-		// as the underscored variable removed in 4.1 branch
-		UnderscoreToCamelCaseVariableNameRector::class => [__DIR__ . '/system/Autoloader/Autoloader.php'],
-	]);
-
 	$parameters->set(Option::ENABLE_CACHE, true);
 
 	$services = $containerConfigurator->services();
