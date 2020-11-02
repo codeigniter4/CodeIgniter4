@@ -17,13 +17,10 @@ use ParseError;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class Parser
- *
- *  ClassFormerlyKnownAsTemplateParser
+ * Class for parsing pseudo-vars
  */
 class Parser extends View
 {
-
 	/**
 	 * Left delimiter character for pseudo vars
 	 *
@@ -572,12 +569,19 @@ class Parser extends View
 	 */
 	protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
 	{
-		// Any dollar signs in the pattern will be mis-interpreted, so slash them
+		// Any dollar signs in the pattern will be misinterpreted, so slash them
 		$pattern = addcslashes($pattern, '$');
+
+		// Flesh out the main pattern from the delimiters and escape the hash
+		// See https://regex101.com/r/1GIHTa/1
+		if (preg_match('/^(#)(.*)(#(m?s)?)$/', $pattern, $parts))
+		{
+			$pattern = $parts[1] . addcslashes($parts[2], '#') . $parts[3];
+		}
 
 		// Replace the content in the template
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
-			// Check for {! !} syntax to not-escape this one.
+			// Check for {! !} syntax to not escape this one.
 			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) === '!}')
 			{
 				$escape = false;
