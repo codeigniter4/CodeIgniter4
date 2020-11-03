@@ -86,7 +86,7 @@ class History extends BaseCollector
 			if (json_last_error() === JSON_ERROR_NONE)
 			{
 				preg_match_all('/\d+/', $filename, $time);
-				$time = (int)end($time[0]);
+				$time = (int) end($time[0]);
 
 				// Debugbar files shown in History Collector
 				$files[] = [

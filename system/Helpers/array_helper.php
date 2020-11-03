@@ -50,7 +50,7 @@ if (! function_exists('_array_search_dot'))
 			? array_shift($indexes)
 			: null;
 
-		if ((empty($currentIndex)  && intval($currentIndex) !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*'))
+		if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*'))
 		{
 			return null;
 		}

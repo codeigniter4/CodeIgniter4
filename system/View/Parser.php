@@ -357,7 +357,7 @@ class Parser extends View
 				// Otherwise, cast as an array and it will grab public properties.
 				elseif (is_object($row))
 				{
-					$row = (array)$row;
+					$row = (array) $row;
 				}
 
 				$temp  = [];
@@ -831,7 +831,7 @@ class Parser extends View
 		// Otherwise, cast as an array and it will grab public properties.
 		elseif (is_object($value))
 		{
-			$value = (array)$value;
+			$value = (array) $value;
 		}
 
 		return $value;

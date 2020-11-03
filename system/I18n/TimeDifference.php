@@ -162,7 +162,7 @@ class TimeDifference
 		}
 
 		$time = clone($this->currentTime);
-		return (int)($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
+		return (int) ($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
 	}
 
 	/**
