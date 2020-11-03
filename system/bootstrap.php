@@ -10,11 +10,11 @@
  */
 
 use CodeIgniter\CodeIgniter;
-use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\DotEnv;
 use Config\App;
 use Config\Autoload;
 use Config\Modules;
+use Config\Services;
 
 /*
  * ---------------------------------------------------------------
@@ -107,9 +107,17 @@ if (! class_exists('Config\Autoload', false))
 
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
+require_once SYSTEMPATH . 'Config/Services.php';
+require_once APPPATH . 'Config/Services.php';
+
+// Use Config\Services as CodeIgniter\Services
+if (! class_exists('CodeIgniter\Services', false))
+{
+	class_alias('Config\Services', 'CodeIgniter\Services');
+}
 
 // Initialize and register the loader with the SPL autoloader stack.
-BaseService::autoloader()->initialize(new Autoload(), new Modules())->register();
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
