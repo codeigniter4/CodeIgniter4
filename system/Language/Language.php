@@ -21,7 +21,6 @@ use MessageFormatter;
  */
 class Language
 {
-
 	/**
 	 * Stores the retrieved language lines
 	 * from files for faster retrieval on
@@ -60,10 +59,10 @@ class Language
 	{
 		$this->locale = $locale;
 
-		if (class_exists('\MessageFormatter'))
+		if (class_exists('MessageFormatter'))
 		{
 			$this->intlSupport = true;
-		};
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -108,29 +107,23 @@ class Language
 	 */
 	public function getLine(string $line, array $args = [])
 	{
-		// ignore requests with no file specified
-		if (! strpos($line, '.'))
+		// if no file is given, just parse the line
+		if (strpos($line, '.') === false)
 		{
-			return $line;
+			return $this->formatMessage($line, $args);
 		}
 
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		[
-			$file,
-			$parsedLine,
-		] = $this->parseLine($line, $this->locale);
+		list($file, $parsedLine) = $this->parseLine($line, $this->locale);
 
 		$output = $this->getTranslationOutput($this->locale, $file, $parsedLine);
 
 		if ($output === null && strpos($this->locale, '-'))
 		{
-			[$locale] = explode('-', $this->locale, 2);
+			list($locale) = explode('-', $this->locale, 2);
 
-			[
-				$file,
-				$parsedLine,
-			] = $this->parseLine($line, $locale);
+			list($file, $parsedLine) = $this->parseLine($line, $locale);
 
 			$output = $this->getTranslationOutput($locale, $file, $parsedLine);
 		}
@@ -138,21 +131,14 @@ class Language
 		// if still not found, try English
 		if ($output === null)
 		{
-			[
-				$file,
-				$parsedLine,
-			]       = $this->parseLine($line, 'en');
+			list($file, $parsedLine) = $this->parseLine($line, 'en');
+
 			$output = $this->getTranslationOutput('en', $file, $parsedLine);
 		}
 
 		$output = $output ?? $line;
 
-		if (! empty($args))
-		{
-			$output = $this->formatMessage($output, $args);
-		}
-
-		return $output;
+		return $this->formatMessage($output, $args);
 	}
 
 	//--------------------------------------------------------------------
@@ -230,7 +216,7 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if (! $this->intlSupport || ! $args)
+		if (! $this->intlSupport || $args === [])
 		{
 			return $message;
 		}
@@ -241,6 +227,7 @@ class Language
 			{
 				$message[$index] = $this->formatMessage($value, $args);
 			}
+
 			return $message;
 		}
 
