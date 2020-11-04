@@ -725,9 +725,7 @@ class Parser extends View
 
 	/**
 	 * Scans the template for any parser plugins, and attempts to execute them.
-	 * Plugins are notated based on {+ +} opening and closing braces.
-	 *
-	 * When encountered,
+	 * Plugins are delimited by {+ ... +}
 	 *
 	 * @param string $template
 	 *
@@ -741,7 +739,10 @@ class Parser extends View
 			$isPair   = is_array($callable);
 			$callable = $isPair ? array_shift($callable) : $callable;
 
-			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}#ims';
+			// See https://regex101.com/r/BCBBKB/1
+			$pattern = $isPair
+				? '#\{\+\s*' . $plugin . '([\w=\-_:\+\s\(\)/"@.]*)?\s*\+\}(.+?)\{\+\s*/' . $plugin . '\s*\+\}#ims'
+				: '#\{\+\s*' . $plugin . '([\w=\-_:\+\s\(\)/"@.]*)?\s*\+\}#ims';
 
 			/**
 			 * Match tag pairs
@@ -751,9 +752,7 @@ class Parser extends View
 			 *   $matches[1] = all parameters string in opening tag
 			 *   $matches[2] = content between the tags to send to the plugin.
 			 */
-			preg_match_all($pattern, $template, $matches, PREG_SET_ORDER);
-
-			if (empty($matches))
+			if (! preg_match_all($pattern, $template, $matches, PREG_SET_ORDER))
 			{
 				continue;
 			}
@@ -763,9 +762,11 @@ class Parser extends View
 				$params = [];
 
 				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)|(\"[^"]+\")|(\S+)/', trim($match[1]), $matchesParams);
+
 				foreach ($matchesParams[0] as $item)
 				{
 					$keyVal = explode('=', $item);
+
 					if (count($keyVal) === 2)
 					{
 						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
@@ -776,7 +777,9 @@ class Parser extends View
 					}
 				}
 
-				$template = $isPair ? str_replace($match[0], $callable($match[2], $params), $template) : str_replace($match[0], $callable($params), $template);
+				$template = $isPair
+					? str_replace($match[0], $callable($match[2], $params), $template)
+					: str_replace($match[0], $callable($params), $template);
 			}
 		}
 
