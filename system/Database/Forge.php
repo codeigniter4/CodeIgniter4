@@ -331,7 +331,7 @@ class Forge
 	 */
 	public function addKey($key, bool $primary = false, bool $unique = false)
 	{
-		if ($primary === true)
+		if ($primary)
 		{
 			foreach ((array) $key as $one)
 			{
@@ -341,9 +341,10 @@ class Forge
 		else
 		{
 			$this->keys[] = $key;
-			if ($unique === true)
+
+			if ($unique)
 			{
-				$this->uniqueKeys[] = ($c = count($this->keys)) ? $c - 1 : 0;
+				$this->uniqueKeys[] = count($this->keys) - 1;
 			}
 		}
 
