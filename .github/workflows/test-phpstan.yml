@@ -63,7 +63,7 @@ jobs:
           restore-keys: ${{ runner.os }}-phpstan-
 
       - name: Install dependencies
-        run: composer install --ansi --no-progress --no-suggest --no-interaction
+        run: composer update --ansi --no-interaction
 
       - name: Run static analysis
         run: vendor/bin/phpstan analyse
