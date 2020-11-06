@@ -43,7 +43,7 @@ class ClearDebugbarTest extends CIUnitTestCase
 	public function testClearDebugbarWorks()
 	{
 		// test clean debugbar dir
-		$this->assertFileNotExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
+		$this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
 		// test dir is now populated with json
 		$this->createDummyDebugbarJson();
@@ -52,7 +52,7 @@ class ClearDebugbarTest extends CIUnitTestCase
 		command('debugbar:clear');
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertFileNotExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
+		$this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 		$this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . '.gitkeep');
 		$this->assertStringContainsString('Debugbar cleared.', $result);
 	}
