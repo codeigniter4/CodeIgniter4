@@ -13,6 +13,7 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
@@ -29,7 +30,6 @@ class MockFilters extends Filters
 	 * @param string $position
 	 *
 	 * @return RequestInterface|ResponseInterface|mixed
-	 * @throws FilterException
 	 */
 	public function run(string $uri, string $position = 'before')
 	{
