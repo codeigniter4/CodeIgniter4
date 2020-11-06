@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 class ReflectionHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -67,7 +69,8 @@ class ReflectionHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 class __TestForReflectionHelper
 {
-	private $private               = 'secret';
+	private $private = 'secret';
+
 	private static $static_private = 'xyz';
 
 	public function getPrivate()

@@ -29,7 +29,6 @@ use Imagick;
  */
 class ImageMagickHandler extends BaseHandler
 {
-
 	/**
 	 * Stores image resource in memory.
 	 *

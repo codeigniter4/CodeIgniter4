@@ -21,7 +21,6 @@ use SessionHandlerInterface;
  */
 class MemcachedHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * Memcached instance
 	 *

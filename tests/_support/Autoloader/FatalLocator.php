@@ -14,7 +14,6 @@ use RuntimeException;
  */
 class FatalLocator extends FileLocator
 {
-
 	/**
 	 * Throws.
 	 *

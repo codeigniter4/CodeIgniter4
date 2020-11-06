@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\API;
 
 use CodeIgniter\Format\JSONFormatter;
@@ -7,11 +8,12 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
+use stdClass;
 
 class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $request;
+
 	protected $response;
 
 	/**
@@ -68,13 +70,13 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 
 		// Create the controller class finally.
-		$controller = new class($this->request, $this->response, $this->formatter)
-		{
-
+		$controller = new class($this->request, $this->response, $this->formatter) {
 			use ResponseTrait;
 
 			protected $request;
+
 			protected $response;
+
 			protected $formatter;
 
 			public function __construct(&$request, &$response, &$formatter)
@@ -152,7 +154,7 @@ EOH;
 	{
 		$this->formatter = null;
 		$controller      = $this->makeController();
-		$payload         = new \stdClass();
+		$payload         = new stdClass();
 		$payload->name   = 'Tom';
 		$payload->id     = 1;
 		$expected        = <<<EOH
@@ -161,7 +163,7 @@ EOH;
     "id": 1
 }
 EOH;
-		$controller->respond((array)$payload);
+		$controller->respond((array) $payload);
 		$this->assertEquals($expected, $this->response->getBody());
 	}
 
@@ -484,11 +486,11 @@ EOH;
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
 		$response = new MockResponse((object) $config);
 
-		$controller = new class($request, $response)
-		{
+		$controller = new class($request, $response) {
 			use ResponseTrait;
 
 			protected $request;
+
 			protected $response;
 
 			public function __construct(&$request, &$response)

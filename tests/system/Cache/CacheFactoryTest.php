@@ -1,9 +1,9 @@
 <?php
+
 namespace CodeIgniter\Cache;
 
 class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private static $directory = 'CacheFactory';
 	private $cacheFactory;
 	private $config;
@@ -15,7 +15,8 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config = new \Config\Cache();
+
 		$this->config->storePath .= self::$directory;
 	}
 
@@ -111,5 +112,4 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 	}
-
 }

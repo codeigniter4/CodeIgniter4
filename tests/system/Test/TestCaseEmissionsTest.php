@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
@@ -12,7 +13,6 @@ use Config\App;
  */
 class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * These need to be run as a separate process, since phpunit
 	 * has already captured the "normal" output, and we will get
@@ -28,6 +28,7 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -60,6 +61,7 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -88,5 +90,4 @@ class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertHeaderNotEmitted('Set-Cookie: pop=corn', true);
 	}
-
 }

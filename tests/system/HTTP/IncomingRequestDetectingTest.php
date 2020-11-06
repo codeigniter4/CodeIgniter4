@@ -9,7 +9,6 @@ use Config\App;
  */
 class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
@@ -19,7 +18,7 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$_POST         = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+		$_POST         = $_GET         = $_SERVER         = $_REQUEST         = $_ENV         = $_COOKIE         = $_SESSION         = [];
 		$origin        = 'http://www.example.com/index.php/woot?code=good#pos';
 		$this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
 	}
@@ -156,5 +155,4 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = 'silliness';
 		$this->assertEquals($expected, $this->request->detectPath('PATH_INFO'));
 	}
-
 }

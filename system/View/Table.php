@@ -20,7 +20,6 @@ use CodeIgniter\Database\BaseResult;
  */
 class Table
 {
-
 	/**
 	 * Data for table rows
 	 *

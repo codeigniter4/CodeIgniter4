@@ -4,6 +4,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use Throwable;
 
 class CreateMigrationTest extends CIUnitTestCase
 {
@@ -59,7 +60,7 @@ class CreateMigrationTest extends CIUnitTestCase
 		{
 			command('make:migration migrateTwo -n CodeIgnite');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			ob_end_clean();
 			$this->assertInstanceOf('RuntimeException', $e);

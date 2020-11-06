@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -7,7 +9,6 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class DEBugTest extends CIDatabaseTestCase
 {
-
 	protected $refresh = true;
 
 	public function testDBDebugTrue()

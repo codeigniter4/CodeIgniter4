@@ -22,7 +22,6 @@ use stdClass;
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Database driver
 	 *
@@ -581,5 +580,4 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
-
 }

@@ -9,10 +9,11 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class DbUtilsTest extends CIDatabaseTestCase {
-
+class DbUtilsTest extends CIDatabaseTestCase
+{
 	protected $refresh = true;
-	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 
@@ -59,11 +60,11 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv'], true))
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertTrue(in_array('test', $databases));
+			$this->assertTrue(in_array('test', $databases, true));
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
@@ -80,7 +81,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv'], true))
 		{
 			$exist = $util->databaseExists('test');
 
@@ -128,7 +129,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 		$d = $util->optimizeTable('db_job');
 
-		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'Sqlsrv'], true))
 		{
 			$this->assertFalse((bool) $d);
 		}

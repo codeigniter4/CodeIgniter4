@@ -19,7 +19,6 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 class HTTPException extends FrameworkException implements ExceptionInterface
 {
-
 	/**
 	 * For CurlRequest
 	 *
@@ -245,5 +244,4 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
 	}
-
 }

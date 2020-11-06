@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
@@ -9,8 +10,8 @@ use Config\Filters as FilterConfig;
  */
 class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -46,5 +47,4 @@ class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 		$filter->after($this->request, $this->response);
 		$this->assertEquals($expectedAfter, $this->response);
 	}
-
 }

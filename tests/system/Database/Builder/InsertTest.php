@@ -1,4 +1,6 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -86,11 +88,11 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
 
-		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
 
 		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
+		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery()));
 	}
 
 	//--------------------------------------------------------------------

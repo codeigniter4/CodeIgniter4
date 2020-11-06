@@ -18,7 +18,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 abstract class BaseUtils
 {
-
 	/**
 	 * Database object
 	 *

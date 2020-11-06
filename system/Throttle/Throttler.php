@@ -27,7 +27,6 @@ use CodeIgniter\Cache\CacheInterface;
  */
 class Throttler implements ThrottlerInterface
 {
-
 	/**
 	 * Container for throttle counters.
 	 *

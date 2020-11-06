@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use org\bovigo\vfs\vfsStream;
@@ -13,7 +15,6 @@ use org\bovigo\vfs\vfsStream;
  */
 class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		if (! extension_loaded('gd'))
@@ -111,5 +112,4 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$handler->withFile($this->path);
 		$this->assertEquals($this->path, $handler->getPathname());
 	}
-
 }

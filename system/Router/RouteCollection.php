@@ -25,7 +25,6 @@ use Config\Services;
  */
 class RouteCollection implements RouteCollectionInterface
 {
-
 	/**
 	 * The namespace to be added to any Controllers.
 	 * Defaults to the global namespaces (\)
@@ -1590,5 +1589,4 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $options;
 	}
-
 }

@@ -18,7 +18,6 @@ use CodeIgniter\Database\BaseBuilder;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * Default installs of SQLite typically do not
 	 * support limiting delete clauses.
@@ -86,5 +85,4 @@ class Builder extends BaseBuilder
 	{
 		return 'DELETE FROM ' . $table;
 	}
-
 }

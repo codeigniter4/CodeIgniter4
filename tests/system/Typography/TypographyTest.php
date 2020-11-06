@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Typography;
+<?php
+
+namespace CodeIgniter\Typography;
 
 class TypographyTest extends \CodeIgniter\Test\CIUnitTestCase
 {

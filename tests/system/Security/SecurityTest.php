@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Security;
+<?php
+
+namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
@@ -13,8 +15,8 @@ use CodeIgniter\Test\Mock\MockSecurity;
 /**
  * @backupGlobals enabled
  */
-class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
-
+class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase
+{
 	protected function setUp(): void
 	{
 		parent::setUp();

@@ -279,6 +279,7 @@ class UserAgent
 	{
 		return $this->robot;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -331,6 +332,7 @@ class UserAgent
 			$this->compileData();
 		}
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -470,5 +472,4 @@ class UserAgent
 	{
 		return $this->getAgentString();
 	}
-
 }

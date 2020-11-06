@@ -26,7 +26,6 @@ use Throwable;
  */
 class Exceptions
 {
-
 	use ResponseTrait;
 
 	/**

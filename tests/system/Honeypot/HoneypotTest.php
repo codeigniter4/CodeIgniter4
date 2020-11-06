@@ -11,7 +11,6 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
  */
 class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $config;
 	protected $honeypot;
 	protected $request;
@@ -158,5 +157,4 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->getPrivateProperty($honeypot, 'config')->container
 		);
 	}
-
 }

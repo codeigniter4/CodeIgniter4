@@ -91,5 +91,4 @@ class View extends BaseConfig
 
 		parent::__construct();
 	}
-
 }

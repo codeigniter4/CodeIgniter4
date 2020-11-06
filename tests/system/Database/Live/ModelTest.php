@@ -12,6 +12,7 @@ use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Services;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -112,10 +113,10 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertCount(4, $jobs);
 
 		$names = array_column($jobs, 'name');
-		$this->assertTrue(in_array('Developer', $names));
-		$this->assertTrue(in_array('Politician', $names));
-		$this->assertTrue(in_array('Accountant', $names));
-		$this->assertTrue(in_array('Musician', $names));
+		$this->assertTrue(in_array('Developer', $names, true));
+		$this->assertTrue(in_array('Politician', $names, true));
+		$this->assertTrue(in_array('Accountant', $names, true));
+		$this->assertTrue(in_array('Musician', $names, true));
 	}
 
 	//--------------------------------------------------------------------
@@ -384,7 +385,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
+		$data              = new stdClass();
 		$data->name        = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
 
@@ -478,7 +479,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data = new \stdClass();
+		$data = new stdClass();
 
 		// Sqlsrv does not allow forcing an ID into an autoincrement field.
 		if ($this->db->DBDriver !== 'Sqlsrv')
@@ -502,7 +503,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data               = new \stdClass();
+		$data               = new stdClass();
 		$data->id           = 1;
 		$data->name         = 'Engineer';
 		$data->description  = 'A fancier term for Developer.';
@@ -663,6 +664,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertCount(1, $users);
 	}
+
 	/**
 	 * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
 	 * Exception should not be thrown because condition was explicity set
@@ -677,7 +679,9 @@ class ModelTest extends CIDatabaseTestCase
 		$model->where('id', $emptyValue)->delete();
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 		unset($model);
-	}    //--------------------------------------------------------------------
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @dataProvider emptyPkValues
@@ -719,6 +723,7 @@ class ModelTest extends CIDatabaseTestCase
 			['0'],
 		];
 	}
+
 	//--------------------------------------------------------------------
 
 	public function testChunk()
@@ -855,6 +860,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Your baby name is missing.', $errors['name']);
 	}
+
 	//--------------------------------------------------------------------
 
 	public function testValidationPlaceholdersSuccess()
@@ -1443,8 +1449,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testUpdateBatchWithEntity()
 	{
-		$entity1 = new class extends Entity
-		{
+		$entity1 = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $email;
@@ -1452,7 +1457,6 @@ class ModelTest extends CIDatabaseTestCase
 			protected $deleted;
 			protected $created_at;
 			protected $updated_at;
-
 			protected $_options = [
 				'datamap' => [],
 				'dates'   => [
@@ -1464,8 +1468,7 @@ class ModelTest extends CIDatabaseTestCase
 			];
 		};
 
-		$entity2   = new class extends Entity
-		{
+		$entity2   = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $email;
@@ -1473,7 +1476,6 @@ class ModelTest extends CIDatabaseTestCase
 			protected $deleted;
 			protected $created_at;
 			protected $updated_at;
-
 			protected $_options = [
 				'datamap' => [],
 				'dates'   => [
@@ -1606,7 +1608,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$id = $model->insert($data);
 
-		$this->assertTrue((bool)$id);
+		$this->assertTrue((bool) $id);
 
 		$data['description'] = 'This is a second test!';
 		unset($data['name']);
@@ -1682,7 +1684,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$id = $model->insert($data);
 
-		$this->assertFalse((bool)$id);
+		$this->assertFalse((bool) $id);
 
 		$errors = $model->errors();
 
@@ -1882,8 +1884,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new ValidModel($this->db);
 
-		$data = new class
-		{
+		$data = new class {
 			public $name  = '';
 			public $id    = '';
 			public $token = '';
@@ -2066,7 +2067,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testInsertBatchNewEntityWithDateTime()
 	{
-		$entity    = new class extends Entity{
+		$entity    = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $email;
@@ -2074,7 +2075,6 @@ class ModelTest extends CIDatabaseTestCase
 			protected $deleted;
 			protected $created_at;
 			protected $updated_at;
-
 			protected $_options = [
 				'datamap' => [],
 				'dates'   => [
@@ -2102,7 +2102,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDateTime()
 	{
-		$entity    = new class extends Entity{
+		$entity    = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $email;
@@ -2110,7 +2110,6 @@ class ModelTest extends CIDatabaseTestCase
 			protected $deleted;
 			protected $created_at;
 			protected $updated_at;
-
 			protected $_options = [
 				'datamap' => [],
 				'dates'   => [
@@ -2138,8 +2137,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDate()
 	{
-		$entity    = new class extends Entity
-		{
+		$entity    = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $created_at;
@@ -2154,8 +2152,7 @@ class ModelTest extends CIDatabaseTestCase
 				'casts'   => [],
 			];
 		};
-		$testModel = new class extends Model
-		{
+		$testModel = new class extends Model {
 			protected $table          = 'empty';
 			protected $allowedFields  = [
 				'name',
@@ -2224,7 +2221,7 @@ class ModelTest extends CIDatabaseTestCase
 	public function testInsertObjectWithNoDataException()
 	{
 		$model = new UserModel();
-		$data  = new \stdClass();
+		$data  = new stdClass();
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to insert.');
 		$model->insert($data);
@@ -2245,7 +2242,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$id = $model->insert($data);
 
-		$data = new \stdClass();
+		$data = new stdClass();
 
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to update.');
@@ -2529,13 +2526,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(4, $model->countAllResults());
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
@@ -2550,13 +2547,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(3, $model->countAllResults());
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
@@ -2573,13 +2570,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(4, $model->countAllResults());
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
@@ -2596,13 +2593,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(3, $model->countAllResults());
 
-		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+		$this->assertEquals($expectedSQL, (string) $this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}

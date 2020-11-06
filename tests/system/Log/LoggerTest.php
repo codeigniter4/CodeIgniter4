@@ -8,7 +8,6 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
 		$config           = new LoggerConfig();

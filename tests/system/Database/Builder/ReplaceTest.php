@@ -1,4 +1,6 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Test\Mock\MockConnection;
 

@@ -6,7 +6,6 @@ use CodeIgniter\View\Exceptions\ViewException;
 
 class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $cache;
 
 	/**
@@ -274,5 +273,4 @@ class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertEquals('CodeIgniter\HTTP\Response', $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
 	}
-
 }

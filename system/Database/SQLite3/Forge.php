@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * UNSIGNED support
 	 *

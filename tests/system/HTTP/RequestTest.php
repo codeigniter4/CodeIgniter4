@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use Config\App;
@@ -8,7 +9,6 @@ use Config\App;
  */
 class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\Request
 	 */
@@ -676,5 +676,4 @@ class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('get', $this->request->getMethod());
 		$this->assertEquals('GET', $this->request->getMethod(true));
 	}
-
 }

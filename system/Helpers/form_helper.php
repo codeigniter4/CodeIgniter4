@@ -361,8 +361,8 @@ if (! function_exists('form_dropdown'))
 			$defaults = ['name' => $data];
 		}
 
-		is_array($selected) || $selected = [$selected]; // @phpstan-ignore-line
-		is_array($options) || $options   = [$options]; // @phpstan-ignore-line
+		$selected = (array) $selected;
+		$options  = (array) $options;
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))

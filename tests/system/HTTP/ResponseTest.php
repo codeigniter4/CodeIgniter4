@@ -12,7 +12,6 @@ use DateTimeZone;
 
 class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $server;
 
 	protected function setUp(): void

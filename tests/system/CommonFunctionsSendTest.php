@@ -3,7 +3,6 @@
 
 class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -12,6 +11,7 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Make sure cookies are set by RedirectResponse this way
 	 * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
@@ -48,5 +48,4 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Set-Cookie: foo=onething;');
 		$this->assertHeaderEmitted('Set-Cookie: login_time');
 	}
-
 }

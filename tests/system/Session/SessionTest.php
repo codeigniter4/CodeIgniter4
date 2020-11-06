@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Session;
+<?php
+
+namespace CodeIgniter\Session;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
@@ -665,5 +667,4 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(0, $cookies[0][2]['expires']);
 		}
 	}
-
 }

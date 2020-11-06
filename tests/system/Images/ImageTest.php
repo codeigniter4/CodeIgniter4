@@ -1,11 +1,12 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Images\Exceptions\ImageException;
 use org\bovigo\vfs\vfsStream;
 
 class ImageTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $path = 'tests/_support/ci-logo.png';
 
 	protected function setUp(): void
@@ -88,5 +89,4 @@ class ImageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$targetPath = $this->start . 'work';
 		$this->image->copy($targetPath, '');
 	}
-
 }

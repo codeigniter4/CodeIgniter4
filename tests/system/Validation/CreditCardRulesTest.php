@@ -1,12 +1,14 @@
-<?php namespace CodeIgniter\Validation;
+<?php
+
+namespace CodeIgniter\Validation;
 
 class CreditCardRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
 		'ruleSets'      => [
 			\CodeIgniter\Validation\Rules::class,

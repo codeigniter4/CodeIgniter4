@@ -1,9 +1,9 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -122,5 +122,4 @@ final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse(number_to_size('1232x'));
 		$this->assertFalse(number_to_amount('1232x'));
 	}
-
 }

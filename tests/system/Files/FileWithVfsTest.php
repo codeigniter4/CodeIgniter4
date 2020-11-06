@@ -1,13 +1,16 @@
-<?php namespace CodeIgniter\Files;
+<?php
+
+namespace CodeIgniter\Files;
 
 use org\bovigo\vfs\vfsStream;
 
 class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	// For VFS stuff
 	protected $root;
+
 	protected $path;
+
 	protected $start;
 
 	/**

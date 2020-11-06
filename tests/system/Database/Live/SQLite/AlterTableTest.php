@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live\SQLite;
+<?php
+
+namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -106,9 +108,9 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$columns = $this->db->getFieldNames('foo');
 
-		$this->assertFalse(in_array('name', $columns));
-		$this->assertTrue(in_array('id', $columns));
-		$this->assertTrue(in_array('email', $columns));
+		$this->assertFalse(in_array('name', $columns, true));
+		$this->assertTrue(in_array('id', $columns, true));
+		$this->assertTrue(in_array('email', $columns, true));
 	}
 
 	public function testDropColumnMaintainsKeys()

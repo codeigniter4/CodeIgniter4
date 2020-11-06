@@ -1,10 +1,12 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
+use InvalidArgumentException;
 
 /**
  * Exercise our Controller class.
@@ -14,7 +16,6 @@ use Config\Services;
  */
 class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	use ControllerTester;
 
 	public function setUp(): void
@@ -29,7 +30,7 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testBadController()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$logger = new Logger(new LoggerConfig());
 		$result = $this->withURI('http://example.com')
 				->withLogger($logger)
@@ -39,7 +40,7 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testBadControllerMethod()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$logger = new Logger(new LoggerConfig());
 		$result = $this->withURI('http://example.com')
 				->withLogger($logger)
@@ -234,5 +235,4 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 						->execute('toindex');
 		$this->assertTrue($result->isRedirect());
 	}
-
 }

@@ -21,7 +21,6 @@ use SessionHandlerInterface;
  */
 class FileHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * Where to save the session files to.
 	 *

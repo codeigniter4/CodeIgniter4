@@ -4,7 +4,6 @@ namespace CodeIgniter\Helpers;
 
 class XMLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -28,5 +27,4 @@ class XMLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = '&lt;p&gt;Here is a so&so; paragraph &amp; an entity (&#123;).&lt;/p&gt;';
 		$this->assertEquals($expected, xml_convert($original, true));
 	}
-
 }

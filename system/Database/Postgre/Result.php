@@ -21,7 +21,6 @@ use stdClass;
  */
 class Result extends BaseResult implements ResultInterface
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *

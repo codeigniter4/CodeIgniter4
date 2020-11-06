@@ -268,8 +268,10 @@ class ParserTest extends CIUnitTestCase
 	public function testParseLoopEntityProperties()
 	{
 		$power = new class extends Entity {
-			public $foo    = 'bar';
+			public $foo = 'bar';
+
 			protected $bar = 'baz';
+
 			public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 			{
 				return [
@@ -281,7 +283,6 @@ class ParserTest extends CIUnitTestCase
 					],
 				];
 			}
-
 		};
 
 		$data = [
@@ -299,8 +300,7 @@ class ParserTest extends CIUnitTestCase
 
 	public function testParseLoopEntityObjectProperties()
 	{
-		$power = new class extends Entity
-		{
+		$power = new class extends Entity {
 			protected $attributes = [
 				'foo'     => 'bar',
 				'bar'     => 'baz',

@@ -1,15 +1,17 @@
 <?php
+
 namespace CodeIgniter\I18n;
+
+use Locale;
 
 class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testDifferenceBasics()
@@ -216,5 +218,4 @@ class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse(isset($diff->nonsense));
 	}
-
 }

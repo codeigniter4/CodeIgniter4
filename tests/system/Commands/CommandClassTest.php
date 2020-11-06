@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\CommandRunner;
@@ -7,6 +8,7 @@ use Config\Services;
 class BaseCommandTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $logger;
+
 	protected $runner;
 
 	protected function setUp(): void

@@ -1,4 +1,8 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
+
+use stdClass;
 
 class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -151,7 +155,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testHeaderLineValueNotStringOrArray()
 	{
 		$name  = 'foo';
-		$value = new \stdClass;
+		$value = new stdClass;
 
 		$expected = '';
 
@@ -204,6 +208,6 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$header->setValue('bar')
 			   ->appendValue(['baz' => 'fuzz']);
 
-		$this->assertEquals($expected, (string)$header);
+		$this->assertEquals($expected, (string) $header);
 	}
 }

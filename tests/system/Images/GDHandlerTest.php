@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
@@ -15,7 +17,6 @@ use org\bovigo\vfs\vfsStream;
  */
 class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		if (! extension_loaded('gd'))
@@ -450,5 +451,4 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
 		}
 	}
-
 }

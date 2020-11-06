@@ -14,7 +14,6 @@ namespace CodeIgniter\Exceptions;
 /**
  * Model Exceptions.
  */
-
 class ModelException extends FrameworkException
 {
 	public static function forNoPrimaryKey(string $modelName)

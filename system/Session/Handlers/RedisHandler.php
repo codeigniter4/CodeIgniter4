@@ -23,7 +23,6 @@ use SessionHandlerInterface;
  */
 class RedisHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * phpRedis instance
 	 *

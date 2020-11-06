@@ -20,7 +20,6 @@ namespace CodeIgniter\HTTP;
  */
 interface RequestInterface
 {
-
 	/**
 	 * Gets the user's IP address.
 	 *

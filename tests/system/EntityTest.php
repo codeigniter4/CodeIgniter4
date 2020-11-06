@@ -5,11 +5,12 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
+use DateTime;
+use ReflectionException;
 use Tests\Support\SomeEntity;
 
 class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	use ReflectionHelper;
 
 	public function testSimpleSetAndGet()
@@ -108,7 +109,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('made it', $entity->bar);
 
 		// But it shouldn't actually set a class property for the original name...
-		$this->expectException(\ReflectionException::class);
+		$this->expectException(ReflectionException::class);
 		$this->getPrivateProperty($entity, 'bar');
 	}
 
@@ -191,7 +192,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt         = new \DateTime('now');
+		$dt         = new DateTime('now');
 		$entity     = $this->getEntity();
 		$attributes = [
 			'created_at' => $dt,
@@ -246,7 +247,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt     = new \DateTime('now');
+		$dt     = new DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -497,11 +498,12 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$entity = $this->getCastEntity();
 
-		$data             = [
+		$data = [
 			'Sun',
 			'Mon',
 			'Tue',
 		];
+
 		$entity->eleventh = $data;
 
 		// Should be a JSON-encoded string now...
@@ -639,6 +641,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$method($string, true);
 	}
+
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
@@ -703,8 +706,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
 	{
-		$entity = new class extends Entity
-		{
+		$entity = new class extends Entity {
 			protected $attributes = [
 				'_foo' => null,
 				'bar'  => null,
@@ -873,8 +875,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function getEntity() : Entity
 	{
-		return new class extends Entity
-		{
+		return new class extends Entity {
 			protected $attributes = [
 				'foo'        => null,
 				'bar'        => null,
@@ -914,8 +915,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function getMappedEntity() : Entity
 	{
-		return new class extends Entity
-		{
+		return new class extends Entity {
 			protected $attributes = [
 				'foo'    => null,
 				'simple' => null,
@@ -946,8 +946,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function getSwappedEntity() : Entity
 	{
-		return new class extends Entity
-		{
+		return new class extends Entity {
 			protected $attributes = [
 				'foo' => 'foo',
 				'bar' => 'bar',
@@ -968,8 +967,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function getCastEntity($data = null) : Entity
 	{
-		return new class($data) extends Entity
-		{
+		return new class($data) extends Entity {
 			protected $attributes = [
 				'first'    => null,
 				'second'   => null,
@@ -1025,8 +1023,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function getCastNullableEntity() : Entity
 	{
-		return new class extends Entity
-		{
+		return new class extends Entity {
 			protected $attributes = [
 				'string_null'           => null,
 				'string_empty'          => null,
@@ -1053,5 +1050,4 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 			];
 		};
 	}
-
 }

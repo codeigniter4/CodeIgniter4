@@ -8,6 +8,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 class ClearLogsTest extends CIUnitTestCase
 {
 	protected $streamFilter;
+
 	protected $date;
 
 	protected function setUp(): void

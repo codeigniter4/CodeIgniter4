@@ -1,4 +1,6 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -34,5 +36,4 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
-
 }

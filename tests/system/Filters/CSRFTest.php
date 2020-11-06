@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
@@ -8,9 +9,10 @@ use CodeIgniter\Config\Services;
  */
 class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -38,5 +40,4 @@ class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request  = $filters->run($uri, 'before');
 		$this->assertEquals($expected, $request);
 	}
-
 }

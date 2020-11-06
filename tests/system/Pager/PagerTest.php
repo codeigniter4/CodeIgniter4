@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Pager;
+<?php
+
+namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
@@ -11,11 +13,11 @@ use Config\Services;
  */
 class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\Pager\Pager
 	 */
 	protected $pager;
+
 	protected $config;
 
 	protected function setUp(): void
@@ -226,9 +228,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=3');
+		$expected = (string) $expected->setQuery('page_foo=3');
 
-		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
 	}
 
 	public function testGetNextURIReturnsNullOnLastPage()
@@ -243,7 +245,7 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 1, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=2');
+		$expected = (string) $expected->setQuery('page_foo=2');
 
 		$this->assertEquals($expected, $this->pager->getNextPageURI('foo'));
 	}
@@ -255,9 +257,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=1');
+		$expected = (string) $expected->setQuery('page_foo=1');
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testGetNextURIReturnsNullOnFirstPage()
@@ -275,11 +277,11 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQueryArray($_GET);
+		$expected = (string) $expected->setQueryArray($_GET);
 
 		$this->pager->store('foo', $_GET['page_foo'] - 1, 12, 70);
 
-		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
 	}
 
 	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
@@ -289,11 +291,11 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 			'status'   => 1,
 		];
 		$expected = current_url(true);
-		$expected = (string)$expected->setQueryArray($_GET);
+		$expected = (string) $expected->setQueryArray($_GET);
 
 		$this->pager->store('foo', $_GET['page_foo'] + 1, 12, 70);
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testGetOnlyQueries()
@@ -316,15 +318,15 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getPreviousPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=1')
+						->getPreviousPageURI(), (string) $uri->setQuery('search=foo&order=asc&page=1')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getNextPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=3')
+						->getNextPageURI(), (string) $uri->setQuery('search=foo&order=asc&page=3')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-						->getPageURI(4), (string)$uri->setQuery('search=foo&order=asc&page=4')
+						->getPageURI(4), (string) $uri->setQuery('search=foo&order=asc&page=4')
 		);
 	}
 
@@ -427,9 +429,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('foo', 2, 12, 70);
 
 		$expected = current_url(true);
-		$expected = (string)$expected->setQuery('page_foo=1');
+		$expected = (string) $expected->setQuery('page_foo=1');
 
-		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+		$this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	public function testAccessPageMoreThanPageCountGetLastPage()
@@ -443,5 +445,4 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->pager->store('default', 10, 1, 10, 1000);
 		$this->assertEquals(1, $this->pager->getCurrentPage());
 	}
-
 }

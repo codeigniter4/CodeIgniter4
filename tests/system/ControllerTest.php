@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php
+
+namespace CodeIgniter;
 
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -14,7 +16,6 @@ use Config\App;
  */
 class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\CodeIgniter
 	 */
@@ -38,6 +39,7 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
+
 	/**
 	 * @var \Psr\Log\LoggerInterface
 	 */
@@ -71,8 +73,7 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$original = $_SERVER;
 		$_SERVER  = ['HTTPS' => 'on'];
 		// make sure we can instantiate one
-		$this->controller = new Class() extends Controller
-		{
+		$this->controller = new Class() extends Controller {
 			protected $forceHTTPS = 1;
 		};
 		$this->controller->initController($this->request, $this->response, $this->logger);
@@ -158,8 +159,7 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testHelpers()
 	{
-		$this->controller = new Class() extends Controller
-		{
+		$this->controller = new Class() extends Controller {
 			protected $helpers = [
 				'cookie',
 				'text',
@@ -169,5 +169,4 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertInstanceOf(Controller::class, $this->controller);
 	}
-
 }

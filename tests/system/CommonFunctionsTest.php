@@ -20,7 +20,6 @@ use Tests\Support\Models\JobModel;
  */
 class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	//--------------------------------------------------------------------
 
 	protected function setUp(): void
@@ -334,6 +333,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled

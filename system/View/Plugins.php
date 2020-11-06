@@ -19,7 +19,6 @@ use Config\Services;
  */
 class Plugins
 {
-
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *

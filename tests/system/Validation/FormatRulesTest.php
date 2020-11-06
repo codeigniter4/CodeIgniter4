@@ -4,14 +4,15 @@ namespace CodeIgniter\Validation;
 
 class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
+	const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
 
-	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
 	const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
 		'ruleSets'      => [
 			\CodeIgniter\Validation\Rules::class,
@@ -1261,5 +1262,4 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 	}
-
 }

@@ -6,7 +6,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var CodeIgniter\HTTP\Message
 	 */
@@ -348,5 +347,4 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('Content-Type', 'application/json');
 		$this->assertTrue($this->message->isJSON());
 	}
-
 }

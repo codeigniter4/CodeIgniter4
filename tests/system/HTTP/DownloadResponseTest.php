@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\DownloadException;
@@ -8,7 +9,6 @@ use DateTimeZone;
 
 class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function tearDown(): void
 	{
 		if (isset($_SERVER['HTTP_USER_AGENT']))
@@ -286,6 +286,7 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -310,5 +311,4 @@ class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Content-Length: ' . filesize(__FILE__));
 		$this->assertHeaderEmitted('Date:');
 	}
-
 }

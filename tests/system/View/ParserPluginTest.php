@@ -6,6 +6,7 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * @var \CodeIgniter\View\Parser
 	 */
 	protected $parser;
+
 	/**
 	 * @var \CodeIgniter\Validation\Validation
 	 */
@@ -114,5 +115,4 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
 	}
-
 }

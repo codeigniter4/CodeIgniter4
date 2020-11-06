@@ -9,7 +9,6 @@ use Config\Filters;
 
 class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -29,7 +28,7 @@ class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -90,7 +89,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -127,7 +126,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -164,7 +163,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -208,7 +207,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -804,6 +803,7 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled

@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
@@ -16,14 +17,12 @@ use Config\App;
  */
 class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\CodeIgniter
 	 */
 	protected $codeigniter;
 
 	/**
-	 *
 	 * @var \CodeIgniter\Router\RoutesCollection
 	 */
 	protected $routes;
@@ -308,5 +307,4 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $result);
 	}
-
 }

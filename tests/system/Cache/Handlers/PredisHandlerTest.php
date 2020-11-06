@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
+
+namespace CodeIgniter\Cache\Handlers;
 
 class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -6,6 +8,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	private static $key1 = 'key1';
 	private static $key2 = 'key2';
 	private static $key3 = 'key3';
+
 	private static function getKeyArray()
 	{
 		return [

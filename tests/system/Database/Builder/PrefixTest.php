@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -40,5 +42,4 @@ class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
 }

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database;
+<?php
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -13,9 +15,11 @@ class MigrationTest extends CIDatabaseTestCase
 	{
 		$migration = new class extends Migration {
 			protected $DBGroup = 'tests';
+
 			function up()
 			{
 			}
+
 			function down()
 			{
 			}

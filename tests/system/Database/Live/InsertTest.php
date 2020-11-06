@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -108,5 +110,4 @@ class InsertTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('misc', ['value' => $hash]);
 	}
-
 }

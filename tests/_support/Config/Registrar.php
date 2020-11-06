@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Config;
+<?php
+
+namespace Tests\Support\Config;
 
 /**
  * Class Registrar
@@ -113,5 +115,4 @@ class Registrar
 
 		return $config;
 	}
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Cache\Handlers;
 
 set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
@@ -7,7 +8,6 @@ set_error_handler(function (int $errno, string $errstr, string $errfile, int $er
 
 class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private static $directory = 'FileHandler';
 	private static $key1      = 'key1';
 	private static $key2      = 'key2';
@@ -193,13 +193,12 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('executable', $actual);
 		$this->assertArrayHasKey('fileperms', $actual);
 	}
-
 }
 
 final class BaseTestFileHandler extends FileHandler
 {
-
 	private static $directory = 'FileHandler';
+
 	private $config;
 
 	public function __construct()
@@ -226,5 +225,4 @@ final class BaseTestFileHandler extends FileHandler
 			'fileperms',
 		]);
 	}
-
 }

@@ -35,7 +35,6 @@ use Throwable;
  */
 class CLI
 {
-
 	/**
 	 * Is the readline library on the system?
 	 *

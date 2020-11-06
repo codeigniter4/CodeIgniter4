@@ -1,12 +1,13 @@
 <?php
+
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
 use CodeIgniter\Test\Mock\MockTable;
+use stdClass;
 
 class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function setUp(): void
 	{
 		$this->table = new MockTable();
@@ -294,7 +295,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSetFromObject()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 
@@ -444,7 +445,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGenerateFromDBResult()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 		$DBResult        = new DBResultDummy($dummy->connID, $dummy->resultID);
@@ -495,13 +496,11 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
 	}
-
 }
 
 // We need this for the _set_from_db_result() test
 class DBResultDummy extends Result
 {
-
 	public function getFieldNames(): array
 	{
 		return [
@@ -523,5 +522,4 @@ class DBResultDummy extends Result
 			],
 		];
 	}
-
 }

@@ -22,7 +22,6 @@ use Config\Autoload;
  */
 class Namespaces extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -97,5 +96,4 @@ class Namespaces extends BaseCommand
 
 		CLI::table($tbody, $thead);
 	}
-
 }

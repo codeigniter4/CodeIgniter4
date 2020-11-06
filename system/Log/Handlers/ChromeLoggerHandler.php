@@ -24,7 +24,6 @@ use Config\Services;
  */
 class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 {
-
 	/**
 	 * Version of this library - for ChromeLogger use.
 	 *
@@ -182,5 +181,4 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$response->setHeader($this->header, $data);
 	}
-
 }

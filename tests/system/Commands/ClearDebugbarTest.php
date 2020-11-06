@@ -8,6 +8,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 class ClearDebugbarTest extends CIUnitTestCase
 {
 	protected $streamFilter;
+
 	protected $time;
 
 	protected function setUp(): void

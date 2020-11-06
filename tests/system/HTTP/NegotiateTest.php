@@ -6,7 +6,6 @@ use Config\App;
 
 class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var CodeIgniter\HTTP\Request
 	 */
@@ -196,5 +195,4 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('popcorn/cheddar;a=2', $this->negotiate->media(['popcorn/cheddar;a=2'], false));
 		$this->assertEquals('popcorn/cheddar;a=0', $this->negotiate->media(['popcorn/cheddar;a=0', 'popcorn/cheddar;a=2;b=1'], false));
 	}
-
 }

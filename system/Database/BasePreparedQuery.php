@@ -21,7 +21,6 @@ use mysqli_stmt;
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * The prepared statement itself.
 	 *

@@ -1,12 +1,14 @@
-<?php namespace CodeIgniter\Validation;
+<?php
+
+namespace CodeIgniter\Validation;
 
 class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
 		'ruleSets'      => [
 			\CodeIgniter\Validation\Rules::class,
@@ -325,5 +327,4 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 		$this->assertFalse($this->validation->run([]));
 	}
-
 }

@@ -1,4 +1,6 @@
-<?php namespace system\Email;
+<?php
+
+namespace system\Email;
 
 use CodeIgniter\Events\Events;
 

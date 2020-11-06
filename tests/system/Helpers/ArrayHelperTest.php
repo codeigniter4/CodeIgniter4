@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
+
+namespace CodeIgniter\Helpers;
 
 class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {

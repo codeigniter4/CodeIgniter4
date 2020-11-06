@@ -27,7 +27,6 @@ use InvalidArgumentException;
  */
 class BaseBuilder
 {
-
 	/**
 	 * Reset DELETE data flag
 	 *
@@ -695,8 +694,9 @@ class BaseBuilder
 			foreach ($conditions as $i => $condition)
 			{
 				$operator = $this->getOperator($condition);
-				$cond    .= $joints[$i];
-				$cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+
+				$cond .= $joints[$i];
+				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
 			}
 		}
 
@@ -2003,6 +2003,7 @@ class BaseBuilder
 	{
 		return $this->QBWhere;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -3168,8 +3169,7 @@ class BaseBuilder
 					continue;
 				}
 
-				$groupBy = ($groupBy['escape'] === false ||
-						$this->isLiteral($groupBy['field'])) ? $groupBy['field'] : $this->db->protectIdentifiers($groupBy['field']);
+				$groupBy = ($groupBy['escape'] === false || $this->isLiteral($groupBy['field'])) ? $groupBy['field'] : $this->db->protectIdentifiers($groupBy['field']);
 			}
 
 			return "\nGROUP BY " . implode(', ', $this->QBGroupBy);
@@ -3300,8 +3300,7 @@ class BaseBuilder
 	{
 		$str = trim($str);
 
-		if (empty($str) || ctype_digit($str) || (string) (float) $str === $str ||
-				in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
+		if (empty($str) || ctype_digit($str) || (string) (float) $str === $str || in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
 		)
 		{
 			return true;

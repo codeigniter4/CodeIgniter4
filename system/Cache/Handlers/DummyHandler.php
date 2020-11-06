@@ -18,7 +18,6 @@ use CodeIgniter\Cache\CacheInterface;
  */
 class DummyHandler implements CacheInterface
 {
-
 	/**
 	 * Takes care of any handler-specific setup that must be done.
 	 */

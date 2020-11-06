@@ -28,86 +28,101 @@ class Email
 	 * @var array|null
 	 */
 	public $archive;
+
 	/**
 	 * Properties to be added to the next archive.
 	 *
 	 * @var array
 	 */
 	protected $tmpArchive = [];
+
 	/**
 	 * @var string
 	 */
 	public $fromEmail;
+
 	/**
 	 * @var string
 	 */
 	public $fromName;
+
 	/**
 	 * Used as the User-Agent and X-Mailer headers' value.
 	 *
 	 * @var string
 	 */
 	public $userAgent = 'CodeIgniter';
+
 	/**
 	 * Path to the Sendmail binary.
 	 *
 	 * @var string
 	 */
 	public $mailPath = '/usr/sbin/sendmail';    // Sendmail path
+
 	/**
 	 * Which method to use for sending e-mails.
 	 *
 	 * @var string 'mail', 'sendmail' or 'smtp'
 	 */
 	public $protocol = 'mail';        // mail/sendmail/smtp
+
 	/**
 	 * STMP Server host
 	 *
 	 * @var string
 	 */
 	public $SMTPHost = '';
+
 	/**
 	 * SMTP Username
 	 *
 	 * @var string
 	 */
 	public $SMTPUser = '';
+
 	/**
 	 * SMTP Password
 	 *
 	 * @var string
 	 */
 	public $SMTPPass = '';
+
 	/**
 	 * SMTP Server port
 	 *
 	 * @var integer
 	 */
 	public $SMTPPort = 25;
+
 	/**
 	 * SMTP connection timeout in seconds
 	 *
 	 * @var integer
 	 */
 	public $SMTPTimeout = 5;
+
 	/**
 	 * SMTP persistent connection
 	 *
 	 * @var boolean
 	 */
 	public $SMTPKeepAlive = false;
+
 	/**
 	 * SMTP Encryption
 	 *
 	 * @var string Empty, 'tls' or 'ssl'
 	 */
 	public $SMTPCrypto = '';
+
 	/**
 	 * Whether to apply word-wrapping to the message body.
 	 *
 	 * @var boolean
 	 */
 	public $wordWrap = true;
+
 	/**
 	 * Number of characters to wrap at.
 	 *
@@ -115,36 +130,42 @@ class Email
 	 * @var integer
 	 */
 	public $wrapChars = 76;
+
 	/**
 	 * Message format.
 	 *
 	 * @var string 'text' or 'html'
 	 */
 	public $mailType = 'text';
+
 	/**
 	 * Character set (default: utf-8)
 	 *
 	 * @var string
 	 */
 	public $charset = 'utf-8';
+
 	/**
 	 * Alternative message (for HTML messages only)
 	 *
 	 * @var string
 	 */
 	public $altMessage = '';
+
 	/**
 	 * Whether to validate e-mail addresses.
 	 *
 	 * @var boolean
 	 */
 	public $validate = true;
+
 	/**
 	 * X-Priority header value.
 	 *
 	 * @var integer 1-5
 	 */
 	public $priority = 3;            // Default priority (1 - 5)
+
 	/**
 	 * Newline character sequence.
 	 * Use "\r\n" to comply with RFC 822.
@@ -153,6 +174,7 @@ class Email
 	 * @var  string "\r\n" or "\n"
 	 */
 	public $newline = "\n";            // Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
+
 	/**
 	 * CRLF character sequence
 	 *
@@ -166,12 +188,14 @@ class Email
 	 * @var  string
 	 */
 	public $CRLF = "\n";
+
 	/**
 	 * Whether to use Delivery Status Notification.
 	 *
 	 * @var boolean
 	 */
 	public $DSN = false;
+
 	/**
 	 * Whether to send multipart alternatives.
 	 * Yahoo! doesn't seem to like these.
@@ -179,12 +203,14 @@ class Email
 	 * @var boolean
 	 */
 	public $sendMultipart = true;
+
 	/**
 	 * Whether to send messages to BCC recipients in batches.
 	 *
 	 * @var boolean
 	 */
 	public $BCCBatchMode = false;
+
 	/**
 	 * BCC Batch max number size.
 	 *
@@ -192,6 +218,7 @@ class Email
 	 * @var integer|string
 	 */
 	public $BCCBatchSize = 200;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -200,48 +227,56 @@ class Email
 	 * @var string
 	 */
 	protected $subject = '';
+
 	/**
 	 * Message body
 	 *
 	 * @var string
 	 */
 	protected $body = '';
+
 	/**
 	 * Final message body to be sent.
 	 *
 	 * @var string
 	 */
 	protected $finalBody = '';
+
 	/**
 	 * Final headers to send
 	 *
 	 * @var string
 	 */
 	protected $headerStr = '';
+
 	/**
 	 * SMTP Connection socket placeholder
 	 *
 	 * @var resource|null
 	 */
 	protected $SMTPConnect;
+
 	/**
 	 * Mail encoding
 	 *
 	 * @var string '8bit' or '7bit'
 	 */
 	protected $encoding = '8bit';
+
 	/**
 	 * Whether to perform SMTP authentication
 	 *
 	 * @var boolean
 	 */
 	protected $SMTPAuth = false;
+
 	/**
 	 * Whether to send a Reply-To header
 	 *
 	 * @var boolean
 	 */
 	protected $replyToFlag = false;
+
 	/**
 	 * Debug messages
 	 *
@@ -249,36 +284,42 @@ class Email
 	 * @var array
 	 */
 	protected $debugMessage = [];
+
 	/**
 	 * Recipients
 	 *
 	 * @var array|string
 	 */
 	protected $recipients = [];
+
 	/**
 	 * CC Recipients
 	 *
 	 * @var array
 	 */
 	protected $CCArray = [];
+
 	/**
 	 * BCC Recipients
 	 *
 	 * @var array
 	 */
 	protected $BCCArray = [];
+
 	/**
 	 * Message headers
 	 *
 	 * @var array
 	 */
 	protected $headers = [];
+
 	/**
 	 * Attachment data
 	 *
 	 * @var array
 	 */
 	protected $attachments = [];
+
 	/**
 	 * Valid $protocol values
 	 *
@@ -290,6 +331,7 @@ class Email
 		'sendmail',
 		'smtp',
 	];
+
 	/**
 	 * Base charsets
 	 *
@@ -302,6 +344,7 @@ class Email
 		'us-ascii',
 		'iso-2022-',
 	];
+
 	/**
 	 * Bit depths
 	 *
@@ -314,6 +357,7 @@ class Email
 		'7bit',
 		'8bit',
 	];
+
 	/**
 	 * $priority translations
 	 *
@@ -328,12 +372,14 @@ class Email
 		4 => '4 (Low)',
 		5 => '5 (Lowest)',
 	];
+
 	/**
 	 * mbstring.func_overload flag
 	 *
 	 * @var boolean
 	 */
 	protected static $func_overload;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -348,6 +394,7 @@ class Email
 		$this->initialize($config);
 		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -383,6 +430,7 @@ class Email
 		$this->SMTPAuth = isset($this->SMTPUser[0], $this->SMTPPass[0]);
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -411,6 +459,7 @@ class Email
 		}
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -462,6 +511,7 @@ class Email
 
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -503,6 +553,7 @@ class Email
 
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -527,6 +578,7 @@ class Email
 		$this->recipients = $to;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -551,6 +603,7 @@ class Email
 		$this->tmpArchive['CCArray'] = $cc;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -584,6 +637,7 @@ class Email
 		}
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -601,6 +655,7 @@ class Email
 		$this->setHeader('Subject', $subject);
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -615,6 +670,7 @@ class Email
 		$this->body = rtrim(str_replace("\r", '', $body));
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -664,6 +720,7 @@ class Email
 		];
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -688,6 +745,7 @@ class Email
 		}
 		return false;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -703,6 +761,7 @@ class Email
 		$this->headers[$header] = str_replace(["\n", "\r"], '', $value);
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -720,6 +779,7 @@ class Email
 		}
 		return $email;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -734,6 +794,7 @@ class Email
 		$this->altMessage = (string) $str;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -748,6 +809,7 @@ class Email
 		$this->mailType = ($type === 'html') ? 'html' : 'text';
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -762,6 +824,7 @@ class Email
 		$this->wordWrap = (bool) $wordWrap;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -776,6 +839,7 @@ class Email
 		$this->protocol = in_array($protocol, $this->protocols, true) ? strtolower($protocol) : 'mail';
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -790,6 +854,7 @@ class Email
 		$this->priority = preg_match('/^[1-5]$/', (string) $n) ? (int) $n : 3;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -804,6 +869,7 @@ class Email
 		$this->newline = in_array($newline, ["\n", "\r\n", "\r"], true) ? $newline : "\n";
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -818,6 +884,7 @@ class Email
 		$this->CRLF = ($CRLF !== "\n" && $CRLF !== "\r\n" && $CRLF !== "\r") ? "\n" : $CRLF;
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -830,6 +897,7 @@ class Email
 		$from = str_replace(['>', '<'], '', $this->headers['Return-Path']);
 		return '<' . uniqid('', true) . strstr($from, '@') . '>';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -843,6 +911,7 @@ class Email
 		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail'; // @phpstan-ignore-line
 		return $this->protocol;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -863,6 +932,7 @@ class Email
 		}
 		return $this->encoding;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -883,6 +953,7 @@ class Email
 		}
 		return 'plain';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -898,6 +969,7 @@ class Email
 		$timezone = floor($timezone / 3600) * 100 + ($timezone % 3600) / 60;
 		return sprintf('%s %s%04d', date('D, j M Y H:i:s'), $operator, $timezone);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -909,6 +981,7 @@ class Email
 	{
 		return 'This is a multi-part message in MIME format.' . $this->newline . 'Your email application may not support this format.';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -935,6 +1008,7 @@ class Email
 		}
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -954,6 +1028,7 @@ class Email
 		}
 		return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -976,6 +1051,7 @@ class Email
 		}
 		return $cleanEmail;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1004,6 +1080,7 @@ class Email
 		$body = preg_replace('| +|', ' ', $body);
 		return ($this->wordWrap) ? $this->wordWrap($body, 76) : $body;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1085,6 +1162,7 @@ class Email
 		}
 		return $output;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1099,6 +1177,7 @@ class Email
 		$this->setHeader('Message-ID', $this->getMessageID());
 		$this->setHeader('Mime-Version', '1.0');
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1129,6 +1208,7 @@ class Email
 			$this->headerStr = rtrim($this->headerStr);
 		}
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1262,6 +1342,7 @@ class Email
 		}
 		$this->finalBody = ($this->getProtocol() === 'mail') ? $body : $hdr . $this->newline . $this->newline . $body;
 	}
+
 	//--------------------------------------------------------------------
 	protected function attachmentsHaveMultipart($type)
 	{
@@ -1274,6 +1355,7 @@ class Email
 		}
 		return false;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1306,6 +1388,7 @@ class Email
 		// and therefore a boundary wouldn't be necessary
 		empty($name) || $body .= '--' . $boundary . '--';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1470,6 +1553,7 @@ class Email
 		// get rid of extra CRLF tacked onto the end
 		return static::substr($output, 0, static::strlen($this->CRLF) * -1);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1539,6 +1623,7 @@ class Email
 		// End the header
 		return $output . '?=';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1594,6 +1679,7 @@ class Email
 
 		return $result;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1641,6 +1727,7 @@ class Email
 		$this->setArchiveValues();
 		Events::trigger('email', $this->archive);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1655,6 +1742,7 @@ class Email
 				], $this->finalBody
 		);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1672,6 +1760,7 @@ class Email
 		}
 		return $matches[1];
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1701,6 +1790,7 @@ class Email
 		$this->setErrorMessage(lang('Email.sent', [$protocol]));
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1729,6 +1819,7 @@ class Email
 		}
 		return (filter_var($email, FILTER_VALIDATE_EMAIL) === $email && preg_match('#\A[a-z0-9._+-]+@[a-z0-9.-]{1,253}\z#i', $email));
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1751,6 +1842,7 @@ class Email
 		// we've encountered servers that seem to require it to be in place.
 		return mail($recipients, $this->subject, $this->finalBody, $this->headerStr, '-f ' . $from);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1788,6 +1880,7 @@ class Email
 		}
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1853,6 +1946,7 @@ class Email
 		}
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1864,6 +1958,7 @@ class Email
 	{
 		$this->sendCommand($this->SMTPKeepAlive ? 'reset' : 'quit');
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1902,8 +1997,7 @@ class Email
 		{
 			$this->sendCommand('hello');
 			$this->sendCommand('starttls');
-			$crypto = stream_socket_enable_crypto($this->SMTPConnect, true, STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT |
-				STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
+			$crypto = stream_socket_enable_crypto($this->SMTPConnect, true, STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			if ($crypto !== true)
 			{
 				$this->setErrorMessage(lang('Email.SMTPError', [$this->getSMTPData()]));
@@ -1912,6 +2006,7 @@ class Email
 		}
 		return $this->sendCommand('hello');
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1982,6 +2077,7 @@ class Email
 		}
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2032,6 +2128,7 @@ class Email
 		}
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2081,6 +2178,7 @@ class Email
 
 		return true;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2101,6 +2199,7 @@ class Email
 		}
 		return $data;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2123,6 +2222,7 @@ class Email
 		}
 		return isset($_SERVER['SERVER_ADDR']) ? '[' . $_SERVER['SERVER_ADDR'] . ']' : '[127.0.0.1]';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2144,6 +2244,7 @@ class Email
 		in_array('body', $include, true) && $rawData    .= htmlspecialchars($this->finalBody);
 		return $msg . ($rawData === '' ? '' : '<pre>' . $rawData . '</pre>');
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2155,6 +2256,7 @@ class Email
 	{
 		$this->debugMessage[] = $msg . '<br />';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2169,6 +2271,7 @@ class Email
 		$mime = Mimes::guessTypeFromExtension(strtolower($ext));
 		return ! empty($mime) ? $mime : 'application/x-unknown-content-type';
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2178,6 +2281,7 @@ class Email
 	{
 		is_resource($this->SMTPConnect) && $this->sendCommand('quit');
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2191,6 +2295,7 @@ class Email
 	{
 		return (static::$func_overload) ? mb_strlen($str, '8bit') : strlen($str);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -2210,6 +2315,7 @@ class Email
 		}
 		return isset($length) ? substr($str, $start, $length) : substr($str, $start);
 	}
+
 	//--------------------------------------------------------------------
 
 	/**

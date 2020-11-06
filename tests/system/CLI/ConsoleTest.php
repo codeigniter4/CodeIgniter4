@@ -11,7 +11,6 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 class ConsoleTest extends CIUnitTestCase
 {
-
 	private $stream_filter;
 
 	protected function setUp(): void
@@ -75,5 +74,4 @@ class ConsoleTest extends CIUnitTestCase
 		$this->assertStringContainsString('Lists the available commands.', $result);
 		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
-
 }

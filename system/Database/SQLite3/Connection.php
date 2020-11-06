@@ -24,7 +24,6 @@ use stdClass;
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Database driver
 	 *

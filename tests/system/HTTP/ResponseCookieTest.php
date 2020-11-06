@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -6,7 +7,6 @@ use Config\App;
 
 class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -316,5 +316,4 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 			'samesite' => 'Invalid',
 		]);
 	}
-
 }

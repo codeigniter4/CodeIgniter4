@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -137,7 +139,7 @@ WHEN "id" = :id0: THEN :description0:
 ELSE "description" END
 WHERE "id" IN(:id:,:id0:)';
 
-		$this->assertEquals($expected, $query->getOriginalQuery() );
+		$this->assertEquals($expected, $query->getOriginalQuery());
 
 		$expected = 'UPDATE "jobs" SET "name" = CASE 
 WHEN "id" = 2 THEN \'Comedian\'
@@ -148,7 +150,7 @@ WHEN "id" = 3 THEN \'Iam yellow\'
 ELSE "description" END
 WHERE "id" IN(2,3)';
 
-		$this->assertEquals($expected, $query->getQuery() );
+		$this->assertEquals($expected, $query->getQuery());
 	}
 
 	//--------------------------------------------------------------------

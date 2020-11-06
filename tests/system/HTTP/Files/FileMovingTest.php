@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -6,7 +7,6 @@ use org\bovigo\vfs\vfsStream;
 
 class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -316,9 +316,9 @@ function move_uploaded_file($filename, $destination)
 function rrmdir($src)
 {
 	$dir = opendir($src);
-	while (false !== ( $file = readdir($dir)))
+	while (false !== ($file = readdir($dir)))
 	{
-		if (( $file !== '.' ) && ( $file !== '..' ))
+		if (($file !== '.') && ($file !== '..'))
 		{
 			$full = $src . '/' . $file;
 			if (is_dir($full))

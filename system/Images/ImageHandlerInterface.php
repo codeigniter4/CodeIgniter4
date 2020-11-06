@@ -16,7 +16,6 @@ namespace CodeIgniter\Images;
  */
 interface ImageHandlerInterface
 {
-
 	/**
 	 * Resize the image
 	 *

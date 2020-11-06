@@ -18,7 +18,6 @@ use CodeIgniter\Database\BaseBuilder;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * Identifier escape character
 	 *

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Config;
+<?php
+
+namespace Tests\Support\Config;
 
 /**
  * Class Registrar
@@ -8,7 +10,6 @@
 
 class TestRegistrar
 {
-
 	public static function RegistrarConfig()
 	{
 		return [
@@ -23,5 +24,4 @@ class TestRegistrar
 			],
 		];
 	}
-
 }

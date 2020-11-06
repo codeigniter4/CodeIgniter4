@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
@@ -9,7 +10,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function tearDown(): void
 	{
 	}
@@ -819,6 +819,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
+
 	//--------------------------------------------------------------------
 
 	public function testReverseRoutingWithLocale()
@@ -1654,5 +1655,4 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
-
 }

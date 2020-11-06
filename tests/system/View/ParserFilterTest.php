@@ -5,15 +5,16 @@ use CodeIgniter\View\Parser;
 class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $loader;
+
 	protected $viewsDir;
+
 	protected $config;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->loader = \CodeIgniter\Config\Services::locator();
-		;
+		$this->loader   = \CodeIgniter\Config\Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
 		$this->config   = new Config\View();
 	}

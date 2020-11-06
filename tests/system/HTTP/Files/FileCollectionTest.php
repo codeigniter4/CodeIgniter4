@@ -1,9 +1,9 @@
 <?php
+
 namespace CodeIgniter\HTTP\Files;
 
 class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -659,7 +659,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$files = $collection->getFileMultiple('userfiletest');
 
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
 
 	//--------------------------------------------------------------------
@@ -714,7 +714,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('my-form.details.avatars');
-		$this->assertIsArray( $files);
+		$this->assertIsArray($files);
 		$this->assertCount(2, $files);
 
 		$this->assertInstanceOf(UploadedFile::class, $files[0]);
@@ -769,7 +769,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('my-form.details.avatars');
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
 
 	//--------------------------------------------------------------------
@@ -802,7 +802,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$files = $collection->getFileMultiple('userfile');
 		$this->assertCount(2, $files);
-		$this->assertIsArray( $files);
+		$this->assertIsArray($files);
 
 		$this->assertInstanceOf(UploadedFile::class, $files[0]);
 		$this->assertEquals(124, $files[0]->getSize());
@@ -836,7 +836,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$collection = new FileCollection();
 
 		$files = $collection->getFileMultiple('userfile');
-		$this->assertNull( $files);
+		$this->assertNull($files);
 	}
 
 	//--------------------------------------------------------------------

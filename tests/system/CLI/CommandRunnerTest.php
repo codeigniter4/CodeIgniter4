@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
@@ -8,7 +9,6 @@ use Config\Services;
 
 class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private $stream_filter;
 	protected $env;
 	protected $config;
@@ -133,5 +133,4 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		// make sure the result looks like a command list
 		$this->assertStringContainsString('Lists the available commands.', $result);
 	}
-
 }

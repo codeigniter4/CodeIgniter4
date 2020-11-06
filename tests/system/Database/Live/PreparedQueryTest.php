@@ -11,9 +11,9 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class PreparedQueryTest extends CIDatabaseTestCase
 {
-
 	protected $refresh = true;
-	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 

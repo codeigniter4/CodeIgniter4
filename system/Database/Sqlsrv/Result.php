@@ -21,7 +21,6 @@ use stdClass;
  */
 class Result extends BaseResult implements ResultInterface
 {
-
 	/**
 	 * Row offset
 	 *
@@ -183,5 +182,4 @@ class Result extends BaseResult implements ResultInterface
 		}
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
-
 }

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
+
+namespace Tests\Support\Database\Seeds;
 
 class CITestSeeder extends \CodeIgniter\Database\Seeder
 {

@@ -21,7 +21,6 @@ use Throwable;
  */
 class Forge
 {
-
 	/**
 	 * The active database connection.
 	 *
@@ -1324,5 +1323,4 @@ class Forge
 	{
 		$this->fields = $this->keys = $this->uniqueKeys = $this->primaryKeys = $this->foreignKeys = [];
 	}
-
 }

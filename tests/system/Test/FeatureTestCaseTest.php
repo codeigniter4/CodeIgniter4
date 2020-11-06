@@ -11,7 +11,6 @@ use CodeIgniter\Test\FeatureTestCase;
  */
 class FeatureTestCaseTest extends FeatureTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();

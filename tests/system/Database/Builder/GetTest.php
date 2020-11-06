@@ -1,4 +1,6 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -103,5 +105,4 @@ class GetTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
 	}
-
 }

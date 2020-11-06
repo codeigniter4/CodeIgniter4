@@ -15,7 +15,6 @@ use CodeIgniter\Log\Logger;
 
 class TestLogger extends Logger
 {
-
 	protected static $op_logs = [];
 
 	//--------------------------------------------------------------------
@@ -84,10 +83,9 @@ class TestLogger extends Logger
 	}
 
 	//--------------------------------------------------------------------
-	// Expose cleanFileNames()
+
 	public function cleanup($file)
 	{
 		return $this->cleanFileNames($file);
 	}
-
 }

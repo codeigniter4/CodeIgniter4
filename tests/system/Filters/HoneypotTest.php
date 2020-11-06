@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
@@ -9,10 +10,12 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
  */
 class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $honey;
+
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -112,5 +115,4 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response = $filters->run($uri, 'after');
 		$this->assertStringNotContainsString($this->honey->name, $this->response->getBody());
 	}
-
 }

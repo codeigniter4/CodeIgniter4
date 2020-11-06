@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Language;
+<?php
+
+namespace Tests\Support\Language;
 
 use CodeIgniter\Language\Language;
 
@@ -23,5 +25,4 @@ class SecondMockLanguage extends Language
 	{
 		return $this->loadedFiles[$locale];
 	}
-
 }

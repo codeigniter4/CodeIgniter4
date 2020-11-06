@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Test\Mock\MockFileLogger;
@@ -7,7 +8,6 @@ use org\bovigo\vfs\vfsStream;
 
 class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -78,5 +78,4 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expectedResult = 'Test message';
 		$this->assertStringContainsString($expectedResult, $line);
 	}
-
 }

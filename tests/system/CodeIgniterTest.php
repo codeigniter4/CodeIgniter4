@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php
+
+namespace CodeIgniter;
 
 use \CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
@@ -35,7 +37,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::tearDown();
 
-		if (count( ob_list_handlers() ) > 1)
+		if (count(ob_list_handlers()) > 1)
 		{
 			ob_end_clean();
 		}
@@ -429,5 +431,4 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
-
 }

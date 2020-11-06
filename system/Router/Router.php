@@ -21,7 +21,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class Router implements RouterInterface
 {
-
 	/**
 	 * A RouteCollection instance.
 	 *

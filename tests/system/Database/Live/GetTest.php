@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -81,8 +83,8 @@ class GetTest extends CIDatabaseTestCase
 						 ->get()
 						 ->getFieldNames();
 
-		$this->assertTrue(in_array('name', $jobs));
-		$this->assertTrue(in_array('description', $jobs));
+		$this->assertTrue(in_array('name', $jobs, true));
+		$this->assertTrue(in_array('description', $jobs, true));
 	}
 
 	//--------------------------------------------------------------------

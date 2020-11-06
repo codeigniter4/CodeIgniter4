@@ -13,7 +13,6 @@ use Config\App;
  */
 class CLIRequestTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\CLIRequest
 	 */

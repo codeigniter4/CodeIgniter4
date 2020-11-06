@@ -5,6 +5,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use CURLFile;
 
 class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -860,7 +861,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 				'hi',
 				'there',
 			],
-			'afile' => new \CURLFile(__FILE__),
+			'afile' => new CURLFile(__FILE__),
 		];
 		$this->request->request('POST', '/post', [
 			'multipart' => $params,
@@ -893,7 +894,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 			$this->request->curl_options[CURLOPT_POSTFIELDS]
 		);
 
-		$params['afile'] = new \CURLFile(__FILE__);
+		$params['afile'] = new CURLFile(__FILE__);
 
 		$this->request->setForm($params, true)->post('/post');
 

@@ -8,9 +8,10 @@ use Tests\Support\Commands\ParamsReveal;
 
 class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private $streamFilter;
+
 	protected $logger;
+
 	protected $commands;
 
 	protected function setUp(): void

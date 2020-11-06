@@ -16,7 +16,6 @@ namespace CodeIgniter\Database\Sqlsrv;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * DROP CONSTRAINT statement
 	 *
@@ -406,5 +405,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
 }

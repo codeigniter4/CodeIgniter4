@@ -23,7 +23,6 @@ use InvalidArgumentException;
  */
 class CURLRequest extends Request
 {
-
 	/**
 	 * The response object associated with this request
 	 *

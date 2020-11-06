@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use Config\App;
@@ -11,7 +12,6 @@ use Config\App;
  */
 class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	// Having this method as setUp() doesn't work - can't find Config\App !?
 	protected function prepare(bool $CSPEnabled = true)
 	{
@@ -502,5 +502,4 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertHeaderNotEmitted('content-security-policy', true);
 	}
-
 }

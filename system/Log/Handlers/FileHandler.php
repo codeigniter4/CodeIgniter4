@@ -19,7 +19,6 @@ use Exception;
  */
 class FileHandler extends BaseHandler implements HandlerInterface
 {
-
 	/**
 	 * Folder to hold logs
 	 *

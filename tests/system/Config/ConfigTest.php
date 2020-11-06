@@ -1,11 +1,12 @@
 <?php
+
 namespace CodeIgniter\Config;
 
 use Config\DocTypes;
+use stdClass;
 
 class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function testCreateSingleInstance()
 	{
 		$Config          = Config::get('DocTypes', false);
@@ -44,8 +45,7 @@ class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testInjection()
 	{
 		Config::reset();
-		Config::injectMock('Banana', new \stdClass());
+		Config::injectMock('Banana', new stdClass());
 		$this->assertNotNull(Config::get('Banana'));
 	}
-
 }

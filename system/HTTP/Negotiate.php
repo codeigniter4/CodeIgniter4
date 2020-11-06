@@ -24,7 +24,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  */
 class Negotiate
 {
-
 	/**
 	 * Request
 	 *
@@ -365,8 +364,7 @@ class Negotiate
 
 		foreach ($supported['params'] as $label => $value)
 		{
-			if (! isset($acceptable['params'][$label]) ||
-					$acceptable['params'][$label] !== $value)
+			if (! isset($acceptable['params'][$label]) || $acceptable['params'][$label] !== $value)
 			{
 				return false;
 			}

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\View;
+<?php
+
+namespace Tests\Support\View;
 
 /**
  * Class SampleClass
@@ -7,8 +9,8 @@
  * during tests to make sure that things work as expected.
  */
 
-class SampleClass {
-
+class SampleClass
+{
 	public function index()
 	{
 		return 'Hello World';

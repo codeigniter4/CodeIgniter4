@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
+
+namespace CodeIgniter\Helpers;
 
 class SecurityHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -31,5 +33,4 @@ class SecurityHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
 	}
-
 }

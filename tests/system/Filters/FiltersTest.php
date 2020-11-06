@@ -21,6 +21,7 @@ require_once __DIR__ . '/fixtures/Role.php';
 class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $request;
+
 	protected $response;
 
 	protected function setUp(): void
@@ -657,7 +658,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filters = $filters->getFilters();
 
-		$this->assertTrue(in_array('some_alias', $filters['before']));
+		$this->assertTrue(in_array('some_alias', $filters['before'], true));
 	}
 
 	public function testAddFilterSection()
@@ -672,7 +673,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 				->initialize('admin/foo/bar');
 		$list    = $filters->getFilters();
 
-		$this->assertTrue(in_array('another', $list['before']));
+		$this->assertTrue(in_array('another', $list['before'], true));
 	}
 
 	public function testInitializeTwice()
@@ -688,7 +689,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 				->initialize();
 		$list    = $filters->getFilters();
 
-		$this->assertTrue(in_array('another', $list['before']));
+		$this->assertTrue(in_array('another', $list['before'], true));
 	}
 
 	public function testEnableFilter()
@@ -711,7 +712,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filters = $filters->getFilters();
 
-		$this->assertTrue(in_array('google', $filters['before']));
+		$this->assertTrue(in_array('google', $filters['before'], true));
 	}
 
 	public function testEnableFilterWithArguments()
@@ -726,7 +727,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$filters = new Filters((object)$config, $this->request, $this->response);
+		$filters = new Filters((object) $config, $this->request, $this->response);
 
 		$filters = $filters->initialize('admin/foo/bar');
 
@@ -735,7 +736,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$found = $filters->getFilters();
 
-		$this->assertTrue(in_array('role', $found['before']));
+		$this->assertTrue(in_array('role', $found['before'], true));
 		$this->assertEquals(['admin', 'super'], $filters->getArguments('role'));
 		$this->assertEquals(['role' => ['admin', 'super']], $filters->getArguments());
 
@@ -758,7 +759,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$filters = new Filters((object)$config, $this->request, $this->response);
+		$filters = new Filters((object) $config, $this->request, $this->response);
 
 		$filters = $filters->initialize('admin/foo/bar');
 
@@ -767,7 +768,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$found = $filters->getFilters();
 
-		$this->assertTrue(in_array('role', $found['before']));
+		$this->assertTrue(in_array('role', $found['before'], true));
 
 		$response = $filters->run('admin/foo/bar', 'before');
 		$this->assertEquals('Is null', $response);

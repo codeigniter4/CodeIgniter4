@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use Config\App;
@@ -11,7 +12,6 @@ use Config\App;
  */
 class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * These need to be run as a separate process, since phpunit
 	 * has already captured the "normal" output, and we will get
@@ -26,6 +26,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * the body we thought would be sent actually was.
 	 */
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -60,6 +61,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * This test does not test that CSP is handled properly -
 	 * it makes sure that sending gives CSP a chance to do its thing.
@@ -133,5 +135,4 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertHeaderEmitted('Set-Cookie: foo=bar;');
 		$this->assertHeaderEmitted('Set-Cookie: login_time');
 	}
-
 }

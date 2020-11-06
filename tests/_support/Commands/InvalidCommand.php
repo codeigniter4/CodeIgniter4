@@ -1,20 +1,23 @@
 <?php
+
 namespace Tests\Support\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
+use ReflectionException;
 
 class InvalidCommand extends BaseCommand
 {
+	protected $group = 'demo';
 
-	protected $group       = 'demo';
-	protected $name        = 'app:invalid';
+	protected $name = 'app:invalid';
+
 	protected $description = '';
 
 	public function __construct()
 	{
-		throw new \ReflectionException();
+		throw new ReflectionException();
 	}
 
 	public function run(array $params)

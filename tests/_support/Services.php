@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php
+
+namespace CodeIgniter;
 
 use CIUnitTestCase;
 use Config\Services as ConfigServices;

@@ -26,7 +26,6 @@ use Config\Services;
  */
 class CSRF implements FilterInterface
 {
-
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during

@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Config\Services;
@@ -11,7 +12,6 @@ use Config\App;
 
 final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private $name;
 	private $value;
 	private $expire;
@@ -174,5 +174,4 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		delete_cookie($this->name);
 	}
-
 }

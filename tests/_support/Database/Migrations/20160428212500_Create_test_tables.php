@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Database\Migrations;
+<?php
+
+namespace Tests\Support\Database\Migrations;
 
 class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 {

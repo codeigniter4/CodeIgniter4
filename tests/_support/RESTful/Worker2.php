@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Support\RESTful;
 
 use CodeIgniter\RESTful\ResourcePresenter;
@@ -8,5 +9,4 @@ use CodeIgniter\RESTful\ResourcePresenter;
  */
 class Worker2 extends ResourcePresenter
 {
-
 }

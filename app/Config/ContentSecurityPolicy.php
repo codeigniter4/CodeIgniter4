@@ -17,14 +17,12 @@ use CodeIgniter\Config\BaseConfig;
 class ContentSecurityPolicy extends BaseConfig
 {
 	// broadbrush CSP management
-
 	public $reportOnly              = false; // default CSP report context
 	public $reportURI               = null; // URL to send violation reports to
 	public $upgradeInsecureRequests = false; // toggle for forcing https
 
 	// sources allowed; string or array of strings
 	// Note: once you set a policy to 'none', it cannot be further restricted
-
 	public $defaultSrc     = null; // will default to self if not over-ridden
 	public $scriptSrc      = 'self';
 	public $styleSrc       = 'self';
@@ -44,5 +42,4 @@ class ContentSecurityPolicy extends BaseConfig
 
 	// list of actions allowed; string or array of strings
 	public $sandbox = null;
-
 }

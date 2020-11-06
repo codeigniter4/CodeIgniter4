@@ -20,7 +20,6 @@ use php_user_filter;
  */
 class CITestStreamFilter extends php_user_filter
 {
-
 	/**
 	 * Buffer to capture stream content.
 	 *

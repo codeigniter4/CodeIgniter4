@@ -4,9 +4,10 @@ use CodeIgniter\View\View;
 
 class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $loader;
+
 	protected $viewsDir;
+
 	protected $config;
 
 	//--------------------------------------------------------------------

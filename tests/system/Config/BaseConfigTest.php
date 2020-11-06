@@ -2,9 +2,13 @@
 
 namespace CodeIgniter\Config;
 
+use Encryption;
+use RegistrarConfig;
+use RuntimeException;
+use SimpleConfig;
+
 class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $fixturesFolder;
 
 	//--------------------------------------------------------------------
@@ -37,7 +41,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals('bar', $config->FOO);
 		// empty treated as boolean false
@@ -58,9 +62,10 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 			'simpleconfig.shortie' => 123,
 			'SimpleConfig.longie'  => 456,
 		];
-		$dotenv  = new DotEnv($this->fixturesFolder, '.env');
+
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals(123, $config->shortie);
 		$this->assertEquals(456, $config->longie);
@@ -73,7 +78,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		// override config with ENV var
 		$this->assertEquals('pow', $config->alpha);
@@ -100,7 +105,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals('baz', $config->onedeep);
 	}
@@ -112,7 +117,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals('ci4', $config->default['name']);
 		$this->assertEquals('Malcolm', $config->crew['captain']);
@@ -129,7 +134,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals('complex', $config->simple['name']);
 		$this->assertEquals('foo', $config->first);
@@ -143,7 +148,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals('foo', $config->first);
 		$this->assertEquals('bar', $config->second);
@@ -159,7 +164,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
-		$config = new \Encryption();
+		$config = new Encryption();
 
 		// override config with ENV var
 		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($config->key));
@@ -176,7 +181,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
 		$dotenv->load();
-		$config = new \Encryption('base64');
+		$config = new Encryption('base64');
 
 		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($config->key));
 		$this->assertEquals('OpenSSL', $config->driver);
@@ -188,7 +193,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
 		$dotenv->load();
-		$config = new \Encryption();
+		$config = new Encryption();
 
 		// override config with ENV var
 		$this->assertEquals('84cf2c0811d5daf9e1c897825a3debce91f9a33391e639f72f7a4740b30675a2', bin2hex($config->key));
@@ -201,7 +206,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
 		$dotenv->load();
-		$config = new \Encryption('base64');
+		$config = new Encryption('base64');
 
 		$this->assertEquals('Psf8bUHRh1UJYG2M7e+5ec3MdjpKpzAr0twamcAvOcI=', base64_encode($config->key));
 		$this->assertEquals('MCrypt', $config->driver);
@@ -214,7 +219,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
 		$dotenv->load();
 
-		$config = new \SimpleConfig();
+		$config = new SimpleConfig();
 
 		$this->assertEquals(0, $config->QZERO);
 		$this->assertSame('0', $config->QZEROSTR);
@@ -226,7 +231,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRegistrars()
 	{
-		$config              = new \RegistrarConfig();
+		$config              = new RegistrarConfig();
 		$config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
@@ -245,11 +250,11 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBadRegistrar()
 	{
 		// Shouldn't change any values.
-		$config              = new \RegistrarConfig();
+		$config              = new RegistrarConfig();
 		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
 
@@ -261,7 +266,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$modulesConfig          = config('Modules');
 		$modulesConfig->enabled = false;
 
-		$config              = new \RegistrarConfig();
+		$config              = new RegistrarConfig();
 		$config::$registrars = [];
 		$expected            = $config::$registrars;
 
@@ -276,7 +281,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$modulesConfig          = config('Modules');
 		$modulesConfig->enabled = true;
 
-		$config              = new \RegistrarConfig();
+		$config              = new RegistrarConfig();
 		$config::$registrars = [];
 		$this->setPrivateProperty($config, 'didDiscovery', false);
 
@@ -285,5 +290,4 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(true, $this->getPrivateProperty($config, 'didDiscovery'));
 	}
-
 }

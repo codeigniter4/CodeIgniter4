@@ -6,6 +6,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use UnnamespacedClass;
 
 class AutoloaderTest extends CIUnitTestCase
 {
@@ -29,7 +30,8 @@ class AutoloaderTest extends CIUnitTestCase
 			'OtherClass'        => APPPATH . 'Controllers/Home.php',
 			'Name\Spaced\Class' => APPPATH . 'Controllers/Home.php',
 		];
-		$config->psr4     = [
+
+		$config->psr4 = [
 			'App'         => APPPATH,
 			'CodeIgniter' => SYSTEMPATH,
 		];
@@ -40,7 +42,7 @@ class AutoloaderTest extends CIUnitTestCase
 
 	public function testLoadStoredClass()
 	{
-		$this->assertInstanceOf('UnnamespacedClass', new \UnnamespacedClass());
+		$this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
 	}
 
 	public function testInitializeWithInvalidArguments()

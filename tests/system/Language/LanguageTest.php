@@ -173,7 +173,7 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new SecondMockLanguage('en');
 
 		$this->lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $this->lang->loaded()));
+		$this->assertTrue(in_array('More', $this->lang->loaded(), true));
 
 		$this->lang->loadem('More', 'en');
 		$this->assertEquals(1, count($this->lang->loaded())); // should only be there once
@@ -186,11 +186,11 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new SecondMockLanguage('en');
 
 		$result = $this->lang->loadem('More', 'en', true);
-		$this->assertFalse(in_array('More', $this->lang->loaded()));
+		$this->assertFalse(in_array('More', $this->lang->loaded(), true));
 		$this->assertEquals(3, count($result));
 
 		$result = $this->lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $this->lang->loaded()));
+		$this->assertTrue(in_array('More', $this->lang->loaded(), true));
 		$this->assertEquals(1, count($this->lang->loaded()));
 	}
 
@@ -289,6 +289,7 @@ class LanguageTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Testing base locale vs variants, with fallback to English.
 	 *

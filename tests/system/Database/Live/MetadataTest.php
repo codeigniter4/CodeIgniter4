@@ -9,9 +9,9 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class MetadataTest extends CIDatabaseTestCase
 {
-
 	protected $refresh = true;
-	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	/**
 	 * Array of expected tables.

@@ -11,12 +11,13 @@ use Config\App;
 
 class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var RouteCollection
 	 */
 	protected $routes;
+
 	protected $request;
+
 	protected $config;
 
 	protected function setUp(): void

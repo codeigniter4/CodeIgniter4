@@ -25,7 +25,6 @@ use Closure;
  */
 interface RouteCollectionInterface
 {
-
 	/**
 	 * Adds a single route to the collection.
 	 *

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Validation;
+<?php
+
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
@@ -9,11 +11,11 @@ use Config\Services;
 
 class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
 		'ruleSets'      => [
 			\CodeIgniter\Validation\Rules::class,

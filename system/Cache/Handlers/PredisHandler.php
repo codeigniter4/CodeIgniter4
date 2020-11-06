@@ -22,7 +22,6 @@ use Predis\Client;
  */
 class PredisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -278,5 +277,4 @@ class PredisHandler implements CacheInterface
 	{
 		return class_exists('\Predis\Client');
 	}
-
 }

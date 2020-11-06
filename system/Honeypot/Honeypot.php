@@ -21,7 +21,6 @@ use Config\Honeypot as HoneypotConfig;
  */
 class Honeypot
 {
-
 	/**
 	 * Our configuration.
 	 *
@@ -107,5 +106,4 @@ class Honeypot
 
 		return $template;
 	}
-
 }

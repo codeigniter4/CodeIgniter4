@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Format;
+<?php
+
+namespace CodeIgniter\Format;
 
 class JSONFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -57,5 +59,4 @@ class JSONFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = 'Boom';
 		$this->assertEquals($expected, $this->jsonFormatter->format($data));
 	}
-
 }

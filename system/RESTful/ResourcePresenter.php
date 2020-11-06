@@ -22,7 +22,6 @@ use Psr\Log\LoggerInterface;
  */
 class ResourcePresenter extends Controller
 {
-
 	/**
 	 * @var string|null Name of the model class managing this resource's data
 	 */
@@ -172,5 +171,4 @@ class ResourcePresenter extends Controller
 			$this->modelName = get_class($this->model);
 		}
 	}
-
 }

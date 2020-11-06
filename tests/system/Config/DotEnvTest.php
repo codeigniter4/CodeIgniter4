@@ -9,7 +9,6 @@ use org\bovigo\vfs\vfsStream;
  */
 class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected $fixturesFolder;
 
 	//--------------------------------------------------------------------

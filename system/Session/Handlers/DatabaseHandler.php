@@ -23,7 +23,6 @@ use SessionHandlerInterface;
  */
 class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
 {
-
 	/**
 	 * The database group to use for storage.
 	 *

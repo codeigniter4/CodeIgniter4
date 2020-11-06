@@ -1,11 +1,11 @@
 <?php
+
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 
 class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\Router\RouteCollection $collection
 	 */

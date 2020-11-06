@@ -5,15 +5,17 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * @group DatabaseLive
  */
 class ForgeTest extends CIDatabaseTestCase
 {
-
 	protected $refresh = true;
-	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	/**
 	 * @var \CodeIgniter\Database\Forge
@@ -201,7 +203,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithArrayFieldConstraints()
 	{
-		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true))
 		{
 			$this->forge->dropTable('forge_array_constraint', true);
 			$this->forge->addField([
@@ -260,7 +262,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addField('id');
 		$this->forge->addField('name varchar(100) NULL');
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('A table name is required for that operation.');
 
 		$this->forge->createTable('');
@@ -270,7 +272,7 @@ class ForgeTest extends CIDatabaseTestCase
 	{
 		$this->forge->dropTable('forge_test_table', true);
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$this->expectExceptionMessage('Field information is required.');
 
 		$this->forge->createTable('forge_test_table');
@@ -278,7 +280,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithStringFieldException()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('Field information is required for that operation.');
 
 		$this->forge->dropTable('forge_test_table', true);
@@ -314,7 +316,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->createTable('forge_test_table');
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('A table name is required for that operation.');
 
 		$this->forge->renameTable('forge_test_table', '');
@@ -898,5 +900,4 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropTable('forge_test_four', true);
 	}
-
 }

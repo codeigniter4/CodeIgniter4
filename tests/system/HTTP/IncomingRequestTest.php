@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Files\UploadedFile;
@@ -9,7 +10,6 @@ use Config\App;
  */
 class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
@@ -111,6 +111,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled

@@ -1,16 +1,15 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
 class EventModel extends Model
 {
-	protected $table = 'user';
-
-	protected $returnType = 'array';
-
+	protected $table          = 'user';
+	protected $returnType     = 'array';
 	protected $useSoftDeletes = false;
-
-	protected $dateFormat = 'datetime';
+	protected $dateFormat     = 'datetime';
 
 	protected $allowedFields = [
 		'name',
@@ -109,7 +108,6 @@ class EventModel extends Model
 
 	public function hasToken(string $token)
 	{
-		return in_array($token, $this->tokens);
+		return in_array($token, $this->tokens, true);
 	}
-
 }

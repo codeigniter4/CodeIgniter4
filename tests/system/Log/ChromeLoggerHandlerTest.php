@@ -1,13 +1,15 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php
+
+namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Services;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use stdClass;
 
 class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	public function testCanHandleLogLevel()
 	{
 		$config = new LoggerConfig();
@@ -66,7 +68,7 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 
-		$data              = new \stdClass();
+		$data              = new stdClass();
 		$data->code        = 123;
 		$data->explanation = "That's no moon, it's a pumpkin";
 		$result            = $logger->setDateFormat('F j, Y');
@@ -75,5 +77,4 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertTrue($response->hasHeader('x-chromelogger-data'));
 	}
-
 }

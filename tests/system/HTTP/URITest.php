@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Config;
@@ -8,7 +9,6 @@ use Config\App;
 
 class URITest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -1036,5 +1036,4 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $uri);
 	}
-
 }

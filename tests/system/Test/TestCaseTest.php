@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
@@ -8,7 +9,6 @@ use Config\App;
 
 class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	//  protected function tearDown(): void
 	//  {
 	//      $buffer = ob_clean();
@@ -59,6 +59,7 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * PHPunit emits headers before we get nominal control of
 	 * the output stream, making header testing awkward, to say
@@ -105,5 +106,4 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $this->assertCloseEnoughString('apples & oranges', 'apples');
 		$this->assertFalse($result, 'Different string lengths should have returned false');
 	}
-
 }

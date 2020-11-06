@@ -22,7 +22,6 @@ use Config\Services;
  */
 class Routes extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -116,5 +115,4 @@ class Routes extends BaseCommand
 
 		CLI::table($tbody, $thead);
 	}
-
 }

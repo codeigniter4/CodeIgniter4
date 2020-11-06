@@ -97,7 +97,7 @@ trait ReflectionHelper
 	public static function getPrivateProperty($obj, $property)
 	{
 		$refProperty = self::getAccessibleRefProperty($obj, $property);
+
 		return $refProperty->getValue($obj);
 	}
-
 }

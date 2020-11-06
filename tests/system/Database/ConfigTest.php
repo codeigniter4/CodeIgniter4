@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\BaseConnection;
@@ -179,5 +180,4 @@ class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
 		$this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
 	}
-
 }

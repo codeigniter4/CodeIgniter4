@@ -8,8 +8,8 @@ use CodeIgniter\Test\Mock\MockResponse;
 
 class ServicesTest extends CIUnitTestCase
 {
-
 	protected $config;
+
 	protected $original;
 
 	protected function setUp(): void
@@ -354,5 +354,4 @@ class ServicesTest extends CIUnitTestCase
 		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
 	}
-
 }

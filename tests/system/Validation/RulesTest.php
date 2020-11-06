@@ -3,8 +3,9 @@
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
-use Config\Database;
 use CodeIgniter\Validation\Rules;
+use Config\Database;
+use stdClass;
 
 class RulesTest extends CIDatabaseTestCase
 {
@@ -14,6 +15,7 @@ class RulesTest extends CIDatabaseTestCase
 	 * @var Validation
 	 */
 	protected $validation;
+
 	protected $config = [
 		'ruleSets'      => [
 			\CodeIgniter\Validation\Rules::class,
@@ -38,7 +40,7 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		parent::setUp();
 
-		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -127,7 +129,7 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredObject()
 	{
 		$data = [
-			'foo' => new \stdClass(),
+			'foo' => new stdClass(),
 		];
 
 		$this->validation->setRules([
@@ -1499,7 +1501,7 @@ class RulesTest extends CIDatabaseTestCase
 			'foo' => 'bar',
 			'bar' => 'something',
 			'baz' => null,
-			'ar'  => [],// Was running into issues with array values
+			'ar'  => [], // Was running into issues with array values
 		];
 
 		$this->validation->setRules([

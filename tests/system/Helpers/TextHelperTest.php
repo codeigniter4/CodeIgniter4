@@ -4,7 +4,6 @@ namespace CodeIgniter\Helpers;
 
 class TextHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-
 	private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
 
 	protected function setUp(): void
@@ -360,5 +359,4 @@ class TextHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 		$this->assertEquals(' scream!  scream!  scream!  scream! ', $result);
 	}
-
 }

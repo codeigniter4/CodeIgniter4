@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -236,5 +238,4 @@ class UpdateTest extends CIDatabaseTestCase
 			'description' => 'Developer',
 		]);
 	}
-
 }

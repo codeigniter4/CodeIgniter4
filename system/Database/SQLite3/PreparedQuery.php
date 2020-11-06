@@ -18,7 +18,6 @@ use CodeIgniter\Database\PreparedQueryInterface;
 /**
  * Prepared query for SQLite3
  */
-
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 	/**

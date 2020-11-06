@@ -41,7 +41,6 @@ use Kint\Renderer\RichRenderer;
  */
 class CodeIgniter
 {
-
 	/**
 	 * The current version of CodeIgniter Framework
 	 */

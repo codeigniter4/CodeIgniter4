@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Commands;
+<?php
+
+namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -62,5 +64,4 @@ class SessionsCommandsTest extends CIUnitTestCase
 
 		chmod(APPPATH . 'Database/Migrations', 0755);
 	}
-
 }

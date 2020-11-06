@@ -1,4 +1,8 @@
-<?php namespace CodeIgniter\Format;
+<?php
+
+namespace CodeIgniter\Format;
+
+use DOMDocument;
 
 class XMLFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -69,10 +73,11 @@ EOH;
 
 	public function testValidatingXmlTags()
 	{
-		$data     = [
+		$data = [
 			'BBB096630BD' => 'foo',
 			'096630FR'    => 'bar',
 		];
+
 		$expected = <<<EOH
 <?xml version="1.0"?>
 <response><BBB096630BD>foo</BBB096630BD><item096630FR>bar</item096630FR></response>
@@ -204,7 +209,7 @@ EOH;
 
 EOF;
 
-		$dom                     = new \DOMDocument('1.0');
+		$dom                     = new DOMDocument('1.0');
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput       = true;
 		$dom->loadXML($this->xmlFormatter->format($data));
