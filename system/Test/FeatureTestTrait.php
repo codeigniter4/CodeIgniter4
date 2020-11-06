@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\Test\Mock\MockFilters;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -147,8 +148,12 @@ trait FeatureTestTrait
 		// instance get the right one.
 		Services::injectMock('request', $request);
 
-		// Make sure filters are reset between tests
-		Services::injectMock('filters', Services::filters(null, false));
+		// Make sure filters do not output during testing
+		Services::injectMock('filters', new MockFilters(
+			config('Filters'),
+			Services::request(),
+			Services::response()
+		));
 
 		$response = $this->app
 				->setRequest($request)
