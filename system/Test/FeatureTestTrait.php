@@ -416,13 +416,13 @@ trait FeatureTestTrait
 	 */
 	protected function setRequestBody(Request $request, array $params = null): Request
 	{
-		if (! empty($this->requestBody))
+		if ($this->requestBody !== '')
 		{
 			$request->setBody($this->requestBody);
 			return $request;
 		}
 
-		if (! empty($this->bodyFormat))
+		if ($this->bodyFormat !== '')
 		{
 			if (empty($params))
 			{
