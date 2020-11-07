@@ -176,7 +176,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'es',
 		];
 		$config->defaultLocale    = 'es';
-		$config->baseURL          = 'http://example.com';
+		$config->baseURL          = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -192,7 +192,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'es',
 		];
 		$config->defaultLocale    = 'es';
-		$config->baseURL          = 'http://example.com';
+		$config->baseURL          = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -215,7 +215,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'fr',
 			'en',
 		];
-		$config->baseURL          = 'http://example.com';
+		$config->baseURL          = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -233,7 +233,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'fr',
 			'en',
 		];
-		$config->baseURL          = 'http://example.com';
+		$config->baseURL          = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -291,7 +291,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
@@ -309,7 +309,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$config          = new App();
-		$config->baseURL = 'http://example.com';
+		$config->baseURL = 'http://example.com/';
 
 		$request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 

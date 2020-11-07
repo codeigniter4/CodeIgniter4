@@ -398,6 +398,42 @@ class RulesTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testMatcheNestedsTrue()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'match',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'matches[nested.bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMatchesNestedFalse()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'nope',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'matches[nested.bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testDiffersNull()
 	{
 		$data = [
@@ -439,6 +475,42 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->validation->setRules([
 			'foo' => 'differs[bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersNestedTrue()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'nope',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'differs[nested.bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersNestedFalse()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'match',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'differs[nested.bar]',
 		]);
 
 		$this->assertFalse($this->validation->run($data));

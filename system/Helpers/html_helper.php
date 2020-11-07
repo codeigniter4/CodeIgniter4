@@ -1,48 +1,22 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use Config\DocTypes;
+use Config\Mimes;
 
 // --------------------------------------------------------------------
 
 /**
  * CodeIgniter HTML Helpers
- *
- * @package CodeIgniter
  */
 if (! function_exists('ul'))
 {
@@ -145,9 +119,9 @@ if (! function_exists('img'))
 	 *
 	 * Generates an image element
 	 *
-	 * @param mixed   $src
-	 * @param boolean $indexPage
-	 * @param mixed   $attributes
+	 * @param string|array        $src        Image source URI, or array of attributes and values
+	 * @param boolean             $indexPage  Whether to treat $src as a routed URI string
+	 * @param string|array|object $attributes Additional HTML attributes
 	 *
 	 * @return string
 	 */
@@ -157,7 +131,10 @@ if (! function_exists('img'))
 		{
 			$src = ['src' => $src];
 		}
-
+		if (! isset($src['src']))
+		{
+			$src['src'] = $attributes['src'] ?? '';
+		}
 		if (! isset($src['alt']))
 		{
 			$src['alt'] = $attributes['alt'] ?? '';
@@ -165,33 +142,68 @@ if (! function_exists('img'))
 
 		$img = '<img';
 
-		foreach ($src as $k => $v)
+		// Check for a relative URI
+		if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0)
 		{
-			//Include a protocol if nothing is explicitely defined.
-			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
+			if ($indexPage === true)
 			{
-				if ($indexPage === true)
-				{
-					$img .= ' src="' . site_url($v) . '"';
-				}
-				else
-				{
-					$img .= ' src="' . slash_item('baseURL') . $v . '"';
-				}
+				$img .= ' src="' . site_url($src['src']) . '"';
 			}
 			else
 			{
-				$img .= ' ' . $k . '="' . $v . '"';
+				$img .= ' src="' . slash_item('baseURL') . $src['src'] . '"';
 			}
+
+			unset($src['src']);
 		}
 
-		// prevent passing "alt" to stringify_attributes
-		if (is_array($attributes) && isset($attributes['alt']))
+		// Append any other values
+		foreach ($src as $key => $value)
 		{
-			unset($attributes['alt']);
+			$img .= ' ' . $key . '="' . $value . '"';
+		}
+
+		// Prevent passing completed values to stringify_attributes
+		if (is_array($attributes))
+		{
+			unset($attributes['alt'], $attributes['src']);
 		}
 
 		return $img . stringify_attributes($attributes) . ' />';
+	}
+}
+
+if (! function_exists('img_data'))
+{
+	/**
+	 * Image (data)
+	 *
+	 * Generates a src-ready string from an image using the "data:" protocol
+	 *
+	 * @param string      $path Image source path
+	 * @param string|null $mime MIME type to use, or null to guess
+	 *
+	 * @return string
+	 */
+	function img_data(string $path, string $mime = null): string
+	{
+		if (! is_file($path) || ! is_readable($path))
+		{
+			throw FileNotFoundException::forFileNotFound($path);
+		}
+
+		// Read in file binary data
+		$handle = fopen($path, 'rb');
+		$data   = fread($handle, filesize($path));
+		fclose($handle);
+
+		// Encode as base64
+		$data = base64_encode($data);
+
+		// Figure out the type (Hail Mary to JPEG)
+		$mime = $mime ?? Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
+
+		return 'data:' . $mime . ';base64,' . $data;
 	}
 }
 
@@ -214,7 +226,7 @@ if (! function_exists('doctype'))
 	 */
 	function doctype(string $type = 'html5'): string
 	{
-		$config   = new \Config\DocTypes();
+		$config   = new DocTypes();
 		$doctypes = $config->list;
 		return $doctypes[$type] ?? false;
 	}
@@ -323,7 +335,7 @@ if (! function_exists('link_tag'))
 
 		$link .= 'rel="' . $rel . '" ';
 
-		if (! in_array($rel, ['alternate', 'canonical']))
+		if (! in_array($rel, ['alternate', 'canonical'], true))
 		{
 			$link .= 'type="' . $type . '" ';
 		}

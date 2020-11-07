@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Test\Mock;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Cache\CacheInterface;
 
@@ -54,10 +65,10 @@ class MockCache implements CacheInterface
 	 * The $raw parameter is only utilized by Mamcache in order to
 	 * allow usage of increment() and decrement().
 	 *
-	 * @param string                  $key Cache item name
-	 * @param $value  the data to save
-	 * @param null                    $ttl Time To Live, in seconds (default 60)
-	 * @param boolean                 $raw Whether to store the raw value.
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value the data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param boolean $raw   Whether to store the raw value.
 	 *
 	 * @return mixed
 	 */

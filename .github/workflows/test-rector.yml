@@ -1,0 +1,63 @@
+# When a PR is opened or a push is made, perform
+# a static analysis check on the code using Rector.
+name: Rector
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+      - '.github/workflows/test-rector.yml'
+      - 'rector.php'
+  push:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'system/**'
+      - '.github/workflows/test-rector.yml'
+      - 'rector.php'
+
+jobs:
+  build:
+    name: Analyze code (Rector)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: intl
+
+      - name: Use latest Composer
+        run: composer self-update
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Create composer cache directory
+        run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction
+
+      - name: Run static analysis
+        run: vendor/bin/rector process --dry-run

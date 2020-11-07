@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Commands\Generators;
@@ -44,8 +16,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a new migration file.
- *
- * @package CodeIgniter\Commands
  */
 class CreateMigration extends GeneratorCommand
 {
@@ -54,7 +24,7 @@ class CreateMigration extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'migrate:create';
+	protected $name = 'make:migration';
 
 	/**
 	 * The Command's short description
@@ -68,7 +38,7 @@ class CreateMigration extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:create <name> [options]';
+	protected $usage = 'make:migration <name> [options]';
 
 	/**
 	 * The Command's Arguments
@@ -80,70 +50,43 @@ class CreateMigration extends GeneratorCommand
 	];
 
 	/**
-	 * Gets the class name from input.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getClassName(): string
 	{
 		$class = parent::getClassName();
+
 		if (empty($class))
 		{
-			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
-			// @codeCoverageIgnoreEnd
+			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required'); // @codeCoverageIgnore
 		}
 
 		return $class;
 	}
 
 	/**
-	 * Gets the qualified class name.
-	 *
-	 * @param string $rootNamespace
-	 * @param string $class
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Database\\Migrations\\' . $class;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected function modifyBasename(string $filename): string
 	{
 		return gmdate(config('Migrations')->timestampFormat) . $filename;
 	}
 
 	/**
-	 * Gets the template for this class.
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function getTemplate(): string
 	{
-		return <<<EOD
-<?php
+		$template = $this->getGeneratorViewFile('CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php');
 
-namespace {namespace};
-
-use CodeIgniter\Database\Migration;
-
-class {class} extends Migration
-{
-	public function up()
-	{
-		//
-	}
-
-	//--------------------------------------------------------------------
-
-	public function down()
-	{
-		//
-	}
-}
-
-EOD;
+		return str_replace('<@php', '<?php', $template);
 	}
 }

@@ -60,4 +60,28 @@ class OrderTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testOrderRandom()
+	{
+		$sql = $this->db->table('job')
+			->orderBy('name', 'random')
+			->getCompiledSelect();
+
+		$key = 'RANDOM()';
+
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$key = 'RAND()';
+		}
+		elseif ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$key = 'NEWID()';
+		}
+
+		$expected = 'SELECT * FROM ' . $this->db->protectIdentifiers('job', true) . ' ORDER BY ' . $key;
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $sql));
+	}
+
+	//--------------------------------------------------------------------
+
 }

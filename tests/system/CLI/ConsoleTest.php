@@ -27,7 +27,7 @@ class ConsoleTest extends CIUnitTestCase
 		// Set environment values that would otherwise stop the framework from functioning during tests.
 		if (! isset($_SERVER['app.baseURL']))
 		{
-			$_SERVER['app.baseURL'] = 'http://example.com';
+			$_SERVER['app.baseURL'] = 'http://example.com/';
 		}
 
 		$_SERVER['argv'] = [

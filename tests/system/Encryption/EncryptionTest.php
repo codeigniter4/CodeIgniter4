@@ -1,20 +1,23 @@
 <?php
+
 namespace CodeIgniter\Encryption;
 
+use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
 
-//use CodeIgniter\Encryption\Encryption;
-
-class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
+class EncryptionTest extends CIUnitTestCase
 {
+	/**
+	 * @var \CodeIgniter\Encryption\Encryption
+	 */
+	protected $encryption;
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
-		$this->encryption = new \CodeIgniter\Encryption\Encryption();
+		$this->encryption = new Encryption();
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * __construct test
@@ -27,15 +30,15 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEmpty($this->encryption->key);
 
 		// Try with an empty value
-		$config        = new EncryptionConfig();
-		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->assertEmpty($this->encrypt->key);
+		$config           = new EncryptionConfig();
+		$this->encryption = new Encryption($config);
+		$this->assertEmpty($this->encryption->key);
 
 		// try a different key
-		$ikm           = 'Secret stuff';
-		$config->key   = $ikm;
-		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->assertEquals($ikm, $this->encrypt->key);
+		$ikm              = 'Secret stuff';
+		$config->key      = $ikm;
+		$this->encryption = new Encryption($config);
+		$this->assertEquals($ikm, $this->encryption->key);
 	}
 
 	/**
@@ -50,7 +53,7 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config->driver = 'Bogus';
 		$config->key    = 'anything';
 
-		$encrypter = $this->encryption->initialize($config);
+		$this->encryption->initialize($config);
 	}
 
 	/**
@@ -65,10 +68,8 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config->driver = '';
 		$config->key    = 'anything';
 
-		$encrypter = $this->encryption->initialize($config);
+		$this->encryption->initialize($config);
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testKeyCreation()
 	{
@@ -76,8 +77,6 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(32, strlen($this->encryption->createKey()));
 		$this->assertEquals(16, strlen($this->encryption->createKey(16)));
 	}
-
-	// --------------------------------------------------------------------
 
 	public function testServiceSuccess()
 	{
@@ -98,14 +97,14 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config->driver = 'Kazoo';
 		$config->key    = 'anything';
 
-		$encrypter = Services::encrypter($config);
+		Services::encrypter($config);
 	}
 
 	public function testServiceWithoutKey()
 	{
 		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
 
-		$encrypter = Services::encrypter();
+		Services::encrypter();
 	}
 
 	public function testServiceShared()
@@ -120,8 +119,6 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$encrypter   = Services::encrypter($config, true);
 		$this->assertEquals('anything', $encrypter->key);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMagicIssetTrue()
 	{
@@ -142,5 +139,4 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertNull($this->encryption->bogus);
 	}
-
 }

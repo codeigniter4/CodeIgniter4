@@ -1,24 +1,21 @@
 <?php
 
 /**
- * Database language strings.
+ * This file is part of the CodeIgniter 4 framework.
  *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * @codeCoverageIgnore
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+// Database language settings
 return [
    'invalidEvent'                     => '{0} is not a valid Model Event callback.',
    'invalidArgument'                  => 'You must provide a valid {0}.',
    'invalidAllowedFields'             => 'Allowed fields must be specified for model: {0}',
    'emptyDataset'                     => 'There is no data to {0}.',
+   'emptyPrimaryKey'                  => 'There is no primary key defined when trying to make {0}.',
    'failGetFieldData'                 => 'Failed to get field data from database.',
    'failGetIndexData'                 => 'Failed to get index data from database.',
    'failGetForeignKeyData'            => 'Failed to get foreign key data from database.',

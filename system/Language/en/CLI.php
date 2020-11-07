@@ -1,19 +1,15 @@
 <?php
 
 /**
- * CLI language strings.
+ * This file is part of the CodeIgniter 4 framework.
  *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * @codeCoverageIgnore
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+// CLI language settings
 return [
    'commandNotFound'     => 'Command "{0}" not found.',
    'altCommandSingular'  => 'Did you mean this?',
@@ -25,6 +21,8 @@ return [
    'invalidColor'        => 'Invalid {0} color: {1}.',
 
    // Generators
+   'generateClassName'   => 'Name of class',
+   'generateParentClass' => 'Name of parent class to extend from',
    'generateFileExists'  => '{0} already exists.',
    'generateFileSuccess' => 'Created file: ',
    'generateFileError'   => 'Error in creating file: ',

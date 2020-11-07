@@ -1,52 +1,27 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
+use Config\Toolbar;
+use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 /**
  * Class View
- *
- * @package CodeIgniter\View
  */
 class View implements RendererInterface
 {
@@ -82,14 +57,14 @@ class View implements RendererInterface
 	 * we need to attempt to find a view
 	 * that's not in standard place.
 	 *
-	 * @var \CodeIgniter\Autoloader\FileLocator
+	 * @var FileLocator
 	 */
 	protected $loader;
 
 	/**
 	 * Logger instance.
 	 *
-	 * @var \CodeIgniter\Log\Logger
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -109,7 +84,7 @@ class View implements RendererInterface
 	protected $performanceData = [];
 
 	/**
-	 * @var \Config\View
+	 * @var ViewConfig
 	 */
 	protected $config;
 
@@ -131,7 +106,7 @@ class View implements RendererInterface
 	 * The name of the layout being used, if any.
 	 * Set by the `extend` method used within views.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $layout;
 
@@ -146,7 +121,7 @@ class View implements RendererInterface
 	 * The name of the current section being rendered,
 	 * if any.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $currentSection;
 
@@ -155,13 +130,13 @@ class View implements RendererInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View                             $config
-	 * @param string|null                              $viewPath
-	 * @param \CodeIgniter\Autoloader\FileLocator|null $loader
-	 * @param boolean|null                             $debug
-	 * @param \Psr\Log\LoggerInterface                 $logger
+	 * @param ViewConfig       $config
+	 * @param string|null      $viewPath
+	 * @param FileLocator|null $loader
+	 * @param boolean|null     $debug
+	 * @param LoggerInterface  $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		$this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
@@ -181,9 +156,9 @@ class View implements RendererInterface
 	 *     - cache 		number of seconds to cache for
 	 *  - cache_name	Name to use for cache
 	 *
-	 * @param string  $view
-	 * @param array   $options
-	 * @param boolean $saveData
+	 * @param string       $view
+	 * @param array|null   $options
+	 * @param boolean|null $saveData
 	 *
 	 * @return string
 	 */
@@ -203,11 +178,15 @@ class View implements RendererInterface
 		// Was it cached?
 		if (isset($this->renderVars['options']['cache']))
 		{
-			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$cacheName = str_replace(['\\', '/'], '', $cacheName);
+
+			$this->renderVars['cacheName'] = $cacheName;
 
 			if ($output = cache($this->renderVars['cacheName']))
 			{
 				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+
 				return $output;
 			}
 		}
@@ -261,11 +240,11 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
+		if (($this->debug && (! isset($options['debug']) || $options['debug'] === true)) && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true))
 		{
-			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
+			$toolbarCollectors = config(Toolbar::class)->collectors;
 
-			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
+			if (in_array(Views::class, $toolbarCollectors, true))
 			{
 				// Clean up our path names to make them a little cleaner
 				$this->renderVars['file'] = clean_path($this->renderVars['file']);
@@ -450,9 +429,7 @@ class View implements RendererInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
-	 *
-	 * @throws \Laminas\Escaper\Exception\RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function endSection()
 	{
@@ -460,7 +437,7 @@ class View implements RendererInterface
 
 		if (empty($this->currentSection))
 		{
-			throw new \RuntimeException('View themes, no current section.');
+			throw new RuntimeException('View themes, no current section.');
 		}
 
 		// Ensure an array exists so we can store multiple entries for this.
@@ -503,7 +480,7 @@ class View implements RendererInterface
 	 *
 	 * @param string     $view
 	 * @param array|null $options
-	 * @param null       $saveData
+	 * @param boolean    $saveData
 	 *
 	 * @return string
 	 */

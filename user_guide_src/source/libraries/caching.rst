@@ -171,7 +171,7 @@ Class Reference
 
 			$cache->clean();
 
-.. php:method:: ⠀cache_info()
+.. php:method:: ⠀getCacheInfo()
 
 	:returns:	Information on the entire cache database
 	:rtype:	mixed
@@ -180,7 +180,7 @@ Class Reference
 
 	Example::
 
-		var_dump($cache->cache_info());
+		var_dump($cache->getCacheInfo());
 
 .. note:: The information returned and the structure of the data is dependent
 		  on which adapter is being used.

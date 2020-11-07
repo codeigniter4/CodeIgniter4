@@ -12,6 +12,7 @@ use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Logger;
+use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
 
 /**
@@ -280,9 +281,19 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull(model(UnexsistenceClass::class));
 	}
 
-	public function testModelExists()
+	public function testModelExistsBasename()
+	{
+		$this->assertInstanceOf(JobModel::class, model('JobModel'));
+	}
+
+	public function testModelExistsClassname()
 	{
 		$this->assertInstanceOf(JobModel::class, model(JobModel::class));
+	}
+
+	public function testModelExistsAbsoluteClassname()
+	{
+		$this->assertInstanceOf(JobModel::class, model('\Tests\Support\Models\JobModel'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -298,7 +309,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$this->config          = new App();
-		$this->config->baseURL = 'http://example.com';
+		$this->config->baseURL = 'http://example.com/';
 
 		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
@@ -334,7 +345,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$this->config          = new App();
-		$this->config->baseURL = 'http://example.com';
+		$this->config->baseURL = 'http://example.com/';
 
 		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
@@ -390,11 +401,16 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookiePrefix'             => '',
 			'cookiePath'               => '/',
 			'cookieSecure'             => false,
+			'cookieSameSite'           => 'Lax',
 		];
 
-		$config = (object) $defaults;
+		$appConfig = new App();
+		foreach ($defaults as $key => $config)
+		{
+			$appConfig->$key = $config;
+		}
 
-		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
+		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
 		$session->setLogger(new TestLogger(new Logger()));
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}
@@ -452,7 +468,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		force_https();
 
-		$this->assertEquals('https://example.com', Services::response()->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', Services::response()->getHeader('Location')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -491,5 +507,50 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 				'FCPATH' . $ds . 'index.php',
 			],
 		];
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHelperWithFatalLocatorThrowsException()
+	{
+		// Replace the locator with one that will fail if it is called
+		$locator = new FatalLocator(Services::autoloader());
+		Services::injectMock('locator', $locator);
+
+		try
+		{
+			helper('baguette');
+			$exception = false;
+		}
+		catch (\RuntimeException $e)
+		{
+			$exception = true;
+		}
+
+		$this->assertTrue($exception);
+		Services::reset();
+	}
+
+	public function testHelperLoadsOnce()
+	{
+		// Load it the first time
+		helper('baguette');
+
+		// Replace the locator with one that will fail if it is called
+		$locator = new FatalLocator(Services::autoloader());
+		Services::injectMock('locator', $locator);
+
+		try
+		{
+			helper('baguette');
+			$exception = false;
+		}
+		catch (\RuntimeException $e)
+		{
+			$exception = true;
+		}
+
+		$this->assertFalse($exception);
+		Services::reset();
 	}
 }

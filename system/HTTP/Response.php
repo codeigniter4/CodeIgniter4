@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
@@ -42,7 +14,10 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use Config\App;
-use Config\Format;
+use Config\Services;
+use DateTime;
+use DateTimeZone;
+use InvalidArgumentException;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -54,8 +29,6 @@ use Config\Format;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @package CodeIgniter\HTTP
  */
 class Response extends Message implements ResponseInterface
 {
@@ -164,7 +137,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Content security policy handler
 	 *
-	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
+	 * @var ContentSecurityPolicy
 	 */
 	public $CSP;
 
@@ -204,6 +177,13 @@ class Response extends Message implements ResponseInterface
 	protected $cookieHTTPOnly = false;
 
 	/**
+	 * Cookie SameSite setting
+	 *
+	 * @var string
+	 */
+	protected $cookieSameSite = 'Lax';
+
+	/**
 	 * Stores all cookies that were set in the response.
 	 *
 	 * @var array
@@ -230,7 +210,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 */
 	public function __construct($config)
 	{
@@ -247,6 +227,12 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
+		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+
+		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($this->cookieSameSite);
+		}
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -303,7 +289,7 @@ class Response extends Message implements ResponseInterface
 	 *                        default to the IANA name.
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code arguments.
+	 * @throws HTTPException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
@@ -360,13 +346,13 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets the date header
 	 *
-	 * @param \DateTime $date
+	 * @param DateTime $date
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date)
+	public function setDate(DateTime $date)
 	{
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new DateTimeZone('UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
 
@@ -378,7 +364,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Set the Link Header
 	 *
-	 * @param \CodeIgniter\Pager\PagerInterface $pager
+	 * @param PagerInterface $pager
 	 *
 	 * @see http://tools.ietf.org/html/rfc5988
 	 *
@@ -441,7 +427,7 @@ class Response extends Message implements ResponseInterface
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
 	 * @param array|string $body
-	 * @param boolean      $name
+	 * @param boolean      $unencoded
 	 *
 	 * @return $this
 	 */
@@ -459,7 +445,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return mixed|string
 	 *
-	 * @throws \InvalidArgumentException If the body property is not array.
+	 * @throws InvalidArgumentException If the body property is not array.
 	 */
 	public function getJSON()
 	{
@@ -467,13 +453,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/json');
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter('application/json')->format($body);
 		}
 
 		return $body ?: null;
@@ -501,7 +481,7 @@ class Response extends Message implements ResponseInterface
 	 * Retrieves the current body into XML and returns it.
 	 *
 	 * @return mixed|string
-	 * @throws \InvalidArgumentException If the body property is not array.
+	 * @throws InvalidArgumentException If the body property is not array.
 	 */
 	public function getXML()
 	{
@@ -509,13 +489,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/xml');
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter('application/xml')->format($body);
 		}
 
 		return $body;
@@ -531,7 +505,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $format Valid: json, xml
 	 *
 	 * @return mixed
-	 * @throws \InvalidArgumentException If the body property is not string or array.
+	 * @throws InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
 	{
@@ -542,13 +516,7 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body) || $format === 'json-unencoded')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter($mime);
-
-			$body = $formatter->format($body);
+			$body = Services::format()->getFormatter($mime)->format($body);
 		}
 
 		return $body;
@@ -644,15 +612,15 @@ class Response extends Message implements ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param \DateTime|string $date
+	 * @param DateTime|string $date
 	 *
 	 * @return Response
 	 */
 	public function setLastModified($date)
 	{
-		if ($date instanceof \DateTime)
+		if ($date instanceof DateTime)
 		{
-			$date->setTimezone(new \DateTimeZone('UTC'));
+			$date->setTimezone(new DateTimeZone('UTC'));
 			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
@@ -712,7 +680,7 @@ class Response extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']) && php_sapi_name() !== 'cli-server')
 		{
-			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
+			$this->setDate(DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status
@@ -761,7 +729,7 @@ class Response extends Message implements ResponseInterface
 	 * @param integer $code   The type of redirection, defaults to 302
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code.
+	 * @throws HTTPException For invalid status code.
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
@@ -818,6 +786,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $prefix   Cookie name prefix
 	 * @param boolean      $secure   Whether to only transfer cookies via SSL
 	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string|null  $samesite
 	 *
 	 * @return $this
 	 */
@@ -829,13 +798,14 @@ class Response extends Message implements ResponseInterface
 		$path = '/',
 		$prefix = '',
 		$secure = false,
-		$httponly = false
+		$httponly = false,
+		$samesite = null
 	)
 	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
+			foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
 			{
 				if (isset($name[$item]))
 				{
@@ -869,6 +839,16 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
+		if (is_null($samesite))
+		{
+			$samesite = $this->cookieSameSite ?? '';
+		}
+
+		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict'], true))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($samesite);
+		}
+
 		if (! is_numeric($expire))
 		{
 			$expire = time() - 86500;
@@ -878,7 +858,7 @@ class Response extends Message implements ResponseInterface
 			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
-		$this->cookies[] = [
+		$cookie = [
 			'name'     => $prefix . $name,
 			'value'    => $value,
 			'expires'  => $expire,
@@ -887,6 +867,13 @@ class Response extends Message implements ResponseInterface
 			'secure'   => $secure,
 			'httponly' => $httponly,
 		];
+
+		if ($samesite !== '')
+		{
+			$cookie['samesite'] = $samesite;
+		}
+
+		$this->cookies[] = $cookie;
 
 		return $this;
 	}
@@ -1036,10 +1023,35 @@ class Response extends Message implements ResponseInterface
 
 		foreach ($this->cookies as $params)
 		{
-			// PHP cannot unpack array with string keys
-			$params = array_values($params);
+			if (PHP_VERSION_ID < 70300)
+			{
+				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
+				if (isset($params['samesite']) && in_array(strtolower($params['samesite']), ['none', 'lax', 'strict'], true))
+				{
+					$params['path'] .= '; samesite=' . $params['samesite'];
+					unset($params['samesite']);
+				}
 
-			setcookie(...$params);
+				// PHP cannot unpack array with string keys
+				$params = array_values($params);
+				setcookie(...$params);
+			}
+			else
+			{
+				// PHP 7.3 and later have a signature for setcookie() with options array as third argument
+				// and SameSite is possible to set there
+				$name  = $params['name'];
+				$value = $params['value'];
+				unset($params['name'], $params['value']);
+
+				// If samesite is blank string, skip setting the attribute on the cookie
+				if (isset($params['samesite']) && $params['samesite'] === '')
+				{
+					unset($params['samesite']);
+				}
+
+				setcookie($name, $value, $params);
+			}
 		}
 	}
 
@@ -1053,7 +1065,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string|null $data     The data to be downloaded
 	 * @param boolean     $setMime  Whether to try and send the actual MIME type
 	 *
-	 * @return \CodeIgniter\HTTP\DownloadResponse|null
+	 * @return DownloadResponse|null
 	 */
 	public function download(string $filename = '', $data = '', bool $setMime = false)
 	{

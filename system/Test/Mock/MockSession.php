@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Test\Mock;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Session\Session;
 
@@ -39,6 +50,7 @@ class MockSession extends Session
 	protected function startSession()
 	{
 		//        session_start();
+		$this->setCookie();
 	}
 
 	//--------------------------------------------------------------------
@@ -49,15 +61,46 @@ class MockSession extends Session
 	 */
 	protected function setCookie()
 	{
-		$this->cookies[] = [
-			$this->sessionCookieName,
-			session_id(),
-			(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
-			$this->cookiePath,
-			$this->cookieDomain,
-			$this->cookieSecure,
-			true,
-		];
+		if (PHP_VERSION_ID < 70300)
+		{
+			$sameSite = '';
+			if ($this->cookieSameSite !== '')
+			{
+				$sameSite = '; samesite=' . $this->cookieSameSite;
+			}
+
+			$this->cookies[] = [
+				$this->sessionCookieName,
+				session_id(),
+				empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
+				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
+				$this->cookieDomain,
+				$this->cookieSecure,
+				true,
+			];
+		}
+		else
+		{
+			// PHP 7.3 adds another function signature allowing setting of samesite
+			$params = [
+				'expires'  => empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
+				'path'     => $this->cookiePath,
+				'domain'   => $this->cookieDomain,
+				'secure'   => $this->cookieSecure,
+				'httponly' => true,
+			];
+
+			if ($this->cookieSameSite !== '')
+			{
+				$params['samesite'] = $this->cookieSameSite;
+			}
+
+			$this->cookies[] = [
+				$this->sessionCookieName,
+				session_id(),
+				$params,
+			];
+		}
 	}
 
 	//--------------------------------------------------------------------

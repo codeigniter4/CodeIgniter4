@@ -122,13 +122,13 @@ Permits you to write the SELECT portion of your query::
 	to select all fields and automatically adds 'SELECT \*'.
 
 ``$builder->select()`` accepts an optional second parameter. If you set it
-to FALSE, CodeIgniter will not try to protect your field or table names.
+to ``false``, CodeIgniter will not try to protect your field or table names.
 This is useful if you need a compound select statement where automatic
 escaping of fields may break them.
 
 ::
 
-	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', FALSE);
+	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', false);
 	$query = $builder->get();
 
 **$builder->selectMax()**
@@ -289,11 +289,11 @@ methods:
 		$builder->where($where);
 
     ``$builder->where()`` accepts an optional third parameter. If you set it to
-    FALSE, CodeIgniter will not try to protect your field or table names.
+    ``false``, CodeIgniter will not try to protect your field or table names.
 
     ::
 
-        $builder->where('MATCH (field) AGAINST ("value")', NULL, FALSE);
+        $builder->where('MATCH (field) AGAINST ("value")', null, false);
 
 #. **Subqueries:**
     You can use an anonymous function to create a subquery.
@@ -505,12 +505,12 @@ You can also pass an array of multiple values as well::
 
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
-setting it to FALSE.
+setting it to ``false``.
 
 ::
 
 	$builder->having('user_id',  45);  // Produces: HAVING `user_id` = 45 in some databases such as MySQL
-	$builder->having('user_id',  45, FALSE);  // Produces: HAVING user_id = 45
+	$builder->having('user_id',  45, false);  // Produces: HAVING user_id = 45
 
 **$builder->orHaving()**
 
@@ -742,7 +742,7 @@ Builder query. Queries will accept Query Builder restrictors such as
 	echo $builder->countAllResults(); // Produces an integer, like 17
 
 However, this method also resets any field values that you may have passed
-to ``select()``. If you need to keep them, you can pass ``FALSE`` as the
+to ``select()``. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
 	echo $builder->countAllResults(false); // Produces an integer, like 17
@@ -755,7 +755,7 @@ Example::
 	echo $builder->countAll();  // Produces an integer, like 25
 
 As is in countAllResult method, this method resets any field values that you may have passed
-to ``select()`` as well. If you need to keep them, you can pass ``FALSE`` as the
+to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
 **************
@@ -779,7 +779,7 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 	// Generates:
 	// SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
 
-.. note:: groups need to be balanced, make sure every groupStart() is matched by a groupEnd().
+.. note:: Groups need to be balanced, make sure every groupStart() is matched by a groupEnd().
 
 **$builder->groupStart()**
 
@@ -801,23 +801,23 @@ Starts a new group by adding an opening parenthesis to the WHERE clause of the q
 
 Ends the current group by adding a closing parenthesis to the WHERE clause of the query.
 
-**$builder->groupHavingStart()**
+**$builder->havingGroupStart()**
 
 Starts a new group by adding an opening parenthesis to the HAVING clause of the query.
 
-**$builder->orGroupHavingStart()**
+**$builder->orHavingGroupStart()**
 
 Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with 'OR'.
 
-**$builder->notGroupHavingStart()**
+**$builder->notHavingGroupStart()**
 
 Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with 'NOT'.
 
-**$builder->orNotGroupHavingStart()**
+**$builder->orNotHavingGroupStart()**
 
 Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with 'OR NOT'.
 
-**$builder->groupHavingEnd()**
+**$builder->havingGroupEnd()**
 
 Ends the current group by adding a closing parenthesis to the HAVING clause of the query.
 
@@ -834,7 +834,7 @@ function. Here is an example using an array::
 	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
-		'date'  => 'My date'
+		'date'  => 'My date',
 	];
 
 	$builder->insert($data);
@@ -844,13 +844,12 @@ The first parameter is an associative array of values.
 
 Here is an example using an object::
 
-	/*
-	class Myclass {
+	class Myclass
+	{
 		public $title   = 'My Title';
 		public $content = 'My Content';
 		public $date    = 'My Date';
 	}
-	*/
 
 	$object = new Myclass;
 	$builder->insert($object);
@@ -869,7 +868,7 @@ You can optionally pass an **boolean** to the function. Here is an example using
 	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
-		'date'  => 'My date'
+		'date'  => 'My date',
 	];
 
 	$builder->ignore(true)->insert($data);
@@ -886,7 +885,7 @@ Example::
 	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
-		'date'  => 'My date'
+		'date'  => 'My date',
 	];
 
 	$sql = $builder->set($data)->getCompiledInsert('mytable');
@@ -897,7 +896,7 @@ Example::
 The second parameter enables you to set whether or not the query builder query
 will be reset (by default it will be--just like $builder->insert())::
 
-	echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', FALSE);
+	echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', false);
 
 	// Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
 
@@ -911,7 +910,7 @@ parameter. The reason this worked is that the query has not been executed
 using `$builder->insert()` which resets values or reset directly using
 `$builder->resetQuery()`.
 
-.. note:: This method doesn't work for batched inserts.
+.. note:: This method doesn't work for batch inserts.
 
 **$builder->insertBatch()**
 
@@ -923,13 +922,13 @@ function. Here is an example using an array::
 		[
 			'title' => 'My title',
 			'name'  => 'My Name',
-			'date'  => 'My date'
+			'date'  => 'My date',
 		],
 		[
 			'title' => 'Another title',
 			'name'  => 'Another Name',
-			'date'  => 'Another date'
-		]
+			'date'  => 'Another date',
+		],
 	];
 
 	$builder->insertBatch($data);
@@ -957,7 +956,7 @@ Example::
 	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
-		'date'  => 'My date'
+		'date'  => 'My date',
 	];
 
 	$builder->replace($data);
@@ -992,13 +991,13 @@ based on whether you are doing an insert or an update::
 	$builder->insert();
 
 **set()** will also accept an optional third parameter (``$escape``), that
-will prevent data from being escaped if set to FALSE. To illustrate the
+will prevent data from being escaped if set to ``false``. To illustrate the
 difference, here is ``set()`` used both with and without the escape
 parameter.
 
 ::
 
-	$builder->set('field', 'field+1', FALSE);
+	$builder->set('field', 'field+1', false);
 	$builder->where('id', 2);
 	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
 
@@ -1011,7 +1010,7 @@ You can also pass an associative array to this function::
 	$array = [
 		'name'   => $name,
 		'title'  => $title,
-		'status' => $status
+		'status' => $status,
 	];
 
 	$builder->set($array);
@@ -1019,13 +1018,12 @@ You can also pass an associative array to this function::
 
 Or an object::
 
-	/*
-	class Myclass {
+	class Myclass
+	{
 		public $title   = 'My Title';
 		public $content = 'My Content';
 		public $date    = 'My Date';
 	}
-	*/
 
 	$object = new Myclass;
 	$builder->set($object);
@@ -1040,7 +1038,7 @@ is an example using an array::
 	$data = [
 		'title' => $title,
 		'name'  => $name,
-		'date'  => $date
+		'date'  => $date,
 	];
 
 	$builder->where('id', $id);
@@ -1053,13 +1051,12 @@ is an example using an array::
 
 Or you can supply an object::
 
-	/*
-	class Myclass {
+	class Myclass
+	{
 		public $title   = 'My Title';
 		public $content = 'My Content';
 		public $date    = 'My Date';
 	}
-	*/
 
 	$object = new Myclass;
 	$builder->where('id', $id);
@@ -1095,13 +1092,13 @@ Here is an example using an array::
 	   [
 	      'title' => 'My title' ,
 	      'name'  => 'My Name 2' ,
-	      'date'  => 'My date 2'
+	      'date'  => 'My date 2',
 	   ],
 	   [
 	      'title' => 'Another title' ,
 	      'name'  => 'Another Name 2' ,
-	      'date'  => 'Another date 2'
-	   ]
+	      'date'  => 'Another date 2',
+	   ],
 	];
 
 	$builder->updateBatch($data, 'title');
@@ -1215,7 +1212,7 @@ This is useful in situations where you are using Query Builder to generate SQL
 (ex. ``$builder->getCompiledSelect()``) but then choose to, for instance,
 run the query::
 
-    // Note that the second parameter of the get_compiled_select method is FALSE
+    // Note that the second parameter of the get_compiled_select method is false
     $sql = $builder->select(['field1','field2'])
                    ->where('field3',5)
                    ->getCompiledSelect(false);
@@ -1236,495 +1233,493 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Database\\BaseBuilder
 
+	.. php:method:: db()
+
+		:returns: The database connection in use
+		:rtype:	``ConnectionInterface``
+
+		Returns the current database connection from ``$db``. Useful for
+		accessing ``ConnectionInterface`` methods that are not directly
+		available to the Query Builder, like ``insertID()`` or ``errors()``.
+
 	.. php:method:: resetQuery()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
 		Resets the current Query Builder state. Useful when you want
 		to build a query that can be canceled under certain conditions.
 
-	.. php:method:: countAllResults([$reset = TRUE])
+	.. php:method:: countAllResults([$reset = true])
 
-		:param	bool	$reset: Whether to reset values for SELECTs
-		:returns:	Number of rows in the query result
+		:param bool $reset: Whether to reset values for SELECTs
+		:returns: Number of rows in the query result
 		:rtype:	int
 
 		Generates a platform-specific query string that counts
 		all records returned by an Query Builder query.
 
-	.. php:method:: countAll([$reset = TRUE])
+	.. php:method:: countAll([$reset = true])
 
-		:param	bool	$reset: Whether to reset values for SELECTs
-		:returns:	Number of rows in the query result
+		:param bool $reset: Whether to reset values for SELECTs
+		:returns: Number of rows in the query result
 		:rtype:	int
 
 		Generates a platform-specific query string that counts
 		all records returned by an Query Builder query.
 
-	.. php:method:: get([$limit = NULL[, $offset = NULL[, $reset = TRUE]]]])
+	.. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 
-		:param	int	$limit: The LIMIT clause
-		:param	int	$offset: The OFFSET clause
-		:param 	bool $reset: Do we want to clear query builder values?
-		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
-		:rtype:	\CodeIgniter\Database\ResultInterface
+		:param int $limit: The LIMIT clause
+		:param int $offset: The OFFSET clause
+		:param bool $reset: Do we want to clear query builder values?
+		:returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
+		:rtype:	``\CodeIgniter\Database\ResultInterface``
 
-		Compiles and runs SELECT statement based on the already
+		Compiles and runs ``SELECT`` statement based on the already
 		called Query Builder methods.
 
-	.. php:method:: getWhere([$where = NULL[, $limit = NULL[, $offset = NULL[, $reset = TRUE]]]]])
+	.. php:method:: getWhere([$where = null[, $limit = null[, $offset = null[, $reset = true]]]]])
 
-		:param	string	$where: The WHERE clause
-		:param	int	$limit: The LIMIT clause
-		:param	int	$offset: The OFFSET clause
-		:param 	bool $reset: Do we want to clear query builder values?
-		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
-		:rtype:	\CodeIgniter\Database\ResultInterface
+		:param string $where: The WHERE clause
+		:param int $limit: The LIMIT clause
+		:param int $offset: The OFFSET clause
+		:param bool $reset: Do we want to clear query builder values?
+		:returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
+		:rtype:	``\CodeIgniter\Database\ResultInterface``
 
 		Same as ``get()``, but also allows the WHERE to be added directly.
 
-	.. php:method:: select([$select = '*'[, $escape = NULL]])
+	.. php:method:: select([$select = '*'[, $escape = null]])
 
-		:param	string	$select: The SELECT portion of a query
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: The SELECT portion of a query
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT clause to a query.
+		Adds a ``SELECT`` clause to a query.
 
 	.. php:method:: selectAvg([$select = ''[, $alias = '']])
 
-		:param	string	$select: Field to compute the average of
-		:param	string	$alias: Alias for the resulting value name
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: Field to compute the average of
+		:param string $alias: Alias for the resulting value name
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT AVG(field) clause to a query.
+		Adds a ``SELECT AVG(field)`` clause to a query.
 
 	.. php:method:: selectMax([$select = ''[, $alias = '']])
 
-		:param	string	$select: Field to compute the maximum of
-		:param	string	$alias: Alias for the resulting value name
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: Field to compute the maximum of
+		:param string $alias: Alias for the resulting value name
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT MAX(field) clause to a query.
+		Adds a ``SELECT MAX(field)`` clause to a query.
 
 	.. php:method:: selectMin([$select = ''[, $alias = '']])
 
-		:param	string	$select: Field to compute the minimum of
-		:param	string	$alias: Alias for the resulting value name
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: Field to compute the minimum of
+		:param string $alias: Alias for the resulting value name
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT MIN(field) clause to a query.
+		Adds a ``SELECT MIN(field)`` clause to a query.
 
 	.. php:method:: selectSum([$select = ''[, $alias = '']])
 
-		:param	string	$select: Field to compute the sum of
-		:param	string	$alias: Alias for the resulting value name
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: Field to compute the sum of
+		:param string $alias: Alias for the resulting value name
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT SUM(field) clause to a query.
+		Adds a ``SELECT SUM(field)`` clause to a query.
 
 	.. php:method:: selectCount([$select = ''[, $alias = '']])
 
-		:param	string	$select: Field to compute the average of
-		:param	string	$alias: Alias for the resulting value name
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $select: Field to compute the average of
+		:param string $alias: Alias for the resulting value name
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a SELECT COUNT(field) clause to a query.
+		Adds a ``SELECT COUNT(field)`` clause to a query.
 
-	.. php:method:: distinct([$val = TRUE])
+	.. php:method:: distinct([$val = true])
 
-		:param	bool	$val: Desired value of the "distinct" flag
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param bool $val: Desired value of the "distinct" flag
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
 		Sets a flag which tells the query builder to add
-		a DISTINCT clause to the SELECT portion of the query.
+		a ``DISTINCT`` clause to the ``SELECT`` portion of the query.
 
-	.. php:method:: from($from[, $overwrite = FALSE])
+	.. php:method:: from($from[, $overwrite = false])
 
-                :param	mixed	$from: Table name(s); string or array
-                :param	bool	$overwrite: Should we remove the first table existing?
-                :returns:	BaseBuilder instance (method chaining)
-                :rtype:	BaseBuilder
+		:param mixed $from: Table name(s); string or array
+		:param bool	$overwrite: Should we remove the first table existing?
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Specifies the FROM clause of a query.
+		Specifies the ``FROM`` clause of a query.
 
-	.. php:method:: join($table, $cond[, $type = ''[, $escape = NULL]])
+	.. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
-		:param	string	$table: Table name to join
-		:param	string	$cond: The JOIN ON condition
-		:param	string	$type: The JOIN type
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $table: Table name to join
+		:param string $cond: The JOIN ON condition
+		:param string $type: The JOIN type
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a JOIN clause to a query.
+		Adds a ``JOIN`` clause to a query.
 
-	.. php:method:: where($key[, $value = NULL[, $escape = NULL]])
+	.. php:method:: where($key[, $value = null[, $escape = null]])
 
-		:param	mixed	$key: Name of field to compare, or associative array
-		:param	mixed	$value: If a single key, compared to this value
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param mixed $key: Name of field to compare, or associative array
+		:param mixed $value: If a single key, compared to this value
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates the WHERE portion of the query.
-                Separates multiple calls with 'AND'.
+		Generates the ``WHERE`` portion of the query. Separates multiple calls with ``AND``.
 
-	.. php:method:: orWhere($key[, $value = NULL[, $escape = NULL]])
+	.. php:method:: orWhere($key[, $value = null[, $escape = null]])
 
-		:param	mixed	$key: Name of field to compare, or associative array
-		:param	mixed	$value: If a single key, compared to this value
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param mixed $key: Name of field to compare, or associative array
+		:param mixed $value: If a single key, compared to this value
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates the WHERE portion of the query.
-                Separates multiple calls with 'OR'.
+		Generates the ``WHERE`` portion of the query. Separates multiple calls with ``OR``.
 
-	.. php:method:: orWhereIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: The field to search
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: The field to search
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a WHERE field IN('item', 'item') SQL query,
-                joined with 'OR' if appropriate.
+		Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: orWhereNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: orWhereNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: The field to search
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: The field to search
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a WHERE field NOT IN('item', 'item') SQL query,
-                joined with 'OR' if appropriate.
+		Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: whereIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: whereIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: Name of field to examine
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool            $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: Name of field to examine
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a WHERE field IN('item', 'item') SQL query,
-                joined with 'AND' if appropriate.
+		Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: whereNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: whereNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: Name of field to examine
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: Name of field to examine
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a WHERE field NOT IN('item', 'item') SQL query,
-                joined with 'AND' if appropriate.
+		Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
 	.. php:method:: groupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression, using ANDs for the conditions inside it.
+		Starts a group expression, using ``AND`` for the conditions inside it.
 
 	.. php:method:: orGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression, using ORs for the conditions inside it.
+		Starts a group expression, using ``OR`` for the conditions inside it.
 
 	.. php:method:: notGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression, using AND NOTs for the conditions inside it.
+		Starts a group expression, using ``AND NOT`` for the conditions inside it.
 
 	.. php:method:: orNotGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression, using OR NOTs for the conditions inside it.
+		Starts a group expression, using ``OR NOT`` for the conditions inside it.
 
 	.. php:method:: groupEnd()
 
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
 		Ends a group expression.
 
-	.. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a LIKE clause to a query, separating multiple calls with AND.
+		Adds a ``LIKE`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a LIKE clause to a query, separating multiple class with OR.
+		Adds a ``LIKE`` clause to a query, separating multiple class with ``OR``.
 
-	.. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a NOT LIKE clause to a query, separating multiple calls with AND.
+		Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a NOT LIKE clause to a query, separating multiple calls with OR.
+		Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``OR``.
 
-	.. php:method:: having($key[, $value = NULL[, $escape = NULL]])
+	.. php:method:: having($key[, $value = null[, $escape = null]])
 
-		:param	mixed	$key: Identifier (string) or associative array of field/value pairs
-		:param	string	$value: Value sought if $key is an identifier
-		:param	string	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $key: Identifier (string) or associative array of field/value pairs
+		:param string $value: Value sought if $key is an identifier
+		:param string $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a HAVING clause to a query, separating multiple calls with AND.
+		Adds a ``HAVING`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orHaving($key[, $value = NULL[, $escape = NULL]])
+	.. php:method:: orHaving($key[, $value = null[, $escape = null]])
 
-		:param	mixed	$key: Identifier (string) or associative array of field/value pairs
-		:param	string	$value: Value sought if $key is an identifier
-		:param	string	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $key: Identifier (string) or associative array of field/value pairs
+		:param string $value: Value sought if $key is an identifier
+		:param string $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a HAVING clause to a query, separating multiple calls with OR.
+		Adds a ``HAVING`` clause to a query, separating multiple calls with ``OR``.
 
-	.. php:method:: orHavingIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: The field to search
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: The field to search
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a HAVING field IN('item', 'item') SQL query,
-                joined with 'OR' if appropriate.
+		Generates a ``HAVING`` field IN('item', 'item') SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: orHavingNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: orHavingNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: The field to search
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: The field to search
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a HAVING field NOT IN('item', 'item') SQL query,
-                joined with 'OR' if appropriate.
+		Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: havingIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: havingIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: Name of field to examine
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool            $escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: Name of field to examine
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a HAVING field IN('item', 'item') SQL query,
-                joined with 'AND' if appropriate.
+		Generates a ``HAVING`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: havingNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
+	.. php:method:: havingNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param	string	        $key: Name of field to examine
-		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
-		:param	bool	        $escape: Whether to escape values and identifiers
-		:param	bool            $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:param string $key: Name of field to examine
+		:param array|Closure $values: Array of target values, or anonymous function for subquery
+		:param bool $escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Generates a HAVING field NOT IN('item', 'item') SQL query,
-                joined with 'AND' if appropriate.
+		Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a LIKE clause to a HAVING part of the query, separating multiple calls with AND.
+		Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
 
-	.. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a LIKE clause to a HAVING part of the query, separating multiple class with OR.
+		Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple class with ``OR``.
 
-	.. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:param bool $insensitiveSearch: Whether to force a case-insensitive search
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with AND.
+		Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
 
-	.. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
+	.. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param	string	$field: Field name
-		:param	string	$match: Text portion to match
-		:param	string	$side: Which side of the expression to put the '%' wildcard on
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $field: Field name
+		:param string $match: Text portion to match
+		:param string $side: Which side of the expression to put the '%' wildcard on
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with OR.
+		Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``OR``.
 
 	.. php:method:: havingGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression for HAVING clause, using ANDs for the conditions inside it.
+		Starts a group expression for ``HAVING`` clause, using ``AND`` for the conditions inside it.
 
 	.. php:method:: orHavingGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression for HAVING clause, using ORs for the conditions inside it.
+		Starts a group expression for ``HAVING`` clause, using ``OR`` for the conditions inside it.
 
 	.. php:method:: notHavingGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression for HAVING clause, using AND NOTs for the conditions inside it.
+		Starts a group expression for ``HAVING`` clause, using ``AND NOT`` for the conditions inside it.
 
 	.. php:method:: orNotHavingGroupStart()
 
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Starts a group expression for HAVING clause, using OR NOTs for the conditions inside it.
+		Starts a group expression for ``HAVING`` clause, using ``OR NOT`` for the conditions inside it.
 
 	.. php:method:: havingGroupEnd()
 
-		:returns:	BaseBuilder instance
-		:rtype:	object
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Ends a group expression for HAVING clause.
+		Ends a group expression for ``HAVING`` clause.
 
-	.. php:method:: groupBy($by[, $escape = NULL])
+	.. php:method:: groupBy($by[, $escape = null])
 
-		:param	mixed	$by: Field(s) to group by; string or array
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $by: Field(s) to group by; string or array
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds a GROUP BY clause to a query.
+		Adds a ``GROUP BY`` clause to a query.
 
-	.. php:method:: orderBy($orderby[, $direction = ''[, $escape = NULL]])
+	.. php:method:: orderBy($orderby[, $direction = ''[, $escape = null]])
 
-		:param	string	$orderby: Field to order by
-		:param	string	$direction: The order requested - ASC, DESC or random
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param string $orderby: Field to order by
+		:param string $direction: The order requested - ASC, DESC or random
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds an ORDER BY clause to a query.
+		Adds an ``ORDER BY`` clause to a query.
 
 	.. php:method:: limit($value[, $offset = 0])
 
-		:param	int	$value: Number of rows to limit the results to
-		:param	int	$offset: Number of rows to skip
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param int $value: Number of rows to limit the results to
+		:param int $offset: Number of rows to skip
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds LIMIT and OFFSET clauses to a query.
+		Adds ``LIMIT`` and ``OFFSET`` clauses to a query.
 
 	.. php:method:: offset($offset)
 
-		:param	int	$offset: Number of rows to skip
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param int $offset: Number of rows to skip
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds an OFFSET clause to a query.
+		Adds an ``OFFSET`` clause to a query.
 
-	.. php:method:: set($key[, $value = ''[, $escape = NULL]])
+	.. php:method:: set($key[, $value = ''[, $escape = null]])
 
-		:param	mixed	$key: Field name, or an array of field/value pairs
-		:param	string	$value: Field value, if $key is a single field
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $key: Field name, or an array of field/value pairs
+		:param string $value: Field value, if $key is a single field
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
-		Adds field/value pairs to be passed later to ``insert()``,
-		``update()`` or ``replace()``.
+		Adds field/value pairs to be passed later to ``insert()``, ``update()`` or ``replace()``.
 
-	.. php:method:: insert([$set = NULL[, $escape = NULL]])
+	.. php:method:: insert([$set = null[, $escape = null]])
 
-		:param	array	$set: An associative array of field/value pairs
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	TRUE on success, FALSE on failure
+		:param array $set: An associative array of field/value pairs
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		Compiles and executes an INSERT statement.
+		Compiles and executes an ``INSERT`` statement.
 
-	.. php:method:: insertBatch([$set = NULL[, $escape = NULL[, $batch_size = 100]]])
+	.. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
 
-		:param	array	$set: Data to insert
-		:param	bool	$escape: Whether to escape values and identifiers
-		:param	int	$batch_size: Count of rows to insert at once
-		:returns:	Number of rows inserted or FALSE on failure
-		:rtype:	mixed
+		:param array $set: Data to insert
+		:param bool $escape: Whether to escape values and identifiers
+		:param int $batch_size: Count of rows to insert at once
+		:returns: Number of rows inserted or ``false`` on failure
+		:rtype:	int|false
 
 		Compiles and executes batch ``INSERT`` statements.
 
@@ -1732,33 +1727,33 @@ Class Reference
 			``INSERT`` queries will be executed, each trying to insert
 			up to ``$batch_size`` rows.
 
-	.. php:method:: setInsertBatch($key[, $value = ''[, $escape = NULL]])
+	.. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
 
-		:param	mixed	$key: Field name or an array of field/value pairs
-		:param	string	$value: Field value, if $key is a single field
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $key: Field name or an array of field/value pairs
+		:param string $value: Field value, if $key is a single field
+		:param bool $escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
 		Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
 
-	.. php:method:: update([$set = NULL[, $where = NULL[, $limit = NULL]]])
+	.. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
-		:param	array	$set: An associative array of field/value pairs
-		:param	string	$where: The WHERE clause
-		:param	int	$limit: The LIMIT clause
-		:returns:	TRUE on success, FALSE on failure
+		:param array $set: An associative array of field/value pairs
+		:param string $where: The WHERE clause
+		:param int $limit: The LIMIT clause
+		:returns: ``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		Compiles and executes an UPDATE statement.
+		Compiles and executes an ``UPDATE`` statement.
 
-	.. php:method:: updateBatch([$set = NULL[, $value = NULL[, $batch_size = 100]]])
+	.. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
 
-		:param	array	$set: Field name, or an associative array of field/value pairs
-		:param	string	$value: Field value, if $set is a single field
-		:param	int	$batch_size: Count of conditions to group in a single query
-		:returns:	Number of rows updated or FALSE on failure
-		:rtype:	mixed
+		:param array $set: Field name, or an associative array of field/value pairs
+		:param string $value: Field value, if $set is a single field
+		:param int $batch_size: Count of conditions to group in a single query
+		:returns: Number of rows updated or ``false`` on failure
+		:rtype:	int|false
 
 		Compiles and executes batch ``UPDATE`` statements.
 
@@ -1766,97 +1761,97 @@ Class Reference
 			multiple queries will be executed, each handling up to
 			``$batch_size`` field/value pairs.
 
-	.. php:method:: setUpdateBatch($key[, $value = ''[, $escape = NULL]])
+	.. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
 
-		:param	mixed	$key: Field name or an array of field/value pairs
-		:param	string	$value: Field value, if $key is a single field
-		:param	bool	$escape: Whether to escape values and identifiers
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+		:param mixed $key: Field name or an array of field/value pairs
+		:param string $value: Field value, if $key is a single field
+		:param bool	$escape: Whether to escape values and identifiers
+		:returns: ``BaseBuilder`` instance (method chaining)
+		:rtype:	``BaseBuilder``
 
 		Adds field/value pairs to be updated in a table later via ``updateBatch()``.
 
-	.. php:method:: replace([$set = NULL])
+	.. php:method:: replace([$set = null])
 
-		:param	array	$set: An associative array of field/value pairs
-		:returns:	TRUE on success, FALSE on failure
+		:param array $set: An associative array of field/value pairs
+		:returns: ``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		Compiles and executes a REPLACE statement.
+		Compiles and executes a ``REPLACE`` statement.
 
-	.. php:method:: delete([$where = ''[, $limit = NULL[, $reset_data = TRUE]]])
+	.. php:method:: delete([$where = ''[, $limit = null[, $reset_data = true]]])
 
-		:param	string	$where: The WHERE clause
-		:param	int	$limit: The LIMIT clause
-		:param	bool	$reset_data: TRUE to reset the query "write" clause
-		:returns:	BaseBuilder instance (method chaining) or FALSE on failure
-		:rtype:	mixed
+		:param string $where: The WHERE clause
+		:param int $limit: The LIMIT clause
+		:param bool $reset_data: true to reset the query "write" clause
+		:returns: ``BaseBuilder`` instance (method chaining) or ``false`` on failure
+		:rtype:	``BaseBuilder|false``
 
-		Compiles and executes a DELETE query.
+		Compiles and executes a ``DELETE`` query.
 
-    .. php:method:: increment($column[, $value = 1])
+	.. php:method:: increment($column[, $value = 1])
 
         :param string $column: The name of the column to increment
-        :param int    $value:  The amount to increment the column by
+        :param int $value: The amount to increment in the column
 
         Increments the value of a field by the specified amount. If the field
-        is not a numeric field, like a VARCHAR, it will likely be replaced
-        with $value.
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with ``$value``.
 
-    .. php:method:: decrement($column[, $value = 1])
+	.. php:method:: decrement($column[, $value = 1])
 
         :param string $column: The name of the column to decrement
-        :param int    $value:  The amount to decrement the column by
+        :param int $value:  The amount to decrement in the column
 
         Decrements the value of a field by the specified amount. If the field
-        is not a numeric field, like a VARCHAR, it will likely be replaced
-        with $value.
+        is not a numeric field, like a ``VARCHAR``, it will likely be replaced
+        with ``$value``.
 
 	.. php:method:: truncate()
 
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+		:returns: ``true`` on success, ``false`` on failure, string on test mode
+		:rtype:	bool|string
 
-		Executes a TRUNCATE statement on a table.
+		Executes a ``TRUNCATE`` statement on a table.
 
-		.. note:: If the database platform in use doesn't support TRUNCATE,
-			a DELETE statement will be used instead.
+		.. note:: If the database platform in use doesn't support ``TRUNCATE``,
+			a ``DELETE`` statement will be used instead.
 
 	.. php:method:: emptyTable()
 
-		:returns:	TRUE on success, FALSE on failure
+		:returns: ``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		Deletes all records from a table via a DELETE statement.
+		Deletes all records from a table via a ``DELETE`` statement.
 
-	.. php:method:: getCompiledSelect([$reset = TRUE])
+	.. php:method:: getCompiledSelect([$reset = true])
 
-		:param	bool	$reset: Whether to reset the current QB values or not
-		:returns:	The compiled SQL statement as a string
+		:param bool $reset: Whether to reset the current QB values or not
+		:returns: The compiled SQL statement as a string
 		:rtype:	string
 
-		Compiles a SELECT statement and returns it as a string.
+		Compiles a ``SELECT`` statement and returns it as a string.
 
-	.. php:method:: getCompiledInsert([$reset = TRUE])
+	.. php:method:: getCompiledInsert([$reset = true])
 
-		:param	bool	$reset: Whether to reset the current QB values or not
-		:returns:	The compiled SQL statement as a string
+		:param bool $reset: Whether to reset the current QB values or not
+		:returns: The compiled SQL statement as a string
 		:rtype:	string
 
-		Compiles an INSERT statement and returns it as a string.
+		Compiles an ``INSERT`` statement and returns it as a string.
 
-	.. php:method:: getCompiledUpdate([$reset = TRUE])
+	.. php:method:: getCompiledUpdate([$reset = true])
 
-		:param	bool	$reset: Whether to reset the current QB values or not
-		:returns:	The compiled SQL statement as a string
+		:param bool $reset: Whether to reset the current QB values or not
+		:returns: The compiled SQL statement as a string
 		:rtype:	string
 
-		Compiles an UPDATE statement and returns it as a string.
+		Compiles an ``UPDATE`` statement and returns it as a string.
 
-	.. php:method:: getCompiledDelete([$reset = TRUE])
+	.. php:method:: getCompiledDelete([$reset = true])
 
-		:param	bool	$reset: Whether to reset the current QB values or not
-		:returns:	The compiled SQL statement as a string
+		:param bool $reset: Whether to reset the current QB values or not
+		:returns: The compiled SQL statement as a string
 		:rtype:	string
 
-		Compiles a DELETE statement and returns it as a string.
+		Compiles a ``DELETE`` statement and returns it as a string.

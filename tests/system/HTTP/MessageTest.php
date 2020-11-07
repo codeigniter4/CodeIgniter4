@@ -209,6 +209,55 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
 
+	public function provideArrayHeaderValue()
+	{
+		return [
+			'existing for next not append' => [
+				[
+					'json',
+					'html',
+					'xml',
+				],
+			],
+			'existing for next append'     => [
+				[
+					'json',
+					'html',
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideArrayHeaderValue
+	 */
+	public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue)
+	{
+		$this->message->setHeader('Accept', $arrayHeaderValue);
+		$this->message->setHeader('Accept', 'xml');
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
+	/**
+	 * @dataProvider provideArrayHeaderValue
+	 */
+	public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue)
+	{
+		$this->message->setHeader('Accept', $arrayHeaderValue);
+		$this->message->setHeader('Accept', ['xml']);
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
+	public function testSetHeaderWithExistingArrayValuesAppendNullValue()
+	{
+		$this->message->setHeader('Accept', ['json', 'html', 'xml']);
+		$this->message->setHeader('Accept', null);
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutContentType()
@@ -281,6 +330,23 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->removeHeader('content-type');
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
+	}
+
+	public function testIsJsonReturnsFalseWithNoHeader()
+	{
+		$this->assertFalse($this->message->isJSON());
+	}
+
+	public function testIsJsonReturnsFalseWithWrongContentType()
+	{
+		$this->message->setHeader('Content-Type', 'application/xml');
+		$this->assertFalse($this->message->isJSON());
+	}
+
+	public function testIsJsonReturnsTrue()
+	{
+		$this->message->setHeader('Content-Type', 'application/json');
+		$this->assertTrue($this->message->isJSON());
 	}
 
 }

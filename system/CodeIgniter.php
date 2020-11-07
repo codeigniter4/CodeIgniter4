@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter;
@@ -48,14 +20,19 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
+use Config\App;
 use Config\Cache;
 use Config\Services;
 use Exception;
+use Kint;
+use Kint\Renderer\CliRenderer;
+use Kint\Renderer\RichRenderer;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -108,7 +85,7 @@ class CodeIgniter
 	/**
 	 * Current response.
 	 *
-	 * @var HTTP\ResponseInterface
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
@@ -122,7 +99,7 @@ class CodeIgniter
 	/**
 	 * Controller to use.
 	 *
-	 * @var string|\Closure
+	 * @var string|Closure
 	 */
 	protected $controller;
 
@@ -167,9 +144,9 @@ class CodeIgniter
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\App $config
+	 * @param App $config
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct(App $config)
 	{
 		$this->startTime = microtime(true);
 		$this->config    = $config;
@@ -208,7 +185,7 @@ class CodeIgniter
 		if (! CI_DEBUG)
 		{
 			// @codeCoverageIgnoreStart
-			\Kint::$enabled_mode = false;
+			Kint::$enabled_mode = false;
 			// @codeCoverageIgnoreEnd
 		}
 	}
@@ -258,6 +235,7 @@ class CodeIgniter
 		// If we have KINT_DIR it means it's already loaded via composer
 		if (! defined('KINT_DIR'))
 		{
+			// @phpstan-ignore-next-line
 			spl_autoload_register(function ($class) {
 				$class = explode('\\', $class);
 
@@ -279,31 +257,31 @@ class CodeIgniter
 		 */
 		$config = config('Config\Kint');
 
-		\Kint::$max_depth           = $config->maxDepth;
-		\Kint::$display_called_from = $config->displayCalledFrom;
-		\Kint::$expanded            = $config->expanded;
+		Kint::$max_depth           = $config->maxDepth;
+		Kint::$display_called_from = $config->displayCalledFrom;
+		Kint::$expanded            = $config->expanded;
 
 		if (! empty($config->plugins) && is_array($config->plugins))
 		{
-			\Kint::$plugins = $config->plugins;
+			Kint::$plugins = $config->plugins;
 		}
 
-		\Kint\Renderer\RichRenderer::$theme  = $config->richTheme;
-		\Kint\Renderer\RichRenderer::$folder = $config->richFolder;
-		\Kint\Renderer\RichRenderer::$sort   = $config->richSort;
+		RichRenderer::$theme  = $config->richTheme;
+		RichRenderer::$folder = $config->richFolder;
+		RichRenderer::$sort   = $config->richSort;
 		if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins))
 		{
-			\Kint\Renderer\RichRenderer::$object_plugins = $config->richObjectPlugins;
+			RichRenderer::$object_plugins = $config->richObjectPlugins;
 		}
 		if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins))
 		{
-			\Kint\Renderer\RichRenderer::$tab_plugins = $config->richTabPlugins;
+			RichRenderer::$tab_plugins = $config->richTabPlugins;
 		}
 
-		\Kint\Renderer\CliRenderer::$cli_colors         = $config->cliColors;
-		\Kint\Renderer\CliRenderer::$force_utf8         = $config->cliForceUTF8;
-		\Kint\Renderer\CliRenderer::$detect_width       = $config->cliDetectWidth;
-		\Kint\Renderer\CliRenderer::$min_terminal_width = $config->cliMinWidth;
+		CliRenderer::$cli_colors         = $config->cliColors;
+		CliRenderer::$force_utf8         = $config->cliForceUTF8;
+		CliRenderer::$detect_width       = $config->cliDetectWidth;
+		CliRenderer::$min_terminal_width = $config->cliMinWidth;
 	}
 
 	//--------------------------------------------------------------------
@@ -316,12 +294,12 @@ class CodeIgniter
 	 * tries to route the response, loads the controller and generally
 	 * makes all of the pieces work together.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
-	 * @param boolean                                           $returnResponse
+	 * @param RouteCollectionInterface|null $routes
+	 * @param boolean                       $returnResponse
 	 *
-	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \Exception
+	 * @return boolean|RequestInterface|Response|ResponseInterface|mixed
+	 * @throws RedirectException
+	 * @throws Exception
 	 */
 	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
 	{
@@ -396,12 +374,12 @@ class CodeIgniter
 	/**
 	 * Handles the main request logic and fires the controller.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
-	 * @param Cache                                             $cacheConfig
-	 * @param boolean                                           $returnResponse
+	 * @param RouteCollectionInterface|null $routes
+	 * @param Cache                         $cacheConfig
+	 * @param boolean                       $returnResponse
 	 *
-	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @return RequestInterface|\CodeIgniter\HTTP\Response|ResponseInterface|mixed
+	 * @throws RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
 	{
@@ -483,7 +461,7 @@ class CodeIgniter
 
 		// Save our current URI as the previous URI in the session
 		// for safer, more accurate use with `previous_url()` helper function.
-		$this->storePreviousURL((string)current_url(true));
+		$this->storePreviousURL((string) current_url(true));
 
 		unset($uri);
 
@@ -549,7 +527,7 @@ class CodeIgniter
 			// @codeCoverageIgnoreStart
 			header('HTTP/1.1 503 Service Unavailable.', true, 503);
 			echo 'The application environment is not set correctly.';
-			exit(1); // EXIT_ERROR
+			exit(EXIT_ERROR); // EXIT_ERROR
 			// @codeCoverageIgnoreEnd
 		}
 	}
@@ -577,9 +555,9 @@ class CodeIgniter
 	 * Sets a Request object to be used for this request.
 	 * Used when running certain tests.
 	 *
-	 * @param \CodeIgniter\HTTP\Request $request
+	 * @param Request $request
 	 *
-	 * @return \CodeIgniter\CodeIgniter
+	 * @return $this
 	 */
 	public function setRequest(Request $request)
 	{
@@ -602,6 +580,7 @@ class CodeIgniter
 			return;
 		}
 
+		// @phpstan-ignore-next-line
 		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
 			// @codeCoverageIgnoreStart
@@ -662,13 +641,13 @@ class CodeIgniter
 	/**
 	 * Determines if a response has been cached for the given URI.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 *
-	 * @return boolean|\CodeIgniter\HTTP\ResponseInterface
+	 * @return boolean|ResponseInterface
 	 */
-	public function displayCache($config)
+	public function displayCache(Cache $config)
 	{
 		if ($cachedResponse = cache()->get($this->generateCacheName($config)))
 		{
@@ -722,7 +701,7 @@ class CodeIgniter
 	 * Caches the full response from the current request. Used for
 	 * full-page caching for very high performance.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 *
 	 * @return mixed
 	 */
@@ -759,11 +738,11 @@ class CodeIgniter
 	/**
 	 * Generates the cache name to use for our full-page caching.
 	 *
-	 * @param $config
+	 * @param Cache $config
 	 *
 	 * @return string
 	 */
-	protected function generateCacheName($config): string
+	protected function generateCacheName(Cache $config): string
 	{
 		if (get_class($this->request) === CLIRequest::class)
 		{
@@ -801,7 +780,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		return str_replace('{elapsed_time}', $this->totalTime, $output);
+		return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -814,8 +793,8 @@ class CodeIgniter
 	 * @param RouteCollectionInterface|null $routes An collection interface to use in place
 	 *                                         of the config file.
 	 *
-	 * @return string
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @return string|null
+	 * @throws RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
@@ -862,6 +841,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
+		// @phpstan-ignore-next-line
 		return (is_cli() && ! (ENVIRONMENT === 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
@@ -914,9 +894,8 @@ class CodeIgniter
 		{
 			throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
 		}
-		else if (! method_exists($this->controller, '_remap') &&
-				! is_callable([$this->controller, $this->method], false)
-		)
+		if (! method_exists($this->controller, '_remap') &&
+				! is_callable([$this->controller, $this->method], false))
 		{
 			throw PageNotFoundException::forMethodNotFound($this->method);
 		}
@@ -931,7 +910,7 @@ class CodeIgniter
 	 */
 	protected function createController()
 	{
-		$class = new $this->controller();
+		$class = new $this->controller(); // @phpstan-ignore-line
 		$class->initController($this->request, $this->response, Services::logger());
 
 		$this->benchmark->stop('controller_constructor');
@@ -984,7 +963,7 @@ class CodeIgniter
 			{
 				echo $override($e->getMessage());
 			}
-			else if (is_array($override))
+			elseif (is_array($override))
 			{
 				$this->benchmark->start('controller');
 				$this->benchmark->start('controller_constructor');
@@ -1091,7 +1070,7 @@ class CodeIgniter
 	 *
 	 * This helps provider safer, more reliable previous_url() detection.
 	 *
-	 * @param \CodeIgniter\HTTP\URI $uri
+	 * @param URI|string $uri
 	 */
 	public function storePreviousURL($uri)
 	{
@@ -1160,7 +1139,7 @@ class CodeIgniter
 	 * Made into a separate method so that it can be mocked during testing
 	 * without actually stopping script execution.
 	 *
-	 * @param $code
+	 * @param integer $code
 	 */
 	protected function callExit($code)
 	{

@@ -1,5 +1,15 @@
 <?php
+
 /**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
  * CodeIgniter PHP-Development Server Rewrite Rules
  *
  * This script works with the CLI serve command to help run a seamless
@@ -10,10 +20,11 @@
 
 // @codeCoverageIgnoreStart
 // Avoid this file run when listing commands
-if (php_sapi_name() === 'cli')
+if (PHP_SAPI === 'cli')
 {
 	return;
 }
+
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Front Controller path - expected to be in the default folder

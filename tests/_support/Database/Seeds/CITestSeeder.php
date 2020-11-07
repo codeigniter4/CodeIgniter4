@@ -6,7 +6,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 	{
 		// Job Data
 		$data = [
-			'user'          => [
+			'user'                   => [
 				[
 					'name'    => 'Derek Jones',
 					'email'   => 'derek@world.com',
@@ -28,7 +28,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'country' => 'UK',
 				],
 			],
-			'job'           => [
+			'job'                    => [
 				[
 					'name'        => 'Developer',
 					'description' => 'Awesome job, but sometimes makes you bored',
@@ -46,7 +46,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'description' => 'Only Coldplay can actually called Musician',
 				],
 			],
-			'misc'          => [
+			'misc'                   => [
 				[
 					'key'   => '\\xxxfoo456',
 					'value' => 'Entry with \\xxx',
@@ -60,13 +60,19 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'value' => ' One  two   three	tab',
 				],
 			],
-			'stringifypkey' => [
+			'stringifypkey'          => [
 				[
 					'id'    => 'A01',
 					'value' => 'test',
 				],
 			],
-			'type_test'     => [
+			'without_auto_increment' => [
+				[
+					'key'   => 'key',
+					'value' => 'value',
+				],
+			],
+			'type_test'              => [
 				[
 					'type_varchar'    => 'test',
 					'type_char'       => 'test',
@@ -90,6 +96,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 				],
 			],
 		];
+
 		//set SQL times to more correct format
 		if ($this->db->DBDriver === 'SQLite3')
 		{
@@ -98,7 +105,8 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
 			 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
 		}
-		elseif ($this->db->DBDriver === 'Postgre')
+
+		if ($this->db->DBDriver === 'Postgre')
 		{
 			$data['type_test'][0]['type_time'] = '15:22:00';
 			unset($data['type_test'][0]['type_enum']);
@@ -109,6 +117,20 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			unset($data['type_test'][0]['type_decimal']);
 			unset($data['type_test'][0]['type_blob']);
 		}
+
+		if ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$data['type_test'][0]['type_date']     = '2020-01-11';
+			$data['type_test'][0]['type_time']     = '15:22:00.000';
+			$data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
+			unset($data['type_test'][0]['type_timestamp']);
+			unset($data['type_test'][0]['type_enum']);
+			unset($data['type_test'][0]['type_set']);
+			unset($data['type_test'][0]['type_mediumtext']);
+			unset($data['type_test'][0]['type_double']);
+			unset($data['type_test'][0]['type_blob']);
+		}
+
 		foreach ($data as $table => $dummy_data)
 		{
 			$this->db->table($table)->truncate();

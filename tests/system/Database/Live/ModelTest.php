@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use BadMethodCallException;
 use CodeIgniter\Config\Config;
@@ -19,6 +21,7 @@ use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
+use Tests\Support\Models\WithoutAutoincrementModel;
 
 /**
  * @group DatabaseLive
@@ -357,13 +360,14 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 1,
+
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
+
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 2,
+
 					 'key'   => 'bar',
 					 'value' => 'baz',
 				 ]);
@@ -435,7 +439,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'id'          => 1,
 			'name'        => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
@@ -475,8 +478,14 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
-		$data->id          = 1;
+		$data = new \stdClass();
+
+		// Sqlsrv does not allow forcing an ID into an autoincrement field.
+		if ($this->db->DBDriver !== 'Sqlsrv')
+		{
+			$data->id = 1;
+		}
+
 		$data->name        = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
@@ -1127,6 +1136,39 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($model->hasToken('afterFind'));
 	}
 
+	public function testFindEventSingletons()
+	{
+		$model = new EventModel();
+
+		// afterFind
+		$model->first();
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find(1);
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		$model->findAll();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		// beforeFind
+		$model->beforeFindReturnData = true;
+
+		$model->first();
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find(1);
+		$this->assertEquals(true, $model->eventData['singleton']);
+
+		$model->find();
+		$this->assertEquals(false, $model->eventData['singleton']);
+
+		$model->findAll();
+		$this->assertEquals(false, $model->eventData['singleton']);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testAllowCallbacksFalsePreventsTriggers()
@@ -1509,7 +1551,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
-					 'id'    => 1,
+
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
@@ -2303,6 +2345,75 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUseAutoIncrementSetToFalseInsertException()
+	{
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no primary key defined when trying to make insert');
+
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseInsert()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+
+		$model->insert($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+	}
+
+	public function testUseAutoIncrementSetToFalseUpdate()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$key    = 'key';
+		$update = [
+			'value' => 'some different value',
+		];
+
+		$model->update($key, $update);
+
+		$this->seeInDatabase('without_auto_increment', ['key' => $key, 'value' => $update['value']]);
+	}
+
+	public function testUseAutoIncrementSetToFalseSave()
+	{
+		$model = new WithoutAutoIncrementModel();
+
+		$insert = [
+			'key'   => 'some_random_key',
+			'value' => 'some value',
+		];
+
+		$model->save($insert);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $insert);
+
+		$update = [
+			'key'   => 'some_random_key',
+			'value' => 'some different value',
+		];
+		$model->save($update);
+
+		$this->assertEquals($insert['key'], $model->getInsertID());
+		$this->seeInDatabase('without_auto_increment', $update);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testMagicIssetTrue()
 	{
 		$model = new UserModel();
@@ -2374,19 +2485,6 @@ class ModelTest extends CIDatabaseTestCase
 		$this->expectException(BadMethodCallException::class);
 		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
 		$model->undefinedMethodCall();
-	}
-
-	public function testUndefinedMethodInBuilder()
-	{
-		$model = new JobModel($this->db);
-
-		$model->find(1);
-
-		$this->expectException(BadMethodCallException::class);
-		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
-
-		$binds = $model->builder()
-			->getBindings();
 	}
 
 	/**
@@ -2509,4 +2607,60 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
+	public function testSetAllowedFields()
+	{
+		$allowed1 = [
+			'id',
+			'created_at',
+		];
+		$allowed2 = [
+			'id',
+			'updated_at',
+		];
+
+		$model = new class extends Model {
+			protected $allowedFields = [
+				'id',
+				'created_at',
+			];
+		};
+
+		$this->assertSame($allowed1, $this->getPrivateProperty($model, 'allowedFields'));
+
+		$model->setAllowedFields($allowed2);
+		$this->assertSame($allowed2, $this->getPrivateProperty($model, 'allowedFields'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testBuilderUsesModelTable()
+	{
+		$model   = new UserModel($this->db);
+		$builder = $model->builder();
+
+		$this->assertEquals('user', $builder->getTable());
+	}
+
+	public function testBuilderRespectsTableParameter()
+	{
+		$model    = new UserModel($this->db);
+		$builder1 = $model->builder('jobs');
+		$builder2 = $model->builder();
+
+		$this->assertEquals('jobs', $builder1->getTable());
+		$this->assertEquals('user', $builder2->getTable());
+	}
+
+	public function testBuilderWithParameterIgnoresShared()
+	{
+		$model = new UserModel($this->db);
+
+		$builder1 = $model->builder();
+		$builder2 = $model->builder('jobs');
+		$builder3 = $model->builder();
+
+		$this->assertEquals('user', $builder1->getTable());
+		$this->assertEquals('jobs', $builder2->getTable());
+		$this->assertEquals('user', $builder3->getTable());
+	}
 }

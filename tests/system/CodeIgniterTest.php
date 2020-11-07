@@ -230,7 +230,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 			'/',
 		];
 		$_SERVER['argc']            = 2;
-		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2';
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2.0';
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -281,7 +281,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', $response->getHeader('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithNamed()

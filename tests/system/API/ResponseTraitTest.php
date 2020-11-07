@@ -29,7 +29,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -41,6 +41,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$config = array_merge($config, $userConfig);
@@ -465,7 +466,7 @@ EOH;
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -477,6 +478,7 @@ EOH;
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());

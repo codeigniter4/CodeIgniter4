@@ -1,7 +1,20 @@
-<?php namespace CodeIgniter\Test\Mock;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Query;
 
 class MockConnection extends BaseConnection
 {
@@ -35,9 +48,8 @@ class MockConnection extends BaseConnection
 	 * @param boolean $setEscapeFlags
 	 * @param string  $queryClass
 	 *
-	 * @return \CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false
+	 * @return BaseResult|Query|false
 	 */
-
 	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
@@ -190,7 +202,7 @@ class MockConnection extends BaseConnection
 	 */
 	public function insertID(): int
 	{
-		return $this->connID->insert_id;
+		return $this->connID->insert_id; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

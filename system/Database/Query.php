@@ -1,47 +1,18 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
 
 /**
  * Query builder
- *
- * @package CodeIgniter\Database
  */
 class Query implements QueryInterface
 {
@@ -80,7 +51,7 @@ class Query implements QueryInterface
 	 * The start time in seconds with microseconds
 	 * for when this query was executed.
 	 *
-	 * @var float
+	 * @var string|float
 	 */
 	protected $startTime;
 
@@ -110,7 +81,7 @@ class Query implements QueryInterface
 	 * Pointer to database connection.
 	 * Mainly for escaping features.
 	 *
-	 * @var BaseConnection
+	 * @var ConnectionInterface
 	 */
 	public $db;
 
@@ -119,9 +90,9 @@ class Query implements QueryInterface
 	/**
 	 * BaseQuery constructor.
 	 *
-	 * @param $db ConnectionInterface
+	 * @param ConnectionInterface $db
 	 */
-	public function __construct(&$db)
+	public function __construct(ConnectionInterface &$db)
 	{
 		$this->db = $db;
 	}
@@ -168,12 +139,23 @@ class Query implements QueryInterface
 	/**
 	 * Will store the variables to bind into the query later.
 	 *
-	 * @param array $binds
+	 * @param array   $binds
+	 * @param boolean $setEscape
 	 *
 	 * @return $this
 	 */
-	public function setBinds(array $binds)
+	public function setBinds(array $binds, bool $setEscape = true)
 	{
+		if ($setEscape)
+		{
+			array_walk($binds, function (&$item) {
+				$item = [
+					$item,
+					true,
+				];
+			});
+		}
+
 		$this->binds = $binds;
 
 		return $this;
@@ -233,9 +215,9 @@ class Query implements QueryInterface
 	 * @param boolean $returnRaw
 	 * @param integer $decimals
 	 *
-	 * @return string
+	 * @return string|float
 	 */
-	public function getStartTime(bool $returnRaw = false, int $decimals = 6): string
+	public function getStartTime(bool $returnRaw = false, int $decimals = 6)
 	{
 		if ($returnRaw)
 		{
@@ -246,6 +228,7 @@ class Query implements QueryInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
@@ -468,7 +451,7 @@ class Query implements QueryInterface
 			}
 		}
 		// Number of binds must match bindMarkers in the string.
-		else if (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
+		elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
 		{
 			return $sql;
 		}

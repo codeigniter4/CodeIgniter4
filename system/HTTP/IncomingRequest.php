@@ -1,41 +1,12 @@
 <?php
 
-
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
@@ -43,7 +14,9 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\App;
 use Config\Services;
+use Locale;
 
 /**
  * Class IncomingRequest
@@ -67,8 +40,6 @@ use Config\Services;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
- *
- * @package CodeIgniter\HTTP
  */
 class IncomingRequest extends Request
 {
@@ -93,14 +64,14 @@ class IncomingRequest extends Request
 	/**
 	 * File collection
 	 *
-	 * @var Files\FileCollection
+	 * @var FileCollection|null
 	 */
 	protected $files;
 
 	/**
 	 * Negotiator
 	 *
-	 * @var \CodeIgniter\HTTP\Negotiate
+	 * @var Negotiate|null
 	 */
 	protected $negotiator;
 
@@ -130,7 +101,7 @@ class IncomingRequest extends Request
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Config\App
+	 * @var App
 	 */
 	public $config;
 
@@ -144,7 +115,7 @@ class IncomingRequest extends Request
 	/**
 	 * The user agent this request is from.
 	 *
-	 * @var \CodeIgniter\HTTP\UserAgent
+	 * @var UserAgent
 	 */
 	protected $userAgent;
 
@@ -153,10 +124,10 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param object                      $config
-	 * @param \CodeIgniter\HTTP\URI       $uri
-	 * @param string|null                 $body
-	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
+	 * @param object      $config
+	 * @param URI         $uri
+	 * @param string|null $body
+	 * @param UserAgent   $userAgent
 	 */
 	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
@@ -194,7 +165,7 @@ class IncomingRequest extends Request
 	 * Handles setting up the locale, perhaps auto-detecting through
 	 * content negotiation.
 	 *
-	 * @param $config
+	 * @param App $config
 	 */
 	public function detectLocale($config)
 	{
@@ -246,29 +217,13 @@ class IncomingRequest extends Request
 	{
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if (! in_array($locale, $this->validLocales))
+		if (! in_array($locale, $this->validLocales, true))
 		{
 			$locale = $this->defaultLocale;
 		}
 
 		$this->locale = $locale;
-
-		// If the intl extension is loaded, make sure
-		// that we set the locale for it... if not, though,
-		// don't worry about it.
-		// this should not block code coverage thru unit testing
-		// @codeCoverageIgnoreStart
-		try
-		{
-			if (class_exists('\Locale', false))
-			{
-				\Locale::setDefault($locale);
-			}
-		}
-		catch (\Exception $e)
-		{
-		}
-		// @codeCoverageIgnoreEnd
+		Locale::setDefault($locale);
 
 		return $this;
 	}
@@ -311,11 +266,13 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-		elseif ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
+
+		if ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
 		{
 			return true;
 		}
-		elseif ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
+
+		if ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
 		{
 			return true;
 		}
@@ -469,7 +426,7 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch the user agent string
 	 *
-	 * @return \CodeIgniter\HTTP\UserAgent
+	 * @return UserAgent
 	 */
 	public function getUserAgent()
 	{
@@ -779,7 +736,8 @@ class IncomingRequest extends Request
 		{
 			return '';
 		}
-		elseif (strncmp($uri, '/', 1) === 0)
+
+		if (strncmp($uri, '/', 1) === 0)
 		{
 			$uri                     = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
@@ -808,7 +766,7 @@ class IncomingRequest extends Request
 		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
-			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
+			if ((! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}

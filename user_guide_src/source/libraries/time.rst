@@ -1,5 +1,5 @@
 ###############
-Dates and Times
+Times and Dates
 ###############
 
 CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTime object, but uses the Intl
@@ -209,7 +209,7 @@ $time > 1 month && < 1 year      in 6 months / 6 months ago
 $time > 7 days && < 1 month      in 3 weeks / 3 weeks ago
 $time > today && < 7 days        in 4 days / 4 days ago
 $time == tomorrow / yesterday    Tomorrow / Yesterday
-$time > 59 minutes && < 1 day    1:37pm
+$time > 59 minutes && < 1 day    in 2 hours / 2 hours ago
 $time > now && < 1 hour          in 35 minutes / 35 minutes ago
 $time == now                     Now
 =============================== =================================
@@ -355,7 +355,7 @@ Converts the time from it's current timezone into the new one::
 
     echo $time->toDateTimeString();   // 2020-05-13 10:00:00
     echo $time2->toDateTimeString();   // 2020-05-13 18:00:00
-    
+
 setTimestamp()
 --------------
 

@@ -1,45 +1,19 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
+use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
@@ -174,7 +148,7 @@ class URI
 	 *
 	 * @param string $uri
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(string $uri = null)
 	{
@@ -442,7 +416,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return (is_null($this->path)) ? '' : $this->path;
+		return $this->path ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -502,7 +476,7 @@ class URI
 	 */
 	public function getFragment(): string
 	{
-		return is_null($this->fragment) ? '' : $this->fragment;
+		return $this->fragment ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -593,9 +567,29 @@ class URI
 	 */
 	public function __toString(): string
 	{
+		// If hosted in a sub-folder, we will have additional
+		// segments that show up prior to the URI path we just
+		// grabbed from the request, so add it on if necessary.
+		$config   = config(App::class);
+		$baseUri  = new self($config->baseURL);
+		$basePath = trim($baseUri->getPath(), '/') . '/';
+		$path     = $this->getPath();
+		$trimPath = ltrim($path, '/');
+
+		if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
+		{
+			$path = $basePath . $trimPath;
+		}
+
+		// force https if needed
+		if ($config->forceGlobalSecureRequests)
+		{
+			$this->setScheme('https');
+		}
+
 		return static::createURIString(
-						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
-						$this->getQuery(), $this->getFragment()
+			$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
+			$this->getQuery(), $this->getFragment()
 		);
 	}
 
@@ -664,7 +658,7 @@ class URI
 		if (empty($parts['host']) && $parts['path'] !== '')
 		{
 			$parts['host'] = $parts['path'];
-			unset($parts['path']);
+			unset($parts['path']); // @phpstan-ignore-line
 		}
 
 		$this->applyParts($parts);
@@ -682,7 +676,7 @@ class URI
 	 *
 	 * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 	 *
-	 * @param $str
+	 * @param string $str
 	 *
 	 * @return $this
 	 */
@@ -784,8 +778,6 @@ class URI
 	/**
 	 * Sets the path portion of the URI based on segments.
 	 *
-	 * @param string $path
-	 *
 	 * @return $this
 	 */
 	public function refreshPath()
@@ -847,7 +839,7 @@ class URI
 	 *
 	 * @param array $query
 	 *
-	 * @return \CodeIgniter\HTTP\URI
+	 * @return URI
 	 */
 	public function setQueryArray(array $query)
 	{
@@ -878,7 +870,7 @@ class URI
 	/**
 	 * Removes one or more query vars from the URI.
 	 *
-	 * @param array ...$params
+	 * @param string ...$params
 	 *
 	 * @return $this
 	 */
@@ -898,7 +890,7 @@ class URI
 	 * Filters the query variables so that only the keys passed in
 	 * are kept. The rest are removed from the object.
 	 *
-	 * @param array ...$params
+	 * @param string ...$params
 	 *
 	 * @return $this
 	 */
@@ -908,7 +900,7 @@ class URI
 
 		foreach ($this->query as $key => $value)
 		{
-			if (! in_array($key, $params))
+			if (! in_array($key, $params, true))
 			{
 				continue;
 			}
@@ -946,7 +938,7 @@ class URI
 	 * While dot segments have valid uses according to the spec,
 	 * this URI class does not allow them.
 	 *
-	 * @param $path
+	 * @param string|null $path
 	 *
 	 * @return string
 	 */
@@ -1056,7 +1048,7 @@ class URI
 	 *
 	 * @param string $uri
 	 *
-	 * @return \CodeIgniter\HTTP\URI
+	 * @return URI
 	 */
 	public function resolveRelativeURI(string $uri)
 	{
@@ -1064,7 +1056,7 @@ class URI
 		 * NOTE: We don't use removeDotSegments in this
 		 * algorithm since it's already done by this line!
 		 */
-		$relative = new URI();
+		$relative = new self();
 		$relative->setURI($uri);
 
 		if ($relative->getScheme() === $this->getScheme())
@@ -1194,7 +1186,7 @@ class URI
 			{
 				array_pop($output);
 			}
-			else if ($segment !== '.' && $segment !== '')
+			elseif ($segment !== '.' && $segment !== '')
 			{
 				array_push($output, $segment);
 			}

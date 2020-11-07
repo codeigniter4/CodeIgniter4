@@ -9,8 +9,8 @@
 		"codeigniter4/framework": "^4"
 	},
 	"require-dev": {
-		"fzaninotto/faker": "^1.9@dev",
-		"mikey179/vfsstream": "1.6.*",
+		"fakerphp/faker": "^1.9",
+		"mikey179/vfsstream": "^1.6",
 		"phpunit/phpunit": "^8.5"
 	},
 	"autoload": {
@@ -25,9 +25,6 @@
 		}
 	},
 	"scripts": {
-		"post-update-cmd": [
-			"@composer dump-autoload"
-		],
 		"test": "phpunit"
 	},
 	"support": {

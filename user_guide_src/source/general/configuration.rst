@@ -229,21 +229,20 @@ Registrars
 
 A configuration file can also specify any number of "registrars", which are any
 other classes which might provide additional configuration properties.
-This is done by adding a ``registrars`` property to your configuration file,
+This is done by adding a ``$registrars`` property to your configuration file,
 holding an array of the names of candidate registrars.::
 
-    protected $registrars = [
+    public static $registrars = [
         SupportingPackageRegistrar::class
     ];
 
 In order to act as a "registrar" the classes so identified must have a
-static function named the same as the configuration class, and it should return an associative
+static function with the same name as the configuration class, and it should return an associative
 array of property settings.
 
 When your configuration object is instantiated, it will loop over the
-designated classes in ``$registrars``. For each of these classes, which contains a method name matching
-the configuration class, it will invoke that method, and incorporate any returned properties
-the same way as described for namespaced variables.
+designated classes in ``$registrars``. For each of these classes it will invoke
+the method named for the configuration class and incorporate any returned properties.
 
 A sample configuration class setup for this::
 
@@ -253,9 +252,9 @@ A sample configuration class setup for this::
 
     class MySalesConfig extends BaseConfig
     {
-        public $target        = 100;
-        public $campaign      = "Winter Wonderland";
-        protected $registrars = [
+        public $target            = 100;
+        public $campaign          = "Winter Wonderland";
+        public static $registrars = [
             '\App\Models\RegionalSales';
         ];
     }
@@ -272,9 +271,14 @@ A sample configuration class setup for this::
         }
     }
 
-With the above example, when `MySalesConfig` is instantiated, it will end up with
-the two properties declared, but the value of the `$target` property will be over-ridden
-by treating `RegionalSalesModel` as a "registrar". The resulting configuration properties::
+With the above example, when ``MySalesConfig`` is instantiated, it will end up with
+the two properties declared, but the value of the ``$target`` property will be overridden
+by treating ``RegionalSales`` as a "registrar". The resulting configuration properties::
 
     $target   = 45;
     $campaign = "Winter Wonderland";
+
+In addition to explicit registrars defined by the ``$registrars`` property, you may also
+define registrars in any namespace using the **Config/Registrars.php** file, if discovery
+is enabled in :doc:`Modules </general/modules>`. These files work the same as the classes
+described above, using methods named for each configuration class you wish to extend.

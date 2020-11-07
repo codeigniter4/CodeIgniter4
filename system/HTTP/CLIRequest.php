@@ -1,39 +1,12 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
@@ -52,12 +25,9 @@ use Config\App;
  * originally made available under.
  *
  * http://fuelphp.com
- *
- * @package CodeIgniter\HTTP
  */
 class CLIRequest extends Request
 {
-
 	/**
 	 * Stores the segments of our cli "URI" command.
 	 *
@@ -79,8 +49,6 @@ class CLIRequest extends Request
 	 */
 	protected $method = 'cli';
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -95,8 +63,6 @@ class CLIRequest extends Request
 
 		$this->parseCommand();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the "path" of the request script so that it can be used
@@ -120,8 +86,6 @@ class CLIRequest extends Request
 		return empty($path) ? '' : $path;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an associative array of all CLI options found, with
 	 * their values.
@@ -133,8 +97,6 @@ class CLIRequest extends Request
 		return $this->options;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the path segments.
 	 *
@@ -144,8 +106,6 @@ class CLIRequest extends Request
 	{
 		return $this->segments;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the value for a single CLI option that was passed in.
@@ -159,8 +119,6 @@ class CLIRequest extends Request
 		return $this->options[$key] ?? null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the options as a string, suitable for passing along on
 	 * the CLI to other commands.
@@ -173,9 +131,11 @@ class CLIRequest extends Request
 	 *
 	 *      getOptionString() = '-foo bar -baz "queue some stuff"'
 	 *
+	 * @param boolean $useLongOpts
+	 *
 	 * @return string
 	 */
-	public function getOptionString(): string
+	public function getOptionString(bool $useLongOpts = false): string
 	{
 		if (empty($this->options))
 		{
@@ -186,14 +146,25 @@ class CLIRequest extends Request
 
 		foreach ($this->options as $name => $value)
 		{
-			// If there's a space, we need to group
-			// so it will pass correctly.
-			if (strpos($value, ' ') !== false)
+			if ($useLongOpts && mb_strlen($name) > 1)
 			{
-				$value = '"' . $value . '"';
+				$out .= "--{$name} ";
+			}
+			else
+			{
+				$out .= "-{$name} ";
 			}
 
-			$out .= "-{$name} $value ";
+			// If there's a space, we need to group
+			// so it will pass correctly.
+			if (mb_strpos($value, ' ') !== false)
+			{
+				$out .= '"' . $value . '" ';
+			}
+			elseif ($value !== null)
+			{
+				$out .= "{$value} ";
+			}
 		}
 
 		return trim($out);

@@ -11,5 +11,6 @@ The following pages describe the architectural concepts behind CodeIgniter4:
 	mvc
 	autoloader
 	services
+	factories
 	http
 	security

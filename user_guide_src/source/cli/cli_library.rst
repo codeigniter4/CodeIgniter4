@@ -166,11 +166,11 @@ every line after the first line, so that you will have a crisp column edge on th
 	// to determine the width of the left column
 	$maxlen = max(array_map('strlen', $titles));
 
-	for ($i=0; $i <= count($titles); $i++)
+	for ($i=0; $i < count($titles); $i++)
 	{
 		CLI::write(
 			// Display the title on the left of the row
-			$title[$i] . '   ' .
+			$titles[$i] . '   ' .
 			// Wrap the descriptions in a right-hand column
 			// with its left side 3 characters wider than
 			// the longest item on the left.
@@ -182,7 +182,7 @@ Would create something like this:
 
 .. code-block:: none
 
-    task1a     Lorem Ipsum is simply dummy
+    task1a   Lorem Ipsum is simply dummy
                text of the printing and typesetting
                industry.
     task1abc   Lorem Ipsum has been the industry's

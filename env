@@ -35,6 +35,7 @@
 # app.cookiePath = '/'
 # app.cookieSecure = false
 # app.cookieHTTPOnly = false
+# app.cookieSameSite = 'Lax'
 
 # app.CSRFProtection  = false
 # app.CSRFTokenName   = 'csrf_test_name'
@@ -42,6 +43,7 @@
 # app.CSRFExpire      = 7200
 # app.CSRFRegenerate  = true
 # app.CSRFExcludeURIs = []
+# app.CSRFSameSite    = 'Lax'
 
 # app.CSPEnabled = false
 
@@ -89,6 +91,7 @@
 
 # encryption.key =
 # encryption.driver = OpenSSL
+# encryption.blockSize = 16
 # encryption.digest = SHA512
 
 #--------------------------------------------------------------------

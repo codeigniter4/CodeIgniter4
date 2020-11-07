@@ -1,39 +1,12 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Config;
@@ -62,7 +35,6 @@ use Config\Modules;
  */
 class BaseService
 {
-
 	/**
 	 * Cache for instance of any services that
 	 * have been requested as a "shared" instance.
@@ -70,28 +42,28 @@ class BaseService
 	 *
 	 * @var array
 	 */
-	static protected $instances = [];
+	protected static $instances = [];
 
 	/**
 	 * Mock objects for testing which are returned if exist.
 	 *
 	 * @var array
 	 */
-	static protected $mocks = [];
+	protected static $mocks = [];
 
 	/**
 	 * Have we already discovered other Services?
 	 *
 	 * @var boolean
 	 */
-	static protected $discovered = false;
+	protected static $discovered = false;
 
 	/**
 	 * A cache of other service classes we've found.
 	 *
 	 * @var array
 	 */
-	static protected $services = [];
+	protected static $services = [];
 
 	//--------------------------------------------------------------------
 
@@ -134,7 +106,7 @@ class BaseService
 	 *
 	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Autoloader\Autoloader
+	 * @return Autoloader
 	 */
 	public static function autoloader(bool $getShared = true)
 	{
@@ -160,7 +132,7 @@ class BaseService
 	 *
 	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Autoloader\FileLocator
+	 * @return FileLocator
 	 */
 	public static function locator(bool $getShared = true)
 	{
@@ -168,12 +140,10 @@ class BaseService
 		{
 			if (empty(static::$instances['locator']))
 			{
-				static::$instances['locator'] = new FileLocator(
-					static::autoloader()
-				);
+				static::$instances['locator'] = new FileLocator(static::autoloader());
 			}
 
-			return static::$instances['locator'];
+			return static::$mocks['locator'] ?? static::$instances['locator'];
 		}
 
 		return new FileLocator(static::autoloader());
@@ -207,15 +177,15 @@ class BaseService
 	/**
 	 * Reset shared instances and mocks for testing.
 	 *
-	 * @param boolean $init_autoloader Initializes autoloader instance
+	 * @param boolean $initAutoloader Initializes autoloader instance
 	 */
-	public static function reset(bool $init_autoloader = false)
+	public static function reset(bool $initAutoloader = false)
 	{
 		static::$mocks = [];
 
 		static::$instances = [];
 
-		if ($init_autoloader)
+		if ($initAutoloader)
 		{
 			static::autoloader()->initialize(new Autoload(), new Modules());
 		}
@@ -227,12 +197,11 @@ class BaseService
 	 * Inject mock object for testing.
 	 *
 	 * @param string $name
-	 * @param $mock
+	 * @param mixed  $mock
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name                 = strtolower($name);
-		static::$mocks[$name] = $mock;
+		static::$mocks[strtolower($name)] = $mock;
 	}
 
 	//--------------------------------------------------------------------
@@ -270,7 +239,7 @@ class BaseService
 				{
 					$classname = $locator->getClassname($file);
 
-					if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
+					if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true))
 					{
 						static::$services[] = new $classname();
 					}
@@ -289,7 +258,7 @@ class BaseService
 		// Try to find the desired service method
 		foreach (static::$services as $class)
 		{
-			if (method_exists(get_class($class), $name))
+			if (method_exists($class, $name))
 			{
 				return $class::$name(...$arguments);
 			}

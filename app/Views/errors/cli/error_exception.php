@@ -62,7 +62,7 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE)
 				default:
 					return var_export($value, true);
 			}
-		}, array_values($error['args'])));
+		}, array_values($error['args'] ?? [])));
 
 		$function .= '(' . $args . ')';
 

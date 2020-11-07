@@ -1,43 +1,17 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
+
+use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 
 /**
  * Class ContentSecurityPolicy
@@ -45,11 +19,10 @@ namespace CodeIgniter\HTTP;
  * Provides tools for working with the Content-Security-Policy header
  * to help defeat XSS attacks.
  *
- * @see     http://www.w3.org/TR/CSP/
- * @see     http://www.html5rocks.com/en/tutorials/security/content-security-policy/
- * @see     http://content-security-policy.com/
- * @see     https://www.owasp.org/index.php/Content_Security_Policy
- * @package CodeIgniter\HTTP
+ * @see http://www.w3.org/TR/CSP/
+ * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+ * @see http://content-security-policy.com/
+ * @see https://www.owasp.org/index.php/Content_Security_Policy
  */
 class ContentSecurityPolicy
 {
@@ -222,11 +195,11 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the Config file.
 	 *
-	 * @param \Config\ContentSecurityPolicy $config
+	 * @param ContentSecurityPolicyConfig $config
 	 */
-	public function __construct(\Config\ContentSecurityPolicy $config)
+	public function __construct(ContentSecurityPolicyConfig $config)
 	{
-		foreach ($config as $setting => $value)
+		foreach ($config as $setting => $value) // @phpstan-ignore-line
 		{
 			if (isset($this->{$setting}))
 			{
@@ -658,7 +631,7 @@ class ContentSecurityPolicy
 	 * placeholders with actual nonces, that we'll then add to our
 	 * headers.
 	 *
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|Response $response
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
@@ -710,7 +683,7 @@ class ContentSecurityPolicy
 	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
 	 * with their values to the response object.
 	 *
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|Response $response
 	 */
 	protected function buildHeaders(ResponseInterface &$response)
 	{
@@ -819,7 +792,7 @@ class ContentSecurityPolicy
 
 			if ($reportOnly === true)
 			{
-				$reportSources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+				$reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 			}
 			else
 			{
@@ -829,7 +802,7 @@ class ContentSecurityPolicy
 				}
 				else
 				{
-					$sources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+					$sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 				}
 			}
 		}

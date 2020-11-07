@@ -109,6 +109,8 @@ what table to use and how we can find the required records::
         protected $table      = 'users';
         protected $primaryKey = 'id';
 
+        protected $useAutoIncrement = true;
+
         protected $returnType     = 'array';
         protected $useSoftDeletes = true;
 
@@ -138,6 +140,16 @@ is used with methods like ``find()`` to know what column to match the specified 
 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
+
+**$useAutoIncrement**
+
+Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
+then you are responsible for providing primary key value for every record in the table. This 
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
+
+.. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
+    key in the database to ``unique``. This way you will make sure that all of Model's features
+    will still work the same as before.
 
 **$returnType**
 
@@ -658,7 +670,10 @@ need it::
 
 	$builder = $userModel->builder();
 
-This builder is already set up with the model's $table.
+This builder is already set up with the model's $table. If you need access to another table
+you can pass it in as a parameter, but be aware that this will not return a shared instance::
+
+	$groupBuilder = $userModel->builder('groups');
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::
@@ -783,14 +798,12 @@ beforeUpdate      **id** = the array of primary keys of the rows being updated.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
-afterFind         Varies by find* method. See the following:
+beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
+- first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
-                  **data** = The resulting row of data, or null if no result found.
-- findAll()       **data** = the resulting rows of data, or null if no result found.
-                  **limit** = the number of rows to find.
+- findAll()       **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
-- first()         **data** = the resulting row found during the search, or null if none found.
-beforeFind        Same as **afterFind** but with the name of the calling **$method** instead of **$data**.
+afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.

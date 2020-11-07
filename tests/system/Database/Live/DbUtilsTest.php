@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -7,11 +9,10 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class DbUtilsTest extends CIDatabaseTestCase
-{
-	protected $refresh = true;
+class DbUtilsTest extends CIDatabaseTestCase {
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected $refresh = true;
+	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 
@@ -58,13 +59,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$databases = $util->listDatabases();
-
-			$this->assertTrue(in_array('test', $databases));
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
 		{
 			$databases = $util->listDatabases();
 
@@ -85,13 +80,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$exist = $util->databaseExists('test');
-
-			$this->assertTrue($exist);
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
 		{
 			$exist = $util->databaseExists('test');
 
@@ -114,7 +103,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$d = $util->optimizeDatabase();
 
-		$this->assertTrue((bool)$d);
+		$this->assertTrue((bool) $d);
 	}
 
 	//--------------------------------------------------------------------
@@ -139,13 +128,13 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$d = $util->optimizeTable('db_job');
 
-		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
+		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'Sqlsrv']))
 		{
-			$this->assertFalse((bool)$d);
+			$this->assertFalse((bool) $d);
 		}
 		else
 		{
-			$this->assertTrue((bool)$d);
+			$this->assertTrue((bool) $d);
 		}
 	}
 
@@ -180,7 +169,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	public function testUtilsCSVFromResult()
 	{
 		$data = $this->db->table('job')
-						 ->get();
+				->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -196,8 +185,8 @@ class DbUtilsTest extends CIDatabaseTestCase
 	public function testUtilsXMLFromResult()
 	{
 		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+				->where('id', 4)
+				->get();
 
 		$util = (new Database())->loadUtils($this->db);
 

@@ -1,52 +1,25 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\CLI;
 
+use Config\Generators;
 use Config\Services;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
+use Throwable;
 
 /**
  * GeneratorCommand can be used as base class
  * for creating commands that generates a file.
- *
- * @package CodeIgniter\CLI
  */
 abstract class GeneratorCommand extends BaseCommand
 {
@@ -73,9 +46,18 @@ abstract class GeneratorCommand extends BaseCommand
 	 * @var array
 	 */
 	private $defaultOptions = [
-		'-n'     => 'Set root namespace. Defaults to APP_NAMESPACE.',
-		'-force' => 'Force overwrite existing files.',
+		'-n'      => 'Set root namespace. Defaults to APP_NAMESPACE.',
+		'--force' => 'Force overwrite existing files.',
 	];
+
+	/**
+	 * Whether to sort class imports.
+	 *
+	 * @internal
+	 *
+	 * @var boolean
+	 */
+	private $sortImports = true;
 
 	/**
 	 * The params array for easy access by other methods.
@@ -85,15 +67,23 @@ abstract class GeneratorCommand extends BaseCommand
 	protected $params = [];
 
 	/**
+	 * Instance of Config\Generators
+	 *
+	 * @var Generators
+	 */
+	protected $config;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param \Psr\Log\LoggerInterface  $logger
-	 * @param \CodeIgniter\CLI\Commands $commands
+	 * @param LoggerInterface $logger
+	 * @param Commands        $commands
 	 */
 	public function __construct(LoggerInterface $logger, Commands $commands)
 	{
 		$this->arguments = array_merge($this->defaultArguments, $this->arguments);
 		$this->options   = array_merge($this->options, $this->defaultOptions);
+		$this->config    = config('Config\Generators');
 
 		parent::__construct($logger, $commands);
 	}
@@ -111,7 +101,7 @@ abstract class GeneratorCommand extends BaseCommand
 		// pascalizing it if not yet done. Then we will try to get the file
 		// path from this.
 		helper('inflector');
-		$class = $this->qualifyClassName(pascalize($this->getClassName()));
+		$class = $this->qualifyClassName($this->sanitizeClassName($this->getClassName()));
 		$path  = $this->buildPath($class);
 
 		// Next, overwriting files unknowingly is a serious annoyance. So we'll check
@@ -120,11 +110,13 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			CLI::error(lang('CLI.generateFileExists', [clean_path($path)]), 'light_gray', 'red');
 			CLI::newLine();
+
 			return;
 		}
 
 		// Next, check if the directory to save the file is existing.
 		$dir = dirname($path);
+
 		if (! is_dir($dir))
 		{
 			mkdir($dir, 0755, true);
@@ -137,11 +129,27 @@ abstract class GeneratorCommand extends BaseCommand
 		{
 			CLI::error(lang('CLI.generateFileError') . clean_path($path), 'light_gray', 'red');
 			CLI::newLine();
+
 			return;
 		}
 
 		CLI::write(lang('CLI.generateFileSuccess') . CLI::color(clean_path($path), 'green'));
 		CLI::newLine();
+	}
+
+	/**
+	 * Allows child generators to modify
+	 * the internal `$sortImports` flag.
+	 *
+	 * @param boolean $sort
+	 *
+	 * @return $this
+	 */
+	protected function setSortImports(bool $sort)
+	{
+		$this->sortImports = $sort;
+
+		return $this;
 	}
 
 	/**
@@ -152,8 +160,25 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function getClassName(): string
 	{
-		$name = $this->params[0] ?? CLI::getSegment(0);
+		$name = $this->params[0] ?? CLI::getSegment(2);
+
 		return $name ?? '';
+	}
+
+	/**
+	 * Trims input, normalize separators, and ensures
+	 * all paths are in Pascal case.
+	 *
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function sanitizeClassName(string $class): string
+	{
+		$class = trim($class);
+		$class = str_replace('/', '\\', $class);
+
+		return implode('\\', array_map('pascalize', explode('\\', $class)));
 	}
 
 	/**
@@ -186,6 +211,7 @@ abstract class GeneratorCommand extends BaseCommand
 	protected function getRootNamespace(): string
 	{
 		$rootNamespace = $this->params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
+
 		return trim(str_replace('/', '\\', $rootNamespace), '\\');
 	}
 
@@ -213,14 +239,16 @@ abstract class GeneratorCommand extends BaseCommand
 
 		// Check if the namespace is actually defined and we are not just typing gibberish.
 		$base = Services::autoloader()->getNamespace($root);
+
 		if (! $base = reset($base))
 		{
-			throw new \RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
+			throw new RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
 		}
-		$base = realpath($base) ?: $base;
 
+		$base     = realpath($base) ?: $base;
 		$path     = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
 		$filename = $this->modifyBasename(basename($path));
+
 		return implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $path), 0, -1)) . DIRECTORY_SEPARATOR . $filename;
 	}
 
@@ -248,8 +276,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function buildClassContents(string $class): string
 	{
-		$template = $this->getTemplate();
-		return $this->replaceNamespace($template, $class)->replaceClass($template, $class);
+		return $this->setReplacements($this->getTemplate(), $class);
 	}
 
 	/**
@@ -272,43 +299,30 @@ abstract class GeneratorCommand extends BaseCommand
 	}
 
 	/**
-	 * Replaces the namespace for a given template.
-	 *
-	 * @param string $template
-	 * @param string $class
-	 *
-	 * @return $this
-	 */
-	protected function replaceNamespace(string &$template, string $class)
-	{
-		$search = [
-			'DummyNamespace',
-			'{ namespace }',
-			'{namespace}',
-		];
-
-		$template = str_replace($search, $this->getNamespace($class), $template);
-		return $this;
-	}
-
-	/**
-	 * Replaces the class name for a given template.
+	 * Performs the necessary replacements.
 	 *
 	 * @param string $template
 	 * @param string $class
 	 *
 	 * @return string
 	 */
-	protected function replaceClass(string $template, string $class): string
+	protected function setReplacements(string $template, string $class): string
 	{
-		$class  = str_replace($this->getNamespace($class) . '\\', '', $class);
-		$search = [
+		$namespaces = [
+			'DummyNamespace',
+			'{ namespace }',
+			'{namespace}',
+		];
+		$classes    = [
 			'DummyClass',
 			'{ class }',
 			'{class}',
 		];
 
-		return str_replace($search, $class, $template);
+		$template = str_replace($namespaces, $this->getNamespace($class), $template);
+		$class    = str_replace($this->getNamespace($class) . '\\', '', $class);
+
+		return str_replace($classes, $class, $template);
 	}
 
 	/**
@@ -320,15 +334,37 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function sortImports(string $template): string
 	{
-		if (preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $template, $match))
+		if ($this->sortImports && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match))
 		{
 			$imports = explode("\n", trim($match['imports']));
 			sort($imports);
+
 			return str_replace(trim($match['imports']), implode("\n", $imports), $template);
 		}
 
-		// @codeCoverageIgnoreStart
 		return $template;
-		// @codeCoverageIgnoreEnd
+	}
+
+	/**
+	 * Gets a generator view as defined in the `Config\Generators::$views`,
+	 * with fallback to `$default` when the defined view does not exist.
+	 *
+	 * @param string $default Path to the fallback view.
+	 * @param array  $data    Data to be passed to the view.
+	 *
+	 * @return string
+	 */
+	protected function getGeneratorViewFile(string $default, array $data = []): string
+	{
+		try
+		{
+			return view($this->config->views[$this->name], $data, ['debug' => false]);
+		}
+		catch (Throwable $e)
+		{
+			log_message('error', $e->getMessage());
+
+			return view($default, $data, ['debug' => false]);
+		}
 	}
 }

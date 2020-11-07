@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.4...HEAD)
+
+**Deprecations:**
+
+- `CodeIgniter\Database\ModelFactory` is now deprecated in favor of `CodeIgniter\Config\Factories::models()`
+- `CodeIgniter\Config\Config` is now deprecated in favor of `CodeIgniter\Config\Factories::config()`
+
 ## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4) (2020-07-15)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.3...v4.0.4)
