@@ -26,7 +26,7 @@ class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Then check the actual config file
 		$reader = new \Tests\Support\Libraries\ConfigReader();
-		$config = ! empty($reader->baseUrl);
+		$config = ! empty($reader->baseURL);
 
 		$this->assertTrue($env || $config);
 	}
