@@ -35,7 +35,7 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 	{
 		$comments = $node->getAttribute('comments');
 
-		if ($comments === [])
+		if ($comments === [] || ! is_array($comments))
 		{
 			return [];
 		}

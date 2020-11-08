@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
@@ -526,6 +527,8 @@ class Fabricator
 	 * @param boolean      $mock  Whether to execute or mock the insertion
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 *
+	 * @throws FrameworkException
 	 */
 	public function create(int $count = null, bool $mock = false)
 	{
@@ -544,6 +547,13 @@ class Fabricator
 			{
 				$ids[] = $id;
 				self::upCount($this->model->table);
+			}
+			else
+			{
+				throw new FrameworkException(lang('Fabricator.createFailed', [
+													  $this->model->table,
+													  implode(' ', $this->model->errors()),
+												  ]));
 			}
 		}
 
