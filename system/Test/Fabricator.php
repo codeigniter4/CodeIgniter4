@@ -551,9 +551,9 @@ class Fabricator
 			else
 			{
 				throw new FrameworkException(lang('Fabricator.createFailed', [
-													  $this->model->table,
-													  implode(' ', $this->model->errors()),
-												  ]));
+					$this->model->table,
+					implode(' ', $this->model->errors()),
+				]));
 			}
 		}
 
