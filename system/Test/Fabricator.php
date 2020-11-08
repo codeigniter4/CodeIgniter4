@@ -547,14 +547,10 @@ class Fabricator
 			{
 				$ids[] = $id;
 				self::upCount($this->model->table);
+				continue;
 			}
-			else
-			{
-				throw new FrameworkException(lang('Fabricator.createFailed', [
-					$this->model->table,
-					implode(' ', $this->model->errors()),
-				]));
-			}
+
+			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', $this->model->errors()));
 		}
 
 		// If the model defines a "withDeleted" method for handling soft deletes then use it
