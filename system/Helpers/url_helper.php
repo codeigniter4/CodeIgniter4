@@ -637,9 +637,11 @@ if (! function_exists('url_to'))
 
 			if (isset($explode[1]))
 			{
+				// @phpstan-ignore-next-line
 				throw new RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
 			}
 
+			// @phpstan-ignore-next-line
 			throw new RouterException(lang('HTTP.invalidRoute', [$controller]));
 		}
 
