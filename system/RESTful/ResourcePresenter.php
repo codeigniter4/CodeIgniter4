@@ -11,40 +11,11 @@
 
 namespace CodeIgniter\RESTful;
 
-use CodeIgniter\Controller;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Model;
-use Psr\Log\LoggerInterface;
-
 /**
  * An extendable controller to help provide a UI for a resource.
  */
-class ResourcePresenter extends Controller
+class ResourcePresenter extends BaseResource
 {
-
-	/**
-	 * @var string|null Name of the model class managing this resource's data
-	 */
-	protected $modelName;
-
-	/**
-	 * @var Model|null the model holding this resource's data
-	 */
-	protected $model;
-
-	//--------------------------------------------------------------------
-
-	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-	{
-		parent::initController($request, $response, $logger);
-
-		// instantiate our model, if needed
-		$this->setModel($this->modelName);
-	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Present a view of resource objects
 	 *
@@ -55,16 +26,21 @@ class ResourcePresenter extends Controller
 		return lang('RESTful.notImplemented', ['index']);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Present a view to present a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return mixed
 	 */
 	public function show($id = null)
 	{
 		return lang('RESTful.notImplemented', ['show']);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Present a view to present a new single resource object
@@ -75,6 +51,8 @@ class ResourcePresenter extends Controller
 	{
 		return lang('RESTful.notImplemented', ['new']);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Process the creation/insertion of a new resource object.
@@ -87,32 +65,13 @@ class ResourcePresenter extends Controller
 		return lang('RESTful.notImplemented', ['create']);
 	}
 
-	/**
-	 * Present a view to confirm the deletion of a specific resource object
-	 *
-	 * @param  mixed $id
-	 * @return mixed
-	 */
-	public function remove($id = null)
-	{
-		return lang('RESTful.notImplemented', ['remove']);
-	}
-
-	/**
-	 * Process the deletion of a specific resource object
-	 *
-	 * @param  mixed $id
-	 * @return mixed
-	 */
-	public function delete($id = null)
-	{
-		return lang('RESTful.notImplemented', ['delete']);
-	}
+	//--------------------------------------------------------------------
 
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return mixed
 	 */
 	public function edit($id = null)
@@ -120,11 +79,14 @@ class ResourcePresenter extends Controller
 		return lang('RESTful.notImplemented', ['edit']);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Process the updating, full or partial, of a specific resource object.
 	 * This should be a POST.
 	 *
-	 * @param  mixed $id
+	 * @param mixed $id
+	 *
 	 * @return mixed
 	 */
 	public function update($id = null)
@@ -135,42 +97,28 @@ class ResourcePresenter extends Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set or change the model this controller is bound to.
-	 * Given either the name or the object, determine the other.
+	 * Present a view to confirm the deletion of a specific resource object
 	 *
-	 * @param string|object $which
+	 * @param mixed $id
+	 *
+	 * @return mixed
 	 */
-	public function setModel($which = null)
+	public function remove($id = null)
 	{
-		// save what we have been given
-		if (! empty($which))
-		{
-			if (is_object($which))
-			{
-				$this->model     = $which;
-				$this->modelName = null;
-			}
-			else
-			{
-				$this->model     = null;
-				$this->modelName = $which;
-			}
-		}
-
-		// make a model object if needed
-		if (empty($this->model) && ! empty($this->modelName))
-		{
-			if (class_exists($this->modelName))
-			{
-				$this->model = model($this->modelName);
-			}
-		}
-
-		// determine model name if needed
-		if (empty($this->modelName) && ! empty($this->model))
-		{
-			$this->modelName = get_class($this->model);
-		}
+		return lang('RESTful.notImplemented', ['remove']);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Process the deletion of a specific resource object
+	 *
+	 * @param mixed $id
+	 *
+	 * @return mixed
+	 */
+	public function delete($id = null)
+	{
+		return lang('RESTful.notImplemented', ['delete']);
+	}
 }
