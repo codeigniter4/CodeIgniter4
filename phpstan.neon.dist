@@ -4,7 +4,7 @@ services:
 		tags:
 			- phpstan.rules.rule
 	-
-		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaStaticCallRule
+		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
 		tags:
 			- phpstan.rules.rule
 
