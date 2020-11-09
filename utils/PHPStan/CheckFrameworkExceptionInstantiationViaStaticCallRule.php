@@ -34,8 +34,7 @@ final class CheckFrameworkExceptionInstantiationViaStaticCallRule implements Rul
 			return [];
 		}
 
-		$className = (string) $class;
-		if (! is_a($className, FrameworkException::class, true))
+		if (! is_a((string) $class, FrameworkException::class, true))
 		{
 			return [];
 		}
