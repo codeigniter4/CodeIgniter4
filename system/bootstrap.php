@@ -11,9 +11,10 @@
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Services;
+use Config\App;
 use Config\Autoload;
 use Config\Modules;
+use Config\Services;
 
 /*
  * ---------------------------------------------------------------
@@ -77,8 +78,8 @@ if (! defined('APP_NAMESPACE'))
 	require_once APPPATH . 'Config/Constants.php';
 }
 
-// Let's see if an app/Common.php file exists
-if (file_exists(APPPATH . 'Common.php'))
+// Require app/Common.php file if exists.
+if (is_file(APPPATH . 'Common.php'))
 {
 	require_once APPPATH . 'Common.php';
 }
@@ -91,9 +92,9 @@ require_once SYSTEMPATH . 'Common.php';
  * LOAD OUR AUTOLOADER
  * ---------------------------------------------------------------
  *
- * The autoloader allows all of the pieces to work together
- * in the framework. We have to load it here, though, so
- * that the config files can use the path constants.
+ * The autoloader allows all of the pieces to work together in the
+ * framework. We have to load it here, though, so that the config
+ * files can use the path constants.
  */
 
 if (! class_exists('Config\Autoload', false))
@@ -115,9 +116,8 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-$loader = Services::autoloader();
-$loader->initialize(new Autoload(), new Modules());
-$loader->register(); // Register the loader with the SPL autoloader stack.
+// Initialize and register the loader with the SPL autoloader stack.
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
@@ -135,15 +135,13 @@ if (is_file(COMPOSER_PATH))
 	require_once COMPOSER_PATH;
 }
 
-// Load environment settings from .env files
-// into $_SERVER and $_ENV
+// Load environment settings from .env files into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
 $env = new DotEnv(ROOTPATH);
 $env->load();
 
-// Always load the URL helper -
-// it should be used in 90% of apps.
+// Always load the URL helper, it should be used in most of apps.
 helper('url');
 
 /*
@@ -156,8 +154,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$appConfig = config('Config\App');
-$app       = new CodeIgniter($appConfig);
+$app = new CodeIgniter(new App());
 $app->initialize();
 
 return $app;
