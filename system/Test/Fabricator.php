@@ -550,7 +550,7 @@ class Fabricator
 				continue;
 			}
 
-			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', $this->model->errors()));
+			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', $this->model->errors() ?? []));
 		}
 
 		// If the model defines a "withDeleted" method for handling soft deletes then use it
