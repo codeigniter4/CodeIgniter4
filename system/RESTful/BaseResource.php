@@ -19,6 +19,11 @@ use Psr\Log\LoggerInterface;
 class BaseResource extends Controller
 {
 	/**
+	 * @var The model name that managing this resource's data
+	 */
+	protected $modelName;
+	
+	/**
 	 * @var The model that holding this resource's data
 	 */
 	protected $model;
