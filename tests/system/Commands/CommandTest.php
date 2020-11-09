@@ -44,6 +44,14 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
 	}
 
+	public function testListCommandsSimple()
+	{
+		command('list --simple');
+
+		$this->assertStringContainsString('db:seed', $this->getBuffer());
+		$this->assertStringNotContainsString('Lists the available commands.', $this->getBuffer());
+	}
+
 	public function testCustomCommand()
 	{
 		command('app:info');
