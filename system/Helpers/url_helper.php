@@ -637,10 +637,10 @@ if (! function_exists('url_to'))
 
 			if (isset($explode[1]))
 			{
-				throw new RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
+				throw RouterException::forControllerNotFound($explode[0], $explode[1]);
 			}
 
-			throw new RouterException(lang('HTTP.invalidRoute', [$controller]));
+			throw RouterException::forInvalidRoute($controller);
 		}
 
 		return site_url($route);
