@@ -24,7 +24,7 @@ class BaseResource extends Controller
 	protected $modelName;
 	
 	/**
-	 * @var object The model that holding this resource's data
+	 * @var string The model that holding this resource's data
 	 */
 	protected $model;
 
@@ -46,34 +46,17 @@ class BaseResource extends Controller
 	 * Set or change the model this controller is bound to.
 	 * Given either the name or the object, determine the other.
 	 *
-	 * @param string|object $which
+	 * @param string $model
 	 *
 	 * @return void
 	 *
 	 * @deprecated
 	 */
-	public function setModel($which = null)
+	public function setModel(string $model)
 	{
-		// save what we have been given
-		if (! empty($which))
+		if (! empty($this->model))
 		{
-			$this->model     = is_object($which) ? $which : null;
-			$this->modelName = is_object($which) ? null : $which;
-		}
-
-		// make a model object if needed
-		if (empty($this->model) && ! empty($this->modelName))
-		{
-			if (class_exists($this->modelName))
-			{
-				$this->model = model($this->modelName);
-			}
-		}
-
-		// determine model name if needed
-		if (empty($this->modelName) && ! empty($this->model))
-		{
-			$this->modelName = get_class($this->model);
+			$this->model = model($model);
 		}
 	}
 }
