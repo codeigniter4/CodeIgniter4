@@ -215,8 +215,10 @@
 	#toolbar-position,
 	#toolbar-theme {
 		a {
-			float: left;
+			// float: left;
 			padding: 0 6px;
+			display: inline-flex;
+			vertical-align: top;
 
 			&:hover {
 				text-decoration: none;
@@ -239,9 +241,9 @@
 
 	// The toolbar menus
 	.ci-label {
-		display: inline-block;
+		display: inline-flex;
 		font-size: $base-size - 2;
-		vertical-align: baseline;
+		// vertical-align: baseline;
 
 		&:hover {
 			cursor: pointer;
@@ -249,17 +251,18 @@
 
 		a {
 			color: inherit;
-			display: block;
+			display: flex;
 			letter-spacing: normal;
 			padding: 0 10px;
 			text-decoration: none;
+			align-items: center;
 		}
 
 		// The toolbar icons
 		img {
-			clear: left;
-			display: inline-block;
-			float: left;
+			// clear: left;
+			// display: inline-block;
+			// float: left;
 			margin: 6px 3px 6px 0;
 			width: 16px !important;
 		}
