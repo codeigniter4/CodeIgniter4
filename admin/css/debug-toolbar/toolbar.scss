@@ -153,6 +153,23 @@
 		}
 	}
 
+	td[data-debugbar-route] {
+		form {
+			display: none; 
+		}
+		&:hover {
+			form {
+				display: block; 
+			}
+			& > div {
+				display: none;
+			}
+		}
+		input[type=text] {
+			padding: 2px;
+		}
+	}
+
 	// The toolbar
 	.toolbar {
 		display: block;
@@ -219,7 +236,8 @@
 			clear: left;
 			display: inline-block;
 			float: left;
-			margin: 6px 3px 6px 0;
+			margin: 6px 3px 6px 0; 
+			width: 16px !important;
 		}
 
 		// The toolbar notification badges
@@ -343,6 +361,11 @@
 // If we force the "Dark" theme
 #toolbarContainer.dark {
 	@import '_theme-dark';
+
+	td[data-debugbar-route] input[type=text] {
+		background: #000;
+		color: #fff;
+	}
 }
 
 // If we force the "Light" theme
