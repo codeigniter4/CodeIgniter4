@@ -86,6 +86,11 @@
 		right: 30px;
 		text-align: left;
 		top: 0;
+
+		svg {
+			width: 16px;
+			margin-right: 5px;
+		}
 	}
 
 	h2 {
@@ -191,7 +196,7 @@
 
 	// The toolbar
 	.toolbar {
-		display: block;
+		display: flex;
 		overflow: hidden;
 		overflow-y: auto;
 		padding: 0 12px 0 12px;
@@ -373,6 +378,14 @@
 // ========================================================================== */
 
 @media screen and (max-width: 1024px) {
+	#debug-bar {
+		.ci-label {
+			img {
+				margin: unset
+			}
+		}
+	}
+
 	.hide-sm {
 		display: none !important;
 	}
