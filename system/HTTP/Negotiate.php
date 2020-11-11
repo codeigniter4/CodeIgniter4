@@ -246,7 +246,10 @@ class Negotiate
 				preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
-				$parameters[trim($param['name'])] = trim($param['value']);
+				if ($param != [])
+				{
+					$parameters[trim($param['name'])] = trim($param['value']);
+				}
 			}
 
 			$quality = 1.0;
