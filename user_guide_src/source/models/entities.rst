@@ -1,5 +1,5 @@
 #####################
-Working With Entities
+Using Entity Classes
 #####################
 
 CodeIgniter supports Entity classes as a first-class citizen in it's database layer, while keeping
@@ -40,7 +40,9 @@ Entity itself at **app/Entities/User.php**.
 
 ::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -56,7 +58,9 @@ Create the Model
 
 Create the model first at **app/Models/UserModel.php** so that we can interact with it::
 
-    <?php namespace App\Models;
+    <?php
+    
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
@@ -152,7 +156,9 @@ the attributes directly, allowing you to enforce any business logic or data conv
 
 Here's an updated User entity to provide some examples of how this could be used::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
     use CodeIgniter\I18n\Time;
@@ -220,7 +226,9 @@ with the Entity class' data mapping features.
 
 As an example, imagine you have the simplified User Entity that is used throughout your application::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -245,7 +253,9 @@ Ignoring how contrived this example is, we now have two choices on how to fix th
 property from ``$name`` to ``$full_name``, but that would require changes throughout the application. Instead, we can
 simply map the ``full_name`` column in the database to the ``$name`` property, and be done with the Entity changes::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -261,8 +271,8 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         ];
 
         protected $datamap = [
-            'full_name' => 'name'
-        ],
+            'full_name' => 'name',
+        ];
     }
 
 By adding our new database name to the ``$datamap`` array, we can tell the class what class property the database column
@@ -287,7 +297,9 @@ of helpful methods in an immutable, localized way.
 
 You can define which properties are automatically converted by adding the name to the **options['dates']** array::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -320,7 +332,9 @@ Add a question mark at the beginning of type to mark property as nullable, i.e. 
 
 For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -328,8 +342,8 @@ For example, if you had a User entity with an **is_banned** property, you can ca
     {
         protected $casts = [
             'is_banned' => 'boolean',
-            'is_banned_nullable' => '?boolean'
-        ],
+            'is_banned_nullable' => '?boolean',
+        ];
     }
 
 Array/Json Casting
@@ -349,7 +363,9 @@ Unlike the rest of the data types that you can cast properties into, the:
 
 the value whenever the property is set::
 
-    <?php namespace App\Entities;
+    <?php
+    
+    namespace App\Entities;
 
     use CodeIgniter\Entity;
 
@@ -357,10 +373,12 @@ the value whenever the property is set::
     {
         protected $casts = [
             'options'        => 'array',
-	        'options_object' => 'json',
-	        'options_array'  => 'json-array'
+	    'options_object' => 'json',
+	    'options_array'  => 'json-array',
         ];
     }
+
+::
 
     $user    = $userModel->find(15);
     $options = $user->options;
@@ -378,6 +396,12 @@ may be more complex than the original structure. Casting as Comma-Separated Valu
 a simpler alternative will result in a string that uses less space and is more easily read
 by humans::
 
+    <?php
+    
+    namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
     class Widget extends Entity
     {
         protected $casts = [
@@ -385,7 +409,9 @@ by humans::
         ];
     }
 
-    $widget->colors = ['red', 'yellow', 'green']; // Stored in the database as "red,yellow,green"
+Stored in the database as "red,yellow,green"::
+
+    $widget->colors = ['red', 'yellow', 'green'];
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
@@ -396,11 +422,11 @@ You can check if an Entity attribute has changed since it was created. The only 
 attribute to check::
 
     $user = new User();
-    $user->hasChanged('name');      // false
+    $user->hasChanged('name'); // false
 
     $user->name = 'Fred';
-    $user->hasChanged('name');      // true
+    $user->hasChanged('name'); // true
 
 Or to check the whole entity for changed values omit the parameter::
 
-    $user->hasChanged();            // true
+    $user->hasChanged();       // true
