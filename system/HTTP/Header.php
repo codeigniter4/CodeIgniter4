@@ -15,8 +15,6 @@ namespace CodeIgniter\HTTP;
  * Class Header
  *
  * Represents a single HTTP header.
- *
- * @package CodeIgniter\HTTP
  */
 class Header
 {

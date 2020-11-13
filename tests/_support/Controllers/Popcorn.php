@@ -73,4 +73,8 @@ class Popcorn extends Controller
 		return redirect()->route('testing-index');
 	}
 
+	public function echoJson()
+	{
+		return $this->response->setJSON($this->request->getJSON());
+	}
 }

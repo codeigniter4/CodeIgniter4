@@ -16,8 +16,6 @@ use Config\Services;
 
 /**
  * CodeIgniter Cookie Helpers
- *
- * @package CodeIgniter
  */
 if (! function_exists('set_cookie'))
 {

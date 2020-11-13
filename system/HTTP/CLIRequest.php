@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
+use RuntimeException;
 
 /**
  * Class CLIRequest
@@ -56,6 +57,11 @@ class CLIRequest extends Request
 	 */
 	public function __construct(App $config)
 	{
+		if (! is_cli())
+		{
+			throw new RuntimeException(static::class . ' needs to run from the command line.'); // @codeCoverageIgnore
+		}
+
 		parent::__construct($config);
 
 		// Don't terminate the script when the cli's tty goes away

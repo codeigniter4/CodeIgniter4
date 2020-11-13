@@ -19,12 +19,6 @@ use ErrorException;
  * CodeIgniter Email Class
  *
  * Permits email to be sent using Mail, Sendmail, or SMTP.
- *
- * @package    CodeIgniter
- * @subpackage Libraries
- * @category   Libraries
- * @author     EllisLab Dev Team
- * @link       https://codeigniter.com/user_guide/libraries/email.html
  */
 class Email
 {
@@ -2050,14 +2044,16 @@ class Email
 	protected function sendData($data)
 	{
 		$data .= $this->newline;
+
 		for ($written = $timestamp = 0, $length = static::strlen($data); $written < $length; $written += $result)
 		{
 			if (($result = fwrite($this->SMTPConnect, static::substr($data, $written))) === false)
 			{
 				break;
 			}
+
 			// See https://bugs.php.net/bug.php?id=39598 and http://php.net/manual/en/function.fwrite.php#96951
-			elseif ($result === 0)
+			if ($result === 0)
 			{
 				if ($timestamp === 0)
 				{
@@ -2068,19 +2064,21 @@ class Email
 					$result = false;
 					break;
 				}
+
 				usleep(250000);
 				continue;
 			}
-			else
-			{
-				$timestamp = 0;
-			}
+
+			$timestamp = 0;
 		}
+
 		if ($result === false) // @phpstan-ignore-line
 		{
 			$this->setErrorMessage(lang('Email.SMTPDataFailure', [$data]));
+
 			return false;
 		}
+
 		return true;
 	}
 	//--------------------------------------------------------------------

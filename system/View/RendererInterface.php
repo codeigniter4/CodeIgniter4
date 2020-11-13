@@ -15,8 +15,6 @@ namespace CodeIgniter\View;
  * Interface RendererInterface
  *
  * The interface used for displaying Views and/or theme files.
- *
- * @package CodeIgniter\View
  */
 interface RendererInterface
 {

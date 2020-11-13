@@ -19,12 +19,9 @@ use CodeIgniter\CLI\CLI;
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
  */
 class ListCommands extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -66,7 +63,9 @@ class ListCommands extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = [];
+	protected $options = [
+		'--simple' => 'Prints a list of the commands with no other info',
+	];
 
 	//--------------------------------------------------------------------
 
@@ -78,9 +77,21 @@ class ListCommands extends BaseCommand
 	public function run(array $params)
 	{
 		$commands = $this->commands->getCommands();
-
 		ksort($commands);
 
+		// Check for 'simple' format
+		return array_key_exists('simple', $params) || CLI::getOption('simple')
+			? $this->listSimple($commands)
+			: $this->listFull($commands);
+	}
+
+	/**
+	 * Lists the commands with accompanying info.
+	 *
+	 * @param array $commands
+	 */
+	protected function listFull(array $commands)
+	{
 		// Sort into buckets by group
 		$groups = [];
 
@@ -119,6 +130,19 @@ class ListCommands extends BaseCommand
 			{
 				CLI::newLine();
 			}
+		}
+	}
+
+	/**
+	 * Lists the commands only.
+	 *
+	 * @param array $commands
+	 */
+	protected function listSimple(array $commands)
+	{
+		foreach ($commands as $title => $command)
+		{
+			CLI::write($title);
 		}
 	}
 }

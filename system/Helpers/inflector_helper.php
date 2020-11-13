@@ -13,8 +13,6 @@
 
 /**
  * CodeIgniter Inflector Helpers
- *
- * @package CodeIgniter
  */
 if (! function_exists('singular'))
 {
@@ -29,7 +27,7 @@ if (! function_exists('singular'))
 	 */
 	function singular(string $string): string
 	{
-		$result = strval($string);
+		$result = $string;
 
 		if (! is_pluralizable($result))
 		{
@@ -96,7 +94,7 @@ if (! function_exists('plural'))
 	 */
 	function plural(string $string): string
 	{
-		$result = strval($string);
+		$result = $string;
 
 		if (! is_pluralizable($result))
 		{

@@ -16,8 +16,6 @@ namespace CodeIgniter\Database;
  *
  * Represents a single statement that can be executed against the database.
  * Statements are platform-specific and can handle binding of binds.
- *
- * @package CodeIgniter\Database
  */
 interface QueryInterface
 {

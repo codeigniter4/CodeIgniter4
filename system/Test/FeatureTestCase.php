@@ -18,8 +18,6 @@ use CodeIgniter\Router\RouteCollection;
  *
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
- *
- * @package CodeIgniter\Test
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {
@@ -54,4 +52,20 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @var array
 	 */
 	protected $headers = [];
+
+	/**
+	 * Allows for formatting the request body to what
+	 * the controller is going to expect
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = '';
+
+	/**
+	 * Allows for directly setting the body to what
+	 * it needs to be.
+	 *
+	 * @var mixed
+	 */
+	protected $requestBody = '';
 }

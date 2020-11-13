@@ -20,8 +20,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * type match between what the application supports and what the requesting
  * getServer wants.
  *
- * @see     http://tools.ietf.org/html/rfc7231#section-5.3
- * @package CodeIgniter\HTTP
+ * @see http://tools.ietf.org/html/rfc7231#section-5.3
  */
 class Negotiate
 {

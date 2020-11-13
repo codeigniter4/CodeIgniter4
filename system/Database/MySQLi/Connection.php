@@ -474,7 +474,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
 		}
 
 		return $retVal;

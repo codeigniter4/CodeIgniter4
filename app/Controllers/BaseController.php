@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -15,8 +16,6 @@ use Psr\Log\LoggerInterface;
  *     class Home extends BaseController
  *
  * For security be sure to declare any new methods as protected or private.
- *
- * @package CodeIgniter
  */
 
 class BaseController extends Controller

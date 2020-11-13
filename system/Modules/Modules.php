@@ -14,9 +14,7 @@ namespace CodeIgniter\Modules;
 /**
  * Modules Class
  *
- * @package CodeIgniter\Modules
- * @author  EllisLab Dev Team
- * @link    https://codeigniter.com/user_guide/general/modules.html
+ * @link https://codeigniter.com/user_guide/general/modules.html
  */
 class Modules
 {

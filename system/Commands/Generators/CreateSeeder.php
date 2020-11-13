@@ -16,8 +16,6 @@ use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a new seeder file
- *
- * @package CodeIgniter\Commands
  */
 class CreateSeeder extends GeneratorCommand
 {

@@ -15,8 +15,6 @@ use Config\Database;
 
 /**
  * Validation Rules.
- *
- * @package CodeIgniter\Validation
  */
 class Rules
 {
@@ -72,7 +70,7 @@ class Rules
 		$val = explode(',', $val);
 		foreach ($val as $tmp)
 		{
-			if (is_numeric($tmp) && (int)$tmp === mb_strlen($str))
+			if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
 			{
 				return true;
 			}

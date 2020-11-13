@@ -61,6 +61,9 @@ You can get help about any CLI command using the help command as follows::
 
     > php spark help db:seed
 
+Use the **list** command to get a list of available commands and their descriptions, sorted by categories.
+You may also use ``spark list --simple`` to get a raw list of all available commands, sorted alphabetically.
+
 *********************
 Creating New Commands
 *********************

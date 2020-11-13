@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
@@ -297,7 +296,7 @@ class CodeIgniter
 	 * @param RouteCollectionInterface|null $routes
 	 * @param boolean                       $returnResponse
 	 *
-	 * @return boolean|RequestInterface|Response|ResponseInterface|mixed
+	 * @return boolean|RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -378,7 +377,7 @@ class CodeIgniter
 	 * @param Cache                         $cacheConfig
 	 * @param boolean                       $returnResponse
 	 *
-	 * @return RequestInterface|\CodeIgniter\HTTP\Response|ResponseInterface|mixed
+	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
@@ -401,15 +400,12 @@ class CodeIgniter
 		// Never run filters when running through Spark cli
 		if (! defined('SPARKED'))
 		{
-			$possibleRedirect = $filters->run($uri, 'before');
-			if ($possibleRedirect instanceof RedirectResponse)
+			$possibleResponse = $filters->run($uri, 'before');
+
+			// If a ResponseInterface instance is returned then send it back to the client and stop
+			if ($possibleResponse instanceof ResponseInterface)
 			{
-				return $possibleRedirect->send();
-			}
-			// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
-			if ($possibleRedirect instanceof ResponseInterface)
-			{
-				return $possibleRedirect->send();
+				return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
 			}
 		}
 
@@ -454,14 +450,14 @@ class CodeIgniter
 			}
 		}
 
-		if ($response instanceof Response)
+		if ($response instanceof ResponseInterface)
 		{
 			$this->response = $response;
 		}
 
 		// Save our current URI as the previous URI in the session
 		// for safer, more accurate use with `previous_url()` helper function.
-		$this->storePreviousURL((string)current_url(true));
+		$this->storePreviousURL((string) current_url(true));
 
 		unset($uri);
 
@@ -1038,7 +1034,7 @@ class CodeIgniter
 		// echoed already.
 		// We also need to save the instance locally
 		// so that any status code changes, etc, take place.
-		if ($returned instanceof Response)
+		if ($returned instanceof ResponseInterface)
 		{
 			$this->response = $returned;
 			$returned       = $returned->getBody();

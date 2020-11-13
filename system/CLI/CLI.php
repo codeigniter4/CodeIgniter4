@@ -32,8 +32,6 @@ use Throwable;
  * The wait() method is mostly testable, as long as you don't give it
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
- *
- * @package CodeIgniter\CLI
  */
 class CLI
 {
@@ -785,7 +783,7 @@ class CLI
 			$thisStep   = abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
-			$percent = intval(($thisStep / $totalSteps) * 100);
+			$percent = (int) (($thisStep / $totalSteps) * 100);
 			$step    = (int) round($percent / 10);
 
 			// Write the progress bar

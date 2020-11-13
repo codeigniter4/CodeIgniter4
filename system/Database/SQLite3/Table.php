@@ -21,8 +21,6 @@ use CodeIgniter\Database\Exceptions\DataException;
  * These are needed in order to support migrations during testing
  * when another database is used as the primary engine, but
  * SQLite in memory databases are used for faster test execution.
- *
- * @package CodeIgniter\Database\SQLite3
  */
 class Table
 {
@@ -399,7 +397,7 @@ class Table
 	 */
 	protected function dropIndexes()
 	{
-		if (! is_array($this->keys) || ! count($this->keys))
+		if (! is_array($this->keys) || $this->keys === [])
 		{
 			return;
 		}

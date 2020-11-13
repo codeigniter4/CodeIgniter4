@@ -23,8 +23,7 @@ use InvalidArgumentException;
  * Database-specific Builders might need to override
  * certain methods to make them work.
  *
- * @package CodeIgniter\Database
- * @mixin   \CodeIgniter\Model
+ * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
@@ -2163,7 +2162,7 @@ class BaseBuilder
 		foreach ($key as $row)
 		{
 			$row = $this->objectToArray($row);
-			if (count(array_diff($keys, array_keys($row))) > 0 || count(array_diff(array_keys($row), $keys)) > 0)
+			if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== [])
 			{
 				// batch function above returns an error on an empty array
 				$this->QBSet[] = [];

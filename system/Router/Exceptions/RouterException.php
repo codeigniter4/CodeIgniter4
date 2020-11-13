@@ -39,4 +39,29 @@ class RouterException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('Router.missingDefaultRoute'));
 	}
+
+	/**
+	 * Throw when controller or its method is not found.
+	 *
+	 * @param string $controller
+	 * @param string $method
+	 *
+	 * @return RouterException
+	 */
+	public static function forControllerNotFound(string $controller, string $method)
+	{
+		return new static(lang('HTTP.controllerNotFound', [$controller, $method]));
+	}
+
+	/**
+	 * Throw when route is not valid.
+	 *
+	 * @param string $route
+	 *
+	 * @return RouterException
+	 */
+	public static function forInvalidRoute(string $route)
+	{
+		return new static(lang('HTTP.invalidRoute', [$route]));
+	}
 }

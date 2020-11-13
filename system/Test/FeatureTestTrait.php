@@ -27,8 +27,6 @@ use ReflectionException;
  *
  * Provides additional utilities for doing full HTTP testing
  * against your application in trait format.
- *
- * @package CodeIgniter\Test
  */
 trait FeatureTestTrait
 {
@@ -97,6 +95,32 @@ trait FeatureTestTrait
 	}
 
 	/**
+	 * Set the format the request's body should have.
+	 *
+	 * @param  string $format The desired format. Currently supported formats: xml, json
+	 * @return $this
+	 */
+	public function withBodyFormat(string $format)
+	{
+		$this->bodyFormat = $format;
+
+		return $this;
+	}
+
+	/**
+	 * Set the raw body for the request
+	 *
+	 * @param  mixed $body
+	 * @return $this
+	 */
+	public function withBody($body)
+	{
+		$this->requestBody = $body;
+
+		return $this;
+	}
+
+	/**
 	 * Don't run any events while running this test.
 	 *
 	 * @return $this
@@ -140,6 +164,7 @@ trait FeatureTestTrait
 		$request = $this->setupRequest($method, $path);
 		$request = $this->setupHeaders($request);
 		$request = $this->populateGlobals($method, $request, $params);
+		$request = $this->setRequestBody($request);
 
 		// Make sure the RouteCollection knows what method we're using...
 		$routes = $this->routes ?? Services::routes();
@@ -348,6 +373,50 @@ trait FeatureTestTrait
 		$request->setGlobal('request', $params);
 
 		$_SESSION = $this->session ?? [];
+
+		return $request;
+	}
+
+	/**
+	 * Set the request's body formatted according to the value in $this->bodyFormat.
+	 * This allows the body to be formatted in a way that the controller is going to
+	 * expect as in the case of testing a JSON or XML API.
+	 *
+	 * @param  Request    $request
+	 * @param  null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
+	 *                               what has been loaded into the request global of the request class.
+	 * @return Request
+	 */
+	protected function setRequestBody(Request $request, array $params = null): Request
+	{
+		if (isset($this->requestBody) && $this->requestBody !== '')
+		{
+			$request->setBody($this->requestBody);
+			return $request;
+		}
+
+		if (isset($this->bodyFormat) && $this->bodyFormat !== '')
+		{
+			if (empty($params))
+			{
+				$params = $request->fetchGlobal('request');
+			}
+			$formatMime = '';
+			if ($this->bodyFormat === 'json')
+			{
+				$formatMime = 'application/json';
+			}
+			elseif ($this->bodyFormat === 'xml')
+			{
+				$formatMime = 'application/xml';
+			}
+			if (! empty($formatMime) && ! empty($params))
+			{
+				$formatted = Services::format()->getFormatter($formatMime)->format($params);
+				$request->setBody($formatted);
+				$request->setHeader('Content-Type', $formatMime);
+			}
+		}
 
 		return $request;
 	}

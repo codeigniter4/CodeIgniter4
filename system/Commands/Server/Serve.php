@@ -19,8 +19,6 @@ use CodeIgniter\CLI\CLI;
  *
  * Not testable, as it throws phpunit for a loop :-/
  *
- * @package CodeIgniter\Commands\Server
- *
  * @codeCoverageIgnore
  */
 class Serve extends BaseCommand

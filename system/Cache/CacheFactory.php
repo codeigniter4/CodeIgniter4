@@ -19,8 +19,6 @@ use Config\Cache;
  * Class Cache
  *
  * A factory for loading the desired
- *
- * @package CodeIgniter\Cache
  */
 class CacheFactory
 {

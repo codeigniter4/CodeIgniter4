@@ -11,8 +11,6 @@
 
 /**
  * CodeIgniter File System Helpers
- *
- * @package CodeIgniter
  */
 // ------------------------------------------------------------------------
 

@@ -33,7 +33,7 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
-		$comments = $node->getAttribute('comments');
+		$comments = $node->getComments();
 
 		if ($comments === [])
 		{

@@ -18,8 +18,6 @@ use RuntimeException;
  *
  * A collection of exceptions thrown by the framework
  * that can only be determined at run time.
- *
- * @package CodeIgniter\Exceptions
  */
 class FrameworkException extends RuntimeException implements ExceptionInterface
 {
@@ -46,5 +44,10 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 	public static function forNoHandlers(string $class)
 	{
 		return new static(lang('Core.noHandlers', [$class]));
+	}
+
+	public static function forFabricatorCreateFailed(string $table, string $reason)
+	{
+		return new static(lang('Fabricator.createFailed', [$table, $reason]));
 	}
 }

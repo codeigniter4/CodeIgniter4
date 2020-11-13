@@ -331,9 +331,9 @@ class Forge
 	 */
 	public function addKey($key, bool $primary = false, bool $unique = false)
 	{
-		if ($primary === true)
+		if ($primary)
 		{
-			foreach ((array)$key as $one)
+			foreach ((array) $key as $one)
 			{
 				$this->primaryKeys[] = $one;
 			}
@@ -341,9 +341,10 @@ class Forge
 		else
 		{
 			$this->keys[] = $key;
-			if ($unique === true)
+
+			if ($unique)
 			{
-				$this->uniqueKeys[] = ($c = count($this->keys)) ? $c - 1 : 0;
+				$this->uniqueKeys[] = count($this->keys) - 1;
 			}
 		}
 
@@ -502,7 +503,7 @@ class Forge
 
 		$table = $this->db->DBPrefix . $table;
 
-		if (count($this->fields) === 0)
+		if ($this->fields === [])
 		{
 			throw new RuntimeException('Field information is required.');
 		}
@@ -853,7 +854,7 @@ class Forge
 			$this->addField([$k => $field[$k]]);
 		}
 
-		if (count($this->fields) === 0)
+		if ($this->fields === [])
 		{
 			throw new RuntimeException('Field information is required');
 		}
@@ -981,7 +982,7 @@ class Forge
 				}
 				elseif (isset($attributes['FIRST']))
 				{
-					$field['first'] = (bool)$attributes['FIRST'];
+					$field['first'] = (bool) $attributes['FIRST'];
 				}
 			}
 
@@ -1211,7 +1212,7 @@ class Forge
 			}
 		}
 
-		if (count($this->primaryKeys) > 0)
+		if ($this->primaryKeys !== [])
 		{
 			$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
 					. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
@@ -1235,7 +1236,7 @@ class Forge
 
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
+			$this->keys[$i] = (array) $this->keys[$i];
 
 			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{
@@ -1286,7 +1287,7 @@ class Forge
 			'SET DEFAULT',
 		];
 
-		if (count($this->foreignKeys) > 0)
+		if ($this->foreignKeys !== [])
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{

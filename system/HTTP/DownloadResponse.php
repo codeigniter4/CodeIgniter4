@@ -434,7 +434,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Disposition', $this->getContentDisposition());
 		$this->setHeader('Expires-Disposition', '0');
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
-		$this->setHeader('Content-Length', (string)$this->getContentLength());
+		$this->setHeader('Content-Length', (string) $this->getContentLength());
 		$this->noCache();
 	}
 

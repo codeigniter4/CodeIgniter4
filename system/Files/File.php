@@ -18,8 +18,6 @@ use SplFileInfo;
 
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.
- *
- * @package CodeIgniter\Files
  */
 class File extends SplFileInfo
 {
