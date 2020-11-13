@@ -641,6 +641,31 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 	//--------------------------------------------------------------------
 
+	public function testCastSetter()
+	{
+		$string = '321 String with numbers 123';
+		$entity = $this->getCastEntity();
+
+		$entity->first = $string;
+
+		$entity->cast(false);
+		$this->assertIsString($entity->first);
+		$this->assertEquals($string, $entity->first);
+
+		$entity->cast(true);
+		$this->assertIsInt($entity->first);
+		$this->assertEquals((int) $string, $entity->first);
+	}
+
+	public function testCastGetter()
+	{
+		$entity = new Entity();
+
+		$this->assertIsBool($entity->cast());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAsArray()
 	{
 		$entity = $this->getEntity();

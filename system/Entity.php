@@ -635,10 +635,16 @@ class Entity implements JsonSerializable
 	/**
 	 * Change the value of the private $_cast property
 	 *
-	 * @param bool $cast
+	 * @param  boolean|null $cast
+	 * @return boolean|Entity
 	 */
-	public function setCast(bool $cast)
+	public function cast(bool $cast = null)
 	{
+		if (null === $cast)
+		{
+			return $this->_cast;
+		}
 		$this->_cast = $cast;
+		return $this;
 	}
 }
