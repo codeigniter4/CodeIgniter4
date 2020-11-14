@@ -8,7 +8,6 @@ use CodeIgniter\Test\Mock\MockResponse;
 
 class ServicesTest extends CIUnitTestCase
 {
-
 	protected $config;
 	protected $original;
 
@@ -17,15 +16,13 @@ class ServicesTest extends CIUnitTestCase
 		parent::setUp();
 
 		$this->original = $_SERVER;
-		//      $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
-		$this->config = new App();
-		//      $this->config->negotiateLocale = true;
-		//      $this->config->supportedLocales = ['en', 'es'];
+		$this->config   = new App();
 	}
 
 	public function tearDown(): void
 	{
 		$_SERVER = $this->original;
+		Services::reset();
 	}
 
 	public function testNewAutoloader()

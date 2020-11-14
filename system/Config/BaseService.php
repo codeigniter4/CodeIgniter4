@@ -65,7 +65,12 @@ class BaseService
 	 */
 	protected static $services = [];
 
-	//--------------------------------------------------------------------
+	/**
+	 * A cache of the names of services classes found.
+	 *
+	 * @var array<string>
+	 */
+	private static $serviceNames = [];
 
 	/**
 	 * Returns a shared instance of any of the class' services.
@@ -98,8 +103,6 @@ class BaseService
 		return static::$instances[$key];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * The Autoloader class is the central class that handles our
 	 * spl_autoload_register method, and helper methods.
@@ -122,8 +125,6 @@ class BaseService
 
 		return new Autoloader();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * The file locator provides utility methods for looking for non-classes
@@ -149,8 +150,6 @@ class BaseService
 		return new FileLocator(static::autoloader());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Provides the ability to perform case-insensitive calling of service
 	 * names.
@@ -162,17 +161,40 @@ class BaseService
 	 */
 	public static function __callStatic(string $name, array $arguments)
 	{
-		$name = strtolower($name);
+		$service = static::serviceExists($name);
 
-		if (method_exists(Services::class, $name))
+		if ($service === null)
 		{
-			return Services::$name(...$arguments);
+			return null;
 		}
 
-		return static::discoverServices($name, $arguments);
+		return $service::$name(...$arguments);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Check if the requested service is defined and return the declaring
+	 * class. Return null if not found.
+	 *
+	 * @param string $name
+	 *
+	 * @return string|null
+	 */
+	public static function serviceExists(string $name): ?string
+	{
+		static::buildServicesCache();
+		$services = array_merge([Services::class], self::$serviceNames);
+		$name     = strtolower($name);
+
+		foreach ($services as $service)
+		{
+			if (method_exists($service, $name))
+			{
+				return $service;
+			}
+		}
+
+		return null;
+	}
 
 	/**
 	 * Reset shared instances and mocks for testing.
@@ -181,8 +203,7 @@ class BaseService
 	 */
 	public static function reset(bool $initAutoloader = false)
 	{
-		static::$mocks = [];
-
+		static::$mocks     = [];
 		static::$instances = [];
 
 		if ($initAutoloader)
@@ -190,8 +211,6 @@ class BaseService
 			static::autoloader()->initialize(new Autoload(), new Modules());
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Inject mock object for testing.
@@ -204,8 +223,6 @@ class BaseService
 		static::$mocks[strtolower($name)] = $mock;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will scan all psr4 namespaces registered with system to look
 	 * for new Config\Services files. Caches a copy of each one, then
@@ -216,6 +233,10 @@ class BaseService
 	 * @param array  $arguments
 	 *
 	 * @return mixed
+	 *
+	 * @deprecated
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected static function discoverServices(string $name, array $arguments)
 	{
@@ -265,5 +286,33 @@ class BaseService
 		}
 
 		return null;
+	}
+
+	protected static function buildServicesCache(): void
+	{
+		if (! static::$discovered)
+		{
+			$config = config('Modules');
+
+			if ($config->shouldDiscover('services'))
+			{
+				$locator = static::locator();
+				$files   = $locator->search('Config/Services');
+
+				// Get instances of all service classes and cache them locally.
+				foreach ($files as $file)
+				{
+					$classname = $locator->getClassname($file);
+
+					if ($classname !== 'CodeIgniter\\Config\\Services')
+					{
+						self::$serviceNames[] = $classname;
+						static::$services[]   = new $classname();
+					}
+				}
+			}
+
+			static::$discovered = true;
+		}
 	}
 }

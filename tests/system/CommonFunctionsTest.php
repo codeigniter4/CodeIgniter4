@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
@@ -18,11 +19,8 @@ use Tests\Support\Models\JobModel;
 /**
  * @backupGlobals enabled
  */
-class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
+class CommonFunctionsTest extends CIUnitTestCase
 {
-
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -30,8 +28,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$renderer->resetData();
 		unset($_ENV['foo'], $_SERVER['foo']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testStringifyAttributes()
 	{
@@ -50,8 +46,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', stringify_attributes([]));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testStringifyJsAttributes()
 	{
 		$this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
@@ -61,8 +55,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$atts->height = 600;
 		$this->assertEquals('width=800,height=600', stringify_attributes($atts, true));
 	}
-
-	// ------------------------------------------------------------------------
 
 	public function testEnvReturnsDefault()
 	{
@@ -96,8 +88,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull(env('p4'));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testRedirectReturnsRedirectResponse()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -122,8 +112,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect());
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testView()
 	{
 		$data     = [
@@ -145,15 +133,11 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple'));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testViewCell()
 	{
 		$expected = 'Hello';
 		$this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
 	}
-
-	// ------------------------------------------------------------------------
 
 	public function testEscapeWithDifferentEncodings()
 	{
@@ -162,15 +146,11 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('&lt;x', esc('<x', 'html', 'windows-1251'));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testEscapeBadContext()
 	{
 		$this->expectException(InvalidArgumentException::class);
 		esc(['width' => '800', 'height' => '600'], 'bogus');
 	}
-
-	// ------------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -208,17 +188,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(null, session('notbogus'));
 	}
 
-	// ------------------------------------------------------------------------
-
-	public function testSingleService()
-	{
-		$timer1 = single_service('timer');
-		$timer2 = single_service('timer');
-		$this->assertFalse($timer1 === $timer2);
-	}
-
-	// ------------------------------------------------------------------------
-
 	public function testRouteTo()
 	{
 		// prime the pump
@@ -227,8 +196,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('/path/string/to/13', route_to('myController::goto', 'string', 13));
 	}
-
-	// ------------------------------------------------------------------------
 
 	public function testInvisible()
 	{
@@ -240,14 +207,10 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Javascript', remove_invisible_characters('Java%0cscript', true));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testAppTimezone()
 	{
 		$this->assertEquals('America/Chicago', app_timezone());
 	}
-
-	// ------------------------------------------------------------------------
 
 	public function testCSRFToken()
 	{
@@ -274,8 +237,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<meta name="X-CSRF-TOKEN" ', csrf_meta());
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testModelNotExists()
 	{
 		$this->assertNull(model(UnexsistenceClass::class));
@@ -295,8 +256,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertInstanceOf(JobModel::class, model('\Tests\Support\Models\JobModel'));
 	}
-
-	// ------------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -370,15 +329,11 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($locations, old('location'));
 	}
 
-	// ------------------------------------------------------------------------
-
 	public function testReallyWritable()
 	{
 		// cannot test fully on *nix
 		$this->assertTrue(is_really_writable(WRITEPATH));
 	}
-
-	// ------------------------------------------------------------------------
 
 	public function testSlashItem()
 	{
@@ -415,7 +370,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}
 
-	//--------------------------------------------------------------------
 	// Make sure cookies are set by RedirectResponse this way
 	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	public function testRedirectResponseCookies1()
@@ -434,8 +388,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($answer1->hasCookie('foo', 'onething'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testTrace()
 	{
@@ -456,8 +408,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -470,8 +420,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('https://example.com/', Services::response()->getHeader('Location')->getValue());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @dataProvider dirtyPathsProvider
@@ -508,8 +456,6 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testHelperWithFatalLocatorThrowsException()
 	{
