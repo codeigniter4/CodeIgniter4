@@ -631,4 +631,20 @@ class Entity implements JsonSerializable
 	{
 		return $this->toArray();
 	}
+
+	/**
+	 * Change the value of the private $_cast property
+	 *
+	 * @param  boolean|null $cast
+	 * @return boolean|Entity
+	 */
+	public function cast(bool $cast = null)
+	{
+		if (null === $cast)
+		{
+			return $this->_cast;
+		}
+		$this->_cast = $cast;
+		return $this;
+	}
 }
