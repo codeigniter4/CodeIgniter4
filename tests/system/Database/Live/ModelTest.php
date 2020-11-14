@@ -1392,6 +1392,52 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testInsertBatchSetsIntTimestamps()
+	{
+		$job_data = [
+			[
+				'name'        => 'Philosopher',
+			],
+			[
+				'name'        => 'Laborer',
+			],
+		];
+
+		$model = new JobModel($this->db);
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+		$this->assertEquals(2, $model->insertBatch($job_data));
+
+		$result = $model->where('name', 'Philosopher')->first();
+
+		$this->assertEquals(time(), $result->created_at);
+	}
+
+	public function testInsertBatchSetsDatetimeTimestamps()
+	{
+		$user_data = [
+			[
+				'name'    => 'Lou',
+				'email'   => 'lou@example.com',
+				'country' => 'Ireland',
+			],
+			[
+				'name'    => 'Sue',
+				'email'   => 'sue@example.com',
+				'country' => 'Ireland',
+			],
+		];
+
+		$model = new UserModel($this->db);
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+		$this->assertEquals(2, $model->insertBatch($user_data));
+
+		$result = $model->where('name', 'Lou')->first();
+
+		$this->assertEquals(time(), strtotime($result->created_at));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testUpdateBatchSuccess()
 	{
 		$data = [
