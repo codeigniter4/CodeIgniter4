@@ -14,6 +14,7 @@ use CodeIgniter\Test\ReflectionHelper;
 use Config\Services;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
+use Tests\Support\Models\GroupsModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
@@ -1396,10 +1397,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$job_data = [
 			[
-				'name'        => 'Philosopher',
+				'name' => 'Philosopher',
 			],
 			[
-				'name'        => 'Laborer',
+				'name' => 'Laborer',
 			],
 		];
 
@@ -1434,6 +1435,36 @@ class ModelTest extends CIDatabaseTestCase
 		$result = $model->where('name', 'Lou')->first();
 
 		$this->assertEquals(time(), strtotime($result->created_at));
+	}
+
+	/**
+	 * @todo change assertRegExp on transition to PHPUnit 9
+	 */
+	public function testInsertBatchTimestampsWithTimestampDataType(): void
+	{
+		if ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$this->markTestSkipped('Sqlsrv has no TIMESTAMP format.');
+		}
+
+		$data = [
+			[
+				'name'        => 'Manager',
+				'description' => 'Managerial group',
+			],
+			[
+				'name'        => 'User',
+				'description' => 'Default group',
+			],
+		];
+
+		$model = new GroupsModel($this->db);
+		$this->assertSame(2, $model->insertBatch($data));
+
+		// Tries to match YYYY-MM-DD HH:II:SS timestamp format
+		$pattern   = '/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/';
+		$createdAt = $model->where(['name' => 'Manager'])->first()->created_at;
+		$this->assertRegExp($pattern, $createdAt);
 	}
 
 	//--------------------------------------------------------------------

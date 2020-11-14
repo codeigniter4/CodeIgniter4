@@ -1,10 +1,13 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
 
-class CITestSeeder extends \CodeIgniter\Database\Seeder
+namespace Tests\Support\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+class CITestSeeder extends Seeder
 {
 	public function run()
 	{
-		// Job Data
 		$data = [
 			'user'                   => [
 				[
@@ -95,27 +98,35 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'type_bigint'     => 2342342,
 				],
 			],
+			'groups'                 => [
+				[
+					'name'        => 'Admin',
+					'description' => 'Administrative group.',
+				],
+			],
 		];
 
-		//set SQL times to more correct format
+		// set SQL times to more correct format
 		if ($this->db->DBDriver === 'SQLite3')
 		{
-			 $data['type_test'][0]['type_date']      = '2020/01/11';
-			 $data['type_test'][0]['type_time']      = '15:22:00';
-			 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
-			 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
+			$data['type_test'][0]['type_date']      = '2020/01/11';
+			$data['type_test'][0]['type_time']      = '15:22:00';
+			$data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
+			$data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
 		}
 
 		if ($this->db->DBDriver === 'Postgre')
 		{
 			$data['type_test'][0]['type_time'] = '15:22:00';
-			unset($data['type_test'][0]['type_enum']);
-			unset($data['type_test'][0]['type_set']);
-			unset($data['type_test'][0]['type_mediumtext']);
-			unset($data['type_test'][0]['type_real']);
-			unset($data['type_test'][0]['type_double']);
-			unset($data['type_test'][0]['type_decimal']);
-			unset($data['type_test'][0]['type_blob']);
+			unset(
+				$data['type_test'][0]['type_enum'],
+				$data['type_test'][0]['type_set'],
+				$data['type_test'][0]['type_mediumtext'],
+				$data['type_test'][0]['type_real'],
+				$data['type_test'][0]['type_double'],
+				$data['type_test'][0]['type_decimal'],
+				$data['type_test'][0]['type_blob']
+			);
 		}
 
 		if ($this->db->DBDriver === 'Sqlsrv')
@@ -123,25 +134,25 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			$data['type_test'][0]['type_date']     = '2020-01-11';
 			$data['type_test'][0]['type_time']     = '15:22:00.000';
 			$data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
-			unset($data['type_test'][0]['type_timestamp']);
-			unset($data['type_test'][0]['type_enum']);
-			unset($data['type_test'][0]['type_set']);
-			unset($data['type_test'][0]['type_mediumtext']);
-			unset($data['type_test'][0]['type_double']);
-			unset($data['type_test'][0]['type_blob']);
+
+			unset(
+				$data['type_test'][0]['type_timestamp'],
+				$data['type_test'][0]['type_enum'],
+				$data['type_test'][0]['type_set'],
+				$data['type_test'][0]['type_mediumtext'],
+				$data['type_test'][0]['type_double'],
+				$data['type_test'][0]['type_blob']
+			);
 		}
 
-		foreach ($data as $table => $dummy_data)
+		foreach ($data as $table => $dummyData)
 		{
 			$this->db->table($table)->truncate();
 
-			foreach ($dummy_data as $single_dummy_data)
+			foreach ($dummyData as $singleDummyData)
 			{
-				$this->db->table($table)->insert($single_dummy_data);
+				$this->db->table($table)->insert($singleDummyData);
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }
