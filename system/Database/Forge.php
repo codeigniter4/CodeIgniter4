@@ -165,9 +165,9 @@ class Forge
 	/**
 	 * Constructor.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param BaseConnection $db
 	 */
-	public function __construct(ConnectionInterface $db)
+	public function __construct(BaseConnection $db)
 	{
 		$this->db = &$db;
 	}

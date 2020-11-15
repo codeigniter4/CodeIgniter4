@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
-use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
@@ -39,9 +39,9 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Constructor.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param BaseConnection $db
 	 */
-	public function __construct(ConnectionInterface $db)
+	public function __construct(BaseConnection $db)
 	{
 		parent::__construct($db);
 
