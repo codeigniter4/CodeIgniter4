@@ -17,20 +17,25 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class BaseResource extends Controller
+abstract class BaseResource extends Controller
 {
 	/**
-	 * @var string The model that holding this resource's data
+	 * @var string|null The model that holding this resource's data
 	 */
 	protected $modelName;
 
 	/**
-	 * @var object The model that holding this resource's data
+	 * @var object|null The model that holding this resource's data
 	 */
 	protected $model;
 
-	//--------------------------------------------------------------------
-
+	/**
+	 * Constructor.
+	 *
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 * @param LoggerInterface   $logger
+	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
 		parent::initController($request, $response, $logger);
@@ -39,20 +44,18 @@ class BaseResource extends Controller
 		$this->setModel($this->modelName);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set or change the model this controller is bound to.
 	 * Given either the name or the object, determine the other.
 	 *
-	 * @param string|object $which
+	 * @param object|string|null $which
 	 *
 	 * @return void
 	 */
 	public function setModel($which = null)
 	{
 		// save what we have been given
-		if (! empty($which))
+		if ($which)
 		{
 			$this->model     = is_object($which) ? $which : null;
 			$this->modelName = is_object($which) ? null : $which;
@@ -68,7 +71,7 @@ class BaseResource extends Controller
 		}
 
 		// determine model name if needed
-		if (empty($this->modelName) && ! empty($this->model))
+		if (! empty($this->model) && empty($this->modelName))
 		{
 			$this->modelName = get_class($this->model);
 		}
