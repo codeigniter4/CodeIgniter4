@@ -12,20 +12,17 @@
 namespace CodeIgniter\Database;
 
 use BadMethodCallException;
-use CodeIgniter\Database\MySQLi\Connection;
 use CodeIgniter\Events\Events;
-use mysqli_stmt;
 
 /**
  * Base prepared query
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
-
 	/**
 	 * The prepared statement itself.
 	 *
-	 * @var resource|mysqli_stmt
+	 * @var object|resource
 	 */
 	protected $statement;
 
@@ -54,7 +51,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * A reference to the db connection to use.
 	 *
-	 * @var BaseConnection|Connection
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -63,9 +60,9 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param BaseConnection $db
 	 */
-	public function __construct(ConnectionInterface $db)
+	public function __construct(BaseConnection $db)
 	{
 		$this->db = &$db;
 	}
@@ -180,7 +177,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Explicitly closes the statement.
 	 *
-	 * @return null|void
+	 * @return void
 	 */
 	public function close()
 	{

@@ -17,11 +17,11 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class Forge
+ * The Forge class transforms migrations to executable
+ * SQL statements.
  */
 class Forge
 {
-
 	/**
 	 * The active database connection.
 	 *
@@ -165,9 +165,9 @@ class Forge
 	/**
 	 * Constructor.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param BaseConnection $db
 	 */
-	public function __construct(ConnectionInterface $db)
+	public function __construct(BaseConnection $db)
 	{
 		$this->db = &$db;
 	}

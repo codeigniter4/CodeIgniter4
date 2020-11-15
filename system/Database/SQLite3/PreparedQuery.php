@@ -86,7 +86,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			}
 
 			// Bind it
-			$this->statement->bindValue($key + 1, $item, $bindType); // @phpstan-ignore-line
+			$this->statement->bindValue($key + 1, $item, $bindType);
 		}
 
 		$this->result = $this->statement->execute();
