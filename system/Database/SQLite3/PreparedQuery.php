@@ -13,13 +13,11 @@ namespace CodeIgniter\Database\SQLite3;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
  * Prepared query for SQLite3
  */
-
-class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
+class PreparedQuery extends BasePreparedQuery
 {
 	/**
 	 * The SQLite3Result resource, or false.

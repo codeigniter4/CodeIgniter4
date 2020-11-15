@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Session\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class SessionException extends FrameworkException implements ExceptionInterface
+class SessionException extends FrameworkException
 {
 	public static function forMissingDatabaseTable()
 	{

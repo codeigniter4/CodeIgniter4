@@ -22,9 +22,8 @@ use Config\Services;
  *
  * @see https://craig.is/writing/chrome-logger
  */
-class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
+class ChromeLoggerHandler extends BaseHandler
 {
-
 	/**
 	 * Version of this library - for ChromeLogger use.
 	 *

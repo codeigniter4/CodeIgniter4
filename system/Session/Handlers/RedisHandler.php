@@ -16,14 +16,12 @@ use Config\App as AppConfig;
 use Exception;
 use Redis;
 use RedisException;
-use SessionHandlerInterface;
 
 /**
  * Session handler using Redis for persistence
  */
-class RedisHandler extends BaseHandler implements SessionHandlerInterface
+class RedisHandler extends BaseHandler
 {
-
 	/**
 	 * phpRedis instance
 	 *

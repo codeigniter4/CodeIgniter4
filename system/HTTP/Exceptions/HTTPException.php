@@ -11,15 +11,13 @@
 
 namespace CodeIgniter\HTTP\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
 /**
  * Things that can go wrong with HTTP
  */
-class HTTPException extends FrameworkException implements ExceptionInterface
+class HTTPException extends FrameworkException
 {
-
 	/**
 	 * For CurlRequest
 	 *

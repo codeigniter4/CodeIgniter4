@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Pager\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class PagerException extends FrameworkException implements ExceptionInterface
+class PagerException extends FrameworkException
 {
 	public static function forInvalidTemplate(string $template = null)
 	{

@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Security\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class SecurityException extends FrameworkException implements ExceptionInterface
+class SecurityException extends FrameworkException
 {
 	public static function forDisallowedAction()
 	{

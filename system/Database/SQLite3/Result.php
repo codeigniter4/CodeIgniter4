@@ -14,16 +14,14 @@ namespace CodeIgniter\Database\SQLite3;
 use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
  * Result for SQLite3
  */
-class Result extends BaseResult implements ResultInterface
+class Result extends BaseResult
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *

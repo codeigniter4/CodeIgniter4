@@ -14,14 +14,12 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Exception;
-use SessionHandlerInterface;
 
 /**
  * Session handler using file system for storage
  */
-class FileHandler extends BaseHandler implements SessionHandlerInterface
+class FileHandler extends BaseHandler
 {
-
 	/**
 	 * Where to save the session files to.
 	 *

@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Validation\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class ValidationException extends FrameworkException implements ExceptionInterface
+class ValidationException extends FrameworkException
 {
 	public static function forRuleNotFound(string $rule = null)
 	{

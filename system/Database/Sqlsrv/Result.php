@@ -12,16 +12,14 @@
 namespace CodeIgniter\Database\Sqlsrv;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
  * Result for Sqlsrv
  */
-class Result extends BaseResult implements ResultInterface
+class Result extends BaseResult
 {
-
 	/**
 	 * Row offset
 	 *

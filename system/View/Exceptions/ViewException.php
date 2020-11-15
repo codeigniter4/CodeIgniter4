@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\View\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class ViewException extends FrameworkException implements ExceptionInterface
+class ViewException extends FrameworkException
 {
 	public static function forInvalidCellMethod(string $class, string $method)
 	{
