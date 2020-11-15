@@ -17,11 +17,11 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class Forge
+ * The Forge class transforms migrations to executable
+ * SQL statements.
  */
 class Forge
 {
-
 	/**
 	 * The active database connection.
 	 *
