@@ -26,8 +26,6 @@ class ResourcePresenter extends BaseResource
 		return lang('RESTful.notImplemented', ['index']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Present a view to present a specific resource object
 	 *
@@ -40,8 +38,6 @@ class ResourcePresenter extends BaseResource
 		return lang('RESTful.notImplemented', ['show']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Present a view to present a new single resource object
 	 *
@@ -51,8 +47,6 @@ class ResourcePresenter extends BaseResource
 	{
 		return lang('RESTful.notImplemented', ['new']);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process the creation/insertion of a new resource object.
@@ -65,8 +59,6 @@ class ResourcePresenter extends BaseResource
 		return lang('RESTful.notImplemented', ['create']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
@@ -78,8 +70,6 @@ class ResourcePresenter extends BaseResource
 	{
 		return lang('RESTful.notImplemented', ['edit']);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process the updating, full or partial, of a specific resource object.
@@ -94,8 +84,6 @@ class ResourcePresenter extends BaseResource
 		return lang('RESTful.notImplemented', ['update']);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
@@ -107,8 +95,6 @@ class ResourcePresenter extends BaseResource
 	{
 		return lang('RESTful.notImplemented', ['remove']);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Process the deletion of a specific resource object
