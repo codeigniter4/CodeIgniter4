@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\Sqlsrv;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 use stdClass;
@@ -20,9 +19,8 @@ use stdClass;
 /**
  * Connection for Sqlsrv
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
-
 	/**
 	 * Database driver
 	 *

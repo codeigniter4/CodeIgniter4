@@ -13,13 +13,12 @@ namespace CodeIgniter\Database\Postgre;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\PreparedQueryInterface;
 use Exception;
 
 /**
  * Prepared query for Postgre
  */
-class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
+class PreparedQuery extends BasePreparedQuery
 {
 	/**
 	 * Stores the name this query can be

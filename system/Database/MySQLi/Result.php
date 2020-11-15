@@ -12,16 +12,14 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
  * Result for MySQLi
  */
-class Result extends BaseResult implements ResultInterface
+class Result extends BaseResult
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *

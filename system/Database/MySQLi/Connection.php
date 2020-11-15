@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
 use MySQLi;
@@ -23,7 +22,7 @@ use Throwable;
 /**
  * Connection for MySQLi
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
 	/**
 	 * Database driver

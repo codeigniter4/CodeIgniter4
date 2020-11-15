@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use ErrorException;
 use Exception;
@@ -22,9 +21,8 @@ use stdClass;
 /**
  * Connection for SQLite3
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
-
 	/**
 	 * Database driver
 	 *
