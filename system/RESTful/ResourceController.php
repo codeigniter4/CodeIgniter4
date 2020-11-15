@@ -30,8 +30,6 @@ class ResourceController extends BaseResource
 		return $this->fail(lang('RESTful.notImplemented', ['index']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return the properties of a resource object
 	 *
@@ -44,8 +42,6 @@ class ResourceController extends BaseResource
 		return $this->fail(lang('RESTful.notImplemented', ['show']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Return a new resource object, with default properties
 	 *
@@ -56,8 +52,6 @@ class ResourceController extends BaseResource
 		return $this->fail(lang('RESTful.notImplemented', ['new']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Create a new resource object, from "posted" parameters
 	 *
@@ -67,8 +61,6 @@ class ResourceController extends BaseResource
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['create']), 501);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Return the editable properties of a resource object
@@ -82,8 +74,6 @@ class ResourceController extends BaseResource
 		return $this->fail(lang('RESTful.notImplemented', ['edit']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Add or update a model resource, from "posted" properties
 	 *
@@ -96,8 +86,6 @@ class ResourceController extends BaseResource
 		return $this->fail(lang('RESTful.notImplemented', ['update']), 501);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Delete the designated resource object from the model
 	 *
@@ -109,8 +97,6 @@ class ResourceController extends BaseResource
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['delete']), 501);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set/change the expected response representation for returned objects
