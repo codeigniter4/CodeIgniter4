@@ -195,6 +195,11 @@ class Model
 	protected $tempReturnType;
 
 	/**
+	 * Used by indexed() to return array indexed by a specified key
+	 */
+	protected $tempReturnIndexed = false;
+
+	/**
 	 * Whether we should limit fields in inserts
 	 * and updates to those available in $allowedFields or not.
 	 *
@@ -446,10 +451,16 @@ class Model
 
 		$row = $row->getResult($this->tempReturnType);
 
+		if ($this->tempReturnIndexed)
+		{
+			$row = array_column($row, null, $this->tempReturnIndexed);
+		}
+
 		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempReturnIndexed  = false;
 
 		return $eventData['data'];
 	}
@@ -487,6 +498,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempReturnIndexed  = false;
 
 		return $eventData['data'];
 	}
@@ -1062,6 +1074,22 @@ class Model
 	public function asObject(string $class = 'object')
 	{
 		$this->tempReturnType = $class;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the return to be array indexed by a specific key (column table).
+	 *
+	 * @param string $key Column to use for indexing (defaults to $primaryKey)
+	 *
+	 * @return Model
+	 */
+	public function indexed($key = null)
+	{
+		$this->tempReturnIndexed = $key ?? $this->primaryKey;
 
 		return $this;
 	}
