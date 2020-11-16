@@ -1396,10 +1396,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$job_data = [
 			[
-				'name'        => 'Philosopher',
+				'name' => 'Philosopher',
 			],
 			[
-				'name'        => 'Laborer',
+				'name' => 'Laborer',
 			],
 		];
 
@@ -1409,7 +1409,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$result = $model->where('name', 'Philosopher')->first();
 
-		$this->assertEquals(time(), $result->created_at);
+		$this->assertCloseEnough(time(), $result->created_at);
 	}
 
 	public function testInsertBatchSetsDatetimeTimestamps()
@@ -1433,7 +1433,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$result = $model->where('name', 'Lou')->first();
 
-		$this->assertEquals(time(), strtotime($result->created_at));
+		$this->assertCloseEnough(time(), strtotime($result->created_at));
 	}
 
 	//--------------------------------------------------------------------
