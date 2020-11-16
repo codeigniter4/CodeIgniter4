@@ -300,7 +300,7 @@ class BaseBuilder
 	 *
 	 * @param boolean $mode Mode to set
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function testMode(bool $mode = true)
 	{
@@ -344,7 +344,7 @@ class BaseBuilder
 	 *
 	 * @param boolean $ignore
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function ignore(bool $ignore = true)
 	{
@@ -363,7 +363,7 @@ class BaseBuilder
 	 * @param string|array $select
 	 * @param boolean      $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function select($select = '*', bool $escape = null)
 	{
@@ -412,7 +412,7 @@ class BaseBuilder
 	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function selectMax(string $select = '', string $alias = '')
 	{
@@ -429,7 +429,7 @@ class BaseBuilder
 	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function selectMin(string $select = '', string $alias = '')
 	{
@@ -446,7 +446,7 @@ class BaseBuilder
 	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function selectAvg(string $select = '', string $alias = '')
 	{
@@ -463,7 +463,7 @@ class BaseBuilder
 	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function selectSum(string $select = '', string $alias = '')
 	{
@@ -480,7 +480,7 @@ class BaseBuilder
 	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function selectCount(string $select = '', string $alias = '')
 	{
@@ -501,7 +501,7 @@ class BaseBuilder
 	 * @param string $alias
 	 * @param string $type
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 * @throws DataException
 	 * @throws DatabaseException
 	 */
@@ -567,7 +567,7 @@ class BaseBuilder
 	 *
 	 * @param boolean $val
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function distinct(bool $val = true)
 	{
@@ -586,7 +586,7 @@ class BaseBuilder
 	 * @param mixed   $from      can be a string or array
 	 * @param boolean $overwrite Should we remove the first table existing?
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function from($from, bool $overwrite = false)
 	{
@@ -635,7 +635,7 @@ class BaseBuilder
 	 * @param string  $type   The type of join
 	 * @param boolean $escape Whether not to try to escape identifiers
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function join(string $table, string $cond, string $type = '', bool $escape = null)
 	{
@@ -724,7 +724,7 @@ class BaseBuilder
 	 * @param mixed   $value
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function where($key, $value = null, bool $escape = null)
 	{
@@ -743,7 +743,7 @@ class BaseBuilder
 	 * @param mixed   $value
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orWhere($key, $value = null, bool $escape = null)
 	{
@@ -766,7 +766,7 @@ class BaseBuilder
 	 * @param string  $type
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
 	{
@@ -852,7 +852,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function whereIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -871,7 +871,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orWhereIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -890,7 +890,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function whereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -909,7 +909,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orWhereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -928,7 +928,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function havingIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -947,7 +947,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orHavingIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -966,7 +966,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function havingNotIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -985,7 +985,7 @@ class BaseBuilder
 	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
 	 * @param boolean              $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orHavingNotIn(string $key = null, $values = null, bool $escape = null)
 	{
@@ -1010,7 +1010,7 @@ class BaseBuilder
 	 * @param  string             $clause (Internal use only)
 	 * @throws InvalidArgumentException
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
 	{
@@ -1084,7 +1084,7 @@ class BaseBuilder
 	 * @param boolean $escape
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function like($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1105,7 +1105,7 @@ class BaseBuilder
 	 * @param boolean $escape
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function notLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1126,7 +1126,7 @@ class BaseBuilder
 	 * @param boolean $escape
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1147,7 +1147,7 @@ class BaseBuilder
 	 * @param boolean $escape
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orNotLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1167,7 +1167,7 @@ class BaseBuilder
 	 * @param string  $side
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function havingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1187,7 +1187,7 @@ class BaseBuilder
 	 * @param string  $side
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function notHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1207,7 +1207,7 @@ class BaseBuilder
 	 * @param string  $side
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1227,7 +1227,7 @@ class BaseBuilder
 	 * @param string  $side
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orNotHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
@@ -1257,7 +1257,7 @@ class BaseBuilder
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
 	 * @param string  $clause            (Internal use only)
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', bool $escape = null, bool $insensitiveSearch = false, string $clause = 'QBWhere')
 	{
@@ -1344,7 +1344,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function groupStart()
 	{
@@ -1356,7 +1356,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but ORs the group
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orGroupStart()
 	{
@@ -1368,7 +1368,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but NOTs the group
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function notGroupStart()
 	{
@@ -1380,7 +1380,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but OR NOTs the group
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orNotGroupStart()
 	{
@@ -1392,7 +1392,7 @@ class BaseBuilder
 	/**
 	 * Ends a query group
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function groupEnd()
 	{
@@ -1404,7 +1404,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group for HAVING clause.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function havingGroupStart()
 	{
@@ -1416,7 +1416,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group for HAVING clause, but ORs the group.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orHavingGroupStart()
 	{
@@ -1428,7 +1428,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group for HAVING clause, but NOTs the group.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function notHavingGroupStart()
 	{
@@ -1440,7 +1440,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group for HAVING clause, but OR NOTs the group.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orNotHavingGroupStart()
 	{
@@ -1452,7 +1452,7 @@ class BaseBuilder
 	/**
 	 * Ends a query group for HAVING clause.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function havingGroupEnd()
 	{
@@ -1468,7 +1468,7 @@ class BaseBuilder
 	 * @param string $type
 	 * @param string $clause
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function groupStartPrepare(string $not = '', string $type = 'AND ', string $clause = 'QBWhere')
 	{
@@ -1493,7 +1493,7 @@ class BaseBuilder
 	 *
 	 * @param string $clause
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function groupEndPrepare(string $clause = 'QBWhere')
 	{
@@ -1542,7 +1542,7 @@ class BaseBuilder
 	 * @param string|array $by
 	 * @param boolean      $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function groupBy($by, bool $escape = null)
 	{
@@ -1582,7 +1582,7 @@ class BaseBuilder
 	 * @param mixed        $value
 	 * @param boolean      $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function having($key, $value = null, bool $escape = null)
 	{
@@ -1600,7 +1600,7 @@ class BaseBuilder
 	 * @param mixed        $value
 	 * @param boolean      $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orHaving($key, $value = null, bool $escape = null)
 	{
@@ -1616,7 +1616,7 @@ class BaseBuilder
 	 * @param string  $direction ASC, DESC or RANDOM
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
 	{
@@ -1682,7 +1682,7 @@ class BaseBuilder
 	 * @param integer $value  LIMIT value
 	 * @param integer $offset OFFSET value
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function limit(int $value = null, ?int $offset = 0)
 	{
@@ -1706,7 +1706,7 @@ class BaseBuilder
 	 *
 	 * @param integer $offset OFFSET value
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function offset(int $offset)
 	{
@@ -1745,7 +1745,7 @@ class BaseBuilder
 	 * @param string              $value  Field value, if $key is a single field
 	 * @param boolean             $escape Whether to escape values and identifiers
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function set($key, ?string $value = '', bool $escape = null)
 	{
@@ -2143,7 +2143,7 @@ class BaseBuilder
 	 * @param string  $value
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder|null
+	 * @return $this|null
 	 */
 	public function setInsertBatch($key, string $value = '', bool $escape = null)
 	{
@@ -2677,7 +2677,7 @@ class BaseBuilder
 	 * @param string       $index
 	 * @param boolean      $escape
 	 *
-	 * @return BaseBuilder|null
+	 * @return $this|null
 	 * @throws DatabaseException
 	 */
 	public function setUpdateBatch($key, string $index = '', bool $escape = null)
@@ -3324,7 +3324,7 @@ class BaseBuilder
 	 *
 	 * Publicly-visible method to reset the QB values.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function resetQuery()
 	{
@@ -3498,7 +3498,7 @@ class BaseBuilder
 	/**
 	 * Returns a clone of a Base Builder with reset query builder values.
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	protected function cleanClone()
 	{
