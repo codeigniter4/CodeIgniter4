@@ -5,7 +5,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Config;
 use CodeIgniter\Test\ReflectionHelper;
 
-class DatabaseConfig extends \CodeIgniter\Test\CIUnitTestCase
+class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	use ReflectionHelper;
 
