@@ -243,10 +243,9 @@ class Negotiate
 			foreach ($pairs as $pair)
 			{
 				$param = [];
-				preg_match(
+				if (preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
-				);
-				if ($param != [])
+				))
 				{
 					$parameters[trim($param['name'])] = trim($param['value']);
 				}
