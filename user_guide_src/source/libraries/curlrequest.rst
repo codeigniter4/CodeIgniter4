@@ -360,6 +360,13 @@ option. The value should be the number of seconds you want the functions to exec
 
 	$response->request('GET', 'http://example.com', ['timeout' => 5]);
 
+user_agent
+==========
+
+Allows specifying the User Agent for requests::
+
+	$response->request('GET', 'http://example.com', ['user_agent' => 'CodeIgniter Framework v4']);
+
 verify
 ======
 
