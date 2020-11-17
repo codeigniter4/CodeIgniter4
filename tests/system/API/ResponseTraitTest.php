@@ -83,6 +83,11 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 				$this->response  = $response;
 				$this->formatter = $formatter;
 			}
+
+			public function resetFormatter()
+			{
+				$this->formatter = null;
+			}
 		};
 
 		return $controller;
@@ -513,10 +518,23 @@ EOH;
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
+		$this->assertEquals($this->formatter->format($data), $this->response->getJSON());
 
 		$controller->setResponseFormat('xml');
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
+	}
+
+	public function testXMLResponseFormat()
+	{
+		$data       = ['foo' => 'bar'];
+		$controller = $this->makeController();
+		$controller->resetFormatter();
+		$controller->setResponseFormat('xml');
+		$controller->respond($data, 201);
+
+		$xmlFormatter = new XMLFormatter();
+		$this->assertEquals($xmlFormatter->format($data), $this->response->getXML());
 	}
 }
