@@ -713,13 +713,13 @@ if (! function_exists('set_value'))
 	 * Grabs a value from the POST array for the specified field so you can
 	 * re-populate an input field or textarea
 	 *
-	 * @param string  $field      Field name
-	 * @param string  $default    Default value
-	 * @param boolean $htmlEscape Whether to escape HTML special characters or not
+	 * @param string          $field      Field name
+	 * @param string|string[] $default    Default value
+	 * @param boolean         $htmlEscape Whether to escape HTML special characters or not
 	 *
-	 * @return string
+	 * @return string|string[]
 	 */
-	function set_value(string $field, string $default = '', bool $htmlEscape = true): string
+	function set_value(string $field, $default = '', bool $htmlEscape = true)
 	{
 		$request = Services::request();
 
