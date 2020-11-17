@@ -69,6 +69,7 @@ be set to handle specific levels and ignore the rest. Currently, two handlers co
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
   installed in the Chrome web browser, you can use this handler to display the log information in
   Chrome's console window.
+- **Errorlog Handler** this handler will log with php error_log
 
 The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
 an array of handlers and their configuration. Each handler is specified with the key being the fully
