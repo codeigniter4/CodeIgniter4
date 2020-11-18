@@ -123,16 +123,17 @@ if (! function_exists('array_deep_search'))
 	}
 }
 
-if (!function_exists('sort_by_multiple_keys'))
+if (!function_exists('array_sort_by_multiple_keys'))
 {
 	/**
-	 * Sorts an associative multidimensional array by the values of the
-	 * passed columns names. The sorting params represent an associative
-	 * array of column names and sorting flags.
+	 * Sorts a multidimensional array by its elements values. The array
+	 * columns to be used for sorting are passed as an associative
+	 * array of key names and sorting flags.
+	 *
 	 * Both arrays of objects and arrays of array can be sorted.
 	 *
 	 * Example:
-	 * 	sort_by_multiple_keys($players,
+	 * 	array_sort_by_multiple_keys($players,
 	 * 			[
 	 * 				'team.hierarchy' => SORT_ASC,
 	 * 				'position'       => SORT_ASC,
@@ -143,9 +144,9 @@ if (!function_exists('sort_by_multiple_keys'))
 	 * object level. In principle, any number of sublevels could be used,
 	 * as long as the level and column exist in every array element.
 	 *
-	 * @param array $array the reference of the array to be sorted
+	 * @param array $array       the reference of the array to be sorted
 	 * @param array $sortColumns an associative array of columns to sort
-	 *              after and their sorting flags
+	 *                           after and their sorting flags
 	 *
 	 * @return boolean
 	 */
@@ -167,36 +168,30 @@ if (!function_exists('sort_by_multiple_keys'))
 			// The '.' operator separates nested elements
 			foreach (explode('.', $key) as $keySegment)
 			{
-				// Distinguish array of objects and arrays of arrays
-				if (is_object(reset($carry)) ?? false)
+				// Loop elements if they are objects
+				if (is_object(reset($carry)))
 				{
 					// Extract the object attribute
 					foreach ($carry as $index => $object)
 					{
 						$carry[$index] = $object->$keySegment;
 					}
+					
+					continue;
 				}
-				else
-				{
-					// Extract
-					$carry = array_column($carry, $keySegment);
-				}
+
+				// Extract the target column if elements are arrays
+				$carry = array_column($carry, $keySegment);
 			}
 
-			// Store this iterations sorting paramters
-			$tempArray[$key][0] = $carry;
-			$tempArray[$key][1] = $sortFlag;
+			// Store the collected sorting parameters
+			$tempArray[] = $carry;
+			$tempArray[] = $sortFlag;
 		}
 
-		// Prepare sorting array
-		$sortArray = [];
-		foreach ($sortColumns as $index => $sortFlag)
-		{
-			$sortArray[] = &$tempArray[$index][0];
-			$sortArray[] = &$tempArray[$index][1];
-		}
-		$sortArray[] = &$array;
+		// Append the array reference
+		$tempArray[] = &$array;
 
-		return call_user_func_array('array_multisort', $sortArray);
+		return call_user_func_array('array_multisort', $tempArray);
 	}
 }
