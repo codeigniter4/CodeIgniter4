@@ -109,16 +109,18 @@ The following functions are available:
         ];
 
     Now sort this array by two keys. Note that the method supports the dot-notation
-    to access values in deeper array levels, but does not support wildcards.
+    to access values in deeper array levels, but does not support wildcards::
 
-        array_sort_by_multiple_keys($players, [
-            'team.order' => SORT_ASC,
-            'position'   => SORT_ASC,
-        ]);
+        array_sort_by_multiple_keys($players,
+            [
+                'team.order' => SORT_ASC,
+                'position'   => SORT_ASC,
+            ]
+        );
 
-    The ``$players`` array is now sorted by the ``order`` value in each players'
-    ``team`` subarray. If this value is equal for several players, these players
-    will be ordered by their ``position``. The resulting array is::
+    The ``$players`` array is now sorted by the 'order' value in each players'
+    'team' subarray. If this value is equal for several players, these players
+    will be ordered by their 'position'. The resulting array is::
 
         $players = [
             0 => [
@@ -151,6 +153,6 @@ The following functions are available:
         ];
 
     In the same way, the method can also handle an array of objects. In the example
-    above it is further possible that each ``player`` is represented by an array,
-    while the ``teams`` are objects. The method will detect the type of elements in
+    above it is further possible that each 'player' is represented by an array,
+    while the 'teams' are objects. The method will detect the type of elements in
     each nesting level and handle it accordingly.
