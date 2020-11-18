@@ -26,7 +26,6 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  */
 class ContentSecurityPolicy
 {
-
 	/**
 	 * Used for security enforcement
 	 *

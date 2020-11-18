@@ -26,7 +26,6 @@ use Config\Pager as PagerConfig;
  */
 class Pager implements PagerInterface
 {
-
 	/**
 	 * The group data.
 	 *

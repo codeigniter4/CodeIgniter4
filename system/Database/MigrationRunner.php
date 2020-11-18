@@ -25,7 +25,6 @@ use stdClass;
  */
 class MigrationRunner
 {
-
 	/**
 	 * Whether or not migrations are allowed to run.
 	 *
@@ -154,6 +153,7 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Locate and run all new migrations
 	 *
@@ -236,6 +236,7 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Migrate down to a previous batch
 	 *

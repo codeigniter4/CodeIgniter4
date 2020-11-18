@@ -16,7 +16,6 @@ namespace CodeIgniter\Database\MySQLi;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * CREATE DATABASE statement
 	 *

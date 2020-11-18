@@ -32,7 +32,6 @@ use InvalidArgumentException;
  */
 class Response extends Message implements ResponseInterface
 {
-
 	/**
 	 * HTTP status codes
 	 *
@@ -1095,5 +1094,4 @@ class Response extends Message implements ResponseInterface
 
 		return $response;
 	}
-
 }

@@ -418,5 +418,4 @@ class FeatureResponse extends TestCase
 	{
 		return $this->response->getXML();
 	}
-
 }

@@ -16,7 +16,6 @@ namespace CodeIgniter\Typography;
  */
 class Typography
 {
-
 	/**
 	 * Block level elements that should not be wrapped inside <p> tags
 	 *
@@ -376,5 +375,4 @@ class Typography
 
 		return $newstr;
 	}
-
 }

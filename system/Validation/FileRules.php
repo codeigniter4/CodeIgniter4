@@ -20,7 +20,6 @@ use Config\Services;
  */
 class FileRules
 {
-
 	/**
 	 * Request instance. So we can get access to the files.
 	 *

@@ -21,7 +21,6 @@ use CodeIgniter\CLI\BaseCommand;
  */
 class Help extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -88,5 +87,4 @@ class Help extends BaseCommand
 		$class = new $commands[$command]['class']($this->logger, $this->commands);
 		$class->showHelp();
 	}
-
 }

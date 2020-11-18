@@ -181,5 +181,4 @@ class ChromeLoggerHandler extends BaseHandler
 
 		$response->setHeader($this->header, $data);
 	}
-
 }

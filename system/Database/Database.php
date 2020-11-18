@@ -20,7 +20,6 @@ use InvalidArgumentException;
  */
 class Database
 {
-
 	/**
 	 * Maintains an array of the instances of all connections
 	 * that have been created. Helps to keep track of all open

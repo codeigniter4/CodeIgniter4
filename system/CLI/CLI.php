@@ -35,7 +35,6 @@ use Throwable;
  */
 class CLI
 {
-
 	/**
 	 * Is the readline library on the system?
 	 *
@@ -253,7 +252,8 @@ class CLI
 			{
 				$extraOutput = ' [' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
 				$validation .= '|in_list[' . implode(',', $options) . ']';
-				$validation  = trim($validation, '|');
+
+				$validation = trim($validation, '|');
 			}
 
 			$default = $options[0];

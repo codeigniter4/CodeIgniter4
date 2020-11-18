@@ -20,7 +20,6 @@ use Throwable;
  */
 abstract class BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.

@@ -313,7 +313,8 @@ abstract class GeneratorCommand extends BaseCommand
 			'{ namespace }',
 			'{namespace}',
 		];
-		$classes    = [
+
+		$classes = [
 			'DummyClass',
 			'{ class }',
 			'{class}',

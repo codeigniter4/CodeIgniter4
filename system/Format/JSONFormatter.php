@@ -19,7 +19,6 @@ use Config\Format;
  */
 class JSONFormatter implements FormatterInterface
 {
-
 	/**
 	 * Takes the given data and formats it.
 	 *

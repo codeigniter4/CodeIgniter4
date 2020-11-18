@@ -19,7 +19,6 @@ namespace CodeIgniter\Database;
  */
 interface QueryInterface
 {
-
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *

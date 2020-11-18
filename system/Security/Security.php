@@ -22,7 +22,6 @@ use Exception;
  */
 class Security
 {
-
 	/**
 	 * CSRF Hash
 	 *
@@ -298,7 +297,7 @@ class Security
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $secureCookie,
-				'httponly' => true,// Enforce HTTP only cookie for security
+				'httponly' => true, // Enforce HTTP only cookie for security
 			];
 
 			if ($this->CSRFSameSite !== '')

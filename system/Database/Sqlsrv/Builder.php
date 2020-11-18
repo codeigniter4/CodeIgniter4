@@ -26,7 +26,6 @@ use CodeIgniter\Database\ResultInterface;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * ORDER BY random keyword
 	 *
@@ -656,5 +655,4 @@ class Builder extends BaseBuilder
 
 		return $result;
 	}
-
 }

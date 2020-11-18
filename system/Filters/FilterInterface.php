@@ -19,7 +19,6 @@ use CodeIgniter\HTTP\ResponseInterface;
  */
 interface FilterInterface
 {
-
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during

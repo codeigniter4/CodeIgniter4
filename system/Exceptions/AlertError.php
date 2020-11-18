@@ -18,5 +18,4 @@ use Error;
  */
 class AlertError extends Error
 {
-
 }

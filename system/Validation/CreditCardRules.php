@@ -20,7 +20,6 @@ namespace CodeIgniter\Validation;
  */
 class CreditCardRules
 {
-
 	/**
 	 * The cards that we support, with the defining details:
 	 *

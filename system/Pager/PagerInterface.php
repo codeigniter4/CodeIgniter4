@@ -16,7 +16,6 @@ namespace CodeIgniter\Pager;
  */
 interface PagerInterface
 {
-
 	/**
 	 * Handles creating and displaying the
 	 *

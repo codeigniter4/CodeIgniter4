@@ -19,7 +19,6 @@ use CodeIgniter\Images\Exceptions\ImageException;
  */
 class Image extends File
 {
-
 	/**
 	 * The original image width in pixels.
 	 *

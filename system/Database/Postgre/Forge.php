@@ -16,7 +16,6 @@ namespace CodeIgniter\Database\Postgre;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * CHECK DATABASE EXIST statement
 	 *

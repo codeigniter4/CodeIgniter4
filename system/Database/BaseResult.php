@@ -18,7 +18,6 @@ use CodeIgniter\Entity;
  */
 abstract class BaseResult implements ResultInterface
 {
-
 	/**
 	 * Connection ID
 	 *

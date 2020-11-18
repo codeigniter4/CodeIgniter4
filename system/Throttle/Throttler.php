@@ -27,7 +27,6 @@ use CodeIgniter\Cache\CacheInterface;
  */
 class Throttler implements ThrottlerInterface
 {
-
 	/**
 	 * Container for throttle counters.
 	 *
@@ -136,7 +135,7 @@ class Throttler implements ThrottlerInterface
 		// should be refilled, then checked against capacity
 		// to be sure the bucket didn't overflow.
 		$tokens += $rate * $elapsed;
-		$tokens  = $tokens > $capacity ? $capacity : $tokens;
+		$tokens = $tokens > $capacity ? $capacity : $tokens;
 
 		// If $tokens >= 1, then we are safe to perform the action, but
 		// we need to decrement the number of available tokens.

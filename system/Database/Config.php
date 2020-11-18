@@ -19,7 +19,6 @@ use InvalidArgumentException;
  */
 class Config extends BaseConfig
 {
-
 	/**
 	 * Cache for instance of any connections that
 	 * have been requested as a "shared" instance.

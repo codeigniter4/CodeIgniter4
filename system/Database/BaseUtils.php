@@ -18,7 +18,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 abstract class BaseUtils
 {
-
 	/**
 	 * Database object
 	 *
@@ -297,11 +296,14 @@ abstract class BaseUtils
 		while ($row = $query->getUnbufferedRow())
 		{
 			$xml .= $tab . '<' . $element . '>' . $newline;
+
 			foreach ($row as $key => $val)
 			{
-				$val  = (! empty($val)) ? xml_convert($val) : '';
+				$val = (! empty($val)) ? xml_convert($val) : '';
+
 				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
 			}
+
 			$xml .= $tab . '</' . $element . '>' . $newline;
 		}
 

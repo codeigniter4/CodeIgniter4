@@ -27,7 +27,6 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class CIUnitTestCase extends TestCase
 {
-
 	use ReflectionHelper;
 
 	/**

@@ -65,7 +65,7 @@ if (! function_exists('timezone_select'))
 		foreach ($timezones as $timezone)
 		{
 			$selected = ($timezone === $default) ? 'selected' : '';
-			$buffer  .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+			$buffer .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
 		}
 
 		return $buffer . ('</select>' . PHP_EOL);

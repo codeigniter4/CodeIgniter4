@@ -333,5 +333,4 @@ class DOMParser
 			'attr'  => $attr,
 		];
 	}
-
 }
