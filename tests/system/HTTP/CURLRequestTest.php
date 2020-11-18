@@ -983,4 +983,18 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertArrayHasKey(CURLOPT_COOKIEFILE, $options);
 		$this->assertEquals($holder, $options[CURLOPT_COOKIEFILE]);
 	}
+
+	public function testUserAgentOption()
+	{
+		$agent = 'CodeIgniter Framework';
+
+		$this->request->request('POST', '/post', [
+			'user_agent' => $agent,
+		]);
+
+		$options = $this->request->curl_options;
+
+		$this->assertArrayHasKey(CURLOPT_USERAGENT, $options);
+		$this->assertEquals($agent, $options[CURLOPT_USERAGENT]);
+	}
 }
