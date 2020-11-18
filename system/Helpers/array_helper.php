@@ -143,7 +143,7 @@ if (!function_exists('sort_by_multiple_keys'))
 	 * object level. In principle, any number of sublevels could be used,
 	 * as long as the level and column exist in every array element.
 	 *
-	 * @param array &$array the reference of the array to be sorted
+	 * @param array $array the reference of the array to be sorted
 	 * @param array $sortColumns an associative array of columns to sort
 	 *              after and their sorting flags
 	 *
@@ -154,7 +154,7 @@ if (!function_exists('sort_by_multiple_keys'))
 		// Check if there really are columns to sort after
 		if (empty($sortColumns) || empty($array))
 		{
-			return $array;
+			return false;
 		}
 
 		// Group sorting indexes and data
