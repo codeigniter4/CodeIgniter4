@@ -125,7 +125,6 @@ if (! function_exists('array_deep_search'))
 
 if (!function_exists('sort_by_multiple_keys'))
 {
-
 	/**
 	 * Sorts an associative multidimensional array by the values of the
 	 * passed columns names. The sorting params represent an associative
