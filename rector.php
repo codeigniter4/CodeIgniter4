@@ -37,6 +37,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	]);
 
 	$parameters->set(Option::ENABLE_CACHE, true);
+	$parameters->set(Option::PHP_VERSION_FEATURES, '7.2');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
