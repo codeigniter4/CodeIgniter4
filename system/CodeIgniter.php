@@ -407,6 +407,8 @@ class CodeIgniter
 			{
 				return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
 			}
+
+			$this->request = $possibleResponse;
 		}
 
 		$returned = $this->startController();
