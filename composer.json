@@ -36,7 +36,8 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Utils\\": "utils"
+			"CodeIgniter\\": "tests/system/",
+			"Utils\\": "utils/"
 		}
 	},
 	"scripts": {
