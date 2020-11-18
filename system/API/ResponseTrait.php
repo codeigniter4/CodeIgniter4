@@ -118,19 +118,16 @@ trait ResponseTrait
 		{
 			if ($this->format === 'json')
 			{
-				return $this->response->setJSON($output)
-					->setStatusCode($status, $message);
+				return $this->response->setJSON($output)->setStatusCode($status, $message);
 			}
 
 			if ($this->format === 'xml')
 			{
-				return $this->response->setXML($output)
-					->setStatusCode($status, $message);
+				return $this->response->setXML($output)->setStatusCode($status, $message);
 			}
 		}
 
-		return $this->response->setBody($output)
-			->setStatusCode($status, $message);
+		return $this->response->setBody($output)->setStatusCode($status, $message);
 	}
 
 	//--------------------------------------------------------------------
