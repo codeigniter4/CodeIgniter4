@@ -154,6 +154,76 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull(array_deep_search('key644', $data));
 	}
 
+	/**
+	 * @dataProvider sortByMultipleKeysProvider
+	 */
+	public function testArraySortByMultipleKeysWithArray($sortColumns, $expected)
+	{
+		$data = $this->sortByMultipleKeysSeeder();
+
+		$success = array_sort_by_multiple_keys($data, $sortColumns);
+
+		$this->assertTrue($success);
+		$this->assertEquals($expected, array_column($data, 'name'));
+	}
+
+	/**
+	 * @dataProvider sortByMultipleKeysProvider
+	 */
+	public function testArraySortByMultipleKeysWithObjects($sortColumns, $expected)
+	{
+		$data = $this->sortByMultipleKeysSeeder();
+
+		// Morph to objects
+		foreach($data as $index => $dataSet){
+			$data[$index] = (object) $dataSet;
+		}
+
+		$success = array_sort_by_multiple_keys($data, $sortColumns);
+
+		$this->assertTrue($success);
+		$this->assertEquals($expected, array_column((array) $data, 'name'));
+	}
+
+	/**
+	 * @dataProvider sortByMultipleKeysProvider
+	 */
+	public function testArraySortByMultipleKeysFailsEmptyParameter($sortColumns, $expected)
+	{
+		$data = $this->sortByMultipleKeysSeeder();
+
+		// Both filled
+		$success = array_sort_by_multiple_keys($data, $sortColumns);
+
+		$this->assertTrue($success);
+
+		// Empty $sortColumns
+		$success = array_sort_by_multiple_keys($data, []);
+
+		$this->assertFalse($success);
+
+		// Empty &$array
+		$data    = [];
+		$success = array_sort_by_multiple_keys($data, $sortColumns);
+
+		$this->assertFalse($success);
+	}
+
+	public function testArraySortByMultipleKeysFailsInconsistentArraySizes()
+	{
+		$this->expectException('ErrorException');
+		$this->expectExceptionMessage('Array sizes are inconsistent');
+
+		$data = $this->sortByMultipleKeysSeeder();
+
+		$sortColumns = [
+			'team.orders' => SORT_ASC,
+			'positions'   => SORT_ASC,
+		];
+
+		$success = array_sort_by_multiple_keys($data, $sortColumns);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function deepSearchProvider()
@@ -178,6 +248,60 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'',
 				null,
+			],
+		];
+	}
+
+	public function sortByMultipleKeysProvider()
+	{
+		return [
+			[
+				[
+					'name' => SORT_STRING,
+				],
+				[
+					'Frank',
+					'John',
+					'Maria',
+				],
+			],
+			[
+				[
+					'team.order' => SORT_ASC,
+					'position'   => SORT_ASC,
+				],
+				[
+					'Frank',
+					'Maria',
+					'John',
+				],
+			],
+		];
+	}
+
+	public function sortByMultipleKeysSeeder()
+	{
+		return [
+			0 => [
+				'name'     => 'John',
+				'position' => 3,
+				'team'     => [
+					'order' => 2,
+				],
+			],
+			1 => [
+				'name'     => 'Maria',
+				'position' => 4,
+				'team'     => [
+					'order' => 1,
+				],
+			],
+			2 => [
+				'name'     => 'Frank',
+				'position' => 1,
+				'team'     => [
+					'order' => 1,
+				],
 			],
 		];
 	}
