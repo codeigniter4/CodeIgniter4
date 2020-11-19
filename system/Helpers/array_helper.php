@@ -134,15 +134,19 @@ if (!function_exists('array_sort_by_multiple_keys'))
 	 *
 	 * Example:
 	 * 	array_sort_by_multiple_keys($players,
-	 * 			[
-	 * 				'team.hierarchy' => SORT_ASC,
-	 * 				'position'       => SORT_ASC,
-	 * 				'name'           => SORT_STRING,
-	 * 			]
-	 * 		);
+	 * 		[
+	 * 			'team.hierarchy' => SORT_ASC,
+	 * 			'position'       => SORT_ASC,
+	 * 			'name'           => SORT_STRING,
+	 * 		]
+	 * 	);
+	 *
 	 * The '.' dot operator in the column name indicates a deeper array or
 	 * object level. In principle, any number of sublevels could be used,
 	 * as long as the level and column exist in every array element.
+	 *
+	 * For information on multi-level array sorting, refer to Example #3 here:
+	 * https://www.php.net/manual/de/function.array-multisort.php
 	 *
 	 * @param array $array       the reference of the array to be sorted
 	 * @param array $sortColumns an associative array of columns to sort
@@ -189,9 +193,14 @@ if (!function_exists('array_sort_by_multiple_keys'))
 			$tempArray[] = $sortFlag;
 		}
 
-		// Append the array reference
+		// Append the array as reference
 		$tempArray[] = &$array;
 
+		// The array_multisort method accepts all sorting arrays and
+		// flags as an argument list. As we have those stored in a
+		// dynamically sized array, we use the call_user_func_array
+		// function, which parses the array to a list and then passes
+		// it to array_multisort.
 		return call_user_func_array('array_multisort', $tempArray);
 	}
 }
