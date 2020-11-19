@@ -84,7 +84,7 @@ The following functions are available:
                 'team_id'  => 2,
                 'position' => 3,
                 'team'     => [
-                    'id' => 1,
+                    'id'    => 1,
                     'order' => 2,
                 ],
             ],
@@ -93,7 +93,7 @@ The following functions are available:
                 'team_id'  => 5,
                 'position' => 4,
                 'team'     => [
-                    'id' => 5,
+                    'id'    => 5,
                     'order' => 1,
                 ],
             ],
@@ -102,7 +102,7 @@ The following functions are available:
                 'team_id'  => 5,
                 'position' => 1,
                 'team'     => [
-                    'id' => 5,
+                    'id'    => 5,
                     'order' => 1,
                 ],
             ],
