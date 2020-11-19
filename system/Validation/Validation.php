@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Validation as ValidationConfig;
+use ErrorException;
 use InvalidArgumentException;
 
 /**
@@ -265,16 +266,56 @@ class Validation implements ValidationInterface
 
 		foreach ($rules as $rule)
 		{
-			$callable = is_callable($rule);
-			$passed   = false;
-
-			// Rules can contain parameters: max_length[5]
+			// String based rules can contain parameters: max_length[5]
 			$param = false;
-			if (! $callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
+			if (is_string($rule) && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
 			{
-				$rule  = $match[1];
-				$param = $match[2];
+				[,
+					$rule,
+					$param,
+				] = $match;
 			}
+
+			$callable         = null;
+			$callablePassData = false;
+
+			if (is_array($rule) && ! is_callable($rule))
+			{
+				try
+				{
+					[
+						$rule,
+						$callable,
+					] = $rule;
+				}
+				catch (ErrorException $e)
+				{
+					//maybe throw a ValidationException for a unnamed rule here
+					$callable = $rule;
+				}
+
+				if (! is_callable($callable))
+				{
+					throw ValidationException::forInvalidRule($rule);
+				}
+
+				// In case we got a wrapped callable, we pass $data.
+				// We can expect this to be named or at least not a native function which might
+				// fail when passing $data to it dua a argument error
+				$callablePassData = true;
+			}
+			elseif (is_callable($rule))
+			{
+				$callable = $rule;
+			}
+
+			//check if the user provided us a anonymous function without a name
+			if (! is_string($rule))
+			{
+				throw ValidationException::forUnnamedRule($rule);
+			}
+
+			$passed = false;
 
 			// Placeholder for custom errors from the rules.
 			$error = null;
@@ -282,8 +323,21 @@ class Validation implements ValidationInterface
 			// If it's a callable, call and and get out of here.
 			if ($callable)
 			{
-				$passed = $param === false ? $rule($value) : $rule($value, $param, $data);
+				$arguments = [$value];
+
+				if ($param)
+				{
+					$arguments[] = $param;
+				}
+
+				if ($callablePassData)
+				{
+					$arguments[] = $data;
+				}
+
+				$passed = call_user_func($callable, ...$arguments);
 			}
+			// It is a classic rule
 			else
 			{
 				$found = false;
@@ -375,15 +429,20 @@ class Validation implements ValidationInterface
 	 *        'rule' => 'message'
 	 *    ]
 	 *
-	 * @param string      $field
-	 * @param string|null $label
-	 * @param string      $rules
-	 * @param array       $errors
+	 * @param string       $field
+	 * @param string|null  $label
+	 * @param string|array $rules
+	 * @param array        $errors
 	 *
 	 * @return $this
 	 */
-	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
+	public function setRule(string $field, string $label = null, $rules, array $errors = [])
 	{
+		if (! is_array($rules) && ! is_string($rules))
+		{
+			throw new InvalidArgumentException('$rules can only be of type string|array');
+		}
+
 		$this->rules[$field] = [
 			'label' => $label,
 			'rules' => $rules,

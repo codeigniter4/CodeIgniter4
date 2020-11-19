@@ -39,4 +39,31 @@ class ValidationException extends FrameworkException
 	{
 		return new static(lang('Validation.noRuleSets'));
 	}
+	public static function forInvalidRule($rule = null) : self
+	{
+		return new static(lang('Validation.invalidRule', [ static::convertRuleToString($rule) ]));
+	}
+
+	public static function forUnnamedRule($rule = null) : self
+	{
+		return new static(lang('Validation.unnamedRule', [ static::convertRuleToString($rule) ]));
+	}
+
+	/**
+	 * Used as a helper to convert anything else than a string to a rule (name)
+	 *
+	 * @param  mixed $rule
+	 * @return string|null
+	 */
+	protected static function convertRuleToString($rule) : ?string
+	{
+		if (! is_string($rule))
+		{
+			// Try to not confuse the developer with something like "Cannot use array as a rule."
+			// but dont leak to much
+			$rule = ENVIRONMENT !== 'production' ? '"' . var_export($rule, true) . '"' : gettype($rule);
+		}
+
+		return $rule;
+	}
 }

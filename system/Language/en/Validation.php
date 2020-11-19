@@ -17,6 +17,8 @@ return [
    'groupNotFound'         => '{0} is not a validation rules group.',
    'groupNotArray'         => '{0} rule group must be an array.',
    'invalidTemplate'       => '{0} is not a valid Validation template.',
+   'invalidRule'           => '{0} can\'t be used as a rule.',
+   'unnamedRule'           => '{0} has to have a name.',
 
 	// Rule Messages
    'alpha'                 => 'The {field} field may only contain alphabetical characters.',
