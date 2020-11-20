@@ -196,11 +196,7 @@ if (!function_exists('array_sort_by_multiple_keys'))
 		// Append the array as reference
 		$tempArray[] = &$array;
 
-		// The array_multisort method accepts all sorting arrays and
-		// flags as an argument list. As we have those stored in a
-		// dynamically sized array, we use the call_user_func_array
-		// function, which parses the array to a list and then passes
-		// it to array_multisort.
-		return call_user_func_array('array_multisort', $tempArray);
+		// Pass sorting arrays and flags as an argument list.
+		return array_multisort(...$tempArray);
 	}
 }
