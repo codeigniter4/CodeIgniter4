@@ -167,7 +167,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function deepSearchProvider()
+	public static function deepSearchProvider()
 	{
 		return [
 			[
