@@ -19,6 +19,17 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(23, dot_array_search('foo.bar', $data));
 	}
 
+	public function testArrayDotTooManyLevels()
+	{
+		$data = [
+			'foo' => [
+				'bar' => 23,
+			],
+		];
+
+		$this->assertEquals(23, dot_array_search('foo.bar.baz', $data));
+	}
+
 	public function testArrayDotReturnNullEmptyArray()
 	{
 		$data = [];
@@ -156,7 +167,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function deepSearchProvider()
+	public static function deepSearchProvider()
 	{
 		return [
 			[
