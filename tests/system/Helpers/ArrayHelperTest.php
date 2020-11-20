@@ -157,10 +157,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider sortByMultipleKeysProvider
 	 */
-	public function testArraySortByMultipleKeysWithArray($sortColumns, $expected)
+	public function testArraySortByMultipleKeysWithArray($data, $sortColumns, $expected)
 	{
-		$data = $this->sortByMultipleKeysSeeder();
-
 		$success = array_sort_by_multiple_keys($data, $sortColumns);
 
 		$this->assertTrue($success);
@@ -170,10 +168,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider sortByMultipleKeysProvider
 	 */
-	public function testArraySortByMultipleKeysWithObjects($sortColumns, $expected)
+	public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
 	{
-		$data = $this->sortByMultipleKeysSeeder();
-
 		// Morph to objects
 		foreach($data as $index => $dataSet){
 			$data[$index] = (object) $dataSet;
@@ -188,10 +184,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider sortByMultipleKeysProvider
 	 */
-	public function testArraySortByMultipleKeysFailsEmptyParameter($sortColumns, $expected)
+	public function testArraySortByMultipleKeysFailsEmptyParameter($data, $sortColumns, $expected)
 	{
-		$data = $this->sortByMultipleKeysSeeder();
-
 		// Both filled
 		$success = array_sort_by_multiple_keys($data, $sortColumns);
 
@@ -209,12 +203,13 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($success);
 	}
 
-	public function testArraySortByMultipleKeysFailsInconsistentArraySizes()
+	/**
+	 * @dataProvider sortByMultipleKeysProvider
+	 */
+	public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data)
 	{
 		$this->expectException('ErrorException');
 		$this->expectExceptionMessage('Array sizes are inconsistent');
-
-		$data = $this->sortByMultipleKeysSeeder();
 
 		$sortColumns = [
 			'team.orders' => SORT_ASC,
@@ -252,36 +247,9 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	public function sortByMultipleKeysProvider()
+	public static function sortByMultipleKeysProvider()
 	{
-		return [
-			[
-				[
-					'name' => SORT_STRING,
-				],
-				[
-					'Frank',
-					'John',
-					'Maria',
-				],
-			],
-			[
-				[
-					'team.order' => SORT_ASC,
-					'position'   => SORT_ASC,
-				],
-				[
-					'Frank',
-					'Maria',
-					'John',
-				],
-			],
-		];
-	}
-
-	public function sortByMultipleKeysSeeder()
-	{
-		return [
+		$seed = [
 			0 => [
 				'name'     => 'John',
 				'position' => 3,
@@ -301,6 +269,32 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'position' => 1,
 				'team'     => [
 					'order' => 1,
+				],
+			],
+		];
+
+		return [
+			[
+				$seed,
+				[
+					'name' => SORT_STRING,
+				],
+				[
+					'Frank',
+					'John',
+					'Maria',
+				],
+			],
+			[
+				$seed,
+				[
+					'team.order' => SORT_ASC,
+					'position'   => SORT_ASC,
+				],
+				[
+					'Frank',
+					'Maria',
+					'John',
 				],
 			],
 		];
