@@ -123,7 +123,7 @@ if (! function_exists('array_deep_search'))
 	}
 }
 
-if (!function_exists('array_sort_by_multiple_keys'))
+if (! function_exists('array_sort_by_multiple_keys'))
 {
 	/**
 	 * Sorts a multidimensional array by its elements values. The array
