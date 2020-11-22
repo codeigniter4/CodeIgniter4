@@ -430,6 +430,108 @@ have a numeric index:</p>
 <p>Returns the value of an element with a key value in an array of uncertain depth</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="array_sort_by_multiple_keys">
+<code class="sig-name descname">array_sort_by_multiple_keys</code><span class="sig-paren">(</span><em class="sig-param">array &amp;$array</em>, <em class="sig-param">array $sortColumns</em><span class="sig-paren">)</span><a class="headerlink" href="#array_sort_by_multiple_keys" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$array</strong> (<em>array</em>) – The array to be sorted (passed by reference).</p></li>
+<li><p><strong>$sortColumns</strong> (<em>array</em>) – The array keys to sort after and the respective PHP
+sort flags as an associative array.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whether sorting was successful or not.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+<p>This method sorts the elements of a multidimensonal array by the values of one or
+more keys in a hierarchical way. Take the following array, that might be returned
+from, e.g., the <code class="docutils literal notranslate"><span class="pre">find()</span></code> function of a model:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+    <span class="mi">1</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Maria&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+    <span class="mi">2</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Frank&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Now sort this array by two keys. Note that the method supports the dot-notation
+to access values in deeper array levels, but does not support wildcards:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">array_sort_by_multiple_keys</span><span class="p">(</span><span class="nv">$players</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;team.order&#39;</span> <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span>   <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">$players</span></code> array is now sorted by the ‘order’ value in each players’
+‘team’ subarray. If this value is equal for several players, these players
+will be ordered by their ‘position’. The resulting array is:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Frank&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+    <span class="mi">1</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Maria&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+    <span class="mi">2</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;team&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>In the same way, the method can also handle an array of objects. In the example
+above it is further possible that each ‘player’ is represented by an array,
+while the ‘teams’ are objects. The method will detect the type of elements in
+each nesting level and handle it accordingly.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -456,7 +558,7 @@ have a numeric index:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Nov 18, 2020.
+        Last updated on Nov 22, 2020.
       </span>
 
     </p>
