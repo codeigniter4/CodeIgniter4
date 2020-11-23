@@ -701,19 +701,20 @@ class RouteCollection implements RouteCollectionInterface
 	 *            $route->resource('users');
 	 *     });
 	 *
-	 * @param string         $name      The name to group/prefix the routes with.
+	 * @param string|null    $name      The name to group/prefix the routes with.
 	 * @param array|callable ...$params
 	 *
 	 * @return void
 	 */
-	public function group(string $name, ...$params)
+	public function group(?string $name, ...$params)
 	{
 		$oldGroup   = $this->group;
 		$oldOptions = $this->currentOptions;
 
 		// To register a route, we'll set a flag so that our router
 		// so it will see the group name.
-		$this->group = ltrim($oldGroup . '/' . $name, '/');
+		// If the group name is null, we go on using the previously built group name.
+		$this->group = $name ? ltrim($oldGroup . '/' . $name, '/') : $oldGroup;
 
 		$callback = array_pop($params);
 
