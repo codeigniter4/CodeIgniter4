@@ -20,7 +20,6 @@ use php_user_filter;
  */
 class CITestStreamFilter extends php_user_filter
 {
-
 	/**
 	 * Buffer to capture stream content.
 	 *
@@ -43,7 +42,8 @@ class CITestStreamFilter extends php_user_filter
 		while ($bucket = stream_bucket_make_writeable($in))
 		{
 			static::$buffer .= $bucket->data;
-			$consumed       += $bucket->datalen;
+
+			$consumed += $bucket->datalen;
 		}
 
 		// @phpstan-ignore-next-line

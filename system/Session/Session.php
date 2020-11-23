@@ -25,7 +25,6 @@ use SessionHandlerInterface;
  */
 class Session implements SessionInterface
 {
-
 	use LoggerAwareTrait;
 
 	/**
@@ -227,8 +226,9 @@ class Session implements SessionInterface
 		$this->startSession();
 
 		// Is session ID auto-regeneration configured? (ignoring ajax requests)
-		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerateTime = $this->sessionTimeToUpdate) > 0
+		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+			|| strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
+			&& ($regenerateTime = $this->sessionTimeToUpdate) > 0
 		)
 		{
 			if (! isset($_SESSION['__ci_last_regenerate']))
@@ -372,9 +372,11 @@ class Session implements SessionInterface
 		$bitsPerCharacter = (int) (ini_get('session.sid_bits_per_character') !== false
 			? ini_get('session.sid_bits_per_character')
 			: 4);
-		$sidLength        = (int) (ini_get('session.sid_length') !== false
+
+		$sidLength = (int) (ini_get('session.sid_length') !== false
 			? ini_get('session.sid_length')
 			: 40);
+
 		if (($sidLength * $bitsPerCharacter) < 160)
 		{
 			$bits = ($sidLength * $bitsPerCharacter);
@@ -566,14 +568,14 @@ class Session implements SessionInterface
 
 	   //--------------------------------------------------------------------
 
-	  /**
-	   * Push new value onto session value that is array.
-	   *
-	   * @param string $key  Identifier of the session property we are interested in.
-	   * @param array  $data value to be pushed to existing session key.
-	   *
-	   * @return void
-	   */
+	/**
+	 * Push new value onto session value that is array.
+	 *
+	 * @param string $key  Identifier of the session property we are interested in.
+	 * @param array  $data value to be pushed to existing session key.
+	 *
+	 * @return void
+	 */
 	public function push(string $key, array $data)
 	{
 		if ($this->has($key) && is_array($value = $this->get($key)))

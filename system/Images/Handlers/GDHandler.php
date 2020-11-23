@@ -19,7 +19,6 @@ use Config\Images;
  */
 class GDHandler extends BaseHandler
 {
-
 	/**
 	 * Constructor.
 	 *
@@ -598,5 +597,4 @@ class GDHandler extends BaseHandler
 	{
 		return imagesy($this->resource);
 	}
-
 }

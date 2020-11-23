@@ -25,7 +25,6 @@ use RuntimeException;
  */
 class View implements RendererInterface
 {
-
 	/**
 	 * Data that is made available to the Views.
 	 *

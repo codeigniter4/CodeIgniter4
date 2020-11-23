@@ -43,7 +43,6 @@ use Locale;
  */
 class IncomingRequest extends Request
 {
-
 	/**
 	 * Enable CSRF flag
 	 *

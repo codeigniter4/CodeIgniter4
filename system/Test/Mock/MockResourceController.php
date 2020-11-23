@@ -15,7 +15,6 @@ use CodeIgniter\RESTful\ResourceController;
 
 class MockResourceController extends ResourceController
 {
-
 	public function getModel()
 	{
 		return $this->model;
@@ -30,5 +29,4 @@ class MockResourceController extends ResourceController
 	{
 		return $this->format;
 	}
-
 }

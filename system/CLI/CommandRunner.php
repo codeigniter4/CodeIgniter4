@@ -20,7 +20,6 @@ use ReflectionException;
  */
 class CommandRunner extends Controller
 {
-
 	/**
 	 * The Command Manager
 	 *

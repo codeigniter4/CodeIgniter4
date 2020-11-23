@@ -21,7 +21,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class Router implements RouterInterface
 {
-
 	/**
 	 * A RouteCollection instance.
 	 *
@@ -530,11 +529,13 @@ class Router implements RouterInterface
 		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $defaultNamespace;
+			$controller = '\\' . $defaultNamespace;
+
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $controllerName;
-			$controller  = strtolower($controller);
-			$methodName  = strtolower($this->methodName());
+
+			$controller = strtolower($controller);
+			$methodName = strtolower($this->methodName());
 
 			foreach ($this->collection->getRoutes('cli') as $route)
 			{

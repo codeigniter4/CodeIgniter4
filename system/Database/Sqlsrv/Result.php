@@ -181,5 +181,4 @@ class Result extends BaseResult
 		}
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
-
 }

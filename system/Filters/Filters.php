@@ -23,7 +23,6 @@ use Config\Services;
  */
 class Filters
 {
-
 	/**
 	 * The processed filters that will
 	 * be used to check against.

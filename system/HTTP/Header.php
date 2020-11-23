@@ -18,7 +18,6 @@ namespace CodeIgniter\HTTP;
  */
 class Header
 {
-
 	/**
 	 * The name of the header.
 	 *

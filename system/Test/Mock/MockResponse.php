@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\Response;
  */
 class MockResponse extends Response
 {
-
 	/**
 	 * If true, will not write output. Useful during testing.
 	 *
@@ -37,5 +36,4 @@ class MockResponse extends Response
 	{
 		$this->statusCode = 0;
 	}
-
 }

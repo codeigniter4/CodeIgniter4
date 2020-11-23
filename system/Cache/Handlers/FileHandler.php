@@ -20,7 +20,6 @@ use Config\Cache;
  */
 class FileHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *

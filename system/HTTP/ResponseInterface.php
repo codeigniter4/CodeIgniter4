@@ -29,7 +29,6 @@ use InvalidArgumentException;
  */
 interface ResponseInterface
 {
-
 	/**
 	 * Constants for status codes.
 	 * From  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes

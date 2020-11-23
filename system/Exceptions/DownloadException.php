@@ -18,7 +18,6 @@ use RuntimeException;
  */
 class DownloadException extends RuntimeException implements ExceptionInterface
 {
-
 	public static function forCannotSetFilePath(string $path)
 	{
 		return new static(lang('HTTP.cannotSetFilepath', [$path]));

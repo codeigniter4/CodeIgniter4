@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\Request;
  */
 interface RouterInterface
 {
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *

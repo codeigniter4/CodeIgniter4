@@ -15,7 +15,6 @@ use CodeIgniter\Language\Language;
 
 class MockLanguage extends Language
 {
-
 	/**
 	 * Stores the data that should be
 	 * returned by the 'requireFile()' method.
@@ -68,5 +67,4 @@ class MockLanguage extends Language
 	{
 		$this->intlSupport = false;
 	}
-
 }

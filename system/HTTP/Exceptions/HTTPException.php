@@ -243,5 +243,4 @@ class HTTPException extends FrameworkException
 	{
 		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
 	}
-
 }

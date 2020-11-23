@@ -16,7 +16,6 @@ namespace CodeIgniter\Format;
  */
 interface FormatterInterface
 {
-
 	/**
 	 * Takes the given data and formats it.
 	 *

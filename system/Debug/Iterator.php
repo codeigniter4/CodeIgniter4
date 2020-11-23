@@ -18,7 +18,6 @@ use Closure;
  */
 class Iterator
 {
-
 	/**
 	 * Stores the tests that we are to run.
 	 *

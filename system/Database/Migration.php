@@ -18,7 +18,6 @@ use Config\Database;
  */
 abstract class Migration
 {
-
 	/**
 	 * The name of the database group to use.
 	 *

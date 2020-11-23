@@ -26,7 +26,6 @@ use Throwable;
  */
 class Exceptions
 {
-
 	use ResponseTrait;
 
 	/**
@@ -461,7 +460,8 @@ class Exceptions
 		foreach ($source as $n => $row)
 		{
 			$spans += substr_count($row, '<span') - substr_count($row, '</span');
-			$row    = str_replace(["\r", "\n"], ['', ''], $row);
+
+			$row = str_replace(["\r", "\n"], ['', ''], $row);
 
 			if (($n + $start + 1) === $lineNumber)
 			{

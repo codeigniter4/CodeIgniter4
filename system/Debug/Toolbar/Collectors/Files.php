@@ -16,7 +16,6 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
  */
 class Files extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.

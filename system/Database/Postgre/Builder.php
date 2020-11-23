@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * ORDER BY random keyword
 	 *

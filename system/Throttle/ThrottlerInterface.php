@@ -16,7 +16,6 @@ namespace CodeIgniter\Throttle;
  */
 interface ThrottlerInterface
 {
-
 	/**
 	 * Restricts the number of requests made by a single key within
 	 * a set number of seconds.

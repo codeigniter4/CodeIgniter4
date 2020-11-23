@@ -99,5 +99,4 @@ trait ReflectionHelper
 		$refProperty = self::getAccessibleRefProperty($obj, $property);
 		return $refProperty->getValue($obj);
 	}
-
 }

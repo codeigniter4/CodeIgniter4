@@ -1324,5 +1324,4 @@ class Forge
 	{
 		$this->fields = $this->keys = $this->uniqueKeys = $this->primaryKeys = $this->foreignKeys = [];
 	}
-
 }

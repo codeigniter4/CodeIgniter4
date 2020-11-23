@@ -16,7 +16,6 @@ namespace CodeIgniter\Log\Handlers;
  */
 interface HandlerInterface
 {
-
 	/**
 	 * Handles logging the message.
 	 * If the handler returns false, then execution of handlers

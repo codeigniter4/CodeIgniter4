@@ -15,7 +15,6 @@ use CodeIgniter\Log\Logger;
 
 class TestLogger extends Logger
 {
-
 	protected static $op_logs = [];
 
 	//--------------------------------------------------------------------
@@ -89,5 +88,4 @@ class TestLogger extends Logger
 	{
 		return $this->cleanFileNames($file);
 	}
-
 }

@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\RequestInterface;
  */
 interface ValidationInterface
 {
-
 	/**
 	 * Runs the validation process, returning true/false determining whether
 	 * or not validation was successful.

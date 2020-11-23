@@ -105,5 +105,4 @@ class MockLogger
 			'path'    => '',
 		],
 	];
-
 }
