@@ -257,7 +257,7 @@ The value for the filter must match one of the aliases defined within ``app/Conf
 
 At some point, you may want to group routes for the purpose of applying filters or other route 
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass 
-``null`` in place of the prefix and the routes in the group will be routed as though the group never existed but with the 
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the 
 given route config options.
 
 Environment Restrictions

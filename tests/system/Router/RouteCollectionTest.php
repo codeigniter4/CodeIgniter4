@@ -308,12 +308,12 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testGroupingWorksWithNullPrefix()
+	public function testGroupingWorksWithEmptyStringPrefix()
 	{
 		$routes = $this->getCollector();
 
 		$routes->group(
-				null, function ($routes) {
+				'', function ($routes) {
 					$routes->add('users/list', '\Users::list');
 				}
 		);
@@ -327,7 +327,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testNestedGroupingWorksWithNullPrefix()
+	public function testNestedGroupingWorksWithEmptyPrefix()
 	{
 		$routes = $this->getCollector();
 
@@ -335,7 +335,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$routes->group('admin', function ($routes) {
 			$routes->group(
-				null, function ($routes) {
+				'', function ($routes) {
 					$routes->add('users/list', '\Users::list');
 					
 					$routes->group('delegate', function ($routes) {

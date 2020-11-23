@@ -701,12 +701,12 @@ class RouteCollection implements RouteCollectionInterface
 	 *            $route->resource('users');
 	 *     });
 	 *
-	 * @param string|null    $name      The name to group/prefix the routes with.
+	 * @param string         $name      The name to group/prefix the routes with.
 	 * @param array|callable ...$params
 	 *
 	 * @return void
 	 */
-	public function group(?string $name, ...$params)
+	public function group(string $name, ...$params)
 	{
 		$oldGroup   = $this->group;
 		$oldOptions = $this->currentOptions;
