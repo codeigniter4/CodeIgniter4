@@ -988,7 +988,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function match(array $verbs = [], string $from, $to, array $options = null): RouteCollectionInterface
+	public function match(array $verbs = [], string $from = '', $to = '', array $options = null): RouteCollectionInterface
 	{
 		foreach ($verbs as $verb)
 		{

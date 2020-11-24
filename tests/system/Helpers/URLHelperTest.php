@@ -875,7 +875,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider mailtoPatterns
 	 */
-	public function testMailto($expected = '', $email, $title = '', $attributes = '')
+	public function testMailto($expected = '', $email = '', $title = '', $attributes = '')
 	{
 		$request      = Services::request($this->config);
 		$request->uri = new URI('http://example.com/');
@@ -912,7 +912,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider safeMailtoPatterns
 	 */
-	public function testSafeMailto($expected = '', $email, $title = '', $attributes = '')
+	public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
 	{
 		$request      = Services::request($this->config);
 		$request->uri = new URI('http://example.com/');
