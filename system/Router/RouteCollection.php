@@ -713,7 +713,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// To register a route, we'll set a flag so that our router
 		// so it will see the group name.
-		// If the group name is null, we go on using the previously built group name.
+		// If the group name is empty, we go on using the previously built group name.
 		$this->group = $name ? ltrim($oldGroup . '/' . $name, '/') : $oldGroup;
 
 		$callback = array_pop($params);
