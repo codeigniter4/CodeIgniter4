@@ -11,10 +11,10 @@
 
 // Cast language settings
 return [
-   'jsonErrorDepth'         => 'Maximum stack depth exceeded',
-   'jsonErrorStateMismatch' => 'Underflow or the modes mismatch',
-   'jsonErrorCtrlChar'      => 'Unexpected control character found',
-   'jsonErrorSyntax'        => 'Syntax error, malformed JSON',
-   'jsonErrorUtf8'          => 'Malformed UTF-8 characters, possibly incorrectly encoded',
-   'jsonErrorUnknown'       => 'Unknown error',
+	'jsonErrorDepth'         => 'Maximum stack depth exceeded',
+	'jsonErrorStateMismatch' => 'Underflow or the modes mismatch',
+	'jsonErrorCtrlChar'      => 'Unexpected control character found',
+	'jsonErrorSyntax'        => 'Syntax error, malformed JSON',
+	'jsonErrorUtf8'          => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+	'jsonErrorUnknown'       => 'Unknown error',
 ];
