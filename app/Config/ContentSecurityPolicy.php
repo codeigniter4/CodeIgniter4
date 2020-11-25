@@ -35,6 +35,7 @@ class ContentSecurityPolicy extends BaseConfig
 	public $fontSrc        = null;
 	public $formAction     = 'self';
 	public $frameAncestors = null;
+	public $frameSrc       = null;
 	public $mediaSrc       = null;
 	public $objectSrc      = 'self';
 	public $manifestSrc    = null;
