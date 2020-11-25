@@ -11,13 +11,12 @@
 
 namespace CodeIgniter\I18n\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
 /**
  * I18nException
  */
-class I18nException extends FrameworkException implements ExceptionInterface
+class I18nException extends FrameworkException
 {
 	/**
 	 * Thrown when the numeric representation of the month falls

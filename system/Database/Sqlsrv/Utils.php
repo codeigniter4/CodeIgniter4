@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Utils extends BaseUtils
 {
-
 	/**
 	 * List databases statement
 	 *
@@ -47,5 +46,4 @@ class Utils extends BaseUtils
 	{
 		throw new DatabaseException('Unsupported feature of the database platform you are using.');
 	}
-
 }

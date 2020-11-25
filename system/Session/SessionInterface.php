@@ -16,7 +16,6 @@ namespace CodeIgniter\Session;
  */
 interface SessionInterface
 {
-
 	/**
 	 * Regenerates the session ID.
 	 *

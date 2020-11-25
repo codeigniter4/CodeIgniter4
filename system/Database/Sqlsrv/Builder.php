@@ -26,7 +26,6 @@ use CodeIgniter\Database\ResultInterface;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * ORDER BY random keyword
 	 *
@@ -341,7 +340,7 @@ class Builder extends BaseBuilder
 		$q = $builder->get()->getResult();
 
 		// Delete entries if we find them
-		if (count($q))
+		if ($q !== [])
 		{
 			$delete = $this->db->table($table);
 			foreach ($bingo as $k => $v)
@@ -656,5 +655,4 @@ class Builder extends BaseBuilder
 
 		return $result;
 	}
-
 }

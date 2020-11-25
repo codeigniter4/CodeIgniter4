@@ -48,6 +48,17 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3523
+	 */
+	public function testMailtoWithDashAndParenthesis()
+	{
+		helper('url');
+		$template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
+
+		$this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
+	}
+
 	public function testSafeMailto()
 	{
 		helper('url');

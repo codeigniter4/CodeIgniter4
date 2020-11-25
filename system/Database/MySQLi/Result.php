@@ -12,16 +12,14 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
  * Result for MySQLi
  */
-class Result extends BaseResult implements ResultInterface
+class Result extends BaseResult
 {
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *
@@ -100,8 +98,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]              = new stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true)
-				? 'char' : (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
+			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char'	: (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;

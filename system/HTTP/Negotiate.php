@@ -24,7 +24,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  */
 class Negotiate
 {
-
 	/**
 	 * Request
 	 *
@@ -242,11 +241,14 @@ class Negotiate
 
 			foreach ($pairs as $pair)
 			{
-				$param = [];
-				preg_match(
-						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
-				);
-				$parameters[trim($param['name'])] = trim($param['value']);
+				if (preg_match(
+					'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
+					$pair,
+					$param
+				))
+				{
+					$parameters[trim($param['name'])] = trim($param['value']);
+				}
 			}
 
 			$quality = 1.0;
@@ -365,8 +367,9 @@ class Negotiate
 
 		foreach ($supported['params'] as $label => $value)
 		{
-			if (! isset($acceptable['params'][$label]) ||
-					$acceptable['params'][$label] !== $value)
+			if (! isset($acceptable['params'][$label])
+				|| $acceptable['params'][$label] !== $value
+			)
 			{
 				return false;
 			}

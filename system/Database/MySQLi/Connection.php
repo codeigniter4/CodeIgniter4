@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
 use MySQLi;
@@ -23,7 +22,7 @@ use Throwable;
 /**
  * Connection for MySQLi
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
 	/**
 	 * Database driver
@@ -31,6 +30,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var string
 	 */
 	public $DBDriver = 'MySQLi';
+
 	/**
 	 * DELETE hack flag
 	 *
@@ -41,14 +41,18 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var boolean
 	 */
 	public $deleteHack = true;
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
 	public $escapeChar = '`';
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * MySQLi object
 	 *
@@ -57,6 +61,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var MySQLi
 	 */
 	public $mysqli;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -114,10 +119,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (is_array($this->encrypt))
 		{
-			$ssl                                                  = [];
-			empty($this->encrypt['ssl_key']) || $ssl['key']       = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) || $ssl['cert']     = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) || $ssl['ca']         = $this->encrypt['ssl_ca'];
+			$ssl = [];
+
+			empty($this->encrypt['ssl_key'])    || $ssl['key']    = $this->encrypt['ssl_key'];
+			empty($this->encrypt['ssl_cert'])   || $ssl['cert']   = $this->encrypt['ssl_cert'];
+			empty($this->encrypt['ssl_ca'])     || $ssl['ca']     = $this->encrypt['ssl_ca'];
 			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
 			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
 
@@ -474,7 +480,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
 		}
 
 		return $retVal;
@@ -710,5 +716,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return false;
 	}
+
 	//--------------------------------------------------------------------
 }

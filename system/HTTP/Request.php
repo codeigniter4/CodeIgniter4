@@ -16,7 +16,6 @@ namespace CodeIgniter\HTTP;
  */
 class Request extends Message implements RequestInterface
 {
-
 	/**
 	 * IP address of the current user.
 	 *

@@ -18,7 +18,6 @@ use DateTime;
  */
 class FormatRules
 {
-
 	/**
 	 * Alpha
 	 *
@@ -60,17 +59,17 @@ class FormatRules
 			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
 	}
 
-		/**
-		 * Alphanumeric, spaces, and a limited set of punctuation characters.
-		 * Accepted punctuation characters are: ~ tilde, ! exclamation,
-		 * # number, $ dollar, % percent, & ampersand, * asterisk, - dash,
-		 * _ underscore, + plus, = equals, | vertical bar, : colon, . period
-		 * ~ ! # $ % & * - _ + = | : .
-		 *
-		 * @param string $str
-		 *
-		 * @return boolean
-		 */
+	/**
+	 * Alphanumeric, spaces, and a limited set of punctuation characters.
+	 * Accepted punctuation characters are: ~ tilde, ! exclamation,
+	 * # number, $ dollar, % percent, & ampersand, * asterisk, - dash,
+	 * _ underscore, + plus, = equals, | vertical bar, : colon, . period
+	 * ~ ! # $ % & * - _ + = | : .
+	 *
+	 * @param string $str
+	 *
+	 * @return boolean
+	 */
 	public function alpha_numeric_punct($str)
 	{
 		return (bool) preg_match('/^[A-Z0-9 ~!#$%\&\*\-_+=|:.]+$/i', $str);
@@ -369,5 +368,4 @@ class FormatRules
 
 		return (bool) $date && DateTime::getLastErrors()['warning_count'] === 0 && DateTime::getLastErrors()['error_count'] === 0;
 	}
-
 }

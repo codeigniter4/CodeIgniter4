@@ -21,7 +21,6 @@ use Throwable;
  */
 abstract class BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Data Source Name / Connect string
 	 *

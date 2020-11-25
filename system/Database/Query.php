@@ -16,7 +16,6 @@ namespace CodeIgniter\Database;
  */
 class Query implements QueryInterface
 {
-
 	/**
 	 * The query string, as provided by the user.
 	 *
@@ -353,9 +352,10 @@ class Query implements QueryInterface
 
 		$hasNamedBinds = strpos($sql, ':') !== false && strpos($sql, ':=') === false;
 
-		if (empty($this->binds) || empty($this->bindMarker) ||
-				(strpos($sql, $this->bindMarker) === false &&
-				$hasNamedBinds === false)
+		if (empty($this->binds)
+			|| empty($this->bindMarker)
+			|| (strpos($sql, $this->bindMarker) === false
+			&& $hasNamedBinds === false)
 		)
 		{
 			return;

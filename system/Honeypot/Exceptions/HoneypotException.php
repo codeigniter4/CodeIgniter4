@@ -35,5 +35,4 @@ class HoneypotException extends ConfigException implements ExceptionInterface
 	{
 		return new static(lang('Honeypot.theClientIsABot'));
 	}
-
 }

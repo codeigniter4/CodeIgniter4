@@ -18,7 +18,6 @@ namespace CodeIgniter\View;
  */
 interface RendererInterface
 {
-
 	/**
 	 * Builds the output based upon a file name and any
 	 * data that has already been set.

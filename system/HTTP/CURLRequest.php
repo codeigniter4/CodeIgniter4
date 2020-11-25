@@ -23,7 +23,6 @@ use InvalidArgumentException;
  */
 class CURLRequest extends Request
 {
-
 	/**
 	 * The response object associated with this request
 	 *
@@ -769,6 +768,12 @@ class CURLRequest extends Request
 		{
 			$curlOptions[CURLOPT_COOKIEJAR]  = $config['cookie'];
 			$curlOptions[CURLOPT_COOKIEFILE] = $config['cookie'];
+		}
+
+		// User Agent
+		if (isset($config['user_agent']))
+		{
+			$curlOptions[CURLOPT_USERAGENT] = $config['user_agent'];
 		}
 
 		return $curlOptions;

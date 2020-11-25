@@ -17,9 +17,8 @@ use Exception;
 /**
  * Log error messages to file system
  */
-class FileHandler extends BaseHandler implements HandlerInterface
+class FileHandler extends BaseHandler
 {
-
 	/**
 	 * Folder to hold logs
 	 *

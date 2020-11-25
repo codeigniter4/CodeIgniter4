@@ -45,4 +45,9 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 	{
 		return new static(lang('Core.noHandlers', [$class]));
 	}
+
+	public static function forFabricatorCreateFailed(string $table, string $reason)
+	{
+		return new static(lang('Fabricator.createFailed', [$table, $reason]));
+	}
 }

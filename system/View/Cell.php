@@ -44,7 +44,6 @@ use ReflectionMethod;
  */
 class Cell
 {
-
 	/**
 	 * Instance of the current Cache Instance
 	 *
@@ -120,9 +119,10 @@ class Cell
 
 			$output = $instance->{$method}();
 		}
-		elseif (($paramCount === 1) && (
-				(! array_key_exists($refParams[0]->name, $paramArray)) ||
-				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1))
+		elseif (($paramCount === 1)
+			&& ((! array_key_exists($refParams[0]->name, $paramArray))
+			|| (array_key_exists($refParams[0]->name, $paramArray)
+			&& count($paramArray) !== 1))
 		)
 		{
 			$output = $instance->{$method}($paramArray);

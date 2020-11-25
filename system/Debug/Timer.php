@@ -21,7 +21,6 @@ use RuntimeException;
  */
 class Timer
 {
-
 	/**
 	 * List of all timers.
 	 *

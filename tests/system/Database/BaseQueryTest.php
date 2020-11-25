@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Mock\MockConnection;
 
-class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

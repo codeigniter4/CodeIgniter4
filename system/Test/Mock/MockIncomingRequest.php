@@ -24,5 +24,4 @@ class MockIncomingRequest extends IncomingRequest
 	{
 		// Do nothing...
 	}
-
 }

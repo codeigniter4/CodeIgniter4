@@ -1030,7 +1030,6 @@ if (! function_exists('service'))
 if (! function_exists('single_service'))
 {
 	/**
-	 * Allow cleaner access to a Service.
 	 * Always returns a new instance of the class.
 	 *
 	 * @param string     $name
@@ -1040,10 +1039,36 @@ if (! function_exists('single_service'))
 	 */
 	function single_service(string $name, ...$params)
 	{
-		// Ensure it's NOT a shared instance
-		array_push($params, false);
+		$service = Services::serviceExists($name);
 
-		return Services::$name(...$params);
+		if ($service === null)
+		{
+			// The service is not defined anywhere so just return.
+			return null;
+		}
+
+		$method = new ReflectionMethod($service, $name);
+		$count  = $method->getNumberOfParameters();
+		$mParam = $method->getParameters();
+		$params = $params ?? [];
+
+		if ($count === 1)
+		{
+			// This service needs only one argument, which is the shared
+			// instance flag, so let's wrap up and pass false here.
+			return $service::$name(false);
+		}
+
+		// Fill in the params with the defaults, but stop before the last
+		for ($startIndex = count($params); $startIndex <= $count - 2; $startIndex++)
+		{
+			$params[$startIndex] = $mParam[$startIndex]->getDefaultValue();
+		}
+
+		// Ensure the last argument will not create a shared instance
+		$params[$count - 1] = false;
+
+		return $service::$name(...$params);
 	}
 }
 

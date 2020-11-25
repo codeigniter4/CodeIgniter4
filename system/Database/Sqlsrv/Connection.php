@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\Sqlsrv;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 use stdClass;
@@ -20,9 +19,8 @@ use stdClass;
 /**
  * Connection for Sqlsrv
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
-
 	/**
 	 * Database driver
 	 *
@@ -523,10 +521,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function getError()
 	{
-		$error        = [
+		$error = [
 			'code'    => '00000',
 			'message' => '',
 		];
+
 		$sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
 		if (! is_array($sqlsrvErrors))
@@ -581,5 +580,4 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
-
 }

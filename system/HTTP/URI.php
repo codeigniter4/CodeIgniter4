@@ -20,7 +20,6 @@ use InvalidArgumentException;
  */
 class URI
 {
-
 	/**
 	 * Sub-delimiters used in query strings and fragments.
 	 *

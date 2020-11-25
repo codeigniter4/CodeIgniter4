@@ -13,13 +13,12 @@ namespace CodeIgniter\Database\Sqlsrv;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\PreparedQueryInterface;
 use Exception;
 
 /**
  * Prepared query for Postgre
  */
-class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
+class PreparedQuery extends BasePreparedQuery
 {
 	/**
 	 * Parameters array used to store the dynamic variables.

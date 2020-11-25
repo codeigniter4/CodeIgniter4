@@ -14,14 +14,12 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Exception;
-use SessionHandlerInterface;
 
 /**
  * Session handler using file system for storage
  */
-class FileHandler extends BaseHandler implements SessionHandlerInterface
+class FileHandler extends BaseHandler
 {
-
 	/**
 	 * Where to save the session files to.
 	 *
@@ -377,13 +375,13 @@ class FileHandler extends BaseHandler implements SessionHandlerInterface
 	 */
 	protected function configureSessionIDRegex()
 	{
-		$bitsPerCharacter = (int)ini_get('session.sid_bits_per_character');
-		$SIDLength        = (int)ini_get('session.sid_length');
+		$bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
+		$SIDLength        = (int) ini_get('session.sid_length');
 
 		if (($bits = $SIDLength * $bitsPerCharacter) < 160)
 		{
 			// Add as many more characters as necessary to reach at least 160 bits
-			$SIDLength += (int)ceil((160 % $bits) / $bitsPerCharacter);
+			$SIDLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
 			ini_set('session.sid_length', (string) $SIDLength);
 		}
 

@@ -20,49 +20,55 @@ namespace CodeIgniter\Pager;
  */
 class PagerRenderer
 {
-
 	/**
 	 * First page number.
 	 *
 	 * @var integer
 	 */
 	protected $first;
+
 	/**
 	 * Last page number.
 	 *
 	 * @var integer
 	 */
 	protected $last;
+
 	/**
 	 * Current page number.
 	 *
 	 * @var integer
 	 */
 	protected $current;
+
 	/**
 	 * Total number of pages? unused?
 	 *
 	 * @var integer
 	 */
 	protected $total;
+
 	/**
 	 * Page count?
 	 *
 	 * @var integer
 	 */
 	protected $pageCount;
+
 	/**
 	 * URI base for pagination links
 	 *
 	 * @var \CodeIgniter\HTTP\URI
 	 */
 	protected $uri;
+
 	/**
 	 * Segment number used for pagination.
 	 *
 	 * @var integer
 	 */
 	protected $segment;
+
 	/**
 	 * Name of $_GET parameter
 	 *

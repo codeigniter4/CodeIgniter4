@@ -22,8 +22,8 @@ use CodeIgniter\HTTP\CURLRequest;
  */
 class MockCURLRequest extends CURLRequest
 {
-
 	public $curl_options;
+
 	protected $output = '';
 
 	//--------------------------------------------------------------------
@@ -57,5 +57,4 @@ class MockCURLRequest extends CURLRequest
 	{
 		return $this->delay;
 	}
-
 }

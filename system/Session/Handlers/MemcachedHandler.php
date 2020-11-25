@@ -14,14 +14,12 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Memcached;
-use SessionHandlerInterface;
 
 /**
  * Session handler using Memcache for persistence
  */
-class MemcachedHandler extends BaseHandler implements SessionHandlerInterface
+class MemcachedHandler extends BaseHandler
 {
-
 	/**
 	 * Memcached instance
 	 *

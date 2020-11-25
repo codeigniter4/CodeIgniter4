@@ -126,7 +126,7 @@ class DOMParser
 
 		$result = $this->doXPath($search, $element);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -193,7 +193,7 @@ class DOMParser
 	{
 		$result = $this->doXPath(null, 'input', ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -210,7 +210,7 @@ class DOMParser
 			'[@checked="checked"]',
 		]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	//--------------------------------------------------------------------
@@ -333,5 +333,4 @@ class DOMParser
 			'attr'  => $attr,
 		];
 	}
-
 }

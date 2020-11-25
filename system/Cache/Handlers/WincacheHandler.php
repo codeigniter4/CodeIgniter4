@@ -21,7 +21,6 @@ use Config\Cache;
  */
 class WincacheHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *

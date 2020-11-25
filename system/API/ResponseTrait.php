@@ -114,6 +114,19 @@ trait ResponseTrait
 			$output = $this->format($data);
 		}
 
+		if (! is_null($output))
+		{
+			if ($this->format === 'json')
+			{
+				return $this->response->setJSON($output)->setStatusCode($status, $message);
+			}
+
+			if ($this->format === 'xml')
+			{
+				return $this->response->setXML($output)->setStatusCode($status, $message);
+			}
+		}
+
 		return $this->response->setBody($output)->setStatusCode($status, $message);
 	}
 
@@ -361,6 +374,7 @@ trait ResponseTrait
 			$contentType = str_replace('application/json', 'text/html', $contentType);
 			$contentType = str_replace('application/', 'text/', $contentType);
 			$this->response->setContentType($contentType);
+			$this->format = 'html';
 
 			return $data;
 		}

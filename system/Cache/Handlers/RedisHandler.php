@@ -22,7 +22,6 @@ use RedisException;
  */
 class RedisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *

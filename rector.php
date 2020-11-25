@@ -2,6 +2,7 @@
 
 use Rector\Core\Configuration\Option;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
+use Rector\Performance\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -36,10 +37,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	]);
 
 	$parameters->set(Option::ENABLE_CACHE, true);
+	$parameters->set(Option::PHP_VERSION_FEATURES, '7.2');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
 	$services->set(SimplifyUselessVariableRector::class);
 	$services->set(RemoveAlwaysElseRector::class);
 	$services->set(PassStrictParameterToFunctionParameterRector::class);
+	$services->set(CountArrayToEmptyArrayComparisonRector::class);
 };

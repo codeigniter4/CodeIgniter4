@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Log\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class LogException extends FrameworkException implements ExceptionInterface
+class LogException extends FrameworkException
 {
 	public static function forInvalidLogLevel(string $level)
 	{

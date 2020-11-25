@@ -101,8 +101,8 @@ if (! function_exists('delete_cookie'))
 	 *
 	 * @return void
 	 *
-	 * @see (\Config\Services::response())->setCookie()
-	 * @see \CodeIgniter\HTTP\Response::setcookie()
+	 * @see (\Config\Services::response())->deleteCookie()
+	 * @see \CodeIgniter\HTTP\Response::deleteCookie()
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{

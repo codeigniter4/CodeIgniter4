@@ -19,7 +19,6 @@ use Config\Services;
  */
 class Views extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.

@@ -16,10 +16,10 @@ use CodeIgniter\Autoloader\FileLocator;
 
 class MockServices extends BaseService
 {
-
-	public $psr4     = [
+	public $psr4 = [
 		'Tests/Support' => TESTPATH . '_support/',
 	];
+
 	public $classmap = [];
 
 	//--------------------------------------------------------------------
@@ -35,5 +35,4 @@ class MockServices extends BaseService
 	{
 		return new FileLocator(static::autoloader());
 	}
-
 }

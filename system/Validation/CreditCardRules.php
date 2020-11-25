@@ -20,7 +20,6 @@ namespace CodeIgniter\Validation;
  */
 class CreditCardRules
 {
-
 	/**
 	 * The cards that we support, with the defining details:
 	 *
@@ -263,7 +262,7 @@ class CreditCardRules
 	 */
 	protected function isValidLuhn(string $number = null): bool
 	{
-		settype($number, 'string');
+		$number = (string) $number;
 
 		$sumTable = [
 			[

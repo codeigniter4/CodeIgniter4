@@ -35,7 +35,6 @@ use Throwable;
  */
 class CLI
 {
-
 	/**
 	 * Is the readline library on the system?
 	 *
@@ -253,7 +252,8 @@ class CLI
 			{
 				$extraOutput = ' [' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
 				$validation .= '|in_list[' . implode(',', $options) . ']';
-				$validation  = trim($validation, '|');
+
+				$validation = trim($validation, '|');
 			}
 
 			$default = $options[0];
@@ -783,7 +783,7 @@ class CLI
 			$thisStep   = abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
-			$percent = intval(($thisStep / $totalSteps) * 100);
+			$percent = (int) (($thisStep / $totalSteps) * 100);
 			$step    = (int) round($percent / 10);
 
 			// Write the progress bar

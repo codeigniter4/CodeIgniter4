@@ -18,7 +18,6 @@ use Config\Services;
  */
 class Timers extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -75,5 +74,4 @@ class Timers extends BaseCollector
 
 		return $data;
 	}
-
 }

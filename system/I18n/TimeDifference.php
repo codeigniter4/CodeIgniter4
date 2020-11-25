@@ -46,36 +46,42 @@ class TimeDifference
 	 * @var float
 	 */
 	protected $years = 0;
+
 	/**
 	 * Months.
 	 *
 	 * @var float
 	 */
 	protected $months = 0;
+
 	/**
 	 * Weeks.
 	 *
 	 * @var integer
 	 */
 	protected $weeks = 0;
+
 	/**
 	 * Days.
 	 *
 	 * @var integer
 	 */
 	protected $days = 0;
+
 	/**
 	 * Hours.
 	 *
 	 * @var integer
 	 */
 	protected $hours = 0;
+
 	/**
 	 * Minutes.
 	 *
 	 * @var integer
 	 */
 	protected $minutes = 0;
+
 	/**
 	 * Seconds.
 	 *
@@ -162,7 +168,7 @@ class TimeDifference
 		}
 
 		$time = clone($this->currentTime);
-		return (int)($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
+		return (int) ($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
 	}
 
 	/**

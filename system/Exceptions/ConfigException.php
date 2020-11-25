@@ -16,7 +16,6 @@ namespace CodeIgniter\Exceptions;
  */
 class ConfigException extends CriticalError
 {
-
 	/**
 	 * Error code
 	 *

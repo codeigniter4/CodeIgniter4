@@ -23,7 +23,6 @@ use InvalidArgumentException;
  */
 class Validation implements ValidationInterface
 {
-
 	/**
 	 * Files to load with validation functions.
 	 *
@@ -388,7 +387,8 @@ class Validation implements ValidationInterface
 			'label' => $label,
 			'rules' => $rules,
 		];
-		$this->customErrors  = array_merge($this->customErrors, [
+
+		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors,
 		]);
 

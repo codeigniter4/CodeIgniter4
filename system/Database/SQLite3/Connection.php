@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use ErrorException;
 use Exception;
@@ -22,9 +21,8 @@ use stdClass;
 /**
  * Connection for SQLite3
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
-
 	/**
 	 * Database driver
 	 *
@@ -304,8 +302,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retVal[$i]->type        = $query[$i]->type;
 			$retVal[$i]->max_length  = null;
 			$retVal[$i]->default     = $query[$i]->dflt_value;
-			$retVal[$i]->primary_key = isset($query[$i]->pk) && (bool)$query[$i]->pk;
-			$retVal[$i]->nullable    = isset($query[$i]->notnull) && ! (bool)$query[$i]->notnull;
+			$retVal[$i]->primary_key = isset($query[$i]->pk) && (bool) $query[$i]->pk;
+			$retVal[$i]->nullable    = isset($query[$i]->notnull) && ! (bool) $query[$i]->notnull;
 		}
 
 		return $retVal;
@@ -499,7 +497,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function isWriteType($sql): bool
 	{
-		return (bool)preg_match(
+		return (bool) preg_match(
 			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
 			$sql);
 	}
@@ -516,7 +514,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		$result = $this->simpleQuery('PRAGMA foreign_keys');
 
-		return (bool)$result;
+		return (bool) $result;
 	}
 
 	//--------------------------------------------------------------------

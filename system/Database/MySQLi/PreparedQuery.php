@@ -13,12 +13,11 @@ namespace CodeIgniter\Database\MySQLi;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
  * Prepared query for MySQLi
  */
-class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
+class PreparedQuery extends BasePreparedQuery
 {
 	/**
 	 * Prepares the query against the database, and saves the connection

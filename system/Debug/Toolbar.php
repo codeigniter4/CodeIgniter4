@@ -32,7 +32,6 @@ use Config\Toolbar as ToolbarConfig;
  */
 class Toolbar
 {
-
 	/**
 	 * Toolbar configuration settings.
 	 *
@@ -215,11 +214,12 @@ class Toolbar
 			$length = (((float) $row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output                                     .= '</td>';
-			$output                                     .= '</tr>';
 
-			$styleCount ++;
+			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output .= '</td>';
+			$output .= '</tr>';
+
+			$styleCount++;
 		}
 
 		return $output;
@@ -481,5 +481,4 @@ class Toolbar
 
 		return $output;
 	}
-
 }

@@ -16,7 +16,6 @@ namespace CodeIgniter\Database\Sqlsrv;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
-
 	/**
 	 * DROP CONSTRAINT statement
 	 *
@@ -263,7 +262,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			'SET DEFAULT',
 		];
 
-		if (count($this->foreignKeys) > 0)
+		if ($this->foreignKeys !== [])
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{
@@ -305,7 +304,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			}
 		}
 
-		if (count($this->primaryKeys) > 0)
+		if ($this->primaryKeys !== [])
 		{
 			$sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
 					. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
@@ -406,5 +405,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
 }

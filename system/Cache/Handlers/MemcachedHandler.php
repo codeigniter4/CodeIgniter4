@@ -23,7 +23,6 @@ use Memcached;
  */
 class MemcachedHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -364,5 +363,4 @@ class MemcachedHandler implements CacheInterface
 	{
 		return (extension_loaded('memcached') || extension_loaded('memcache'));
 	}
-
 }

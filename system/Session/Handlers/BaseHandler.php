@@ -20,7 +20,6 @@ use SessionHandlerInterface;
  */
 abstract class BaseHandler implements SessionHandlerInterface
 {
-
 	use LoggerAwareTrait;
 
 	/**

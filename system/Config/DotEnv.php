@@ -18,7 +18,6 @@ use InvalidArgumentException;
  */
 class DotEnv
 {
-
 	/**
 	 * The directory where the .env file can be located.
 	 *
@@ -203,9 +202,10 @@ class DotEnv
 					.*$           # and discard any string after the closing quote
 					/mx', $quote
 			);
-			$value        = preg_replace($regexPattern, '$1', $value);
-			$value        = str_replace("\\$quote", $quote, $value);
-			$value        = str_replace('\\\\', '\\', $value);
+
+			$value = preg_replace($regexPattern, '$1', $value);
+			$value = str_replace("\\$quote", $quote, $value);
+			$value = str_replace('\\\\', '\\', $value);
 		}
 		else
 		{

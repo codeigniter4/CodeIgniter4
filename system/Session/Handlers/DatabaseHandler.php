@@ -16,14 +16,12 @@ use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Config\Database;
 use Exception;
-use SessionHandlerInterface;
 
 /**
  * Session handler using current Database for storage
  */
-class DatabaseHandler extends BaseHandler implements SessionHandlerInterface
+class DatabaseHandler extends BaseHandler
 {
-
 	/**
 	 * The database group to use for storage.
 	 *
