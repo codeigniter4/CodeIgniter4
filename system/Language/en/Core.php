@@ -11,9 +11,9 @@
 
 // Core language settings
 return [
-   'copyError'                    => 'An error was encountered while attempting to replace the file ({0}). Please make sure your file directory is writable.',
-   'enabledZlibOutputCompression' => 'Your zlib.output_compression ini directive is turned on. This will not work well with output buffers.',
-   'invalidFile'                  => 'Invalid file: {0}',
-   'missingExtension'             => 'The framework needs the following extension(s) installed and loaded: {0}.',
-   'noHandlers'                   => '{0} must provide at least one Handler.',
+	'copyError'                    => 'An error was encountered while attempting to replace the file ({0}). Please make sure your file directory is writable.',
+	'enabledZlibOutputCompression' => 'Your zlib.output_compression ini directive is turned on. This will not work well with output buffers.',
+	'invalidFile'                  => 'Invalid file: {0}',
+	'missingExtension'             => 'The framework needs the following extension(s) installed and loaded: {0}.',
+	'noHandlers'                   => '{0} must provide at least one Handler.',
 ];
