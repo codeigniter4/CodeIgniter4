@@ -120,7 +120,7 @@ class ContentSecurityPolicy extends BaseConfig
 	 * and `<applet>` tags. This directive can't be used in
 	 * `<meta>` tags and applies only to non-HTML resources.
 	 *
-	 * @var string|string[]
+	 * @var string|string[]|null
 	 */
 	public $frameAncestors = null;
 

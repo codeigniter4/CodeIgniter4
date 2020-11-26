@@ -595,9 +595,6 @@ class ContentSecurityPolicy
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
-		/**
-		 * @var Response $response
-		 */
 		$body = $response->getBody();
 
 		if (empty($body))
