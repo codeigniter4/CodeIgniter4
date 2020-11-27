@@ -60,16 +60,6 @@ class Model extends BaseModel
 	protected $useAutoIncrement = true;
 
 	/**
-	 * The type of column that created_at and updated_at
-	 * are expected to.
-	 *
-	 * Allowed: 'datetime', 'date', 'int'
-	 *
-	 * @var string
-	 */
-	protected $dateFormat = 'datetime';
-
-	/**
 	 * Query Builder object
 	 *
 	 * @var BaseBuilder|null
