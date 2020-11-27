@@ -704,13 +704,13 @@ class CodeIgniter
 	public function cachePage(Cache $config)
 	{
 		$headers = [];
-		foreach ($this->response->getHeaders() as $header)
+		foreach ($this->response->getHeaderObjects() as $header)
 		{
 			$headers[$header->getName()] = $header->getValueLine();
 		}
 
 		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL
+			$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL
 		);
 	}
 

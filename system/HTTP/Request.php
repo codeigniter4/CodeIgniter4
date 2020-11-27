@@ -42,9 +42,9 @@ class Request extends Message implements RequestInterface
 	/**
 	 * A URI instance.
 	 *
-	 * @var UriInterface
+	 * @var URI
 	 */
-	public $uri;
+	protected $uri;
 
 	/**
 	 * Stores values we've retrieved from
@@ -270,7 +270,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @param string $method
 	 *
-	 * @return static
+	 * @return self
 	 */
 	public function withMethod($method)
 	{
@@ -320,13 +320,11 @@ class Request extends Message implements RequestInterface
 	 * @param string $requestTarget
 	 *
 	 * @return static
-	 *
-	 * @throws InvalidArgumentException if the request target is invalid
 	 */
 	public function withRequestTarget($requestTarget): self
 	{
 		$clone = clone $this;
-		$clone->uri = new URI($requestTarget);
+		$clone->setUri(new URI($requestTarget));
 
 		return $clone;
 	}
@@ -372,7 +370,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function setUri(UriInterface $uri): self
 	{
-		$this->uri = $uri;
+		$this->uri = $uri; // @phpstan-ignore-line
 
 		return $this;
 	}
@@ -421,7 +419,7 @@ class Request extends Message implements RequestInterface
 		}
 		elseif ($this->getHeaderLine('Host') === '' && $uri->getHost())
 		{
-			$clone->setHeader($uri->getHost());
+			$clone->setHeader('Host', $uri->getHost());
 		}
 
 		return $clone;
@@ -604,6 +602,24 @@ class Request extends Message implements RequestInterface
 			case 'server':
 				$this->globals['server'] = $_SERVER;
 				break;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Magic getter to provide access to $this->uri since it
+	 * used to be public.
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed
+	 */
+	public function __get(string $name)
+	{
+		if ($name === 'uri')
+		{
+			return $this->getUri();
 		}
 	}
 }

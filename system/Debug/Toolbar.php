@@ -140,7 +140,7 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->getHeaders() as $value)
+		foreach ($request->getHeaders() as $name => $value)
 		{
 			if (empty($value))
 			{
@@ -152,9 +152,9 @@ class Toolbar
 				$value = [$value];
 			}
 
-			foreach ($value as $h)
+			foreach ($value as $v)
 			{
-				$data['vars']['headers'][esc($h->getName())] = esc($h->getValueLine());
+				$data['vars']['headers'][esc($name)] = esc($v);
 			}
 		}
 

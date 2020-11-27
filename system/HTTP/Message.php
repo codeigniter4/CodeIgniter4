@@ -22,7 +22,7 @@ class Message implements MessageInterface
 	/**
 	 * List of all HTTP request headers.
 	 *
-	 * @var array
+	 * @var Header[]
 	 */
 	protected $headers = [];
 
@@ -151,9 +151,26 @@ class Message implements MessageInterface
 	/**
 	 * Returns an array containing all headers.
 	 *
-	 * @return array        An array of the request headers
+	 * @return array<string,string[]> An array of the request header valuess
 	 */
 	public function getHeaders(): array
+	{
+		$return = [];
+
+		foreach ($this->headers as $name => $header)
+		{
+			$return[$header->getName()] = $header->getValue();
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Returns an array containing all Headers.
+	 *
+	 * @return Header[] An array of the Header objects
+	 */
+	public function getHeaderObjects(): array
 	{
 		// If no headers are defined, but the user is
 		// requesting it, then it's likely they want
@@ -167,6 +184,30 @@ class Message implements MessageInterface
 	}
 
 	/**
+	 * Retrieves a message header value by the given case-insensitive name.
+	 *
+	 * This method returns an array of all the header values of the given
+	 * case-insensitive header name.
+	 *
+	 * If the header does not appear in the message, this method MUST return an
+	 * empty array.
+	 *
+	 * @param string $name Case-insensitive header field name.
+	 * @return string[] An array of string values as provided for the given
+	 *     header. If the header does not appear in the message, this method MUST
+	 *     return an empty array.
+	 */
+	public function getHeader($name)
+	{
+		if (! $header = $this->getHeaderObject($name))
+		{
+			return [];
+		}
+
+		return is_string($value = $header->getValue()) ? [$value] : $value;
+	}
+
+	/**
 	 * Returns a single header object. If multiple headers with the same
 	 * name exist, then will return an array of header objects.
 	 *
@@ -174,7 +215,7 @@ class Message implements MessageInterface
 	 *
 	 * @return array|Header|null
 	 */
-	public function getHeader($name)
+	public function getHeaderObject($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -433,6 +474,6 @@ class Message implements MessageInterface
 	public function isJSON()
 	{
 		return $this->hasHeader('Content-Type')
-			&& $this->getHeader('Content-Type')->getValue() === 'application/json';
+			&& $this->getHeaderObject('Content-Type')->getValue() === 'application/json';
 	}
 }
