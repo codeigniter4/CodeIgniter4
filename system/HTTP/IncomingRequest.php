@@ -128,7 +128,7 @@ class IncomingRequest extends Request
 	 * @param string|null $body
 	 * @param UserAgent   $userAgent
 	 */
-	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
+	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent = null)
 	{
 		// Get our body from php://input
 		if ($body === 'php://input')

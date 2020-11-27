@@ -41,7 +41,7 @@ class Database
 	 * @return   mixed
 	 * @internal param bool $useBuilder
 	 */
-	public function load(array $params = [], string $alias)
+	public function load(array $params, string $alias)
 	{
 		// Handle universal DSN connection string
 		if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false)
