@@ -54,13 +54,6 @@ class IncomingRequest extends Request
 	protected $enableCSRF = false;
 
 	/**
-	 * A \CodeIgniter\HTTP\URI instance.
-	 *
-	 * @var URI
-	 */
-	public $uri;
-
-	/**
 	 * File collection
 	 *
 	 * @var FileCollection|null
@@ -140,16 +133,16 @@ class IncomingRequest extends Request
 		$this->config    = $config;
 		$this->userAgent = $userAgent;
 
-		parent::__construct($config);
-
-		$this->populateHeaders();
-
 		// Get our current URI.
 		// NOTE: This WILL NOT match the actual URL in the browser since for
 		// everything this cares about (and the router, etc) is the portion
 		// AFTER the script name. So, if hosted in a sub-folder this will
 		// appear different than actual URL. If you need that, use current_url().
 		$this->uri = $uri;
+
+		parent::__construct($config);
+
+		$this->populateHeaders();
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
 

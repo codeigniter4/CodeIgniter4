@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use Psr\Http\Message\RequestInterface as PsrInterface;
+
 /**
  * Expected behavior of an HTTP request
  *
@@ -18,7 +20,7 @@ namespace CodeIgniter\HTTP;
  * @mixin \CodeIgniter\HTTP\CLIRequest
  * @mixin \CodeIgniter\HTTP\CURLRequest
  */
-interface RequestInterface
+interface RequestInterface extends PsrInterface
 {
 	/**
 	 * Gets the user's IP address.

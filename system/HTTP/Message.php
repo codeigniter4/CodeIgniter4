@@ -12,11 +12,12 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Psr\Http\Message\MessageInterface;
 
 /**
  * An HTTP message
  */
-class Message
+class Message implements MessageInterface
 {
 	/**
 	 * List of all HTTP request headers.
@@ -85,6 +86,20 @@ class Message
 		$this->body = $data;
 
 		return $this;
+	}
+
+	/**
+	 * Returns a new instance with the specified body.
+	 *
+	 * @param mixed $data
+	 *
+	 * @return static
+	 */
+	public function withBody($data): self
+	{
+		$clone = clone $this;
+
+		return $clone->setBody($data);
 	}
 
 	/**
@@ -159,7 +174,7 @@ class Message
 	 *
 	 * @return array|Header|null
 	 */
-	public function getHeader(string $name)
+	public function getHeader($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -178,7 +193,7 @@ class Message
 	 *
 	 * @return boolean
 	 */
-	public function hasHeader(string $name): bool
+	public function hasHeader($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -200,7 +215,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function getHeaderLine(string $name): string
+	public function getHeaderLine($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -243,6 +258,50 @@ class Message
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Return a new instance with the specified header.
+	 *
+	 * @param string            $name
+	 * @param array|null|string $value
+	 *
+	 * @return static
+	 */
+	public function withHeader($name, $value): self
+	{
+		$clone = clone $this;
+
+		return $clone->setHeader($name, $value);
+	}
+
+	/**
+	 * Return a new instance with the additional specified header.
+	 *
+	 * @param string            $name
+	 * @param array|null|string $value
+	 *
+	 * @return static
+	 */
+	public function withAddedHeader($name, $value): self
+	{
+		$clone = clone $this;
+
+		return $clone->appendHeader($name, $value);
+	}
+
+	/**
+	 * Return a new instance without the specified header.
+	 *
+	 * @param string $name
+	 *
+	 * @return static
+	 */
+	public function withoutHeader($name): self
+	{
+		$clone = clone $this;
+
+		return $clone->removeHeader($name);
 	}
 
 	/**
@@ -348,6 +407,22 @@ class Message
 		$this->protocolVersion = $version;
 
 		return $this;
+	}
+
+	/**
+	 * Return a new instance with the specified HTTP protocol version.
+	 *
+	 * @param string $version
+	 *
+	 * @return static
+	 *
+	 * @throws HTTPException For an invalid protocol version
+	 */
+	public function withProtocolVersion($version)
+	{
+		$clone = clone $this;
+
+		return $clone->setProtocolVersion($version);
 	}
 
 	/**
