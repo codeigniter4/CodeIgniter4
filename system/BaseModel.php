@@ -13,7 +13,6 @@ namespace CodeIgniter;
 
 use Closure;
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
@@ -43,13 +42,6 @@ use stdClass;
  */
 abstract class BaseModel
 {
-	/**
-	 * The table's primary key.
-	 *
-	 * @var string
-	 */
-	protected $primaryKey = 'id';
-
 	/**
 	 * Pager instance.
 	 * Populated after calling $this->paginate()
@@ -120,8 +112,6 @@ abstract class BaseModel
 	 * Allowed: 'datetime', 'date', 'int'
 	 *
 	 * @var string
-	 *
-	 * @todo make it more generic to be used by other models
 	 */
 	protected $dateFormat = 'datetime';
 
@@ -173,9 +163,9 @@ abstract class BaseModel
 	/**
 	 * Database Connection
 	 *
-	 * @var ConnectionInterface
+	 * @var object
 	 *
-	 * @todo check if Interface can be used for NO-SQL
+	 * @todo check if ConnectionInterface can be used for NO-SQL
 	 */
 	protected $db;
 
@@ -583,33 +573,67 @@ abstract class BaseModel
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
+	 * This method use objectToRawArray internally and does conversion
+	 * to string on all Time instances
 	 *
 	 * @param string|object $data        Data
-	 * @param string|null   $primaryKey  Primary key
-	 * @param string        $dateFormat  DateFormat
 	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
 	 *
-	 * @return array
+	 * @return array Array
 	 * @throws ReflectionException ReflectionException.
-	 *
-	 * @todo handle primary key outside this
 	 */
-	public static function classToArray(
-		$data,
-		$primaryKey = null,
-		string $dateFormat = 'datetime',
-		bool $onlyChanged = true
-	): array
+	protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
+	{
+		$properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
+
+		// Convert any Time instances to appropriate $dateFormat
+		if ($properties)
+		{
+			$properties = array_map(function ($value) {
+				if ($value instanceof Time)
+				{
+					switch ($this->dateFormat)
+					{
+						case 'datetime':
+							return $value->format('Y-m-d H:i:s');
+						case 'date':
+							return $value->format('Y-m-d');
+						case 'int':
+							return $value->getTimestamp();
+						default:
+							return (string) $value;
+					}
+				}
+				return $value;
+			}, $properties);
+		}
+
+		return $properties;
+	}
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array with raw values.
+	 *
+	 * @param string|object $data        Data
+	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
+	 *
+	 * @return array|null Array
+	 * @throws ReflectionException ReflectionException.
+	 */
+	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
 	{
 		if (method_exists($data, 'toRawArray'))
 		{
-			$properties = $data->toRawArray($onlyChanged);
+			$properties = $data->toRawArray($onlyChanged, $recursive);
 
 			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true)
-				&& ! empty($data->{$primaryKey}))
+			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey}))
 			{
-				$properties[$primaryKey] = $data->{$primaryKey};
+				$properties[$this->primaryKey] = $data->{$this->primaryKey};
 			}
 		}
 		else
@@ -626,33 +650,6 @@ abstract class BaseModel
 				// Must make protected values accessible.
 				$prop->setAccessible(true);
 				$properties[$prop->getName()] = $prop->getValue($data);
-			}
-		}
-
-		// Convert any Time instances to appropriate $dateFormat
-		if ($properties)
-		{
-			foreach ($properties as $key => $value)
-			{
-				if ($value instanceof Time)
-				{
-					switch ($dateFormat)
-					{
-						case 'datetime':
-							$converted = $value->format('Y-m-d H:i:s');
-							break;
-						case 'date':
-							$converted = $value->format('Y-m-d');
-							break;
-						case 'int':
-							$converted = $value->getTimestamp();
-							break;
-						default:
-							$converted = (string) $value;
-					}
-
-					$properties[$key] = $converted;
-				}
 			}
 		}
 
@@ -702,8 +699,7 @@ abstract class BaseModel
 		// them as an array.
 		if (is_object($data) && ! $data instanceof stdClass)
 		{
-			//@TODO: Handle Primary Key
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat, false);
+			$data = $this->objectToArray($data, false, true);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -808,8 +804,7 @@ abstract class BaseModel
 				// them as an array.
 				if (is_object($row) && ! $row instanceof stdClass)
 				{
-					//@TODO: Handle Primary Key
-					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat, false);
+					$row = $this->objectToArray($row, false, true);
 				}
 
 				// If it's still a stdClass, go ahead and convert to
@@ -902,8 +897,7 @@ abstract class BaseModel
 		// them as an array.
 		if (is_object($data) && ! $data instanceof stdClass)
 		{
-			//@TODO: handle primary key
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+			$data = $this->objectToArray($data, true, true);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -998,8 +992,7 @@ abstract class BaseModel
 				// them as an array.
 				if (is_object($row) && ! $row instanceof stdClass)
 				{
-					//@TODO: Handle Primary Key
-					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat);
+					$row = $this->objectToArray($row, true, true);
 				}
 
 				// If it's still a stdClass, go ahead and convert to

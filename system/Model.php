@@ -39,6 +39,8 @@ use ReflectionException;
  *      - allow specifying the return type (array, object, etc) with each call
  *      - ensure validation is run against objects when saving items
  *
+ * @property ConnectionInterface $db
+ *
  * @mixin BaseBuilder
  */
 class Model extends BaseModel
@@ -66,13 +68,6 @@ class Model extends BaseModel
 	 * @var string
 	 */
 	protected $dateFormat = 'datetime';
-
-	/**
-	 * Database Connection
-	 *
-	 * @var ConnectionInterface
-	 */
-	protected $db;
 
 	/**
 	 * Query Builder object
@@ -259,6 +254,34 @@ class Model extends BaseModel
 			}
 		}
 		return $response;
+	}
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array with raw values.
+	 *
+	 * @param string|object $data        Data
+	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
+	 *
+	 * @return array|null Array
+	 * @throws ReflectionException ReflectionException.
+	 */
+	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+	{
+		$properties = parent::objectToRawArray($data, $onlyChanged);
+
+		if (method_exists($data, 'toRawArray'))
+		{
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey}))
+			{
+				$properties[$this->primaryKey] = $data->{$this->primaryKey};
+			}
+		}
+
+		return $properties;
 	}
 
 	/**
