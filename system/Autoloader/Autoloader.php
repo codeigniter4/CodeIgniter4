@@ -38,10 +38,10 @@ use InvalidArgumentException;
  *          ],
  *          'classmap' => [
  *              'MyClass'   => '/path/to/class/file.php',
- *          ]
+ *          ],
  *          'aliases' => [
- *              'Original'  => 'Alias',
- *          ]
+ *              'SomeClass' => 'ReplacementClass',
+ *          ],
  *      ];
  *
  * Example:
@@ -104,12 +104,12 @@ class Autoloader
 
 		if (isset($config->classmap))
 		{
-			$this->classmap = $config->classmap;
+			$this->classmap = array_merge($this->classmap, $config->classmap);
 		}
 
 		if (isset($config->aliases))
 		{
-			$this->aliases = $config->aliases;
+			$this->aliases = array_merge($this->aliases, $config->aliases);
 		}
 
 		// Should we load through Composer's namespaces, also?
@@ -249,21 +249,29 @@ class Autoloader
 		$class = str_ireplace('.php', '', $class);
 
 		// Check if this class is an alias
-		if (! isset($this->aliases[$class]))
+		if (isset($this->aliases[$class]))
 		{
-			return $this->loadInNamespace($class);
+			// Attempt to load the replacement instead, then alias it
+			$replacement = $this->aliases[$class];
+			if ($result = $this->loadInNamespace($replacement))
+			{
+				class_alias($replacement, $class, false);
+				return $result;
+			}
+
+			return false;
 		}
 
-		// Attempt to load the original instead then alias it
-		$original = $this->aliases[$class];
-		if ($result = $this->loadInNamespace($original))
+		$mapped_file = $this->loadInNamespace($class);
+
+		// Nothing? One last chance by looking
+		// in common CodeIgniter folders.
+		if (! $mapped_file)
 		{
-			class_alias($original, $class, false);
-			return $result;
+			$mapped_file = $this->loadLegacy($class);
 		}
 
-		// If the original was not found then fail
-		return false;
+		return $mapped_file;
 	}
 
 	//--------------------------------------------------------------------
@@ -311,6 +319,45 @@ class Autoloader
 		}
 
 		// never found a mapped file
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Attempts to load the class from common locations in previous
+	 * version of CodeIgniter, namely 'app/Libraries', and
+	 * 'app/Models'.
+	 *
+	 * @param string $class The class name. This typically should NOT have a namespace.
+	 *
+	 * @return mixed    The mapped file name on success, or boolean false on failure
+	 */
+	protected function loadLegacy(string $class)
+	{
+		// If there is a namespace on this class, then
+		// we cannot load it from traditional locations.
+		if (strpos($class, '\\') !== false)
+		{
+			return false;
+		}
+
+		$paths = [
+			APPPATH . 'Controllers/',
+			APPPATH . 'Libraries/',
+			APPPATH . 'Models/',
+		];
+
+		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+
+		foreach ($paths as $path)
+		{
+			if ($file = $this->includeFile($path . $class))
+			{
+				return $file;
+			}
+		}
+
 		return false;
 	}
 
