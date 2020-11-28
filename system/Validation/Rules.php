@@ -353,14 +353,14 @@ class Rules
 	 *     required_with[password]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields List of fields that we should check if present
+	 * @param string|null $fields List of fields that we should check if present
 	 * @param array       $data   Complete list of fields from the form
 	 *
 	 * @return boolean
 	 */
-	public function required_with($str = null, string $fields = '', array $data = []): bool
+	public function required_with($str = null, string $fields = null, array $data = []): bool
 	{
-		if (empty($fields) || empty($data))
+		if (is_null($fields) || empty($data))
 		{
 			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
 		}
@@ -410,14 +410,14 @@ class Rules
 	 *     required_without[id,email]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields
+	 * @param string|null $fields
 	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
-	public function required_without($str = null, string $fields = '', array $data = []): bool
+	public function required_without($str = null, string $fields = null, array $data = []): bool
 	{
-		if (empty($fields) || empty($data))
+		if (is_null($fields) || empty($data))
 		{
 			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
 		}
