@@ -662,7 +662,7 @@ class CodeIgniter
 			$output  = $cachedResponse['output'];
 
 			// Clear all default headers
-			foreach ($this->response->getHeaders() as $key => $val)
+			foreach ($this->response->headers() as $key => $val)
 			{
 				$this->response->removeHeader($key);
 			}
@@ -709,7 +709,7 @@ class CodeIgniter
 	public function cachePage(Cache $config)
 	{
 		$headers = [];
-		foreach ($this->response->getHeaders() as $header)
+		foreach ($this->response->headers() as $header)
 		{
 			$headers[$header->getName()] = $header->getValueLine();
 		}

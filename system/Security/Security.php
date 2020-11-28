@@ -207,8 +207,8 @@ class Security
 
 		// Do the tokens exist in _POST, HEADER or optionally php:://input - json data
 		$CSRFTokenValue = $_POST[$this->CSRFTokenName] ??
-			(! is_null($request->getHeader($this->CSRFHeaderName)) && ! empty($request->getHeader($this->CSRFHeaderName)->getValue()) ?
-				$request->getHeader($this->CSRFHeaderName)->getValue() :
+			(! is_null($request->header($this->CSRFHeaderName)) && ! empty($request->header($this->CSRFHeaderName)->getValue()) ?
+				$request->header($this->CSRFHeaderName)->getValue() :
 				(! empty($request->getBody()) && ! empty($json = json_decode($request->getBody())) && json_last_error() === JSON_ERROR_NONE ?
 					($json->{$this->CSRFTokenName} ?? null) :
 					null));
