@@ -416,6 +416,11 @@ class CodeIgniter
 		{
 			$controller = $this->createController();
 
+			if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false))
+			{
+				throw PageNotFoundException::forMethodNotFound($this->method);
+			}
+
 			// Is there a "post_controller_constructor" event?
 			Events::trigger('post_controller_constructor');
 
@@ -657,7 +662,7 @@ class CodeIgniter
 			$output  = $cachedResponse['output'];
 
 			// Clear all default headers
-			foreach ($this->response->getHeaders() as $key => $val)
+			foreach ($this->response->headers() as $key => $val)
 			{
 				$this->response->removeHeader($key);
 			}
@@ -704,7 +709,7 @@ class CodeIgniter
 	public function cachePage(Cache $config)
 	{
 		$headers = [];
-		foreach ($this->response->getHeaders() as $header)
+		foreach ($this->response->headers() as $header)
 		{
 			$headers[$header->getName()] = $header->getValueLine();
 		}
@@ -889,11 +894,6 @@ class CodeIgniter
 		if (! class_exists($this->controller, true) || $this->method[0] === '_')
 		{
 			throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
-		}
-		if (! method_exists($this->controller, '_remap') &&
-				! is_callable([$this->controller, $this->method], false))
-		{
-			throw PageNotFoundException::forMethodNotFound($this->method);
 		}
 	}
 

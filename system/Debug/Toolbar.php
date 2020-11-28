@@ -140,22 +140,9 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->getHeaders() as $value)
+		foreach ($request->headers() as $name => $header)
 		{
-			if (empty($value))
-			{
-				continue;
-			}
-
-			if (! is_array($value))
-			{
-				$value = [$value];
-			}
-
-			foreach ($value as $h)
-			{
-				$data['vars']['headers'][esc($h->getName())] = esc($h->getValueLine());
-			}
+			$data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
 		}
 
 		foreach ($request->getCookie() as $name => $value)

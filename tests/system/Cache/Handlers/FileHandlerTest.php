@@ -1,10 +1,6 @@
 <?php
 namespace CodeIgniter\Cache\Handlers;
 
-set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
-	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-
 class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 

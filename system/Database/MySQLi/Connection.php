@@ -134,7 +134,7 @@ class Connection extends BaseConnection
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, 1);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another

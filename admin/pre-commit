@@ -35,7 +35,12 @@ if [ "$FILES" != "" ]
 then
 	echo "Running PHPStan..."
 	# Run on whole codebase
-	php ./vendor/bin/phpstan analyse
+	if [ -d /proc/cygdrive ]
+	then
+		./vendor/bin/phpstan analyse
+	else
+		php ./vendor/bin/phpstan analyse
+	fi
 
 	if [ $? != 0 ]
 	then
@@ -47,7 +52,12 @@ fi
 if [ "$FILES" != "" ]
 then
 	echo "Running Code Sniffer..."
-	php ./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
+	if [ -d /proc/cygdrive ]
+	then
+		./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
+	else
+		php ./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
+	fi
 fi
 
 exit $?

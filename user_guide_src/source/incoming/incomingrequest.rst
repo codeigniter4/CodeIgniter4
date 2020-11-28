@@ -170,11 +170,11 @@ exception of ``getJSON()``.
 Retrieving Headers
 ----------------------------------------------------------------------------
 
-You can get access to any header that was sent with the request with the ``getHeaders()`` method, which returns
+You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 ``CodeIgniter\HTTP\Header``::
 
-    var_dump($request->getHeaders());
+    var_dump($request->headers());
 
     [
         'Host'          => CodeIgniter\HTTP\Header,
@@ -182,13 +182,13 @@ an array of all headers, with the key as the name of the header, and the value i
         'Accept'        => CodeIgniter\HTTP\Header,
     ]
 
-If you only need a single header, you can pass the name into the ``getHeader()`` method. This will grab the
+If you only need a single header, you can pass the name into the ``header()`` method. This will grab the
 specified header object in a case-insensitive manner if it exists. If not, then it will return ``null``::
 
     // these are all equivalent
-    $host = $request->getHeader('host');
-    $host = $request->getHeader('Host');
-    $host = $request->getHeader('HOST');
+    $host = $request->header('host');
+    $host = $request->header('Host');
+    $host = $request->header('HOST');
 
 You can always use ``hasHeader()`` to see if the header existed in this request::
 
@@ -297,8 +297,8 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::appendBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
-* :meth:`CodeIgniter\\HTTP\\Message::getHeaders`
-* :meth:`CodeIgniter\\HTTP\\Message::getHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::headers`
+* :meth:`CodeIgniter\\HTTP\\Message::header`
 * :meth:`CodeIgniter\\HTTP\\Message::hasHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::getHeaderLine`
 * :meth:`CodeIgniter\\HTTP\\Message::setHeader`
