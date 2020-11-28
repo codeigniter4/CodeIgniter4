@@ -206,13 +206,8 @@ class Validation implements ValidationInterface
 	 *
 	 * @return boolean
 	 */
-	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data = null): bool
+	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data): bool
 	{
-		if (is_null($data))
-		{
-			throw new InvalidArgumentException('You must supply the parameter: data.');
-		}
-
 		// If the if_exist rule is defined...
 		if (in_array('if_exist', $rules, true))
 		{
