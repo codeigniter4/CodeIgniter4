@@ -62,7 +62,7 @@ class CodeIgniter
 	/**
 	 * Main application configuration
 	 *
-	 * @var \Config\App
+	 * @var App
 	 */
 	protected $config;
 
@@ -76,7 +76,7 @@ class CodeIgniter
 	/**
 	 * Current request.
 	 *
-	 * @var HTTP\Request|HTTP\IncomingRequest|CLIRequest
+	 * @var Request|HTTP\IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
@@ -395,7 +395,7 @@ class CodeIgniter
 			$filters->enableFilter($routeFilter, 'after');
 		}
 
-		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
+		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->getUri()->getPath();
 
 		// Never run filters when running through Spark cli
 		if (! defined('SPARKED'))
@@ -747,10 +747,10 @@ class CodeIgniter
 	{
 		if (get_class($this->request) === CLIRequest::class)
 		{
-			return md5($this->request->getPath());
+			return md5($this->request->getPath()); // @phpstan-ignore-line
 		}
 
-		$uri = $this->request->uri;
+		$uri = $this->request->getUri();
 
 		if ($config->cacheQueryString)
 		{
@@ -821,7 +821,7 @@ class CodeIgniter
 		// then we need to set the correct locale on our Request.
 		if ($this->router->hasLocale())
 		{
-			$this->request->setLocale($this->router->getLocale());
+			$this->request->setLocale($this->router->getLocale()); // @phpstan-ignore-line
 		}
 
 		$this->benchmark->stop('routing');
@@ -926,7 +926,7 @@ class CodeIgniter
 	protected function runController($class)
 	{
 		// If this is a console request then use the input segments as parameters
-		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
 
 		if (method_exists($class, '_remap'))
 		{
@@ -1107,7 +1107,7 @@ class CodeIgniter
 			return;
 		}
 
-		$method = $this->request->getPost('_method');
+		$method = $this->request->getPost('_method'); // @phpstan-ignore-line
 
 		if (empty($method))
 		{

@@ -44,7 +44,7 @@ class Request extends Message implements RequestInterface, CIRequestInterface
 	/**
 	 * A URI instance.
 	 *
-	 * @var URI
+	 * @var UriInterface
 	 */
 	protected $uri;
 
@@ -360,7 +360,7 @@ class Request extends Message implements RequestInterface, CIRequestInterface
 	 */
 	public function getUri()
 	{
-		return $this->uri ?? new URI();
+		return $this->uri;
 	}
 
 	/**
@@ -372,7 +372,7 @@ class Request extends Message implements RequestInterface, CIRequestInterface
 	 */
 	public function setUri(UriInterface $uri): self
 	{
-		$this->uri = $uri; // @phpstan-ignore-line
+		$this->uri = $uri;
 
 		return $this;
 	}

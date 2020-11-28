@@ -40,7 +40,7 @@ class URI implements UriInterface
 	 *
 	 * @var string
 	 */
-	protected $uriString;
+	protected $uriString = '';
 
 	/**
 	 * List of URI segments.
@@ -63,26 +63,26 @@ class URI implements UriInterface
 	 *
 	 * @var string
 	 */
-	protected $user;
+	protected $user = '';
 
 	/**
 	 * URI User Password
 	 *
 	 * @var string
 	 */
-	protected $password;
+	protected $password = '';
 
 	/**
 	 * URI Host
 	 *
 	 * @var string
 	 */
-	protected $host;
+	protected $host = '';
 
 	/**
 	 * URI Port
 	 *
-	 * @var integer
+	 * @var int|null
 	 */
 	protected $port;
 
@@ -91,7 +91,7 @@ class URI implements UriInterface
 	 *
 	 * @var string
 	 */
-	protected $path;
+	protected $path = '';
 
 	/**
 	 * The name of any fragment.
@@ -416,7 +416,7 @@ class URI implements UriInterface
 	 */
 	public function getPath(): string
 	{
-		return $this->path ?? '';
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
