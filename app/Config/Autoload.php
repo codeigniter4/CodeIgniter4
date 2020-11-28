@@ -80,5 +80,17 @@ class Autoload extends AutoloadConfig
 	 *
 	 * @var array<string, string>
 	 */
-	public $aliases = [];
+	public $aliases = [
+		/**
+		 * PSR-7 Transitional Classes
+		 *
+		 * As CodeIgniter works towards PSR-7 these aliases allow using
+		 * the updated classes without breaking legacy projects. Once the
+		 * transition is complete they can be safely removed.
+		 */
+		'CodeIgniter\HTTP\Message'  => 'CodeIgniter\HTTP\PSR7\Message',
+		'CodeIgniter\HTTP\Request'  => 'CodeIgniter\HTTP\PSR7\Request',
+		'CodeIgniter\HTTP\Response' => 'CodeIgniter\HTTP\PSR7\Response',
+		'CodeIgniter\HTTP\URI'      => 'CodeIgniter\HTTP\PSR7\URI',
+	];
 }
