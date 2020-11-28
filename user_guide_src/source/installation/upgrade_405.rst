@@ -12,3 +12,10 @@ exists for Response cookies and for CSRF cookies.
 For additional information, see `MDN Web Docs <https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite>`_.
 The SameSite specifications are described in `RFC 6265 <https://tools.ietf.org/html/rfc6265>`_
 and the `RFC 6265bis revision <https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/?include_text=1>`_.
+
+**Message::getHeader(s)**
+
+The HTTP layer is moving towards `PSR-7 compliance <https://www.php-fig.org/psr/psr-7/>`_. Towards this end
+``Message::getHeader()`` and ``Message::getHeaders()`` are deprecated and should be replaced
+with ``Message::header()`` and ``Message::headers()`` respectively. Note that this pertains
+to all classes that extend ``Message`` as well: ``Request``, ``Response`` and their subclasses.
