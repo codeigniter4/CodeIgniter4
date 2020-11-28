@@ -444,8 +444,8 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 </dd></dl>
 
 <dl class="method">
-<dt id="getHeaders">
-<code class="sig-name descname">getHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHeaders" title="Permalink to this definition">¶</a></dt>
+<dt id="headers">
+<code class="sig-name descname">headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#headers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>An array of all of the headers found.</p>
@@ -458,8 +458,8 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 </dd></dl>
 
 <dl class="method">
-<dt id="getHeader">
-<code class="sig-name descname">getHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeader" title="Permalink to this definition">¶</a></dt>
+<dt id="header">
+<code class="sig-name descname">header</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#header" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -476,19 +476,19 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 <p>Allows you to retrieve the current value of a single message header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive header name.
 While the header is converted internally as described above, you can access the header with any type of case:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the header has multiple values, <code class="docutils literal notranslate"><span class="pre">getValue()</span></code> will return as an array of values. You can use the <code class="docutils literal notranslate"><span class="pre">getValueLine()</span></code>
 method to retrieve the values as a string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="c1">// Outputs something like:</span>
 <span class="s1">&#39;Accept-Language: en,en-US&#39;</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
 
 <span class="c1">// Outputs something like:</span>
 <span class="p">[</span>
@@ -496,14 +496,14 @@ method to retrieve the values as a string:</p>
     <span class="s1">&#39;en-US&#39;</span>
 <span class="p">]</span>
 
-<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
 
 <span class="c1">// Outputs something like:</span>
 <span class="s1">&#39;en,en-US&#39;</span>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

@@ -516,10 +516,10 @@ exception of <code class="docutils literal notranslate"><span class="pre">getJSO
 </div>
 <div class="section" id="retrieving-headers">
 <h2><a class="toc-backref" href="#id4">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline">¶</a></h2>
-<p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">getHeaders()</span></code> method, which returns
+<p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeaders</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">headers</span><span class="p">());</span>
 
 <span class="p">[</span>
     <span class="s1">&#39;Host&#39;</span>          <span class="o">=&gt;</span> <span class="nx">CodeIgniter\HTTP\Header</span><span class="p">,</span>
@@ -528,12 +528,12 @@ an array of all headers, with the key as the name of the header, and the value i
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>If you only need a single header, you can pass the name into the <code class="docutils literal notranslate"><span class="pre">getHeader()</span></code> method. This will grab the
+<p>If you only need a single header, you can pass the name into the <code class="docutils literal notranslate"><span class="pre">header()</span></code> method. This will grab the
 specified header object in a case-insensitive manner if it exists. If not, then it will return <code class="docutils literal notranslate"><span class="pre">null</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// these are all equivalent</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<span class="nv">$host</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can always use <code class="docutils literal notranslate"><span class="pre">hasHeader()</span></code> to see if the header existed in this request:</p>
@@ -642,8 +642,8 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendBody()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaders()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeader()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::headers()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::header()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::hasHeader()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaderLine()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></p></li>

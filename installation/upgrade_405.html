@@ -353,6 +353,11 @@ exists for Response cookies and for CSRF cookies.</p>
 <p>For additional information, see <a class="reference external" href="https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite">MDN Web Docs</a>.
 The SameSite specifications are described in <a class="reference external" href="https://tools.ietf.org/html/rfc6265">RFC 6265</a>
 and the <a class="reference external" href="https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/?include_text=1">RFC 6265bis revision</a>.</p>
+<p><strong>Message::getHeader(s)</strong></p>
+<p>The HTTP layer is moving towards <a class="reference external" href="https://www.php-fig.org/psr/psr-7/">PSR-7 compliance</a>. Towards this end
+<code class="docutils literal notranslate"><span class="pre">Message::getHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::getHeaders()</span></code> are deprecated and should be replaced
+with <code class="docutils literal notranslate"><span class="pre">Message::header()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::headers()</span></code> respectively. Note that this pertains
+to all classes that extend <code class="docutils literal notranslate"><span class="pre">Message</span></code> as well: <code class="docutils literal notranslate"><span class="pre">Request</span></code>, <code class="docutils literal notranslate"><span class="pre">Response</span></code> and their subclasses.</p>
 </div>
 
 
