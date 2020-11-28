@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\App;
 use Config\Services;
+use InvalidArgumentException;
 use Locale;
 
 /**
@@ -130,6 +131,11 @@ class IncomingRequest extends Request
 	 */
 	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent = null)
 	{
+		if (empty($uri) || empty($userAgent))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
+		}
+
 		// Get our body from php://input
 		if ($body === 'php://input')
 		{

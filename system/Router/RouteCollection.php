@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
 
 /**
  * Class RouteCollection
@@ -990,6 +991,11 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function match(array $verbs = [], string $from = '', $to = '', array $options = null): RouteCollectionInterface
 	{
+		if (empty($from) || empty($to))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: from, to.');
+		}
+
 		foreach ($verbs as $verb)
 		{
 			$verb = strtolower($verb);

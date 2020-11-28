@@ -12,6 +12,7 @@
 namespace CodeIgniter\Validation;
 
 use Config\Database;
+use InvalidArgumentException;
 
 /**
  * Validation Rules.
@@ -357,8 +358,13 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function required_with($str, string $fields, array $data): bool
+	public function required_with($str = null, string $fields = '', array $data = []): bool
 	{
+		if (empty($fields) || empty($data))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
+		}
+
 		$fields = explode(',', $fields);
 
 		// If the field is present we can safely assume that
@@ -409,8 +415,13 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function required_without($str, string $fields, array $data): bool
+	public function required_without($str = null, string $fields = '', array $data = []): bool
 	{
+		if (empty($fields) || empty($data))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
+		}
+
 		$fields = explode(',', $fields);
 
 		// If the field is present we can safely assume that
