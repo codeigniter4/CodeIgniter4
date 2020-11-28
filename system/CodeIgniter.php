@@ -714,9 +714,7 @@ class CodeIgniter
 			$headers[$header->getName()] = $header->getValueLine();
 		}
 
-		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL
-		);
+		return cache()->save($this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL);
 	}
 
 	//--------------------------------------------------------------------
@@ -745,24 +743,20 @@ class CodeIgniter
 	 */
 	protected function generateCacheName(Cache $config): string
 	{
-		if (get_class($this->request) === CLIRequest::class)
+		if ($this->request instanceof CLIRequest)
 		{
-			return md5($this->request->getPath()); // @phpstan-ignore-line
+			return md5($this->request->getPath());
 		}
 
 		$uri = $this->request->getUri();
 
 		if ($config->cacheQueryString)
 		{
-			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery()
-			);
+			$name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
 		}
 		else
 		{
-			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath()
-			);
+			$name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
 		}
 
 		return md5($name);

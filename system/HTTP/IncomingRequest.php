@@ -550,6 +550,16 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Retrieves the URI instance.
+	 *
+	 * @return URI
+	 */
+	public function getUri()
+	{
+		return $this->uri;
+	}
+
+	/**
 	 * Sets up our URI object based on the information we have. This is
 	 * either provided by the user in the baseURL Config setting, or
 	 * determined from the environment as needed.
