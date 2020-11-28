@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\PSR7;
+namespace CodeIgniter\HTTP\PSR7;
 
 use CodeIgniter\HTTP\RequestInterface as CIRequestInterface;
 use Psr\Http\Message\RequestInterface;

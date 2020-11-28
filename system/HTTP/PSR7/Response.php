@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\PSR7;
+namespace CodeIgniter\HTTP\PSR7;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\ResponseInterface as CIResponseInterface;
@@ -735,7 +735,7 @@ class Response extends Message implements ResponseInterface, CIResponseInterface
 		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->statusCode, $this->reason), true, $this->statusCode);
 
 		// Send all of our headers
-		foreach ($this->getHeaders() as $name => $values)
+		foreach ($this->headers() as $name => $values)
 		{
 			header($name . ': ' . $this->getHeaderLine($name), true, $this->statusCode);
 		}

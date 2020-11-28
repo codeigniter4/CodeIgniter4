@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\PSR7;
+namespace CodeIgniter\HTTP\PSR7;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
