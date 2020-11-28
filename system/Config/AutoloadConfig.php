@@ -81,15 +81,22 @@ class AutoloadConfig
 	 * @var array
 	 */
 	protected $coreClassmap = [
-		'Psr\Log\AbstractLogger'           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
-		'Psr\Log\InvalidArgumentException' => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
-		'Psr\Log\LoggerAwareInterface'     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
-		'Psr\Log\LoggerAwareTrait'         => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
-		'Psr\Log\LoggerInterface'          => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
-		'Psr\Log\LoggerTrait'              => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
-		'Psr\Log\LogLevel'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
-		'Psr\Log\NullLogger'               => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
-		'Laminas\Escaper\Escaper'          => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
+		'Psr\Http\Message\MessageInterface'       => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/MessageInterface.php',
+		'Psr\Http\Message\RequestInterface'       => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/RequestInterface.php',
+		'Psr\Http\Message\ResponseInterface'      => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/ResponseInterface.php',
+		'Psr\Http\Message\ServerRequestInterface' => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/ServerRequestInterface.php',
+		'Psr\Http\Message\StreamInterface'        => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/StreamInterface.php',
+		'Psr\Http\Message\UploadedFileInterface'  => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/UploadedFileInterface.php',
+		'Psr\Http\Message\UriInterface'           => SYSTEMPATH . 'ThirdParty/PSR/Http/Message/UriInterface.php',
+		'Psr\Log\AbstractLogger'                  => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
+		'Psr\Log\InvalidArgumentException'        => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
+		'Psr\Log\LoggerAwareInterface'            => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
+		'Psr\Log\LoggerAwareTrait'                => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
+		'Psr\Log\LoggerInterface'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
+		'Psr\Log\LoggerTrait'                     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
+		'Psr\Log\LogLevel'                        => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
+		'Psr\Log\NullLogger'                      => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
+		'Laminas\Escaper\Escaper'                 => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
 	];
 
 	//--------------------------------------------------------------------
