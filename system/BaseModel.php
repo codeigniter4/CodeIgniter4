@@ -377,7 +377,7 @@ abstract class BaseModel
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	protected abstract function _find(bool $singleton, $id = null);
+	abstract protected function _find(bool $singleton, $id = null);
 
 	/**
 	 * Fetches the column of database from $this->table
@@ -407,7 +407,7 @@ abstract class BaseModel
 	 * @return array|null   The resulting row of data, or null if no data found.
 	 * @throws DataException Data Exception.
 	 */
-	protected abstract function _findColumn(string $columnName);
+	abstract protected function _findColumn(string $columnName);
 
 	/**
 	 * Works with the current Query Builder instance to return
@@ -465,7 +465,7 @@ abstract class BaseModel
 	 *
 	 * @return array
 	 */
-	protected abstract function _findAll(int $limit = 0, int $offset = 0);
+	abstract protected function _findAll(int $limit = 0, int $offset = 0);
 
 	/**
 	 * Returns the first row of the result set. Will take any previous
@@ -513,7 +513,7 @@ abstract class BaseModel
 	 *
 	 * @return array|object|null
 	 */
-	protected abstract function _first();
+	abstract protected function _first();
 
 	/**
 	 * Captures the builder's set() method so that we can validate the
@@ -568,7 +568,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean
 	 */
-	protected abstract function _save($data): bool;
+	abstract protected function _save($data): bool;
 
 	/**
 	 * Takes a class an returns an array of it's public and protected
@@ -780,7 +780,7 @@ abstract class BaseModel
 	 *
 	 * @return object|integer|string|false
 	 */
-	protected abstract function _insert($data, ?bool $escape = null);
+	abstract protected function _insert($data, ?bool $escape = null);
 
 	/**
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
@@ -854,7 +854,7 @@ abstract class BaseModel
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
-	protected abstract function _insertBatch(
+	abstract protected function _insertBatch(
 		array $set = null,
 		bool $escape = null,
 		int $batchSize = 100,
@@ -965,7 +965,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean
 	 */
-	protected abstract function _update($id = null, $data = null, ?bool $escape = null): bool;
+	abstract protected function _update($id = null, $data = null, ?bool $escape = null): bool;
 
 	/**
 	 * Update_Batch
@@ -1046,7 +1046,7 @@ abstract class BaseModel
 	 * @throws DatabaseException DatabaseException.
 	 * @throws ReflectionException ReflectionException.
 	 */
-	protected abstract function _updateBatch(
+	abstract protected function _updateBatch(
 		array $set = null,
 		string $index = null,
 		int $batchSize = 100,
@@ -1107,7 +1107,7 @@ abstract class BaseModel
 	 * @return object|boolean
 	 * @throws DatabaseException DatabaseException.
 	 */
-	protected abstract function _delete($id = null, bool $purge = false);
+	abstract protected function _delete($id = null, bool $purge = false);
 
 	/**
 	 * Permanently deletes all rows that have been marked as deleted
@@ -1131,7 +1131,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean|mixed
 	 */
-	protected abstract function _purgeDeleted();
+	abstract protected function _purgeDeleted();
 
 	/**
 	 * Sets $useSoftDeletes value so that we can temporarily override
@@ -1168,7 +1168,7 @@ abstract class BaseModel
 	 *
 	 * @return void
 	 */
-	protected abstract function _onlyDeleted();
+	abstract protected function _onlyDeleted();
 
 	/**
 	 * Replace
@@ -1201,7 +1201,7 @@ abstract class BaseModel
 	 *
 	 * @return mixed
 	 */
-	protected abstract function _replace(array $data = null, bool $returnSQL = false);
+	abstract protected function _replace(array $data = null, bool $returnSQL = false);
 
 	//--------------------------------------------------------------------
 	// Utility
@@ -1409,7 +1409,7 @@ abstract class BaseModel
 	 *
 	 * @return array|null
 	 */
-	protected abstract function _errors();
+	abstract protected function _errors();
 
 	/**
 	 * It could be used when you have to change default or override current allowed fields.
