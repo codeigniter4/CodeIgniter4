@@ -41,8 +41,13 @@ class Database
 	 * @return   mixed
 	 * @internal param bool $useBuilder
 	 */
-	public function load(array $params = [], string $alias)
+	public function load(array $params = [], string $alias = '')
 	{
+		if (empty($alias))
+		{
+			throw new InvalidArgumentException('You must supply the parameter: alias.');
+		}
+
 		// Handle universal DSN connection string
 		if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false)
 		{
