@@ -134,11 +134,11 @@ class Message
 	}
 
 	/**
-	 * Returns an array containing all headers.
+	 * Returns an array containing all Headers.
 	 *
-	 * @return array        An array of the request headers
+	 * @return Header[] An array of the Header objects
 	 */
-	public function getHeaders(): array
+	public function headers(): array
 	{
 		// If no headers are defined, but the user is
 		// requesting it, then it's likely they want
@@ -152,14 +152,14 @@ class Message
 	}
 
 	/**
-	 * Returns a single header object. If multiple headers with the same
+	 * Returns a single Header object. If multiple headers with the same
 	 * name exist, then will return an array of header objects.
 	 *
 	 * @param string $name
 	 *
 	 * @return array|Header|null
 	 */
-	public function getHeader(string $name)
+	public function header($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -169,6 +169,33 @@ class Message
 		}
 
 		return $this->headers[$origName];
+	}
+
+	/**
+	 * Returns an array containing all headers.
+	 *
+	 * @return array        An array of the request headers
+	 *
+	 * @deprecated Use Message::headers() to make room for PSR-7
+	 */
+	public function getHeaders(): array
+	{
+		return $this->headers();
+	}
+
+	/**
+	 * Returns a single header object. If multiple headers with the same
+	 * name exist, then will return an array of header objects.
+	 *
+	 * @param string $name
+	 *
+	 * @return array|Header|null
+	 *
+	 * @deprecated Use Message::header() to make room for PSR-7
+	 */
+	public function getHeader(string $name)
+	{
+		return $this->header($name);
 	}
 
 	/**
@@ -358,6 +385,6 @@ class Message
 	public function isJSON()
 	{
 		return $this->hasHeader('Content-Type')
-			&& $this->getHeader('Content-Type')->getValue() === 'application/json';
+			&& $this->header('Content-Type')->getValue() === 'application/json';
 	}
 }
