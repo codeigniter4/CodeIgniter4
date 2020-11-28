@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\Request;
 use Config\App;
 use Config\Services;
 use Locale;
