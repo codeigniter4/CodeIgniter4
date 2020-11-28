@@ -32,6 +32,12 @@
 				<file>./system/ComposerScripts.php</file>
 				<file>./system/Config/Routes.php</file>
 				<file>./system/Test/bootstrap.php</file>
+
+				<!-- Files aliased out by their PSR7 equivalent -->
+				<file>./system/HTTP/Message.php</file>
+				<file>./system/HTTP/Request.php</file>
+				<file>./system/HTTP/Response.php</file>
+				<file>./system/HTTP/URI.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
