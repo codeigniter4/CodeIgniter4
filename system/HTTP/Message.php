@@ -21,7 +21,7 @@ class Message
 	/**
 	 * List of all HTTP request headers.
 	 *
-	 * @var array
+	 * @var array<string,Header>
 	 */
 	protected $headers = [];
 
@@ -136,7 +136,7 @@ class Message
 	/**
 	 * Returns an array containing all Headers.
 	 *
-	 * @return Header[] An array of the Header objects
+	 * @return array<string,Header> An array of the Header objects
 	 */
 	public function headers(): array
 	{
@@ -174,7 +174,7 @@ class Message
 	/**
 	 * Returns an array containing all headers.
 	 *
-	 * @return array        An array of the request headers
+	 * @return array<string,Header> An array of the request headers
 	 *
 	 * @deprecated Use Message::headers() to make room for PSR-7
 	 */
