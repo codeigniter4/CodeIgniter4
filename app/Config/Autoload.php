@@ -63,4 +63,22 @@ class Autoload extends AutoloadConfig
 	 * @var array<string, string>
 	 */
 	public $classmap = [];
+
+	/**
+	 * -------------------------------------------------------------------
+	 * Aliases
+	 * -------------------------------------------------------------------
+	 * Class aliasing allows you to "intercept" a class by providing your
+	 * own (compatible) class instead. Be sure you understand the way
+	 * class_alias() works and its limitations before using this.
+	 *
+	 * Prototype:
+	 *
+	 *   $aliases = [
+	 *       'CodeIgniter\Honeypot\Honeypot' => 'App\ThirdParty\CompatibleHoneypotReplacement',
+	 *   ];
+	 *
+	 * @var array<string, string>
+	 */
+	public $aliases = [];
 }

@@ -76,6 +76,26 @@ third-party libraries that are not namespaced::
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
+Aliasing
+========
+
+A third property of your Autoload Config Class may specify class aliases. This provides a powerful way
+to "intercept" requests for an unloaded class and alias it to an alternate name. This option should
+only be used if you know how `class aliasing <https://www.php.net/manual/en/function.class-alias.php>`_
+works and the limitations of autoloading priority.
+
+Classes in this array are defined with the alias as the key and the original as the value.
+Another way to think of this is the key is the class you want to "replace" and the value is
+your new class to use instead of it::
+
+	$aliases = [
+		'CodeIgniter\Honeypot\Honeypot' => 'App\ThirdParty\CompatibleHoneypotReplacement',
+	];
+
+Aliases are "lazy loaded" by the Autoloader instead of processed all at once to increase performance.
+Keep this in mind when writing tests or other Autoloaders to ensure your classes get aliased
+properly, since ``Autoloader::loadClass()`` will only be called when a class is not known.
+
 Legacy Support
 ==============
 

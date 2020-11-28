@@ -252,4 +252,76 @@ class AutoloaderTest extends CIUnitTestCase
 		$namespaces = $this->loader->getNamespace();
 		$this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
 	}
+
+	public function testAliasReplaceesOriginalClass()
+	{
+		$config  = new Autoload();
+		$modules = new Modules();
+
+		$config->aliases = [
+			'Tests\Support\Autoloader\Foobar1' => 'Tests\Support\Autoloader\Replacement',
+		];
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, $modules)->register();
+
+		// Try to load the class
+		$instance = new \Tests\Support\Autoloader\Foobar1();
+
+		$this->assertFalse($instance->isFoobar);
+	}
+
+	public function testAliasReplacementNotFoundUsesFallback()
+	{
+		$config  = new Autoload();
+		$modules = new Modules();
+
+		$config->aliases = [
+			'Tests\Support\Autoloader\Foobar2' => 'Tests\Support\Autoloader\Nonexistant',
+		];
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, $modules)->register();
+
+		// Try to load the class
+		$instance = new \Tests\Support\Autoloader\Foobar2();
+
+		$this->assertTrue($instance->isFoobar);
+	}
+
+	public function testAliasNonexistantStillReplaces()
+	{
+		$config  = new Autoload();
+		$modules = new Modules();
+
+		$config->aliases = [
+			'Tests\Support\Autoloader\Foobar3' => 'Tests\Support\Autoloader\Replacement',
+		];
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, $modules)->register();
+
+		// Try to load the class
+		$instance = new \Tests\Support\Autoloader\Foobar3();
+
+		$this->assertFalse($instance->isFoobar);
+	}
+
+	public function testAliasNeitherFoundFails()
+	{
+		$config  = new Autoload();
+		$modules = new Modules();
+
+		$config->aliases = [
+			'Tests\Support\Autoloader\Foobar4' => 'Tests\Support\Autoloader\Nonexistant',
+		];
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, $modules)->register();
+
+		// Check for the class
+		$result = class_exists('Tests\Support\Autoloader\Foobar4');
+
+		$this->assertFalse($result);
+	}
 }

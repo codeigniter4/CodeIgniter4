@@ -29,15 +29,18 @@ use InvalidArgumentException;
  *                  Quux.php    # Foo\Bar\Qux\Quux
  *
  * you can add the path to the configuration array that is passed in the constructor.
- * The Config array consists of 2 primary keys, both of which are associative arrays:
- * 'psr4', and 'classmap'.
+ * The Config array consists of up to 3 primary keys, all of which are associative arrays:
+ * 'psr4', 'classmap', and 'aliases'.
  *
  *      $Config = [
  *          'psr4' => [
- *              'Foo\Bar'   => '/path/to/packages/foo-bar'
+ *              'Foo\Bar'   => '/path/to/packages/foo-bar',
  *          ],
  *          'classmap' => [
- *              'MyClass'   => '/path/to/class/file.php'
+ *              'MyClass'   => '/path/to/class/file.php',
+ *          ]
+ *          'aliases' => [
+ *              'Original'  => 'Alias',
  *          ]
  *      ];
  *
@@ -67,6 +70,13 @@ class Autoloader
 	 */
 	protected $classmap = [];
 
+	/**
+	 * Stores alias as key, original as value.
+	 *
+	 * @var array<string, string>
+	 */
+	protected $aliases = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -95,6 +105,11 @@ class Autoloader
 		if (isset($config->classmap))
 		{
 			$this->classmap = $config->classmap;
+		}
+
+		if (isset($config->aliases))
+		{
+			$this->aliases = $config->aliases;
 		}
 
 		// Should we load through Composer's namespaces, also?
@@ -221,7 +236,7 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the class file for a given class name.
+	 * Loads the class file for a given class name or its alias.
 	 *
 	 * @param string $class The fully qualified class name.
 	 *
@@ -233,16 +248,22 @@ class Autoloader
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
 
-		$mapped_file = $this->loadInNamespace($class);
-
-		// Nothing? One last chance by looking
-		// in common CodeIgniter folders.
-		if (! $mapped_file)
+		// Check if this class is an alias
+		if (! isset($this->aliases[$class]))
 		{
-			$mapped_file = $this->loadLegacy($class);
+			return $this->loadInNamespace($class);
 		}
 
-		return $mapped_file;
+		// Attempt to load the original instead then alias it
+		$original = $this->aliases[$class];
+		if ($result = $this->loadInNamespace($original))
+		{
+			class_alias($original, $class, false);
+			return $result;
+		}
+
+		// If the original was not found then fail
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -290,45 +311,6 @@ class Autoloader
 		}
 
 		// never found a mapped file
-		return false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to load the class from common locations in previous
-	 * version of CodeIgniter, namely 'app/Libraries', and
-	 * 'app/Models'.
-	 *
-	 * @param string $class The class name. This typically should NOT have a namespace.
-	 *
-	 * @return mixed    The mapped file name on success, or boolean false on failure
-	 */
-	protected function loadLegacy(string $class)
-	{
-		// If there is a namespace on this class, then
-		// we cannot load it from traditional locations.
-		if (strpos($class, '\\') !== false)
-		{
-			return false;
-		}
-
-		$paths = [
-			APPPATH . 'Controllers/',
-			APPPATH . 'Libraries/',
-			APPPATH . 'Models/',
-		];
-
-		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-
-		foreach ($paths as $path)
-		{
-			if ($file = $this->includeFile($path . $class))
-			{
-				return $file;
-			}
-		}
-
 		return false;
 	}
 
