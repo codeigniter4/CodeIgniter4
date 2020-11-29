@@ -43,6 +43,9 @@
 	<php>
 		<server name="app.baseURL" value="http://example.com/"/>
 
+		<!-- PSR-17 UriFactory for PSR-7 integration tests -->
+		<const name="URI_FACTORY" value="CodeIgniter\HTTP\UriFactory"/>
+
 		<!-- Directory containing phpunit.xml -->
 		<const name="HOMEPATH" value="./"/>
 
