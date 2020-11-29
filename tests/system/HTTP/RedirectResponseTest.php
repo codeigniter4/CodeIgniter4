@@ -169,7 +169,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new RedirectResponse(new App());
 
 		$returned = $response->back();
-		$this->assertEquals('http://somewhere.com', $returned->getHeader('location')->getValue());
+		$this->assertEquals('http://somewhere.com', $returned->header('location')->getValue());
 	}
 
 	/**
@@ -255,10 +255,10 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response = $response->withHeaders();
 
-		foreach ($baseResponse->getHeaders() as $name => $header)
+		foreach ($baseResponse->headers() as $name => $header)
 		{
 			$this->assertTrue($response->hasHeader($name));
-			$this->assertEquals($header->getValue(), $response->getHeader($name)->getValue());
+			$this->assertEquals($header->getValue(), $response->header($name)->getValue());
 		}
 	}
 
@@ -267,7 +267,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SESSION = [];
 
 		$baseResponse = service('response');
-		foreach ($baseResponse->getHeaders() as $key => $val)
+		foreach ($baseResponse->headers() as $key => $val)
 		{
 			$baseResponse->removeHeader($key);
 		}
@@ -275,6 +275,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new RedirectResponse(new App());
 		$response = $response->withHeaders();
 
-		$this->assertEmpty($baseResponse->getHeaders());
+		$this->assertEmpty($baseResponse->headers());
 	}
 }
