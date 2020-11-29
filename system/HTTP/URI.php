@@ -14,11 +14,12 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use InvalidArgumentException;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
  */
-class URI
+class URI implements UriInterface
 {
 	/**
 	 * Sub-delimiters used in query strings and fragments.
@@ -39,7 +40,7 @@ class URI
 	 *
 	 * @var string
 	 */
-	protected $uriString;
+	protected $uriString = '';
 
 	/**
 	 * List of URI segments.
@@ -62,26 +63,26 @@ class URI
 	 *
 	 * @var string
 	 */
-	protected $user;
+	protected $user = '';
 
 	/**
 	 * URI User Password
 	 *
 	 * @var string
 	 */
-	protected $password;
+	protected $password = '';
 
 	/**
 	 * URI Host
 	 *
 	 * @var string
 	 */
-	protected $host;
+	protected $host = '';
 
 	/**
 	 * URI Port
 	 *
-	 * @var integer
+	 * @var int|null
 	 */
 	protected $port;
 
@@ -90,7 +91,7 @@ class URI
 	 *
 	 * @var string
 	 */
-	protected $path;
+	protected $path = '';
 
 	/**
 	 * The name of any fragment.
@@ -415,7 +416,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return $this->path ?? '';
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
@@ -928,6 +929,166 @@ class URI
 		$this->fragment = trim($string, '# ');
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return an instance with the specified scheme.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified scheme.
+	 *
+	 * Implementations MUST support the schemes "http" and "https" case
+	 * insensitively, and MAY accommodate other schemes if required.
+	 *
+	 * An empty scheme is equivalent to removing the scheme.
+	 *
+	 * @param  string $scheme The scheme to use with the new instance.
+	 * @return static A new instance with the specified scheme.
+	 * @throws \InvalidArgumentException for invalid or unsupported schemes.
+	 */
+	public function withScheme($scheme)
+	{
+		$clone = clone $this;
+
+		return $clone->setScheme($scheme);
+	}
+
+	/**
+	 * Return an instance with the specified user information.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified user information.
+	 *
+	 * Password is optional, but the user information MUST include the
+	 * user; an empty string for the user is equivalent to removing user
+	 * information.
+	 *
+	 * @param  string      $user     The user name to use for authority.
+	 * @param  null|string $password The password associated with $user.
+	 * @return static A new instance with the specified user information.
+	 */
+	public function withUserInfo($user, $password = null)
+	{
+		$clone = clone $this;
+
+		return $clone->setUserInfo($user, $password);
+	}
+
+	/**
+	 * Return an instance with the specified host.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified host.
+	 *
+	 * An empty host value is equivalent to removing the host.
+	 *
+	 * @param  string $host The hostname to use with the new instance.
+	 * @return static A new instance with the specified host.
+	 * @throws \InvalidArgumentException for invalid hostnames.
+	 */
+	public function withHost($host)
+	{
+		$clone = clone $this;
+
+		return $clone->setHost($host);
+	}
+
+	/**
+	 * Return an instance with the specified port.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified port.
+	 *
+	 * Implementations MUST raise an exception for ports outside the
+	 * established TCP and UDP port ranges.
+	 *
+	 * A null value provided for the port is equivalent to removing the port
+	 * information.
+	 *
+	 * @param  null|integer $port The port to use with the new instance; a null value
+	 *         removes the port information.
+	 * @return static A new instance with the specified port.
+	 * @throws \InvalidArgumentException for invalid ports.
+	 */
+	public function withPort($port)
+	{
+		$clone = clone $this;
+
+		return $clone->setPort($port);
+	}
+
+	/**
+	 * Return an instance with the specified path.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified path.
+	 *
+	 * The path can either be empty or absolute (starting with a slash) or
+	 * rootless (not starting with a slash). Implementations MUST support all
+	 * three syntaxes.
+	 *
+	 * If the path is intended to be domain-relative rather than path relative then
+	 * it must begin with a slash ("/"). Paths not starting with a slash ("/")
+	 * are assumed to be relative to some base path known to the application or
+	 * consumer.
+	 *
+	 * Users can provide both encoded and decoded path characters.
+	 * Implementations ensure the correct encoding as outlined in getPath().
+	 *
+	 * @param  string $path The path to use with the new instance.
+	 * @return static A new instance with the specified path.
+	 * @throws \InvalidArgumentException for invalid paths.
+	 */
+	public function withPath($path)
+	{
+		$clone = clone $this;
+
+		return $clone->setPath($path);
+	}
+
+	/**
+	 * Return an instance with the specified query string.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified query string.
+	 *
+	 * Users can provide both encoded and decoded query characters.
+	 * Implementations ensure the correct encoding as outlined in getQuery().
+	 *
+	 * An empty query string value is equivalent to removing the query string.
+	 *
+	 * @param  string $query The query string to use with the new instance.
+	 * @return static A new instance with the specified query string.
+	 * @throws \InvalidArgumentException for invalid query strings.
+	 */
+	public function withQuery($query)
+	{
+		$clone = clone $this;
+
+		return $clone->setQuery($query);
+	}
+
+	/**
+	 * Return an instance with the specified URI fragment.
+	 *
+	 * This method MUST retain the state of the current instance, and return
+	 * an instance that contains the specified URI fragment.
+	 *
+	 * Users can provide both encoded and decoded fragment characters.
+	 * Implementations ensure the correct encoding as outlined in getFragment().
+	 *
+	 * An empty fragment value is equivalent to removing the fragment.
+	 *
+	 * @param  string $fragment The fragment to use with the new instance.
+	 * @return static A new instance with the specified fragment.
+	 */
+	public function withFragment($fragment)
+	{
+		$clone = clone $this;
+
+		return $clone->setFragment($fragment);
 	}
 
 	//--------------------------------------------------------------------

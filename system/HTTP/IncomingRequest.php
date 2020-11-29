@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\Request;
 use Config\App;
 use Config\Services;
 use Locale;
@@ -547,6 +548,16 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves the URI instance.
+	 *
+	 * @return URI
+	 */
+	public function getUri()
+	{
+		return $this->uri;
+	}
 
 	/**
 	 * Sets up our URI object based on the information we have. This is

@@ -12,11 +12,13 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\HTTP\Header;
+use Psr\Http\Message\MessageInterface;
 
 /**
  * An HTTP message
  */
-class Message
+class Message implements MessageInterface
 {
 	/**
 	 * List of all HTTP request headers.
@@ -85,6 +87,20 @@ class Message
 		$this->body = $data;
 
 		return $this;
+	}
+
+	/**
+	 * Returns a new instance with the specified body.
+	 *
+	 * @param mixed $data
+	 *
+	 * @return static
+	 */
+	public function withBody($data): self
+	{
+		$clone = clone $this;
+
+		return $clone->setBody($data);
 	}
 
 	/**
@@ -174,28 +190,42 @@ class Message
 	/**
 	 * Returns an array containing all headers.
 	 *
-	 * @return array<string,Header> An array of the request headers
-	 *
-	 * @deprecated Use Message::headers() to make room for PSR-7
+	 * @return array<string,string[]> An array of the request header valuess
 	 */
 	public function getHeaders(): array
 	{
-		return $this->headers();
+		$return = [];
+
+		foreach ($this->headers() as $name => $header)
+		{
+			$return[$header->getName()] = $header->getValue();
+		}
+
+		return $return;
 	}
 
 	/**
-	 * Returns a single header object. If multiple headers with the same
-	 * name exist, then will return an array of header objects.
+	 * Retrieves a message header value by the given case-insensitive name.
 	 *
-	 * @param string $name
+	 * This method returns an array of all the header values of the given
+	 * case-insensitive header name.
 	 *
-	 * @return array|Header|null
+	 * If the header does not appear in the message, this method MUST return an
+	 * empty array.
 	 *
-	 * @deprecated Use Message::header() to make room for PSR-7
+	 * @param  string $name Case-insensitive header field name.
+	 * @return string[] An array of string values as provided for the given
+	 *     header. If the header does not appear in the message, this method MUST
+	 *     return an empty array.
 	 */
-	public function getHeader(string $name)
+	public function getHeader($name)
 	{
-		return $this->header($name);
+		if (! $header = $this->header($name))
+		{
+			return [];
+		}
+
+		return is_string($value = $header->getValue()) ? [$value] : $value;
 	}
 
 	/**
@@ -205,7 +235,7 @@ class Message
 	 *
 	 * @return boolean
 	 */
-	public function hasHeader(string $name): bool
+	public function hasHeader($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -227,7 +257,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function getHeaderLine(string $name): string
+	public function getHeaderLine($name)
 	{
 		$origName = $this->getHeaderName($name);
 
@@ -270,6 +300,50 @@ class Message
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Return a new instance with the specified header.
+	 *
+	 * @param string            $name
+	 * @param array|null|string $value
+	 *
+	 * @return static
+	 */
+	public function withHeader($name, $value): self
+	{
+		$clone = clone $this;
+
+		return $clone->setHeader($name, $value);
+	}
+
+	/**
+	 * Return a new instance with the additional specified header.
+	 *
+	 * @param string            $name
+	 * @param array|null|string $value
+	 *
+	 * @return static
+	 */
+	public function withAddedHeader($name, $value): self
+	{
+		$clone = clone $this;
+
+		return $clone->appendHeader($name, $value);
+	}
+
+	/**
+	 * Return a new instance without the specified header.
+	 *
+	 * @param string $name
+	 *
+	 * @return static
+	 */
+	public function withoutHeader($name): self
+	{
+		$clone = clone $this;
+
+		return $clone->removeHeader($name);
 	}
 
 	/**
@@ -378,13 +452,28 @@ class Message
 	}
 
 	/**
+	 * Return a new instance with the specified HTTP protocol version.
+	 *
+	 * @param string $version
+	 *
+	 * @return static
+	 *
+	 * @throws HTTPException For an invalid protocol version
+	 */
+	public function withProtocolVersion($version)
+	{
+		$clone = clone $this;
+
+		return $clone->setProtocolVersion($version);
+	}
+
+	/**
 	 * Determines if this is a json message based on the Content-Type header
 	 *
 	 * @return boolean
 	 */
 	public function isJSON()
 	{
-		return $this->hasHeader('Content-Type')
-			&& $this->header('Content-Type')->getValue() === 'application/json';
+		return $this->hasHeader('Content-Type') && $this->header('Content-Type')->getValue() === 'application/json';
 	}
 }
