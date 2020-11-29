@@ -275,13 +275,13 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
 
 		$response = $this->getPrivateProperty($codeigniter, 'response');
-		$this->assertNull($response->getHeader('Location'));
+		$this->assertNull($response->header('Location'));
 
 		ob_start();
 		$codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertEquals('https://example.com/', $response->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithNamed()
@@ -306,7 +306,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/named', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/named', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithURI()
@@ -331,7 +331,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/uri', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/uri', $response->header('Location')->getValue());
 	}
 
 	/**
@@ -357,7 +357,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/notset', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/notset', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithHTTPCode303()
