@@ -75,6 +75,27 @@ You must [GPG-sign](./contributing/signing.rst) your work, certifying that you e
 otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by"
 commit, but instead, a digitally signed one.
 
+### Static Analysis on PHP code
+
+We cannot, at all times, guarantee that all PHP code submitted on pull requests to be working well without
+actually running the code. For this reason, we make use of two static analysis tools, [PHPStan][1]
+and [Rector][2] to do the analysis for us.
+
+These tools have already been integrated into our CI/CD workflow to minimize unannounced bugs. Pull requests
+are expected that their code will pass these two. In your local machine, you can manually run these tools
+so that you can fix whatever errors that pop up with your submission.
+
+PHPStan is expected to scan the entire framework by running this command in your terminal:
+
+	vendor/bin/phpstan analyse
+
+Rector, on the other hand, can be run on the specific files you modified or added:
+
+	vendor/bin/rector process --dry-run path/to/file
+
+[1]: https://github.com/phpstan/phpstan-src
+[2]: https://github.com/rector/rector
+
 ### Breaking Changes
 
 In general, any change that would disrupt existing uses of the framework is considered a "breaking change" and will not be favorably considered. A few specific examples to pay attention to:
@@ -95,12 +116,19 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 5. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
 6. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 7. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
-8. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
-9. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+8. Commit messages are expected to be descriptive of what you changed specifically. Commit messages like
+"Fixes #1234" would be asked by the reviewer to be revised.
+9. If there are intermediate commits that are not meaningful to the overall PR, it is advised to squash your
+commits so that we can have a clean, single reversible commit.
+10. If you have touched PHP code, run static analysis.
+11. Run unit tests on the specific file you modified. If there are no existing tests yet, please create one.
+12. Make sure the tests pass to have a higher chance of merging.
+13. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
+14. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
 The codebase maintainers will now be alerted to the submission and someone from the team will respond. If your change fails to meet the guidelines, it will be rejected or feedback will be provided to help you improve it.
 
-Once the maintainer handling your pull request is satisfied with it they will approve the pull request and merge it into the "develop" branch; your patch will now be part of the next release!
+Once the maintainer handling your pull request is satisfied with it they will approve the pull request and merge it into the "develop" branch. Your patch will now be part of the next release!
 
 ### Keeping your fork up-to-date
 
