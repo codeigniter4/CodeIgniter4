@@ -92,7 +92,7 @@ class Model extends BaseModel
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	protected function _find(bool $singleton, $id = null)
+	protected function doFind(bool $singleton, $id = null)
 	{
 		$builder = $this->builder();
 
@@ -128,7 +128,7 @@ class Model extends BaseModel
 	 *
 	 * @return array|null   The resulting row of data, or null if no data found.
 	 */
-	protected function _findColumn(string $columnName)
+	protected function doFindColumn(string $columnName)
 	{
 		return $this->select($columnName)->asArray()->find();
 	}
@@ -142,7 +142,7 @@ class Model extends BaseModel
 	 *
 	 * @return array
 	 */
-	protected function _findAll(int $limit = 0, int $offset = 0)
+	protected function doFindAll(int $limit = 0, int $offset = 0)
 	{
 		$builder = $this->builder();
 
@@ -162,7 +162,7 @@ class Model extends BaseModel
 	 *
 	 * @return array|object|null
 	 */
-	protected function _first()
+	protected function doFirst()
 	{
 		$builder = $this->builder();
 
@@ -199,7 +199,7 @@ class Model extends BaseModel
 	 *
 	 * @return boolean
 	 */
-	protected function _save($data): bool
+	protected function doSave($data): bool
 	{
 		// When useAutoIncrement feature is disabled check
 		// in the database if given record already exists
@@ -283,7 +283,7 @@ class Model extends BaseModel
 	 *
 	 * @return BaseResult|integer|string|false
 	 */
-	protected function _insert($data, bool $escape = null)
+	protected function doInsert($data, bool $escape = null)
 	{
 		// Require non empty primaryKey when
 		// not using auto-increment feature
@@ -324,7 +324,7 @@ class Model extends BaseModel
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
-	protected function _insertBatch(
+	protected function doInsertBatch(
 		array $set = null,
 		bool $escape = null,
 		int $batchSize = 100,
@@ -357,7 +357,7 @@ class Model extends BaseModel
 	 *
 	 * @return boolean
 	 */
-	protected function _update($id = null, $data = null, ?bool $escape = null): bool
+	protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool
 	{
 		$builder = $this->builder();
 
@@ -386,7 +386,7 @@ class Model extends BaseModel
 	 * @throws DatabaseException DatabaseException.
 	 * @throws ReflectionException ReflectionException.
 	 */
-	protected function _updateBatch(
+	protected function doUpdateBatch(
 		array $set = null,
 		string $index = null,
 		int $batchSize = 100,
@@ -406,7 +406,7 @@ class Model extends BaseModel
 	 * @return BaseResult|boolean
 	 * @throws DatabaseException DatabaseException.
 	 */
-	protected function _delete($id = null, bool $purge = false)
+	protected function doDelete($id = null, bool $purge = false)
 	{
 		$builder = $this->builder();
 
@@ -452,7 +452,7 @@ class Model extends BaseModel
 	 *
 	 * @return boolean|mixed
 	 */
-	protected function _purgeDeleted()
+	protected function doPurgeDeleted()
 	{
 		return $this->builder()
 			->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
@@ -465,7 +465,7 @@ class Model extends BaseModel
 	 *
 	 * @return void
 	 */
-	protected function _onlyDeleted()
+	protected function doOnlyDeleted()
 	{
 		$this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 	}
@@ -480,7 +480,7 @@ class Model extends BaseModel
 	 *
 	 * @return mixed
 	 */
-	protected function _replace(array $data = null, bool $returnSQL = false)
+	protected function doReplace(array $data = null, bool $returnSQL = false)
 	{
 		return $this->builder()->testMode($returnSQL)->replace($data);
 	}
@@ -589,7 +589,7 @@ class Model extends BaseModel
 	 *
 	 * @return array|null
 	 */
-	protected function _errors()
+	protected function doErrors()
 	{
 		return $this->db->error();
 	}

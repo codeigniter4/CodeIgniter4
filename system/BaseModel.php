@@ -351,7 +351,7 @@ abstract class BaseModel
 
 		$eventData = [
 			'id'        => $id,
-			'data'      => $this->_find($singleton, $id),
+			'data'      => $this->doFind($singleton, $id),
 			'method'    => 'find',
 			'singleton' => $singleton,
 		];
@@ -377,7 +377,7 @@ abstract class BaseModel
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	abstract protected function _find(bool $singleton, $id = null);
+	abstract protected function doFind(bool $singleton, $id = null);
 
 	/**
 	 * Fetches the column of database from $this->table
@@ -394,7 +394,7 @@ abstract class BaseModel
 			throw DataException::forFindColumnHaveMultipleColumns();
 		}
 
-		$resultSet = $resultSet = $this->_findColumn($columnName);
+		$resultSet = $resultSet = $this->doFindColumn($columnName);
 
 		return $resultSet ? array_column($resultSet, $columnName) : null;
 	}
@@ -407,7 +407,7 @@ abstract class BaseModel
 	 * @return array|null   The resulting row of data, or null if no data found.
 	 * @throws DataException Data Exception.
 	 */
-	abstract protected function _findColumn(string $columnName);
+	abstract protected function doFindColumn(string $columnName);
 
 	/**
 	 * Works with the current Query Builder instance to return
@@ -437,7 +437,7 @@ abstract class BaseModel
 		}
 
 		$eventData = [
-			'data'      => $this->_findAll($limit, $offset),
+			'data'      => $this->doFindAll($limit, $offset),
 			'limit'     => $limit,
 			'offset'    => $offset,
 			'method'    => 'findAll',
@@ -465,7 +465,7 @@ abstract class BaseModel
 	 *
 	 * @return array
 	 */
-	abstract protected function _findAll(int $limit = 0, int $offset = 0);
+	abstract protected function doFindAll(int $limit = 0, int $offset = 0);
 
 	/**
 	 * Returns the first row of the result set. Will take any previous
@@ -490,7 +490,7 @@ abstract class BaseModel
 		}
 
 		$eventData = [
-			'data'      => $this->_first(),
+			'data'      => $this->doFirst(),
 			'method'    => 'first',
 			'singleton' => true,
 		];
@@ -513,7 +513,7 @@ abstract class BaseModel
 	 *
 	 * @return array|object|null
 	 */
-	abstract protected function _first();
+	abstract protected function doFirst();
 
 	/**
 	 * Captures the builder's set() method so that we can validate the
@@ -554,7 +554,7 @@ abstract class BaseModel
 			return true;
 		}
 
-		return $this->_save($data);
+		return $this->doSave($data);
 	}
 
 	/**
@@ -568,7 +568,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean
 	 */
-	abstract protected function _save($data): bool;
+	abstract protected function doSave($data): bool;
 
 	/**
 	 * Takes a class an returns an array of it's public and protected
@@ -745,7 +745,7 @@ abstract class BaseModel
 			$eventData = $this->trigger('beforeInsert', $eventData);
 		}
 
-		$result = $this->_insert($eventData['data'], $escape);
+		$result = $this->doInsert($eventData['data'], $escape);
 
 		$eventData = [
 			'id'     => $this->insertID,
@@ -780,7 +780,7 @@ abstract class BaseModel
 	 *
 	 * @return object|integer|string|false
 	 */
-	abstract protected function _insert($data, ?bool $escape = null);
+	abstract protected function doInsert($data, ?bool $escape = null);
 
 	/**
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
@@ -840,7 +840,7 @@ abstract class BaseModel
 			}
 		}
 
-		return $this->_insertBatch($set, $escape, $batchSize, $testing);
+		return $this->doInsertBatch($set, $escape, $batchSize, $testing);
 	}
 
 	/**
@@ -854,7 +854,7 @@ abstract class BaseModel
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
-	abstract protected function _insertBatch(
+	abstract protected function doInsertBatch(
 		array $set = null,
 		bool $escape = null,
 		int $batchSize = 100,
@@ -942,7 +942,7 @@ abstract class BaseModel
 		$eventData = [
 			'id'     => $id,
 			'data'   => $eventData['data'],
-			'result' => $this->_update($id, $eventData['data']),
+			'result' => $this->doUpdate($id, $eventData['data']),
 		];
 
 		if ($this->tempAllowCallbacks)
@@ -965,7 +965,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean
 	 */
-	abstract protected function _update($id = null, $data = null, ?bool $escape = null): bool;
+	abstract protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool;
 
 	/**
 	 * Update_Batch
@@ -1029,7 +1029,7 @@ abstract class BaseModel
 			}
 		}
 
-		return $this->_updateBatch($set, $index, $batchSize, $returnSQL);
+		return $this->doUpdateBatch($set, $index, $batchSize, $returnSQL);
 	}
 
 	/**
@@ -1046,7 +1046,7 @@ abstract class BaseModel
 	 * @throws DatabaseException DatabaseException.
 	 * @throws ReflectionException ReflectionException.
 	 */
-	abstract protected function _updateBatch(
+	abstract protected function doUpdateBatch(
 		array $set = null,
 		string $index = null,
 		int $batchSize = 100,
@@ -1084,7 +1084,7 @@ abstract class BaseModel
 			'id'     => $id,
 			'data'   => null,
 			'purge'  => $purge,
-			'result' => $this->_delete($id, $purge),
+			'result' => $this->doDelete($id, $purge),
 		];
 
 		if ($this->tempAllowCallbacks)
@@ -1107,7 +1107,7 @@ abstract class BaseModel
 	 * @return object|boolean
 	 * @throws DatabaseException DatabaseException.
 	 */
-	abstract protected function _delete($id = null, bool $purge = false);
+	abstract protected function doDelete($id = null, bool $purge = false);
 
 	/**
 	 * Permanently deletes all rows that have been marked as deleted
@@ -1122,7 +1122,7 @@ abstract class BaseModel
 			return true;
 		}
 
-		return $this->_purgeDeleted();
+		return $this->doPurgeDeleted();
 	}
 
 	/**
@@ -1131,7 +1131,7 @@ abstract class BaseModel
 	 *
 	 * @return boolean|mixed
 	 */
-	abstract protected function _purgeDeleted();
+	abstract protected function doPurgeDeleted();
 
 	/**
 	 * Sets $useSoftDeletes value so that we can temporarily override
@@ -1157,7 +1157,7 @@ abstract class BaseModel
 	public function onlyDeleted()
 	{
 		$this->tempUseSoftDeletes = false;
-		$this->_onlyDeleted();
+		$this->doOnlyDeleted();
 
 		return $this;
 	}
@@ -1168,7 +1168,7 @@ abstract class BaseModel
 	 *
 	 * @return void
 	 */
-	abstract protected function _onlyDeleted();
+	abstract protected function doOnlyDeleted();
 
 	/**
 	 * Replace
@@ -1188,7 +1188,7 @@ abstract class BaseModel
 			return false;
 		}
 
-		return $this->_replace($data, $returnSQL);
+		return $this->doReplace($data, $returnSQL);
 	}
 
 	/**
@@ -1201,7 +1201,7 @@ abstract class BaseModel
 	 *
 	 * @return mixed
 	 */
-	abstract protected function _replace(array $data = null, bool $returnSQL = false);
+	abstract protected function doReplace(array $data = null, bool $returnSQL = false);
 
 	//--------------------------------------------------------------------
 	// Utility
@@ -1399,7 +1399,7 @@ abstract class BaseModel
 			}
 		}
 
-		$error = $this->_errors();
+		$error = $this->doErrors();
 
 		return $error['message'] ?? null;
 	}
@@ -1409,7 +1409,7 @@ abstract class BaseModel
 	 *
 	 * @return array|null
 	 */
-	abstract protected function _errors();
+	abstract protected function doErrors();
 
 	/**
 	 * It could be used when you have to change default or override current allowed fields.
