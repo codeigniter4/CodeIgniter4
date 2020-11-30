@@ -25,7 +25,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function setBody($data): self;
+	public function setBody($data);
 
 	/**
 	 * Appends data to the body of the current message.
@@ -34,7 +34,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function appendBody($data): self;
+	public function appendBody($data);
 
 	/**
 	 * Populates the $headers array with any headers the getServer knows about.
@@ -66,7 +66,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function setHeader(string $name, $value): self;
+	public function setHeader(string $name, $value);
 
 	/**
 	 * Removes a header from the list of headers we track.
@@ -75,7 +75,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function removeHeader(string $name): self;
+	public function removeHeader(string $name);
 
 	/**
 	 * Adds an additional header value to any headers that accept
@@ -86,7 +86,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function appendHeader(string $name, ?string $value): self;
+	public function appendHeader(string $name, ?string $value);
 
 	/**
 	 * Adds an additional header value to any headers that accept
@@ -97,7 +97,7 @@ interface MessageInterface
 	 *
 	 * @return $this
 	 */
-	public function prependHeader(string $name, string $value): self;
+	public function prependHeader(string $name, string $value);
 
 	/**
 	 * Sets the HTTP protocol version.
@@ -108,5 +108,5 @@ interface MessageInterface
 	 *
 	 * @throws HTTPException For invalid protocols
 	 */
-	public function setProtocolVersion(string $version): self;
+	public function setProtocolVersion(string $version);
 }
