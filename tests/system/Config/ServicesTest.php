@@ -352,4 +352,13 @@ class ServicesTest extends CIUnitTestCase
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
 	}
 
+	public function testCanReplaceFrameworkServices()
+	{
+		$this->assertArrayNotHasKey('testCanReplaceFrameworkServices', $_SESSION);
+
+		Services::uri('testCanReplaceFrameworkServices');
+
+		$this->assertArrayHasKey('testCanReplaceFrameworkServices', $_SESSION);		
+		unset($_SESSION['testCanReplaceFrameworkServices']);
+	}
 }
