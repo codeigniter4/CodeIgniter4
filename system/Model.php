@@ -20,9 +20,12 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
+use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 
 /**
  * Class Model
@@ -704,4 +707,78 @@ class Model extends BaseModel
 
 		return $result;
 	}
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array suitable for use in creates and updates.
+	 *
+	 * @param string|object $data
+	 * @param string|null   $primaryKey
+	 * @param string        $dateFormat
+	 * @param boolean       $onlyChanged
+	 *
+	 * @return array
+	 * @throws ReflectionException
+	 *
+	 * @deprecated since 4.1
+	 */
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
+	{
+		if (method_exists($data, 'toRawArray'))
+		{
+			$properties = $data->toRawArray($onlyChanged);
+
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey}))
+			{
+				$properties[$primaryKey] = $data->{$primaryKey};
+			}
+		}
+		else
+		{
+			$mirror = new ReflectionClass($data);
+			$props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+
+			$properties = [];
+
+			// Loop over each property,
+			// saving the name/value in a new array we can return.
+			foreach ($props as $prop)
+			{
+				// Must make protected values accessible.
+				$prop->setAccessible(true);
+				$properties[$prop->getName()] = $prop->getValue($data);
+			}
+		}
+
+		// Convert any Time instances to appropriate $dateFormat
+		if ($properties)
+		{
+			foreach ($properties as $key => $value)
+			{
+				if ($value instanceof Time)
+				{
+					switch ($dateFormat)
+					{
+						case 'datetime':
+							$converted = $value->format('Y-m-d H:i:s');
+							break;
+						case 'date':
+							$converted = $value->format('Y-m-d');
+							break;
+						case 'int':
+							$converted = $value->getTimestamp();
+							break;
+						default:
+							$converted = (string) $value;
+					}
+
+					$properties[$key] = $converted;
+				}
+			}
+		}
+
+		return $properties;
+	}
+
 }
