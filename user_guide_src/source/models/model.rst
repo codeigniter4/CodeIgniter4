@@ -187,8 +187,8 @@ data type.
 
 **$createdField**
 
-Specifies which database field should use for keep data record create timestamp.
-Leave it empty to avoid update it (even useTimestamps is enabled)
+Specifies which database field to use for data record create timestamp.
+Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled)
 
 **$updatedField**
 
