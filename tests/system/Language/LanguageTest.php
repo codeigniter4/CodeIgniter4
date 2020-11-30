@@ -244,7 +244,6 @@ class LanguageTest extends CIUnitTestCase
 			['Format'],
 			['HTTP'],
 			['Images'],
-			['Language'],
 			['Log'],
 			['Migrations'],
 			['Number'],
