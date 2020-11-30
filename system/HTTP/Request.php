@@ -36,6 +36,13 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $method;
 
+	/**
+	 * A URI instance.
+	 *
+	 * @var URI
+	 */
+	protected $uri;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -53,6 +60,11 @@ class Request extends Message implements RequestInterface
 		if (empty($this->method))
 		{
 			$this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+		}
+
+		if (empty($this->uri))
+		{
+			$this->uri = new URI();
 		}
 	}
 
@@ -98,7 +110,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return Request
 	 *
-	 * @deprecated Use withMethod instead for immutability
+	 * @deprecated Use withMethod() instead for immutability
 	 */
 	public function setMethod(string $method)
 	{
@@ -119,5 +131,17 @@ class Request extends Message implements RequestInterface
 		$clone = clone $this;
 
 		return $clone->setMethod($method);
+	}
+
+	//--------------------------------------------------------------------
+
+    /**
+     * Retrieves the URI instance.
+     *
+     * @return URI
+     */
+    public function getUri()
+	{
+		return $this->uri;
 	}
 }

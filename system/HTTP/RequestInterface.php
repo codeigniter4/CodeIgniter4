@@ -18,7 +18,7 @@ namespace CodeIgniter\HTTP;
  * @mixin \CodeIgniter\HTTP\CLIRequest
  * @mixin \CodeIgniter\HTTP\CURLRequest
  */
-interface RequestInterface
+interface RequestInterface extends MessageInterface
 {
 	/**
 	 * Gets the user's IP address.
