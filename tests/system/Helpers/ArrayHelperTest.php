@@ -223,13 +223,13 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		if (version_compare(PHP_VERSION, '8.0', '<'))
 		{
 			$this->expectException('ErrorException');
-			$this->expectExceptionMessage('Array sizes are inconsistent');
 		}
 		else
 		{
-			$this->expectException('ValueError');		
-			$this->expectExceptionMessage('Array sizes are inconsistent');
+			$this->expectException('ValueError');
 		}
+		
+		$this->expectExceptionMessage('Array sizes are inconsistent');
 
 		$sortColumns = [
 			'team.orders' => SORT_ASC,
