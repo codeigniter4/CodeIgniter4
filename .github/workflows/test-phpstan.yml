@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Analysis
+    name: PHP ${{ matrix.php-versions }} Static Analysis
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
