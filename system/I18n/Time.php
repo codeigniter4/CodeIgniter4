@@ -635,7 +635,7 @@ class Time extends DateTime
 	 */
 	public function setMonth($value)
 	{
-		if (is_numeric($value) && $value < 1 || $value > 12)
+		if (is_numeric($value) && ($value < 1 || $value > 12))
 		{
 			throw I18nException::forInvalidMonth($value);
 		}
