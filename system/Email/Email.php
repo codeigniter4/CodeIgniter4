@@ -1954,7 +1954,7 @@ class Email
 		if ($status !== 0)
 		{
 			$this->setErrorMessage(lang('Email.exitStatus', [$status]));
-			$this->setErrorMessage(lang('Email.nosocket'));
+			$this->setErrorMessage(lang('Email.noSocket'));
 
 			return false;
 		}
