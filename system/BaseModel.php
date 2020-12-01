@@ -28,17 +28,18 @@ use stdClass;
 /**
  * Class Model
  *
- * The Model class provides a number of convenient features that
- * makes working with a database table less painful.
+ * The BaseModel class provides a number of convenient features that
+ * makes working with a databases less painful. Extending this class
+ * provide means of implementing various database systems
  *
  * It will:
- *      - automatically connect to database
- *      - allow intermingling calls between db connection, the builder,
- *          and methods in this class.
  *      - simplifies pagination
- *      - removes the need to use Result object directly in most cases
  *      - allow specifying the return type (array, object, etc) with each call
+ *      - automatically set and update timestamps
+ *      - handle soft deletes
  *      - ensure validation is run against objects when saving items
+ *      - process various callbacks
+ *      - allow intermingling calls to the db connection
  */
 abstract class BaseModel
 {

@@ -30,17 +30,14 @@ use ReflectionProperty;
 /**
  * Class Model
  *
- * The Model class provides a number of convenient features that
- * makes working with a database table less painful.
+ * The Model class extends BaseModel and provides additional
+ * convenient features that makes working with a SQL database
+ * table less painful.
  *
  * It will:
  *      - automatically connect to database
- *      - allow intermingling calls between db connection, the builder,
- *          and methods in this class.
- *      - simplifies pagination
+ *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
- *      - allow specifying the return type (array, object, etc) with each call
- *      - ensure validation is run against objects when saving items
  *
  * @property ConnectionInterface $db
  *
