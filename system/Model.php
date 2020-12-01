@@ -469,7 +469,8 @@ class Model extends BaseModel
 		{
 			return $data->{$this->primaryKey};
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+
+		if (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			return $data[$this->primaryKey];
 		}
