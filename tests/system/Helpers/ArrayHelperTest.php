@@ -219,7 +219,16 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data)
 	{
-		$this->expectException('ErrorException');
+		// PHP 8 changes this error type
+		if (version_compare(PHP_VERSION, '8.0', '<'))
+		{
+			$this->expectException('ErrorException');
+		}
+		else
+		{
+			$this->expectException('ValueError');
+		}
+		
 		$this->expectExceptionMessage('Array sizes are inconsistent');
 
 		$sortColumns = [
