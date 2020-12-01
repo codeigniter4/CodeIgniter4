@@ -2210,7 +2210,7 @@ class Email
 
 		if ($this->SMTPUser === '' && $this->SMTPPass === '')
 		{
-			$this->setErrorMessage(lang('lang:email.noSMTPAuth'));
+			$this->setErrorMessage(lang('Email.noSMTPAuth'));
 
 			return false;
 		}
