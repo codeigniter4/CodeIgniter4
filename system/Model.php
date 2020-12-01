@@ -49,6 +49,13 @@ use ReflectionProperty;
 class Model extends BaseModel
 {
 	/**
+	 * Name of database table
+	 *
+	 * @var string
+	 */
+	protected $table;
+
+	/**
 	 * The table's primary key.
 	 *
 	 * @var string
@@ -595,6 +602,20 @@ class Model extends BaseModel
 	protected function doErrors()
 	{
 		return $this->db->error();
+	}
+
+	/**
+	 * Specify the table associated with a model
+	 *
+	 * @param string $table Table
+	 *
+	 * @return $this
+	 */
+	public function setTable(string $table)
+	{
+		$this->table = $table;
+
+		return $this;
 	}
 
 	/**

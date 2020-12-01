@@ -51,13 +51,6 @@ abstract class BaseModel
 	public $pager;
 
 	/**
-	 * Name of database table
-	 *
-	 * @var string
-	 */
-	protected $table;
-
-	/**
 	 * Last insert ID
 	 *
 	 * @var integer|string
@@ -1361,20 +1354,6 @@ abstract class BaseModel
 			default:
 				throw ModelException::forNoDateFormat(static::class);
 		}
-	}
-
-	/**
-	 * Specify the table associated with a model
-	 *
-	 * @param string $table Table
-	 *
-	 * @return $this
-	 */
-	public function setTable(string $table)
-	{
-		$this->table = $table;
-
-		return $this;
 	}
 
 	/**
