@@ -74,6 +74,15 @@ class Model extends BaseModel
 	protected $builder;
 
 	/**
+	 * Holds information passed in via 'set'
+	 * so that we can capture it (not the builder)
+	 * and ensure it gets validated first.
+	 *
+	 * @var array
+	 */
+	protected $tempData = [];
+
+	/**
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface|null $db         DB Connection
@@ -200,6 +209,27 @@ class Model extends BaseModel
 	}
 
 	/**
+	 * Captures the builder's set() method so that we can validate the
+	 * data here. This allows it to be used with any of the other
+	 * builder methods and still get validated data, like replace.
+	 *
+	 * @param mixed        $key    Field name, or an array of field/value pairs
+	 * @param string|null  $value  Field value, if $key is a single field
+	 * @param boolean|null $escape Whether to escape values and identifiers
+	 *
+	 * @return $this
+	 */
+	public function set($key, ?string $value = '', ?bool $escape = null)
+	{
+		$data = is_array($key) ? $key : [$key => $value];
+
+		$this->tempData['escape'] = $escape;
+		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
+
+		return $this;
+	}
+
+	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -289,6 +319,29 @@ class Model extends BaseModel
 	}
 
 	/**
+	 * Inserts data into the database. If an object is provided,
+	 * it will attempt to convert it to an array.
+	 *
+	 * @param array|object|null $data     Data
+	 * @param boolean           $returnID Whether insert ID should be returned or not.
+	 * @param boolean|null      $escape   Escape
+	 *
+	 * @return BaseResult|object|integer|string|false
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
+	{
+		if (empty($data))
+		{
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
+		return parent::insert($data, $returnID, $escape);
+	}
+
+	/**
 	 * Inserts data into the current table.
 	 * This methods works only with dbCalls
 	 *
@@ -297,7 +350,7 @@ class Model extends BaseModel
 	 *
 	 * @return BaseResult|integer|string|false
 	 */
-	protected function doInsert($data, bool $escape = null)
+	protected function doInsert($data, ?bool $escape = null)
 	{
 		// Require non empty primaryKey when
 		// not using auto-increment feature
@@ -331,17 +384,17 @@ class Model extends BaseModel
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
 	 * This methods works only with dbCalls
 	 *
-	 * @param array|null $set       An associative array of insert values
-	 * @param boolean    $escape    Whether to escape values and identifiers
-	 * @param integer    $batchSize The size of the batch to run
-	 * @param boolean    $testing   True means only number of records is returned, false will execute the query
+	 * @param array|null   $set       An associative array of insert values
+	 * @param boolean|null $escape    Whether to escape values and identifiers
+	 * @param integer      $batchSize The size of the batch to run
+	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
 	protected function doInsertBatch(
-		array $set = null,
-		bool $escape = null,
+		?array $set = null,
+		?bool $escape = null,
 		int $batchSize = 100,
 		bool $testing = false
 	)
@@ -360,6 +413,29 @@ class Model extends BaseModel
 		}
 
 		return $this->builder()->testMode($testing)->insertBatch($set, $escape, $batchSize);
+	}
+
+	/**
+	 * Updates a single record in the database. If an object is provided,
+	 * it will attempt to convert it into an array.
+	 *
+	 * @param integer|array|string|null $id     ID
+	 * @param array|object|null         $data   Data
+	 * @param boolean|null              $escape Escape
+	 *
+	 * @return boolean
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function update($id = null, $data = null, ?bool $escape = null): bool
+	{
+		if (empty($data))
+		{
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
+		return parent::update($id, $data, $escape);
 	}
 
 	/**
@@ -741,13 +817,13 @@ class Model extends BaseModel
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
-	 * @param string|object $data
-	 * @param string|null   $primaryKey
-	 * @param string        $dateFormat
-	 * @param boolean       $onlyChanged
+	 * @param string|object $data        Data
+	 * @param string|null   $primaryKey  Primary Key
+	 * @param string        $dateFormat  Date Format
+	 * @param boolean       $onlyChanged Only Changed
 	 *
 	 * @return array
-	 * @throws ReflectionException
+	 * @throws ReflectionException ReflectionException.
 	 *
 	 * @deprecated since 4.1
 	 */

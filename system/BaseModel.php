@@ -288,15 +288,6 @@ abstract class BaseModel
 	protected $afterDelete = [];
 
 	/**
-	 * Holds information passed in via 'set'
-	 * so that we can capture it
-	 * and ensure it gets validated first.
-	 *
-	 * @var array
-	 */
-	protected $tempData = [];
-
-	/**
 	 * BaseModel constructor.
 	 *
 	 * @param object|null              $db         DB Connection
@@ -508,29 +499,6 @@ abstract class BaseModel
 	abstract protected function doFirst();
 
 	/**
-	 * Captures the builder's set() method so that we can validate the
-	 * data here. This allows it to be used with any of the other
-	 * builder methods and still get validated data, like replace.
-	 *
-	 * @param mixed       $key    Field name, or an array of field/value pairs
-	 * @param string|null $value  Field value, if $key is a single field
-	 * @param boolean     $escape Whether to escape values and identifiers
-	 *
-	 * @return $this
-	 *
-	 * @todo check if should be moved to Model
-	 */
-	public function set($key, ?string $value = '', bool $escape = null)
-	{
-		$data = is_array($key) ? $key : [$key => $value];
-
-		$this->tempData['escape'] = $escape;
-		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
-
-		return $this;
-	}
-
-	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -669,22 +637,14 @@ abstract class BaseModel
 	 *
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
+	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
 	 * @throws ReflectionException ReflectionException.
 	 */
-	public function insert($data = null, bool $returnID = true)
+	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
 	{
-		$escape = null;
-
 		$this->insertID = 0;
-
-		if (empty($data))
-		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
-		}
 
 		if (empty($data))
 		{
@@ -782,15 +742,15 @@ abstract class BaseModel
 	/**
 	 * Compiles batch insert runs the queries, validating each row prior.
 	 *
-	 * @param array|null $set       An associative array of insert values
-	 * @param boolean    $escape    Whether to escape values and identifiers
-	 * @param integer    $batchSize The size of the batch to run
-	 * @param boolean    $testing   True means only number of records is returned, false will execute the query
+	 * @param array|null   $set       An associative array of insert values
+	 * @param boolean|null $escape    Whether to escape values and identifiers
+	 * @param integer      $batchSize The size of the batch to run
+	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
-	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
+	public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
 		if (is_array($set))
 		{
@@ -844,17 +804,17 @@ abstract class BaseModel
 	 * Compiles batch insert and runs the queries, validating each row prior.
 	 * This methods works only with dbCalls
 	 *
-	 * @param array|null $set       An associative array of insert values
-	 * @param boolean    $escape    Whether to escape values and identifiers
-	 * @param integer    $batchSize The size of the batch to run
-	 * @param boolean    $testing   True means only number of records is returned, false will execute the query
+	 * @param array|null   $set       An associative array of insert values
+	 * @param boolean|null $escape    Whether to escape values and identifiers
+	 * @param integer      $batchSize The size of the batch to run
+	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 * @throws ReflectionException ReflectionException.
 	 */
 	abstract protected function doInsertBatch(
-		array $set = null,
-		bool $escape = null,
+		?array $set = null,
+		?bool $escape = null,
 		int $batchSize = 100,
 		bool $testing = false
 	);
@@ -863,26 +823,18 @@ abstract class BaseModel
 	 * Updates a single record in the database. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string|null $id   ID
-	 * @param array|object|null         $data Data
+	 * @param integer|array|string|null $id     ID
+	 * @param array|object|null         $data   Data
+	 * @param boolean|null              $escape Escape
 	 *
 	 * @return boolean
 	 * @throws ReflectionException ReflectionException.
 	 */
-	public function update($id = null, $data = null): bool
+	public function update($id = null, $data = null, ?bool $escape = null): bool
 	{
-		$escape = null;
-
 		if (is_numeric($id) || is_string($id))
 		{
 			$id = [$id];
-		}
-
-		if (empty($data))
-		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
 		}
 
 		if (empty($data))
@@ -940,7 +892,7 @@ abstract class BaseModel
 		$eventData = [
 			'id'     => $id,
 			'data'   => $eventData['data'],
-			'result' => $this->doUpdate($id, $eventData['data']),
+			'result' => $this->doUpdate($id, $eventData['data'], $escape),
 		];
 
 		if ($this->tempAllowCallbacks)
