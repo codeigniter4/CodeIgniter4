@@ -96,6 +96,7 @@ class Model extends BaseModel
 	/**
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id. This methods works only with dbCalls
+	 * This methods works only with dbCalls
 	 *
 	 * @param boolean                   $singleton Single or multiple results
 	 * @param array|integer|string|null $id        One primary key or an array of primary keys
@@ -133,6 +134,7 @@ class Model extends BaseModel
 
 	/**
 	 * Fetches the column of database from $this->table
+	 * This methods works only with dbCalls
 	 *
 	 * @param string $columnName Column Name
 	 *
@@ -146,6 +148,7 @@ class Model extends BaseModel
 	/**
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
+	 * This methods works only with dbCalls
 	 *
 	 * @param integer $limit  Limit
 	 * @param integer $offset Offset
@@ -169,6 +172,7 @@ class Model extends BaseModel
 	/**
 	 * Returns the first row of the result set. Will take any previous
 	 * Query Builder calls into account when determining the result set.
+	 * This methods works only with dbCalls
 	 *
 	 * @return array|object|null
 	 */
@@ -204,6 +208,7 @@ class Model extends BaseModel
 	 * an array or object. When using with custom class objects,
 	 * you must ensure that the class will provide access to the class
 	 * variables, even if through a magic method.
+	 * This methods works only with dbCalls
 	 *
 	 * @param array|object $data Data
 	 *
@@ -287,6 +292,7 @@ class Model extends BaseModel
 	/**
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
+	 * This methods works only with dbCalls
 	 *
 	 * @param array|object $data   Data
 	 * @param boolean|null $escape Escape
@@ -325,6 +331,7 @@ class Model extends BaseModel
 
 	/**
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
+	 * This methods works only with dbCalls
 	 *
 	 * @param array|null $set       An associative array of insert values
 	 * @param boolean    $escape    Whether to escape values and identifiers
@@ -360,6 +367,7 @@ class Model extends BaseModel
 	/**
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
+	 * This methods works only with dbCalls
 	 *
 	 * @param integer|array|string|null $id     ID
 	 * @param array|object|null         $data   Data
@@ -383,9 +391,8 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Update_Batch
-	 *
 	 * Compiles an update string and runs the query
+	 * This methods works only with dbCalls
 	 *
 	 * @param array|null  $set       An associative array of update values
 	 * @param string|null $index     The where key
@@ -409,6 +416,7 @@ class Model extends BaseModel
 	/**
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
+	 * This methods works only with dbCalls
 	 *
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
@@ -459,6 +467,7 @@ class Model extends BaseModel
 	/**
 	 * Permanently deletes all rows that have been marked as deleted
 	 * through soft deletes (deleted = 1)
+	 * This methods works only with dbCalls
 	 *
 	 * @return boolean|mixed
 	 */
@@ -472,6 +481,7 @@ class Model extends BaseModel
 	/**
 	 * Works with the find* methods to return only the rows that
 	 * have been deleted.
+	 * This methods works only with dbCalls
 	 *
 	 * @return void
 	 */
@@ -481,9 +491,8 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Replace
-	 *
 	 * Compiles a replace into string and runs the query
+	 * This methods works only with dbCalls
 	 *
 	 * @param array|null $data      Data
 	 * @param boolean    $returnSQL Set to true to return Query String
@@ -503,6 +512,7 @@ class Model extends BaseModel
 	 * Loops over records in batches, allowing you to operate on them.
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
+	 * This methods works only with dbCalls
 	 *
 	 * @param integer $size     Size
 	 * @param Closure $userFunc Callback Function
@@ -596,6 +606,7 @@ class Model extends BaseModel
 
 	/**
 	 * Grabs the last error(s) that occurred from the Database connection.
+	 * This methods works only with dbCalls
 	 *
 	 * @return array|null
 	 */
