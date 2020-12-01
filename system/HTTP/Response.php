@@ -30,7 +30,7 @@ use InvalidArgumentException;
  * - Headers
  * - Message body
  */
-class Response extends Message implements ResponseInterface
+class Response extends Message implements MessageInterface, ResponseInterface
 {
 	/**
 	 * HTTP status codes

@@ -27,7 +27,7 @@ use InvalidArgumentException;
  *
  * @mixin \CodeIgniter\HTTP\RedirectResponse
  */
-interface ResponseInterface extends MessageInterface
+interface ResponseInterface
 {
 	/**
 	 * Constants for status codes.
