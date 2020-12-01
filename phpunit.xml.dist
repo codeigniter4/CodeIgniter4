@@ -28,6 +28,7 @@
 				<directory>./system/Pager/Views</directory>
 				<directory>./system/ThirdParty</directory>
 				<directory>./system/Validation/Views</directory>
+				<file>./system/.phpstorm.meta.php</file>
 				<file>./system/bootstrap.php</file>
 				<file>./system/ComposerScripts.php</file>
 				<file>./system/Config/Routes.php</file>
