@@ -210,6 +210,8 @@ class Model extends BaseModel
 	 * @param array|object $data Data
 	 *
 	 * @return boolean
+	 *
+	 * @todo rework to be in BaseModel
 	 */
 	protected function doSave($data): bool
 	{
@@ -362,12 +364,11 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Updates a single record in $this->table. If an object is provided,
-	 * it will attempt to convert it into an array.
+	 * Updates a single record in $this->table.
 	 * This methods works only with dbCalls
 	 *
 	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
+	 * @param array|null                $data   Data
 	 * @param boolean|null              $escape Escape
 	 *
 	 * @return boolean

@@ -297,7 +297,7 @@ abstract class BaseModel
 	protected $tempData = [];
 
 	/**
-	 * Model constructor.
+	 * BaseModel constructor.
 	 *
 	 * @param object|null              $db         DB Connection
 	 * @param ValidationInterface|null $validation Validation
@@ -317,12 +317,11 @@ abstract class BaseModel
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetches the row of database from $this->table with a primary key
-	 * matching $id.
+	 * Fetches the row of database
 	 *
 	 * @param array|integer|string|null $id One primary key or an array of primary keys
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|object|null The resulting row of data, or null.
 	 */
 	public function find($id = null)
 	{
@@ -363,19 +362,18 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Fetches the row of database from $this->table with a primary key
-	 * matching $id. This methods works only with dbCalls
+	 * Fetches the row of database
 	 * This methods works only with dbCalls
 	 *
 	 * @param boolean                   $singleton Single or multiple results
 	 * @param array|integer|string|null $id        One primary key or an array of primary keys
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|object|null The resulting row of data, or null.
 	 */
 	abstract protected function doFind(bool $singleton, $id = null);
 
 	/**
-	 * Fetches the column of database from $this->table
+	 * Fetches the column of database
 	 *
 	 * @param string $columnName Column Name
 	 *
@@ -395,7 +393,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Fetches the column of database from $this->table
+	 * Fetches the column of database
 	 * This methods works only with dbCalls
 	 *
 	 * @param string $columnName Column Name
@@ -406,8 +404,7 @@ abstract class BaseModel
 	abstract protected function doFindColumn(string $columnName);
 
 	/**
-	 * Works with the current Query Builder instance to return
-	 * all results, while optionally limiting them.
+	 * Fetches all results, while optionally limiting them.
 	 *
 	 * @param integer $limit  Limit
 	 * @param integer $offset Offset
@@ -453,8 +450,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Works with the current Query Builder instance to return
-	 * all results, while optionally limiting them.
+	 * Fetches all results, while optionally limiting them.
 	 * This methods works only with dbCalls
 	 *
 	 * @param integer $limit  Limit
@@ -465,8 +461,7 @@ abstract class BaseModel
 	abstract protected function doFindAll(int $limit = 0, int $offset = 0);
 
 	/**
-	 * Returns the first row of the result set. Will take any previous
-	 * Query Builder calls into account when determining the result set.
+	 * Returns the first row of the result set.
 	 *
 	 * @return array|object|null
 	 */
@@ -505,8 +500,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Returns the first row of the result set. Will take any previous
-	 * Query Builder calls into account when determining the result set.
+	 * Returns the first row of the result set.
 	 * This methods works only with dbCalls
 	 *
 	 * @return array|object|null
@@ -523,6 +517,8 @@ abstract class BaseModel
 	 * @param boolean     $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
+	 *
+	 * @todo check if should be moved to Model
 	 */
 	public function set($key, ?string $value = '', bool $escape = null)
 	{
@@ -566,6 +562,8 @@ abstract class BaseModel
 	 * @param array|object $data Data
 	 *
 	 * @return boolean
+	 *
+	 * @todo: to be reworked
 	 */
 	abstract protected function doSave($data): bool;
 
@@ -783,7 +781,7 @@ abstract class BaseModel
 	abstract protected function doInsert($data, ?bool $escape = null);
 
 	/**
-	 * Compiles batch insert strings and runs the queries, validating each row prior.
+	 * Compiles batch insert runs the queries, validating each row prior.
 	 *
 	 * @param array|null $set       An associative array of insert values
 	 * @param boolean    $escape    Whether to escape values and identifiers
@@ -844,7 +842,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Compiles batch insert strings and runs the queries, validating each row prior.
+	 * Compiles batch insert and runs the queries, validating each row prior.
 	 * This methods works only with dbCalls
 	 *
 	 * @param array|null $set       An associative array of insert values
@@ -863,7 +861,7 @@ abstract class BaseModel
 	);
 
 	/**
-	 * Updates a single record in $this->table. If an object is provided,
+	 * Updates a single record in the database. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
 	 * @param integer|array|string|null $id   ID
@@ -957,12 +955,11 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Updates a single record in $this->table. If an object is provided,
-	 * it will attempt to convert it into an array.
+	 * Updates a single record in the database.
 	 * This methods works only with dbCalls
 	 *
 	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
+	 * @param array|null                $data   Data
 	 * @param boolean|null              $escape Escape
 	 *
 	 * @return boolean
@@ -970,7 +967,7 @@ abstract class BaseModel
 	abstract protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool;
 
 	/**
-	 * Compiles an update string and runs the query
+	 * Compiles an update and runs the query
 	 *
 	 * @param array|null  $set       An associative array of update values
 	 * @param string|null $index     The where key
@@ -1033,7 +1030,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Compiles an update string and runs the query
+	 * Compiles an update and runs the query
 	 * This methods works only with dbCalls
 	 *
 	 * @param array|null  $set       An associative array of update values
@@ -1053,8 +1050,7 @@ abstract class BaseModel
 	);
 
 	/**
-	 * Deletes a single record from $this->table where $id matches
-	 * the table's primaryKey
+	 * Deletes a single record from the database where $id matches
 	 *
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
@@ -1097,8 +1093,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Deletes a single record from $this->table where $id matches
-	 * the table's primaryKey
+	 * Deletes a single record from the database where $id matches
 	 * This methods works only with dbCalls
 	 *
 	 * @param integer|string|array|null $id    The rows primary key(s)
@@ -1136,7 +1131,7 @@ abstract class BaseModel
 
 	/**
 	 * Sets $useSoftDeletes value so that we can temporarily override
-	 * the softdeletes settings. Can be used for all find* methods.
+	 * the soft deletes settings. Can be used for all find* methods.
 	 *
 	 * @param boolean $val Value
 	 *
@@ -1173,7 +1168,7 @@ abstract class BaseModel
 	abstract protected function doOnlyDeleted();
 
 	/**
-	 * Compiles a replace into string and runs the query
+	 * Compiles a replace and runs the query
 	 *
 	 * @param array|null $data      Data
 	 * @param boolean    $returnSQL Set to true to return Query String
@@ -1192,7 +1187,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Compiles a replace into string and runs the query
+	 * Compiles a replace and runs the query
 	 * This methods works only with dbCalls
 	 *
 	 * @param array|null $data      Data
@@ -1237,8 +1232,6 @@ abstract class BaseModel
 
 	/**
 	 * Loops over records in batches, allowing you to operate on them.
-	 * Works with $this->builder to get the Compiled select to
-	 * determine the rows to operate on.
 	 * This methods works only with dbCalls
 	 *
 	 * @param integer $size     Size
@@ -1251,7 +1244,7 @@ abstract class BaseModel
 	public abstract function chunk(int $size, Closure $userFunc);
 
 	/**
-	 * Works with $this->builder to get the Compiled Select to operate on.
+	 * Works with Pager to get the size and offset parameters.
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
