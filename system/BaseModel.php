@@ -351,22 +351,6 @@ abstract class BaseModel
 	abstract protected function doFirst();
 
 	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 * This methods works only with dbCalls
-	 *
-	 * @param array|object $data Data
-	 *
-	 * @return boolean
-	 *
-	 * @todo: to be reworked
-	 */
-	abstract protected function doSave($data): bool;
-
-	/**
 	 * Inserts data into the current database
 	 * This methods works only with dbCalls
 	 *
@@ -466,6 +450,15 @@ abstract class BaseModel
 	 * @return array|null
 	 */
 	abstract protected function doErrors();
+
+	/**
+	 * Returns the id value for the data array or object
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return integer|array|string|null
+	 */
+	abstract protected function idValue($data);
 
 	/**
 	 * Override countAllResults to account for soft deleted accounts.
@@ -656,6 +649,8 @@ abstract class BaseModel
 	 * @param array|object $data Data
 	 *
 	 * @return boolean
+	 *
+	 * @throws ReflectionException
 	 */
 	public function save($data): bool
 	{
@@ -664,7 +659,37 @@ abstract class BaseModel
 			return true;
 		}
 
-		return $this->doSave($data);
+		if ($this->shouldUpdate($data))
+		{
+			$response = $this->update($this->idValue($data), $data);
+		}
+		else
+		{
+			$response = $this->insert($data, false);
+
+			if ($response instanceof BaseResult)
+			{
+				$response = $response->resultID !== false;
+			}
+			elseif ($response !== false)
+			{
+				$response = true;
+			}
+		}
+		return $response;
+	}
+
+	/**
+	 * This method is called on save to determine if entry have to be updated
+	 * If this method return false insert operation will be executed
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return boolean
+	 */
+	protected function shouldUpdate($data) : bool
+	{
+		return ! empty($this->idValue($data));
 	}
 
 	/**
@@ -1149,7 +1174,7 @@ abstract class BaseModel
 		}
 
 		$page = $page >= 1 ? $page : $pager->getCurrentPage($group);
-		// Store it in the Pager libraryو so it can be paginated in the views.
+		// Store it in the Pager library, so it can be paginated in the views.
 		$this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
 		$perPage     = $this->pager->getPerPage($group);
 		$offset      = ($page - 1) * $perPage;

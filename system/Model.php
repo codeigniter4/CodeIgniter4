@@ -240,69 +240,6 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 * This methods works only with dbCalls
-	 *
-	 * @param array|object $data Data
-	 *
-	 * @return boolean
-	 *
-	 * @throws ReflectionException
-	 *
-	 * @todo rework to be in BaseModel
-	 */
-	protected function doSave($data): bool
-	{
-		// When useAutoIncrement feature is disabled check
-		// in the database if given record already exists
-		if (! $makeUpdate = $this->useAutoIncrement)
-		{
-			$count = 0;
-
-			if (is_object($data) && isset($data->{$this->primaryKey}))
-			{
-				$count = $this->where($this->primaryKey, $data->{$this->primaryKey})->countAllResults();
-			}
-			elseif (is_array($data) && ! empty($data[$this->primaryKey]))
-			{
-				$count = $this->where($this->primaryKey, $data[$this->primaryKey])->countAllResults();
-			}
-
-			if ($count === 1)
-			{
-				$makeUpdate = true;
-			}
-		}
-
-		if ($makeUpdate && is_object($data) && isset($data->{$this->primaryKey}))
-		{
-			$response = $this->update($data->{$this->primaryKey}, $data);
-		}
-		elseif ($makeUpdate && is_array($data) && ! empty($data[$this->primaryKey]))
-		{
-			$response = $this->update($data[$this->primaryKey], $data);
-		}
-		else
-		{
-			$response = $this->insert($data, false);
-
-			if ($response instanceof BaseResult)
-			{
-				$response = $response->resultID !== false;
-			}
-			elseif ($response !== false)
-			{
-				$response = true;
-			}
-		}
-		return $response;
-	}
-
-	/**
 	 * Inserts data into the current table.
 	 * This methods works only with dbCalls
 	 *
@@ -357,7 +294,7 @@ class Model extends BaseModel
 	{
 		if (is_array($set))
 		{
-			foreach ($set as &$row)
+			foreach ($set as $row)
 			{
 				// Require non empty primaryKey when
 				// not using auto-increment feature
@@ -520,6 +457,27 @@ class Model extends BaseModel
 	}
 
 	/**
+	 * Returns the id value for the data array or object
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return integer|array|string|null
+	 */
+	protected function idValue($data)
+	{
+		if (is_object($data) && isset($data->{$this->primaryKey}))
+		{
+			return $data->{$this->primaryKey};
+		}
+		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		{
+			return $data[$this->primaryKey];
+		}
+
+		return null;
+	}
+
+	/**
 	 * Loops over records in batches, allowing you to operate on them.
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
@@ -669,6 +627,25 @@ class Model extends BaseModel
 	// region Overrides
 
 	// region CRUD & Finders
+
+	/**
+	 * This method is called on save to determine if entry have to be updated
+	 * If this method return false insert operation will be executed
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return boolean
+	 */
+	protected function shouldUpdate($data) : bool
+	{
+		// When useAutoIncrement feature is disabled check
+		// in the database if given record already exists
+		return parent::shouldUpdate($data) &&
+			($this->useAutoIncrement
+				? true
+				: $this->where($this->primaryKey, $this->idValue($data))->countAllResults() === 1
+			);
+	}
 
 	/**
 	 * Inserts data into the database. If an object is provided,
