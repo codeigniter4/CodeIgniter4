@@ -289,7 +289,7 @@ abstract class BaseModel
 
 	/**
 	 * Holds information passed in via 'set'
-	 * so that we can capture it (not the builder)
+	 * so that we can capture it
 	 * and ensure it gets validated first.
 	 *
 	 * @var array
@@ -664,7 +664,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Inserts data into the current table. If an object is provided,
+	 * Inserts data into the database. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object|null $data     Data
@@ -692,7 +692,7 @@ abstract class BaseModel
 		}
 
 		// If $data is using a custom class with public or protected
-		// properties representing the table elements, we need to grab
+		// properties representing the collection elements, we need to grab
 		// them as an array.
 		if (is_object($data) && ! $data instanceof stdClass)
 		{
@@ -769,11 +769,10 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Inserts data into the current table. If an object is provided,
-	 * it will attempt to convert it to an array.
+	 * Inserts data into the current database
 	 * This methods works only with dbCalls
 	 *
-	 * @param array|object $data   Data
+	 * @param array        $data   Data
 	 * @param boolean|null $escape Escape
 	 *
 	 * @return object|integer|string|false
@@ -798,7 +797,7 @@ abstract class BaseModel
 			foreach ($set as &$row)
 			{
 				// If $data is using a custom class with public or protected
-				// properties representing the table elements, we need to grab
+				// properties representing the collection elements, we need to grab
 				// them as an array.
 				if (is_object($row) && ! $row instanceof stdClass)
 				{
@@ -892,7 +891,7 @@ abstract class BaseModel
 		}
 
 		// If $data is using a custom class with public or protected
-		// properties representing the table elements, we need to grab
+		// properties representing the collection elements, we need to grab
 		// them as an array.
 		if (is_object($data) && ! $data instanceof stdClass)
 		{
@@ -985,7 +984,7 @@ abstract class BaseModel
 			foreach ($set as &$row)
 			{
 				// If $data is using a custom class with public or protected
-				// properties representing the table elements, we need to grab
+				// properties representing the collection elements, we need to grab
 				// them as an array.
 				if (is_object($row) && ! $row instanceof stdClass)
 				{
@@ -1216,8 +1215,8 @@ abstract class BaseModel
 	/**
 	 * Sets the return type to be of the specified type of object.
 	 * Defaults to a simple object, but can be any class that has
-	 * class vars with the same name as the table columns, or at least
-	 * allows them to be created.
+	 * class vars with the same name as the collection columns,
+	 * or at least allows them to be created.
 	 *
 	 * @param string $class Class Name
 	 *
@@ -1517,8 +1516,7 @@ abstract class BaseModel
 			return true;
 		}
 
-		// Query Builder works with objects as well as arrays,
-		// but validation requires array, so cast away.
+		//Validation requires array, so cast away.
 		if (is_object($data))
 		{
 			$data = (array) $data;
@@ -1740,7 +1738,7 @@ abstract class BaseModel
 	//--------------------------------------------------------------------
 
 	/**
-	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
+	 * Provides the db connection and model's properties.
 	 *
 	 * @param string $name Name
 	 *
@@ -1762,7 +1760,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Checks for the existence of properties across this model, builder, and db connection.
+	 * Checks for the existence of properties across this model, and db connection.
 	 *
 	 * @param string $name Name
 	 *
@@ -1784,8 +1782,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Provides direct access to method in the builder (if available)
-	 * and the database connection.
+	 * Provides direct access to method in the database connection.
 	 *
 	 * @param string $name   Name
 	 * @param array  $params Params

@@ -289,11 +289,10 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Inserts data into the current table. If an object is provided,
-	 * it will attempt to convert it to an array.
+	 * Inserts data into the current table.
 	 * This methods works only with dbCalls
 	 *
-	 * @param array|object $data   Data
+	 * @param array        $data   Data
 	 * @param boolean|null $escape Escape
 	 *
 	 * @return BaseResult|integer|string|false
