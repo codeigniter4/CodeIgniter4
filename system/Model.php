@@ -90,9 +90,16 @@ class Model extends BaseModel
 	 */
 	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
 	{
-		parent::__construct($db, $validation);
+		parent::__construct($validation);
 
-		$this->db = $db ?? Database::connect($this->DBGroup);
+		if (is_null($db))
+		{
+			$this->db = Database::connect($this->DBGroup);
+		}
+		else
+		{
+			$this->db = &$db;
+		}
 	}
 
 	//--------------------------------------------------------------------

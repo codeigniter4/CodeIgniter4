@@ -290,12 +290,9 @@ abstract class BaseModel
 	/**
 	 * BaseModel constructor.
 	 *
-	 * @param object|null              $db         DB Connection
 	 * @param ValidationInterface|null $validation Validation
-	 *
-	 * @phpstan-ignore-next-line
 	 */
-	public function __construct(object &$db = null, ValidationInterface $validation = null)
+	public function __construct(ValidationInterface $validation = null)
 	{
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
