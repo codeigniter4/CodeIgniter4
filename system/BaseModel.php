@@ -158,8 +158,6 @@ abstract class BaseModel
 	 * Database Connection
 	 *
 	 * @var object
-	 *
-	 * @todo check if ConnectionInterface can be used for NO-SQL
 	 */
 	protected $db;
 
@@ -365,8 +363,9 @@ abstract class BaseModel
 	 *
 	 * @param string $columnName Column Name
 	 *
-	 * @return array|null   The resulting row of data, or null if no data found.
-	 * @throws DataException Data Exception.
+	 * @return array|null The resulting row of data, or null if no data found.
+	 *
+	 * @throws DataException
 	 */
 	public function findColumn(string $columnName)
 	{
@@ -386,8 +385,9 @@ abstract class BaseModel
 	 *
 	 * @param string $columnName Column Name
 	 *
-	 * @return array|null   The resulting row of data, or null if no data found.
-	 * @throws DataException Data Exception.
+	 * @return array|null The resulting row of data, or null if no data found.
+	 *
+	 * @throws DataException
 	 */
 	abstract protected function doFindColumn(string $columnName);
 
@@ -543,7 +543,8 @@ abstract class BaseModel
 	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
 	 *
 	 * @return array Array
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
 	{
@@ -583,7 +584,8 @@ abstract class BaseModel
 	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
 	 *
 	 * @return array|null Array
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
 	{
@@ -637,7 +639,8 @@ abstract class BaseModel
 	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
 	{
@@ -734,18 +737,19 @@ abstract class BaseModel
 	 *
 	 * @return object|integer|string|false
 	 */
-	abstract protected function doInsert($data, ?bool $escape = null);
+	abstract protected function doInsert(array $data, ?bool $escape = null);
 
 	/**
 	 * Compiles batch insert runs the queries, validating each row prior.
 	 *
-	 * @param array|null   $set       An associative array of insert values
+	 * @param array|null   $set       an associative array of insert values
 	 * @param boolean|null $escape    Whether to escape values and identifiers
 	 * @param integer      $batchSize The size of the batch to run
 	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
@@ -807,14 +811,8 @@ abstract class BaseModel
 	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
-	 * @throws ReflectionException ReflectionException.
 	 */
-	abstract protected function doInsertBatch(
-		?array $set = null,
-		?bool $escape = null,
-		int $batchSize = 100,
-		bool $testing = false
-	);
+	abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
 	/**
 	 * Updates a single record in the database. If an object is provided,
@@ -825,7 +823,8 @@ abstract class BaseModel
 	 * @param boolean|null              $escape Escape
 	 *
 	 * @return boolean
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	public function update($id = null, $data = null, ?bool $escape = null): bool
 	{
@@ -923,8 +922,9 @@ abstract class BaseModel
 	 * @param boolean     $returnSQL True means SQL is returned, false will execute the query
 	 *
 	 * @return mixed    Number of rows affected or FALSE on failure
-	 * @throws DatabaseException DatabaseException.
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws DatabaseException
+	 * @throws ReflectionException
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
@@ -987,15 +987,10 @@ abstract class BaseModel
 	 * @param boolean     $returnSQL True means SQL is returned, false will execute the query
 	 *
 	 * @return mixed    Number of rows affected or FALSE on failure
-	 * @throws DatabaseException DatabaseException.
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws DatabaseException
 	 */
-	abstract protected function doUpdateBatch(
-		array $set = null,
-		string $index = null,
-		int $batchSize = 100,
-		bool $returnSQL = false
-	);
+	abstract protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false);
 
 	/**
 	 * Deletes a single record from the database where $id matches
@@ -1004,7 +999,8 @@ abstract class BaseModel
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return BaseResult|boolean
-	 * @throws DatabaseException DatabaseException.
+	 *
+	 * @throws DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
@@ -1048,7 +1044,8 @@ abstract class BaseModel
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return object|boolean
-	 * @throws DatabaseException DatabaseException.
+	 *
+	 * @throws DatabaseException
 	 */
 	abstract protected function doDelete($id = null, bool $purge = false);
 
@@ -1185,9 +1182,9 @@ abstract class BaseModel
 	 * @param integer $size     Size
 	 * @param Closure $userFunc Callback Function
 	 *
-	 * @throws DataException DataException.
-	 *
 	 * @return void
+	 *
+	 * @throws DataException
 	 */
 	public abstract function chunk(int $size, Closure $userFunc);
 
@@ -1246,7 +1243,8 @@ abstract class BaseModel
 	 * @param array $data Data
 	 *
 	 * @return array
-	 * @throws DataException DataException.
+	 *
+	 * @throws DataException
 	 */
 	protected function doProtectFields(array $data): array
 	{
@@ -1285,7 +1283,8 @@ abstract class BaseModel
 	 * @param integer|null $userData An optional PHP timestamp to be converted.
 	 *
 	 * @return mixed
-	 * @throws ModelException ModelException.
+	 *
+	 * @throws ModelException
 	 */
 	protected function setDate(?int $userData = null)
 	{
@@ -1541,7 +1540,7 @@ abstract class BaseModel
 
 		foreach ($data as $key => $value)
 		{
-			$replacements["{{$key}}"] = $value;
+			$replacements['{' . $key . '}'] = $value;
 		}
 
 		if (! empty($replacements))
@@ -1588,7 +1587,8 @@ abstract class BaseModel
 		// or an array of rules.
 		if (is_string($rules))
 		{
-			$rules = $this->validation->loadRuleGroup($rules); // @phpstan-ignore-line
+			// @phpstan-ignore-next-line
+			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
 		if (isset($options['except']))
@@ -1629,7 +1629,7 @@ abstract class BaseModel
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
 	 * the setting. Resets after the next method that uses triggers.
 	 *
-	 * @param boolean $val
+	 * @param boolean $val value
 	 *
 	 * @return $this
 	 */
@@ -1659,7 +1659,8 @@ abstract class BaseModel
 	 * @param array  $eventData Event Data
 	 *
 	 * @return mixed
-	 * @throws DataException DataException.
+	 *
+	 * @throws DataException
 	 */
 	protected function trigger(string $event, array $eventData)
 	{

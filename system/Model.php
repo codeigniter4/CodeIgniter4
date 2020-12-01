@@ -151,7 +151,7 @@ class Model extends BaseModel
 	 *
 	 * @param string $columnName Column Name
 	 *
-	 * @return array|null   The resulting row of data, or null if no data found.
+	 * @return array|null The resulting row of data, or null if no data found.
 	 */
 	protected function doFindColumn(string $columnName)
 	{
@@ -248,6 +248,8 @@ class Model extends BaseModel
 	 *
 	 * @return boolean
 	 *
+	 * @throws ReflectionException
+	 *
 	 * @todo rework to be in BaseModel
 	 */
 	protected function doSave($data): bool
@@ -306,7 +308,8 @@ class Model extends BaseModel
 	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
 	 *
 	 * @return array|null Array
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
 	{
@@ -334,7 +337,8 @@ class Model extends BaseModel
 	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
 	{
@@ -357,7 +361,7 @@ class Model extends BaseModel
 	 *
 	 * @return BaseResult|integer|string|false
 	 */
-	protected function doInsert($data, ?bool $escape = null)
+	protected function doInsert(array $data, ?bool $escape = null)
 	{
 		// Require non empty primaryKey when
 		// not using auto-increment feature
@@ -380,7 +384,8 @@ class Model extends BaseModel
 			}
 			else
 			{
-				$this->insertID = $this->db->insertID(); // @phpstan-ignore-line
+				// @phpstan-ignore-next-line
+				$this->insertID = $this->db->insertID();
 			}
 		}
 
@@ -397,14 +402,8 @@ class Model extends BaseModel
 	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
-	 * @throws ReflectionException ReflectionException.
 	 */
-	protected function doInsertBatch(
-		?array $set = null,
-		?bool $escape = null,
-		int $batchSize = 100,
-		bool $testing = false
-	)
+	protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
 		if (is_array($set))
 		{
@@ -431,7 +430,8 @@ class Model extends BaseModel
 	 * @param boolean|null              $escape Escape
 	 *
 	 * @return boolean
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
 	 */
 	public function update($id = null, $data = null, ?bool $escape = null): bool
 	{
@@ -480,15 +480,10 @@ class Model extends BaseModel
 	 * @param boolean     $returnSQL True means SQL is returned, false will execute the query
 	 *
 	 * @return mixed    Number of rows affected or FALSE on failure
-	 * @throws DatabaseException DatabaseException.
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws DatabaseException
 	 */
-	protected function doUpdateBatch(
-		array $set = null,
-		string $index = null,
-		int $batchSize = 100,
-		bool $returnSQL = false
-	)
+	protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
 		return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
 	}
@@ -502,7 +497,8 @@ class Model extends BaseModel
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return BaseResult|boolean
-	 * @throws DatabaseException DatabaseException.
+	 *
+	 * @throws DatabaseException
 	 */
 	protected function doDelete($id = null, bool $purge = false)
 	{
@@ -524,7 +520,9 @@ class Model extends BaseModel
 					);
 				}
 
-				return false; // @codeCoverageIgnore
+				// @codeCoverageIgnoreStart
+				return false;
+				// @codeCoverageIgnoreEnd
 			}
 
 			$set[$this->deletedField] = $this->setDate();
@@ -597,9 +595,9 @@ class Model extends BaseModel
 	 * @param integer $size     Size
 	 * @param Closure $userFunc Callback Function
 	 *
-	 * @throws DataException DataException.
-	 *
 	 * @return void
+	 *
+	 * @throws DataException
 	 */
 	public function chunk(int $size, Closure $userFunc)
 	{
@@ -638,12 +636,11 @@ class Model extends BaseModel
 	/**
 	 * Provides a shared instance of the Query Builder.
 	 *
-	 * @param string $table
+	 * @param string|null $table Table name
 	 *
 	 * @return BaseBuilder
-	 * @throws ModelException
 	 */
-	public function builder(string $table = null)
+	public function builder(?string $table = null)
 	{
 		// Check for an existing Builder
 		if ($this->builder instanceof BaseBuilder)
@@ -830,7 +827,10 @@ class Model extends BaseModel
 	 * @param boolean       $onlyChanged Only Changed
 	 *
 	 * @return array
-	 * @throws ReflectionException ReflectionException.
+	 *
+	 * @throws ReflectionException
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @deprecated since 4.1
 	 */
