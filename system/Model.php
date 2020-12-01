@@ -45,6 +45,8 @@ use ReflectionProperty;
  */
 class Model extends BaseModel
 {
+	// region Properties
+
 	/**
 	 * Name of database table
 	 *
@@ -82,6 +84,10 @@ class Model extends BaseModel
 	 */
 	protected $tempData = [];
 
+	// endregion
+
+	// region Constructor
+
 	/**
 	 * Model constructor.
 	 *
@@ -102,9 +108,27 @@ class Model extends BaseModel
 		}
 	}
 
-	//--------------------------------------------------------------------
-	// CRUD & FINDERS
-	//--------------------------------------------------------------------
+	// endregion
+
+	// region Setters
+
+	/**
+	 * Specify the table associated with a model
+	 *
+	 * @param string $table Table
+	 *
+	 * @return $this
+	 */
+	public function setTable(string $table)
+	{
+		$this->table = $table;
+
+		return $this;
+	}
+
+	// endregion
+
+	// region Database Methods
 
 	/**
 	 * Fetches the row of database from $this->table with a primary key
@@ -216,27 +240,6 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Captures the builder's set() method so that we can validate the
-	 * data here. This allows it to be used with any of the other
-	 * builder methods and still get validated data, like replace.
-	 *
-	 * @param mixed        $key    Field name, or an array of field/value pairs
-	 * @param string|null  $value  Field value, if $key is a single field
-	 * @param boolean|null $escape Whether to escape values and identifiers
-	 *
-	 * @return $this
-	 */
-	public function set($key, ?string $value = '', ?bool $escape = null)
-	{
-		$data = is_array($key) ? $key : [$key => $value];
-
-		$this->tempData['escape'] = $escape;
-		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
-
-		return $this;
-	}
-
-	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -297,59 +300,6 @@ class Model extends BaseModel
 			}
 		}
 		return $response;
-	}
-
-	/**
-	 * Takes a class an returns an array of it's public and protected
-	 * properties as an array with raw values.
-	 *
-	 * @param string|object $data        Data
-	 * @param boolean       $onlyChanged Only Changed Property
-	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
-	 *
-	 * @return array|null Array
-	 *
-	 * @throws ReflectionException
-	 */
-	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
-	{
-		$properties = parent::objectToRawArray($data, $onlyChanged);
-
-		if (method_exists($data, 'toRawArray'))
-		{
-			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-				&& ! empty($data->{$this->primaryKey}))
-			{
-				$properties[$this->primaryKey] = $data->{$this->primaryKey};
-			}
-		}
-
-		return $properties;
-	}
-
-	/**
-	 * Inserts data into the database. If an object is provided,
-	 * it will attempt to convert it to an array.
-	 *
-	 * @param array|object|null $data     Data
-	 * @param boolean           $returnID Whether insert ID should be returned or not.
-	 * @param boolean|null      $escape   Escape
-	 *
-	 * @return BaseResult|object|integer|string|false
-	 *
-	 * @throws ReflectionException
-	 */
-	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
-	{
-		if (empty($data))
-		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
-		}
-
-		return parent::insert($data, $returnID, $escape);
 	}
 
 	/**
@@ -419,30 +369,6 @@ class Model extends BaseModel
 		}
 
 		return $this->builder()->testMode($testing)->insertBatch($set, $escape, $batchSize);
-	}
-
-	/**
-	 * Updates a single record in the database. If an object is provided,
-	 * it will attempt to convert it into an array.
-	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
-	 * @param boolean|null              $escape Escape
-	 *
-	 * @return boolean
-	 *
-	 * @throws ReflectionException
-	 */
-	public function update($id = null, $data = null, ?bool $escape = null): bool
-	{
-		if (empty($data))
-		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
-		}
-
-		return parent::update($id, $data, $escape);
 	}
 
 	/**
@@ -582,9 +508,16 @@ class Model extends BaseModel
 		return $this->builder()->testMode($returnSQL)->replace($data);
 	}
 
-	//--------------------------------------------------------------------
-	// Utility
-	//--------------------------------------------------------------------
+	/**
+	 * Grabs the last error(s) that occurred from the Database connection.
+	 * This methods works only with dbCalls
+	 *
+	 * @return array|null
+	 */
+	protected function doErrors()
+	{
+		return $this->db->error();
+	}
 
 	/**
 	 * Loops over records in batches, allowing you to operate on them.
@@ -632,6 +565,35 @@ class Model extends BaseModel
 			}
 		}
 	}
+
+	/**
+	 * Override countAllResults to account for soft deleted accounts.
+	 *
+	 * @param boolean $reset Reset
+	 * @param boolean $test  Test
+	 *
+	 * @return mixed
+	 */
+	public function countAllResults(bool $reset = true, bool $test = false)
+	{
+		if ($this->tempUseSoftDeletes)
+		{
+			$this->builder()->where($this->table . '.' . $this->deletedField, null);
+		}
+
+		// When $reset === false, the $tempUseSoftDeletes will be
+		// dependant on $useSoftDeletes value because we don't
+		// want to add the same "where" condition for the second time
+		$this->tempUseSoftDeletes = $reset
+			? $this->useSoftDeletes
+			: ($this->useSoftDeletes ? false : $this->useSoftDeletes);
+
+		return $this->builder()->testMode($test)->countAllResults($reset);
+	}
+
+	// endregion
+
+	// region Builder
 
 	/**
 	 * Provides a shared instance of the Query Builder.
@@ -682,58 +644,116 @@ class Model extends BaseModel
 	}
 
 	/**
-	 * Grabs the last error(s) that occurred from the Database connection.
-	 * This methods works only with dbCalls
+	 * Captures the builder's set() method so that we can validate the
+	 * data here. This allows it to be used with any of the other
+	 * builder methods and still get validated data, like replace.
 	 *
-	 * @return array|null
-	 */
-	protected function doErrors()
-	{
-		return $this->db->error();
-	}
-
-	/**
-	 * Specify the table associated with a model
-	 *
-	 * @param string $table Table
+	 * @param mixed        $key    Field name, or an array of field/value pairs
+	 * @param string|null  $value  Field value, if $key is a single field
+	 * @param boolean|null $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
-	public function setTable(string $table)
+	public function set($key, ?string $value = '', ?bool $escape = null)
 	{
-		$this->table = $table;
+		$data = is_array($key) ? $key : [$key => $value];
+
+		$this->tempData['escape'] = $escape;
+		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
 
 		return $this;
 	}
 
+	// endregion
+
+	// region Overrides
+
+	// region CRUD & Finders
+
 	/**
-	 * Override countAllResults to account for soft deleted accounts.
+	 * Inserts data into the database. If an object is provided,
+	 * it will attempt to convert it to an array.
 	 *
-	 * @param boolean $reset Reset
-	 * @param boolean $test  Test
+	 * @param array|object|null $data     Data
+	 * @param boolean           $returnID Whether insert ID should be returned or not.
+	 * @param boolean|null      $escape   Escape
 	 *
-	 * @return mixed
+	 * @return BaseResult|object|integer|string|false
+	 *
+	 * @throws ReflectionException
 	 */
-	public function countAllResults(bool $reset = true, bool $test = false)
+	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
 	{
-		if ($this->tempUseSoftDeletes)
+		if (empty($data))
 		{
-			$this->builder()->where($this->table . '.' . $this->deletedField, null);
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
 		}
 
-		// When $reset === false, the $tempUseSoftDeletes will be
-		// dependant on $useSoftDeletes value because we don't
-		// want to add the same "where" condition for the second time
-		$this->tempUseSoftDeletes = $reset
-			? $this->useSoftDeletes
-			: ($this->useSoftDeletes ? false : $this->useSoftDeletes);
-
-		return $this->builder()->testMode($test)->countAllResults($reset);
+		return parent::insert($data, $returnID, $escape);
 	}
 
-	//--------------------------------------------------------------------
-	// Magic
-	//--------------------------------------------------------------------
+	/**
+	 * Updates a single record in the database. If an object is provided,
+	 * it will attempt to convert it into an array.
+	 *
+	 * @param integer|array|string|null $id     ID
+	 * @param array|object|null         $data   Data
+	 * @param boolean|null              $escape Escape
+	 *
+	 * @return boolean
+	 *
+	 * @throws ReflectionException
+	 */
+	public function update($id = null, $data = null, ?bool $escape = null): bool
+	{
+		if (empty($data))
+		{
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
+		return parent::update($id, $data, $escape);
+	}
+
+	// endregion
+
+	// region Utility
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array with raw values.
+	 *
+	 * @param string|object $data        Data
+	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
+	 *
+	 * @return array|null Array
+	 *
+	 * @throws ReflectionException
+	 */
+	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+	{
+		$properties = parent::objectToRawArray($data, $onlyChanged);
+
+		if (method_exists($data, 'toRawArray'))
+		{
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey}))
+			{
+				$properties[$this->primaryKey] = $data->{$this->primaryKey};
+			}
+		}
+
+		return $properties;
+	}
+
+	// endregion
+
+	// region Magic
 
 	/**
 	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
@@ -817,6 +837,12 @@ class Model extends BaseModel
 		return $result;
 	}
 
+	// endregion
+
+	// endregion
+
+	// region Deprecated
+
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
@@ -892,5 +918,7 @@ class Model extends BaseModel
 
 		return $properties;
 	}
+
+	// endregion
 
 }

@@ -43,6 +43,8 @@ use stdClass;
  */
 abstract class BaseModel
 {
+	// region Properties
+
 	/**
 	 * Pager instance.
 	 * Populated after calling $this->paginate()
@@ -285,6 +287,10 @@ abstract class BaseModel
 	 */
 	protected $afterDelete = [];
 
+	// endregion
+
+	// region Constructor
+
 	/**
 	 * BaseModel constructor.
 	 *
@@ -298,9 +304,196 @@ abstract class BaseModel
 		$this->validation         = $validation ?? Services::validation(null, false);
 	}
 
-	//--------------------------------------------------------------------
-	// CRUD & FINDERS
-	//--------------------------------------------------------------------
+	// endregion
+
+	// region Abstract Methods
+
+	/**
+	 * Fetches the row of database
+	 * This methods works only with dbCalls
+	 *
+	 * @param boolean                   $singleton Single or multiple results
+	 * @param array|integer|string|null $id        One primary key or an array of primary keys
+	 *
+	 * @return array|object|null The resulting row of data, or null.
+	 */
+	abstract protected function doFind(bool $singleton, $id = null);
+
+	/**
+	 * Fetches the column of database
+	 * This methods works only with dbCalls
+	 *
+	 * @param string $columnName Column Name
+	 *
+	 * @return array|null The resulting row of data, or null if no data found.
+	 *
+	 * @throws DataException
+	 */
+	abstract protected function doFindColumn(string $columnName);
+
+	/**
+	 * Fetches all results, while optionally limiting them.
+	 * This methods works only with dbCalls
+	 *
+	 * @param integer $limit  Limit
+	 * @param integer $offset Offset
+	 *
+	 * @return array
+	 */
+	abstract protected function doFindAll(int $limit = 0, int $offset = 0);
+
+	/**
+	 * Returns the first row of the result set.
+	 * This methods works only with dbCalls
+	 *
+	 * @return array|object|null
+	 */
+	abstract protected function doFirst();
+
+	/**
+	 * A convenience method that will attempt to determine whether the
+	 * data should be inserted or updated. Will work with either
+	 * an array or object. When using with custom class objects,
+	 * you must ensure that the class will provide access to the class
+	 * variables, even if through a magic method.
+	 * This methods works only with dbCalls
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return boolean
+	 *
+	 * @todo: to be reworked
+	 */
+	abstract protected function doSave($data): bool;
+
+	/**
+	 * Inserts data into the current database
+	 * This methods works only with dbCalls
+	 *
+	 * @param array        $data   Data
+	 * @param boolean|null $escape Escape
+	 *
+	 * @return object|integer|string|false
+	 */
+	abstract protected function doInsert(array $data, ?bool $escape = null);
+
+	/**
+	 * Compiles batch insert and runs the queries, validating each row prior.
+	 * This methods works only with dbCalls
+	 *
+	 * @param array|null   $set       An associative array of insert values
+	 * @param boolean|null $escape    Whether to escape values and identifiers
+	 * @param integer      $batchSize The size of the batch to run
+	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
+	 *
+	 * @return integer|boolean Number of rows inserted or FALSE on failure
+	 */
+	abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
+
+	/**
+	 * Updates a single record in the database.
+	 * This methods works only with dbCalls
+	 *
+	 * @param integer|array|string|null $id     ID
+	 * @param array|null                $data   Data
+	 * @param boolean|null              $escape Escape
+	 *
+	 * @return boolean
+	 */
+	abstract protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool;
+
+	/**
+	 * Compiles an update and runs the query
+	 * This methods works only with dbCalls
+	 *
+	 * @param array|null  $set       An associative array of update values
+	 * @param string|null $index     The where key
+	 * @param integer     $batchSize The size of the batch to run
+	 * @param boolean     $returnSQL True means SQL is returned, false will execute the query
+	 *
+	 * @return mixed    Number of rows affected or FALSE on failure
+	 *
+	 * @throws DatabaseException
+	 */
+	abstract protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false);
+
+	/**
+	 * Deletes a single record from the database where $id matches
+	 * This methods works only with dbCalls
+	 *
+	 * @param integer|string|array|null $id    The rows primary key(s)
+	 * @param boolean                   $purge Allows overriding the soft deletes setting.
+	 *
+	 * @return object|boolean
+	 *
+	 * @throws DatabaseException
+	 */
+	abstract protected function doDelete($id = null, bool $purge = false);
+
+	/**
+	 * Permanently deletes all rows that have been marked as deleted
+	 * through soft deletes (deleted = 1)
+	 * This methods works only with dbCalls
+	 *
+	 * @return boolean|mixed
+	 */
+	abstract protected function doPurgeDeleted();
+
+	/**
+	 * Works with the find* methods to return only the rows that
+	 * have been deleted.
+	 * This methods works only with dbCalls
+	 *
+	 * @return void
+	 */
+	abstract protected function doOnlyDeleted();
+
+	/**
+	 * Compiles a replace and runs the query
+	 * This methods works only with dbCalls
+	 *
+	 * @param array|null $data      Data
+	 * @param boolean    $returnSQL Set to true to return Query String
+	 *
+	 * @return mixed
+	 */
+	abstract protected function doReplace(array $data = null, bool $returnSQL = false);
+
+	/**
+	 * Grabs the last error(s) that occurred from the Database connection.
+	 * This methods works only with dbCalls
+	 *
+	 * @return array|null
+	 */
+	abstract protected function doErrors();
+
+	/**
+	 * Override countAllResults to account for soft deleted accounts.
+	 * This methods works only with dbCalls
+	 *
+	 * @param boolean $reset Reset
+	 * @param boolean $test  Test
+	 *
+	 * @return mixed
+	 */
+	abstract public function countAllResults(bool $reset = true, bool $test = false);
+
+	/**
+	 * Loops over records in batches, allowing you to operate on them.
+	 * This methods works only with dbCalls
+	 *
+	 * @param integer $size     Size
+	 * @param Closure $userFunc Callback Function
+	 *
+	 * @return void
+	 *
+	 * @throws DataException
+	 */
+	abstract public function chunk(int $size, Closure $userFunc);
+
+	// endregion
+
+	// region CRUD & Finders
 
 	/**
 	 * Fetches the row of database
@@ -348,17 +541,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Fetches the row of database
-	 * This methods works only with dbCalls
-	 *
-	 * @param boolean                   $singleton Single or multiple results
-	 * @param array|integer|string|null $id        One primary key or an array of primary keys
-	 *
-	 * @return array|object|null The resulting row of data, or null.
-	 */
-	abstract protected function doFind(bool $singleton, $id = null);
-
-	/**
 	 * Fetches the column of database
 	 *
 	 * @param string $columnName Column Name
@@ -378,18 +560,6 @@ abstract class BaseModel
 
 		return $resultSet ? array_column($resultSet, $columnName) : null;
 	}
-
-	/**
-	 * Fetches the column of database
-	 * This methods works only with dbCalls
-	 *
-	 * @param string $columnName Column Name
-	 *
-	 * @return array|null The resulting row of data, or null if no data found.
-	 *
-	 * @throws DataException
-	 */
-	abstract protected function doFindColumn(string $columnName);
 
 	/**
 	 * Fetches all results, while optionally limiting them.
@@ -438,17 +608,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Fetches all results, while optionally limiting them.
-	 * This methods works only with dbCalls
-	 *
-	 * @param integer $limit  Limit
-	 * @param integer $offset Offset
-	 *
-	 * @return array
-	 */
-	abstract protected function doFindAll(int $limit = 0, int $offset = 0);
-
-	/**
 	 * Returns the first row of the result set.
 	 *
 	 * @return array|object|null
@@ -488,14 +647,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Returns the first row of the result set.
-	 * This methods works only with dbCalls
-	 *
-	 * @return array|object|null
-	 */
-	abstract protected function doFirst();
-
-	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -514,110 +665,6 @@ abstract class BaseModel
 		}
 
 		return $this->doSave($data);
-	}
-
-	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 * This methods works only with dbCalls
-	 *
-	 * @param array|object $data Data
-	 *
-	 * @return boolean
-	 *
-	 * @todo: to be reworked
-	 */
-	abstract protected function doSave($data): bool;
-
-	/**
-	 * Takes a class an returns an array of it's public and protected
-	 * properties as an array suitable for use in creates and updates.
-	 * This method use objectToRawArray internally and does conversion
-	 * to string on all Time instances
-	 *
-	 * @param string|object $data        Data
-	 * @param boolean       $onlyChanged Only Changed Property
-	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
-	 *
-	 * @return array Array
-	 *
-	 * @throws ReflectionException
-	 */
-	protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
-	{
-		$properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
-
-		// Convert any Time instances to appropriate $dateFormat
-		if ($properties)
-		{
-			$properties = array_map(function ($value) {
-				if ($value instanceof Time)
-				{
-					switch ($this->dateFormat)
-					{
-						case 'datetime':
-							return $value->format('Y-m-d H:i:s');
-						case 'date':
-							return $value->format('Y-m-d');
-						case 'int':
-							return $value->getTimestamp();
-						default:
-							return (string) $value;
-					}
-				}
-				return $value;
-			}, $properties);
-		}
-
-		return $properties;
-	}
-
-	/**
-	 * Takes a class an returns an array of it's public and protected
-	 * properties as an array with raw values.
-	 *
-	 * @param string|object $data        Data
-	 * @param boolean       $onlyChanged Only Changed Property
-	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
-	 *
-	 * @return array|null Array
-	 *
-	 * @throws ReflectionException
-	 */
-	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
-	{
-		if (method_exists($data, 'toRawArray'))
-		{
-			$properties = $data->toRawArray($onlyChanged, $recursive);
-
-			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-				&& ! empty($data->{$this->primaryKey}))
-			{
-				$properties[$this->primaryKey] = $data->{$this->primaryKey};
-			}
-		}
-		else
-		{
-			$mirror = new ReflectionClass($data);
-			$props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
-
-			$properties = [];
-
-			// Loop over each property,
-			// saving the name/value in a new array we can return.
-			foreach ($props as $prop)
-			{
-				// Must make protected values accessible.
-				$prop->setAccessible(true);
-				$properties[$prop->getName()] = $prop->getValue($data);
-			}
-		}
-
-		return $properties;
 	}
 
 	/**
@@ -729,17 +776,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Inserts data into the current database
-	 * This methods works only with dbCalls
-	 *
-	 * @param array        $data   Data
-	 * @param boolean|null $escape Escape
-	 *
-	 * @return object|integer|string|false
-	 */
-	abstract protected function doInsert(array $data, ?bool $escape = null);
-
-	/**
 	 * Compiles batch insert runs the queries, validating each row prior.
 	 *
 	 * @param array|null   $set       an associative array of insert values
@@ -800,19 +836,6 @@ abstract class BaseModel
 
 		return $this->doInsertBatch($set, $escape, $batchSize, $testing);
 	}
-
-	/**
-	 * Compiles batch insert and runs the queries, validating each row prior.
-	 * This methods works only with dbCalls
-	 *
-	 * @param array|null   $set       An associative array of insert values
-	 * @param boolean|null $escape    Whether to escape values and identifiers
-	 * @param integer      $batchSize The size of the batch to run
-	 * @param boolean      $testing   True means only number of records is returned, false will execute the query
-	 *
-	 * @return integer|boolean Number of rows inserted or FALSE on failure
-	 */
-	abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
 	/**
 	 * Updates a single record in the database. If an object is provided,
@@ -902,18 +925,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Updates a single record in the database.
-	 * This methods works only with dbCalls
-	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|null                $data   Data
-	 * @param boolean|null              $escape Escape
-	 *
-	 * @return boolean
-	 */
-	abstract protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool;
-
-	/**
 	 * Compiles an update and runs the query
 	 *
 	 * @param array|null  $set       An associative array of update values
@@ -978,21 +989,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Compiles an update and runs the query
-	 * This methods works only with dbCalls
-	 *
-	 * @param array|null  $set       An associative array of update values
-	 * @param string|null $index     The where key
-	 * @param integer     $batchSize The size of the batch to run
-	 * @param boolean     $returnSQL True means SQL is returned, false will execute the query
-	 *
-	 * @return mixed    Number of rows affected or FALSE on failure
-	 *
-	 * @throws DatabaseException
-	 */
-	abstract protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false);
-
-	/**
 	 * Deletes a single record from the database where $id matches
 	 *
 	 * @param integer|string|array|null $id    The rows primary key(s)
@@ -1037,19 +1033,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Deletes a single record from the database where $id matches
-	 * This methods works only with dbCalls
-	 *
-	 * @param integer|string|array|null $id    The rows primary key(s)
-	 * @param boolean                   $purge Allows overriding the soft deletes setting.
-	 *
-	 * @return object|boolean
-	 *
-	 * @throws DatabaseException
-	 */
-	abstract protected function doDelete($id = null, bool $purge = false);
-
-	/**
 	 * Permanently deletes all rows that have been marked as deleted
 	 * through soft deletes (deleted = 1)
 	 *
@@ -1064,15 +1047,6 @@ abstract class BaseModel
 
 		return $this->doPurgeDeleted();
 	}
-
-	/**
-	 * Permanently deletes all rows that have been marked as deleted
-	 * through soft deletes (deleted = 1)
-	 * This methods works only with dbCalls
-	 *
-	 * @return boolean|mixed
-	 */
-	abstract protected function doPurgeDeleted();
 
 	/**
 	 * Sets $useSoftDeletes value so that we can temporarily override
@@ -1104,15 +1078,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Works with the find* methods to return only the rows that
-	 * have been deleted.
-	 * This methods works only with dbCalls
-	 *
-	 * @return void
-	 */
-	abstract protected function doOnlyDeleted();
-
-	/**
 	 * Compiles a replace and runs the query
 	 *
 	 * @param array|null $data      Data
@@ -1132,61 +1097,35 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Compiles a replace and runs the query
-	 * This methods works only with dbCalls
+	 * Grabs the last error(s) that occurred. If data was validated,
+	 * it will first check for errors there, otherwise will try to
+	 * grab the last error from the Database connection.
 	 *
-	 * @param array|null $data      Data
-	 * @param boolean    $returnSQL Set to true to return Query String
+	 * @param boolean $forceDB Always grab the db error, not validation
 	 *
-	 * @return mixed
+	 * @return array|null
 	 */
-	abstract protected function doReplace(array $data = null, bool $returnSQL = false);
-
-	//--------------------------------------------------------------------
-	// Utility
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the return type of the results to be as an associative array.
-	 *
-	 * @return $this
-	 */
-	public function asArray()
+	public function errors(bool $forceDB = false)
 	{
-		$this->tempReturnType = 'array';
+		// Do we have validation errors?
+		if (! $forceDB && ! $this->skipValidation)
+		{
+			$errors = $this->validation->getErrors();
 
-		return $this;
+			if (! empty($errors))
+			{
+				return $errors;
+			}
+		}
+
+		$error = $this->doErrors();
+
+		return $error['message'] ?? null;
 	}
 
-	/**
-	 * Sets the return type to be of the specified type of object.
-	 * Defaults to a simple object, but can be any class that has
-	 * class vars with the same name as the collection columns,
-	 * or at least allows them to be created.
-	 *
-	 * @param string $class Class Name
-	 *
-	 * @return $this
-	 */
-	public function asObject(string $class = 'object')
-	{
-		$this->tempReturnType = $class;
+	// endregion
 
-		return $this;
-	}
-
-	/**
-	 * Loops over records in batches, allowing you to operate on them.
-	 * This methods works only with dbCalls
-	 *
-	 * @param integer $size     Size
-	 * @param Closure $userFunc Callback Function
-	 *
-	 * @return void
-	 *
-	 * @throws DataException
-	 */
-	public abstract function chunk(int $size, Closure $userFunc);
+	// region Pager
 
 	/**
 	 * Works with Pager to get the size and offset parameters.
@@ -1216,6 +1155,24 @@ abstract class BaseModel
 		$offset      = ($page - 1) * $perPage;
 
 		return $this->findAll($perPage, $offset);
+	}
+
+	// endregion
+
+	// region Allowed Fields
+
+	/**
+	 * It could be used when you have to change default or override current allowed fields.
+	 *
+	 * @param array $allowedFields Array with names of fields
+	 *
+	 * @return $this
+	 */
+	public function setAllowedFields(array $allowedFields)
+	{
+		$this->allowedFields = $allowedFields;
+
+		return $this;
 	}
 
 	/**
@@ -1269,6 +1226,25 @@ abstract class BaseModel
 		return $data;
 	}
 
+	// endregion
+
+	// region Timestamps
+
+	/**
+	 * Sets the date or current date if null value is passed
+	 *
+	 * @param integer|null $userData An optional PHP timestamp to be converted.
+	 *
+	 * @return mixed
+	 *
+	 * @throws ModelException
+	 */
+	protected function setDate(?int $userData = null)
+	{
+		$currentDate = $userData ?? time();
+		return $this->intToDate($currentDate);
+	}
+
 	/**
 	 * A utility function to allow child models to use the type of
 	 * date/time format that they prefer. This is primarily used for
@@ -1280,81 +1256,57 @@ abstract class BaseModel
 	 *  - 'datetime' - Stores the data in the SQL datetime format
 	 *  - 'date'     - Stores the date (only) in the SQL date format.
 	 *
-	 * @param integer|null $userData An optional PHP timestamp to be converted.
+	 * @param integer $value value
 	 *
-	 * @return mixed
+	 * @return integer|string
 	 *
 	 * @throws ModelException
 	 */
-	protected function setDate(?int $userData = null)
+	protected function intToDate(int $value)
 	{
-		$currentDate = $userData ?? time();
-
 		switch ($this->dateFormat)
 		{
 			case 'int':
-				return $currentDate;
+				return $value;
 			case 'datetime':
-				return date('Y-m-d H:i:s', $currentDate);
+				return date('Y-m-d H:i:s', $value);
 			case 'date':
-				return date('Y-m-d', $currentDate);
+				return date('Y-m-d', $value);
 			default:
 				throw ModelException::forNoDateFormat(static::class);
 		}
 	}
 
 	/**
-	 * Grabs the last error(s) that occurred. If data was validated,
-	 * it will first check for errors there, otherwise will try to
-	 * grab the last error from the Database connection.
+	 * Converts Time value to string using $this->dateFormat
 	 *
-	 * @param boolean $forceDB Always grab the db error, not validation
+	 * The available time formats are:
+	 *  - 'int'      - Stores the date as an integer timestamp
+	 *  - 'datetime' - Stores the data in the SQL datetime format
+	 *  - 'date'     - Stores the date (only) in the SQL date format.
 	 *
-	 * @return array|null
+	 * @param Time $value value
+	 *
+	 * @return string|integer
 	 */
-	public function errors(bool $forceDB = false)
+	protected function timeToDate(Time $value)
 	{
-		// Do we have validation errors?
-		if (! $forceDB && ! $this->skipValidation)
+		switch ($this->dateFormat)
 		{
-			$errors = $this->validation->getErrors();
-
-			if (! empty($errors))
-			{
-				return $errors;
-			}
+			case 'datetime':
+				return $value->format('Y-m-d H:i:s');
+			case 'date':
+				return $value->format('Y-m-d');
+			case 'int':
+				return $value->getTimestamp();
+			default:
+				return (string) $value;
 		}
-
-		$error = $this->doErrors();
-
-		return $error['message'] ?? null;
 	}
 
-	/**
-	 * Grabs the last error(s) that occurred from the Database connection.
-	 * This methods works only with dbCalls
-	 *
-	 * @return array|null
-	 */
-	abstract protected function doErrors();
+	// endregion
 
-	/**
-	 * It could be used when you have to change default or override current allowed fields.
-	 *
-	 * @param array $allowedFields Array with names of fields
-	 *
-	 * @return $this
-	 */
-	public function setAllowedFields(array $allowedFields)
-	{
-		$this->allowedFields = $allowedFields;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-	// Validation
-	//--------------------------------------------------------------------
+	// region Validation
 
 	/**
 	 * Set the value of the skipValidation flag.
@@ -1483,95 +1435,6 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Removes any rules that apply to fields that have not been set
-	 * currently so that rules don't block updating when only updating
-	 * a partial row.
-	 *
-	 * @param array      $rules Array containing field name and rule
-	 * @param array|null $data  Data
-	 *
-	 * @return array
-	 */
-	protected function cleanValidationRules(array $rules, array $data = null): array
-	{
-		if (empty($data))
-		{
-			return [];
-		}
-
-		foreach ($rules as $field => $rule)
-		{
-			if (! array_key_exists($field, $data))
-			{
-				unset($rules[$field]);
-			}
-		}
-
-		return $rules;
-	}
-
-	/**
-	 * Replace any placeholders within the rules with the values that
-	 * match the 'key' of any properties being set. For example, if
-	 * we had the following $data array:
-	 *
-	 * [ 'id' => 13 ]
-	 *
-	 * and the following rule:
-	 *
-	 *  'required|is_unique[users,email,id,{id}]'
-	 *
-	 * The value of {id} would be replaced with the actual id in the form data:
-	 *
-	 *  'required|is_unique[users,email,id,13]'
-	 *
-	 * @param array $rules Validation rules
-	 * @param array $data  Data
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @deprecated use fillPlaceholders($rules, $data) from Validation instead
-	 *
-	 * @return array
-	 */
-	protected function fillPlaceholders(array $rules, array $data): array
-	{
-		$replacements = [];
-
-		foreach ($data as $key => $value)
-		{
-			$replacements['{' . $key . '}'] = $value;
-		}
-
-		if (! empty($replacements))
-		{
-			foreach ($rules as &$rule)
-			{
-				if (is_array($rule))
-				{
-					foreach ($rule as &$row)
-					{
-						// Should only be an `errors` array
-						// which doesn't take placeholders.
-						if (is_array($row))
-						{
-							continue;
-						}
-
-						$row = strtr($row, $replacements);
-					}
-
-					continue;
-				}
-
-				$rule = strtr($rule, $replacements);
-			}
-		}
-
-		return $rules;
-	}
-
-	/**
 	 * Returns the model's defined validation rules so that they
 	 * can be used elsewhere, if needed.
 	 *
@@ -1615,15 +1478,36 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Override countAllResults to account for soft deleted accounts.
-	 * This methods works only with dbCalls
+	 * Removes any rules that apply to fields that have not been set
+	 * currently so that rules don't block updating when only updating
+	 * a partial row.
 	 *
-	 * @param boolean $reset Reset
-	 * @param boolean $test  Test
+	 * @param array      $rules Array containing field name and rule
+	 * @param array|null $data  Data
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	abstract public function countAllResults(bool $reset = true, bool $test = false);
+	protected function cleanValidationRules(array $rules, array $data = null): array
+	{
+		if (empty($data))
+		{
+			return [];
+		}
+
+		foreach ($rules as $field => $rule)
+		{
+			if (! array_key_exists($field, $data))
+			{
+				unset($rules[$field]);
+			}
+		}
+
+		return $rules;
+	}
+
+	// endregion
+
+	// region Callbacks
 
 	/**
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
@@ -1683,9 +1567,120 @@ abstract class BaseModel
 		return $eventData;
 	}
 
-	//--------------------------------------------------------------------
-	// Magic
-	//--------------------------------------------------------------------
+	// endregion
+
+	// region Utility
+
+	/**
+	 * Sets the return type of the results to be as an associative array.
+	 *
+	 * @return $this
+	 */
+	public function asArray()
+	{
+		$this->tempReturnType = 'array';
+
+		return $this;
+	}
+
+	/**
+	 * Sets the return type to be of the specified type of object.
+	 * Defaults to a simple object, but can be any class that has
+	 * class vars with the same name as the collection columns,
+	 * or at least allows them to be created.
+	 *
+	 * @param string $class Class Name
+	 *
+	 * @return $this
+	 */
+	public function asObject(string $class = 'object')
+	{
+		$this->tempReturnType = $class;
+
+		return $this;
+	}
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array suitable for use in creates and updates.
+	 * This method use objectToRawArray internally and does conversion
+	 * to string on all Time instances
+	 *
+	 * @param string|object $data        Data
+	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
+	 *
+	 * @return array Array
+	 *
+	 * @throws ReflectionException
+	 */
+	protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
+	{
+		$properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
+
+		// Convert any Time instances to appropriate $dateFormat
+		if ($properties)
+		{
+			$properties = array_map(function ($value) {
+				if ($value instanceof Time)
+				{
+					return $this->timeToDate($value);
+				}
+				return $value;
+			}, $properties);
+		}
+
+		return $properties;
+	}
+
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array with raw values.
+	 *
+	 * @param string|object $data        Data
+	 * @param boolean       $onlyChanged Only Changed Property
+	 * @param boolean       $recursive   If true, inner entities will be casted as array as well
+	 *
+	 * @return array|null Array
+	 *
+	 * @throws ReflectionException
+	 */
+	protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+	{
+		if (method_exists($data, 'toRawArray'))
+		{
+			$properties = $data->toRawArray($onlyChanged, $recursive);
+
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey}))
+			{
+				$properties[$this->primaryKey] = $data->{$this->primaryKey};
+			}
+		}
+		else
+		{
+			$mirror = new ReflectionClass($data);
+			$props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+
+			$properties = [];
+
+			// Loop over each property,
+			// saving the name/value in a new array we can return.
+			foreach ($props as $prop)
+			{
+				// Must make protected values accessible.
+				$prop->setAccessible(true);
+				$properties[$prop->getName()] = $prop->getValue($data);
+			}
+		}
+
+		return $properties;
+	}
+
+	// endregion
+
+	// region Magic
 
 	/**
 	 * Provides the db connection and model's properties.
@@ -1750,4 +1745,71 @@ abstract class BaseModel
 
 		return $result;
 	}
+
+	// endregion
+
+	// region Deprecated
+
+	/**
+	 * Replace any placeholders within the rules with the values that
+	 * match the 'key' of any properties being set. For example, if
+	 * we had the following $data array:
+	 *
+	 * [ 'id' => 13 ]
+	 *
+	 * and the following rule:
+	 *
+	 *  'required|is_unique[users,email,id,{id}]'
+	 *
+	 * The value of {id} would be replaced with the actual id in the form data:
+	 *
+	 *  'required|is_unique[users,email,id,13]'
+	 *
+	 * @param array $rules Validation rules
+	 * @param array $data  Data
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @deprecated use fillPlaceholders($rules, $data) from Validation instead
+	 *
+	 * @return array
+	 */
+	protected function fillPlaceholders(array $rules, array $data): array
+	{
+		$replacements = [];
+
+		foreach ($data as $key => $value)
+		{
+			$replacements['{' . $key . '}'] = $value;
+		}
+
+		if (! empty($replacements))
+		{
+			foreach ($rules as &$rule)
+			{
+				if (is_array($rule))
+				{
+					foreach ($rule as &$row)
+					{
+						// Should only be an `errors` array
+						// which doesn't take placeholders.
+						if (is_array($row))
+						{
+							continue;
+						}
+
+						$row = strtr($row, $replacements);
+					}
+
+					continue;
+				}
+
+				$rule = strtr($rule, $replacements);
+			}
+		}
+
+		return $rules;
+	}
+
+	// endregion
 }
