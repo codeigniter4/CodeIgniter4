@@ -249,6 +249,7 @@ class LanguageTest extends CIUnitTestCase
 			['Migrations'],
 			['Number'],
 			['Pager'],
+			['RESTful'],
 			['Router'],
 			['Session'],
 			['Time'],
