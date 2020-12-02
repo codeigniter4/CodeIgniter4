@@ -113,6 +113,8 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 	$s3_bucket = $_ENV['S3_BUCKET'];
 	$s3_bucket = $_SERVER['S3_BUCKET'];
 
+.. important:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
+
 Nesting Variables
 =================
 
