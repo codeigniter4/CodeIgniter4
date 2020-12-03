@@ -462,10 +462,12 @@ class Mimes
 		'srt'   => [
 			'text/srt',
 			'text/plain',
+			'application/octet-stream',
 		],
 		'vtt'   => [
 			'text/vtt',
 			'text/plain',
+			'application/octet-stream',
 		],
 		'ico'   => [
 			'image/x-icon',
