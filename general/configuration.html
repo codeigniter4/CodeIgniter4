@@ -456,6 +456,10 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Note that your settings from the <strong>.env</strong> file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a <code class="docutils literal notranslate"><span class="pre">var_dump($_ENV)</span></code> or <code class="docutils literal notranslate"><span class="pre">phpinfo()</span></code> (for debugging or other valid reasons) <strong>your secure credentials are publicly exposed</strong>.</p>
+</div>
 </div>
 <div class="section" id="nesting-variables">
 <h2><a class="toc-backref" href="#id6">Nesting Variables</a><a class="headerlink" href="#nesting-variables" title="Permalink to this headline">¶</a></h2>
@@ -636,7 +640,7 @@ described above, using methods named for each configuration class you wish to ex
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Nov 30, 2020.
+        Last updated on Dec 03, 2020.
       </span>
 
     </p>
