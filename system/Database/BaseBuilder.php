@@ -1319,15 +1319,15 @@ class BaseBuilder
 	/**
 	 * Platform independent LIKE statement builder.
 	 *
-	 * @param string  $prefix
-	 * @param string  $column
-	 * @param string  $not
-	 * @param string  $bind
-	 * @param boolean $insensitiveSearch
+	 * @param string|null  $prefix
+	 * @param string|null  $column
+	 * @param string|null  $not
+	 * @param string|null  $bind
+	 * @param boolean      $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */
-	protected function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	protected function _like_statement(string $prefix = null, string $column = null, string $not = null, string $bind = null, bool $insensitiveSearch = false): string
 	{
 		$likeStatement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 

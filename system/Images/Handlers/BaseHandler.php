@@ -657,12 +657,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param integer|float      $width
 	 * @param integer|float|null $height
-	 * @param integer|float      $origWidth
-	 * @param integer|float      $origHeight
+	 * @param integer|float|null $origWidth
+	 * @param integer|float|null $origHeight
 	 *
 	 * @return array
 	 */
-	protected function calcAspectRatio($width, $height = null, $origWidth, $origHeight): array
+	protected function calcAspectRatio($width, $height = null, $origWidth = null, $origHeight = null): array
 	{
 		// If $height is null, then we have it easy.
 		// Calc based on full image size and be done.

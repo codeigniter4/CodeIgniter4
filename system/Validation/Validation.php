@@ -376,12 +376,12 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string      $field
 	 * @param string|null $label
-	 * @param string      $rules
+	 * @param string|null $rules
 	 * @param array       $errors
 	 *
 	 * @return $this
 	 */
-	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
+	public function setRule(string $field, string $label = null, string $rules = null, array $errors = [])
 	{
 		$this->rules[$field] = [
 			'label' => $label,

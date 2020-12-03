@@ -23,13 +23,13 @@ class Rules
 	/**
 	 * The value does not match another field in $data.
 	 *
-	 * @param string $str
-	 * @param string $field
-	 * @param array  $data  Other field/value pairs
+	 * @param string|null $str
+	 * @param string|null $field
+	 * @param array       $data  Other field/value pairs
 	 *
 	 * @return boolean
 	 */
-	public function differs(string $str = null, string $field, array $data): bool
+	public function differs(string $str = null, string $field = null, array $data = []): bool
 	{
 		if (strpos($field, '.') !== false)
 		{
@@ -44,12 +44,12 @@ class Rules
 	/**
 	 * Equals the static value provided.
 	 *
-	 * @param string $str
-	 * @param string $val
+	 * @param string|null $str
+	 * @param string|null $val
 	 *
 	 * @return boolean
 	 */
-	public function equals(string $str = null, string $val): bool
+	public function equals(string $str = null, string $val = null): bool
 	{
 		return $str === $val;
 	}
@@ -60,12 +60,12 @@ class Rules
 	 * Returns true if $str is $val characters long.
 	 * $val = "5" (one) | "5,8,12" (multiple values)
 	 *
-	 * @param string $str
-	 * @param string $val
+	 * @param string|null $str
+	 * @param string|null $val
 	 *
 	 * @return boolean
 	 */
-	public function exact_length(string $str = null, string $val): bool
+	public function exact_length(string $str = null, string $val = null): bool
 	{
 		$val = explode(',', $val);
 		foreach ($val as $tmp)
@@ -84,12 +84,12 @@ class Rules
 	/**
 	 * Greater than
 	 *
-	 * @param string $str
-	 * @param string $min
+	 * @param string|null $str
+	 * @param string|null $min
 	 *
 	 * @return boolean
 	 */
-	public function greater_than(string $str = null, string $min): bool
+	public function greater_than(string $str = null, string $min = null): bool
 	{
 		return is_numeric($str) && $str > $min;
 	}
@@ -99,12 +99,12 @@ class Rules
 	/**
 	 * Equal to or Greater than
 	 *
-	 * @param string $str
-	 * @param string $min
+	 * @param string|null $str
+	 * @param string|null $min
 	 *
 	 * @return boolean
 	 */
-	public function greater_than_equal_to(string $str = null, string $min): bool
+	public function greater_than_equal_to(string $str = null, string $min = null): bool
 	{
 		return is_numeric($str) && $str >= $min;
 	}
@@ -120,13 +120,13 @@ class Rules
 	 *    is_not_unique[table.field,where_field,where_value]
 	 *    is_not_unique[menu.id,active,1]
 	 *
-	 * @param string $str
-	 * @param string $field
-	 * @param array  $data
+	 * @param string|null $str
+	 * @param string|null $field
+	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
-	public function is_not_unique(string $str = null, string $field, array $data): bool
+	public function is_not_unique(string $str = null, string $field = null, array $data = []): bool
 	{
 		// Grab any data for exclusion of a single row.
 		list($field, $whereField, $whereValue) = array_pad(explode(',', $field), 3, null);
@@ -157,12 +157,12 @@ class Rules
 	/**
 	 * Value should be within an array of values
 	 *
-	 * @param string $value
-	 * @param string $list
+	 * @param string|null $value
+	 * @param string|null $list
 	 *
 	 * @return boolean
 	 */
-	public function in_list(string $value = null, string $list): bool
+	public function in_list(string $value = null, string $list = null): bool
 	{
 		$list = array_map('trim', explode(',', $list));
 		return in_array($value, $list, true);
@@ -179,13 +179,13 @@ class Rules
 	 *    is_unique[table.field,ignore_field,ignore_value]
 	 *    is_unique[users.email,id,5]
 	 *
-	 * @param string $str
-	 * @param string $field
-	 * @param array  $data
+	 * @param string|null $str
+	 * @param string|null $field
+	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
-	public function is_unique(string $str = null, string $field, array $data): bool
+	public function is_unique(string $str = null, string $field = null, array $data = []): bool
 	{
 		// Grab any data for exclusion of a single row.
 		list($field, $ignoreField, $ignoreValue) = array_pad(explode(',', $field), 3, null);
@@ -216,12 +216,12 @@ class Rules
 	/**
 	 * Less than
 	 *
-	 * @param string $str
-	 * @param string $max
+	 * @param string|null $str
+	 * @param string|null $max
 	 *
 	 * @return boolean
 	 */
-	public function less_than(string $str = null, string $max): bool
+	public function less_than(string $str = null, string $max = null): bool
 	{
 		return is_numeric($str) && $str < $max;
 	}
@@ -231,12 +231,12 @@ class Rules
 	/**
 	 * Equal to or Less than
 	 *
-	 * @param string $str
-	 * @param string $max
+	 * @param string|null $str
+	 * @param string|null $max
 	 *
 	 * @return boolean
 	 */
-	public function less_than_equal_to(string $str = null, string $max): bool
+	public function less_than_equal_to(string $str = null, string $max = null): bool
 	{
 		return is_numeric($str) && $str <= $max;
 	}
@@ -246,13 +246,13 @@ class Rules
 	/**
 	 * Matches the value of another field in $data.
 	 *
-	 * @param string $str
-	 * @param string $field
-	 * @param array  $data  Other field/value pairs
+	 * @param string|null $str
+	 * @param string|null $field
+	 * @param array       $data  Other field/value pairs
 	 *
 	 * @return boolean
 	 */
-	public function matches(string $str = null, string $field, array $data): bool
+	public function matches(string $str = null, string $field = null, array $data = []): bool
 	{
 		if (strpos($field, '.') !== false)
 		{
@@ -267,12 +267,12 @@ class Rules
 	/**
 	 * Returns true if $str is $val or fewer characters in length.
 	 *
-	 * @param string $str
-	 * @param string $val
+	 * @param string|null $str
+	 * @param string|null $val
 	 *
 	 * @return boolean
 	 */
-	public function max_length(string $str = null, string $val): bool
+	public function max_length(string $str = null, string $val = null): bool
 	{
 		return (is_numeric($val) && $val >= mb_strlen($str));
 	}
@@ -282,12 +282,12 @@ class Rules
 	/**
 	 * Returns true if $str is at least $val length.
 	 *
-	 * @param string $str
-	 * @param string $val
+	 * @param string|null $str
+	 * @param string|null $val
 	 *
 	 * @return boolean
 	 */
-	public function min_length(string $str = null, string $val): bool
+	public function min_length(string $str = null, string $val = null): bool
 	{
 		return (is_numeric($val) && $val <= mb_strlen($str));
 	}
@@ -297,12 +297,12 @@ class Rules
 	/**
 	 * Does not equal the static value provided.
 	 *
-	 * @param string $str
-	 * @param string $val
+	 * @param string|null $str
+	 * @param string|null $val
 	 *
 	 * @return boolean
 	 */
-	public function not_equals(string $str = null, string $val): bool
+	public function not_equals(string $str = null, string $val = null): bool
 	{
 		return $str !== $val;
 	}
@@ -312,12 +312,12 @@ class Rules
 	/**
 	 * Value should not be within an array of values.
 	 *
-	 * @param string $value
-	 * @param string $list
+	 * @param string|null $value
+	 * @param string|null $list
 	 *
 	 * @return boolean
 	 */
-	public function not_in_list(string $value = null, string $list): bool
+	public function not_in_list(string $value = null, string $list = null): bool
 	{
 		return ! $this->in_list($value, $list);
 	}
@@ -352,12 +352,12 @@ class Rules
 	 *     required_with[password]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields List of fields that we should check if present
+	 * @param string|null $fields List of fields that we should check if present
 	 * @param array       $data   Complete list of fields from the form
 	 *
 	 * @return boolean
 	 */
-	public function required_with($str = null, string $fields, array $data): bool
+	public function required_with($str = null, string $fields = null, array $data = []): bool
 	{
 		$fields = explode(',', $fields);
 
@@ -404,12 +404,12 @@ class Rules
 	 *     required_without[id,email]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields
+	 * @param string|null $fields
 	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
-	public function required_without($str = null, string $fields, array $data): bool
+	public function required_without($str = null, string $fields = null, array $data = []): bool
 	{
 		$fields = explode(',', $fields);
 

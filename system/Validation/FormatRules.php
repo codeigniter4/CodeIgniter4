@@ -187,12 +187,12 @@ class FormatRules
 	/**
 	 * Compares value against a regular expression pattern.
 	 *
-	 * @param string $str
-	 * @param string $pattern
+	 * @param string|null $str
+	 * @param string|null $pattern
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str = null, string $pattern): bool
+	public function regex_match(string $str = null, string $pattern = null): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{

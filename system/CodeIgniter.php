@@ -374,13 +374,13 @@ class CodeIgniter
 	 * Handles the main request logic and fires the controller.
 	 *
 	 * @param RouteCollectionInterface|null $routes
-	 * @param Cache                         $cacheConfig
+	 * @param Cache|null                    $cacheConfig
 	 * @param boolean                       $returnResponse
 	 *
 	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig = null, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 

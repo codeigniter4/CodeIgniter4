@@ -172,12 +172,12 @@ class CreditCardRules
 	 *      'cc_num' => 'valid_cc_number[visa]'
 	 *  ];
 	 *
-	 * @param string $ccNumber
-	 * @param string $type
+	 * @param string|null $ccNumber
+	 * @param string|null $type
 	 *
 	 * @return boolean
 	 */
-	public function valid_cc_number(string $ccNumber = null, string $type): bool
+	public function valid_cc_number(string $ccNumber = null, string $type = null): bool
 	{
 		$type = strtolower($type);
 		$info = null;

@@ -49,12 +49,12 @@ class FileRules
 	/**
 	 * Verifies that $name is the name of a valid uploaded file.
 	 *
-	 * @param string $blank
-	 * @param string $name
+	 * @param string|null $blank
+	 * @param string|null $name
 	 *
 	 * @return boolean
 	 */
-	public function uploaded(string $blank = null, string $name): bool
+	public function uploaded(string $blank = null, string $name = null): bool
 	{
 		if (! ($files = $this->request->getFileMultiple($name)))
 		{
@@ -96,11 +96,11 @@ class FileRules
 	 * Verifies if the file's size in Kilobytes is no larger than the parameter.
 	 *
 	 * @param string|null $blank
-	 * @param string      $params
+	 * @param string|null $params
 	 *
 	 * @return boolean
 	 */
-	public function max_size(string $blank = null, string $params): bool
+	public function max_size(string $blank = null, string $params = null): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -145,11 +145,11 @@ class FileRules
 	 * which for our purposes basically means that it's a raster image or svg.
 	 *
 	 * @param string|null $blank
-	 * @param string      $params
+	 * @param string|null $params
 	 *
 	 * @return boolean
 	 */
-	public function is_image(string $blank = null, string $params): bool
+	public function is_image(string $blank = null, string $params = null): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -192,11 +192,11 @@ class FileRules
 	 * Checks to see if an uploaded file's mime type matches one in the parameter.
 	 *
 	 * @param string|null $blank
-	 * @param string      $params
+	 * @param string|null $params
 	 *
 	 * @return boolean
 	 */
-	public function mime_in(string $blank = null, string $params): bool
+	public function mime_in(string $blank = null, string $params = null): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -235,11 +235,11 @@ class FileRules
 	 * Checks to see if an uploaded file's extension matches one in the parameter.
 	 *
 	 * @param string|null $blank
-	 * @param string      $params
+	 * @param string|null $params
 	 *
 	 * @return boolean
 	 */
-	public function ext_in(string $blank = null, string $params): bool
+	public function ext_in(string $blank = null, string $params = null): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -279,11 +279,11 @@ class FileRules
 	 * a specified allowable dimension.
 	 *
 	 * @param string|null $blank
-	 * @param string      $params
+	 * @param string|null $params
 	 *
 	 * @return boolean
 	 */
-	public function max_dims(string $blank = null, string $params): bool
+	public function max_dims(string $blank = null, string $params = null): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
