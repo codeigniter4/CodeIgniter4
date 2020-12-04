@@ -235,7 +235,7 @@ class Autoloader
 	 *
 	 * @return string|false The mapped file on success, or false on failure.
 	 */
-	protected function loadClassmap(string $class)
+	public function loadClassmap(string $class)
 	{
 		$classmap = is_array($this->classmap) ? $this->classmap : [];
 
