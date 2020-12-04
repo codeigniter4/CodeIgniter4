@@ -235,11 +235,9 @@ class Autoloader
 	 */
 	public function loadClassmap(string $class)
 	{
-		$classmap = is_array($this->classmap) ? $this->classmap : [];
-
-		if (! empty($classmap[$class]))
+		if (! empty($this->classmap[$class]))
 		{
-			include_once $classmap[$class];
+			include_once $this->classmap[$class];
 		}
 	}
 
