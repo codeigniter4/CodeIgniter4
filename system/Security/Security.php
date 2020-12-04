@@ -120,12 +120,12 @@ class Security
 	{
 		$security = config('Security');
 		// Store CSRF-related configurations
-		$this->tokenName  = $config->CSRFTokenName ?? $security->tokenName ?? $this->tokenName;
-		$this->headerName = $config->CSRFHeaderName ?? $security->headerName ?? $this->headerName;
-		$this->cookieName = $config->CSRFCookieName ?? $security->cookieName ?? $this->cookieName;
-		$this->expires    = $config->CSRFExpire ?? $security->expires ?? $this->expires;
-		$this->regenerate = $config->CSRFRegenerate ?? $security->regenerate ?? $this->regenerate;
-		$this->samesite   = $config->CSRFSameSite ?? $security->samesite ?? $this->samesite;
+		$this->tokenName  = $security->tokenName ?? $config->CSRFTokenName ?? $this->tokenName;
+		$this->headerName = $security->headerName ?? $config->CSRFHeaderName ?? $this->headerName;
+		$this->cookieName = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
+		$this->expires    = $security->expires ?? $config->CSRFExpire ?? $this->expires;
+		$this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
+		$this->samesite   = $security->samesite ?? $config->CSRFSameSite ?? $this->samesite;
 
 		if (! in_array(strtolower($this->samesite), ['none', 'lax', 'strict', ''], true))
 		{
@@ -390,7 +390,10 @@ class Security
 			// We don't necessarily want to regenerate it with
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
-			if (isset($_COOKIE[$this->cookieName]) && is_string($_COOKIE[$this->cookieName]) && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
+			if (
+				isset($_COOKIE[$this->cookieName])
+				&& is_string($_COOKIE[$this->cookieName])
+				&& preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
 			)
 			{
 				return $this->hash = $_COOKIE[$this->cookieName];
