@@ -232,10 +232,8 @@ class Autoloader
 	 * Loads the classmap file for the given class name.
 	 *
 	 * @param string $class The class name.
-	 *
-	 * @return void
 	 */
-	public function loadClassmap(string $class): void
+	public function loadClassmap(string $class)
 	{
 		$classmap = is_array($this->classmap) ? $this->classmap : [];
 
@@ -243,8 +241,6 @@ class Autoloader
 		{
 			include_once $classmap[$class];
 		}
-
-		return;
 	}
 
 	//--------------------------------------------------------------------
