@@ -22,34 +22,30 @@ use InvalidArgumentException;
  *
  * Given a foo-bar package of classes in the file system at the following paths:
  *
- *      /path/to/packages/foo-bar/
- *          /src
- *              Baz.php         # Foo\Bar\Baz
- *              Qux/
- *                  Quux.php    # Foo\Bar\Qux\Quux
+ * 	/path/to/packages/foo-bar/
+ *  	/src
+ *			Baz.php  # Foo\Bar\Baz
+ *		Qux/
+ *			Quux.php # Foo\Bar\Qux\Quux
  *
  * you can add the path to the configuration array that is passed in the constructor.
  * The Config array consists of 2 primary keys, both of which are associative arrays:
  * 'psr4', and 'classmap'.
  *
- *      $Config = [
- *          'psr4' => [
- *              'Foo\Bar'   => '/path/to/packages/foo-bar'
- *          ],
- *          'classmap' => [
- *              'MyClass'   => '/path/to/class/file.php'
- *          ]
- *      ];
+ *	$Config = [
+ *		'psr4' => [
+ *			'Foo\Bar' => '/path/to/packages/foo-bar'
+ *		],
+ *		'classmap' => [
+ *			'MyClass' => '/path/to/class/file.php'
+ *		]
+ *	];
  *
  * Example:
  *
- *      <?php
- *      // our configuration array
- *      $Config = [ ... ];
- *      $loader = new \CodeIgniter\Autoloader\Autoloader($Config);
- *
- *      // register the autoloader
- *      $loader->register();
+ *	$config = [ ... ]; // Configuration array
+ *	$loader = new Autoloader($config);
+ *	$loader->register(); // Register the autoloader
  */
 class Autoloader
 {
@@ -70,8 +66,8 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Reads in the configuration array (described above) and stores
-	 * the valid parts that we'll need.
+	 * Reads in the configuration array (described above) and stores the
+	 * valid parts that we'll need.
 	 *
 	 * @param Autoload $config
 	 * @param Modules  $modules
@@ -97,7 +93,7 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
-		// Should we load through Composer's namespaces, also?
+		// Load through Composer's namespaces if available.
 		if ($modules->discoverInComposer)
 		{
 			$this->discoverComposerNamespaces();
@@ -110,33 +106,21 @@ class Autoloader
 
 	/**
 	 * Register the loader with the SPL autoloader stack.
+	 * 
+	 * @see http://php.net/manual/en/function.spl-autoload.php#78053
 	 */
 	public function register()
 	{
-		// Since the default file extensions are searched
-		// in order of .inc then .php, but we always use .php,
-		// put the .php extension first to eek out a bit
-		// better performance.
-		// http://php.net/manual/en/function.spl-autoload.php#78053
+		// Since the default file extensions are searched in order of .inc
+		// then .php, but we always use .php, put the .php extension first
+		// to eek out a bit better performance.
 		spl_autoload_extensions('.php,.inc');
 
-		// Prepend the PSR4  autoloader for maximum performance.
+		// Prepend the PSR4 autoloader for maximum performance.
 		spl_autoload_register([$this, 'loadClass'], true, true); // @phpstan-ignore-line
 
-		// Now prepend another loader for the files in our class map.
-		$config = $this->classmap;
-
-		// @phpstan-ignore-next-line
-		spl_autoload_register(function ($class) use ($config) {
-			if (empty($config[$class]))
-			{
-				return false;
-			}
-
-			include_once $config[$class];
-		}, true, // Throw exception
-			true // Prepend
-		);
+		// Prepend the classmap autoloader.
+		spl_autoload_register([$this, 'loadClassmap'], true, true); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -145,7 +129,7 @@ class Autoloader
 	 * Registers namespaces with the autoloader.
 	 *
 	 * @param array|string $namespace
-	 * @param string       $path
+	 * @param string|null  $path
 	 *
 	 * @return $this
 	 */
@@ -159,9 +143,9 @@ class Autoloader
 
 				if (is_array($path))
 				{
-					foreach ($path as $dir)
+					foreach ($path as $directory)
 					{
-						$this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
+						$this->prefixes[$prefix][] = rtrim($directory, '\\/') . DIRECTORY_SEPARATOR;
 					}
 
 					continue;
@@ -189,9 +173,9 @@ class Autoloader
 	 *
 	 * @return array
 	 */
-	public function getNamespace(string $prefix = null)
+	public function getNamespace(string $prefix = null): array
 	{
-		if ($prefix === null)
+		if (is_null($prefix))
 		{
 			return $this->prefixes;
 		}
@@ -221,45 +205,63 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the class file for a given class name.
+	 * Loads the class file for the given class name.
 	 *
 	 * @param string $class The fully qualified class name.
 	 *
-	 * @return string|false The mapped file on success, or boolean false
-	 *                          on failure.
+	 * @return string|false The mapped file on success, or false on failure.
 	 */
 	public function loadClass(string $class)
 	{
-		$class = trim($class, '\\');
-		$class = str_ireplace('.php', '', $class);
+		$class = str_ireplace('.php', '', trim($class, '\\'));
 
-		$mapped_file = $this->loadInNamespace($class);
+		$mappedFile = $this->loadInNamespace($class);
 
-		// Nothing? One last chance by looking
-		// in common CodeIgniter folders.
-		if (! $mapped_file)
+		// Look in the common folders.
+		if (! $mappedFile)
 		{
-			$mapped_file = $this->loadLegacy($class);
+			$mappedFile = $this->loadLegacy($class);
 		}
 
-		return $mapped_file;
+		return $mappedFile;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the class file for a given class name.
+	 * Loads the classmap file for the given class name.
+	 *
+	 * @param string $class The class name.
+	 *
+	 * @return string|false The mapped file on success, or false on failure.
+	 */
+	protected function loadClassmap(string $class)
+	{
+		$classmap = is_array($this->classmap) ? $this->classmap : [];
+
+		if (empty($classmap[$class]))
+		{
+			return false;
+		}
+
+		include_once $classmap[$class];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Loads the class file for the given class name.
 	 *
 	 * @param string $class The fully-qualified class name
 	 *
-	 * @return string|false The mapped file name on success, or boolean false on fail
+	 * @return string|false The mapped file on success, or false on failure.
 	 */
 	protected function loadInNamespace(string $class)
 	{
 		if (strpos($class, '\\') === false)
 		{
 			$class    = 'Config\\' . $class;
-			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class);
 			$filename = $this->includeFile($filePath);
 
 			if ($filename)
@@ -274,12 +276,11 @@ class Autoloader
 		{
 			foreach ($directories as $directory)
 			{
-				$directory = rtrim($directory, '\\/');
-
 				if (strpos($class, $namespace) === 0)
 				{
-					$filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
-					$filename = $this->includeFile($filePath);
+					$filename = $this->includeFile(
+						rtrim($directory, '\\/') . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace)))
+					);
 
 					if ($filename)
 					{
@@ -289,37 +290,35 @@ class Autoloader
 			}
 		}
 
-		// never found a mapped file
 		return false;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to load the class from common locations in previous
-	 * version of CodeIgniter, namely 'app/Libraries', and
-	 * 'app/Models'.
+	 * Attempts to load the class from common locations in previous version
+	 * of CodeIgniter, namely 'app/Libraries', and 'app/Models'.
 	 *
-	 * @param string $class The class name. This typically should NOT have a namespace.
+	 * @param string $class The class name. This typically haven't a namespace.
 	 *
-	 * @return mixed    The mapped file name on success, or boolean false on failure
+	 * @return string|false The mapped file on success, or false on failure
 	 */
 	protected function loadLegacy(string $class)
 	{
-		// If there is a namespace on this class, then
-		// we cannot load it from traditional locations.
+		// If there is a namespace on this class, then we
+		// cannot load it from traditional locations.
 		if (strpos($class, '\\') !== false)
 		{
 			return false;
 		}
+
+		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
 
 		$paths = [
 			APPPATH . 'Controllers/',
 			APPPATH . 'Libraries/',
 			APPPATH . 'Models/',
 		];
-
-		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
 		foreach ($paths as $path)
 		{
@@ -335,15 +334,17 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * A central way to include a file. Split out primarily for testing purposes.
+	 * A central way to include a file.
+	 * Split out primarily for testing purposes.
 	 *
 	 * @param string $file
+	 * @param string $ext
 	 *
-	 * @return string|false The filename on success, false if the file is not loaded
+	 * @return string|false The file on success, or false on failure
 	 */
-	protected function includeFile(string $file)
+	protected function includeFile(string $file, string $ext = '.php')
 	{
-		$file = $this->sanitizeFilename($file);
+		$file = $this->sanitizeFilename($file) . $ext;
 
 		if (is_file($file))
 		{
@@ -358,63 +359,59 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sanitizes a filename, replacing spaces with dashes.
-	 *
-	 * Removes special characters that are illegal in filenames on certain
-	 * operating systems and special characters requiring special escaping
-	 * to manipulate at the command line. Replaces spaces and consecutive
-	 * dashes with a single dash. Trim period, dash and underscore from beginning
-	 * and end of filename.
-	 *
-	 * @param string $filename
-	 *
-	 * @return string       The sanitized filename
+	 * Locates all PSR4 compatible namespaces from Composer.
+	 * 
+	 * @return void
 	 */
-	public function sanitizeFilename(string $filename): string
+	protected function discoverComposerNamespaces(): void
 	{
-		// Only allow characters deemed safe for POSIX portable filenames.
-		// Plus the forward slash for directory separators since this might
-		// be a path.
-		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
-		// Modified to allow backslash and colons for on Windows machines.
-		$filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
+		if (is_file(COMPOSER_PATH))
+		{
+			$composer = include COMPOSER_PATH;
 
-		// Clean up our filename edges.
-		$filename = trim($filename, '.-_');
+			$paths = $composer->getPrefixesPsr4();
+			unset($composer);
 
-		return $filename;
+			// Get rid of CodeIgniter so we don't have duplicates
+			if (isset($paths['CodeIgniter\\']))
+			{
+				unset($paths['CodeIgniter\\']);
+			}
+
+			// Composer stores namespaces with trailing slash. We don't.
+			$newPaths = [];
+
+			foreach ($paths as $key => $value)
+			{
+				$newPaths[rtrim($key, '\\ ')] = $value;
+			}
+
+			$this->prefixes = array_merge($this->prefixes, $newPaths);
+		}
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Locates all PSR4 compatible namespaces from Composer.
+	 * Sanitizes a filename
+	 *
+	 * Only allow characters deemed safe for POSIX portable filenames, plus
+	 * the forward slash for directory separators since this might be a path.
+	 * Removes special characters that are illegal in filenames on certain
+	 * operating systems and special characters requiring special escaping
+	 * to manipulate at the command line. Replaces spaces and consecutive
+	 * dashes with a single dash.
+	 * 
+	 * Trim period, dash and underscore from beginning and end of filename.
+	 * 
+	 * @see http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
+	 *
+	 * @param string $filename The file name to be sanitized
+	 *
+	 * @return string The sanitized file name
 	 */
-	protected function discoverComposerNamespaces()
+	public function sanitizeFilename(string $filename): string
 	{
-		if (! is_file(COMPOSER_PATH))
-		{
-			return false;
-		}
-
-		$composer = include COMPOSER_PATH;
-
-		$paths = $composer->getPrefixesPsr4();
-		unset($composer);
-
-		// Get rid of CodeIgniter so we don't have duplicates
-		if (isset($paths['CodeIgniter\\']))
-		{
-			unset($paths['CodeIgniter\\']);
-		}
-
-		// Composer stores namespaces with trailing slash. We don't.
-		$newPaths = [];
-		foreach ($paths as $key => $value)
-		{
-			$newPaths[rtrim($key, '\\ ')] = $value;
-		}
-
-		$this->prefixes = array_merge($this->prefixes, $newPaths);
+		return trim(preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename), '.-_');
 	}
 }

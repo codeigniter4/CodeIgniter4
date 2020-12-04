@@ -12,7 +12,7 @@
 namespace CodeIgniter\Autoloader;
 
 /**
- * Class FileLocator
+ * FileLocator
  *
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
@@ -22,7 +22,7 @@ class FileLocator
 	/**
 	 * The Autoloader to use.
 	 *
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $autoloader;
 
@@ -41,14 +41,15 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to locate a file by examining the name for a namespace
-	 * and looking through the PSR-4 namespaced files that we know about.
+	 * Attempts to locate a file by examining the name for a namespace and
+	 * looking through the PSR-4 namespaced files that we know about.
 	 *
-	 * @param string $file   The namespaced file to locate
-	 * @param string $folder The folder within the namespace that we should look for the file.
-	 * @param string $ext    The file extension the file should have.
+	 * @param string 	  $file   The namespaced file to locate
+	 * @param string|null $folder The folder within the namespace that we
+	 * 							  should look in for the file
+	 * @param string 	  $ext    The file extension the file should have
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return string|false The file path on success, or false on failure.
 	 */
 	public function locateFile(string $file, string $folder = null, string $ext = 'php')
 	{
@@ -67,9 +68,7 @@ class FileLocator
 		}
 
 		// Standardize slashes to handle nested directories.
-		$file = strtr($file, '/', '\\');
-
-		$segments = explode('\\', $file);
+		$segments = explode('\\', strtr($file, '/', '\\'));
 
 		// The first segment will be empty if a slash started the filename.
 		if (empty($segments[0]))
@@ -92,9 +91,10 @@ class FileLocator
 			{
 				continue;
 			}
-			$paths = $namespaces[$prefix];
-
+			
+			$paths 	  = $namespaces[$prefix];
 			$filename = implode('/', $segments);
+
 			break;
 		}
 
@@ -119,6 +119,7 @@ class FileLocator
 			}
 
 			$path .= $filename;
+
 			if (is_file($path))
 			{
 				return $path;
@@ -139,8 +140,7 @@ class FileLocator
 	 */
 	public function getClassname(string $file) : string
 	{
-		$php       = file_get_contents($file);
-		$tokens    = token_get_all($php);
+		$tokens    = token_get_all(file_get_contents($file));
 		$dlm       = false;
 		$namespace = '';
 		$className = '';
@@ -161,7 +161,8 @@ class FileLocator
 				if (isset($token[1]))
 				{
 					$namespace = $namespace ? $namespace . '\\' . $token[1] : $token[1];
-					$dlm       = true;
+
+					$dlm = true;
 				}
 			}
 			elseif ($dlm && ($token[0] !== T_NS_SEPARATOR) && ($token[0] !== T_STRING))
@@ -242,9 +243,7 @@ class FileLocator
 		}
 
 		// Remove any duplicates
-		$foundPaths = array_unique($foundPaths);
-
-		return $foundPaths;
+		return array_unique($foundPaths);
 	}
 
 	//--------------------------------------------------------------------
@@ -315,12 +314,12 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Find the qualified name of a file according to
-	 * the namespace of the first matched namespace path.
+	 * Find the qualified name of a file according to the namespace of the
+	 * first matched namespace path.
 	 *
 	 * @param string $path
 	 *
-	 * @return string|false The qualified name or false if the path is not found
+	 * @return string|false The qualified file on success, or false on failure.
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
@@ -363,8 +362,8 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Scans the defined namespaces, returning a list of all files
-	 * that are contained within the subpath specified by $path.
+	 * Scans the defined namespaces, returning a list of all files that are
+	 * contained within the subpath specified by $path.
 	 *
 	 * @param string $path
 	 *
@@ -377,8 +376,9 @@ class FileLocator
 			return [];
 		}
 
-		$files = [];
 		helper('filesystem');
+
+		$files = [];
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
@@ -404,8 +404,8 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Scans the provided namespace, returning a list of all files
-	 * that are contained within the subpath specified by $path.
+	 * Scans the provided namespace, returning a list of all files that are
+	 * contained within the subpath specified by $path.
 	 *
 	 * @param string $prefix
 	 * @param string $path
@@ -419,8 +419,9 @@ class FileLocator
 			return [];
 		}
 
-		$files = [];
 		helper('filesystem');
+		
+		$files = [];
 
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
@@ -453,7 +454,7 @@ class FileLocator
 	 * @param string      $file
 	 * @param string|null $folder
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return string|false The file path on success, or false on failure.
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{
