@@ -31,7 +31,6 @@ the slug from our title in the model. Create a new view at
         <textarea name="body"></textarea><br />
 
         <input type="submit" name="submit" value="Create news item" />
-
     </form>
 
 There are probably only two things here that look unfamiliar. The
@@ -52,7 +51,7 @@ validation <../libraries/validation>` library to do this.
 
         if ($this->request->getMethod() === 'post' && $this->validate([
                 'title' => 'required|min_length[3]|max_length[255]',
-                'body'  => 'required'
+                'body'  => 'required',
             ]))
         {
             $model->save([
