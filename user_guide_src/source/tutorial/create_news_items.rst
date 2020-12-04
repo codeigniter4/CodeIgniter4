@@ -31,7 +31,6 @@ the slug from our title in the model. Create a new view at
         <textarea name="body"></textarea><br />
 
         <input type="submit" name="submit" value="Create news item" />
-
     </form>
 
 There are probably only two things here that look unfamiliar. The
