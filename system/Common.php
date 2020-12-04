@@ -233,9 +233,7 @@ if (! function_exists('csrf_token'))
 	 */
 	function csrf_token(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFTokenName;
+		return Services::security()->getTokenName();
 	}
 }
 
@@ -250,9 +248,7 @@ if (! function_exists('csrf_header'))
 	 */
 	function csrf_header(): string
 	{
-		$config = config(App::class);
-
-		return $config->CSRFHeaderName;
+		return Services::security()->getHeaderName();
 	}
 }
 
@@ -267,9 +263,7 @@ if (! function_exists('csrf_hash'))
 	 */
 	function csrf_hash(): string
 	{
-		$security = Services::security(null, true);
-
-		return $security->getCSRFHash();
+		return Services::security()->getHash();
 	}
 }
 
