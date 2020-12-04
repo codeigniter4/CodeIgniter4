@@ -233,18 +233,18 @@ class Autoloader
 	 *
 	 * @param string $class The class name.
 	 *
-	 * @return string|false The mapped file on success, or false on failure.
+	 * @return void
 	 */
-	public function loadClassmap(string $class)
+	public function loadClassmap(string $class): void
 	{
 		$classmap = is_array($this->classmap) ? $this->classmap : [];
 
-		if (empty($classmap[$class]))
+		if (! empty($classmap[$class]))
 		{
-			return false;
+			include_once $classmap[$class];
 		}
 
-		include_once $classmap[$class];
+		return;
 	}
 
 	//--------------------------------------------------------------------
