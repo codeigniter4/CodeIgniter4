@@ -376,19 +376,15 @@ class Rules
 		// as $fields is the lis
 		$requiredFields = [];
 
-		foreach ($fields as $field)
-		{
-			if (array_key_exists($field, $data))
-			{
+		foreach ($fields as $field) {
+			if (
+				(strpos($field, '.') !== false &&
+					!empty(dot_array_search($field, $data))) ||
+				(array_key_exists($field, $data) && !empty($data[$field]))
+			) {
 				$requiredFields[] = $field;
 			}
 		}
-
-		// Remove any keys with empty values since, that means they
-		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
-			return ! empty($data[$item]);
-		});
 
 		return empty($requiredFields);
 	}
@@ -425,10 +421,13 @@ class Rules
 
 		// Still here? Then we fail this test if
 		// any of the fields are not present in $data
-		foreach ($fields as $field)
-		{
-			if (! array_key_exists($field, $data))
-			{
+		foreach ($fields as $field) {
+			if (
+				(strpos($field, '.') !== false &&
+					empty(dot_array_search($field, $data))) ||
+				(strpos($field, '.') === false &&
+					(!array_key_exists($field, $data) || empty($data[$field])))
+			) {
 				return false;
 			}
 		}
