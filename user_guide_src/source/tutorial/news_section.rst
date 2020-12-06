@@ -265,7 +265,7 @@ The only thing left to do is create the corresponding view at
 ::
 
     <h2><?= esc($news['title']); ?></h2>
-    <?= esc($news['body']); ?>
+    <p><?= esc($news['body']); ?></p>
 
 Routing
 -------------------------------------------------------
