@@ -376,12 +376,13 @@ class Rules
 		// as $fields is the lis
 		$requiredFields = [];
 
-		foreach ($fields as $field) {
+		foreach ($fields as $field)
+		{
 			if (
-				(strpos($field, '.') !== false &&
-					!empty(dot_array_search($field, $data))) ||
-				(array_key_exists($field, $data) && !empty($data[$field]))
-			) {
+				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data))) ||
+				(array_key_exists($field, $data) && ! empty($data[$field]))
+			)
+			{
 				$requiredFields[] = $field;
 			}
 		}
