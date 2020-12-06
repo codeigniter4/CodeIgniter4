@@ -422,13 +422,13 @@ class Rules
 
 		// Still here? Then we fail this test if
 		// any of the fields are not present in $data
-		foreach ($fields as $field) {
+		foreach ($fields as $field)
+		{
 			if (
-				(strpos($field, '.') !== false &&
-					empty(dot_array_search($field, $data))) ||
-				(strpos($field, '.') === false &&
-					(!array_key_exists($field, $data) || empty($data[$field])))
-			) {
+				(strpos($field, '.') !== false && empty(dot_array_search($field, $data))) ||
+				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field])))
+			)
+			{
 				return false;
 			}
 		}
