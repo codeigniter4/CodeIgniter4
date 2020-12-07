@@ -22,7 +22,7 @@ to all classes that extend ``Message`` as well: ``Request``, ``Response`` and th
 
 Additional related deprecations from the HTTP layer:
 
-* ``Message::isJSON`: Check the "Content-Type" header directly
+* ``Message::isJSON``: Check the "Content-Type" header directly
 * ``Request[Interface]::isValidIP``: Use the Validation class with ``valid_ip``
 * ``Request[Interface]::getMethod()``: The ``$upper`` parameter will be removed, use str_to_upper()
 * ``Request[Trait]::$ipAddress``: This property will become private
@@ -57,4 +57,3 @@ updated requirements. These methods are as follows:
 
 To facilitate use of this interface these methods have been moved from the framework's ``Response`` into a ``ResponseTrait``
 which you may use, and ``DownloadResponse`` now extends ``Response`` directly to ensure maximum compatibility.
-
