@@ -132,12 +132,7 @@ trait MessageTrait
 	{
 		$origName = $this->getHeaderName($name);
 
-		if (! isset($this->headers[$origName]))
-		{
-			return null;
-		}
-
-		return $this->headers[$origName];
+		return $this->headers[$origName] ?? null;
 	}
 
 	/**
