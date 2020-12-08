@@ -214,7 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
@@ -363,6 +363,16 @@
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">BaseCommand::getPad</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">BaseCommand::setPad</span></code>.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller::loadHelpers</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">helper</span></code> function.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\Format::getFormatter</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Format\Format::getFormatter</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::CSRFVerify</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::verify</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getCSRFHash</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getHash</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getCSRTokenName</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getCSRTokenName</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFTokenName</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$tokenName</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFHeaderName</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$headerName</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFCookieName</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$cookieName</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFExpire</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$expire</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFRegenerate</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$regenerate</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFRedirect</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$redirect</span></code></p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFSameSite</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$samesite</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">migrate:create</span></code> command in favor of <code class="docutils literal notranslate"><span class="pre">make:migration</span></code> command.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\ModelFactory</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Factories::models()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Config</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Factories::config()</span></code></p></li>

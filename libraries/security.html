@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Security Class &mdash; CodeIgniter 4.0.4 documentation</title>
+  <title>Security &mdash; CodeIgniter 4.0.4 documentation</title>
   
 
   
@@ -214,7 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Security Class</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="time.html">Times and Dates</a></li>
@@ -324,7 +324,7 @@
         
           <li><a href="index.html">Library Reference</a> &raquo;</li>
         
-      <li>Security Class</li>
+      <li>Security</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -341,8 +341,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="security-class">
-<h1>Security Class<a class="headerlink" href="#security-class" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="security">
+<h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
 <p>The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -423,15 +423,16 @@ kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
-may alter this behavior by editing the following config parameter</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSRFRegenerate</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+may alter this behavior by editing the following config parameter value in
+<strong>app/Config/Security.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$regenerate</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>When a request fails the CSRF validation check, it will redirect to the previous page by default,
 setting an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message that you can display to the end user. This provides a nicer experience
-than simply crashing. This can be turned off by editing the <code class="docutils literal notranslate"><span class="pre">$CSRFRedirect</span></code> value in
-<strong>app/Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSRFRedirect</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+than simply crashing. This can be turned off by editing the following config parameter value in
+<strong>app/Config/Security.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$redirect</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Even when the redirect value is <strong>true</strong>, AJAX calls will not redirect, but will throw an error.</p>
