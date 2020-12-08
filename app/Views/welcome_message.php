@@ -219,7 +219,7 @@
 
 	<div class="heroe">
 
-		<h1>Welcome to CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+		<h1>Welcome to CodeIgniter <?php echo CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
 
 		<h2>The small framework with powerful features</h2>
 
@@ -293,13 +293,13 @@
 
 		<p>Page rendered in {elapsed_time} seconds</p>
 
-		<p>Environment: <?= ENVIRONMENT ?></p>
+		<p>Environment: <?php echo ENVIRONMENT ?></p>
 
 	</div>
 
 	<div class="copyrights">
 
-		<p>&copy; <?= date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
+		<p>&copy; <?php echo date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
 			open source licence.</p>
 
 	</div>
