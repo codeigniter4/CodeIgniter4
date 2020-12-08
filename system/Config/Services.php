@@ -677,7 +677,7 @@ class Services extends BaseService
 			return static::getSharedInstance('security', $config);
 		}
 
-		$config = $config ?? config('App');
+		$config = $config ?? config('Security') ?? config('App');
 
 		return new Security($config);
 	}
@@ -859,6 +859,4 @@ class Services extends BaseService
 
 		return new Typography();
 	}
-
-	//--------------------------------------------------------------------
 }

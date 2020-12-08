@@ -17,11 +17,11 @@ class SecurityException extends FrameworkException
 {
 	public static function forDisallowedAction()
 	{
-		return new static(lang('HTTP.disallowedAction'), 403);
+		return new static(lang('Security.disallowedAction'), 403);
 	}
-
-	public static function forInvalidSameSiteSetting(string $samesite)
+	
+	public static function forInvalidSameSite(string $samesite)
 	{
-		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
+		return new static(lang('Security.invalidSameSite', [$samesite]));
 	}
 }

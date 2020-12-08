@@ -53,11 +53,11 @@ class CSRF implements FilterInterface
 
 		try
 		{
-			$security->CSRFVerify($request);
+			$security->verify($request);
 		}
 		catch (SecurityException $e)
 		{
-			if (config('App')->CSRFRedirect && ! $request->isAJAX())
+			if ($security->shouldRedirect() && ! $request->isAJAX())
 			{
 				return redirect()->back()->with('error', $e->getMessage());
 			}

@@ -23,6 +23,16 @@ Deprecations:
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
 - Deprecated ``CodeIgniter\Controller::loadHelpers`` in favor of ``helper`` function.
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
+- Deprecated ``CodeIgniter\Security\Security::CSRFVerify`` in favor of ``CodeIgniter\Security\Security::verify``
+- Deprecated ``CodeIgniter\Security\Security::getCSRFHash`` in favor of ``CodeIgniter\Security\Security::getHash``
+- Deprecated ``CodeIgniter\Security\Security::getCSRTokenName`` in favor of ``CodeIgniter\Security\Security::getCSRTokenName``
+- Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
+- Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
+- Deprecated ``Config\App::$CSRFCookieName`` in favor of ``Config\Security::$cookieName``
+- Deprecated ``Config\App::$CSRFExpire`` in favor of ``Config\Security::$expire``
+- Deprecated ``Config\App::$CSRFRegenerate`` in favor of ``Config\Security::$regenerate``
+- Deprecated ``Config\App::$CSRFRedirect`` in favor of ``Config\Security::$redirect``
+- Deprecated ``Config\App::$CSRFSameSite`` in favor of ``Config\Security::$samesite``
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
 - Deprecated ``CodeIgniter\Database\ModelFactory`` in favor of ``CodeIgniter\Config\Factories::models()``
 - Deprecated ``CodeIgniter\Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``
