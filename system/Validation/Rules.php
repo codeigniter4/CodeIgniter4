@@ -379,8 +379,8 @@ class Rules
 		foreach ($fields as $field)
 		{
 			if (
-				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data))) ||
-				(array_key_exists($field, $data) && ! empty($data[$field]))
+				(array_key_exists($field, $data) && ! empty($data[$field])) ||
+				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))	
 			)
 			{
 				$requiredFields[] = $field;
@@ -425,8 +425,8 @@ class Rules
 		foreach ($fields as $field)
 		{
 			if (
-				(strpos($field, '.') !== false && empty(dot_array_search($field, $data))) ||
-				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field])))
+				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
+				(strpos($field, '.') !== false && empty(dot_array_search($field, $data)))
 			)
 			{
 				return false;
