@@ -14,11 +14,11 @@ helper methods to make testing every aspect of your application as painless as p
 System Set Up
 *************
 
-Installing phpUnit
+Installing PHPUnit
 ==================
 
-CodeIgniter uses `phpUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
-phpUnit to use within your system.
+CodeIgniter uses `PHPUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
+PHPUnit to use within your system.
 
 Composer
 --------
@@ -40,7 +40,7 @@ tests for this project by typing::
 Phar
 ----
 
-The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
+The other option is to download the .phar file from the `PHPUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
 This is a standalone file that should be placed within your project root.
 
 
