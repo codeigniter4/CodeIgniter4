@@ -24,13 +24,6 @@ use CodeIgniter\CLI\CLI;
 class Serve extends BaseCommand
 {
 	/**
-	 * Minimum PHP version
-	 *
-	 * @var string
-	 */
-	protected $minPHPVersion = '7.2';
-
-	/**
 	 * Group
 	 *
 	 * @var string
@@ -99,15 +92,6 @@ class Serve extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		// Valid PHP Version?
-		if (version_compare(PHP_VERSION, $this->minPHPVersion, '<'))
-		{
-			// @codeCoverageIgnoreStart
-			die('Your PHP version must be ' . $this->minPHPVersion .
-				' or higher to run CodeIgniter. Current version: ' . PHP_VERSION);
-			// @codeCoverageIgnoreEnd
-		}
-
 		// Collect any user-supplied options and apply them.
 		$php  = escapeshellarg(CLI::getOption('php') ?? PHP_BINARY);
 		$host = CLI::getOption('host') ?? 'localhost';
