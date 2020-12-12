@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -55,6 +56,7 @@ use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
 use Config\App;
 use Config\Cache;
+use Config\Cookie as CookieConfig;
 use Config\Email as EmailConfig;
 use Config\Encryption as EncryptionConfig;
 use Config\Exceptions as ExceptionsConfig;
@@ -149,6 +151,31 @@ class Services extends BaseService
 
 		return new Commands();
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Cookie class is a mechanism for storing data in array, and send
+	 * it to remote browser and thus tracking or identifying return users.
+	 *
+	 * @param CookieConfig|null $config
+	 * @param boolean			$getShared
+	 *
+	 * @return Cookie
+	 */
+	public static function cookie(CookieConfig $config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('cookie', $config);
+		}
+
+		$config = $config ?? config('Cookie');
+
+		return new Cookie($config, static::request());
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * The CURL Request class acts as a simple HTTP client for interacting

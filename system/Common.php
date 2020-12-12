@@ -222,6 +222,37 @@ if (! function_exists('config'))
 	}
 }
 
+if (! function_exists('cookie'))
+{
+	/**
+	 * A convenience method for accessing the cookie instance,
+	 * or an item that has been set in the cookie.
+	 *
+	 * Examples:
+	 *    cookie()->setPrefix('mk_')->set('foo', 'bar');
+	 * 
+	 *    $foo = cookie()->get('foo', 'mk_');
+	 *		or
+	 *    $foo = cookie('foo', 'mk_');
+	 *
+	 * @param string $name	 The cookie name
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return Cookie|array|null
+	 */
+	function cookie(string $name = null, string $prefix = '')
+	{
+		$cookie = Services::cookie();
+
+		if (is_string($name))
+		{
+			return $cookie->get($name, $prefix);
+		}
+
+		return $cookie;
+	}
+}
+
 if (! function_exists('csrf_token'))
 {
 	/**

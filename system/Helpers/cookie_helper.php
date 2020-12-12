@@ -109,3 +109,127 @@ if (! function_exists('delete_cookie'))
 		Services::response()->deleteCookie($name, $domain, $path, $prefix);
 	}
 }
+
+//--------------------------------------------------------------------
+
+if (! function_exists('set_cookie'))
+{
+	/**
+	 * Set a cookie.
+	 *
+	 * Accepts an arbitrary number of binds or an associative array in the
+	 * first parameter containing all the values.
+	 *
+	 * @param string|array $name     The cookie name or array containing binds
+	 * @param string       $value    The cookie value
+	 * @param integer|null $expires  The cookie expiration time (in seconds)
+	 * @param string       $path     The cookie path (default: '/')
+	 * @param string       $domain   The cookie domain (e.g.: '.example-domain.com')
+	 * @param string       $prefix   The cookie name prefix
+	 * @param boolean      $secure   Whether to transfer the cookie over a SSL only
+	 * @param boolean      $httponly Whether to access the cookie through HTTP only
+	 * @param string|null  $samesite The cookie samesite
+	 * 
+	 * @return void
+	 *
+	 * @see CodeIgniter\Cookie\Cookie::set()
+	 */
+	function set_cookie(
+		$name, string $value = '',
+		int $expires = null,
+		string $path = '/',
+		string $domain = '',
+		string $prefix = '',
+		bool $secure = false,
+		bool $httponly = false,
+		string $samesite = null
+	): void
+	{
+		Services::cookie()->set($name, $value, $expires, $path, $domain, $prefix, $secure, $httponly, $samesite);
+	}
+}
+
+if (! function_exists('get_cookie'))
+{
+	/**
+	 * Get the cookie.
+	 *
+	 * Return a specific cookie for the given name, if no name was given
+	 * it will return all cookies.
+	 * 
+	 * @param string $name	 The cookie name
+	 * @param string $prefix The cookie prefix
+	 * 
+	 * @return array|null
+	 * 
+	 * @see CodeIgniter\Cookie\Cookie::get()
+	 */
+	function get_cookie(string $name = '', string $prefix = ''): ?array
+	{
+		return Services::cookie()->get($name, $prefix);
+	}
+}
+
+if (! function_exists('remove_cookie'))
+{
+	/**
+	 * Remove a cookie.
+	 *
+	 * Delete a specific cookie for the given name.
+	 *
+	 * @param string $name	 The cookie name
+	 * @param string $path	 The cookie path
+	 * @param string $domain The cookie domain
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return void
+	 * 
+	 * @see CodeIgniter\Cookie\Cookie::remove()
+	 */
+	function remove_cookie(string $name, string $path = '/', string $domain = '', string $prefix = ''): void
+	{
+		Services::cookie()->remove($name, $path, $domain, $prefix);
+	}
+}
+
+if (! function_exists('has_cookie'))
+{
+	/**
+	 * Remove a cookie.
+	 *
+	 * Check whether cookie exists or not.
+	 *
+	 * @param string $name	 The cookie name
+	 * @param string $value	 The cookie value
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return boolean
+	 * 
+	 * @see CodeIgniter\Cookie\Cookie::has()
+	 */
+	function has_cookie(string $name, string $value = '', string $prefix = ''): bool
+	{
+		return Services::cookie()->has($name, $value, $prefix);
+	}
+}
+
+if (! function_exists('fetch_cookie'))
+{
+	/**
+	 * Fetch a cookie.
+	 *
+	 * Return an item from the COOKIE array.
+	 * 
+	 * @param string|array|null $index  Index for item to be fetched
+	 * @param integer|null      $filter The filter to be applied
+	 * @param integer|null      $flags	The flags to be applied
+	 *
+	 * @return string|array|null
+	 * 
+	 * @see CodeIgniter\Cookie\Cookie::fetch()
+	 */
+	function fetch_cookie($index = null, int $filter = null, int $flags = null)
+	{
+		return Services::cookie()->fetch($index, $filter, $flags);
+	}
+}
