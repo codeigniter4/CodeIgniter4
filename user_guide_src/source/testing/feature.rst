@@ -48,10 +48,10 @@ populated, while a **post** request would have the **$_POST** array populated.
 ::
 
     // Get a simple page
-    $result = $this->call('get', site_url());
+    $result = $this->call('get', '/');
 
     // Submit a form
-    $result = $this->call('post', site_url('contact'), [
+    $result = $this->call('post', 'contact'), [
         'name' => 'Fred Flintstone',
         'email' => 'flintyfred@example.com'
     ]);
