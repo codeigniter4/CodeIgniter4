@@ -610,19 +610,7 @@ extensive set of routes that all share the opening string, like when building an
 <span class="p">});</span>
 </pre></div>
 </div>
-<p>This would prefix the ‘users’ and ‘blog” URIs with “admin”, handling URLs like <code class="docutils literal notranslate"><span class="pre">/admin/users</span></code> and <code class="docutils literal notranslate"><span class="pre">/admin/blog</span></code>.
-It is possible to nest groups within groups for finer organization if you need it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-
-<span class="p">});</span>
-</pre></div>
-</div>
-<p>This would handle the URL at <code class="docutils literal notranslate"><span class="pre">admin/users/list</span></code>.</p>
+<p>This would prefix the ‘users’ and ‘blog” URIs with “admin”, handling URLs like <code class="docutils literal notranslate"><span class="pre">/admin/users</span></code> and <code class="docutils literal notranslate"><span class="pre">/admin/blog</span></code>.</p>
 <p>If you need to assign options to a group, like a <a class="reference external" href="#assigning-namespace">namespace</a>, do it before the callback:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
 <span class="p">{</span>
@@ -640,6 +628,19 @@ run the filter before or after the controller. This is especially handy during a
 </pre></div>
 </div>
 <p>The value for the filter must match one of the aliases defined within <code class="docutils literal notranslate"><span class="pre">app/Config/Filters.php</span></code>.</p>
+<p>It is possible to nest groups within groups for finer organization if you need it:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>This would handle the URL at <code class="docutils literal notranslate"><span class="pre">admin/users/list</span></code>. Note that options passed to the outer <code class="docutils literal notranslate"><span class="pre">group()</span></code> (for example
+<code class="docutils literal notranslate"><span class="pre">namespace</span></code> and <code class="docutils literal notranslate"><span class="pre">filter</span></code>) are not merged with the inner <code class="docutils literal notranslate"><span class="pre">group()</span></code> options.</p>
 <p>At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
