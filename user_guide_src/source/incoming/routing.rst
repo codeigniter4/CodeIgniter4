@@ -223,18 +223,6 @@ extensive set of routes that all share the opening string, like when building an
     });
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
-It is possible to nest groups within groups for finer organization if you need it::
-
-    $routes->group('admin', function($routes)
-    {
-        $routes->group('users', function($routes)
-        {
-            $routes->add('list', 'Admin\Users::list');
-        });
-
-    });
-
-This would handle the URL at ``admin/users/list``.
 
 If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
 
@@ -254,6 +242,20 @@ run the filter before or after the controller. This is especially handy during a
     });
 
 The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``.
+
+It is possible to nest groups within groups for finer organization if you need it::
+
+    $routes->group('admin', function($routes)
+    {
+        $routes->group('users', function($routes)
+        {
+            $routes->add('list', 'Admin\Users::list');
+        });
+
+    });
+
+This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example 
+``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
 At some point, you may want to group routes for the purpose of applying filters or other route 
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass 
