@@ -395,4 +395,3 @@ Working With XML
 **getXML()**
 
 If your application returns XML, you can retrieve it through this method.
-
