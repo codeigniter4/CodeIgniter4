@@ -177,7 +177,7 @@ a response status code in the 200 or 300's.
 This assertion simply uses the **isOK()** method to test a response.
 ::
 
-    $this->assertOK();
+    $result->assertOK();
 
 **isRedirect()**
 
@@ -194,7 +194,7 @@ Returns a boolean true/false based on whether the response is a redirected respo
 Asserts that the Response is an instance of RedirectResponse.
 ::
 
-    $this->assertRedirect();
+    $result->assertRedirect();
 
 **getRedirectUrl()**
 
@@ -209,7 +209,7 @@ Returns the URL set for a RedirectResponse, or null for failure.
 Asserts that the HTTP status code returned matches $code.
 ::
 
-    $this->assertStatus(403);
+    $result->assertStatus(403);
 
 
 Session Assertions
@@ -221,14 +221,14 @@ Asserts that a value exists in the resulting session. If $value is passed, will 
 matches what was specified.
 ::
 
-    $this->assertSessionHas('logged_in', 123);
+    $result->assertSessionHas('logged_in', 123);
 
 **assertSessionMissing(string $key)**
 
 Asserts that the resulting session does not include the specified $key.
 ::
 
-    $this->assertSessionMissin('logged_in');
+    $result->assertSessionMissin('logged_in');
 
 
 Header Assertions
@@ -240,14 +240,14 @@ Asserts that a header named **$key** exists in the response. If **$value** is no
 the values match.
 ::
 
-    $this->assertHeader('Content-Type', 'text/html');
+    $result->assertHeader('Content-Type', 'text/html');
 
 **assertHeaderMissing(string $key)**
 
 Asserts that a header name **$key** does not exist in the response.
 ::
 
-    $this->assertHeader('Accepts');
+    $result->assertHeader('Accepts');
 
 
 
@@ -260,14 +260,14 @@ Asserts that a cookie named **$key** exists in the response. If **$value** is no
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
 ::
 
-    $this->assertCookie('foo', 'bar');
+    $result->assertCookie('foo', 'bar');
 
 **assertCookieMissing(string $key)**
 
 Asserts that a cookie named **$key** does not exist in the response.
 ::
 
-    $this->assertCookieMissing('ci_session');
+    $result->assertCookieMissing('ci_session');
 
 **assertCookieExpired(string $key, string $prefix = '')**
 
@@ -275,7 +275,7 @@ Asserts that a cookie named **$key** exists, but has expired. You can set the co
 in as the second parameter.
 ::
 
-    $this->assertCookieExpired('foo');
+    $result->assertCookieExpired('foo');
 
 
 DOM Assertions
@@ -290,13 +290,13 @@ Asserts that text/HTML is on the page, either by itself or - more specifically -
 a tag, as specified by type, class, or id::
 
     // Check that "Hello World" is on the page
-    $this->assertSee('Hello World');
+    $result->assertSee('Hello World');
     // Check that "Hello World" is within an h1 tag
-    $this->assertSee('Hello World', 'h1');
+    $result->assertSee('Hello World', 'h1');
     // Check that "Hello World" is within an element with the "notice" class
-    $this->assertSee('Hello World', '.notice');
+    $result->assertSee('Hello World', '.notice');
     // Check that "Hello World" is within an element with id of "title"
-    $this->assertSee('Hellow World', '#title');
+    $result->assertSee('Hellow World', '#title');
 
 
 **assertDontSee(string $search = null, string $element = null)**
