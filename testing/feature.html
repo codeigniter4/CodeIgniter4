@@ -406,10 +406,10 @@ The second parameter is the path on your site to test. The third parameter accep
 superglobal variables for the HTTP verb you are using. So, a method of <strong>GET</strong> would have the <strong>$_GET</strong> variable
 populated, while a <strong>post</strong> request would have the <strong>$_POST</strong> array populated.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get a simple page</span>
-<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="nx">site_url</span><span class="p">());</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
 
 <span class="c1">// Submit a form</span>
-<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;contact&#39;</span><span class="p">),</span> <span class="p">[</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">),</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fred Flintstone&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;flintyfred@example.com&#39;</span>
 <span class="p">]);</span>
@@ -528,7 +528,7 @@ a response status code in the 200 or 300’s.</p>
 </div>
 <p><strong>assertOK()</strong></p>
 <p>This assertion simply uses the <strong>isOK()</strong> method to test a response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>isRedirect()</strong></p>
@@ -541,7 +541,7 @@ a response status code in the 200 or 300’s.</p>
 </div>
 <p><strong>assertRedirect()</strong></p>
 <p>Asserts that the Response is an instance of RedirectResponse.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>getRedirectUrl()</strong></p>
@@ -552,7 +552,7 @@ a response status code in the 200 or 300’s.</p>
 </div>
 <p><strong>assertStatus(int $code)</strong></p>
 <p>Asserts that the HTTP status code returned matches $code.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStatus</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertStatus</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -561,12 +561,12 @@ a response status code in the 200 or 300’s.</p>
 <p><strong>assertSessionHas(string $key, $value = null)</strong></p>
 <p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable’s value
 matches what was specified.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>assertSessionMissing(string $key)</strong></p>
 <p>Asserts that the resulting session does not include the specified $key.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSessionMissin</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionMissin</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -575,12 +575,12 @@ matches what was specified.</p>
 <p><strong>assertHeader(string $key, $value = null)</strong></p>
 <p>Asserts that a header named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
 the values match.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>assertHeaderMissing(string $key)</strong></p>
 <p>Asserts that a header name <strong>$key</strong> does not exist in the response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -589,18 +589,18 @@ the values match.</p>
 <p><strong>assertCookie(string $key, $value = null, string $prefix = ‘’)</strong></p>
 <p>Asserts that a cookie named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>assertCookieMissing(string $key)</strong></p>
 <p>Asserts that a cookie named <strong>$key</strong> does not exist in the response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>assertCookieExpired(string $key, string $prefix = ‘’)</strong></p>
 <p>Asserts that a cookie named <strong>$key</strong> exists, but has expired. You can set the cookie prefix, if needed, by passing it
 in as the second parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -612,13 +612,13 @@ assertions.</p>
 <p>Asserts that text/HTML is on the page, either by itself or - more specifically - within
 a tag, as specified by type, class, or id:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that &quot;Hello World&quot; is on the page</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
 <span class="c1">// Check that &quot;Hello World&quot; is within an h1 tag</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
 <span class="c1">// Check that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
 <span class="c1">// Check that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>assertDontSee(string $search = null, string $element = null)</strong></p>
@@ -732,7 +732,7 @@ method to do the comparison.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 11, 2020.
+        Last updated on Dec 13, 2020.
       </span>
 
     </p>
