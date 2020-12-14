@@ -264,7 +264,7 @@ abstract class BaseCookie
 	{
 		if (! in_array($samesite, ['None', 'Lax', 'Strict', '']))
 		{
-			$samesite = $this->config['samesite'];
+			$samesite = $this->properties['samesite'];
 		}
         
         $this->samesite = $samesite;
