@@ -107,44 +107,44 @@ Staging
 Most tests require some preparation in order to run correctly. PHPUnit's ``TestCase`` provides four methods
 to help with staging and clean up::
 
-	public static function setUpBeforeClass(): void
-	public static function tearDownAfterClass(): void
-	public function setUp(): void
-	public function tearDown(): void
+    public static function setUpBeforeClass(): void
+    public static function tearDownAfterClass(): void
+    public function setUp(): void
+    public function tearDown(): void
 
 The static methods run before and after the entire test case, whereas the local methods run
 between each test. If you implement any of these special functions make sure you run their
 parent as well so extended test cases do not interfere with staging::
 
-	public function setUp(): void
-	{
-		parent::setUp();
-		helper('text');
-	}
+    public function setUp(): void
+    {
+        parent::setUp();
+        helper('text');
+    }
 
 In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property for
 parameter-free methods you want run during set up and tear down::
 
-	protected $setUpMethods = [
-		'mockEmail',
-		'mockSession',
-	];
-	
-	protected $tearDownMethods = [];
+    protected $setUpMethods = [
+        'mockEmail',
+        'mockSession',
+    ];
+
+    protected $tearDownMethods = [];
 
 You can see by default these handle the mocking of intrusive services, but your class may override
 that or provide their own::
 
-	class OneOfMyModelsTest extends CIUnitTestCase
-	{
-		protected $tearDownMethods = [
-			'purgeRows',
-		];
-		
-		protected function purgeRows()
-		{
-			$this->model->purgeDeleted()
-		}
+    class OneOfMyModelsTest extends CIUnitTestCase
+    {
+        protected $tearDownMethods = [
+            'purgeRows',
+        ];
+
+        protected function purgeRows()
+        {
+            $this->model->purgeDeleted()
+        }
 
 Additional Assertions
 ---------------------
@@ -245,10 +245,10 @@ parameter is an instance of the class to test. The second parameter is the name 
     $obj = new Foo();
 
     // Get the invoker for the 'privateMethod' method.
-	$method = $this->getPrivateMethodInvoker($obj, 'privateMethod');
+    $method = $this->getPrivateMethodInvoker($obj, 'privateMethod');
 
     // Test the results
-	$this->assertEquals('bar', $method('param1', 'param2'));
+    $this->assertEquals('bar', $method('param1', 'param2'));
 
 **getPrivateProperty($instance, $property)**
 
@@ -319,12 +319,12 @@ component name::
 
     protected function setUp()
     {
-    	parent::setUp();
+        parent::setUp();
 
-		$model = new MockUserModel();
-		Factories::injectMock('models', 'App\Models\UserModel', $model);
-	}
-		
+        $model = new MockUserModel();
+        Factories::injectMock('models', 'App\Models\UserModel', $model);
+    }
+
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
 Stream Filters
