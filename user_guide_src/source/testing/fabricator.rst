@@ -277,4 +277,3 @@ you deleted a fake item but wanted to track the change.
 
 Resets all counts. Good idea to call this between test cases (though using
 ``CIDatabaseTestCase::$refresh = true`` does it automatically).
-
