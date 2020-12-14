@@ -55,9 +55,9 @@ Or with an associative array containing the data into first parameter. Here's
 an example::
 
 	$data = [
-		'name'  	=> 'item',
-		'value' 	=> 'hat',
-		'expires' 	=> 3600,
+		'name'	  => 'item',
+		'value'	  => 'hat',
+		'expires' => 3600,
 	];
 
 	$cookie->set($data);
@@ -90,7 +90,9 @@ If you want to retrieve all of the existing cookies, you can simply
 omit the item key::
 
 	$cookie->get();
-	// or
+
+Or even through the cookie helper method::
+
 	get_cookie();
 
 Remove Cookie Data
@@ -98,7 +100,7 @@ Remove Cookie Data
 
 Just as ``set()`` can be used to add information to a
 cookie, ``remove()`` can be used to remove it, by passing the
-cookie key. For example, if you wanted to remove 'item' from your
+cookie key. For example, if you wanted to remove 'item' from
 cookie data array::
 
 	$cookie->remove('item');
@@ -106,6 +108,19 @@ cookie data array::
 Or even through the cookie helper method::
 
 	remove_cookie('item');
+
+Check Cookie Data
+=====================
+
+To check whether cookie exists or not ``has()`` can be used to for it, by passing the
+cookie key. For example, if you wanted to check 'item' in
+cookie data array::
+
+	$cookie->has('item');
+
+Or even through the cookie helper method::
+
+	has_cookie('item');
 
 Send Cookie Data
 =====================
@@ -172,7 +187,6 @@ Chain method together::
 
 	$cookie->setPrefix('mk_')->set('item', 'cap', 300)->send();
 
-***************
 Class Reference
 ***************
 
@@ -223,7 +237,7 @@ Class Reference
 
 		Get cookie domain.
 
-	.. php:method:: setSecure(bool $secure)
+	.. php:method:: setSecure(bool $secure = true)
 
 		:param boolean $secure: The cookie secure
 		:returns: ``BaseCookie`` instance (method chaining)
@@ -238,7 +252,7 @@ Class Reference
 
 		Check cookie secure status.
 
-	.. php:method:: setHTTPOnly(bool $httponly)
+	.. php:method:: setHTTPOnly(bool $httponly = true)
 
 		:param boolean $httponly: The cookie httponly
 		:returns: ``BaseCookie`` instance (method chaining)
@@ -300,7 +314,7 @@ Class Reference
 		Accepts an arbitrary number of binds or an associative array in the
 		first parameter containing all the values.
 
-	.. php:method:: get([string $name = ''[, string $prefix = '']])
+	.. php:method:: get(string $name = '', string $prefix = '')
 
 		:param string $name: The cookie name
 		:param string $prefix: The cookie prefix
@@ -325,10 +339,9 @@ Class Reference
 
 		Delete a specific cookie for the given name.
 
-	.. php:method:: has(string $name, string $value = '', string $prefix = '')
+	.. php:method:: has(string $name, string $prefix = '')
 
 		:param string $name: The cookie name
-		:param string $value: The cookie value
 		:param string $prefix: The cookie prefix
 		:returns: ``TRUE if found, FALSE if not``
 		:rtype:	``boolean``
@@ -345,12 +358,12 @@ Class Reference
 
 		Send the cookies to the remote browser.
 
-	.. php:method:: fetch($index = NULL, $filter = NULL, $flags = NULL)
+	.. php:method:: fetch(string $name = NULL, string $prefix = '', bool $xssClean = FALSE)
 
-		:param string|array|null $index: Index for item to be fetched
-		:param integer|null $filter: The type of filter to apply
-		:param integer|null $flags: The flags to be applied
-		:returns: ``$_COOKIE if no parameters supplied, otherwise the COOKIE value or NULL``
+		:param string|null $name: The cookie name
+		:param string $prefix: The cookie prefix
+		:param boolean $xssClean: Whether to apply filter
+		:returns: ``$_COOKIE if no name supplied, otherwise the COOKIE value or NULL``
 		:rtype:	``string|array|null``
 
 		Fetch a cookie.

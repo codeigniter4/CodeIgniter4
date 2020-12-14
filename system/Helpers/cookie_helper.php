@@ -122,7 +122,7 @@ if (! function_exists('set_cookie'))
 	 *
 	 * @param string|array $name     The cookie name or array containing binds
 	 * @param string       $value    The cookie value
-	 * @param integer|null $expires  The cookie expiration time (in seconds)
+	 * @param integer      $expires  The cookie expiration time (in seconds)
 	 * @param string       $path     The cookie path (default: '/')
 	 * @param string       $domain   The cookie domain (e.g.: '.example-domain.com')
 	 * @param string       $prefix   The cookie name prefix
@@ -135,8 +135,9 @@ if (! function_exists('set_cookie'))
 	 * @see CodeIgniter\Cookie\Cookie::set()
 	 */
 	function set_cookie(
-		$name, string $value = '',
-		int $expires = null,
+		$name,
+		string $value = '',
+		int $expires = 0,
 		string $path = '/',
 		string $domain = '',
 		string $prefix = '',
@@ -178,17 +179,15 @@ if (! function_exists('remove_cookie'))
 	 * Delete a specific cookie for the given name.
 	 *
 	 * @param string $name	 The cookie name
-	 * @param string $path	 The cookie path
-	 * @param string $domain The cookie domain
 	 * @param string $prefix The cookie prefix
 	 *
 	 * @return void
 	 * 
 	 * @see CodeIgniter\Cookie\Cookie::remove()
 	 */
-	function remove_cookie(string $name, string $path = '/', string $domain = '', string $prefix = ''): void
+	function remove_cookie(string $name, string $prefix = ''): void
 	{
-		Services::cookie()->remove($name, $path, $domain, $prefix);
+		Services::cookie()->remove($name, $prefix);
 	}
 }
 
@@ -200,16 +199,15 @@ if (! function_exists('has_cookie'))
 	 * Check whether cookie exists or not.
 	 *
 	 * @param string $name	 The cookie name
-	 * @param string $value	 The cookie value
 	 * @param string $prefix The cookie prefix
 	 *
 	 * @return boolean
 	 * 
 	 * @see CodeIgniter\Cookie\Cookie::has()
 	 */
-	function has_cookie(string $name, string $value = '', string $prefix = ''): bool
+	function has_cookie(string $name, string $prefix = ''): bool
 	{
-		return Services::cookie()->has($name, $value, $prefix);
+		return Services::cookie()->has($name, $prefix);
 	}
 }
 
@@ -218,18 +216,18 @@ if (! function_exists('fetch_cookie'))
 	/**
 	 * Fetch a cookie.
 	 *
-	 * Return an item from the COOKIE array.
+	 * Return an item from the $_COOKIE array.
 	 * 
-	 * @param string|array|null $index  Index for item to be fetched
-	 * @param integer|null      $filter The filter to be applied
-	 * @param integer|null      $flags	The flags to be applied
+	 * @param string|null $name     The cookie name
+	 * @param string      $prefix 	The cookie prefix
+	 * @param boolean     $xssClean Whether to apply filter
 	 *
 	 * @return string|array|null
 	 * 
 	 * @see CodeIgniter\Cookie\Cookie::fetch()
 	 */
-	function fetch_cookie($index = null, int $filter = null, int $flags = null)
+	function fetch_cookie(string $name = null, string $prefix = '', bool $xssClean = false)
 	{
-		return Services::cookie()->fetch($index, $filter, $flags);
+		return Services::cookie()->fetch($name, $prefix, $xssClean);
 	}
 }

@@ -26,7 +26,7 @@ class CookieTest extends CIUnitTestCase
 
 	protected function setUp(): void
 	{
-		$this->cookie = new Cookie(new CookieConfig());
+		$this->cookie = new CookiePresenter(new CookieConfig());
 	}
 
 	public function testGetCookieWhenArrayReturns()
@@ -61,7 +61,7 @@ class CookieTest extends CIUnitTestCase
 	{
 		$this->cookie->set('foo', 'bar');
 
-		$this->assertEquals($this->cookie->has('foo'), $this->cookie->has('foo', 'bar'));
+		$this->assertEquals($this->cookie->has('foo'), $this->cookie->has('foo'));
 	}
 
 	public function testRemoveCookie()
@@ -69,25 +69,10 @@ class CookieTest extends CIUnitTestCase
 		$this->cookie->set([
 			'name' => 'foo',
 			'value' => 'bar',
-			'expires' => HOUR,
+			'expires' => 0,
 		])->remove('foo');
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertTrue($item['expires'] <= time());
-	}
-
-	public function testRemoveCookieManually()
-	{
-		$this->cookie->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => null,
-		]);
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertTrue($item['expires'] <= time());
+		$this->assertFalse($this->cookie->has('foo'));
 	}
 
 	public function testRemoveCookieExpired()
@@ -95,12 +80,12 @@ class CookieTest extends CIUnitTestCase
 		$this->cookie->set('foo', 'bar')->set([
 			'name' => 'foo',
 			'value' => 'bar',
-			'expires' => HOUR,
+			'expires' => -1000,
 		]);
 
 		$item = $this->cookie->get('foo');
 		
-		$this->assertFalse($item['expires'] <= time());
+		$this->assertTrue($item['expires'] <= time());
 	}
 
 	public function testRemoveCookieWithRealPrefix()
@@ -108,12 +93,9 @@ class CookieTest extends CIUnitTestCase
 		$this->cookie->setPrefix('mk_')->set([
 			'name' => 'foo',
 			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '', '', 'mk_');
+		])->remove('foo', 'mk_');
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertEquals(null, $item['expires']);
+		$this->assertFalse($this->cookie->has('foo', 'mk_'));
 	}
 
 	public function testRemoveCookieWithWrongPrefix()
@@ -121,114 +103,30 @@ class CookieTest extends CIUnitTestCase
 		$this->cookie->setPrefix('mk_')->set([
 			'name' => 'foo',
 			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '', '', 'ma_');
+		])->remove('foo', 'ma_');
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertFalse($item['expires'] <= time());
-	}
-
-	public function testRemoveCookieWithRealPath()
-	{
-		$this->cookie->setPath('/mk/baz')->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '/mk/ba', '', '');
-
-		$item = $this->cookie->get('foo');
-		
-		$this->assertEquals(null, $item['expires']);
-	}
-
-	public function testRemoveCookieWithWrongPath()
-	{
-		$this->cookie->setPath('/mk/baz')->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '/mk/qux', '', '');
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertFalse($item['expires'] <= time());
-	}
-
-	public function testRemoveCookieWithRealDomain()
-	{
-		$this->cookie->setDomain('.baz.mk')->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '', '.baz.mk', '');
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertEquals(null, $item['expires']);
-	}
-
-	public function testRemoveCookieWithWrongDomain()
-	{
-		$this->cookie->setDomain('.baz.mk')->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => HOUR,
-		])->remove('foo', '', 'qux.mk', '');
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertFalse($item['expires'] <= time());
-	}
-
-	public function testCookieExpires()
-	{
-		$this->cookie->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => HOUR,
-		]);
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertFalse($item['expires'] < time());
-	}
-
-	public function testCookieExpiresNull()
-	{
-		$this->cookie->set([
-			'name' => 'foo',
-			'value' => 'bar',
-			'expires' => null,
-		]);
-
-		$item = $this->cookie->get('foo');
-
-		$this->assertTrue($item['expires'] < time());
-		$this->assertEquals(null, $item['expires']);
+		$this->assertTrue($this->cookie->has('foo', 'mk_'));
 	}
 
 	public function testCookieWithRealPrefix()
 	{
-		$this->cookie->set('foo', 'bar', null, '', '', '', 'mk_');
+		$this->cookie->set('foo', 'bar', 0, '', '', 'mk_');
 
-		$this->assertTrue($this->cookie->has('foo', 'bar', 'mk_'));
-		$this->assertTrue($this->cookie->has('mk_foo'));
+		$this->assertTrue($this->cookie->has('foo', 'mk_'));
 	}
 
 	public function testCookieWithWrongPrefix()
 	{
-		$this->cookie->set('foo', 'bar', null, '', '', '', 'mk_');
+		$this->cookie->set('foo', 'bar', 0, '', '', 'mk_');
 
-		$this->assertFalse($this->cookie->has('foo', 'bar', 'ci_'));
-		$this->assertFalse($this->cookie->has('foo'));
+		$this->assertFalse($this->cookie->has('foo', '_mk'));
 	}
 
 	public function testCookieDefaultPrefix()
 	{
 		$this->cookie->set('foo', 'bar');
 
-		$this->assertTrue($this->cookie->has('foo', 'bar', ''));
+		$this->assertTrue($this->cookie->has('foo'));
 	}
 
 	public function testCookiePrefixViaArray()
@@ -239,20 +137,20 @@ class CookieTest extends CIUnitTestCase
 			'prefix' => 'mk_',
 		]);
 
-		$item = $this->cookie->get('foo');
+		$item = $this->cookie->get('foo', 'mk_');
 
-		$this->assertTrue($this->cookie->has('foo', 'bar', 'mk_'));
-		$this->assertEquals('mk_bar', $item['name']);
+		$this->assertTrue($this->cookie->has('foo', 'mk_'));
+		$this->assertEquals('mk_foo', $item['name']);
 	}
 
 	public function testCookiePrefixViaConfig()
 	{
 		$this->cookie->setPrefix('mk_')->set('foo', 'bar');
 
-		$item = $this->cookie->get('foo');
+		$item = $this->cookie->get('foo', 'mk_');
 
-		$this->assertTrue($this->cookie->has('foo', 'bar', 'mk_'));
-		$this->assertEqual('mk_bar', $item['name']);
+		$this->assertTrue($this->cookie->has('foo', 'mk_'));
+		$this->assertEquals('mk_foo', $item['name']);
 	}
 
 	public function testCookieDefaultPath()
@@ -357,7 +255,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieSecureFalseViaConfig()
 	{
-		$this->cookie->setSecure()->set('foo', 'bar');
+		$this->cookie->setSecure(false)->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -367,7 +265,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieSecureTrueViaConfig()
 	{
-		$this->cookie->setSecure(true)->set('foo', 'bar');
+		$this->cookie->setSecure()->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -415,7 +313,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieHTTPOnlyFalseViaConfig()
 	{
-		$this->cookie->setHTTPOnly()->set('foo', 'bar');
+		$this->cookie->setHTTPOnly(false)->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -425,7 +323,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieHTTPOnlyTrueViaConfig()
 	{
-		$this->cookie->setHTTPOnly(true)->set('foo', 'bar');
+		$this->cookie->setHTTPOnly()->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -445,12 +343,12 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieNoneSameSite()
 	{
-		$this->cookie->set('foo', 'bar', null, '/', '', '', false, false, 'None');
+		$this->cookie->set('foo', 'bar', 0, '/', '', '', false, false, 'None');
 
 		$item = $this->cookie->get('foo');
 
 		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('', $item['samesite']);
+		$this->assertEquals('None', $item['samesite']);
 	}
 
 	public function testCookieNoneSameSiteViaArray()
@@ -479,12 +377,12 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieLaxSameSite()
 	{
-		$this->cookie->set('foo', 'bar', null, '/', '', '', false, false, 'Lax');
+		$this->cookie->set('foo', 'bar', 0, '', '', '', false, false, 'Lax');
 
 		$item = $this->cookie->get('foo');
 
 		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('', $item['samesite']);
+		$this->assertEquals('Lax', $item['samesite']);
 	}
 
 	public function testCookieLaxSameSiteViaArray()
@@ -513,12 +411,12 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieStrictSameSite()
 	{
-		$this->cookie->set('foo', 'bar', null, '/', '', '', false, false, 'Strict');
+		$this->cookie->set('foo', 'bar', 0, '', '', '', false, false, 'Strict');
 
 		$item = $this->cookie->get('foo');
 
 		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('', $item['samesite']);
+		$this->assertEquals('Strict', $item['samesite']);
 	}
 
 	public function testCookieStrictSameSiteViaArray()
@@ -547,12 +445,9 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieBlankSameSite()
 	{
-		$this->cookie->set('foo', 'bar', null, '/', '', '', false, false, '');
+		$this->cookie->set('foo', 'bar', 0, '', '', '', false, false, '');
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('', $item['samesite']);
+		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
 	}
 
 	public function testCookieBlankSameSiteViaArray()
@@ -563,32 +458,14 @@ class CookieTest extends CIUnitTestCase
 			'samesite' => '',
 		]);
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('', $item['samesite']);
+		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
 	}
 
 	public function testCookieBlankSameSiteViaConfig()
 	{
 		$this->cookie->setSameSite('')->set('foo', 'bar');
 
-		$item = $this->cookie->get('foo');
-
-		$this->assertArrayHasKey('samesite', $item);
-		$this->assertEquals('Strict', $item['samesite']);
-	}
-
-	public function testCookieInvalidSameSite()
-	{
-		$this->cookie->set([
-			'name'     => 'foo',
-			'value'    => 'bar',
-			'samesite' => 'Invalid',
-		]);
-
-		$this->expectException('CodeIgniter\Cookie\Exceptions\CookieException');
-		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
+		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
 	}
 
 	public function testSetCookiePrefix()
@@ -608,17 +485,17 @@ class CookieTest extends CIUnitTestCase
 
 	public function testSetCookieSecure()
 	{
-		$this->assertFalse($this->cookie->setSecure()->isSecure());
+		$this->assertFalse($this->cookie->setSecure(false)->isSecure());
 		$this->assertEquals(false, $this->cookie->isSecure());
-		$this->assertTrue($this->cookie->setSecure(true)->isSecure());
+		$this->assertTrue($this->cookie->setSecure()->isSecure());
 		$this->assertEquals(true, $this->cookie->isSecure());
 	}
 
 	public function testSetCookieHTTPOnly()
 	{
-		$this->assertFalse($this->cookie->setHTTPOnly()->isHTTPOnly());
+		$this->assertFalse($this->cookie->setHTTPOnly(false)->isHTTPOnly());
 		$this->assertEquals(false, $this->cookie->isHTTPOnly());
-		$this->assertTrue($this->cookie->setHTTPOnly(true)->isHTTPOnly());
+		$this->assertTrue($this->cookie->setHTTPOnly()->isHTTPOnly());
 		$this->assertEquals(true, $this->cookie->isHTTPOnly());
 	}
 }

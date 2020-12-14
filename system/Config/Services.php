@@ -14,7 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
-use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookiePresenter;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -159,9 +159,9 @@ class Services extends BaseService
 	 * it to remote browser and thus tracking or identifying return users.
 	 *
 	 * @param CookieConfig|null $config
-	 * @param boolean			$getShared
+	 * @param boolean           $getShared
 	 *
-	 * @return Cookie
+	 * @return CookiePresenter
 	 */
 	public static function cookie(CookieConfig $config = null, bool $getShared = true)
 	{
@@ -172,7 +172,7 @@ class Services extends BaseService
 
 		$config = $config ?? config('Cookie');
 
-		return new Cookie($config);
+		return new CookiePresenter($config);
 	}
 
 	//--------------------------------------------------------------------

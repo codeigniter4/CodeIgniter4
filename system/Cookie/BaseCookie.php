@@ -73,7 +73,7 @@ abstract class BaseCookie
 	 *
 	 * Setting for cookie SameSite.
 	 *
-	 * Allowed values are: None - Lax - Strict - ''.
+	 * Allowed values are: [None - Lax - Strict - ''].
 	 *
 	 * Defaults to `Lax` as recommended in this link:
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
@@ -95,11 +95,11 @@ abstract class BaseCookie
 	{
 		$this->properties = get_object_vars($config);
 
-		foreach (get_class_vars(get_class($this)) as $key => $value)
+		foreach (get_object_vars($this) as $key => $value)
 		{
-			if (property_exists($this, $key) && isset($this->properties[$key]))
+			if (isset($this->properties[$key]))
 			{
-				$this->$key = $this->properties[$key];
+				$this->{$key} = $this->properties[$key];
 			}
 		}
 
@@ -202,7 +202,7 @@ abstract class BaseCookie
 	 *
 	 * @return $this
 	 */
-	public function setSecure(bool $secure = false)
+	public function setSecure(bool $secure = true)
 	{
 		$this->secure = $secure;
 
@@ -230,7 +230,7 @@ abstract class BaseCookie
 	 *
 	 * @return $this
 	 */
-	public function setHTTPOnly(bool $httponly = false)
+	public function setHTTPOnly(bool $httponly = true)
 	{
 		$this->httponly = $httponly;
 
@@ -254,20 +254,20 @@ abstract class BaseCookie
 	/**
 	 * Set cookie samesite.
 	 * 
-	 * Returns the default samesite configuration if $samesite is invalid.
-	 *
+	 * Set value to the default configuration, if $samesite is invalid.
+	 * 
 	 * @param string $samesite
 	 *
 	 * @return $this
 	 */
 	public function setSameSite(string $samesite)
 	{
-		if (! in_array($samesite, ['None', 'Lax', 'Strict', '']))
+		if (! in_array(strtolower($samesite), ['none', 'lax', 'strict', ''], true))
 		{
 			$samesite = $this->properties['samesite'];
 		}
-        
-        $this->samesite = $samesite;
+
+		$this->samesite = ucfirst(strtolower($samesite));
 
 		return $this;
 	}
@@ -293,11 +293,11 @@ abstract class BaseCookie
 	 */
 	public function reset()
 	{
-		foreach (get_class_vars(get_class($this)) as $key => $value)
+		foreach (get_object_vars($this) as $key => $value)
 		{
-			if (property_exists($this, $key) && isset($this->properties[$key]))
+			if (isset($this->properties[$key]))
 			{
-				$this->$key = $this->properties[$key];
+				$this->{$key} = $this->properties[$key];
 			}
 		}
 

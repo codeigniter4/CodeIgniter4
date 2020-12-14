@@ -10,7 +10,7 @@
  */
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookiePresenter;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
@@ -240,7 +240,7 @@ if (! function_exists('cookie'))
 	 * @param string $name	 The cookie name
 	 * @param string $prefix The cookie prefix
 	 *
-	 * @return Cookie|array|null
+	 * @return CookiePresenter|array|null
 	 */
 	function cookie(string $name = null, string $prefix = '')
 	{

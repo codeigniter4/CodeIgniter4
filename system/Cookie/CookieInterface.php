@@ -14,111 +14,56 @@ namespace CodeIgniter\Cookie;
 interface CookieInterface
 {
 	/**
-	 * Set a cookie.
+	 * Get cookie name.
 	 *
-	 * Accepts an arbitrary number of binds or an associative array in the
-	 * first parameter containing all the values.
-	 *
-	 * @param string|array $name     The cookie name or array containing binds
-	 * @param string       $value    The cookie value
-	 * @param integer|null $expires  The cookie expiration time (in seconds)
-	 * @param string       $path     The cookie path (default: '/')
-	 * @param string       $domain   The cookie domain (e.g.: '.example-domain.com')
-	 * @param string       $prefix   The cookie name prefix
-	 * @param boolean      $secure   Whether to transfer the cookie over a SSL only
-	 * @param boolean      $httponly Whether to access the cookie through HTTP only
-	 * @param string|null  $samesite The cookie samesite
-	 * @return CookieInterface
+	 * @return string
 	 */
-	public function set(
-		$name, string $value = '',
-		int $expires = null,
-		string $path = '/',
-		string $domain = '',
-		string $prefix = '',
-		bool $secure = false,
-		bool $httponly = false,
-		string $samesite = null
-	): CookieInterface;
-
-	//--------------------------------------------------------------------
+	public function getName(): string;
+	/**
+	 * Get cookie value.
+	 *
+	 * @return string
+	 */
+	public function getValue(): string;
+	/**
+	 * Get cookie expires.
+	 *
+	 * @return integer
+	 */
+    public function getExpires(): int;
+    
+	/**
+	 * Get cookie path.
+	 *
+	 * @return string
+	 */
+    public function getPath(): string;
+    
+	/**
+	 * Get cookie domain.
+	 *
+	 * @return string
+	 */
+	public function getDomain(): string;
 
 	/**
-	 * Get a cookie
-	 *
-	 * Return a specific cookie for the given name, if no name was given
-	 * it will return all cookies.
-	 * 
-	 * @param string $name	 The cookie name
-	 * @param string $prefix The cookie prefix
-	 *
-	 * @return array|null
-	 */
-	public function get(string $name = '', string $prefix = ''): ?array;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Remove a cookie.
-	 *
-	 * Delete a specific cookie for the given name.
-	 * 
-	 * @param string $name	 The cookie name
-	 * @param string $path	 The cookie path
-	 * @param string $domain The cookie domain
-	 * @param string $prefix The cookie prefix
-	 *
-	 * @return CookieInterface
-	 */
-	public function remove(string $name, string $path = '/', string $domain = '', string $prefix = ''): CookieInterface;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Has a cookie.
-	 * 
-	 * Checks whether cookie exists or not.
-	 *
-	 * @param string $name	 The cookie name
-	 * @param string $value  The cookie value
-	 * @param string $prefix The cookie prefix
+	 * Check cookie secure status.
 	 *
 	 * @return boolean
 	 */
-	public function has(string $name, string $value = '', string $prefix = ''): bool;
-
-	//--------------------------------------------------------------------
+	public function isSecure(): bool;
 
 	/**
-	 * Send the cookies.
-	 * 
-	 * Send the cookies to the remote browser.
-	 * 
-	 * @return void
+	 * Check cookie httponly status.
+	 *
+	 * @return boolean
 	 */
-	public function send(): void;
-
-	//--------------------------------------------------------------------
+	public function isHTTPOnly(): bool;
 
 	/**
-	 * Fetch a cookie.
+	 * Get cookie samesite.
 	 *
-	 * Return an item from the COOKIE array.
-	 * 
-	 * @param string|array|null $index  Index for item to be fetched
-	 * @param integer|null      $filter The filter to be applied
-	 * @param integer|null      $flags	The flags to be applied
-	 *
-	 * @return string|array|null
+	 * @return string
 	 */
-	public function fetch($index = null, int $filter = null, int $flags = null);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Clear stored cookies.
-	 *
-	 * @return void
-	 */
-	public function clear(): void;
+	public function getSameSite(): string;
 }

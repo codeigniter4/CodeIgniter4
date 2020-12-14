@@ -68,7 +68,7 @@ class Cookie extends BaseConfig
 	 *
 	 * Setting for cookie SameSite.
 	 *
-	 * Allowed values are: None - Lax - Strict - ''.
+	 * Allowed values are: [None - Lax - Strict - ''].
 	 *
 	 * Defaults to `Lax` as recommended in this link:
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies

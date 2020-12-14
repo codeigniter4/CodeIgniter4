@@ -11,10 +11,9 @@
 
 namespace CodeIgniter\Cookie\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
-class CookieException extends FrameworkException implements ExceptionInterface
+class CookieException extends FrameworkException
 {
 	public static function forInvalidSameSite(string $samesite)
 	{

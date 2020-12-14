@@ -11,5 +11,5 @@
 
 // Cookie language settings
 return [
-	'invalidSameSite' => 'The SameSite value must be None, Lax, Strict, or a blank string, {0} given.',
+	'invalidSameSite' => 'The SameSite value must be None, Lax, Strict or a blank string, {0} given.',
 ];
