@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cookie;
 
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 

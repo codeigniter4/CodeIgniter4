@@ -121,13 +121,4 @@ interface CookieInterface
 	 * @return void
 	 */
 	public function clear(): void;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reset configuration to default.
-	 *
-	 * @return CookieInterface
-	 */
-	public function reset(): CookieInterface;
 }

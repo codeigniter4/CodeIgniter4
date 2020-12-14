@@ -172,7 +172,7 @@ class Services extends BaseService
 
 		$config = $config ?? config('Cookie');
 
-		return new Cookie($config, static::request());
+		return new Cookie($config);
 	}
 
 	//--------------------------------------------------------------------

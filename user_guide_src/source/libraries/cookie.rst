@@ -119,7 +119,9 @@ in the remote browser::
 
 Or we can chain them together::
 
-	$cookie->set('item1', 'bag', 3600)->set('item2', 'cup', 1800)->send();
+	$cookie->set('item1', 'bag', 3600)
+		->set('item2', 'cup', 1800)
+		->send();
 
 Fetch Cookie Data
 =======================
@@ -140,7 +142,7 @@ For example, to assign a previously stored 'item'::
 .. note:: The ``fetch()`` method returns NULL if the item you are trying
 	to access does not exist.
 
-If you want to retrieve all of the existing cookies, you can simply
+If you want to retrieve all of the existing ``$_COOKIE``, you can simply
 omit the item key::
 
 	$cookie->fetch();
@@ -168,20 +170,13 @@ Preference                     Default                                      Opti
 
 Chain method together::
 
-	$cookie->setPrefix('mk_')
-		->setDomain('.example-domain.com)
-		->setSameSite('Strict')
-		->set('item', 'cap', 300)
-		->send();
-
-	// Reset config values to default
-		$cookie->reset();
+	$cookie->setPrefix('mk_')->set('item', 'cap', 300)->send();
 
 ***************
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\Cookie\\BaseCookie
+.. php:class:: CodeIgniter\Cookie\BaseCookie
 
 	.. php:method:: setPrefix(string $prefix)
 
@@ -266,6 +261,8 @@ Class Reference
 
 		Set cookie samesite.
 
+		Returns the default samesite configuration if $samesite is invalid.
+
 	.. php:method:: getSameSite()
 
 		:returns: ``$samesite`` configuration property
@@ -273,9 +270,18 @@ Class Reference
 
 		Get cookie samesite.
 
-.. php:class:: CodeIgniter\\Cookie\\Cookie
+	.. php:method:: reset()
 
-	.. php:method:: set($name, string $value, int $expires = null, string $path = '/', string $domain = '', string $prefix = '', bool $secure = false, bool $httponly = false, string $samesite = null)
+		:returns: ``BaseCookie`` instance (method chaining)
+		:rtype:	``BaseCookie``
+
+		Reset configuration to default.
+
+.. php:class:: CodeIgniter\Cookie\Cookie
+
+	.. php:method:: set($name, string $value, int $expires = NULL, string $path = '/',
+						string $domain = '', string $prefix = '', bool $secure = FALSE,
+						bool $httponly = FALSE, string $samesite = NULL)
 
 		:param string|array $name: The cookie name or array containing binds
 		:param string $value: The cookie value
@@ -291,9 +297,10 @@ Class Reference
 
 		Set a cookie.
 
-		Accepts an arbitrary number of binds or an associative array in the first parameter containing all the values.
+		Accepts an arbitrary number of binds or an associative array in the
+		first parameter containing all the values.
 
-	.. php:method:: get(string $name = '', string $prefix = '')
+	.. php:method:: get([string $name = ''[, string $prefix = '']])
 
 		:param string $name: The cookie name
 		:param string $prefix: The cookie prefix
@@ -302,7 +309,8 @@ Class Reference
 
 		Get a cookie.
 
-		Return a specific cookie for the given name, if $name is empty it will return all cookies.
+		Return a specific cookie for the given name, if no name was given
+		it will return all cookies.
 
 	.. php:method:: remove(string $name, string $path = '/', string $domain = '', string $prefix = '')
 
@@ -337,12 +345,12 @@ Class Reference
 
 		Send the cookies to the remote browser.
 
-	.. php:method:: fetch($index = null, $filter = null, $flags = null)
+	.. php:method:: fetch($index = NULL, $filter = NULL, $flags = NULL)
 
 		:param string|array|null $index: Index for item to be fetched
 		:param integer|null $filter: The type of filter to apply
 		:param integer|null $flags: The flags to be applied
-		:returns: ``$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not``
+		:returns: ``$_COOKIE if no parameters supplied, otherwise the COOKIE value or NULL``
 		:rtype:	``string|array|null``
 
 		Fetch a cookie.
@@ -354,10 +362,3 @@ Class Reference
 		:rtype:	``void``
 
 		Clear stored cookies.
-
-	.. php:method:: reset()
-
-		:returns: ``CookieInterface`` instance (method chaining)
-		:rtype:	``CookieInterface``
-
-		Reset configuration to default.

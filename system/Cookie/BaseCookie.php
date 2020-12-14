@@ -12,9 +12,17 @@
 namespace CodeIgniter\Cookie;
 
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use Config\Cookie as CookieConfig;
 
 abstract class BaseCookie
 {
+	/**
+	 * Configuration Properties
+	 *
+	 * @var @array
+	 */
+	protected $config;
+
 	/**
 	 * Cookie Prefix
 	 *
@@ -79,19 +87,19 @@ abstract class BaseCookie
 	/**
 	 * Constructor.
 	 *
-	 * @param $config
+	 * @param CookieConfig $config
 	 * 
 	 * @throws CookieException
 	 */
-	public function __construct($config)
+	public function __construct(CookieConfig $config)
 	{
-		$config = get_object_vars($config);
+		$this->config = get_object_vars($config);
 
 		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
-			if (property_exists($this, $key) && isset($config[$key]))
+			if (property_exists($this, $key) && isset($this->config[$key]))
 			{
-				$this->$key = $config[$key];
+				$this->$key = $this->config[$key];
 			}
 		}
 
@@ -245,6 +253,8 @@ abstract class BaseCookie
 
 	/**
 	 * Set cookie samesite.
+	 * 
+	 * Returns the default samesite configuration if $samesite is invalid.
 	 *
 	 * @param string $samesite
 	 *
@@ -252,7 +262,12 @@ abstract class BaseCookie
 	 */
 	public function setSameSite(string $samesite)
 	{
-		$this->samesite = $samesite;
+		if (! in_array($samesite, ['None', 'Lax', 'Strict', '']))
+		{
+			$samesite = $this->config['samesite'];
+		}
+        
+        $this->samesite = $samesite;
 
 		return $this;
 	}
@@ -267,5 +282,25 @@ abstract class BaseCookie
 	public function getSameSite(): string
 	{
 		return $this->samesite;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Reset configuration to default.
+	 *
+	 * @return $this
+	 */
+	public function reset()
+	{
+		foreach (get_class_vars(get_class($this)) as $key => $value)
+		{
+			if (property_exists($this, $key) && isset($this->config[$key]))
+			{
+				$this->$key = $this->config[$key];
+			}
+		}
+
+		return $this;
 	}
 }

@@ -11,8 +11,7 @@
 
 namespace CodeIgniter\Cookie;
 
-use CodeIgniter\HTTP\RequestInterface;
-use Config\Cookie as CookieConfig;
+use Config\Services;
 
 class Cookie extends BaseCookie implements CookieInterface
 {
@@ -23,26 +22,16 @@ class Cookie extends BaseCookie implements CookieInterface
 	 */
 	protected $cookies = [];
 
-	/**
-	 * Instance of the main Request object.
-	 *
-	 * @var RequestInterface
-	 */
-	protected $request;
-
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param CookieConfig 	   $config
-	 * @param RequestInterface $request
+	 * @param object $config
 	 */
-	public function __construct(CookieConfig $config, RequestInterface $request)
+	public function __construct(CookieConfig $config)
 	{
 		parent::__construct($config);
-
-		$this->request = $request;
 	}
 
 	//--------------------------------------------------------------------
@@ -123,16 +112,16 @@ class Cookie extends BaseCookie implements CookieInterface
 	//--------------------------------------------------------------------
 
 	/**
-	* Get a cookie.
-	*
-	* Return a specific cookie for the given name, if no name was given
-	* it will return all cookies.
-	* 
-	* @param string $name	 The cookie name
-	* @param string $prefix The cookie prefix
-	*
-	* @return array|null
-	*/
+	 * Get a cookie.
+	 *
+	 * Return a specific cookie for the given name, if no name was given
+	 * it will return all cookies.
+	 * 
+	 * @param string $name	 The cookie name
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return array|null
+	 */
 	public function get(string $name = '', string $prefix = ''): ?array
 	{
 		if (empty($name))
@@ -156,17 +145,17 @@ class Cookie extends BaseCookie implements CookieInterface
 	//--------------------------------------------------------------------
 
 	/**
-	* Remove a cookie.
-	*
-	* Delete a specific cookie for the given name.
-	*
-	* @param string $name	 The cookie name
-	* @param string $path	 The cookie path
-	* @param string $domain The cookie domain
-	* @param string $prefix The cookie prefix
-	*
-	* @return CookieInterface
-	*/
+	 * Remove a cookie.
+	 *
+	 * Delete a specific cookie for the given name.
+	 *
+	 * @param string $name	 The cookie name
+	 * @param string $path	 The cookie path
+	 * @param string $domain The cookie domain
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return CookieInterface
+	 */
 	public function remove(string $name, string $path = '/', string $domain = '', string $prefix = ''): CookieInterface
 	{
 		$prefix = empty($prefix) && ! empty($this->prefix) ? $this->prefix : $prefix;
@@ -207,16 +196,16 @@ class Cookie extends BaseCookie implements CookieInterface
 	//--------------------------------------------------------------------
 
 	/**
-	* Has a cookie.
-	* 
-	* Check whether cookie exists or not.
-	*
-	* @param string $name	 The cookie name
-	* @param string $value  The cookie value
-	* @param string $prefix The cookie prefix
-	*
-	* @return boolean
-	*/
+	 * Has a cookie.
+	 * 
+	 * Check whether cookie exists or not.
+	 *
+	 * @param string $name	 The cookie name
+	 * @param string $value  The cookie value
+	 * @param string $prefix The cookie prefix
+	 *
+	 * @return boolean
+	 */
 	public function has(string $name, string $value = '', string $prefix = ''): bool
 	{
 		$prefix = empty($prefix) && ! empty($this->prefix) ? $this->prefix : $prefix;
@@ -235,17 +224,19 @@ class Cookie extends BaseCookie implements CookieInterface
 
 			return $cookie['value'] === $value;
 		}
+
+		return false;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	* Send the cookies.
-	* 
-	* Send the cookies to the remote browser.
-	* 
-	* @return void
-	*/
+	 * Send the cookies.
+	 * 
+	 * Send the cookies to the remote browser.
+	 * 
+	 * @return void
+	 */
 	public function send(): void
 	{
 		foreach ($this->cookies as $params)
@@ -269,57 +260,37 @@ class Cookie extends BaseCookie implements CookieInterface
 				setcookie($name, $value, $params);
 			}
 		}
+		
+		$this->clear();
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	* Fetch a cookie.
-	*
-	* Return an item from the COOKIE array.
-	* 
-	* @param string|array|null $index  Index for item to be fetched
-	* @param integer|null      $filter The filter to be applied
-	* @param integer|null      $flags	The flags to be applied
-	*
-	* @return string|array|null
-	*/
+	 * Fetch a cookie.
+	 *
+	 * Return an item from the COOKIE array.
+	 * 
+	 * @param string|array|null $index  Index for item to be fetched
+	 * @param integer|null      $filter The filter to be applied
+	 * @param integer|null      $flags  The flags to be applied
+	 *
+	 * @return string|array|null
+	 */
 	public function fetch($index = null, int $filter = null, int $flags = null)
 	{
-		return $this->request->fetchGlobal('cookie', $index, $filter, $flags);
+		return Services::request()->fetchGlobal('cookie', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	* Clear stored cookies.
-	*
-	* @return void
-	*/
+	 * Clear stored cookies.
+	 *
+	 * @return void
+	 */
 	public function clear(): void
 	{
 		$this->cookies = [];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	* Reset configuration to default.
-	*
-	* @return CookieInterface
-	*/
-	public function reset(): CookieInterface
-	{
-		$config = get_object_vars($this->config);
-
-		foreach (get_class_vars(get_class($this)) as $key => $value)
-		{
-			if (property_exists($this, $key) && isset($config[$key]))
-			{
-				$this->$key = $config[$key];
-			}
-		}
-
-		return $this;
 	}
 }
