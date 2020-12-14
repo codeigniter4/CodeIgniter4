@@ -96,7 +96,7 @@ test data prior to every test running.
 **$basePath**
 
 By default, CodeIgniter will look in **tests/_support/Database/Seeds** to locate the seeds that it should run during testing.
-You can change this directories by specifying the ``$basePath`` property. This should not include the **Seeds** directory,
+You can change this directory by specifying the ``$basePath`` property. This should not include the **Seeds** directory,
 but the path to the single directory that holds the sub-directory.
 
 **$namespace**
@@ -175,4 +175,3 @@ Asserts that a number of matching rows are found in the database that match ``$c
         'active' => 1
     ];
     $this->seeNumRecords(2, 'users', $criteria);
-
