@@ -19,9 +19,9 @@ abstract class BaseCookie
 	/**
 	 * Configuration Properties
 	 *
-	 * @var @array
+	 * @var array
 	 */
-	protected $config;
+	protected $properties;
 
 	/**
 	 * Cookie Prefix
@@ -93,13 +93,13 @@ abstract class BaseCookie
 	 */
 	public function __construct(CookieConfig $config)
 	{
-		$this->config = get_object_vars($config);
+		$this->properties = get_object_vars($config);
 
 		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
-			if (property_exists($this, $key) && isset($this->config[$key]))
+			if (property_exists($this, $key) && isset($this->properties[$key]))
 			{
-				$this->$key = $this->config[$key];
+				$this->$key = $this->properties[$key];
 			}
 		}
 
@@ -295,9 +295,9 @@ abstract class BaseCookie
 	{
 		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
-			if (property_exists($this, $key) && isset($this->config[$key]))
+			if (property_exists($this, $key) && isset($this->properties[$key]))
 			{
-				$this->$key = $this->config[$key];
+				$this->$key = $this->properties[$key];
 			}
 		}
 

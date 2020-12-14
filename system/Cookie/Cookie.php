@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cookie;
 
+use Config\Cookie as CookieConfig;
 use Config\Services;
 
 class Cookie extends BaseCookie implements CookieInterface
@@ -27,7 +28,7 @@ class Cookie extends BaseCookie implements CookieInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param object $config
+	 * @param CookieConfig $config
 	 */
 	public function __construct(CookieConfig $config)
 	{
