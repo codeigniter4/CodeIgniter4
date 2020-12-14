@@ -96,14 +96,14 @@ test data prior to every test running.
 **$basePath**
 
 By default, CodeIgniter will look in **tests/_support/Database/Seeds** to locate the seeds that it should run during testing.
-You can change this directores by specifying the ``$basePath`` property. This should not include the **seeds** directory,
+You can change this directory by specifying the ``$basePath`` property. This should not include the **Seeds** directory,
 but the path to the single directory that holds the sub-directory.
 
 **$namespace**
 
 By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
 that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
-This should not include the **Database/Migrations** path, just the base namespace.
+This should not include the **Database\\Migrations** sub-namespace but just the base namespace.
 To run migrations from all available namespaces set this property to ``null``.
 
 Helper Methods
@@ -175,4 +175,3 @@ Asserts that a number of matching rows are found in the database that match ``$c
         'active' => 1
     ];
     $this->seeNumRecords(2, 'users', $criteria);
-
