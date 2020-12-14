@@ -435,12 +435,12 @@ state as defined by <code class="docutils literal notranslate"><span class="pre"
 test data prior to every test running.</p>
 <p><strong>$basePath</strong></p>
 <p>By default, CodeIgniter will look in <strong>tests/_support/Database/Seeds</strong> to locate the seeds that it should run during testing.
-You can change this directores by specifying the <code class="docutils literal notranslate"><span class="pre">$basePath</span></code> property. This should not include the <strong>seeds</strong> directory,
+You can change this directory by specifying the <code class="docutils literal notranslate"><span class="pre">$basePath</span></code> property. This should not include the <strong>Seeds</strong> directory,
 but the path to the single directory that holds the sub-directory.</p>
 <p><strong>$namespace</strong></p>
 <p>By default, CodeIgniter will look in <strong>tests/_support/Database/Migrations</strong> to locate the migrations
 that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal notranslate"><span class="pre">$namespace</span></code> properties.
-This should not include the <strong>Database/Migrations</strong> path, just the base namespace.
+This should not include the <strong>Database\Migrations</strong> sub-namespace but just the base namespace.
 To run migrations from all available namespaces set this property to <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </div>
 </div>
@@ -522,7 +522,7 @@ array with the data to insert into the table.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 13, 2020.
+        Last updated on Dec 14, 2020.
       </span>
 
     </p>
