@@ -103,7 +103,7 @@ but the path to the single directory that holds the sub-directory.
 
 By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
 that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
-This should not include the **Database\Migrations** path, just the base namespace.
+This should not include the **Database\\Migrations** sub-namespace but just the base namespace.
 To run migrations from all available namespaces set this property to ``null``.
 
 Helper Methods
