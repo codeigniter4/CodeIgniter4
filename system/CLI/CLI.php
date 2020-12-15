@@ -581,7 +581,7 @@ class CLI
 
 		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
 
-		return mb_strlen($string);
+		return mb_strwidth($string);
 	}
 
 	//--------------------------------------------------------------------
