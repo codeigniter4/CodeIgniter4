@@ -679,8 +679,8 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Regress can be used to roll back changes to a previous state, batch by batch.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">regress</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">regress</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -780,7 +780,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 14, 2020.
+        Last updated on Dec 15, 2020.
       </span>
 
     </p>
