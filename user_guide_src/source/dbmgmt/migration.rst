@@ -305,8 +305,8 @@ Class Reference
 		Regress can be used to roll back changes to a previous state, batch by batch.
 		::
 
-			$migration->batch(5);
-			$migration->batch(-1);
+			$migration->regress(5);
+			$migration->regress(-1);
 
 	.. php:method:: force($path, $namespace, $group)
 
