@@ -74,7 +74,7 @@ The following functions are available:
     :returns: Whether sorting was successful or not.
     :rtype: boolean
 
-    This method sorts the elements of a multidimensonal array by the values of one or
+    This method sorts the elements of a multidimensional array by the values of one or
     more keys in a hierarchical way. Take the following array, that might be returned
     from, e.g., the ``find()`` function of a model::
 
