@@ -25,6 +25,41 @@ use Config\Services;
 abstract class CIDatabaseTestCase extends CIUnitTestCase
 {
 	/**
+	 * Should run db migration?
+	 *
+	 * @var boolean
+	 */
+	protected $migrate = true;
+
+	/**
+	 * Should run db migration only once?
+	 *
+	 * @var boolean
+	 */
+	protected $migrateOnce = false;
+
+	/**
+	 * Is db migration done once or more than once?
+	 *
+	 * @var boolean
+	 */
+	private static $doneMigration = false;
+
+	/**
+	 * Should run seeding only once?
+	 *
+	 * @var boolean
+	 */
+	protected $seedOnce = false;
+
+	/**
+	 * Is seeding done once or more than once?
+	 *
+	 * @var boolean
+	 */
+	private static $doneSeed = false;
+
+	/**
 	 * Should the db be refreshed before
 	 * each test?
 	 *
@@ -139,28 +174,22 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 
 		$this->loadDependencies();
 
-		if ($this->refresh === true)
+		if ($this->migrateOnce === false || self::$doneMigration === false)
 		{
-			$this->regressDatabase();
+			if ($this->refresh === true)
+			{
+				$this->regressDatabase();
 
-			// Reset counts on faked items
-			Fabricator::resetCounts();
+				// Reset counts on faked items
+				Fabricator::resetCounts();
+			}
+
+			$this->migrateDatabase();
 		}
 
-		$this->migrateDatabase();
-
-		if (! empty($this->seed))
+		if ($this->seedOnce === false || self::$doneSeed === false)
 		{
-			if (! empty($this->basePath))
-			{
-				$this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
-			}
-
-			$seeds = is_array($this->seed) ? $this->seed : [$this->seed];
-			foreach ($seeds as $seed)
-			{
-				$this->seed($seed);
-			}
+			$this->runSeeds();
 		}
 	}
 
@@ -188,10 +217,39 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * Run seeds as defined by the class
+	 */
+	protected function runSeeds()
+	{
+		if (! empty($this->seed))
+		{
+			if (! empty($this->basePath))
+			{
+				$this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
+			}
+
+			$seeds = is_array($this->seed) ? $this->seed : [$this->seed];
+			foreach ($seeds as $seed)
+			{
+				$this->seed($seed);
+			}
+		}
+
+		self::$doneSeed = true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Regress migrations as defined by the class
 	 */
 	protected function regressDatabase()
 	{
+		if ($this->migrate === false)
+		{
+			return;
+		}
+
 		// If no namespace was specified then rollback all
 		if (empty($this->namespace))
 		{
@@ -217,11 +275,17 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	protected function migrateDatabase()
 	{
+		if ($this->migrate === false)
+		{
+			return;
+		}
+
 		// If no namespace was specified then migrate all
 		if (empty($this->namespace))
 		{
 			$this->migrations->setNamespace(null);
 			$this->migrations->latest('tests');
+			self::$doneMigration = true;
 		}
 		// Run migrations for each specified namespace
 		else
@@ -232,6 +296,7 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 			{
 				$this->migrations->setNamespace($namespace);
 				$this->migrations->latest('tests');
+				self::$doneMigration = true;
 			}
 		}
 	}
@@ -361,4 +426,15 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Reset $doneMigration and $doneSeed
+	 *
+	 * @afterClass
+	 */
+	public static function resetMigrationSeedCount()
+	{
+		self::$doneMigration = false;
+		self::$doneSeed      = false;
+	}
 }
