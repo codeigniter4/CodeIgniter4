@@ -75,7 +75,7 @@ meta tag for you::
 	// Generates: <meta name="{csrf_header}" content="{csrf_hash}" />
 	<?= csrf_meta() ?>
 
-The order of checking the avability of the CSRF token is as follows:
+The order of checking the availability of the CSRF token is as follows:
 
 1. ``$_POST`` array
 2. Http header
