@@ -458,16 +458,16 @@ between each test. If you implement any of these special functions make sure you
 parent as well so extended test cases do not interfere with staging:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
-        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+    <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
+    <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>In addition to these methods, <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> also comes with a convenience property for
 parameter-free methods you want run during set up and tear down:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$setUpMethods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;mockEmail&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;mockSession&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mockEmail&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mockSession&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[];</span>
@@ -477,14 +477,14 @@ parameter-free methods you want run during set up and tear down:</p>
 that or provide their own:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-        <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;purgeRows&#39;</span><span class="p">,</span>
-        <span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;purgeRows&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
 
-        <span class="k">protected</span> <span class="k">function</span> <span class="nf">purgeRows</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">model</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">()</span>
-        <span class="p">}</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">purgeRows</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">model</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">()</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -569,10 +569,10 @@ parameter is an instance of the class to test. The second parameter is the name 
 <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
 
 <span class="c1">// Get the invoker for the &#39;privateMethod&#39; method.</span>
-    <span class="nv">$method</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;privateMethod&#39;</span><span class="p">);</span>
+<span class="nv">$method</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;privateMethod&#39;</span><span class="p">);</span>
 
 <span class="c1">// Test the results</span>
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">&#39;param1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">&#39;param1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
 <p><strong>getPrivateProperty($instance, $property)</strong></p>
@@ -638,9 +638,9 @@ component name:</p>
 <span class="p">{</span>
     <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
 
-            <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockUserModel</span><span class="p">();</span>
-            <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
-    <span class="p">}</span>
+    <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockUserModel</span><span class="p">();</span>
+    <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -700,7 +700,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 16, 2020.
+        Last updated on Dec 17, 2020.
       </span>
 
     </p>
