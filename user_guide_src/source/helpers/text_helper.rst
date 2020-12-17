@@ -387,19 +387,19 @@ The following functions are available:
 .. php:function:: excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
 
 	:param	string	$text: Text to extract an excerpt
-	:param	string	$phrase: Phrase or word to extract the text arround
+	:param	string	$phrase: Phrase or word to extract the text around
 	:param	int		$radius: Number of characters before and after $phrase
 	:param	string	$ellipsis: What to use as the ellipsis character
 	:returns:	Excerpt.
 	:rtype:		string
 
 	This function will extract $radius number of characters before and after the
-	central $phrase with an elipsis before and after.
+	central $phrase with an ellipsis before and after.
 
-	The first paramenter is the text to extract an excerpt from, the second is the
+	The first parameter is the text to extract an excerpt from, the second is the
 	central word or phrase to count before and after. The third parameter is the
 	number of characters to count before and after the central phrase. If no phrase
-	passed, the excerpt will include the first $radius characters with the elipsis
+	passed, the excerpt will include the first $radius characters with the ellipsis
 	at the end.
 
 	Example::
