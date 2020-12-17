@@ -368,7 +368,7 @@ need to ensure your controller can locate it via a <code class="docutils literal
 
 <span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
-        <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -501,14 +501,14 @@ every line after the first line, so that you will have a crisp column edge on th
 
 <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$titles</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span>
-                <span class="c1">// Display the title on the left of the row</span>
-                <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;   &#39;</span> <span class="o">.</span>
-                <span class="c1">// Wrap the descriptions in a right-hand column</span>
-                <span class="c1">// with its left side 3 characters wider than</span>
-                <span class="c1">// the longest item on the left.</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$descriptions</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span> <span class="mi">40</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="p">);</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span>
+        <span class="c1">// Display the title on the left of the row</span>
+        <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;   &#39;</span> <span class="o">.</span>
+        <span class="c1">// Wrap the descriptions in a right-hand column</span>
+        <span class="c1">// with its left side 3 characters wider than</span>
+        <span class="c1">// the longest item on the left.</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$descriptions</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span> <span class="mi">40</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -547,8 +547,8 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$tasks</span> <span class="k">as</span> <span class="nv">$task</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">showProgress</span><span class="p">(</span><span class="nv">$currStep</span><span class="o">++</span><span class="p">,</span> <span class="nv">$totalSteps</span><span class="p">);</span>
-        <span class="nv">$task</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">showProgress</span><span class="p">(</span><span class="nv">$currStep</span><span class="o">++</span><span class="p">,</span> <span class="nv">$totalSteps</span><span class="p">);</span>
+    <span class="nv">$task</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="c1">// Done, so erase it...</span>
@@ -558,8 +558,8 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 <p><strong>table()</strong></p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
 <span class="nv">$tbody</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-15 10:35:02&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-15 10:35:02&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="p">];</span>
 
 <span class="nx">CLI</span><span class="o">::</span><span class="na">table</span><span class="p">(</span><span class="nv">$tbody</span><span class="p">,</span> <span class="nv">$thead</span><span class="p">);</span>
