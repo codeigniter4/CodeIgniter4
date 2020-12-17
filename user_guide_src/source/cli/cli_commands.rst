@@ -204,7 +204,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
             $pad = $this->getPad($this->options, 6);
             foreach ($this->options as $option => $description)
             {
-                    CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+                CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
             }
 
             // Output will be
