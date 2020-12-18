@@ -127,8 +127,7 @@ eg. ``apache2/conf/extra/httpd-vhost.conf``::
     </VirtualHost>
 
 If your project folder is not a subfolder of the Apache document root, then your
-<VirtualHost> element may need a nested <Directory> element to grant the web s
-erver access to the files.
+<VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
 
 Testing
 -------------------------------------------------------
