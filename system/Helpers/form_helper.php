@@ -158,7 +158,7 @@ if (! function_exists('form_hidden'))
 
 		if (! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value) . "\" style=\"display:none;\" />\n";
+			$form .= form_input($name, $value, '', 'hidden');
 		}
 		else
 		{
