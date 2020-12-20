@@ -64,7 +64,7 @@ if (! function_exists('form_open'))
 		}
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config = config(App::class);
+			$config      = config(App::class);
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
@@ -398,7 +398,7 @@ if (! function_exists('form_dropdown'))
 				$form .= '<optgroup label="' . $key . "\">\n";
 				foreach ($val as $optgroupKey => $optgroupVal)
 				{
-					$sel = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
+					$sel   = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
 					$form .= '<option value="' . htmlspecialchars($optgroupKey) . '"' . $sel . '>'
 							. $optgroupVal . "</option>\n";
 				}
@@ -944,7 +944,7 @@ if (! function_exists('parse_form_attributes'))
 				{
 					continue;
 				}
-				$att .= $key . '="' . $val . '" ';
+				$att .= $key . '="' . $val . '"' . ($val === end($default) ? '' : ' ');
 			}
 			else
 			{
