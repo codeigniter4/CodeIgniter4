@@ -13,6 +13,7 @@ on:
       - composer.json
       - spark
       - '**.php'
+      - phpunit.xml.dist
       - .github/workflows/test-phpunit.yml
   pull_request:
     branches:
@@ -26,6 +27,7 @@ on:
       - composer.json
       - spark
       - '**.php'
+      - phpunit.xml.dist
       - .github/workflows/test-phpunit.yml
 
 jobs:
