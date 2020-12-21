@@ -568,21 +568,24 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addUniqueKey(['username', 'active']);
 		$create = $this->forge->createTable('forge_test_fields', true);
 
-		//Check Field names
 		$fieldsNames = $this->db->getFieldNames('forge_test_fields');
+		$fieldsData  = $this->db->getFieldData('forge_test_fields');
+
+		$this->forge->dropTable('forge_test_fields', true);
+
+		// Check field names
 		$this->assertContains('id', $fieldsNames);
 		$this->assertContains('username', $fieldsNames);
 		$this->assertContains('name', $fieldsNames);
 		$this->assertContains('active', $fieldsNames);
 
-		$fieldsData = $this->db->getFieldData('forge_test_fields');
-
+		// Check field data
 		$this->assertContains($fieldsData[0]->name, ['id', 'name', 'username', 'active']);
 		$this->assertContains($fieldsData[1]->name, ['id', 'name', 'username', 'active']);
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
-			//Check types
+			// Check types
 			$this->assertEquals($fieldsData[0]->type, 'int');
 			$this->assertEquals($fieldsData[1]->type, 'varchar');
 
@@ -597,7 +600,7 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
-			//Check types
+			// Check types
 			$this->assertEquals($fieldsData[0]->type, 'integer');
 			$this->assertEquals($fieldsData[1]->type, 'character varying');
 
@@ -615,7 +618,7 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 		elseif ($this->db->DBDriver === 'Sqlsrv')
 		{
-			//Check types
+			// Check types
 			$this->assertEquals($fieldsData[0]->type, 'int');
 			$this->assertEquals($fieldsData[0]->max_length, 10);
 
@@ -627,8 +630,6 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$this->assertTrue(false, 'DB Driver not supported');
 		}
-
-		$this->forge->dropTable('forge_test_fields', true);
 	}
 
 	public function testCompositeKey()
