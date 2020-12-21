@@ -174,6 +174,17 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 
 		$this->loadDependencies();
 
+		$this->setUpMigrate();
+		$this->setUpSeed();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Migrate on setUp
+	 */
+	protected function setUpMigrate()
+	{
 		if ($this->migrateOnce === false || self::$doneMigration === false)
 		{
 			if ($this->refresh === true)
@@ -186,7 +197,15 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 
 			$this->migrateDatabase();
 		}
+	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Seed on setUp
+	 */
+	protected function setUpSeed()
+	{
 		if ($this->seedOnce === false || self::$doneSeed === false)
 		{
 			$this->runSeeds();
