@@ -303,14 +303,14 @@ The methods provided by the parent class that are available are:
 
 			$response->setStatusCode(230, "Tardis initiated");
 
-	.. php:method:: getReason()
+	.. php:method:: getReasonPhrase()
 
 		:returns: The current reason phrase.
 		:rtype: string
 
 		Returns the current status code for this response. If not status has been set, will return an empty string::
 
-			echo $response->getReason();
+			echo $response->getReasonPhrase();
 
 	.. php:method:: setDate($date)
 

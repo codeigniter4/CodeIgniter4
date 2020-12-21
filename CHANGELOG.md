@@ -8,6 +8,7 @@
 
 - `CodeIgniter\Database\ModelFactory` is now deprecated in favor of `CodeIgniter\Config\Factories::models()`
 - `CodeIgniter\Config\Config` is now deprecated in favor of `CodeIgniter\Config\Factories::config()`
+- HTTP Layer Refactor: Numerous deprecations have been made towards a transition to a PSR-compliant HTTP layer. [See the User Guide](user_guide_src/source/installation/upgrade_405.rst)
 
 ## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4) (2020-07-15)
 

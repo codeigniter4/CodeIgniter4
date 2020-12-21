@@ -20,7 +20,7 @@ use DateTimeZone;
 /**
  * HTTP response when a download is requested.
  */
-class DownloadResponse extends Message implements ResponseInterface
+class DownloadResponse extends Response
 {
 	/**
 	 * Download file name
@@ -51,13 +51,6 @@ class DownloadResponse extends Message implements ResponseInterface
 	private $binary;
 
 	/**
-	 * Download reason
-	 *
-	 * @var string
-	 */
-	private $reason = 'OK';
-
-	/**
 	 * Download charset
 	 *
 	 * @var string
@@ -65,11 +58,18 @@ class DownloadResponse extends Message implements ResponseInterface
 	private $charset = 'UTF-8';
 
 	/**
-	 * pretend
+	 * Download reason
 	 *
-	 * @var boolean
+	 * @var string
 	 */
-	private $pretend = false;
+	protected $reason = 'OK';
+
+	/**
+	 * The current status code for this response.
+	 *
+	 * @var integer
+	 */
+	protected $statusCode = 200;
 
 	/**
 	 * Constructor.
@@ -79,8 +79,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function __construct(string $filename, bool $setMime)
 	{
+		parent::__construct(config('App'));
+
 		$this->filename = $filename;
 		$this->setMime  = $setMime;
+
+		// Make sure the content type is either specified or detected
+		$this->removeHeader('Content-Type');
 	}
 
 	/**
@@ -227,71 +232,19 @@ class DownloadResponse extends Message implements ResponseInterface
 		return $result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getStatusCode(): int
-	{
-		return 200;
-	}
-
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return an instance with the specified status code and, optionally, reason phrase.
+	 * Disallows status changing.
 	 *
-	 * If no reason phrase is specified, will default recommended reason phrase for
-	 * the response's status code.
-	 *
-	 * @see http://tools.ietf.org/html/rfc7231#section-6
-	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-	 *
-	 * @param integer $code   The 3-digit integer result code to set.
-	 * @param string  $reason The reason phrase to use with the
-	 *                        provided status code; if none is provided, will
-	 *                        default to the IANA name.
+	 * @param integer $code
+	 * @param string  $reason
 	 *
 	 * @throws DownloadException
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
 		throw DownloadException::forCannotSetStatusCode($code, $reason);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Gets the response response phrase associated with the status code.
-	 *
-	 * @see http://tools.ietf.org/html/rfc7231#section-6
-	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-	 *
-	 * @return string
-	 */
-	public function getReason(): string
-	{
-		return $this->reason;
-	}
-
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Convenience Methods
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the date header
-	 *
-	 * @param DateTime $date
-	 *
-	 * @return ResponseInterface
-	 */
-	public function setDate(DateTime $date)
-	{
-		$date->setTimezone(new DateTimeZone('UTC'));
-
-		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
-
-		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -307,15 +260,9 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setContentType(string $mime, string $charset = 'UTF-8')
 	{
-		// add charset attribute if not already there and provided as parm
-		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
-		{
-			$mime .= '; charset=' . $charset;
-		}
+		parent::setContentType($mime, $charset);
 
-		$this->removeHeader('Content-Type'); // replace existing content type
-		$this->setHeader('Content-Type', $mime);
-		if (! empty($charset))
+		if ($charset !== '')
 		{
 			$this->charset = $charset;
 		}
@@ -339,28 +286,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * A shortcut method that allows the developer to set all of the
-	 * cache-control headers in one method call.
-	 *
-	 * The options array is used to provide the cache-control directives
-	 * for the header. It might look something like:
-	 *
-	 *      $options = [
-	 *          'max-age'  => 300,
-	 *          's-maxage' => 900
-	 *          'etag'     => 'abcde',
-	 *      ];
-	 *
-	 * Typical options are:
-	 *  - etag
-	 *  - last-modified
-	 *  - max-age
-	 *  - s-maxage
-	 *  - private
-	 *  - public
-	 *  - must-revalidate
-	 *  - proxy-revalidate
-	 *  - no-transform
+	 * Disables cache configuration.
 	 *
 	 * @param array $options
 	 *
@@ -372,45 +298,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setLastModified($date)
-	{
-		if ($date instanceof DateTime)
-		{
-			$date->setTimezone(new DateTimeZone('UTC'));
-			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
-		}
-		elseif (is_string($date))
-		{
-			$this->setHeader('Last-Modified', $date);
-		}
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
 
 	/**
-	 * For unit testing, don't actually send headers.
-	 *
-	 * @param  boolean $pretend
-	 * @return $this
-	 */
-	public function pretend(bool $pretend = true)
-	{
-		$this->pretend = $pretend;
-
-		return $this;
-	}
-
-	/**
 	 * {@inheritDoc}
+	 *
+	 * @todo Do downloads need CSP or Cookies? Compare with ResponseTrait::send()
 	 */
 	public function send()
 	{
@@ -436,39 +330,6 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
 		$this->setHeader('Content-Length', (string) $this->getContentLength());
 		$this->noCache();
-	}
-
-	/**
-	 * Sends the headers of this HTTP request to the browser.
-	 *
-	 * @return DownloadResponse
-	 */
-	public function sendHeaders()
-	{
-		// Have the headers already been sent?
-		if ($this->pretend || headers_sent())
-		{
-			return $this;
-		}
-
-		// Per spec, MUST be sent with each request, if possible.
-		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-		if (! isset($this->headers['Date']))
-		{
-			$this->setDate(DateTime::createFromFormat('U', (string) time()));
-		}
-
-		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true,
-				$this->getStatusCode());
-
-		// Send all of our headers
-		foreach ($this->getHeaders() as $name => $values)
-		{
-			header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
-		}
-
-		return $this;
 	}
 
 	/**

@@ -176,7 +176,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=2>; rel="prev",<http://example.com/test/?page=4>; rel="next",<http://example.com/test/?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 
 		$pager->store('default', 1, 10, 200);
@@ -184,7 +184,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=2>; rel="next",<http://example.com/test/?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 
 		$pager->store('default', 20, 10, 200);
@@ -192,7 +192,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=19>; rel="prev"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 	}
 

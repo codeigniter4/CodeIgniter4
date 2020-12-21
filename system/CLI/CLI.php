@@ -869,7 +869,7 @@ class CLI
 	 */
 	protected static function parseCommandLine()
 	{
-		$args = $_SERVER['argv'];
+		$args = $_SERVER['argv'] ?? [];
 		array_shift($args); // scrap invoking program
 		$optionValue = false;
 
