@@ -663,8 +663,8 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </dd></dl>
 
 <dl class="method">
-<dt id="getReason">
-<code class="sig-name descname">getReason</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReason" title="Permalink to this definition">¶</a></dt>
+<dt id="getReasonPhrase">
+<code class="sig-name descname">getReasonPhrase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReasonPhrase" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current reason phrase.</p>
@@ -674,7 +674,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </dd>
 </dl>
 <p>Returns the current status code for this response. If not status has been set, will return an empty string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReason</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReasonPhrase</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>

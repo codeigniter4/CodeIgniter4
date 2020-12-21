@@ -358,6 +358,42 @@ and the <a class="reference external" href="https://datatracker.ietf.org/doc/dra
 <code class="docutils literal notranslate"><span class="pre">Message::getHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::getHeaders()</span></code> are deprecated and should be replaced
 with <code class="docutils literal notranslate"><span class="pre">Message::header()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::headers()</span></code> respectively. Note that this pertains
 to all classes that extend <code class="docutils literal notranslate"><span class="pre">Message</span></code> as well: <code class="docutils literal notranslate"><span class="pre">Request</span></code>, <code class="docutils literal notranslate"><span class="pre">Response</span></code> and their subclasses.</p>
+<p>Additional related deprecations from the HTTP layer:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Message::isJSON</span></code>: Check the “Content-Type” header directly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::isValidIP</span></code>: Use the Validation class with <code class="docutils literal notranslate"><span class="pre">valid_ip</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::getMethod()</span></code>: The <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter will be removed, use str_to_upper()</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request[Trait]::$ipAddress</span></code>: This property will become private</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request::$proxyIPs</span></code>: This property will be removed; access <code class="docutils literal notranslate"><span class="pre">config('App')-&gt;proxyIPs</span></code> directly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request::__construct()</span></code>: The constructor will no longer take <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> and has been made nullable to aid transition</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Response[Interface]::getReason()</span></code>: Use <code class="docutils literal notranslate"><span class="pre">getReasonPhrase()</span></code> instead</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Response[Interface]::getStatusCode()</span></code>: The explicit <code class="docutils literal notranslate"><span class="pre">int</span></code> return type will be removed (no action required)</p></li>
+</ul>
+<p><strong>ResponseInterface</strong></p>
+<p>This interface intends to include the necessary methods for any framework-compatible response class.
+A number of methods expected by the framework were missing and have noe been added. If you use any
+classes the implement <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> directly they will need to be compatible with the
+updated requirements. These methods are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">setLastModified($date);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setLink(PagerInterface</span> <span class="pre">$pager);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setJSON($body,</span> <span class="pre">bool</span> <span class="pre">$unencoded</span> <span class="pre">=</span> <span class="pre">false);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getJSON();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setXML($body);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getXML();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">send();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sendHeaders();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sendBody();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setCookie($name,</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hasCookie(string</span> <span class="pre">$name,</span> <span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''):</span> <span class="pre">bool;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'');</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deleteCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'');</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCookies();</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">redirect(string</span> <span class="pre">$uri,</span> <span class="pre">string</span> <span class="pre">$method</span> <span class="pre">=</span> <span class="pre">'auto',</span> <span class="pre">int</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download(string</span> <span class="pre">$filename</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$data</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">bool</span> <span class="pre">$setMime</span> <span class="pre">=</span> <span class="pre">false);</span></code></p></li>
+</ul>
+<p>To facilitate use of this interface these methods have been moved from the framework’s <code class="docutils literal notranslate"><span class="pre">Response</span></code> into a <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>
+which you may use, and <code class="docutils literal notranslate"><span class="pre">DownloadResponse</span></code> now extends <code class="docutils literal notranslate"><span class="pre">Response</span></code> directly to ensure maximum compatibility.</p>
 </div>
 
 
