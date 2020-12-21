@@ -601,8 +601,8 @@ class ForgeTest extends CIDatabaseTestCase
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
 			// Check types
-			$this->assertEquals($fieldsData[0]->type, 'integer');
-			$this->assertEquals($fieldsData[1]->type, 'character varying');
+			$this->assertEquals($fieldsData[0]->type, 'integer', print_r($fieldsData, true));
+			$this->assertEquals($fieldsData[1]->type, 'character varying', print_r($fieldsData, true));
 
 			$this->assertEquals($fieldsData[0]->max_length, 32);
 			$this->assertNull($fieldsData[1]->default);
