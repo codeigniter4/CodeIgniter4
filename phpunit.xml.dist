@@ -41,6 +41,7 @@
 	</logging>
 
 	<php>
+		<env name="XDEBUG_MODE" value="coverage"/>
 		<server name="app.baseURL" value="http://example.com/"/>
 
 		<!-- Directory containing phpunit.xml -->
