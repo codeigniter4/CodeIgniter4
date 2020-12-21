@@ -40,8 +40,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+<<<<<<< HEAD
         php-versions: ['7.2', '7.3', '7.4']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+=======
+        php-versions: ['7.2', '7.3', '7.4', '8.0']
+        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'Sqlsrv']
+>>>>>>> 62fd6fe3b... Include PHP8 in Actions
 
     services:
       mysql:
