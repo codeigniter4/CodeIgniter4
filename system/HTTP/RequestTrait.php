@@ -52,9 +52,14 @@ trait RequestTrait
 			return $this->ipAddress;
 		}
 
-		$ipValidator = [new FormatRules(), 'valid_ip'];
+		$ipValidator = [
+			new FormatRules(),
+			'valid_ip',
+		];
 
-		/** @deprecated $this->proxyIPs property will be removed in the future */
+		/**
+		 * @deprecated $this->proxyIPs property will be removed in the future
+		 */
 		$proxyIPs = isset($this->proxyIPs) ? $this->proxyIPs : config('App')->proxyIPs;
 		if (! empty($proxyIPs) && ! is_array($proxyIPs))
 		{
@@ -104,11 +109,13 @@ trait RequestTrait
 					}
 
 					// We have a subnet ... now the heavy lifting begins
-					// // @phpstan-ignore-next-line
-					isset($separator) || $separator = $ipValidator($this->ipAddress, 'ipv6') ? ':' : '.';
+					if (! isset($separator))
+					{
+						$separator = $ipValidator($this->ipAddress, 'ipv6') ? ':' : '.';
+					}
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxyIP, $separator) === false) // @phpstan-ignore-line
+					if (strpos($proxyIP, $separator) === false)
 					{
 						continue;
 					}
@@ -116,12 +123,10 @@ trait RequestTrait
 					// Convert the REMOTE_ADDR IP address to binary, if needed
 					if (! isset($ip, $sprintf))
 					{
-						if ($separator === ':') // @phpstan-ignore-line
+						if ($separator === ':')
 						{
 							// Make sure we're have the "full" IPv6 format
-							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress
-									)
-							);
+							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
 
 							for ($j = 0; $j < 8; $j ++)
 							{
@@ -143,10 +148,10 @@ trait RequestTrait
 					sscanf($proxyIP, '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
-					if ($separator === ':') // @phpstan-ignore-line
+					if ($separator === ':')
 					{
 						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-						for ($i = 0; $i < 8; $i ++)
+						for ($i = 0; $i < 8; $i++)
 						{
 							$netaddr[$i] = intval($netaddr[$i], 16);
 						}
