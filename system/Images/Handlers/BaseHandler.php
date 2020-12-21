@@ -15,6 +15,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
+use InvalidArgumentException;
 
 /**
  * Base image handling implementation
@@ -662,8 +663,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return array
 	 */
-	protected function calcAspectRatio($width, $height = null, $origWidth, $origHeight): array
+	protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
 	{
+		if (empty($origWidth) || empty($origHeight))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
+		}
+
 		// If $height is null, then we have it easy.
 		// Calc based on full image size and be done.
 		if (is_null($height))
