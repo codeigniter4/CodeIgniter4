@@ -20,8 +20,14 @@ use CodeIgniter\Exceptions\PageNotFoundException;
  * It is called by Config\Routes, and has the $routes RouteCollection
  * already loaded up and ready for us to use.
  */
+
 // Prevent access to BaseController
-$routes->add('basecontroller(:any)', function () {
+$routes->add('BaseController(:any)', function () {
+	throw PageNotFoundException::forPageNotFound();
+});
+
+// Prevent access to initController method
+$routes->add('(:any)/initController', function () {
 	throw PageNotFoundException::forPageNotFound();
 });
 
@@ -32,8 +38,3 @@ $routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 
 // CLI Catchall - uses a _remap to call Commands
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
-
-// Prevent access to initController method
-$routes->add('(:any)/initController', function () {
-	throw PageNotFoundException::forPageNotFound();
-});
