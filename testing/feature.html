@@ -690,13 +690,8 @@ can help to test the responses.</p>
 <span class="p">]</span>
 
 <span class="c1">// Is true</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]]);</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This simply uses PHPUnit’s own <a class="reference external" href="https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset">assertArraySubset()</a>
-method to do the comparison.</p>
 </div>
 <p><strong>assertJSONExact($test)</strong></p>
 <p>Similar to <strong>assertJSONFragment()</strong>, but checks the entire JSON response to ensure exact matches.</p>
@@ -732,7 +727,7 @@ method to do the comparison.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 20, 2020.
+        Last updated on Dec 21, 2020.
       </span>
 
     </p>
