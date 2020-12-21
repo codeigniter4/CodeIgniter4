@@ -218,12 +218,13 @@ class DOMParser
 	/**
 	 * Search the DOM using an XPath expression.
 	 *
-	 * @param  string $search
-	 * @param  string $element
-	 * @param  array  $paths
+	 * @param  string|null $search
+	 * @param  string      $element
+	 * @param  array       $paths
+	 *
 	 * @return DOMNodeList
 	 */
-	protected function doXPath(string $search = null, string $element, array $paths = [])
+	protected function doXPath(?string $search, string $element, array $paths = [])
 	{
 		// Otherwise, grab any elements that match
 		// the selector

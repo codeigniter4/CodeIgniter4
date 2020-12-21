@@ -380,7 +380,7 @@ class CodeIgniter
 	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 
