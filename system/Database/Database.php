@@ -43,7 +43,7 @@ class Database
 	 */
 	public function load(array $params = [], string $alias = '')
 	{
-		if (empty($alias))
+		if ($alias === '')
 		{
 			throw new InvalidArgumentException('You must supply the parameter: alias.');
 		}
