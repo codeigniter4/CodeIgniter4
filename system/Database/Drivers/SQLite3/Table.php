@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Drivers\SQLite3;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DataException;
 
 /**
@@ -62,7 +63,7 @@ class Table
 	/**
 	 * Database connection.
 	 *
-	 * @var Connection
+	 * @var BaseConnection|Connection
 	 */
 	protected $db;
 
@@ -76,10 +77,10 @@ class Table
 	/**
 	 * Table constructor.
 	 *
-	 * @param object $db
-	 * @param object $forge
+	 * @param BaseConnection|Connection $db
+	 * @param Forge			    $forge
 	 */
-	public function __construct($db, $forge)
+	public function __construct(Connection $db, Forge $forge)
 	{
 		$this->db    = $db;
 		$this->forge = $forge;
