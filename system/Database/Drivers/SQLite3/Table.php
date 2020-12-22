@@ -63,7 +63,7 @@ class Table
 	/**
 	 * Database connection.
 	 *
-	 * @var BaseConnection|Connection
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -77,8 +77,8 @@ class Table
 	/**
 	 * Table constructor.
 	 *
-	 * @param BaseConnection|Connection $db
-	 * @param Forge                     $forge
+	 * @param BaseConnection $db
+	 * @param Forge          $forge
 	 */
 	public function __construct(BaseConnection $db, Forge $forge)
 	{

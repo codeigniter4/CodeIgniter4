@@ -178,7 +178,7 @@ class Database
 
 		if (strpos($driver, '\\') === false)
 		{
-			$class = 'CodeIgniter\Drivers\Database\\' . $class;
+			$class = "CodeIgniter\Database\Drivers\\{$class}";
 		}
 
 		return $class;
