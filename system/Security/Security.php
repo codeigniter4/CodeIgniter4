@@ -15,7 +15,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App;
-use Exception;
 
 /**
  * Class Security
@@ -23,7 +22,7 @@ use Exception;
  * Provides methods that help protect your site against
  * Cross-Site Request Forgery attacks.
  */
-class Security
+class Security implements SecurityInterface
 {
 	/**
 	 * CSRF Hash
@@ -41,7 +40,7 @@ class Security
 	 *
 	 * @var string
 	 */
-	protected $tokenName = 'CSRFToken';
+	protected $tokenName = 'csrf_token_name';
 
 	/**
 	 * CSRF Header Name
@@ -50,7 +49,7 @@ class Security
 	 *
 	 * @var string
 	 */
-	protected $headerName = 'CSRFToken';
+	protected $headerName = 'X-CSRF-TOKEN';
 
 	/**
 	 * CSRF Cookie Name
@@ -59,7 +58,7 @@ class Security
 	 *
 	 * @var string
 	 */
-	protected $cookieName = 'CSRFToken';
+	protected $cookieName = 'csrf_cookie_name';
 
 	/**
 	 * CSRF Expires
@@ -148,6 +147,7 @@ class Security
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
+	 * 
 	 * @throws SecurityException
 	 *
 	 * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
@@ -193,6 +193,7 @@ class Security
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
+	 * 
 	 * @throws SecurityException
 	 */
 	public function verify(RequestInterface $request)
