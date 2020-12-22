@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\MySQLi;
 
 use CodeIgniter\Database\BaseBuilder;
 
 /**
- * Builder for MySQLi
+ * MySQLi Builder
  */
 class Builder extends BaseBuilder
 {

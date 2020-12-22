@@ -38,7 +38,7 @@ class PreparedQueryTest extends CIDatabaseTestCase
 			$placeholders = '$1, $2';
 		}
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$database = $this->db->getDatabase();
 			$expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
@@ -114,6 +114,4 @@ class PreparedQueryTest extends CIDatabaseTestCase
 
 		$query->close();
 	}
-
-	//--------------------------------------------------------------------
 }

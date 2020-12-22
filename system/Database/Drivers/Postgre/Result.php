@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
- * Result for MySQLi
+ * Postgre Result
  */
 class Result extends BaseResult
 {
@@ -27,7 +27,7 @@ class Result extends BaseResult
 	 */
 	public function getFieldCount(): int
 	{
-		return $this->resultID->field_count;
+		return pg_num_fields($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -40,10 +40,9 @@ class Result extends BaseResult
 	public function getFieldNames(): array
 	{
 		$fieldNames = [];
-		$this->resultID->field_seek(0);
-		while ($field = $this->resultID->fetch_field())
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$fieldNames[] = $field->name;
+			$fieldNames[] = pg_field_name($this->resultID, $i);
 		}
 
 		return $fieldNames;
@@ -58,51 +57,18 @@ class Result extends BaseResult
 	 */
 	public function getFieldData(): array
 	{
-		static $dataTypes = [
-			MYSQLI_TYPE_DECIMAL     => 'decimal',
-			MYSQLI_TYPE_NEWDECIMAL  => 'newdecimal',
-			MYSQLI_TYPE_FLOAT       => 'float',
-			MYSQLI_TYPE_DOUBLE      => 'double',
+		$retVal = [];
 
-			MYSQLI_TYPE_BIT         => 'bit',
-			MYSQLI_TYPE_SHORT       => 'short',
-			MYSQLI_TYPE_LONG        => 'long',
-			MYSQLI_TYPE_LONGLONG    => 'longlong',
-			MYSQLI_TYPE_INT24       => 'int24',
-
-			MYSQLI_TYPE_YEAR        => 'year',
-
-			MYSQLI_TYPE_TIMESTAMP   => 'timestamp',
-			MYSQLI_TYPE_DATE        => 'date',
-			MYSQLI_TYPE_TIME        => 'time',
-			MYSQLI_TYPE_DATETIME    => 'datetime',
-			MYSQLI_TYPE_NEWDATE     => 'newdate',
-
-			MYSQLI_TYPE_SET         => 'set',
-
-			MYSQLI_TYPE_VAR_STRING  => 'var_string',
-			MYSQLI_TYPE_STRING      => 'string',
-
-			MYSQLI_TYPE_GEOMETRY    => 'geometry',
-			MYSQLI_TYPE_TINY_BLOB   => 'tiny_blob',
-			MYSQLI_TYPE_MEDIUM_BLOB => 'medium_blob',
-			MYSQLI_TYPE_LONG_BLOB   => 'long_blob',
-			MYSQLI_TYPE_BLOB        => 'blob',
-		];
-
-		$retVal    = [];
-		$fieldData = $this->resultID->fetch_fields();
-
-		foreach ($fieldData as $i => $data)
+		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retVal[$i]              = new stdClass();
-			$retVal[$i]->name        = $data->name;
-			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char'	: (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
-			$retVal[$i]->max_length  = $data->max_length;
-			$retVal[$i]->primary_key = (int) ($data->flags & 2);
-			$retVal[$i]->length      = $data->length;
-			$retVal[$i]->default     = $data->def;
+			$retVal[$i]             = new stdClass();
+			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
+			$retVal[$i]->type       = pg_field_type_oid($this->resultID, $i);
+			$retVal[$i]->type_name  = pg_field_type($this->resultID, $i);
+			$retVal[$i]->max_length = pg_field_size($this->resultID, $i);
+			$retVal[$i]->length     = $retVal[$i]->max_length;
+			// $retVal[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
+			// $retVal[$i]->default     = $fieldData[$i]->def;
 		}
 
 		return $retVal;
@@ -117,9 +83,9 @@ class Result extends BaseResult
 	 */
 	public function freeResult()
 	{
-		if (is_object($this->resultID))
+		if (is_resource($this->resultID))
 		{
-			$this->resultID->free();
+			pg_free_result($this->resultID);
 			$this->resultID = false;
 		}
 	}
@@ -137,7 +103,7 @@ class Result extends BaseResult
 	 */
 	public function dataSeek(int $n = 0)
 	{
-		return $this->resultID->data_seek($n);
+		return pg_result_seek($this->resultID, $n);
 	}
 
 	//--------------------------------------------------------------------
@@ -151,7 +117,7 @@ class Result extends BaseResult
 	 */
 	protected function fetchAssoc()
 	{
-		return $this->resultID->fetch_assoc();
+		return pg_fetch_assoc($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -171,8 +137,6 @@ class Result extends BaseResult
 		{
 			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
 		}
-		return $this->resultID->fetch_object($className);
+		return pg_fetch_object($this->resultID, null, $className);
 	}
-
-	//--------------------------------------------------------------------
 }

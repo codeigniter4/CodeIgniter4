@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
- * Result for Sqlsrv
+ * SQLSRV Result
  */
 class Result extends BaseResult
 {

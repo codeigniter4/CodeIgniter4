@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\MySQLi;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for Sqlsrv
+ * MySQLi Utils
  */
 class Utils extends BaseUtils
 {
@@ -24,14 +24,14 @@ class Utils extends BaseUtils
 	 *
 	 * @var string
 	 */
-	protected $listDatabases = 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
+	protected $listDatabases = 'SHOW DATABASES';
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var string
 	 */
-	protected $optimizeTable = 'ALTER INDEX all ON %s REORGANIZE';
+	protected $optimizeTable = 'OPTIMIZE TABLE %s';
 
 	//--------------------------------------------------------------------
 

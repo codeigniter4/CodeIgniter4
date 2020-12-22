@@ -38,7 +38,8 @@ class Database
 	 * @param array  $params
 	 * @param string $alias
 	 *
-	 * @return   mixed
+	 * @return mixed
+	 * 
 	 * @internal param bool $useBuilder
 	 */
 	public function load(array $params = [], string $alias = '')
@@ -60,14 +61,10 @@ class Database
 			throw new InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 
-		$className = strpos($params['DBDriver'], '\\') === false
-			? '\CodeIgniter\Database\\' . $params['DBDriver'] . '\\Connection'
-			: $params['DBDriver'] . '\\Connection';
-
-		$class = new $className($params);
+		$class = $this->locateDriver($params['DBDriver'], 'Connection');
 
 		// Store the connection
-		$this->connections[$alias] = $class;
+		$this->connections[$alias] = new $class($params);
 
 		return $this->connections[$alias];
 	}
@@ -83,7 +80,7 @@ class Database
 	 */
 	public function loadForge(ConnectionInterface $db)
 	{
-		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Forge';
+		$class = $this->locateDriver($db->DBDriver, 'Forge');
 
 		// Make sure a connection exists
 		if (! $db->connID)
@@ -91,7 +88,7 @@ class Database
 			$db->initialize();
 		}
 
-		return new $className($db);
+		return new $class($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -105,7 +102,7 @@ class Database
 	 */
 	public function loadUtils(ConnectionInterface $db)
 	{
-		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Utils' : $db->DBDriver . '\\Utils';
+		$class = $this->locateDriver($db->DBDriver, 'Utils');
 
 		// Make sure a connection exists
 		if (! $db->connID)
@@ -113,7 +110,7 @@ class Database
 			$db->initialize();
 		}
 
-		return new $className($db);
+		return new $class($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -124,11 +121,14 @@ class Database
 	 * @param array $params
 	 *
 	 * @return array
+	 * 
 	 * @throws InvalidArgumentException
 	 */
 	protected function parseDSN(array $params): array
 	{
-		if (($dsn = parse_url($params['DSN'])) === false)
+		$dsn = parse_url($params['DSN']);
+
+		if (! $dsn)
 		{
 			throw new InvalidArgumentException('Your DSN connection string is invalid.');
 		}
@@ -163,4 +163,24 @@ class Database
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Locate Database Driver's class
+	 *
+	 * @param string $driver
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function locateDriver(string $driver, string $class): string
+	{
+		$class = $driver . '\\' . $class;
+
+		if (strpos($driver, '\\') === false)
+		{
+			$class = 'CodeIgniter\Drivers\Database\\' . $class;
+		}
+
+		return $class;
+	}
 }

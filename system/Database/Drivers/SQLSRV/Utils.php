@@ -9,22 +9,29 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for SQLite3
+ * SQLSRV Utils
  */
 class Utils extends BaseUtils
 {
+	/**
+	 * List databases statement
+	 *
+	 * @var string
+	 */
+	protected $listDatabases = 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
+
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var string
 	 */
-	protected $optimizeTable = 'REINDEX %s';
+	protected $optimizeTable = 'ALTER INDEX all ON %s REORGANIZE';
 
 	//--------------------------------------------------------------------
 
@@ -39,6 +46,4 @@ class Utils extends BaseUtils
 	{
 		throw new DatabaseException('Unsupported feature of the database platform you are using.');
 	}
-
-	//--------------------------------------------------------------------
 }

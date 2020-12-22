@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\MySQLi;
+
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for MySQLi
+ * MySQLi Forge
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * CREATE DATABASE statement
@@ -246,6 +248,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 }

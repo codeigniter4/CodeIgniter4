@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -20,7 +20,7 @@ use stdClass;
 use Throwable;
 
 /**
- * Connection for MySQLi
+ * MySQLi Connection
  */
 class Connection extends BaseConnection
 {
@@ -716,6 +716,4 @@ class Connection extends BaseConnection
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -10,9 +12,7 @@ use Config\Database;
 class ConnectTest extends CIDatabaseTestCase
 {
 	protected $group1;
-
 	protected $group2;
-
 	protected $tests;
 
 	protected function setUp(): void
@@ -73,7 +73,7 @@ class ConnectTest extends CIDatabaseTestCase
 		Config::injectMock('Database', $config);
 
 		$db1 = Database::connect('default');
-		$this->assertNotInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db1);
+		$this->assertNotInstanceOf('CodeIgniter\Database\Drivers\SQLite3\Connection', $db1);
 		$this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
 	}
 

@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
+
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for Postgre
+ * Postgre Forge
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * CHECK DATABASE EXIST statement
@@ -226,7 +228,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
-
 }

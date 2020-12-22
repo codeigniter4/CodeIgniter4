@@ -1,10 +1,12 @@
 <?php
+
 namespace CodeIgniter\View;
 
-use CodeIgniter\Database\MySQLi\Result;
+use CodeIgniter\Database\Drivers\MySQLi\Result;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
 
-class TableTest extends \CodeIgniter\Test\CIUnitTestCase
+class TableTest extends CIUnitTestCase
 {
 
 	public function setUp(): void

@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Builder for Postgre
+ * Postgre Builder
  */
 class Builder extends BaseBuilder
 {
@@ -399,7 +399,4 @@ class Builder extends BaseBuilder
 
 		return parent::join($table, $cond, $type, $escape);
 	}
-
-	//--------------------------------------------------------------------
-
 }

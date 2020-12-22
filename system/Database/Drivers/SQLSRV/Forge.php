@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
+
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for Sqlsrv
+ * SQLSRV Forge
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * DROP CONSTRAINT statement

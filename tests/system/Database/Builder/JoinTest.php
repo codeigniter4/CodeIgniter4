@@ -1,10 +1,13 @@
-<?php namespace Builder;
+<?php
+
+namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Database\Drivers\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
+class JoinTest extends CIUnitTestCase
 {
 	protected $db;
 
@@ -81,7 +84,4 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
-
 }

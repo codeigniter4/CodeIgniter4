@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -14,9 +16,9 @@ class OrderTest extends CIDatabaseTestCase
 	public function testOrderAscending()
 	{
 		$jobs = $this->db->table('job')
-						->orderBy('name', 'asc')
-						->get()
-						->getResult();
+			->orderBy('name', 'asc')
+			->get()
+			->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
@@ -30,9 +32,9 @@ class OrderTest extends CIDatabaseTestCase
 	public function testOrderDescending()
 	{
 		$jobs = $this->db->table('job')
-						 ->orderBy('name', 'desc')
-						 ->get()
-						 ->getResult();
+			->orderBy('name', 'desc')
+			->get()
+			->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[3]->name);
@@ -46,10 +48,10 @@ class OrderTest extends CIDatabaseTestCase
 	public function testMultipleOrderValues()
 	{
 		$users = $this->db->table('user')
-						->orderBy('country', 'asc')
-						->orderBy('name', 'desc')
-						->get()
-						->getResult();
+			->orderBy('country', 'asc')
+			->orderBy('name', 'desc')
+			->get()
+			->getResult();
 
 		$this->assertCount(4, $users);
 		$this->assertEquals('Ahmadinejad', $users[0]->name);
@@ -72,7 +74,7 @@ class OrderTest extends CIDatabaseTestCase
 		{
 			$key = 'RAND()';
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
+		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
 			$key = 'NEWID()';
 		}
@@ -81,7 +83,4 @@ class OrderTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $sql));
 	}
-
-	//--------------------------------------------------------------------
-
 }

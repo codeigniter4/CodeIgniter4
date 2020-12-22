@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use Closure;
 use CodeIgniter\Database\BaseResult;
@@ -18,7 +18,7 @@ use CodeIgniter\Entity;
 use stdClass;
 
 /**
- * Result for SQLite3
+ * SQLite3 Result
  */
 class Result extends BaseResult
 {
@@ -178,6 +178,4 @@ class Result extends BaseResult
 		}
 		return $classObj;
 	}
-
-	//--------------------------------------------------------------------
 }

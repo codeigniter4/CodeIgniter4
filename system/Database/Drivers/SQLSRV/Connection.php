@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -17,7 +17,7 @@ use Exception;
 use stdClass;
 
 /**
- * Connection for Sqlsrv
+ * SQLSRV Connection
  */
 class Connection extends BaseConnection
 {
@@ -26,7 +26,7 @@ class Connection extends BaseConnection
 	 *
 	 * @var string
 	 */
-	public $DBDriver = 'Sqlsrv';
+	public $DBDriver = 'SQLSRV';
 
 	/**
 	 * Database name

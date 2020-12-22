@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
 
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
@@ -18,7 +18,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\ResultInterface;
 
 /**
- * Builder for Sqlsrv
+ * SQLSRV Builder
  *
  * @todo auto check for TextCastToInt
  * @todo auto check for InsertIndexValue

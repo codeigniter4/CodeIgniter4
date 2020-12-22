@@ -9,18 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use Exception;
 
 /**
- * Prepared query for SQLite3
+ * Postgre Prepared-Query
  */
 class PreparedQuery extends BasePreparedQuery
 {
 	/**
-	 * The SQLite3Result resource, or false.
+	 * Stores the name this query can be
+	 * used under by postgres. Only used internally.
+	 *
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * The result resource from a successful
+	 * pg_exec. Or false.
 	 *
 	 * @var Result|boolean
 	 */
@@ -38,13 +48,22 @@ class PreparedQuery extends BasePreparedQuery
 	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		if (! ($this->statement = $this->db->connID->prepare($sql)))
+		$this->name = (string) random_int(1, 10000000000000000);
+
+		$sql = $this->parameterize($sql);
+
+		// Update the query object since the parameters are slightly different
+		// than what was put in.
+		$this->query->setQuery($sql);
+
+		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
 		{
-			$this->errorCode   = $this->db->connID->lastErrorCode();
-			$this->errorString = $this->db->connID->lastErrorMsg();
+			$this->errorCode   = 0;
+			$this->errorString = pg_last_error($this->db->connID);
 		}
 
 		return $this;
@@ -53,8 +72,6 @@ class PreparedQuery extends BasePreparedQuery
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
-	 *
-	 * @todo finalize()
 	 *
 	 * @param array $data
 	 *
@@ -67,29 +84,9 @@ class PreparedQuery extends BasePreparedQuery
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		foreach ($data as $key => $item)
-		{
-			// Determine the type string
-			if (is_integer($item))
-			{
-				$bindType = SQLITE3_INTEGER;
-			}
-			elseif (is_float($item))
-			{
-				$bindType = SQLITE3_FLOAT;
-			}
-			else
-			{
-				$bindType = SQLITE3_TEXT;
-			}
+		$this->result = pg_execute($this->db->connID, $this->name, $data);
 
-			// Bind it
-			$this->statement->bindValue($key + 1, $item, $bindType);
-		}
-
-		$this->result = $this->statement->execute();
-
-		return $this->result !== false;
+		return (bool) $this->result;
 	}
 
 	/**
@@ -100,5 +97,24 @@ class PreparedQuery extends BasePreparedQuery
 	public function _getResult()
 	{
 		return $this->result;
+	}
+
+	/**
+	 * Replaces the ? placeholders with $1, $2, etc parameters for use
+	 * within the prepared query.
+	 *
+	 * @param string $sql
+	 *
+	 * @return string
+	 */
+	public function parameterize(string $sql): string
+	{
+		// Track our current value
+		$count = 0;
+
+		return preg_replace_callback('/\?/', function ($matches) use (&$count) {
+			$count ++;
+			return "\${$count}";
+		}, $sql);
 	}
 }

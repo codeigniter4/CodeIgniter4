@@ -1,6 +1,8 @@
-<?php namespace CodeIgniter\Database\Live\SQLite;
+<?php
 
-use CodeIgniter\Database\SQLite3\Table;
+namespace CodeIgniter\Database\Live\SQLite;
+
+use CodeIgniter\Database\Drivers\SQLite3\Table;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
 
@@ -10,20 +12,8 @@ use Config\Database;
 class AlterTableTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
-
-	/**
-	 * @var Table
-	 */
 	protected $table;
-
-	/**
-	 * @var \CodeIgniter\Database\SQLite3\Connection
-	 */
 	protected $db;
-
-	/**
-	 * @var \CodeIgniter\Database\SQLite3\Forge
-	 */
 	protected $forge;
 
 	public function setUp(): void

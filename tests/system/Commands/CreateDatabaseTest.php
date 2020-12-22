@@ -2,7 +2,7 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\Drivers\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;

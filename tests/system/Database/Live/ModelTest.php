@@ -12,6 +12,8 @@ use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Services;
+use Config\Validation;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -106,8 +108,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel($this->db);
 
-		$jobs = $model->asArray()
-					  ->find();
+		$jobs = $model->asArray()->find();
 
 		$this->assertCount(4, $jobs);
 
@@ -124,8 +125,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel($this->db);
 
-		$job = $model->asArray()
-					 ->find(4);
+		$job = $model->asArray()->find(4);
 
 		$this->assertIsArray($job);
 	}
@@ -136,8 +136,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel($this->db);
 
-		$job = $model->asObject()
-					 ->find(4);
+		$job = $model->asObject()->find(4);
 
 		$this->assertIsObject($job);
 	}
@@ -146,19 +145,17 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testFindRespectsSoftDeletes()
 	{
-		$this->db->table('user')
-				 ->where('id', 4)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+		$this->db->table('user')->where('id', 4)->update([
+			'deleted_at' => date('Y-m-d H:i:s'),
+		]);
 
 		$model = new UserModel($this->db);
 
-		$user = $model->asObject()
-					  ->find(4);
+		$user = $model->asObject()->find(4);
 
 		$this->assertEmpty($user);
 
-		$user = $model->withDeleted()
-					  ->find(4);
+		$user = $model->withDeleted()->find(4);
 
 		// fix for PHP7.2
 		$count = is_array($user) ? count($user) : 1;
@@ -175,8 +172,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model->find(1);
 
 		// Binds should be reset to 0 after each one
-		$binds = $model->builder()
-					   ->getBinds();
+		$binds = $model->builder()->getBinds();
+
 		$this->assertCount(0, $binds);
 
 		$query = $model->getLastQuery();
@@ -222,9 +219,9 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testFindAllRespectsSoftDeletes()
 	{
-		$this->db->table('user')
-				 ->where('id', 4)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+		$this->db->table('user')->where('id', 4)->update([
+			'deleted_at' => date('Y-m-d H:i:s'),
+		]);
 
 		$model = new UserModel($this->db);
 
@@ -232,8 +229,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertCount(3, $user);
 
-		$user = $model->withDeleted()
-					  ->findAll();
+		$user = $model->withDeleted()->findAll();
 
 		$this->assertCount(4, $user);
 	}
@@ -244,8 +240,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$user = $model->where('id >', 2)
-					  ->first();
+		$user = $model->where('id >', 2)->first();
 
 		// fix for PHP7.2
 		$count = is_array($user) ? count($user) : 1;
@@ -281,9 +276,7 @@ class ModelTest extends CIDatabaseTestCase
 			$model->groupBy('id');
 		}
 
-		$user = $model->select('SUM(id) as total')
-					  ->where('id >', 2)
-					  ->first();
+		$user = $model->select('SUM(id) as total')->where('id >', 2)->first();
 
 		$this->assertEquals($total, $user->total);
 	}
@@ -293,22 +286,10 @@ class ModelTest extends CIDatabaseTestCase
 	public function provideAggregateAndGroupBy()
 	{
 		return [
-			[
-				true,
-				true,
-			],
-			[
-				false,
-				false,
-			],
-			[
-				true,
-				false,
-			],
-			[
-				false,
-				true,
-			],
+			[true, true],
+			[false, false],
+			[true, false],
+			[false, true],
 		];
 	}
 
@@ -317,9 +298,9 @@ class ModelTest extends CIDatabaseTestCase
 	 */
 	public function testFirstRespectsSoftDeletes($aggregate, $groupBy)
 	{
-		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+		$this->db->table('user')->where('id', 1)->update([
+			'deleted_at' => date('Y-m-d H:i:s'),
+		]);
 
 		$model = new UserModel();
 		if ($aggregate)
@@ -346,8 +327,7 @@ class ModelTest extends CIDatabaseTestCase
 			$this->assertEquals(9, $user->id);
 		}
 
-		$user = $model->withDeleted()
-					  ->first();
+		$user = $model->withDeleted()->first();
 
 		$this->assertEquals(1, $user->id);
 	}
@@ -358,19 +338,15 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new SecondaryModel();
 
-		$this->db->table('secondary')
-				 ->insert([
+		$this->db->table('secondary')->insert([
+			'key'   => 'foo',
+			'value' => 'bar',
+		]);
 
-					 'key'   => 'foo',
-					 'value' => 'bar',
-				 ]);
-
-		$this->db->table('secondary')
-				 ->insert([
-
-					 'key'   => 'bar',
-					 'value' => 'baz',
-				 ]);
+		$this->db->table('secondary')->insert([
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
 
 		$record = $model->first();
 
@@ -384,12 +360,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
+		$data              = new stdClass();
 		$data->name        = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
 	}
@@ -405,8 +380,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 	}
@@ -424,8 +398,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-			  ->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->assertFalse($result);
 
@@ -443,8 +416,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-						->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 		$this->assertTrue($result);
@@ -464,8 +436,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-						->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->assertFalse($result);
 
@@ -478,10 +449,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data = new \stdClass();
+		$data = new stdClass();
 
-		// Sqlsrv does not allow forcing an ID into an autoincrement field.
-		if ($this->db->DBDriver !== 'Sqlsrv')
+		// SQLSRV does not allow forcing an ID into an autoincrement field.
+		if ($this->db->DBDriver !== 'SQLSRV')
 		{
 			$data->id = 1;
 		}
@@ -489,8 +460,7 @@ class ModelTest extends CIDatabaseTestCase
 		$data->name        = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
-		$result = $model->protect(false)
-						->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Engineer']);
 		$this->assertTrue($result);
@@ -508,8 +478,7 @@ class ModelTest extends CIDatabaseTestCase
 		$data->description  = 'A fancier term for Developer.';
 		$data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
 
-		$result = $model->protect(true)
-						->save($data);
+		$result = $model->protect(true)->save($data);
 
 		$this->assertTrue($result);
 	}
@@ -624,8 +593,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
-		$model->where('id', 1)
-			  ->delete();
+		$model->where('id', 1)->delete();
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
@@ -636,14 +604,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+		$this->db->table('user')->where('id', 1)->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model->purgeDeleted();
 
-		$users = $model->withDeleted()
-					   ->findAll();
+		$users = $model->withDeleted()->findAll();
 
 		$this->assertCount(3, $users);
 	}
@@ -654,12 +619,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel($this->db);
 
-		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+		$this->db->table('user')->where('id', 1)->update([
+			'deleted_at' => date('Y-m-d H:i:s'),
+		]);
 
-		$users = $model->onlyDeleted()
-					   ->findAll();
+		$users = $model->onlyDeleted()->findAll();
 
 		$this->assertCount(1, $users);
 	}
@@ -980,7 +944,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testValidationWithGroupName()
 	{
-		$config            = new \Config\Validation();
+		$config            = new Validation();
 		$config->grouptest = [
 			'name'  => [
 				'required',
@@ -995,7 +959,7 @@ class ModelTest extends CIDatabaseTestCase
 			'token' => 13,
 		];
 
-		\CodeIgniter\Config\Config::injectMock('Validation', $config);
+		Config::injectMock('Validation', $config);
 
 		$model = new ValidModel($this->db);
 		$this->setPrivateProperty($model, 'validationRules', 'grouptest');
@@ -1009,8 +973,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new EntityModel($this->db);
 
-		$entity = $model->where('name', 'Developer')
-						->first();
+		$entity = $model->where('name', 'Developer')->first();
 
 		$this->assertInstanceOf(SimpleEntity::class, $entity);
 		$this->assertEquals('Developer', $entity->name);
@@ -1023,9 +986,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertTrue($model->save($entity));
 
-		$result = $model->where('name', 'Senior Developer')
-						->get()
-						->getFirstRow();
+		$result = $model->where('name', 'Senior Developer')->get()->getFirstRow();
 
 		$this->assertEquals(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
 	}
@@ -1559,9 +1520,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EntityModel();
 
 		// get only id, name column
-		$job = $model->select('id, name')
-					 ->where('name', 'Rocket Scientist')
-					 ->first();
+		$job = $model->select('id, name')->where('name', 'Rocket Scientist')->first();
 
 		// Hence getting Null as description column not in select clause
 		$this->assertNull($job->description);
@@ -1595,12 +1554,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new SecondaryModel();
 
-		$this->db->table('secondary')
-				 ->insert([
-
-					 'key'   => 'foo',
-					 'value' => 'bar',
-				 ]);
+		$this->db->table('secondary')->insert([
+			'key'   => 'foo',
+			'value' => 'bar',
+		]);
 
 		$this->dontSeeInDatabase('secondary', [
 			'key'   => 'bar',
@@ -1628,8 +1585,7 @@ class ModelTest extends CIDatabaseTestCase
 		// testSeeder has 4 users....
 		$this->assertEquals(4, $model->countAllResults());
 
-		$model->where('name', 'Derek Jones')
-			  ->delete();
+		$model->where('name', 'Derek Jones')->delete();
 
 		$this->assertEquals(3, $model->countAllResults());
 	}
@@ -1772,8 +1728,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(false)->save($data);
 
 		$lastInsertId = $model->getInsertID();
 
@@ -1791,8 +1746,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-			  ->insert($data, false);
+		$result = $model->protect(false)->insert($data, false);
 
 		$this->assertTrue($result->resultID !== false);
 
@@ -1814,8 +1768,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-			  ->insert($data, false);
+		$result = $model->protect(false)->insert($data, false);
 
 		$this->assertFalse($result->resultID);
 
@@ -1839,8 +1792,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(false)->save($data);
 
 		$lastInsertId = $model->getInsertID();
 
@@ -2017,8 +1969,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [];
 
-		$data = $model->protect(false)
-					  ->save($data);
+		$data = $model->protect(false)->save($data);
 
 		$this->assertTrue($data);
 	}
@@ -2061,9 +2012,9 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$this->db->table('job')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => time()]);
+		$this->db->table('job')->where('id', 1)->update([
+			'deleted_at' => time(),
+		]);
 
 		$model->purgeDeleted();
 
@@ -2112,7 +2063,8 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testInsertBatchNewEntityWithDateTime()
 	{
-		$entity    = new class extends Entity{
+		$entity = new class extends Entity
+		{
 			protected $id;
 			protected $name;
 			protected $email;
@@ -2148,7 +2100,8 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDateTime()
 	{
-		$entity    = new class extends Entity{
+		$entity = new class extends Entity
+		{
 			protected $id;
 			protected $name;
 			protected $email;
@@ -2184,7 +2137,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDate()
 	{
-		$entity    = new class extends Entity
+		$entity = new class extends Entity
 		{
 			protected $id;
 			protected $name;
@@ -2270,7 +2223,7 @@ class ModelTest extends CIDatabaseTestCase
 	public function testInsertObjectWithNoDataException()
 	{
 		$model = new UserModel();
-		$data  = new \stdClass();
+		$data  = new stdClass();
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to insert.');
 		$model->insert($data);
@@ -2283,15 +2236,15 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = (object) [
-							 'name'    => 'Foo',
-							 'email'   => 'foo@example.com',
-							 'country' => 'US',
-							 'deleted' => 0,
-						 ];
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
 
 		$id = $model->insert($data);
 
-		$data = new \stdClass();
+		$data = new stdClass();
 
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to update.');
@@ -2350,8 +2303,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
-		$results = $model->join('job', 'job.id = user.id')
-			->findAll();
+		$results = $model->join('job', 'job.id = user.id')->findAll();
 
 		// Just making sure it didn't throw ambiguous delete error
 		$this->assertCount(4, $results);
@@ -2366,8 +2318,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
-		$results = $model->join('job', 'job.id = user.id')
-						 ->find(1);
+		$results = $model->join('job', 'job.id = user.id')->find(1);
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
@@ -2382,8 +2333,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
-		$results = $model->join('job', 'job.id = user.id')
-						 ->first(1);
+		$results = $model->join('job', 'job.id = user.id')->first(1);
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);

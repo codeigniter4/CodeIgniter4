@@ -14,7 +14,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\Drivers\SQLite3\Connection;
 use Config\Database;
 use Throwable;
 

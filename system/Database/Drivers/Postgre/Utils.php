@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for Postgre
+ * Postgre Utils
  */
 class Utils extends BaseUtils
 {
@@ -46,6 +46,4 @@ class Utils extends BaseUtils
 	{
 		throw new DatabaseException('Unsupported feature of the database platform you are using.');
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -9,16 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 
 /**
- * Prepared query for MySQLi
+ * SQLite3 Prepared-Query
  */
 class PreparedQuery extends BasePreparedQuery
 {
+	/**
+	 * The SQLite3Result resource, or false.
+	 *
+	 * @var Result|boolean
+	 */
+	protected $result;
+
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -34,14 +41,10 @@ class PreparedQuery extends BasePreparedQuery
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		// Mysqli driver doesn't like statements
-		// with terminating semicolons.
-		$sql = rtrim($sql, ';');
-
-		if (! $this->statement = $this->db->mysqli->prepare($sql))
+		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{
-			$this->errorCode   = $this->db->mysqli->errno;
-			$this->errorString = $this->db->mysqli->error;
+			$this->errorCode   = $this->db->connID->lastErrorCode();
+			$this->errorString = $this->db->connID->lastErrorMsg();
 		}
 
 		return $this;
@@ -50,6 +53,8 @@ class PreparedQuery extends BasePreparedQuery
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.
+	 *
+	 * @todo finalize()
 	 *
 	 * @param array $data
 	 *
@@ -62,30 +67,29 @@ class PreparedQuery extends BasePreparedQuery
 			throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		// First off -bind the parameters
-		$bindTypes = '';
-
-		// Determine the type string
-		foreach ($data as $item)
+		foreach ($data as $key => $item)
 		{
+			// Determine the type string
 			if (is_integer($item))
 			{
-				$bindTypes .= 'i';
+				$bindType = SQLITE3_INTEGER;
 			}
-			elseif (is_numeric($item))
+			elseif (is_float($item))
 			{
-				$bindTypes .= 'd';
+				$bindType = SQLITE3_FLOAT;
 			}
 			else
 			{
-				$bindTypes .= 's';
+				$bindType = SQLITE3_TEXT;
 			}
+
+			// Bind it
+			$this->statement->bindValue($key + 1, $item, $bindType);
 		}
 
-		// Bind it
-		$this->statement->bind_param($bindTypes, ...$data);
+		$this->result = $this->statement->execute();
 
-		return $this->statement->execute();
+		return $this->result !== false;
 	}
 
 	/**
@@ -95,6 +99,6 @@ class PreparedQuery extends BasePreparedQuery
 	 */
 	public function _getResult()
 	{
-		return $this->statement->get_result();
+		return $this->result;
 	}
 }

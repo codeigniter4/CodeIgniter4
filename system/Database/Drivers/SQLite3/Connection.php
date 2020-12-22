@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -19,7 +19,7 @@ use SQLite3;
 use stdClass;
 
 /**
- * Connection for SQLite3
+ * SQLite3 Connection
  */
 class Connection extends BaseConnection
 {
@@ -516,6 +516,4 @@ class Connection extends BaseConnection
 
 		return (bool) $result;
 	}
-
-	//--------------------------------------------------------------------
 }

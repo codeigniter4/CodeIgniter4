@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\Drivers\SQLSRV;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use Exception;
 
 /**
- * Prepared query for Postgre
+ * Postgre Prepared-Query
  */
 class PreparedQuery extends BasePreparedQuery
 {

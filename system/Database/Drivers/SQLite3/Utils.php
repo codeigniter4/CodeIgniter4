@@ -9,29 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for MySQLi
+ * SQLite3 Utils
  */
 class Utils extends BaseUtils
 {
-	/**
-	 * List databases statement
-	 *
-	 * @var string
-	 */
-	protected $listDatabases = 'SHOW DATABASES';
-
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var string
 	 */
-	protected $optimizeTable = 'OPTIMIZE TABLE %s';
+	protected $optimizeTable = 'REINDEX %s';
 
 	//--------------------------------------------------------------------
 
@@ -46,6 +39,4 @@ class Utils extends BaseUtils
 	{
 		throw new DatabaseException('Unsupported feature of the database platform you are using.');
 	}
-
-	//--------------------------------------------------------------------
 }

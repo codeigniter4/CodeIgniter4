@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for SQLite3
+ * SQLite3 Forge
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * UNSIGNED support
@@ -297,7 +298,4 @@ class Forge extends \CodeIgniter\Database\Forge
 			->dropForeignKey($foreignName)
 			->run();
 	}
-
-	//--------------------------------------------------------------------
-
 }

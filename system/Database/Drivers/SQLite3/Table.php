@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
 
@@ -76,10 +76,10 @@ class Table
 	/**
 	 * Table constructor.
 	 *
-	 * @param Connection $db
-	 * @param Forge      $forge
+	 * @param object $db
+	 * @param object $forge
 	 */
-	public function __construct(Connection $db, Forge $forge)
+	public function __construct($db, $forge)
 	{
 		$this->db    = $db;
 		$this->forge = $forge;

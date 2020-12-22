@@ -82,7 +82,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			'batch'     => 1,
 		];
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
 		}
@@ -91,7 +91,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertEquals($history, (array) $runner->getHistory()[0]);
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
 
@@ -200,23 +200,23 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$mig1      = (object)[
-								 'name'      => 'Some_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
-								 'version'   => '2018-01-24-102301',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-							 ];
+		$mig1      = (object) [
+			'name'      => 'Some_migration',
+			'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+			'version'   => '2018-01-24-102301',
+			'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+			'namespace' => 'Tests\Support\MigrationTestMigrations',
+		];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
-		$mig2      = (object)[
-								 'name'      => 'Another_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
-								 'version'   => '2018-01-24-102302',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-								 'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-							 ];
+		$mig2      = (object) [
+			'name'      => 'Another_migration',
+			'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+			'version'   => '2018-01-24-102302',
+			'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+			'namespace' => 'Tests\Support\MigrationTestMigrations',
+			'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+		];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
 		$migrations = $runner->findMigrations();

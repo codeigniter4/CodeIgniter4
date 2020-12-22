@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLite3;
+namespace CodeIgniter\Database\Drivers\SQLite3;
 
 use CodeIgniter\Database\BaseBuilder;
 
 /**
- * Builder for SQLite3
+ * SQLite3 Builder
  */
 class Builder extends BaseBuilder
 {

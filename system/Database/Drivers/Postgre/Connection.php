@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Postgre;
+namespace CodeIgniter\Database\Drivers\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -17,7 +17,7 @@ use ErrorException;
 use stdClass;
 
 /**
- * Connection for Postgre
+ * Postgre Connection
  */
 class Connection extends BaseConnection
 {
@@ -598,6 +598,4 @@ class Connection extends BaseConnection
 	{
 		return (bool) pg_query($this->connID, 'ROLLBACK');
 	}
-
-	// --------------------------------------------------------------------
 }
