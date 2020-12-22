@@ -72,7 +72,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider urlProvider
 	 */
-	public function testValidURL(string $url = null, bool $expected)
+	public function testValidURL(?string $url, bool $expected)
 	{
 		$data = [
 			'foo' => $url,
