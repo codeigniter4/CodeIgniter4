@@ -277,7 +277,8 @@ class Connection extends BaseConnection
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape($this->DBPrefix . strtolower($table));
+				. $this->escape($this->DBPrefix . strtolower($table))
+				. ' ORDER BY "ordinal_position"';
 	}
 
 	//--------------------------------------------------------------------
@@ -294,7 +295,8 @@ class Connection extends BaseConnection
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape(strtolower($table));
+				. $this->escape(strtolower($table))
+				. ' ORDER BY "ordinal_position"';
 
 		if (($query = $this->query($sql)) === false)
 		{
