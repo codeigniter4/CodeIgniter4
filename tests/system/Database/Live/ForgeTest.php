@@ -168,7 +168,7 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
+		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
 		}
@@ -616,7 +616,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 			$this->assertEquals($fieldsData[1]->default, null);
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
+		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
 			// Check types
 			$this->assertEquals($fieldsData[0]->type, 'int');
@@ -696,7 +696,7 @@ class ForgeTest extends CIDatabaseTestCase
 			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
 			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
+		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
 			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
@@ -899,5 +899,4 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropTable('forge_test_four', true);
 	}
-
 }

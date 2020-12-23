@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for Sqlsrv
+ * Utils for SQLSRV
  */
 class Utils extends BaseUtils
 {

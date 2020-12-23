@@ -82,7 +82,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			'batch'     => 1,
 		];
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
 		}
@@ -91,7 +91,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertEquals($history, (array) $runner->getHistory()[0]);
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
 
