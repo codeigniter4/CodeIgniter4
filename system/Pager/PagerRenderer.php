@@ -79,9 +79,9 @@ class PagerRenderer
 	/**
 	 * Links to display
 	 *
-	 * @var array
+	 * @var array|null
 	 */
-	private $links = [];
+	private $links;
 
 	//--------------------------------------------------------------------
 
@@ -289,11 +289,12 @@ class PagerRenderer
 	 */
 	public function links(): array
 	{
-		if ($this->links !== [])
+		if (isset($this->links))
 		{
 			return $this->links;
 		}
 
+		$this->links = [];
 		$uri = clone $this->uri;
 
 		for ($i = $this->first; $i <= $this->last; $i++)
