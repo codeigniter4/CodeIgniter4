@@ -76,6 +76,13 @@ class PagerRenderer
 	 */
 	protected $pageSelector;
 
+	/**
+	 * Links to display
+	 *
+	 * @var array
+	 */
+	private $links = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -282,20 +289,23 @@ class PagerRenderer
 	 */
 	public function links(): array
 	{
-		$links = [];
+		if ($this->links !== [])
+		{
+			return $this->links;
+		}
 
 		$uri = clone $this->uri;
 
-		for ($i = $this->first; $i <= $this->last; $i ++)
+		for ($i = $this->first; $i <= $this->last; $i++)
 		{
-			$links[] = [
+			$this->links[] = [
 				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i)),
 				'title'  => (int) $i,
 				'active' => ($i === $this->current),
 			];
 		}
 
-		return $links;
+		return $this->links;
 	}
 
 	//--------------------------------------------------------------------
