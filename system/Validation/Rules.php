@@ -384,17 +384,14 @@ class Rules
 
 		foreach ($fields as $field)
 		{
-			if (array_key_exists($field, $data))
+			if (
+				(array_key_exists($field, $data) && ! empty($data[$field])) ||
+				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))	
+			)
 			{
 				$requiredFields[] = $field;
 			}
 		}
-
-		// Remove any keys with empty values since, that means they
-		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
-			return ! empty($data[$item]);
-		});
 
 		return empty($requiredFields);
 	}
@@ -438,7 +435,10 @@ class Rules
 		// any of the fields are not present in $data
 		foreach ($fields as $field)
 		{
-			if (! array_key_exists($field, $data))
+			if (
+				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
+				(strpos($field, '.') !== false && empty(dot_array_search($field, $data)))
+			)
 			{
 				return false;
 			}
