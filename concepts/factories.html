@@ -384,8 +384,8 @@ and classes are found within <strong>Models</strong>, so you can request a model
 you get back the instance as before:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SomeOtherClass</span>
 <span class="p">{</span>
-        <span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;WidgetModel&#39;</span><span class="p">);</span>
-        <span class="o">...</span>
+    <span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;WidgetModel&#39;</span><span class="p">);</span>
+    <span class="o">...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -474,9 +474,9 @@ your <strong>Factories.php</strong> file might look like this:</p>
 
 <span class="k">class</span> <span class="nc">Factories</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="p">];</span>
+    <span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -489,8 +489,8 @@ unrelated “Filters” path in its namespace.</p>
 supply the desired array of options using the <code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> method and they will be
 merged with the default values and stored for the next call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Factories</span><span class="o">::</span><span class="na">setOptions</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="s1">&#39;prefersApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">&#39;prefersApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -535,7 +535,7 @@ that single call will return a new or shared instance:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 21, 2020.
+        Last updated on Dec 24, 2020.
       </span>
 
     </p>

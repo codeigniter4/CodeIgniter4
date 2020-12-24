@@ -423,7 +423,7 @@ want to create a replacement that provides a different way to create routes, you
 create a new class that implements the <code class="docutils literal notranslate"><span class="pre">RouterCollectionInterface</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyRouter</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollectionInterface</span>
 <span class="p">{</span>
-        <span class="c1">// Implement required methods here.</span>
+    <span class="c1">// Implement required methods here.</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -431,7 +431,7 @@ create a new class that implements the <code class="docutils literal notranslate
 instead of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouterCollection</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
 <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -445,7 +445,7 @@ changing that path, though, if their needs require it. So the class accepts the 
 as a constructor parameter. The service method looks like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span><span class="o">=</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -540,7 +540,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 21, 2020.
+        Last updated on Dec 24, 2020.
       </span>
 
     </p>
