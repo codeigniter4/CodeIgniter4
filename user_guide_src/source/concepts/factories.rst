@@ -24,22 +24,22 @@ by using the magic static method of the Factories class, ``Factories::models()``
 the common path structure for namespaces and folders, Factories know that the model files
 and classes are found within **Models**, so you can request a model by its shorthand base name::
 
-	use CodeIgniter\Config\Factories;
+    use CodeIgniter\Config\Factories;
 
-	$users = Factories::models('UserModel');
+    $users = Factories::models('UserModel');
 
 Or you could also request a specific class::
 
-	$widgets = Factories::models('Some\Namespace\Models\WidgetModel');
+    $widgets = Factories::models('Some\Namespace\Models\WidgetModel');
 
 Next time you ask for the same class anywhere in your code, ``Factories`` will be sure
 you get back the instance as before::
 
-	class SomeOtherClass
-	{
-		$widgets = Factories::models('WidgetModel');
-		...
-	}
+    class SomeOtherClass
+    {
+        $widgets = Factories::models('WidgetModel');
+        ...
+    }
 
 Factory Parameters
 ==================
@@ -52,8 +52,8 @@ constructor, making it easy to configure your class instance on-the-fly. For exa
 your app uses a separate database for authentication and you want to be sure that any attempts
 to access user records always go through that connection::
 
-	$conn  = db_connect('AuthDatabase');
-	$users = Factories::models('UserModel', [], $conn);
+    $conn  = db_connect('AuthDatabase');
+    $users = Factories::models('UserModel', [], $conn);
 
 Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
 class instance that uses the alternate database connection.
@@ -92,17 +92,17 @@ that supplies options as an array property that matches the name of the componen
 if you wanted to ensure that all Filters used by your app were valid framework instances,
 your **Factories.php** file might look like this::
 
-	<?php namespace Config;
+    <?php namespace Config;
 
-	use CodeIgniter\Config\Factory as BaseFactory;
-	use CodeIgniter\Filters\FilterInterface;
+    use CodeIgniter\Config\Factory as BaseFactory;
+    use CodeIgniter\Filters\FilterInterface;
 
-	class Factories extends BaseFactory
-	{
-		public $filters = [
-			'instanceOf' => FilterInterface::class,
-		];
-	}
+    class Factories extends BaseFactory
+    {
+        public $filters = [
+            'instanceOf' => FilterInterface::class,
+        ];
+    }
 
 This would prevent conflict of an unrelated third-party module which happened to have an
 unrelated "Filters" path in its namespace.
@@ -114,10 +114,10 @@ The ``Factories`` class has a static method to allow runtime option configuratio
 supply the desired array of options using the ``setOptions()`` method and they will be
 merged with the default values and stored for the next call::
 
-	Factories::setOptions('filters', [
-		'instanceOf' => FilterInterface::class,
-		'prefersApp' => false,
-	]);
+    Factories::setOptions('filters', [
+        'instanceOf' => FilterInterface::class,
+        'prefersApp' => false,
+    ]);
 
 Parameter Options
 -----------------
@@ -131,5 +131,5 @@ For example, by default ``Factories`` assumes that you want to locate a shared i
 a component. By adding a second parameter to the magic static call, you can control whether
 that single call will return a new or shared instance::
 
-	$users = Factories::models('UserModel', ['getShared' => true]); // Default; will always be the same instance
-	$other = Factories::models('UserModel', ['getShared' => false]); // Will always create a new instance
+    $users = Factories::models('UserModel', ['getShared' => true]); // Default; will always be the same instance
+    $other = Factories::models('UserModel', ['getShared' => false]); // Will always create a new instance
