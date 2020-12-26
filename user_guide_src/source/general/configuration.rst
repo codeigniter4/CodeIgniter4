@@ -64,14 +64,16 @@ The class should use the appropriate namespace, and it should extend
 
 Define the class and fill it with public properties that represent your settings.::
 
-    <?php namespace Config;
+    <?php
+
+    namespace Config;
 
     use CodeIgniter\Config\BaseConfig;
 
     class CustomClass extends BaseConfig
     {
-    	public $siteName  = 'My Great Site';
-    	public $siteEmail = 'webmaster@example.com';
+        public $siteName  = 'My Great Site';
+        public $siteEmail = 'webmaster@example.com';
 
     }
 
@@ -248,7 +250,9 @@ the method named for the configuration class and incorporate any returned proper
 
 A sample configuration class setup for this::
 
-    <?php namespace App\Config;
+    <?php
+
+    namespace App\Config;
 
     use CodeIgniter\Config\BaseConfig;
 
@@ -257,19 +261,24 @@ A sample configuration class setup for this::
         public $target            = 100;
         public $campaign          = "Winter Wonderland";
         public static $registrars = [
-            '\App\Models\RegionalSales';
+            '\App\Models\RegionalSales'
         ];
     }
 
 ... and the associated regional sales model might look like::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     class RegionalSales
     {
         public static function MySalesConfig()
         {
-            return ['target' => 45, 'actual' => 72];
+            return [
+                'target' => 45,
+                'actual' => 72,
+            ];
         }
     }
 

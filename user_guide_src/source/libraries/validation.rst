@@ -118,7 +118,9 @@ The Controller
 Using a text editor, create a controller called **Form.php**. In it, place
 this code and save it to your **app/Controllers/** folder::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -131,7 +133,7 @@ this code and save it to your **app/Controllers/** folder::
             if (! $this->validate([]))
             {
                 echo view('Signup', [
-                    'validation' => $this->validator
+                    'validation' => $this->validator,
                 ]);
             }
             else

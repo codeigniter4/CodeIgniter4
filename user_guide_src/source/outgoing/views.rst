@@ -45,9 +45,11 @@ Where *name* is the name of your view file.
 
 Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function::
 
-	<?php namespace App\Controllers;
+	<?php
 
-        class Blog extends \CodeIgniter\Controller
+	namespace App\Controllers;
+
+	class Blog extends \CodeIgniter\Controller
 	{
 		public function index()
 		{
@@ -69,7 +71,9 @@ CodeIgniter will intelligently handle multiple calls to ``view()`` from within a
 call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Page extends \CodeIgniter\Controller
 	{
@@ -140,7 +144,9 @@ Here's an example::
 
 Let's try it with your controller file. Open it and add this code::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Blog extends \CodeIgniter\Controller
 	{
@@ -192,7 +198,9 @@ typically be in the form of a multi-dimensional array.
 
 Here’s a simple example. Add this to your controller::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Blog extends \CodeIgniter\Controller
 	{

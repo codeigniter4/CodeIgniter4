@@ -38,7 +38,9 @@ Let's create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
 in it::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -46,7 +48,7 @@ in it::
     {
         public function message($to = 'World')
         {
-            echo "Hello {$to}!".PHP_EOL;
+            echo "Hello {$to}!" . PHP_EOL;
         }
     }
 

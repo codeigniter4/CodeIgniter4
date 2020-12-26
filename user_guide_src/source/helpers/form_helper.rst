@@ -31,13 +31,13 @@ Consider the following example::
 
 	$string = 'Here is a string containing "quoted" text.';
 
-	<input type="text" name="myfield" value="<?= $string; ?>" />
+	<input type="text" name="myfield" value="<?= $string ?>" />
 
 Since the above string contains a set of quotes, it will cause the form
 to break. The :php:func:`esc()` function converts HTML special
 characters so that it can be used safely::
 
-	<input type="text" name="myfield" value="<?= esc($string); ?>" />
+	<input type="text" name="myfield" value="<?= esc($string) ?>" />
 
 .. note:: If you use any of the form helper functions listed on this page,
         and you pass values as an associative array,
@@ -619,7 +619,7 @@ The following functions are available:
 
 	Example::
 
-		<input type="text" name="quantity" value="<?php echo set_value('quantity', '0'); ?>" size="50" />
+		<input type="text" name="quantity" value="<?= set_value('quantity', '0') ?>" size="50" />
 
 	The above form will show "0" when loaded for the first time.
 
@@ -641,9 +641,9 @@ The following functions are available:
     	Example::
 
 		<select name="myselect">
-			<option value="one" <?php echo  set_select('myselect', 'one', TRUE); ?> >One</option>
-			<option value="two" <?php echo  set_select('myselect', 'two'); ?> >Two</option>
-			<option value="three" <?php echo  set_select('myselect', 'three'); ?> >Three</option>
+			<option value="one" <?= set_select('myselect', 'one', TRUE) ?>>One</option>
+			<option value="two" <?= set_select('myselect', 'two') ?>>Two</option>
+			<option value="three" <?= set_select('myselect', 'three') ?>>Three</option>
 		</select>
 
 .. php:function:: set_checkbox($field[, $value = ''[, $default = FALSE]])
@@ -662,8 +662,8 @@ The following functions are available:
 
     	Example::
 
-		<input type="checkbox" name="mycheck" value="1" <?php echo set_checkbox('mycheck', '1'); ?> />
-		<input type="checkbox" name="mycheck" value="2" <?php echo set_checkbox('mycheck', '2'); ?> />
+		<input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?> />
+		<input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?> />
 
 .. php:function:: set_radio($field[, $value = ''[, $default = FALSE]])
 
@@ -678,8 +678,8 @@ The following functions are available:
 
 	Example::
 
-		<input type="radio" name="myradio" value="1" <?php echo  set_radio('myradio', '1', TRUE); ?> />
-		<input type="radio" name="myradio" value="2" <?php echo  set_radio('myradio', '2'); ?> />
+		<input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', TRUE) ?> />
+		<input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
 
 	.. note:: If you are using the Form Validation class, you must always specify
 		a rule for your field, even if empty, in order for the ``set_*()``

@@ -20,13 +20,15 @@ Initializing the Class
 You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\CLI\CLI;
 
     class MyController extends \CodeIgniter\Controller
     {
-        . . .
+        // ...
     }
 
 The class is automatically initialized when the file is loaded the first time.

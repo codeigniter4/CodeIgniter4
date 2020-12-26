@@ -119,19 +119,21 @@ that you can override, and has four required class properties that you must corr
 the Collector to work
 ::
 
-    <?php namespace MyNamespace;
+    <?php
+
+    namespace MyNamespace;
 
     use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 
     class MyCollector extends BaseCollector
     {
-        protected $hasTimeline   = false;
+        protected $hasTimeline = false;
 
         protected $hasTabContent = false;
 
-        protected $hasVarData    = false;
+        protected $hasVarData = false;
 
-        protected $title         = '';
+        protected $title = '';
     }
 
 **$hasTimeline** should be set to ``true`` for any Collector that wants to display information in the toolbar's

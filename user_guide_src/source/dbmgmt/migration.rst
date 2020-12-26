@@ -47,13 +47,14 @@ migrations go in the **app/Database/Migrations/** directory and have names such
 as *20121031100537_add_blog.php*.
 ::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
 	class AddBlog extends Migration
 	{
-
 		public function up()
 		{
 			$this->forge->addField([
@@ -64,12 +65,12 @@ as *20121031100537_add_blog.php*.
 					'auto_increment' => true,
 				],
 				'blog_title'       => [
-					'type'           => 'VARCHAR',
-					'constraint'     => '100',
+					'type'       => 'VARCHAR',
+					'constraint' => '100',
 				],
 				'blog_description' => [
-					'type'           => 'TEXT',
-					'null'           => true,
+					'type' => 'TEXT',
+					'null' => true,
 				],
 			]);
 			$this->forge->addKey('blog_id', true);
@@ -117,7 +118,9 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
@@ -125,9 +128,15 @@ match the name of the database group exactly::
 	{
 		protected $DBGroup = 'alternate_db_group';
 
-		public function up() { . . . }
+		public function up()
+		{
+			// ...
+		}
 
-		public function down() { . . . }
+		public function down()
+		{
+			// ...
+		}
 	}
 
 Namespaces
@@ -159,11 +168,12 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
-
 		public function index()
 		{
 			$migrate = \Config\Services::migrations();
@@ -177,7 +187,6 @@ to update the schema::
 				// Do something with the error here...
 			}
 		}
-
 	}
 
 *******************

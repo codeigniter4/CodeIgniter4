@@ -38,7 +38,7 @@ you get back the instance as before::
     class SomeOtherClass
     {
         $widgets = Factories::models('WidgetModel');
-        ...
+        // ...
     }
 
 Factory Parameters
@@ -92,7 +92,9 @@ that supplies options as an array property that matches the name of the componen
 if you wanted to ensure that all Filters used by your app were valid framework instances,
 your **Factories.php** file might look like this::
 
-    <?php namespace Config;
+    <?php
+
+    namespace Config;
 
     use CodeIgniter\Config\Factory as BaseFactory;
     use CodeIgniter\Filters\FilterInterface;

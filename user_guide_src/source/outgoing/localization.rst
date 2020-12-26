@@ -88,7 +88,9 @@ Retrieving the Current Locale
 The current locale can always be retrieved from the IncomingRequest object, through the ``getLocale()`` method.
 If your controller is extending ``CodeIgniter\Controller``, this will be available through ``$this->request``::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     class UserController extends \CodeIgniter\Controller
     {
@@ -135,7 +137,7 @@ It also support nested definition::
         'errorEmailMissing'    => 'You must submit an email address',
         'errorURLMissing'      => 'You must submit a URL',
         'errorUsernameMissing' => 'You must submit a username',
-        'nested'             => [
+        'nested'               => [
             'error' => [
                 'message' => 'A specific error message',
             ],

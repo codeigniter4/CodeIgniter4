@@ -19,7 +19,9 @@ The following example shows a common usage pattern within your controllers.
 
 ::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\API\ResponseTrait;
 
