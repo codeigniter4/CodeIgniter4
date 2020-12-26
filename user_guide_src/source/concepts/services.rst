@@ -54,7 +54,7 @@ always return the same instance::
 
 If the creation method requires additional parameters, they can be passed after the service name::
 
-    $renderer = service('renderer', APPPATH.'views/');
+    $renderer = service('renderer', APPPATH . 'views/');
 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class::
@@ -147,7 +147,9 @@ Imagine that you've created a new directory, ``Blog`` in your root directory. Th
 models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
 ``Blog\Config\Services.php``. The skeleton of the file should be::
 
-    <?php namespace Blog\Config;
+    <?php
+
+    namespace Blog\Config;
 
     use CodeIgniter\Config\BaseService;
 
@@ -155,7 +157,7 @@ models, etc, and you'd like to make some of the classes available as a service. 
     {
         public static function postManager()
         {
-            ...
+            // ...
         }
     }
 

@@ -99,7 +99,9 @@ Let's step through an example command whose only function is to report basic inf
 itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
 should contain the following code::
 
-    <?php namespace App\Commands;
+    <?php
+
+    namespace App\Commands;
 
     use CodeIgniter\CLI\BaseCommand;
     use CodeIgniter\CLI\CLI;
@@ -112,7 +114,7 @@ should contain the following code::
 
         public function run(array $params)
         {
-
+            // ...
         }
     }
 

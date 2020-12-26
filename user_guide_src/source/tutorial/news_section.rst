@@ -77,7 +77,9 @@ Open up the **app/Models/** directory and create a new file called
 
 ::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
@@ -138,7 +140,9 @@ a new ``News`` controller is defined. Create the new controller at
 
 ::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use App\Models\NewsModel;
     use CodeIgniter\Controller;

@@ -66,7 +66,9 @@ are expected to be located in the **tests/app** directory by default.
 
 To test a new library, **Foo**, you would create a new file at **tests/app/Libraries/FooTest.php**::
 
-    <?php namespace App\Libraries;
+    <?php
+
+    namespace App\Libraries;
 
     use CodeIgniter\Test\CIUnitTestCase;
 
@@ -74,13 +76,15 @@ To test a new library, **Foo**, you would create a new file at **tests/app/Libra
     {
         public function testFooNotBar()
         {
-            . . .
+            // ...
         }
     }
 
 To test one of your models, you might end up with something like this in ``tests/app/Models/OneOfMyModelsTest.php``::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Test\CIUnitTestCase;
 
@@ -88,7 +92,7 @@ To test one of your models, you might end up with something like this in ``tests
     {
         public function testFooNotBar()
         {
-            . . .
+            // ...
         }
     }
 

@@ -35,7 +35,9 @@ code.
 
 ::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -48,8 +50,10 @@ code.
 
         public function view($page = 'home')
         {
+            // ...
         }
     }
+
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same

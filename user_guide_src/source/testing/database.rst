@@ -12,20 +12,24 @@ The Test Class
 In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
 tests must extend ``CIDatabaseTestCase``::
 
-    <?php namespace App\Database;
+    <?php
+
+    namespace App\Database;
 
     use CodeIgniter\Test\CIDatabaseTestCase;
 
     class MyTests extends CIDatabaseTestCase
     {
-        . . .
+        // ...
     }
 
 Because special functionality executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
 that you call the parent's methods if you need to use those methods, otherwise you will lose much
 of the functionality described here::
 
-    <?php namespace App\Database;
+    <?php
+
+    namespace App\Database;
 
     use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -71,11 +75,13 @@ it is in a known state for every test. You can use migrations and seeds to set u
 by adding a couple of class properties to your test.
 ::
 
-    <?php namespace App\Database;
+    <?php
+
+    namespace App\Database;
 
     use CodeIgniter\Test\CIDatabaseTestCase;
 
-    class MyTests extends\CIDatabaseTestCase
+    class MyTests extends \CIDatabaseTestCase
     {
         protected $refresh  = true;
         protected $seed     = 'TestSeeder';

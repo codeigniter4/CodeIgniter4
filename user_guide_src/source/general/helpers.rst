@@ -126,11 +126,11 @@ functions::
         {
             if (in_array($item, $haystack))
             {
-                return TRUE;
+                return true;
             }
-            }
+        }
 
-        return FALSE;
+        return false;
     }
 
     // random_element() is included in Array Helper, so it overrides the native function

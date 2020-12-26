@@ -20,7 +20,9 @@ class or use the ``CodeIgniter\Test\FeatureTestTrait``. Since these testing tool
 are called before you take your actions.
 ::
 
-    <?php namespace App;
+    <?php
+
+    namespace App;
 
     use CodeIgniter\Test\FeatureTestCase;
 
