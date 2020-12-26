@@ -404,7 +404,7 @@ namespace has changed.</p>
 by not hitting the file-system with extra <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> calls. You can use the classmap to link to
 third-party libraries that are not namespaced:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span><span class="s1">&#39;third_party/markdown.php&#39;</span>
+    <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;third_party/markdown.php&#39;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -420,7 +420,7 @@ a measure to help ease the transition from previous versions.</p>
 <div class="section" id="composer-support">
 <h2>Composer Support<a class="headerlink" href="#composer-support" title="Permalink to this headline">¶</a></h2>
 <p>Composer support is automatically initialized by default. By default, it looks for Composer’s autoload file at
-<code class="docutils literal notranslate"><span class="pre">ROOTPATH.'vendor/autoload.php'</span></code>. If you need to change the location of that file for any reason, you can modify
+<code class="docutils literal notranslate"><span class="pre">ROOTPATH</span> <span class="pre">.</span> <span class="pre">'vendor/autoload.php'</span></code>. If you need to change the location of that file for any reason, you can modify
 the value defined in <code class="docutils literal notranslate"><span class="pre">Config\Constants.php</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -453,7 +453,7 @@ the first one to get a chance to locate the file.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

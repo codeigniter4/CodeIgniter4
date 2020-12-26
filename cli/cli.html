@@ -384,7 +384,9 @@ random C++ script could call one command and run code in your models!</p></li>
 <p>Let’s create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
 in it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
@@ -392,7 +394,7 @@ in it:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">message</span><span class="p">(</span><span class="nv">$to</span> <span class="o">=</span> <span class="s1">&#39;World&#39;</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="s2">&quot;Hello </span><span class="si">{</span><span class="nv">$to</span><span class="si">}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="nx">PHP_EOL</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="s2">&quot;Hello </span><span class="si">{</span><span class="nv">$to</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -470,7 +472,7 @@ allows you to prompt a user for information, making it easy to build flexible, s
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

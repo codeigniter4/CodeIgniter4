@@ -389,7 +389,9 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 <p>If the file extension is omitted, then the views are expected to end with the .php extension.</p>
 </div>
 <p>Now, open the controller file you made earlier called <code class="docutils literal notranslate"><span class="pre">Blog.php</span></code>, and replace the echo statement with the view function:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
@@ -415,7 +417,9 @@ and it will be appended to any captured output.</p>
 <p>CodeIgniter will intelligently handle multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> from within a controller. If more than one
 call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Page</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
@@ -484,7 +488,9 @@ Here’s an example:</p>
 </pre></div>
 </div>
 <p>Let’s try it with your controller file. Open it and add this code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
@@ -532,7 +538,9 @@ between calls, you can set <code class="docutils literal notranslate"><span clas
 arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
 typically be in the form of a multi-dimensional array.</p>
 <p>Here’s a simple example. Add this to your controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
@@ -597,7 +605,7 @@ typically be in the form of a multi-dimensional array.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

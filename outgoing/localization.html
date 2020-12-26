@@ -439,7 +439,9 @@ locale will be used in it’s place.</p>
 <h3><a class="toc-backref" href="#id4">Retrieving the Current Locale</a><a class="headerlink" href="#retrieving-the-current-locale" title="Permalink to this headline">¶</a></h3>
 <p>The current locale can always be retrieved from the IncomingRequest object, through the <code class="docutils literal notranslate"><span class="pre">getLocale()</span></code> method.
 If your controller is extending <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code>, this will be available through <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
@@ -485,7 +487,7 @@ with error_</p>
     <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
     <span class="s1">&#39;errorURLMissing&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">,</span>
     <span class="s1">&#39;errorUsernameMissing&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;nested&#39;</span>             <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;nested&#39;</span>               <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;A specific error message&#39;</span><span class="p">,</span>
         <span class="p">],</span>
@@ -683,7 +685,7 @@ up because the translations folders get mapped appropriately.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

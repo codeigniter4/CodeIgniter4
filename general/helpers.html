@@ -437,7 +437,7 @@ The namespace is simply used as a convenient way to locate the files.</p>
 use, you’ll call it the way you would a standard PHP function.</p>
 <p>For example, to create a link using the <code class="docutils literal notranslate"><span class="pre">anchor()</span></code> function in one of
 your view files you would do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;blog/comments&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here&#39;</span><span class="p">);</span><span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;blog/comments&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>Where “Click Here” is the name of the link, and “blog/comments” is the
@@ -470,11 +470,11 @@ functions:</p>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">))</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="k">TRUE</span><span class="p">;</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="p">}</span>
+    <span class="p">}</span>
 
-    <span class="k">return</span> <span class="k">FALSE</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// random_element() is included in Array Helper, so it overrides the native function</span>
@@ -525,7 +525,7 @@ Browse each one to see what they do.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

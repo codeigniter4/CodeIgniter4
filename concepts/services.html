@@ -401,7 +401,7 @@ always return the same instance:</p>
 </pre></div>
 </div>
 <p>If the creation method requires additional parameters, they can be passed after the service name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second function, <code class="docutils literal notranslate"><span class="pre">single_service()</span></code> works just like <code class="docutils literal notranslate"><span class="pre">service()</span></code> but returns a new instance of
@@ -491,7 +491,9 @@ meet these requirements:</p>
 <p>Imagine that you’ve created a new directory, <code class="docutils literal notranslate"><span class="pre">Blog</span></code> in your root directory. This will hold a <strong>blog module</strong> with controllers,
 models, etc, and you’d like to make some of the classes available as a service. The first step is to create a new file:
 <code class="docutils literal notranslate"><span class="pre">Blog\Config\Services.php</span></code>. The skeleton of the file should be:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Blog\Config</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Blog\Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseService</span><span class="p">;</span>
 
@@ -499,7 +501,7 @@ models, etc, and you’d like to make some of the classes available as a service
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">postManager</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="o">...</span>
+        <span class="c1">// ...</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -540,7 +542,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>

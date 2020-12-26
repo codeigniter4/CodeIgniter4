@@ -360,7 +360,9 @@ When using the <a class="reference internal" href="../models/model.html"><span c
 retrieve the current batch of results, as well as set up the Pager library so it’s ready to use in your controllers.
 It even reads the current page it should display from the current URL via a <code class="docutils literal notranslate"><span class="pre">page=X</span></code> query variable.</p>
 <p>To provide a paginated list of users in your application, your controller’s method would look something like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
@@ -372,7 +374,7 @@ It even reads the current page it should display from the current URL via a <cod
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span>
+            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -680,7 +682,7 @@ title, which is just the number, and a boolean that tells whether the link is th
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 24, 2020.
+        Last updated on Dec 26, 2020.
       </span>
 
     </p>
