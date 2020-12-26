@@ -197,18 +197,18 @@ and add the next piece of code.
 
 ::
 
-    <h2><?= esc($title); ?></h2>
+    <h2><?= esc($title) ?></h2>
 
     <?php if (! empty($news) && is_array($news)) : ?>
 
         <?php foreach ($news as $news_item): ?>
 
-            <h3><?= esc($news_item['title']); ?></h3>
+            <h3><?= esc($news_item['title']) ?></h3>
 
             <div class="main">
-                <?= esc($news_item['body']); ?>
+                <?= esc($news_item['body']) ?>
             </div>
-            <p><a href="/news/<?= esc($news_item['slug'], 'url'); ?>">View article</a></p>
+            <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
 
         <?php endforeach; ?>
 
@@ -264,8 +264,8 @@ The only thing left to do is create the corresponding view at
 
 ::
 
-    <h2><?= esc($news['title']); ?></h2>
-    <p><?= esc($news['body']); ?></p>
+    <h2><?= esc($news['title']) ?></h2>
+    <p><?= esc($news['body']) ?></p>
 
 Routing
 -------------------------------------------------------

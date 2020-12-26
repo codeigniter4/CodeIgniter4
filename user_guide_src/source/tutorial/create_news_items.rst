@@ -17,7 +17,7 @@ the slug from our title in the model. Create a new view at
 
 ::
 
-    <h2><?= esc($title); ?></h2>
+    <h2><?= esc($title) ?></h2>
 
     <?= \Config\Services::validation()->listErrors(); ?>
 
