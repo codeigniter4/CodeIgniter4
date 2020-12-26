@@ -32,9 +32,9 @@ class BaseController extends Controller
 	/**
 	 * Constructor.
 	 *
-	 * @param RequestInterface
-	 * @param ResponseInterface
-	 * @param LoggerInterface
+	 * @param $request  RequestInterface
+	 * @param $response ResponseInterface
+	 * @param $logger   LoggerInterface
 	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
