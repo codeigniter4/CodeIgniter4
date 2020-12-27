@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Database\Forge as BaseForge;
+
 /**
  * Forge for SQLSRV
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * DROP CONSTRAINT statement
