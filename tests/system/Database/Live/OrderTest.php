@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -72,7 +74,7 @@ class OrderTest extends CIDatabaseTestCase
 		{
 			$key = 'RAND()';
 		}
-		elseif ($this->db->DBDriver === 'Sqlsrv')
+		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
 			$key = 'NEWID()';
 		}
@@ -81,7 +83,4 @@ class OrderTest extends CIDatabaseTestCase
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $sql));
 	}
-
-	//--------------------------------------------------------------------
-
 }

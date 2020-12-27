@@ -9,7 +9,8 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class DbUtilsTest extends CIDatabaseTestCase {
+class DbUtilsTest extends CIDatabaseTestCase
+{
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
@@ -59,7 +60,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
 		{
 			$databases = $util->listDatabases();
 
@@ -80,7 +81,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
 		{
 			$exist = $util->databaseExists('test');
 
@@ -128,7 +129,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 		$d = $util->optimizeTable('db_job');
 
-		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'Sqlsrv']))
+		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'SQLSRV']))
 		{
 			$this->assertFalse((bool) $d);
 		}
@@ -168,8 +169,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 	public function testUtilsCSVFromResult()
 	{
-		$data = $this->db->table('job')
-				->get();
+		$data = $this->db->table('job')->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -184,9 +184,7 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 	public function testUtilsXMLFromResult()
 	{
-		$data = $this->db->table('job')
-				->where('id', 4)
-				->get();
+		$data = $this->db->table('job')->where('id', 4)->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -199,6 +197,4 @@ class DbUtilsTest extends CIDatabaseTestCase {
 
 		$this->assertEquals($expected, $actual);
 	}
-
-	//--------------------------------------------------------------------
 }

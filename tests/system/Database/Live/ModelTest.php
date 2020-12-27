@@ -480,8 +480,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = new \stdClass();
 
-		// Sqlsrv does not allow forcing an ID into an autoincrement field.
-		if ($this->db->DBDriver !== 'Sqlsrv')
+		// SQLSRV does not allow forcing an ID into an autoincrement field.
+		if ($this->db->DBDriver !== 'SQLSRV')
 		{
 			$data->id = 1;
 		}

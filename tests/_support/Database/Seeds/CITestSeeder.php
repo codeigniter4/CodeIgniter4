@@ -1,6 +1,10 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
 
-class CITestSeeder extends \CodeIgniter\Database\Seeder
+namespace Tests\Support\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+class CITestSeeder extends Seeder
 {
 	public function run()
 	{
@@ -118,7 +122,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			unset($data['type_test'][0]['type_blob']);
 		}
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$data['type_test'][0]['type_date']     = '2020-01-11';
 			$data['type_test'][0]['type_time']     = '15:22:00.000';
@@ -141,7 +145,4 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }
