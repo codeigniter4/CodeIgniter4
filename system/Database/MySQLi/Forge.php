@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database\MySQLi;
 
+use CodeIgniter\Database\Forge as BaseForge;
+
 /**
  * Forge for MySQLi
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * CREATE DATABASE statement
@@ -246,6 +248,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 }
