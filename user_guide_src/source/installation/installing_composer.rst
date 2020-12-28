@@ -167,7 +167,7 @@ Structure
 
 Folders in your project after set up:
 
-- app, public, tests, writable (when using `--prefer-source`)
+- app, public, writable (when using `--prefer-source`)
 - vendor/codeigniter4/framework/system
 
 
