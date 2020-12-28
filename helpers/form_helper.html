@@ -447,15 +447,15 @@ parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myform&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>If CSRF filter is turned on <cite>form_open()</cite> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the $attribute array:</p>
-<blockquote>
-<div><p>form_open(‘/u/sign-up’, [‘csrf_id’ =&gt; ‘my-id’]);</p>
-</div></blockquote>
+<p>If CSRF filter is turned on <cite>form_open()</cite> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the <code class="docutils literal notranslate"><span class="pre">$attribute</span></code> array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;/u/sign-up&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;csrf_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-id&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
 <p>will return:</p>
-<blockquote>
-<div><p>&lt;form action=”/u/sign-up” method=”post” accept-charset=”utf-8”&gt;
-&lt;input type=”hidden” id=”my-id” name=”csrf_field” value=”964ede6e0ae8a680f7b8eab69136717d” /&gt;</p>
-</div></blockquote>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;/u/sign-up&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;my-id&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;csrf_field&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;964ede6e0ae8a680f7b8eab69136717d&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
 </div></blockquote>
 <p><strong>Adding Hidden Input Fields</strong></p>
 <blockquote>
