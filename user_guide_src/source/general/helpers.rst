@@ -34,7 +34,7 @@ Loading a Helper
 
 Loading a helper file is quite simple using the following method::
 
-	helper('name');
+    helper('name');
 
 Where **name** is the file name of the helper, without the .php file
 extension or the "_helper" part.
