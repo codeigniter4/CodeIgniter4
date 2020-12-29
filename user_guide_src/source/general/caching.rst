@@ -24,7 +24,7 @@ expired, it will be deleted and refreshed before being sent to the
 browser.
 
 .. note:: The Benchmark tag is not cached so you can still view your page
-	load speed when caching is enabled.
+    load speed when caching is enabled.
 
 Enabling Caching
 ================
@@ -32,7 +32,7 @@ Enabling Caching
 To enable caching, put the following tag in any of your controller
 methods::
 
-	$this->cachePage($n);
+    $this->cachePage($n);
 
 Where ``$n`` is the number of **seconds** you wish the page to remain
 cached between refreshes.
@@ -42,10 +42,10 @@ the order that it appears, so place it wherever it seems most logical to
 you. Once the tag is in place, your pages will begin being cached.
 
 .. important:: If you change configuration options that might affect
-	your output, you have to manually delete your cache files.
+    your output, you have to manually delete your cache files.
 
 .. note:: Before the cache files can be written you must set the cache
-	engine up by editing **app/Config/Cache.php**.
+    engine up by editing **app/Config/Cache.php**.
 
 Deleting Caches
 ===============
@@ -54,4 +54,4 @@ If you no longer wish to cache a file you can remove the caching tag and
 it will no longer be refreshed when it expires.
 
 .. note:: Removing the tag will not delete the cache immediately. It will
-	have to expire normally.
+    have to expire normally.

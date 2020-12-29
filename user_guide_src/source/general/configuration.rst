@@ -22,25 +22,25 @@ You can access configuration files for your classes in several different ways.
 
 - By using the ``new`` keyword to create an instance::
 
-	// Creating new configuration object by hand
-	$config = new \Config\Pager();
+    // Creating new configuration object by hand
+    $config = new \Config\Pager();
 
 - By using the ``config()`` function::
 
-	// Get shared instance with config function
-	$config = config('Pager');
+    // Get shared instance with config function
+    $config = config('Pager');
 
-	// Access config class with namespace
-	$config = config( 'Config\\Pager' );
+    // Access config class with namespace
+    $config = config( 'Config\\Pager' );
 
-	// Creating a new object with config function
-	$config = config('Pager', false);
+    // Creating a new object with config function
+    $config = config('Pager', false);
 
 All configuration object properties are public, so you access the settings like any other property::
 
-        $config = config('Pager');
-	// Access settings as object properties
-	$pageSize = $config->perPage;
+    $config = config('Pager');
+    // Access settings as object properties
+    $pageSize = $config->perPage;
 
 If no namespace is provided, it will look for the file in all defined namespaces
 as well as **/app/Config/**.
@@ -101,8 +101,8 @@ application by either renaming the template to **.env**, or by making a copy of 
 Settings are stored in **.env** files as a simple a collection of name/value pairs separated by an equal sign.
 ::
 
-	S3_BUCKET = dotenv
-	SECRET_KEY = super_secret_key
+    S3_BUCKET = dotenv
+    SECRET_KEY = super_secret_key
         CI_ENVIRONMENT = development
 
 When your application runs, **.env** will be loaded automatically, and the variables put
@@ -111,9 +111,9 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 ``getenv()``, ``$_SERVER``, or ``$_ENV``.
 ::
 
-	$s3_bucket = getenv('S3_BUCKET');
-	$s3_bucket = $_ENV['S3_BUCKET'];
-	$s3_bucket = $_SERVER['S3_BUCKET'];
+    $s3_bucket = getenv('S3_BUCKET');
+    $s3_bucket = $_ENV['S3_BUCKET'];
+    $s3_bucket = $_SERVER['S3_BUCKET'];
 
 .. important:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 

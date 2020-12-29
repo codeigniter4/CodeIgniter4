@@ -46,16 +46,16 @@ like:
 
 .. code-block:: nginx
 
-	server {
-	    server_name localhost;
-	    include     conf/defaults.conf;
-	    root        /var/www;
+    server {
+        server_name localhost;
+        include     conf/defaults.conf;
+        root        /var/www;
 
-	    location    ~* \.php$ {
-	        fastcgi_param CI_ENVIRONMENT "production";
-	        include conf/fastcgi-php.conf;
-	    }
-	}
+        location    ~* \.php$ {
+            fastcgi_param CI_ENVIRONMENT "production";
+            include conf/fastcgi-php.conf;
+        }
+    }
 
 Alternative methods are available for nginx and other servers, or you can
 remove this logic entirely and set the constant based on the server's IP address
