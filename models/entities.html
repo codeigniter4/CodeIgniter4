@@ -539,7 +539,7 @@ the attributes directly, allowing you to enforce any business logic or data conv
 </div>
 <p>The first thing to notice is the name of the methods we’ve added. For each one, the class expects the snake_case
 column name to be converted into PascalCase, and prefixed with either <code class="docutils literal notranslate"><span class="pre">set</span></code> or <code class="docutils literal notranslate"><span class="pre">get</span></code>. These methods will then
-be automatically called whenever you set or retrieve the class property using the direct syntax (i.e. $user-&gt;email).
+be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., $user-&gt;email).
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal notranslate"><span class="pre">created_at</span></code>
 class property will be accessed through the <code class="docutils literal notranslate"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code> methods.</p>
 <div class="admonition note">
@@ -664,7 +664,7 @@ This option should be an array where the key is the name of the class property, 
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
 either the entity or the database. Properties can be cast to any of the following data types:
 <strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, and <strong>timestamp</strong>.
-Add a question mark at the beginning of type to mark property as nullable, i.e. <strong>?string</strong>, <strong>?integer</strong>.</p>
+Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
 <p>For example, if you had a User entity with an <strong>is_banned</strong> property, you can cast it as a boolean:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -794,7 +794,7 @@ attribute to check:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 29, 2020.
+        Last updated on Dec 30, 2020.
       </span>
 
     </p>

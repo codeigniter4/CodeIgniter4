@@ -368,7 +368,7 @@ data.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$str</strong> (<em>string</em>) – the text string to convert</p></li>
-<li><p><strong>$protect_all</strong> (<em>bool</em>) – Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g. &amp;foo;</p></li>
+<li><p><strong>$protect_all</strong> (<em>bool</em>) – Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g., &amp;foo;</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -389,7 +389,7 @@ characters to entities:</p>
 </ul>
 </div></blockquote>
 <p>This function ignores ampersands if they are part of existing numbered
-character entities, e.g. &amp;#123;. Example:</p>
+character entities, e.g., &amp;#123;. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;&lt;p&gt;Here is a paragraph &amp; an entity (&amp;#123;).&lt;/p&gt;&#39;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">xml_convert</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$string</span><span class="p">;</span>
@@ -427,7 +427,7 @@ character entities, e.g. &amp;#123;. Example:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Dec 29, 2020.
+        Last updated on Dec 30, 2020.
       </span>
 
     </p>
