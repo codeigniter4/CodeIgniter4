@@ -3,9 +3,12 @@
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Services;
 
+/**
+ * @group DatabaseLive
+ */
 class DatabaseTestCaseTest extends CIDatabaseTestCase
 {
-	protected $loaded = false;
+	protected static $loaded = false;
 
 	/**
 	 * Should the db be refreshed before
@@ -41,10 +44,10 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 
 	public function setUp(): void
 	{
-		if (! $this->loaded)
+		if (! self::$loaded)
 		{
 			Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-			$this->loaded = true;
+			self::$loaded = true;
 		}
 
 		parent::setUp();
