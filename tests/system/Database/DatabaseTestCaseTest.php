@@ -3,6 +3,9 @@
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Services;
 
+/**
+ * @group DatabaseLive
+ */
 class DatabaseTestCaseTest extends CIDatabaseTestCase
 {
 	protected static $loaded = false;
