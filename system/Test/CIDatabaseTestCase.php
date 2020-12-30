@@ -60,8 +60,7 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 	private static $doneSeed = false;
 
 	/**
-	 * Should the db be refreshed before
-	 * each test?
+	 * Should the db be refreshed before test?
 	 *
 	 * @var boolean
 	 */
