@@ -208,7 +208,7 @@ The following functions are available:
 	:param	array	$data: Field attributes data
 	:param	string	$value: Field value
 	:param	mixed	$extra: Extra attributes to be added to the tag either as an array or a literal string
-	:param  string  $type: The type of input field. i.e. 'text', 'email', 'number', etc.
+	:param  string  $type: The type of input field. i.e., 'text', 'email', 'number', etc.
 	:returns:	An HTML text input field tag
 	:rtype:	string
 
@@ -382,7 +382,7 @@ The following functions are available:
 
     	The parameter usage is identical to using :php:func:`form_dropdown()` above,
 	except of course that the name of the field will need to use POST array
-	syntax, e.g. foo[].
+	syntax, e.g., foo[].
 
 .. php:function:: form_fieldset([$legend_text = ''[, $attributes = []]])
 
@@ -615,7 +615,7 @@ The following functions are available:
     	second (optional) parameter allows you to set a default value for the
     	form. The third (optional) parameter allows you to turn off HTML escaping
     	of the value, in case you need to use this function in combination with
-    	i.e. :php:func:`form_input()` and avoid double-escaping.
+    	i.e., :php:func:`form_input()` and avoid double-escaping.
 
 	Example::
 

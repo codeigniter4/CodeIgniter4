@@ -16,7 +16,7 @@ anywhere. This is a great way to reuse object states and reduce memory load from
 multiple instances loaded across your app.
 
 Anything can be loaded by Factories, but the best examples are those classes that are used
-to work on or transmit common data. The framework itself uses Factories internally, e.g. to
+to work on or transmit common data. The framework itself uses Factories internally, e.g., to
 make sure the correct configuration is loaded when using the ``Config`` class. 
 
 Take a look at ``Models`` as an example. You can access the Factory specific to ``Models``

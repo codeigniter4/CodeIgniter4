@@ -462,7 +462,7 @@ then you can change this value to save typing::
 Default Controller
 ------------------
 
-When a user visits the root of your site (i.e. example.com) the controller to use is determined by the value set by
+When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at ``/app/Controllers/Home.php``::
 

@@ -74,14 +74,14 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
         // ...
     }
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
     // Returns 'post'
     $method = $request->getMethod();
 
-By default, the method is returned as a lower-case string (i.e. 'get', 'post', etc). You can get an
+By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
 uppercase version by wrapping the call in ``str_to_upper()``::
 
     // Returns 'GET'

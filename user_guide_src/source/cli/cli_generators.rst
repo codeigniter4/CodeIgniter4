@@ -203,7 +203,7 @@ Options:
 
 .. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
     Should you need to have the generated code elsewhere in your module namespace, make sure to set
-    the ``-n`` option in your command, e.g. ``php spark make:model blog -n Acme\Blog``.
+    the ``-n`` option in your command, e.g., ``php spark make:model blog -n Acme\Blog``.
 
 .. warning:: Make sure when setting the ``-n`` option that the supplied namespace is a valid namespace
     defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload file.
@@ -344,7 +344,7 @@ which is public and need not be overridden as it is essentially complete.
     ``getNamespacedClass`` and ``getTemplate``, or else you will get a PHP fatal error.
 
 .. note:: ``GeneratorCommand`` has the default argument of ``['name' => 'Class name']``. You can
-    override the description by supplying the name in your ``$arguments`` property, e.g. ``['name' => 'Module class name']``.
+    override the description by supplying the name in your ``$arguments`` property, e.g., ``['name' => 'Module class name']``.
 
 .. note:: ``GeneratorCommand`` has the default options of ``-n`` and ``--force``. Child classes cannot override
     these two properties as they are crucial in the implementation of the code generation.
@@ -352,4 +352,4 @@ which is public and need not be overridden as it is essentially complete.
 .. note:: Generators are default listed under the ``Generators`` namespace because it is the default group
     name in ``GeneratorCommand``. If you want to have your own generator listed elsewhere under a different
     namespace, you will just need to provide the ``$group`` property in your child generator,
-    e.g. ``protected $group = 'CodeIgniter';``.
+    e.g., ``protected $group = 'CodeIgniter';``.

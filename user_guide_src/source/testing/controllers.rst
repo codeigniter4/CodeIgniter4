@@ -58,7 +58,7 @@ Helper Methods
 **controller($class)**
 
 Specifies the class name of the controller to test. The first parameter must be a fully qualified class name
-(i.e. include the namespace)::
+(i.e., include the namespace)::
 
     $this->controller(\App\Controllers\ForumController::class);
 

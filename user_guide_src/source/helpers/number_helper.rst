@@ -93,7 +93,7 @@ The following functions are available:
 .. php:function:: number_to_currency($num, $currency[, $locale = null])
 
     :param mixed $num: Number to format
-    :param string $currency: The currency type, i.e. USD, EUR, etc
+    :param string $currency: The currency type, i.e., USD, EUR, etc
     :param string $locale: The locale to use for formatting
     :param integer $fraction: Number of fraction digits after decimal point
     :returns: The number as the appropriate currency for the locale

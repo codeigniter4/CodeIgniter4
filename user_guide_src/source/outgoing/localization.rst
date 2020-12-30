@@ -197,7 +197,7 @@ library, the following types of data can be replaced:
 * numbers - integer, currency, percent
 * dates - short, medium, long, full
 * time - short, medium, long, full
-* spellout - spells out numbers (i.e. 34 becomes thirty-four)
+* spellout - spells out numbers (i.e., 34 becomes thirty-four)
 * ordinal
 * duration
 

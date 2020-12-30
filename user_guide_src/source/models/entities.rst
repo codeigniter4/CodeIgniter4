@@ -194,7 +194,7 @@ Here's an updated User entity to provide some examples of how this could be used
 
 The first thing to notice is the name of the methods we've added. For each one, the class expects the snake_case
 column name to be converted into PascalCase, and prefixed with either ``set`` or ``get``. These methods will then
-be automatically called whenever you set or retrieve the class property using the direct syntax (i.e. $user->email).
+be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., $user->email).
 The methods do not need to be public unless you want them accessed from other classes. For example, the ``created_at``
 class property will be accessed through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
 
@@ -328,7 +328,7 @@ This option should be an array where the key is the name of the class property, 
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
 either the entity or the database. Properties can be cast to any of the following data types:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and **timestamp**.
-Add a question mark at the beginning of type to mark property as nullable, i.e. **?string**, **?integer**.
+Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
 For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
 

@@ -65,7 +65,7 @@ add the config variables as a query string::
 	// Postgre
 	$default['DSN'] = 'Postgre://username:password@hostname:5432/database?charset=utf8&connect_timeout=5&sslmode=1';
 
-.. note:: If you provide a DSN string and it is missing some valid settings (e.g. the
+.. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
 	database character set), which are present in the rest of the configuration
 	fields, CodeIgniter will append them.
 
