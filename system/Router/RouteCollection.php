@@ -1316,9 +1316,11 @@ class RouteCollection implements RouteCollectionInterface
 		// Find all of our back-references in the original route
 		preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
+		$baseURI = new \CodeIgniter\HTTP\URI(config(App::class)->baseURL);
+
 		if (empty($matches[0]))
 		{
-			return '/' . ltrim($from, '/');
+			return $baseURI->getPath() . ltrim($from, '/');
 		}
 
 		// Build our resulting string, inserting the $params in
@@ -1336,7 +1338,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 		}
 
-		return '/' . ltrim($from, '/');
+		return $baseURI->getPath() . ltrim($from, '/');
 	}
 
 	//--------------------------------------------------------------------
