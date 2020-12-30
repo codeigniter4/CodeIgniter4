@@ -2,7 +2,7 @@
 AJAX Requests
 ##############
 
-The ``IncomingRequest::isAJAX()`` method uses the ``X-Requested-With`` header to define whether the request is XHR or normal. However, the most recent JavaScript implementations (i.e. fetch) no longer send this header along with the request, thus the use of ``IncomingRequest::isAJAX()`` becomes less reliable, because without this header it is not possible to define whether the request is or not XHR.
+The ``IncomingRequest::isAJAX()`` method uses the ``X-Requested-With`` header to define whether the request is XHR or normal. However, the most recent JavaScript implementations (i.e., fetch) no longer send this header along with the request, thus the use of ``IncomingRequest::isAJAX()`` becomes less reliable, because without this header it is not possible to define whether the request is or not XHR.
 
 To get around this problem, the most efficient solution (so far) is to manually define the request header, forcing the information to be sent to the server, which will then be able to identify that the request is XHR.
 

@@ -27,7 +27,7 @@ Migration file names
 
 Each Migration is run in numeric order forward or backwards depending on the
 method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
+was created, in **YYYYMMDDHHIISS** format (e.g., **20121031100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
@@ -306,7 +306,7 @@ Class Reference
 
 	.. php:method:: regress($batch, $group)
 
-		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
+		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	``true`` on success, ``false`` on failure or no migrations are found
 		:rtype:	bool

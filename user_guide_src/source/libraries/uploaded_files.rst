@@ -239,7 +239,7 @@ Moving an uploaded file can fail, with an HTTPException, under several circumsta
 
 - the file has already been moved
 - the file did not upload successfully
-- the file move operation fails (eg. improper permissions)
+- the file move operation fails (e.g., improper permissions)
 
 Store Files
 ------------
@@ -264,4 +264,4 @@ Moving an uploaded file can fail, with an HTTPException, under several circumsta
 
 - the file has already been moved
 - the file did not upload successfully
-- the file move operation fails (eg. improper permissions)
+- the file move operation fails (e.g., improper permissions)

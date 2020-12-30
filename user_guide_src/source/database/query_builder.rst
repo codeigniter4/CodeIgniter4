@@ -412,7 +412,7 @@ searches.
 
 .. note:: All ``like*`` method variations can be forced to perform case-insensitive searches by passing
         a fifth parameter of ``true`` to the method. This will use platform-specific features where available
-        otherwise, will force the values to be lowercase, i.e. ``WHERE LOWER(column) LIKE '%search%'``. This
+        otherwise, will force the values to be lowercase, i.e., ``WHERE LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
 #. **Simple key/value method:**
@@ -609,7 +609,7 @@ searches.
 
 .. note:: All ``havingLike*`` method variations can be forced to perform case-insensitive searches by passing
         a fifth parameter of ``true`` to the method. This will use platform-specific features where available
-        otherwise, will force the values to be lowercase, i.e. ``HAVING LOWER(column) LIKE '%search%'``. This
+        otherwise, will force the values to be lowercase, i.e., ``HAVING LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
 #. **Simple key/value method:**

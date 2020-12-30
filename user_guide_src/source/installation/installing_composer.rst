@@ -66,7 +66,7 @@ If `--prefer-source` doesn't automatically update to pull latest framework sourc
     rm -rf vendor/codeigniter4/framework && composer update codeigniter4/framework --prefer-source
 
 If you used the "--no-dev" option when you created the project, it
-would be appropriate to do so here too, i.e. ``composer update --no-dev``.
+would be appropriate to do so here too, i.e., ``composer update --no-dev``.
 
 Read the upgrade instructions, and check designated  ``app/Config`` folders for affected changes.
 
@@ -139,7 +139,7 @@ to your project root
 Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 ``vendor/codeigniter4/framework`` to your project root
 
-You will have to adjust the system path to refer to the vendor one, e.g. ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
+You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
 - the ``$systemDirectory`` variable in ``app/Config/Paths.php``
 
 Upgrading

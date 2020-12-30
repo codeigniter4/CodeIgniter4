@@ -130,7 +130,7 @@ Several core placeholders exist that will be automatically expanded for you base
 +----------------+---------------------------------------------------+
 | {session_vars} | $_SESSION variables                               |
 +----------------+---------------------------------------------------+
-| {env}          | Current environment name, i.e. development        |
+| {env}          | Current environment name, i.e., development       |
 +----------------+---------------------------------------------------+
 | {file}         | The name of file calling the logger               |
 +----------------+---------------------------------------------------+

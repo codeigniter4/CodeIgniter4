@@ -287,7 +287,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
     $routes->get('news', 'News::index');
     $routes->get('(:any)', 'Pages::view/$1');
 
-Point your browser to your "news" page, i.e. ``localhost:8080/news``,
+Point your browser to your "news" page, i.e., ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link
 to display just the one article.
 
