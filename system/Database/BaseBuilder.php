@@ -485,6 +485,23 @@ class BaseBuilder
 	{
 		return $this->maxMinAvgSum($select, $alias, 'COUNT');
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Select Group_Concat
+	 *
+	 * Generates a SELECT GROUP_CONCAT(field) portion of a query
+	 *
+	 * @param string $select The field
+	 * @param string $alias  An alias
+	 *
+	 * @return $this
+	 */
+	public function selectGroupConcat(string $select = '', string $alias = '')
+	{
+		return $this->maxMinAvgSum($select, $alias, 'GROUP_CONCAT');
+	}
 
 	//--------------------------------------------------------------------
 
@@ -518,7 +535,7 @@ class BaseBuilder
 
 		$type = strtoupper($type);
 
-		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT'], true))
+		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT', 'GROUP_CONCAT'], true))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}
