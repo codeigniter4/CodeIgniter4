@@ -127,6 +127,7 @@ The following functions are available:
 	:param	string	$path: Directory path
 	:param	bool	$del_dir: Whether to also delete directories
 	:param	bool	$htdocs: Whether to skip deleting .htaccess and index page files
+	:param  bool    $hidden: Whether to also delete hidden files (files beginning with a period)
 	:returns:	TRUE on success, FALSE in case of an error
 	:rtype:	bool
 
