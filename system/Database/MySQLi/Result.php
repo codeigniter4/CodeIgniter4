@@ -98,7 +98,7 @@ class Result extends BaseResult
 			$retVal[$i]              = new stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char'	: (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
+			$retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char' : (isset($dataTypes[$data->type]) ? $dataTypes[$data->type] : null);
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;
@@ -172,6 +172,18 @@ class Result extends BaseResult
 			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
 		}
 		return $this->resultID->fetch_object($className);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the number of rows in the resultID (i.e., mysqli_result object)
+	 *
+	 * @return integer number of rows in a query result; if the number of rows is greater than PHP_INT_MAX, this will cast the number as a string which will yield PHP_INT_MAX
+	 */
+	public function getNumRows() : int
+	{
+		return intval($this->resultID->num_rows);
 	}
 
 	//--------------------------------------------------------------------

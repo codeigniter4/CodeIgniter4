@@ -180,4 +180,17 @@ class Result extends BaseResult
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * SQLite3Result class does not have a numrows function, so we throw an exception here.
+	 * NOTE: there are workarounds (e.g., looping thru results and counting) but these would alter other object states so we just encourage use of countAllResults instead
+	 *
+	 * @throws \Exception
+	 */
+	public function getNumRows() : int
+	{
+		throw new \Exception('SQLite3Result does not support a numRows method. Use Builder->countAllResults() instead.');
+	}
+
+	//--------------------------------------------------------------------
 }

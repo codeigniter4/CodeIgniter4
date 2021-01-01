@@ -283,6 +283,21 @@ Make sure to call the method using your query result object::
 
 	echo $query->getFieldNames();
 
+**getNumRows()**
+
+The number of records returned by the query. Make sure to call
+the method using your query result object::
+
+	$query = $db->query('SELECT * FROM my_table');
+
+	echo $query->getNumRows();
+
+.. note:: PHP's SQLite3 module does not support this type of function and will
+throw an Exception. Use Builder->countAllResults() instead or return your results
+into an array and count its elements. For other DBMS systems, this number may
+return different values depending on whether you are buffering results or not.
+Refer to the documentation of your chosen DBMS for more detail.
+
 **freeResult()**
 
 It frees the memory associated with the result and deletes the result
@@ -499,6 +514,13 @@ Class Reference
 
 		Generates an array of ``stdClass`` objects containing
 		field meta-data.
+
+    .. php:method:: getNumRows()
+
+		:returns:	Number of rows in result set
+		:rtype:	int
+
+		Returns number of rows returned by the query
 
 	.. php:method:: freeResult()
 
