@@ -181,4 +181,24 @@ class Result extends BaseResult
 		}
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
+	 *
+	 * @return int Returns the number of rows retrieved on success
+	 * @throws \Exception if an error is encountered attempting to retrieve the count (eg if the prior select query failed)
+	 */
+	public function getNumRows() : int
+	{
+		$retval = sqlsrv_num_rows($this->resultID);
+		if ($retval === false) {
+			throw new \Exception("Error retrieving row count");
+		} else {
+			return intval($retval);
+		}
+	}
+
+	//--------------------------------------------------------------------
 }

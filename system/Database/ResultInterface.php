@@ -232,4 +232,13 @@ interface ResultInterface
 	public function dataSeek(int $n = 0);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the number of rows returned in the result set.
+	 *
+	 * @return integer
+	 */
+	public function getNumRows(): int;
+
+	//--------------------------------------------------------------------
 }
