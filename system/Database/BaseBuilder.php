@@ -1882,7 +1882,7 @@ class BaseBuilder
 	 * "Count All" query
 	 *
 	 * Generates a platform-specific query string that counts all records in
-	 * the specified database
+	 * the particular table
 	 *
 	 * @param boolean $reset Are we want to clear query builder values?
 	 *

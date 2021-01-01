@@ -1266,7 +1266,7 @@ Class Reference
 		:rtype:	int
 
 		Generates a platform-specific query string that counts
-		all records returned by an Query Builder query.
+		all records in the particular table.
 
 	.. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 
