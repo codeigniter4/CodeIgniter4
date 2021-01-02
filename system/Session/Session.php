@@ -425,9 +425,8 @@ class Session implements SessionInterface
 			{
 				$_SESSION['__ci_vars'][$key] = 'old';
 			}
-			// Hacky, but 'old' will (implicitly) always be less than time() ;)
 			// DO NOT move this above the 'new' check!
-			elseif ($value < $currentTime)
+			elseif ($value === 'old' || $value < $currentTime)
 			{
 				unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 			}
