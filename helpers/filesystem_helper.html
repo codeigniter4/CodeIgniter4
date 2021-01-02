@@ -488,13 +488,14 @@ are always relative to the main site index.</p>
 
 <dl class="function">
 <dt id="delete_files">
-<code class="sig-name descname">delete_files</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$del_dir = FALSE</em><span class="optional">[</span>, <em class="sig-param">$htdocs = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_files</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$delDir = FALSE</em><span class="optional">[</span>, <em class="sig-param">$htdocs = FALSE</em><span class="optional">[</span>, <em class="sig-param">$hidden = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_files" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$path</strong> (<em>string</em>) – Directory path</p></li>
-<li><p><strong>$del_dir</strong> (<em>bool</em>) – Whether to also delete directories</p></li>
+<li><p><strong>$delDir</strong> (<em>bool</em>) – Whether to also delete directories</p></li>
 <li><p><strong>$htdocs</strong> (<em>bool</em>) – Whether to skip deleting .htaccess and index page files</p></li>
+<li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to also delete hidden files (files beginning with a period)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -710,7 +711,7 @@ cause an error to be triggered if the path cannot be resolved.</p>
         
         &copy; Copyright 2019-2021 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Jan 01, 2021.
+        Last updated on Jan 02, 2021.
       </span>
 
     </p>
