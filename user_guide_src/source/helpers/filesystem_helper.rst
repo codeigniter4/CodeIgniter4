@@ -122,10 +122,10 @@ The following functions are available:
 
 	.. note:: This function acquires an exclusive lock on the file while writing to it.
 
-.. php:function:: delete_files($path[, $del_dir = FALSE[, $htdocs = FALSE]])
+.. php:function:: delete_files($path[, $delDir = FALSE[, $htdocs = FALSE[, $hidden = FALSE]]])
 
 	:param	string	$path: Directory path
-	:param	bool	$del_dir: Whether to also delete directories
+	:param	bool	$delDir: Whether to also delete directories
 	:param	bool	$htdocs: Whether to skip deleting .htaccess and index page files
 	:param  bool    $hidden: Whether to also delete hidden files (files beginning with a period)
 	:returns:	TRUE on success, FALSE in case of an error
