@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
+use Exception;
 use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -22,6 +23,14 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+
+	/**
+	 * SQLite3 doesn't have a numRows method or property so we store brute-force counting here
+	 *
+	 * @var null|integer
+	 */
+	protected $numRows;
+
 	/**
 	 * Gets the number of fields in the result set.
 	 *
@@ -98,6 +107,7 @@ class Result extends BaseResult
 		{
 			$this->resultID->finalize();
 			$this->resultID = false;
+			$this->numRows  = null;
 		}
 	}
 
@@ -180,16 +190,32 @@ class Result extends BaseResult
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
-	 * SQLite3Result class does not have a numrows function, so we throw an exception here.
-	 * NOTE: there are workarounds (e.g., looping thru results and counting) but these would alter other object states so we just encourage use of countAllResults instead
+	 * SQLite3Result class does not have a numRows function, so we have to brute force count results
+	 * NOTE: brute force counting the results also resets the results, which might cause problems.
 	 *
-	 * @throws \Exception
+	 * @throws DatabaseException
 	 */
 	public function getNumRows() : int
 	{
-		throw new \Exception('SQLite3Result does not support a numRows method. Use Builder->countAllResults() instead.');
+		if (! $this->resultID)
+		{
+			throw new DatabaseException(__METHOD__ . ' cannot run if there is no query result');
+		}
+		if (is_null($this->numRows))
+		{
+			// the rows have not been counted yet, count by brute force
+			$nrows = 0;
+			$this->resultID->reset();
+			while ($this->resultID->fetchArray(SQLITE3_NUM)) // SQLITE3_NUM should be slightly more efficient
+			{
+				$nrows++;
+			}
+			$this->resultID->reset();
+			$this->numRows = $nrows;
+		}
+
+		return $this->numRows;
 	}
 
 	//--------------------------------------------------------------------

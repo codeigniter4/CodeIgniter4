@@ -61,13 +61,6 @@ abstract class BaseResult implements ResultInterface
 	public $currentRow = 0;
 
 	/**
-	 * Number of rows
-	 *
-	 * @var integer
-	 */
-	public $numRows;
-
-	/**
 	 * Row data
 	 *
 	 * @var array|null
@@ -130,7 +123,7 @@ abstract class BaseResult implements ResultInterface
 			return $this->customResultObject[$className];
 		}
 
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID || $this->getNumRows() === 0)
 		{
 			return [];
 		}
@@ -197,7 +190,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID || $this->getNumRows() === 0)
 		{
 			return [];
 		}
@@ -240,7 +233,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID || $this->getNumRows() === 0)
 		{
 			return [];
 		}

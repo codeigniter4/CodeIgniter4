@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
@@ -183,24 +184,20 @@ class Result extends BaseResult
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
 	 *
 	 * @return integer Returns the number of rows retrieved on success
-	 * @throws \Exception if an error is encountered attempting to retrieve the count (eg if the prior select query failed)
+	 * @throws DatabaseException if an error is encountered attempting to retrieve the count (eg if the prior select query failed)
 	 */
 	public function getNumRows() : int
 	{
 		$retval = sqlsrv_num_rows($this->resultID);
 		if ($retval === false)
 		{
-			throw new \Exception('Error retrieving row count');
+			throw new DatabaseException('Error retrieving row count');
 		}
-		else
-		{
-			return intval($retval);
-		}
+		return intval($retval);
 	}
 
 	//--------------------------------------------------------------------
