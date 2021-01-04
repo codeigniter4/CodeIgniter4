@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	// auto import fully qualified class names
 	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
 	$parameters->set(Option::ENABLE_CACHE, true);
-	$parameters->set(Option::PHP_VERSION_FEATURES, '7.2');
+	$parameters->set(Option::PHP_VERSION_FEATURES, '7.3');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
