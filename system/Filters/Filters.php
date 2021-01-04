@@ -315,7 +315,7 @@ class Filters
 	 * after the filter name, followed by a comma-separated list of arguments that
 	 * are passed to the filter when executed.
 	 *
-	 * @param string $name
+	 * @param string|array $filter
 	 * @param string $when
 	 *
 	 * @return Filters
