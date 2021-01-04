@@ -1293,7 +1293,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function getFilterForRoute(string $search, string $verb = null): string
+	public function getFilterForRoute(string $search, string $verb = null)
 	{
 		$options = $this->loadRoutesOptions($verb);
 
