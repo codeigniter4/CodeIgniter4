@@ -46,6 +46,7 @@ class CITestStreamFilter extends php_user_filter
 			$consumed += $bucket->datalen;
 		}
 
+		// @phpstan-ignore-next-line
 		return PSFS_PASS_ON;
 	}
 }
