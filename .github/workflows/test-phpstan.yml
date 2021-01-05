@@ -20,8 +20,12 @@ on:
 
 jobs:
   build:
-    name: Analyze code (PHPStan)
+    name: PHP ${{ matrix.php-versions }} Static Analysis
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.4', '8.0']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,7 +33,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: ${{ matrix.php-versions }}
           extensions: intl
 
       - name: Use latest Composer

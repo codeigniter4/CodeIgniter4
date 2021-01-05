@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.2', '7.3', '7.4', '8.0']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
 
     services:
@@ -88,7 +88,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv
+          extensions: imagick, sqlsrv-beta
           coverage: xdebug
         env:
           update: true
