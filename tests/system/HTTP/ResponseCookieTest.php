@@ -308,7 +308,7 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new Response($config);
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+		$this->expectExceptionMessage(lang('Security.invalidSameSiteSetting', ['Invalid']));
 
 		$response->setCookie([
 			'name'     => 'bar',
