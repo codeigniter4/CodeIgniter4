@@ -198,7 +198,7 @@ Explanation of Values:
 **swapPre**		A default table prefix that should be swapped with dbprefix. This is useful for distributed
 			applications where you might run manually written queries, and need the prefix to still be
 			customizable by the end user.
-**schema**		The database schema, defaults to 'public'. Used by PostgreSQL and ODBC drivers.
+**schema**		The database schema, default value varies by driver. Used by PostgreSQL and SQLSRV drivers.
 **encrypt**		Whether or not to use an encrypted connection.
 
 			  - 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE
