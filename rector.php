@@ -15,7 +15,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system']);
 
 	// is there a file you need to skip?
-	$parameters->set(Option::EXCLUDE_PATHS, [
+	$parameters->set(Option::SKIP, [
 		__DIR__ . '/app/Views',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 		__DIR__ . '/system/ThirdParty',
