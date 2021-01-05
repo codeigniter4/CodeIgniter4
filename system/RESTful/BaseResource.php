@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\RESTful;
 
-use CodeIgniter\Config\Factories;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;

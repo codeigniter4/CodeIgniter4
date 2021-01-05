@@ -12,6 +12,7 @@
 namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\View\RendererInterface;
 use Config\Pager as PagerConfig;
@@ -335,7 +336,6 @@ class Pager implements PagerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the URI for a specific page for the specified group.
 	 *
@@ -343,14 +343,14 @@ class Pager implements PagerInterface
 	 * @param string       $group
 	 * @param boolean      $returnObject
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false)
 	{
 		$this->ensureGroup($group);
 
 		/**
-		 * @var \CodeIgniter\HTTP\URI $uri
+		 * @var URI $uri
 		 */
 		$uri = $this->groups[$group]['uri'];
 
