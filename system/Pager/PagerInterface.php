@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\HTTP\URI;
+
 /**
  * Expected behavior for a Pager
  */
@@ -103,7 +105,6 @@ interface PagerInterface
 	public function getCurrentPage(string $group = 'default'): int;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the URI for a specific page for the specified group.
 	 *
@@ -111,7 +112,7 @@ interface PagerInterface
 	 * @param string       $group
 	 * @param boolean      $returnObject
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false);
 

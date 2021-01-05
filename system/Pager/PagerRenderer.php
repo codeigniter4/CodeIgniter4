@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\HTTP\URI;
+
 /**
  * Class PagerRenderer
  *
@@ -58,7 +60,7 @@ class PagerRenderer
 	/**
 	 * URI base for pagination links
 	 *
-	 * @var \CodeIgniter\HTTP\URI
+	 * @var URI
 	 */
 	protected $uri;
 

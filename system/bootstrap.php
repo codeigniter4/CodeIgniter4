@@ -14,6 +14,7 @@ use CodeIgniter\Config\DotEnv;
 use Config\App;
 use Config\Autoload;
 use Config\Modules;
+use Config\Paths;
 use Config\Services;
 
 /*
@@ -30,7 +31,7 @@ use Config\Services;
 if (! defined('APPPATH'))
 {
 	/**
-	 * @var \Config\Paths $paths
+	 * @var Paths $paths
 	 */
 	define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
@@ -45,7 +46,7 @@ if (! defined('ROOTPATH'))
 if (! defined('SYSTEMPATH'))
 {
 	/**
-	 * @var \Config\Paths $paths
+	 * @var Paths $paths
 	 */
 	define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
@@ -54,7 +55,7 @@ if (! defined('SYSTEMPATH'))
 if (! defined('WRITEPATH'))
 {
 	/**
-	 * @var \Config\Paths $paths
+	 * @var Paths $paths
 	 */
 	define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
@@ -63,7 +64,7 @@ if (! defined('WRITEPATH'))
 if (! defined('TESTPATH'))
 {
 	/**
-	 * @var \Config\Paths $paths
+	 * @var Paths $paths
 	 */
 	define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
