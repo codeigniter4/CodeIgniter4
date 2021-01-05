@@ -303,6 +303,23 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('test', $router->getFilter());
 	}
 
+	public function testRouteWorksWithMultipleArrayFilters()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', ['filter' => ['test:args1,args2', 'test2:args1,args2']], function ($routes) {
+			$routes->add('bar', 'TestController::foobar');
+		});
+
+		$router = new Router($collection, $this->request);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('foobar', $router->methodName());
+		$this->assertEquals(['test:args1,args2', 'test2:args1,args2'], $router->getFilter());
+	}
+
 	//--------------------------------------------------------------------
 
 	/**

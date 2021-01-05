@@ -1068,4 +1068,31 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$this->assertEquals($expected, $filters->getFiltersClass());
 	}
+
+	public function testEnableArrayMultipleFilters()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => [
+				'google'  => 'CodeIgniter\Filters\fixtures\GoogleMe',
+				'google2' => 'CodeIgniter\Filters\fixtures\GoogleEmpty',
+			],
+			'globals' => [
+				'before' => [],
+				'after'  => [],
+			],
+		];
+
+		$filters = new Filters((object) $config, $this->request, $this->response);
+
+		$filters = $filters->initialize('admin/foo/bar');
+
+		$filters->enableFilter(['google', 'google2'], 'before');
+
+		$filters = $filters->getFilters();
+
+		$this->assertTrue(in_array('google', $filters['before']));
+		$this->assertTrue(in_array('google2', $filters['before']));
+	}
 }
