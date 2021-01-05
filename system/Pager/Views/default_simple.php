@@ -1,8 +1,10 @@
 <?php
-/**
- * @var \CodeIgniter\Pager\PagerRenderer $pager
- */
 
+use CodeIgniter\Pager\PagerRenderer;
+
+/**
+ * @var PagerRenderer $pager
+ */
 $pager->setSurroundCount(0);
 ?>
 <nav>

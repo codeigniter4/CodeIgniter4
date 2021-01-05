@@ -132,7 +132,7 @@ if (! function_exists('current_url'))
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -212,7 +212,7 @@ if (! function_exists('index_page'))
 	 *
 	 * Returns the "index_page" from your config file
 	 *
-	 * @param  \Config\App|null $altConfig Alternate configuration to use
+	 * @param  App|null $altConfig Alternate configuration to use
 	 * @return string
 	 */
 	function index_page(App $altConfig = null): string

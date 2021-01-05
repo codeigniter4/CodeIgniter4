@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-/**
- * @var \CodeIgniter\Pager\PagerRenderer $pager
+use CodeIgniter\Pager\PagerRenderer;
+
+ /**
+ * @var PagerRenderer $pager
  */
 $pager->setSurroundCount(0);
 

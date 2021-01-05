@@ -15,7 +15,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system']);
 
 	// is there a file you need to skip?
-	$parameters->set(Option::EXCLUDE_PATHS, [
+	$parameters->set(Option::SKIP, [
 		__DIR__ . '/app/Views',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 		__DIR__ . '/system/ThirdParty',
@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	// auto import fully qualified class names
 	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
 	$parameters->set(Option::ENABLE_CACHE, true);
-	$parameters->set(Option::PHP_VERSION_FEATURES, '7.2');
+	$parameters->set(Option::PHP_VERSION_FEATURES, '7.3');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
