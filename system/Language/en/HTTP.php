@@ -54,6 +54,7 @@ return [
 	'methodNotFound'             => 'Controller method is not found: {0}',
 
 	// CSRF
+	// @deprecated use `Security.disallowedAction`
 	'disallowedAction'           => 'The action you requested is not allowed.',
 
 	// Uploaded file moving
@@ -72,5 +73,6 @@ return [
 	'uploadErrUnknown'           => 'The file "%s" was not uploaded due to an unknown error.',
 
 	// SameSite setting
+	// @deprecated use `Security.invalidSameSiteSetting`
 	'invalidSameSiteSetting'     => 'The SameSite setting must be None, Lax, Strict, or a blank string. Given: {0}',
 ];

@@ -141,7 +141,7 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+		$this->expectExceptionMessage(lang('Security.invalidSameSiteSetting', ['Invalid']));
 
 		set_cookie($cookieAttr);
 	}

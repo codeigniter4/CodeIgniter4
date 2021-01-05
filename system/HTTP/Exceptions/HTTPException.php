@@ -241,6 +241,6 @@ class HTTPException extends FrameworkException
 	 */
 	public static function forInvalidSameSiteSetting(string $samesite)
 	{
-		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
+		return new static(lang('Security.invalidSameSiteSetting', [$samesite]));
 	}
 }
