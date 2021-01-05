@@ -13,6 +13,10 @@ Enhancements:
 - Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.
 - Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is ``Lax``.
 
+Changes:
+
+- System messages defined in ``system/Language/en/`` are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
+
 Bugs Fixed:
 
 - Fixed a bug in ``Entity`` class where declaring class parameters was preventing data propagation to the ``attributes`` array.
