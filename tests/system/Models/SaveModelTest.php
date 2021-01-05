@@ -92,7 +92,7 @@ final class SaveModelTest extends LiveModelTestCase
 		$data = new stdClass();
 
 		// Sqlsrv does not allow forcing an ID into an autoincrement field.
-		if ($this->db->DBDriver !== 'Sqlsrv')
+		if ($this->db->DBDriver !== 'SQLSRV')
 		{
 			$data->id = 1;
 		}
