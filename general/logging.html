@@ -357,7 +357,6 @@
 </li>
 <li><p><a class="reference internal" href="#modifying-the-message-with-context" id="id3">Modifying the Message With Context</a></p></li>
 <li><p><a class="reference internal" href="#using-third-party-loggers" id="id4">Using Third-Party Loggers</a></p></li>
-<li><p><a class="reference internal" href="#loggeraware-trait" id="id5">LoggerAware Trait</a></p></li>
 </ul>
 </div>
 <p>You can log information to the local log files by using the <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> method. You must supply
@@ -537,13 +536,6 @@ the <code class="docutils literal notranslate"><span class="pre">/app/Config/Aut
 like Composer. Next, you should modify <code class="docutils literal notranslate"><span class="pre">/app/Config/Services.php</span></code> to point the <code class="docutils literal notranslate"><span class="pre">logger</span></code>
 alias to your new class name.</p>
 <p>Now, any call that is done through the <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> function will use your library instead.</p>
-</div>
-<div class="section" id="loggeraware-trait">
-<h2><a class="toc-backref" href="#id5">LoggerAware Trait</a><a class="headerlink" href="#loggeraware-trait" title="Permalink to this headline">¶</a></h2>
-<p>If you would like to implement your libraries in a framework-agnostic method, you can use
-the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\LoggerAwareTrait</span></code> which implements the <code class="docutils literal notranslate"><span class="pre">setLogger()</span></code> method for you.
-Then, when you use your library under different environments for frameworks, your library should
-still be able to log as it would expect, as long as it can find a PSR3 compatible logger.</p>
 </div>
 </div>
 
