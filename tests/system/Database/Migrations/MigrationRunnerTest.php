@@ -68,9 +68,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testGetHistory()
 	{
 		$runner = new MigrationRunner($this->config);
-
-		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
-		$tableMaker();
+		$runner->ensureTable();
 
 		$history = [
 			'id'        => 4,
@@ -103,9 +101,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testGetHistoryReturnsEmptyArrayWithNoResults()
 	{
 		$runner = new MigrationRunner($this->config);
-
-		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
-		$tableMaker();
+		$runner->ensureTable();
 
 		$this->assertEquals([], $runner->getHistory());
 	}
