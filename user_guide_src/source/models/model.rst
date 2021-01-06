@@ -674,12 +674,12 @@ Working With Query Builder
 You can get access to a shared instance of the Query Builder for that model's database connection any time you
 need it::
 
-	$builder = $userModel->builder();
+    $builder = $userModel->builder();
 
 This builder is already set up with the model's $table. If you need access to another table
 you can pass it in as a parameter, but be aware that this will not return a shared instance::
 
-	$groupBuilder = $userModel->builder('groups');
+    $groupBuilder = $userModel->builder('groups');
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::
@@ -777,12 +777,12 @@ use the same callback in multiple events::
 
 Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
 
-	protected $allowCallbacks = false;
+    protected $allowCallbacks = false;
 
 You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method::
 
-	$model->allowCallbacks(false)->find(1); // No callbacks triggered
-	$model->find(1);                        // Callbacks subject to original property value
+    $model->allowCallbacks(false)->find(1); // No callbacks triggered
+    $model->find(1);                        // Callbacks subject to original property value
 
 Event Parameters
 ----------------
@@ -829,16 +829,16 @@ boolean, ``returnData``::
 
     protected $beforeFind = ['checkCache'];
     ...
-	protected function checkCache(array $data)
-	{
-		// Check if the requested item is already in our cache
-		if (isset($data['id']) && $item = $this->getCachedItem($data['id']]))
-		{
-			$data['data']       = $item;
-			$data['returnData'] = true;
+    protected function checkCache(array $data)
+    {
+        // Check if the requested item is already in our cache
+        if (isset($data['id']) && $item = $this->getCachedItem($data['id']]))
+        {
+            $data['data']       = $item;
+            $data['returnData'] = true;
 
-			return $data;
-	...
+            return $data;
+    ...
 
 Manual Model Creation
 =====================
