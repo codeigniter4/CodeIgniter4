@@ -354,12 +354,11 @@ abstract class BaseModel
 	 * Inserts data into the current database
 	 * This methods works only with dbCalls
 	 *
-	 * @param array        $data   Data
-	 * @param boolean|null $escape Escape
+	 * @param array $data Data
 	 *
 	 * @return object|integer|string|false
 	 */
-	abstract protected function doInsert(array $data, ?bool $escape = null);
+	abstract protected function doInsert(array $data);
 
 	/**
 	 * Compiles batch insert and runs the queries, validating each row prior.
@@ -708,13 +707,12 @@ abstract class BaseModel
 	 *
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
-	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
 	 *
 	 * @throws ReflectionException
 	 */
-	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
+	public function insert($data = null, bool $returnID = true)
 	{
 		$this->insertID = 0;
 
@@ -774,7 +772,7 @@ abstract class BaseModel
 			$eventData = $this->trigger('beforeInsert', $eventData);
 		}
 
-		$result = $this->doInsert($eventData['data'], $escape);
+		$result = $this->doInsert($eventData['data']);
 
 		$eventData = [
 			'id'     => $this->insertID,
@@ -866,15 +864,14 @@ abstract class BaseModel
 	 * Updates a single record in the database. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|object|null         $data Data
 	 *
 	 * @return boolean
 	 *
 	 * @throws ReflectionException
 	 */
-	public function update($id = null, $data = null, ?bool $escape = null): bool
+	public function update($id = null, $data = null): bool
 	{
 		if (is_numeric($id) || is_string($id))
 		{
@@ -936,7 +933,7 @@ abstract class BaseModel
 		$eventData = [
 			'id'     => $id,
 			'data'   => $eventData['data'],
-			'result' => $this->doUpdate($id, $eventData['data'], $escape),
+			'result' => $this->doUpdate($id, $eventData['data']),
 		];
 
 		if ($this->tempAllowCallbacks)

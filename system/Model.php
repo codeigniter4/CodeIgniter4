@@ -84,6 +84,13 @@ class Model extends BaseModel
 	 */
 	protected $tempData = [];
 
+	/**
+	 * Escape Parameter to be passed in do methods
+	 *
+	 * @var boolean|null
+	 */
+	protected $escape = null;
+
 	// endregion
 
 	// region Constructor
@@ -243,13 +250,15 @@ class Model extends BaseModel
 	 * Inserts data into the current table.
 	 * This methods works only with dbCalls
 	 *
-	 * @param array        $data   Data
-	 * @param boolean|null $escape Escape
+	 * @param array $data Data
 	 *
 	 * @return BaseResult|integer|string|false
 	 */
-	protected function doInsert(array $data, ?bool $escape = null)
+	protected function doInsert(array $data)
 	{
+		$escape       = $this->escape;
+		$this->escape = null;
+
 		// Require non empty primaryKey when
 		// not using auto-increment feature
 		if (! $this->useAutoIncrement && empty($data[$this->primaryKey]))
@@ -320,6 +329,9 @@ class Model extends BaseModel
 	 */
 	protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool
 	{
+		$escape       = $this->escape;
+		$this->escape = null;
+
 		$builder = $this->builder();
 
 		if ($id)
@@ -654,46 +666,44 @@ class Model extends BaseModel
 	 *
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
-	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
 	 *
 	 * @throws ReflectionException
 	 */
-	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
+	public function insert($data = null, bool $returnID = true)
 	{
 		if (empty($data))
 		{
 			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
+			$this->escape   = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
-		return parent::insert($data, $returnID, $escape);
+		return parent::insert($data, $returnID);
 	}
 
 	/**
 	 * Updates a single record in the database. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|object|null         $data Data
 	 *
 	 * @return boolean
 	 *
 	 * @throws ReflectionException
 	 */
-	public function update($id = null, $data = null, ?bool $escape = null): bool
+	public function update($id = null, $data = null): bool
 	{
 		if (empty($data))
 		{
 			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
+			$this->escape   = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
-		return parent::update($id, $data, $escape);
+		return parent::update($id, $data);
 	}
 
 	// endregion
