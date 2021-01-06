@@ -560,6 +560,7 @@ class Model extends BaseModel
 	 * @param string|null $table Table name
 	 *
 	 * @return BaseBuilder
+	 * @throws ModelException
 	 */
 	public function builder(?string $table = null)
 	{
