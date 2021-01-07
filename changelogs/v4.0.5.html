@@ -358,6 +358,10 @@
 <li><p>Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.</p></li>
 <li><p>Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is <code class="docutils literal notranslate"><span class="pre">Lax</span></code>.</p></li>
 </ul>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>System messages defined in <code class="docutils literal notranslate"><span class="pre">system/Language/en/</span></code> are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.</p></li>
+</ul>
 <p>Bugs Fixed:</p>
 <ul class="simple">
 <li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
