@@ -1213,7 +1213,7 @@ from the model. For <code class="docutils literal notranslate"><span class="pre"
 to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
 boolean, <code class="docutils literal notranslate"><span class="pre">returnData</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
-<span class="o">...</span>
+<span class="c1">// ...</span>
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Check if the requested item is already in our cache</span>
@@ -1223,7 +1223,7 @@ boolean, <code class="docutils literal notranslate"><span class="pre">returnData
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;returnData&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
         <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
-<span class="o">...</span>
+<span class="c1">// ...</span>
 </pre></div>
 </div>
 </div>

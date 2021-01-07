@@ -406,30 +406,31 @@ override this behavior, you may set a third parameter to true (boolean):</p>
 <p>Each folder name will be an array index, while its contained files will
 be numerically indexed. Here is an example of a typical array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">Array</span> <span class="p">(</span>
-        <span class="p">[</span><span class="nx">libraries</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+    <span class="p">[</span><span class="nx">libraries</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+        <span class="p">(</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">benchmark</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">config</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="s2">&quot;database/&quot;</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
                 <span class="p">(</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">benchmark</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">config</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="s2">&quot;database/&quot;</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
-                                <span class="p">(</span>
-                                        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">query_builder</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">binds</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">configuration</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">connecting</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">examples</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">fields</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">index</span><span class="o">.</span><span class="nx">html</span>
-                                        <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">queries</span><span class="o">.</span><span class="nx">html</span>
-                                <span class="p">)</span>
-                        <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">email</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">file_uploading</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">image_lib</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">input</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">language</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">loader</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">pagination</span><span class="o">.</span><span class="nx">html</span>
-                        <span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">uri</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">query_builder</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">binds</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">configuration</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">connecting</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">examples</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">fields</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">index</span><span class="o">.</span><span class="nx">html</span>
+                    <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">queries</span><span class="o">.</span><span class="nx">html</span>
                 <span class="p">)</span>
+            <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">email</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">file_uploading</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">image_lib</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">input</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">language</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">loader</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">pagination</span><span class="o">.</span><span class="nx">html</span>
+            <span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">uri</span><span class="o">.</span><span class="nx">html</span>
+        <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>If no results are found, this will return an empty array.</p>
@@ -459,11 +460,11 @@ function will create it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Some file data&#39;</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Unable to write the file&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Unable to write the file&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="k">else</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;File written!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;File written!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>

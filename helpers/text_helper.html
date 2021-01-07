@@ -393,8 +393,13 @@ specifies the length. The following choices are available:</p>
 <li><p><strong>numeric</strong>: Numeric string.</p></li>
 <li><p><strong>nozero</strong>: Numeric string with no zeros.</p></li>
 <li><p><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
-<li><p><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
+<li><dl class="simple">
+<dt><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</dt><dd><ul>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
@@ -451,7 +456,7 @@ content which has unique titles or slugs.</p>
 a loop. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;string one&#39;</span><span class="p">,</span> <span class="s1">&#39;string two&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;string one&#39;</span><span class="p">,</span> <span class="s1">&#39;string two&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -459,7 +464,7 @@ a loop. Example:</p>
 your loop the next item will be returned.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -514,8 +519,8 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 <p>Removes any slashes from an array of strings.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O\&#39;reilly?&quot;</span><span class="p">,</span>
-        <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O\&#39;connor.&quot;</span>
+    <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O\&#39;reilly?&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O\&#39;connor.&quot;</span>
 <span class="p">];</span>
 
 <span class="nv">$str</span> <span class="o">=</span> <span class="nx">strip_slashes</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span>
@@ -523,8 +528,8 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 </div>
 <p>The above will return the following array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-        <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
-        <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
+    <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -853,8 +858,8 @@ might not support the new HTML5 mark tag, so it is recommended that you
 insert the following CSS code into your stylesheet if you need to support
 such browsers:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
-        <span class="nx">background</span><span class="o">:</span> <span class="c1">#ff0;</span>
-        <span class="nx">color</span><span class="o">:</span> <span class="c1">#000;</span>
+    <span class="nx">background</span><span class="o">:</span> <span class="c1">#ff0;</span>
+    <span class="nx">color</span><span class="o">:</span> <span class="c1">#000;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -889,9 +894,10 @@ complete words.</p>
 <span class="c1">// of text that will help us</span>
 <span class="c1">// demonstrate this</span>
 <span class="c1">// function.</span>
+
+<span class="nx">Excessively</span> <span class="nx">long</span> <span class="nx">words</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nb">split</span><span class="p">,</span> <span class="nx">but</span> <span class="nx">URLs</span> <span class="nx">will</span> <span class="k">not</span> <span class="nx">be</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>Excessively long words will be split, but URLs will not be.</p>
 </dd></dl>
 
 <dl class="function">
@@ -969,13 +975,13 @@ at the end.</p>
 <span class="s1">arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus.</span>
 <span class="s1">Sed ut tortor diam.&#39;</span><span class="p">;</span>
 
-<span class="k">echo</span> <span class="nx">excerpt</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="s1">&#39;Donec&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">excerpt</span><span class="p">(</span><span class="nv">$text</span><span class="p">,</span> <span class="s1">&#39;Donec&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Produces:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="nx">non</span> <span class="nx">mauris</span> <span class="nx">lectus</span><span class="o">.</span> <span class="nx">Phasellus</span> <span class="nx">eu</span> <span class="nx">sodales</span> <span class="nx">sem</span><span class="o">.</span> <span class="nx">Integer</span> <span class="nx">dictum</span> <span class="nx">purus</span> <span class="nx">ac</span>
 <span class="nx">enim</span> <span class="nx">hendrerit</span> <span class="nx">gravida</span><span class="o">.</span> <span class="nx">Donec</span> <span class="nx">ac</span> <span class="nx">magna</span> <span class="nx">vel</span> <span class="nx">nunc</span> <span class="nx">tincidunt</span> <span class="nx">molestie</span> <span class="nx">sed</span>
-<span class="nx">vitae</span> <span class="nx">nisl</span><span class="o">.</span> <span class="nx">Cras</span> <span class="nx">sed</span> <span class="nx">auctor</span> <span class="nx">mauris</span><span class="p">,</span> <span class="nx">non</span> <span class="nx">dictum</span> <span class="o">...</span>
+<span class="nx">vitae</span> <span class="nx">nisl</span><span class="o">.</span> <span class="nx">Cras</span> <span class="nx">sed</span> <span class="nx">auctor</span> <span class="nx">mauris</span><span class="p">,</span> <span class="nx">non</span> <span class="nx">dictum</span> <span class="nx">tortor</span><span class="o">.</span> <span class="o">...</span>
 </pre></div>
 </div>
 </dd></dl>
