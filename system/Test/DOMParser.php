@@ -237,19 +237,19 @@ class DOMParser
 		{
 			$path = empty($selector['tag'])
 				? "id(\"{$selector['id']}\")"
-				: "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
+				: "//{$selector['tag']}[@id=\"{$selector['id']}\"]";
 		}
 		// By Class
 		elseif (! empty($selector['class']))
 		{
 			$path = empty($selector['tag'])
 				? "//*[@class=\"{$selector['class']}\"]"
-				: "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
+				: "//{$selector['tag']}[@class=\"{$selector['class']}\"]";
 		}
 		// By tag only
 		elseif (! empty($selector['tag']))
 		{
-			$path = "//body//{$selector['tag']}";
+			$path = "//{$selector['tag']}";
 		}
 
 		if (! empty($selector['attr']))
