@@ -124,12 +124,12 @@ interface ConnectionInterface
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param string $sql
-	 * @param mixed  ...$binds
+	 * @param mixed $sql
+	 * @param mixed ...$binds
 	 *
 	 * @return BaseResult|Query|boolean
 	 */
-	public function query(string $sql, $binds = null);
+	public function query($sql, $binds = null);
 
 	//--------------------------------------------------------------------
 
@@ -138,11 +138,11 @@ interface ConnectionInterface
 	 * is performed, nor are transactions handled. Simply takes a raw
 	 * query string and returns the database-specific result id.
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed
 	 */
-	public function simpleQuery(string $sql);
+	public function simpleQuery($sql);
 
 	//--------------------------------------------------------------------
 	/**

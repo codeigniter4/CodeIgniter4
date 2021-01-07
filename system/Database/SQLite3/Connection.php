@@ -134,11 +134,11 @@ class Connection extends BaseConnection
 	/**
 	 * Execute the query
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed    \SQLite3Result object or bool
 	 */
-	public function execute(string $sql)
+	public function execute($sql)
 	{
 		try
 		{

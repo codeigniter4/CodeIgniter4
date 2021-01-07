@@ -22,13 +22,13 @@ interface QueryInterface
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
-	 * @param string  $sql
+	 * @param mixed   $sql
 	 * @param mixed   $binds
 	 * @param boolean $setEscape
 	 *
 	 * @return mixed
 	 */
-	public function setQuery(string $sql, $binds = null, bool $setEscape = true);
+	public function setQuery($sql, $binds = null, bool $setEscape = true);
 
 	//--------------------------------------------------------------------
 

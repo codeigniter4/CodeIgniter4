@@ -75,13 +75,13 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * NOTE: This version is based on SQL code. Child classes should
 	 * override this method.
 	 *
-	 * @param string $sql
+	 * @param mixed  $sql
 	 * @param array  $options    Passed to the connection's prepare statement.
 	 * @param string $queryClass
 	 *
 	 * @return mixed
 	 */
-	public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
+	public function prepare($sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		// We only supports positional placeholders (?)
 		// in order to work with the execute method below, so we

@@ -43,16 +43,16 @@ class MockConnection extends BaseConnection
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param string  $sql
-	 * @param mixed   ...$binds
-	 * @param boolean $setEscapeFlags
-	 * @param string  $queryClass
+	 * @param mixed       $sql
+	 * @param mixed       ...$binds
+	 * @param boolean     $setEscapeFlags
+	 * @param string|null $queryClass
 	 *
 	 * @return BaseResult|Query|boolean
 	 *
 	 * @todo BC set $queryClass default as null in 4.1
 	 */
-	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
+	public function query($sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = null)
 	{
 		$queryClass = str_replace('Connection', 'Query', static::class);
 
@@ -161,11 +161,11 @@ class MockConnection extends BaseConnection
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed
 	 */
-	protected function execute(string $sql)
+	protected function execute($sql)
 	{
 		return $this->returnValues['execute'];
 	}

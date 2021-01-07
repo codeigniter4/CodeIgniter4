@@ -33,13 +33,13 @@ class PreparedQuery extends BasePreparedQuery
 	 * NOTE: This version is based on SQL code. Child classes should
 	 * override this method.
 	 *
-	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
-	 *                        Unused in the MySQLi driver.
+	 * @param mixed $sql
+	 * @param array $options Passed to the connection's prepare statement.
+	 *                       Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 */
-	public function _prepare(string $sql, array $options = [])
+	public function _prepare($sql, array $options = [])
 	{
 		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{

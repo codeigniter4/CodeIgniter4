@@ -32,12 +32,12 @@ interface PreparedQueryInterface
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
 	 *
-	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
+	 * @param mixed $sql
+	 * @param array $options Passed to the connection's prepare statement.
 	 *
 	 * @return mixed
 	 */
-	public function prepare(string $sql, array $options = []);
+	public function prepare($sql, array $options = []);
 
 	//--------------------------------------------------------------------
 

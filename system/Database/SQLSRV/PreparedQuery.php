@@ -41,13 +41,13 @@ class PreparedQuery extends BasePreparedQuery
 	 * NOTE: This version is based on SQL code. Child classes should
 	 * override this method.
 	 *
-	 * @param string $sql
-	 * @param array  $options Options takes an associative array;
+	 * @param mixed $sql
+	 * @param array $options Options takes an associative array;
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function _prepare(string $sql, array $options = [])
+	public function _prepare($sql, array $options = [])
 	{
 		/* Prepare parameters for the query */
 		$queryString = $this->getQueryString();

@@ -593,11 +593,11 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed
 	 */
-	abstract protected function execute(string $sql);
+	abstract protected function execute($sql);
 
 	/**
 	 * Orchestrates a query against the database. Queries must use
@@ -607,16 +607,16 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param string  $sql
-	 * @param mixed   ...$binds
-	 * @param boolean $setEscapeFlags
-	 * @param string  $queryClass
+	 * @param mixed       $sql
+	 * @param mixed       ...$binds
+	 * @param boolean     $setEscapeFlags
+	 * @param string|null $queryClass
 	 *
 	 * @return BaseResult|Query|boolean
 	 *
 	 * @todo BC set $queryClass default as null in 4.1
 	 */
-	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
+	public function query($sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = null)
 	{
 		$queryClass = $queryClass ?: $this->queryClass;
 
@@ -718,11 +718,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 * is performed, nor are transactions handled. Simply takes a raw
 	 * query string and returns the database-specific result id.
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed
 	 */
-	public function simpleQuery(string $sql)
+	public function simpleQuery($sql)
 	{
 		if (empty($this->connID))
 		{

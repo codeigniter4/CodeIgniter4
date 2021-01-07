@@ -159,11 +159,11 @@ class Connection extends BaseConnection
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param string $sql
+	 * @param mixed $sql
 	 *
 	 * @return mixed
 	 */
-	public function execute(string $sql)
+	public function execute($sql)
 	{
 		try
 		{
