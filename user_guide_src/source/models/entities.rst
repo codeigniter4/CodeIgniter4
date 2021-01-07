@@ -48,7 +48,7 @@ Entity itself at **app/Entities/User.php**.
 
     class User extends Entity
     {
-        //
+        // ...
     }
 
 At its simplest, this is all you need to do, though we'll make it more useful in a minute.
@@ -373,8 +373,8 @@ the value whenever the property is set::
     {
         protected $casts = [
             'options'        => 'array',
-        'options_object' => 'json',
-        'options_array'  => 'json-array',
+            'options_object' => 'json',
+            'options_array'  => 'json-array',
         ];
     }
 

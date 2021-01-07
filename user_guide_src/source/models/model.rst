@@ -828,7 +828,7 @@ to the calling context. In order for ``beforeFind`` to intercept the find workfl
 boolean, ``returnData``::
 
     protected $beforeFind = ['checkCache'];
-    ...
+    // ...
     protected function checkCache(array $data)
     {
         // Check if the requested item is already in our cache
@@ -838,7 +838,7 @@ boolean, ``returnData``::
             $data['returnData'] = true;
 
             return $data;
-    ...
+    // ...
 
 Manual Model Creation
 =====================
