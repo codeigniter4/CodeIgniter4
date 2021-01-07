@@ -117,7 +117,8 @@ if (! class_exists('CodeIgniter\Services', false))
 }
 
 // Initialize and register the loader with the SPL autoloader stack.
-Services::autoloader()->initialize(new Autoload(), new Modules())->register();
+$autoload = new Autoload();
+Services::autoloader()->initialize($autoload, new Modules())->register();
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
@@ -134,6 +135,13 @@ if (is_file(COMPOSER_PATH))
 
 	require_once COMPOSER_PATH;
 }
+
+// Check for an additional Composer autoload for Local namespace
+if ($autoload->local && is_file($autoload->local))
+{
+	require_once $autoload->local;
+}
+unset($autoload);
 
 // Load environment settings from .env files into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';

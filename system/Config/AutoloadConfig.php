@@ -51,6 +51,14 @@ class AutoloadConfig
 	public $classmap = [];
 
 	/**
+	 * Path to Composer's autoload for the Local namespace.
+	 * E.g. ROOTPATH . 'local/vendor/autoload.php'
+	 *
+	 * @var string|null
+	 */
+	public $local;
+
+	/**
 	 * -------------------------------------------------------------------
 	 * Namespaces
 	 * -------------------------------------------------------------------
@@ -111,5 +119,13 @@ class AutoloadConfig
 
 		$this->psr4     = array_merge($this->corePsr4, $this->psr4);
 		$this->classmap = array_merge($this->coreClassmap, $this->classmap);
+
+		if (isset($this->psr4['Local']))
+		{
+			$this->local = $this->psr4['Local']
+				. DIRECTORY_SEPARATOR . '..'
+				. DIRECTORY_SEPARATOR . 'vendor'
+				. DIRECTORY_SEPARATOR . 'autoload.php';
+		}
 	}
 }
