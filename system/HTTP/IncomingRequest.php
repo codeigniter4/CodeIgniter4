@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use \CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -678,7 +679,7 @@ class IncomingRequest extends Request
 		// parse_url() returns false if no host is present, but the path or query string
 		// contains a colon followed by a number. So we attach a dummy host since
 		// REQUEST_URI does not include the host. This allows us to parse out the query string and path.
-		$baseURI = new \CodeIgniter\HTTP\URI(config(App::class)->baseURL);
+		$baseURI = new URI(config(App::class)->baseURL);
 		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
 		$query = $parts['query'] ?? '';
 		$uri   = str_replace($baseURI->getPath(), '', $parts['path'] ?? '');

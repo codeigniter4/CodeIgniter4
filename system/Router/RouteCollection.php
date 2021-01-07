@@ -14,6 +14,7 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Modules;
 use Config\Services;
@@ -1316,7 +1317,7 @@ class RouteCollection implements RouteCollectionInterface
 		// Find all of our back-references in the original route
 		preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
-		$baseURI = new \CodeIgniter\HTTP\URI(config(App::class)->baseURL);
+		$baseURI = new URI(config(App::class)->baseURL);
 
 		if (empty($matches[0]))
 		{
