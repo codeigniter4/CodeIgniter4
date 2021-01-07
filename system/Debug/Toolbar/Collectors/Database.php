@@ -57,7 +57,7 @@ class Database extends BaseCollector
 	 * The query instances that have been collected
 	 * through the DBQuery Event.
 	 *
-	 * @var array
+	 * @var Query[]
 	 */
 	protected static $queries = [];
 
@@ -138,59 +138,12 @@ class Database extends BaseCollector
 	 */
 	public function display(): array
 	{
-		// Key words we want bolded
-		$highlight = [
-			'SELECT',
-			'DISTINCT',
-			'FROM',
-			'WHERE',
-			'AND',
-			'LEFT&nbsp;JOIN',
-			'RIGHT&nbsp;JOIN',
-			'JOIN',
-			'ORDER&nbsp;BY',
-			'GROUP&nbsp;BY',
-			'LIMIT',
-			'INSERT',
-			'INTO',
-			'VALUES',
-			'UPDATE',
-			'OR&nbsp;',
-			'HAVING',
-			'OFFSET',
-			'NOT&nbsp;IN',
-			'IN',
-			'LIKE',
-			'NOT&nbsp;LIKE',
-			'COUNT',
-			'MAX',
-			'MIN',
-			'ON',
-			'AS',
-			'AVG',
-			'SUM',
-			'(',
-			')',
-		];
-
-		$data = [
-			'queries' => [],
-		];
-
-		foreach (static::$queries as $query)
-		{
-			$sql = $query->getQuery();
-
-			foreach ($highlight as $term)
-			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-			}
-
-			$data['queries'][] = [
-				'duration' => ($query->getDuration(5) * 1000) . ' ms',
-				'sql'      => $sql,
+		$data['queries'] = array_map(function (Query $query) {
+			return [
+				'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
+				'sql'      => $query->debugToolbarDisplay(),
 			];
-		}
+		}, static::$queries);
 
 		return $data;
 	}
