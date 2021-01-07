@@ -63,7 +63,7 @@ class RedirectResponse extends Response
 			throw HTTPException::forInvalidRedirectRoute($route);
 		}
 
-		return $this->redirect(site_url($route), $method, $code);
+		return $this->redirect($route, $method, $code);
 	}
 
 	/**
