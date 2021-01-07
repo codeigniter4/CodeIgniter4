@@ -153,15 +153,16 @@ The following functions are available:
     ... or you can submit an associative array to create multiple fields::
 
         $data = [
-            'name'	=> 'John Doe',
-            'email'	=> 'john@example.com',
-            'url'	=> 'http://example.com'
+            'name'  => 'John Doe',
+            'email' => 'john@example.com',
+            'url'   => 'http://example.com'
         ];
 
         echo form_hidden($data);
 
         /*
             Would produce:
+
             <input type="hidden" name="name" value="John Doe" />
             <input type="hidden" name="email" value="john@example.com" />
             <input type="hidden" name="url" value="http://example.com" />
@@ -170,9 +171,9 @@ The following functions are available:
     You can also pass an associative array to the value field::
 
         $data = [
-            'name'	=> 'John Doe',
-            'email'	=> 'john@example.com',
-            'url'	=> 'http://example.com'
+            'name'  => 'John Doe',
+            'email' => 'john@example.com',
+            'url'   => 'http://example.com'
         ];
 
         echo form_hidden('my_array', $data);
@@ -188,11 +189,11 @@ The following functions are available:
     If you want to create hidden input fields with extra attributes::
 
         $data = [
-            'type'	=> 'hidden',
-            'name'	=> 'email',
-            'id'	=> 'hiddenemail',
-            'value'	=> 'john@example.com',
-            'class'	=> 'hiddenemail'
+            'type'  => 'hidden',
+            'name'  => 'email',
+            'id'    => 'hiddenemail',
+            'value' => 'john@example.com',
+            'class' => 'hiddenemail'
         ];
 
         echo form_input($data);
@@ -605,17 +606,17 @@ The following functions are available:
 .. php:function:: set_value($field[, $default = ''[, $html_escape = TRUE]])
 
     :param	string	$field: Field name
-        :param	string	$default: Default value
-        :param  bool	$html_escape: Whether to turn off HTML escaping of the value
-        :returns:	Field value
-        :rtype:	string
+    :param	string	$default: Default value
+    :param  bool	$html_escape: Whether to turn off HTML escaping of the value
+    :returns:	Field value
+    :rtype:	string
 
-        Permits you to set the value of an input form or textarea. You must
-        supply the field name via the first parameter of the function. The
-        second (optional) parameter allows you to set a default value for the
-        form. The third (optional) parameter allows you to turn off HTML escaping
-        of the value, in case you need to use this function in combination with
-        i.e., :php:func:`form_input()` and avoid double-escaping.
+    Permits you to set the value of an input form or textarea. You must
+    supply the field name via the first parameter of the function. The
+    second (optional) parameter allows you to set a default value for the
+    form. The third (optional) parameter allows you to turn off HTML escaping
+    of the value, in case you need to use this function in combination with
+    i.e., :php:func:`form_input()` and avoid double-escaping.
 
     Example::
 
@@ -649,18 +650,18 @@ The following functions are available:
 .. php:function:: set_checkbox($field[, $value = ''[, $default = FALSE]])
 
     :param	string	$field: Field name
-        :param	string	$value: Value to check for
-        :param	string	$default: Whether the value is also a default one
-        :returns:	'checked' attribute or an empty string
-        :rtype:	string
+    :param	string	$value: Value to check for
+    :param	string	$default: Whether the value is also a default one
+    :returns:	'checked' attribute or an empty string
+    :rtype:	string
 
-        Permits you to display a checkbox in the state it was submitted.
+    Permits you to display a checkbox in the state it was submitted.
 
-        The first parameter must contain the name of the checkbox, the second
-        parameter must contain its value, and the third (optional) parameter
-        lets you set an item as the default (use boolean TRUE/FALSE).
+    The first parameter must contain the name of the checkbox, the second
+    parameter must contain its value, and the third (optional) parameter
+    lets you set an item as the default (use boolean TRUE/FALSE).
 
-        Example::
+    Example::
 
         <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?> />
         <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?> />
@@ -668,13 +669,13 @@ The following functions are available:
 .. php:function:: set_radio($field[, $value = ''[, $default = FALSE]])
 
     :param	string	$field: Field name
-        :param	string	$value: Value to check for
-        :param	string	$default: Whether the value is also a default one
-        :returns:	'checked' attribute or an empty string
-        :rtype:	string
+    :param	string	$value: Value to check for
+    :param	string	$default: Whether the value is also a default one
+    :returns:	'checked' attribute or an empty string
+    :rtype:	string
 
-        Permits you to display radio buttons in the state they were submitted.
-        This function is identical to the :php:func:`set_checkbox()` function above.
+    Permits you to display radio buttons in the state they were submitted.
+    This function is identical to the :php:func:`set_checkbox()` function above.
 
     Example::
 
