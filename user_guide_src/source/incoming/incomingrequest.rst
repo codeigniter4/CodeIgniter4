@@ -141,6 +141,45 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
+If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
+the JSON stream. Using ``getVar()`` in this way will always return an object.
+
+**Get Specific Data from JSON**
+
+You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
+data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
+
+::
+
+    //With a request body of:
+    {
+        "foo": "bar",
+        "fizz": {
+            "buzz": "baz"
+        }
+    }
+    $data = $request->getVar('foo');
+    //$data = "bar"
+
+    $data = $request->getVar('fizz.buzz');
+    //$data = "baz"
+
+
+If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
+true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
+correct ``CONTENT_TYPE`` header.
+
+::
+
+    //With the same request as above
+    $data = $request->getJsonVar('fizz');
+    //$data->buzz = "baz"
+
+    $data = $request->getJsonVar('fizz', true);
+    //$data = ["buzz" => "baz"]
+
+.. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
+
 **Retrieving Raw data (PUT, PATCH, DELETE)**
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``::

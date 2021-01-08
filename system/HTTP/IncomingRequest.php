@@ -288,7 +288,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch an item from the $_REQUEST object. This is the simplest way
+	 * Fetch an item from the $_REQUEST object or a JSON input stream. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
@@ -300,6 +300,26 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
+		if ($this->isJSON())
+		{
+			if (is_null($index))
+			{
+				return $this->getJSON();
+			}
+
+			if (is_array($index))
+			{
+				$output = [];
+				foreach ($index as $key)
+				{
+					$output[$key] = $this->getJsonVar($key);
+				}
+				return $output;
+			}
+
+			return $this->getJsonVar($index);
+		}
+
 		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
@@ -323,6 +343,25 @@ class IncomingRequest extends Request
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
 		return json_decode($this->body, $assoc, $depth, $options);
+	}
+
+	/**
+	 * Get a specific variable from a JSON input stream
+	 *
+	 * @param  string  $index The variable that you want which can use dot syntax for getting specific values.
+	 * @param  boolean $assoc If TRUE return the result as an associative array.
+	 * @return array|mixed|null|object
+	 */
+	public function getJsonVar(string $index, bool $assoc = false)
+	{
+		helper('array');
+
+		$data = dot_array_search($index, $this->getJSON(true));
+		if (is_array($data) && ! $assoc)
+		{
+			return json_decode(json_encode($data));
+		}
+		return $data;
 	}
 
 	//--------------------------------------------------------------------
