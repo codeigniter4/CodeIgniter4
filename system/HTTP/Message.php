@@ -150,6 +150,6 @@ class Message implements MessageInterface
 		$header = $this->header('Content-Type')->getValue();
 		$parts  = explode(';', $header);
 
-		return in_array('application/json', $parts);
+		return in_array('application/json', $parts, true);
 	}
 }
