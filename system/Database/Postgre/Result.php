@@ -147,16 +147,12 @@ class Result extends BaseResult
 	 * Returns the number of rows in the resultID (i.e., PostgreSQL query result resource)
 	 *
 	 * @return integer The number of rows in the query result
-	 * @throws DatabaseException if an error is encountered retrieving the row count
 	 */
 	public function getNumRows() : int
 	{
-		$retval = pg_num_rows($this->resultID);
-		if ($retval < 0)
-		{
-			throw new DatabaseException('An error was encountered retrieving the row count');
-		}
-		return intval($retval);
+		return is_int($this->numRows)
+		? $this->numRows
+		: $this->numRows = pg_num_rows($this->resultID);
 	}
 
 	//--------------------------------------------------------------------

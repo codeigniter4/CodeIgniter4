@@ -61,6 +61,13 @@ abstract class BaseResult implements ResultInterface
 	public $currentRow = 0;
 
 	/**
+	 * the number of records in the query result
+	 *
+	 * @var integer|null
+	 */
+	protected $numRows = null;
+
+	/**
 	 * Row data
 	 *
 	 * @var array|null
@@ -524,6 +531,31 @@ abstract class BaseResult implements ResultInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Number of rows in the result set; checks for previous count, falls
+	 * back on counting resultArray or resultObject, finally fetching resultArray
+	 * if nothing was previously fetched
+	 *
+	 * @return integer
+	 */
+	public function getNumRows() : int
+	{
+		if (is_int($this->numRows))
+		{
+			return $this->numRows;
+		}
+		elseif (count($this->resultArray) > 0)
+		{
+			return $this->numRows = count($this->resultArray);
+		}
+		elseif (count($this->resultObject) > 0)
+		{
+			return $this->numRows = count($this->resultObject);
+		}
+
+		return $this->numRows = count($this->getResultArray());
+	}
 
 	/**
 	 * Gets the number of fields in the result set.

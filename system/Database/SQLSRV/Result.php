@@ -188,16 +188,12 @@ class Result extends BaseResult
 	 * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
 	 *
 	 * @return integer Returns the number of rows retrieved on success
-	 * @throws DatabaseException if an error is encountered attempting to retrieve the count (eg if the prior select query failed)
 	 */
 	public function getNumRows() : int
 	{
-		$retval = sqlsrv_num_rows($this->resultID);
-		if ($retval === false)
-		{
-			throw new DatabaseException('Error retrieving row count');
-		}
-		return intval($retval);
+		return is_int($this->numRows)
+		? $this->numRows
+		: $this->numRows = sqlsrv_num_rows($this->resultID);
 	}
 
 	//--------------------------------------------------------------------

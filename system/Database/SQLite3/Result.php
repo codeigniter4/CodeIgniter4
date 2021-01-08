@@ -23,14 +23,6 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-
-	/**
-	 * SQLite3 doesn't have a numRows method or property so we store brute-force counting here
-	 *
-	 * @var null|integer
-	 */
-	protected $numRows;
-
 	/**
 	 * Gets the number of fields in the result set.
 	 *
@@ -107,7 +99,6 @@ class Result extends BaseResult
 		{
 			$this->resultID->finalize();
 			$this->resultID = false;
-			$this->numRows  = null;
 		}
 	}
 
@@ -187,35 +178,6 @@ class Result extends BaseResult
 			$classSet($key, $row[$key]);
 		}
 		return $classObj;
-	}
-
-	//--------------------------------------------------------------------
-	/**
-	 * SQLite3Result class does not have a numRows function, so we have to brute force count results
-	 * NOTE: brute force counting the results also resets the results, which might cause problems.
-	 *
-	 * @throws DatabaseException
-	 */
-	public function getNumRows() : int
-	{
-		if (! $this->resultID)
-		{
-			throw new DatabaseException(__METHOD__ . ' cannot run if there is no query result');
-		}
-		if (is_null($this->numRows))
-		{
-			// the rows have not been counted yet, count by brute force
-			$nrows = 0;
-			$this->resultID->reset();
-			while ($this->resultID->fetchArray(SQLITE3_NUM)) // SQLITE3_NUM should be slightly more efficient
-			{
-				$nrows++;
-			}
-			$this->resultID->reset();
-			$this->numRows = $nrows;
-		}
-
-		return $this->numRows;
 	}
 
 	//--------------------------------------------------------------------

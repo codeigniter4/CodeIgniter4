@@ -183,7 +183,9 @@ class Result extends BaseResult
 	 */
 	public function getNumRows() : int
 	{
-		return intval($this->resultID->num_rows);
+		return is_int($this->numRows)
+		? $this->numRows
+		: $this->numRows = $this->resultID->num_rows;
 	}
 
 	//--------------------------------------------------------------------
