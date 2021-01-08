@@ -40,7 +40,7 @@ If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
 
 If you don't need or want phpunit installed, and all of its composer
-dependencies, then add the "--no-dev" option to the end of the above
+dependencies, then add the ``--no-dev`` option to the end of the above
 command line. That will result in only the framework, and the three
 trusted dependencies that we bundle, being composer-installed.
 
@@ -57,15 +57,15 @@ Whenever there is a new release, then from the command line in your project root
 
     composer update
 
-If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with `--prefer-source`:
+If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with ``--prefer-source``::
 
     composer update codeigniter4/framework --prefer-source
 
-If `--prefer-source` doesn't automatically update to pull latest framework source structure, you can remove first:
+If ``--prefer-source`` doesn't automatically update to pull latest framework source structure, you can remove first::
 
     rm -rf vendor/codeigniter4/framework && composer update codeigniter4/framework --prefer-source
 
-If you used the "--no-dev" option when you created the project, it
+If you used the ``--no-dev`` option when you created the project, it
 would be appropriate to do so here too, i.e., ``composer update --no-dev``.
 
 Read the upgrade instructions, and check designated  ``app/Config`` folders for affected changes.
@@ -87,7 +87,7 @@ Folders in your project after set up:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/framework/app & public (compare with yours after updating when using `--prefer-source`)
+- vendor/codeigniter4/framework/app & public (compare with yours after updating when using ``--prefer-source``)
 
 Latest Dev
 -------------------------------------------------------
@@ -128,7 +128,7 @@ In your project root::
     composer require codeigniter4/framework --prefer-source
 
 As with the earlier two composer install methods, you can omit installing
-phpunit and its dependencies by adding the "--no-dev" argument to the "composer require" command.
+phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
 
 Set Up
 -------------------------------------------------------
@@ -167,7 +167,7 @@ Structure
 
 Folders in your project after set up:
 
-- app, public, writable (when using `--prefer-source`)
+- app, public, writable (when using ``--prefer-source``)
 - vendor/codeigniter4/framework/system
 
 
