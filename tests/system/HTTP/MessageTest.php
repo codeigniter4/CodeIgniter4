@@ -349,4 +349,10 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($this->message->isJSON());
 	}
 
+	public function testIsJsonWorksWithExtendedContentType()
+	{
+		$this->message->setHeader('Content-Type', 'application/json;charset=UTF-8');
+		$this->assertTrue($this->message->isJSON());
+	}
+
 }
