@@ -144,14 +144,21 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 				'name'     => 'fileA.txt',
 				'type'     => 'text/plain',
 				'size'     => 124,
-				'tmp_name' => '/fileA.txt',
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileA.txt',
 				'error'    => 0,
 			],
 			'userfile2' => [
 				'name'     => 'fileB.txt',
 				'type'     => 'text/csv',
 				'size'     => 248,
-				'tmp_name' => '/fileB.txt',
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileB.txt',
+				'error'    => 0,
+			],
+			'userfile3' => [
+				'name'     => 'fileC.csv',
+				'type'     => 'text/csv',
+				'size'     => 248,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileC.csv',
 				'error'    => 0,
 			],
 		];
@@ -162,9 +169,15 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
 
+		// Test the client mime type if finfo_open is not available
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('csv', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
+
+		$file = $collection->getFile('userfile3');
+		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('csv', $file->guessExtension());
+		
 	}
 
 	//--------------------------------------------------------------------
