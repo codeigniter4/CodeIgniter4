@@ -545,11 +545,11 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->numRows;
 		}
-		elseif (count($this->resultArray) > 0)
+		if ($this->resultArray !== [])
 		{
 			return $this->numRows = count($this->resultArray);
 		}
-		elseif (count($this->resultObject) > 0)
+		elseif ($this->resultObject !== [])
 		{
 			return $this->numRows = count($this->resultObject);
 		}
