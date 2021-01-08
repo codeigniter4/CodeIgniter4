@@ -381,7 +381,7 @@ a new CodeIgniter4 based project.</p>
 <p>If you omit the “project-root” argument, the command will create an
 “appstarter” folder, which can be renamed as appropriate.</p>
 <p>If you don’t need or want phpunit installed, and all of its composer
-dependencies, then add the “–no-dev” option to the end of the above
+dependencies, then add the <code class="docutils literal notranslate"><span class="pre">--no-dev</span></code> option to the end of the above
 command line. That will result in only the framework, and the three
 trusted dependencies that we bundle, being composer-installed.</p>
 <p>A sample such installation command, using the default project-root “appstarter”:</p>
@@ -396,15 +396,15 @@ trusted dependencies that we bundle, being composer-installed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
-<p>If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with <cite>–prefer-source</cite>:</p>
-<blockquote>
-<div><p>composer update codeigniter4/framework –prefer-source</p>
-</div></blockquote>
-<p>If <cite>–prefer-source</cite> doesn’t automatically update to pull latest framework source structure, you can remove first:</p>
-<blockquote>
-<div><p>rm -rf vendor/codeigniter4/framework &amp;&amp; composer update codeigniter4/framework –prefer-source</p>
-</div></blockquote>
-<p>If you used the “–no-dev” option when you created the project, it
+<p>If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code> doesn’t automatically update to pull latest framework source structure, you can remove first:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="nx">vendor</span><span class="o">/</span><span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">&amp;&amp;</span> <span class="nx">composer</span> <span class="nx">update</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
+</pre></div>
+</div>
+<p>If you used the <code class="docutils literal notranslate"><span class="pre">--no-dev</span></code> option when you created the project, it
 would be appropriate to do so here too, i.e., <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code>.</p>
 <p>Read the upgrade instructions, and check designated  <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> folders for affected changes.</p>
 </div>
@@ -422,7 +422,7 @@ would be appropriate to do so here too, i.e., <code class="docutils literal notr
 <ul class="simple">
 <li><p>app, public, tests, writable</p></li>
 <li><p>vendor/codeigniter4/framework/system</p></li>
-<li><p>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating when using <cite>–prefer-source</cite>)</p></li>
+<li><p>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating when using <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code>)</p></li>
 </ul>
 </div>
 <div class="section" id="latest-dev">
@@ -459,7 +459,7 @@ will be your document root.</p>
 </pre></div>
 </div>
 <p>As with the earlier two composer install methods, you can omit installing
-phpunit and its dependencies by adding the “–no-dev” argument to the “composer require” command.</p>
+phpunit and its dependencies by adding the <code class="docutils literal notranslate"><span class="pre">--no-dev</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">require</span></code> command.</p>
 <div class="section" id="set-up">
 <h3>Set Up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h3>
 <p>Copy the <code class="docutils literal notranslate"><span class="pre">app</span></code>, <code class="docutils literal notranslate"><span class="pre">public</span></code>, and <code class="docutils literal notranslate"><span class="pre">writable</span></code> folders from <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code>
@@ -490,7 +490,7 @@ to your project root</p>
 <h3>Structure<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
-<li><p>app, public, writable (when using <cite>–prefer-source</cite>)</p></li>
+<li><p>app, public, writable (when using <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code>)</p></li>
 <li><p>vendor/codeigniter4/framework/system</p></li>
 </ul>
 </div>
@@ -523,7 +523,7 @@ they can be added to your project in a similar fashion.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 07, 2021.
+        Last updated on Jan 08, 2021.
       </span>
 
     </p>
