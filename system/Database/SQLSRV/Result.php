@@ -192,8 +192,8 @@ class Result extends BaseResult
 	public function getNumRows() : int
 	{
 		return is_int($this->numRows)
-		? $this->numRows
-		: $this->numRows = sqlsrv_num_rows($this->resultID);
+			? $this->numRows
+			: $this->numRows = sqlsrv_num_rows($this->resultID);
 	}
 
 	//--------------------------------------------------------------------

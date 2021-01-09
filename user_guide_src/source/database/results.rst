@@ -292,11 +292,9 @@ the method using your query result object::
 
 	echo $query->getNumRows();
 
-.. note:: PHP's SQLite3 module does not support this type of function and will
-throw an Exception. Use Builder->countAllResults() instead or return your results
-into an array and count its elements. For other DBMS systems, this number may
-return different values depending on whether you are buffering results or not.
-Refer to the documentation of your chosen DBMS for more detail.
+.. note:: Because PHP's SQLite3 driver lacks an efficient method returning a record
+count, CodeIgniter will fetch and buffer the query result records internally and
+return a count of the resulting record array, which can be inefficient.
 
 **freeResult()**
 

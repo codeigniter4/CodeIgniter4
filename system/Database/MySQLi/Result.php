@@ -179,13 +179,13 @@ class Result extends BaseResult
 	/**
 	 * Returns the number of rows in the resultID (i.e., mysqli_result object)
 	 *
-	 * @return integer number of rows in a query result; if the number of rows is greater than PHP_INT_MAX, this will cast the number as a string which will yield PHP_INT_MAX
+	 * @return integer number of rows in a query result
 	 */
 	public function getNumRows() : int
 	{
 		return is_int($this->numRows)
-		? $this->numRows
-		: $this->numRows = $this->resultID->num_rows;
+			? $this->numRows
+			: $this->numRows = $this->resultID->num_rows;
 	}
 
 	//--------------------------------------------------------------------
