@@ -165,19 +165,23 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$collection = new FileCollection();
 
+		// client extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile1');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
 
-		// Test the client mime type if finfo_open is not available
+		// proposed extension matches finfo_open mime type (text/plain)
+		// but not client mime type
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('txt', $file->getExtension());
 		$this->assertEquals('csv', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
 
+		// proposed extension does not match finfo_open mime type (text/plain)
+		// but can be resolved by reverse searching
 		$file = $collection->getFile('userfile3');
 		$this->assertInstanceOf(UploadedFile::class, $file);
-		$this->assertEquals('csv', $file->guessExtension());
-		
+		$this->assertEquals('csv', $file->getExtension());
 	}
 
 	//--------------------------------------------------------------------
