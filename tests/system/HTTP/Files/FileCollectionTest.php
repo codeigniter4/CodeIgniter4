@@ -179,7 +179,7 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$collection = new FileCollection();
 
-		// client extension matches finfo_open mime type (text/plain)
+		// proposed extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile1');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
@@ -197,12 +197,13 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('csv', $file->getExtension());
 		
-		// client extension matches finfo_open mime type (application/zip)
+		// proposed extension matches finfo_open mime type (application/zip)
 		$file = $collection->getFile('userfile4');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('zip', $file->getExtension());
 
-		// client extension matches client mime type, but not finfo_open mime type (application/zip)
+		// proposed extension matches client mime type, but not finfo_open mime type (application/zip)
+		// this is a zip file (userFile4) but hat been renamed to 'rar'
 		$file = $collection->getFile('userfile5');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertNotEquals('rar', $file->getExtension());
