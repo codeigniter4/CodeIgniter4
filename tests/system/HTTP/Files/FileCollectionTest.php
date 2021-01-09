@@ -161,6 +161,20 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileC.csv',
 				'error'    => 0,
 			],
+			'userfile4' => [
+				'name'     => 'fileD.zip',
+				'type'     => 'application/zip',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileD.zip',
+				'error'    => 0,
+			],
+			'userfile5' => [
+				'name'     => 'fileE.zip.rar',
+				'type'     => 'application/rar',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileE.zip.rar',
+				'error'    => 0,
+			],
 		];
 
 		$collection = new FileCollection();
@@ -175,13 +189,24 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
-		$this->assertEquals('csv', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
+		$this->assertNotEquals('txt', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
 
 		// proposed extension does not match finfo_open mime type (text/plain)
 		// but can be resolved by reverse searching
 		$file = $collection->getFile('userfile3');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('csv', $file->getExtension());
+		
+		// client extension matches finfo_open mime type (application/zip)
+		$file = $collection->getFile('userfile4');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('zip', $file->getExtension());
+
+		// client extension matches client mime type, but not finfo_open mime type (application/zip)
+		$file = $collection->getFile('userfile5');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertNotEquals('rar', $file->getExtension());
+		$this->assertEquals('rar', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
 	}
 
 	//--------------------------------------------------------------------
