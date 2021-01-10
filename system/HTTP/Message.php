@@ -142,7 +142,14 @@ class Message implements MessageInterface
 	 */
 	public function isJSON()
 	{
-		return $this->hasHeader('Content-Type')
-			&& $this->header('Content-Type')->getValue() === 'application/json';
+		if (! $this->hasHeader('Content-Type'))
+		{
+			return false;
+		}
+
+		$header = $this->header('Content-Type')->getValue();
+		$parts  = explode(';', $header);
+
+		return in_array('application/json', $parts, true);
 	}
 }
