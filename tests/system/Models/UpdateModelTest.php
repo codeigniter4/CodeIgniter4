@@ -286,4 +286,24 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->createModel(WithoutAutoIncrementModel::class)->update($key, $update);
 		$this->seeInDatabase('without_auto_increment', ['key' => $key, 'value' => $update['value']]);
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4087
+	 */
+	public function testUpdateWithSetAndEscape(): void
+	{
+		$userData = [
+			'name' => 'Scott',
+		];
+
+		$this->createModel(UserModel::class);
+
+		$this->assertTrue($this->model->set('country', '2+2', false)->set('email', '1+1')->update(1, $userData));
+
+		$this->seeInDatabase('user', [
+			'name' => 'Scott',
+			'country' => 4,
+			'email' => '1+1',
+		]);
+	}
 }
