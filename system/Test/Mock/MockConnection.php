@@ -54,7 +54,7 @@ class MockConnection extends BaseConnection
 	 */
 	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
 	{
-		$queryClass = str_replace('Connection', 'Query', get_class($this));
+		$queryClass = str_replace('Connection', 'Query', static::class);
 
 		$query = new $queryClass($this);
 
