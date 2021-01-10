@@ -302,7 +302,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
 		$this->seeInDatabase('user', [
 			'name' => 'Scott',
-			'country' => 4,
+			'country' => '4',
 			'email' => '1+1',
 		]);
 	}
