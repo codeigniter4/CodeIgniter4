@@ -377,13 +377,12 @@ abstract class BaseModel
 	 * Updates a single record in the database.
 	 * This methods works only with dbCalls
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|null                $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|null                $data Data
 	 *
 	 * @return boolean
 	 */
-	abstract protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool;
+	abstract protected function doUpdate($id = null, $data = null): bool;
 
 	/**
 	 * Compiles an update and runs the query
