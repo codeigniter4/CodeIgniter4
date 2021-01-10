@@ -321,13 +321,12 @@ class Model extends BaseModel
 	 * Updates a single record in $this->table.
 	 * This methods works only with dbCalls
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|null                $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|null                $data Data
 	 *
 	 * @return boolean
 	 */
-	protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool
+	protected function doUpdate($id = null, $data = null): bool
 	{
 		$escape       = $this->escape;
 		$this->escape = null;
