@@ -61,7 +61,7 @@ abstract class BaseResult implements ResultInterface
 	public $currentRow = 0;
 
 	/**
-	 * the number of records in the query result
+	 * The number of records in the query result
 	 *
 	 * @var integer|null
 	 */
@@ -539,7 +539,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return integer
 	 */
-	public function getNumRows() : int
+	public function getNumRows(): int
 	{
 		if (is_int($this->numRows))
 		{

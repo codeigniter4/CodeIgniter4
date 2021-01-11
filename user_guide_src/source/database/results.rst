@@ -292,8 +292,8 @@ the method using your query result object::
 
 	echo $query->getNumRows();
 
-.. note:: Because PHP's SQLite3 driver lacks an efficient method returning a record
-	count, CodeIgniter will fetch and buffer the query result records internally and
+.. note:: Because SQLite3 lacks an efficient method returning a record count,
+	CodeIgniter will fetch and buffer the query result records internally and
 	return a count of the resulting record array, which can be inefficient.
 
 **freeResult()**

@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
@@ -189,7 +188,7 @@ class Result extends BaseResult
 	 *
 	 * @return integer Returns the number of rows retrieved on success
 	 */
-	public function getNumRows() : int
+	public function getNumRows(): int
 	{
 		if (! is_int($this->numRows))
 		{

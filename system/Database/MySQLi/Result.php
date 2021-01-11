@@ -181,7 +181,7 @@ class Result extends BaseResult
 	 *
 	 * @return integer number of rows in a query result
 	 */
-	public function getNumRows() : int
+	public function getNumRows(): int
 	{
 		if (! is_int($this->numRows))
 		{

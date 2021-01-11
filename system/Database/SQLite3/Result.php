@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
-use Exception;
 use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;

@@ -11,11 +11,9 @@
 
 namespace CodeIgniter\Database\Postgre;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
-use CodeIgniter\Database\Exceptions\DataException;
 
 /**
  * Result for Postgre
@@ -148,7 +146,7 @@ class Result extends BaseResult
 	 *
 	 * @return integer The number of rows in the query result
 	 */
-	public function getNumRows() : int
+	public function getNumRows(): int
 	{
 		if (! is_int($this->numRows))
 		{
