@@ -44,7 +44,7 @@ class FormatRules
 			return true;
 		}
 
-		return (bool) preg_match('/^[A-Z ]+$/i', $value);
+		return (bool) preg_match('/\A[A-Z ]+\z/i', $value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ class FormatRules
 	 */
 	public function alpha_dash(?string $str = null): bool
 	{
-			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
+			return (bool) preg_match('/\A[a-z0-9_-]+\z/i', $str);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class FormatRules
 	 */
 	public function alpha_numeric_punct($str)
 	{
-		return (bool) preg_match('/^[A-Z0-9 ~!#$%\&\*\-_+=|:.]+$/i', $str);
+		return (bool) preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str);
 	}
 
 	/**
@@ -96,7 +96,7 @@ class FormatRules
 	 */
 	public function alpha_numeric_space(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+		return (bool) preg_match('/\A[A-Z0-9 ]+\z/i', $str);
 	}
 
 	/**
@@ -123,7 +123,7 @@ class FormatRules
 	 */
 	public function decimal(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[-+]?[0-9]{0,}\.?[0-9]+$/', $str);
+		return (bool) preg_match('/\A[-+]?[0-9]{0,}\.?[0-9]+\z/', $str);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class FormatRules
 	 */
 	public function integer(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
+		return (bool) preg_match('/\A[\-+]?[0-9]+\z/', $str);
 	}
 
 	/**
@@ -181,7 +181,7 @@ class FormatRules
 	 */
 	public function numeric(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
+		return (bool) preg_match('/\A[\-+]?[0-9]*\.?[0-9]+\z/', $str);
 	}
 
 	/**
