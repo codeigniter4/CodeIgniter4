@@ -272,11 +272,11 @@ class View implements RendererInterface
 	 * data that has already been set.
 	 * Cache does not apply, because there is no "key".
 	 *
-	 * @param string  $view     The view contents
-	 * @param array   $options  Reserved for 3rd-party uses since
-	 *                          it might be needed to pass additional info
-	 *                          to other template engines.
-	 * @param boolean $saveData If true, will save data for use with any other calls,
+	 * @param string       $view     The view contents
+	 * @param array        $options  Reserved for 3rd-party uses since
+	 *                               it might be needed to pass additional info
+	 *                               to other template engines.
+	 * @param boolean|null $saveData If true, will save data for use with any other calls,
 	 *                          if false, will clean the data after displaying the view,
 	 *                             if not specified, use the config setting.
 	 *
