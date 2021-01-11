@@ -58,7 +58,7 @@ The following functions are available:
     :returns:	An HTML form opening tag
     :rtype:	string
 
-    Creates an opening form tag with a base URL **built from your config preferences**.
+    Creates an opening form tag with a site URL **built from your config preferences**.
     It will optionally let you add form attributes and hidden input fields, and
     will always add the `accept-charset` attribute based on the charset value in your
     config file.
@@ -70,7 +70,7 @@ The following functions are available:
 
         echo form_open('email/send');
 
-    The above example would create a form that points to your base URL plus the
+    The above example would create a form that points to your site URL plus the
     "email/send" URI segments, like this::
 
         <form action="http://example.com/index.php/email/send" method="post" accept-charset="utf-8">
@@ -79,7 +79,7 @@ The following functions are available:
 
         echo form_open('{locale}/email/send');
 
-    The above example would create a form that points to your base URL plus the current request locale with
+    The above example would create a form that points to your site URL plus the current request locale with
     "email/send" URI segments, like this::
 
         <form action="http://example.com/index.php/en/email/send" method="post" accept-charset="utf-8">
