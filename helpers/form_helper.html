@@ -412,7 +412,7 @@ form elements, which you would pass as strings.</p>
 <dd class="field-odd"><p>string</p>
 </dd>
 </dl>
-<p>Creates an opening form tag with a base URL <strong>built from your config preferences</strong>.
+<p>Creates an opening form tag with a site URL <strong>built from your config preferences</strong>.
 It will optionally let you add form attributes and hidden input fields, and
 will always add the <cite>accept-charset</cite> attribute based on the charset value in your
 config file.</p>
@@ -422,7 +422,7 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would create a form that points to your base URL plus the
+<p>The above example would create a form that points to your site URL plus the
 “email/send” URI segments, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
 </pre></div>
@@ -431,7 +431,7 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;{locale}/email/send&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would create a form that points to your base URL plus the current request locale with
+<p>The above example would create a form that points to your site URL plus the current request locale with
 “email/send” URI segments, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/en/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
 </pre></div>
@@ -1295,7 +1295,7 @@ class instead of the generic helper function.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 08, 2021.
+        Last updated on Jan 11, 2021.
       </span>
 
     </p>
