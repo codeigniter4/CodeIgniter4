@@ -27,8 +27,8 @@ interface RendererInterface
 	 *                               it might be needed to pass additional info
 	 *                               to other template engines.
 	 * @param boolean|null $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 *                               if false, will clean the data after displaying the view,
+	 *                               if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
@@ -45,8 +45,8 @@ interface RendererInterface
 	 *                               it might be needed to pass additional info
 	 *                               to other template engines.
 	 * @param boolean|null $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 *                               if false, will clean the data after displaying the view,
+	 *                               if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
