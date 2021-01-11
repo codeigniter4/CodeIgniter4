@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use CodeIgniter\Test\Mock\MockCookieConfig;
 use CodeIgniter\Test\Mock\MockSecurityConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 
@@ -24,8 +25,6 @@ class SecurityTest extends CIUnitTestCase
 		$_COOKIE = [];
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBasicConfigIsSaved()
 	{
 		$security = new Security(new MockSecurityConfig());
@@ -36,8 +35,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->assertEquals('csrf_test_name', $security->getTokenName());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHashIsReadFromCookie()
 	{
 		$_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -46,8 +43,6 @@ class SecurityTest extends CIUnitTestCase
 
 		$this->assertEquals('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifySetsCookieWhenNotPOST()
 	{
@@ -59,8 +54,6 @@ class SecurityTest extends CIUnitTestCase
 
 		$this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getHash());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
 	{
@@ -74,8 +67,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->expectException('CodeIgniter\Security\Exceptions\SecurityException');
 		$security->verify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyPostReturnsSelfOnMatch()
 	{
@@ -93,8 +84,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->assertTrue(count($_POST) === 1);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockSecurityConfig());
@@ -108,8 +97,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->expectException('CodeIgniter\Security\Exceptions\SecurityException');
 		$security->verify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyHeaderReturnsSelfOnMatch()
 	{
@@ -128,8 +115,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->assertTrue(count($_POST) === 1);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockSecurityConfig());
@@ -143,8 +128,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->expectException('CodeIgniter\Security\Exceptions\SecurityException');
 		$security->verify($request);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCSRFVerifyJsonReturnsSelfOnMatch()
 	{
@@ -162,8 +145,6 @@ class SecurityTest extends CIUnitTestCase
 		$this->assertTrue($request->getBody() === '{"foo":"bar"}');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSanitizeFilename()
 	{
 		$security = new MockSecurity(new MockSecurityConfig());
@@ -171,5 +152,16 @@ class SecurityTest extends CIUnitTestCase
 		$filename = './<!--foo-->';
 
 		$this->assertEquals('foo', $security->sanitizeFilename($filename));
+	}
+
+	public function testGetters(): void
+	{
+		$security = new MockSecurity(new MockSecurityConfig());
+
+		$this->assertIsString($security->getHash());
+		$this->assertIsString($security->getTokenName());
+		$this->assertIsString($security->getHeaderName());
+		$this->assertIsString($security->getCookieName());
+		$this->assertIsBool($security->shouldRedirect());
 	}
 }

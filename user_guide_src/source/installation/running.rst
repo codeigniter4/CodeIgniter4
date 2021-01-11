@@ -31,7 +31,7 @@ By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "development".
 
-.. note:: If you will be running your site using a web server (e.g. Apache or Nginx),
+.. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside
     your project, so that it is writable by the user or account used by your
     web server.
@@ -86,7 +86,7 @@ The “mod_rewrite” module enables URLs without “index.php” in them, and i
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, eg. ``apache2/conf/httpd.conf``::
+configuration file, e.g., ``apache2/conf/httpd.conf``::
 
     LoadModule rewrite_module modules/mod_rewrite.so
 
@@ -106,7 +106,7 @@ We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, eg. ``apache2/conf/httpd.conf``::
+configuration file, e.g., ``apache2/conf/httpd.conf``::
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
@@ -117,7 +117,7 @@ Add a line to the file. This could be "myproject.local" or "myproject.test", for
     127.0.0.1 myproject.local
 
 Add a <VirtualHost> element for your webapp inside the virtual hosting configuration,
-eg. ``apache2/conf/extra/httpd-vhost.conf``::
+e.g., ``apache2/conf/extra/httpd-vhost.conf``::
 
     <VirtualHost *:80>
         DocumentRoot "/opt/lamp7.2/apache2/htdocs/myproject/public"
@@ -127,8 +127,7 @@ eg. ``apache2/conf/extra/httpd-vhost.conf``::
     </VirtualHost>
 
 If your project folder is not a subfolder of the Apache document root, then your
-<VirtualHost> element may need a nested <Directory> element to grant the web s
-erver access to the files.
+<VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
 
 Testing
 -------------------------------------------------------

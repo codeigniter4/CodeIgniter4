@@ -6,8 +6,8 @@ CodeIgniter4 now comes equipped with generators to ease the creation of stock co
 etc. You can also scaffold a complete set of files with just one command.
 
 .. contents::
-	:local:
-	:depth: 2
+    :local:
+    :depth: 2
 
 ************
 Introduction
@@ -16,7 +16,7 @@ Introduction
 All built-in generators reside under the ``Generators`` namespace when listed using ``php spark list``.
 To view the full description and usage information on a particular generator, use the command::
 
-	> php spark help <generator_command>
+    > php spark help <generator_command>
 
 where ``<generator_command>`` will be replaced with the command to check.
 
@@ -35,7 +35,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:command <name> [options]
+    make:command <name> [options]
 
 Argument:
 =========
@@ -58,7 +58,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:controller <name> [options]
+    make:controller <name> [options]
 
 Argument:
 =========
@@ -80,7 +80,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:entity <name> [options]
+    make:entity <name> [options]
 
 Argument:
 =========
@@ -100,7 +100,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:filter <name> [options]
+    make:filter <name> [options]
 
 Argument:
 =========
@@ -120,7 +120,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:model <name> [options]
+    make:model <name> [options]
 
 Argument:
 =========
@@ -143,7 +143,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:seeder <name> [options]
+    make:seeder <name> [options]
 
 Argument:
 =========
@@ -163,7 +163,7 @@ Usage:
 ======
 .. code-block:: none
 
-	make:migration <name> [options]
+    make:migration <name> [options]
 
 Argument:
 =========
@@ -183,7 +183,7 @@ Usage:
 ======
 .. code-block:: none
 
-	session:migration [options]
+    session:migration [options]
 
 Options:
 ========
@@ -193,24 +193,24 @@ Options:
 * ``--force``: Set this flag to overwrite existing files on destination.
 
 .. note:: When running ``php spark help session:migration``, you will see that it has the argument ``name`` listed.
-	This argument is not used as the class name is derived from the table name passed to the ``-t`` option.
+    This argument is not used as the class name is derived from the table name passed to the ``-t`` option.
 
 .. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
-	class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
-	to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This
-	command will create the ``Login`` controller in the ``Controllers/Admin`` subfolder with
-	a namespace of ``App\Controllers\Admin``.
+    class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
+    to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This
+    command will create the ``Login`` controller in the ``Controllers/Admin`` subfolder with
+    a namespace of ``App\Controllers\Admin``.
 
 .. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
-	Should you need to have the generated code elsewhere in your module namespace, make sure to set
-	the ``-n`` option in your command, e.g. ``php spark make:model blog -n Acme\Blog``.
+    Should you need to have the generated code elsewhere in your module namespace, make sure to set
+    the ``-n`` option in your command, e.g., ``php spark make:model blog -n Acme\Blog``.
 
 .. warning:: Make sure when setting the ``-n`` option that the supplied namespace is a valid namespace
-	defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload file.
-	Otherwise, a ``RuntimeException`` will be thrown.
+    defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload file.
+    Otherwise, a ``RuntimeException`` will be thrown.
 
 .. warning:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
-	future releases. Please use ``make:migration`` as replacement.
+    future releases. Please use ``make:migration`` as replacement.
 
 ****************************************
 Scaffolding a Complete Set of Stock Code
@@ -228,7 +228,7 @@ generator command are recognized by the scaffold command.
 
 Running this in your terminal::
 
-	php spark make:scaffold user
+    php spark make:scaffold user
 
 will create the following classes:
 
@@ -249,107 +249,107 @@ which is public and need not be overridden as it is essentially complete.
 
 .. php:class:: CodeIgniter\\CLI\\GeneratorCommand
 
-	.. php:method:: getClassName()
+    .. php:method:: getClassName()
 
-		:rtype: string
+        :rtype: string
 
-		Gets the class name from input. This can be overridden if name is really
-		required by providing a prompt.
+        Gets the class name from input. This can be overridden if name is really
+        required by providing a prompt.
 
-	.. php:method:: sanitizeClassName(string $class)
+    .. php:method:: sanitizeClassName(string $class)
 
-		:param string $class: Class name.
-		:rtype: string
+        :param string $class: Class name.
+        :rtype: string
 
-		Trims input, normalize separators, and ensures all paths are in Pascal case.
+        Trims input, normalize separators, and ensures all paths are in Pascal case.
 
-	.. php:method:: qualifyClassName(string $class)
+    .. php:method:: qualifyClassName(string $class)
 
-		:param string $class: Class name.
-		:rtype: string
+        :param string $class: Class name.
+        :rtype: string
 
-		Parses the class name and checks if it is already fully qualified.
+        Parses the class name and checks if it is already fully qualified.
 
-	.. php:method:: getRootNamespace()
+    .. php:method:: getRootNamespace()
 
-		:rtype: string
+        :rtype: string
 
-		Gets the root namespace from input. Defaults to value of ``APP_NAMESPACE``.
+        Gets the root namespace from input. Defaults to value of ``APP_NAMESPACE``.
 
-	.. php:method:: getNamespacedClass(string $rootNamespace, string $class)
+    .. php:method:: getNamespacedClass(string $rootNamespace, string $class)
 
-		:param string $rootNamespace: The root namespace of the class.
-		:param string $class: Class name
-		:returns: The fully qualified class name
-		:rtype: string
+        :param string $rootNamespace: The root namespace of the class.
+        :param string $class: Class name
+        :returns: The fully qualified class name
+        :rtype: string
 
-		Gets the qualified class name. This should be implemented.
+        Gets the qualified class name. This should be implemented.
 
-	.. php:method:: buildPath(string $class)
+    .. php:method:: buildPath(string $class)
 
-		:param string $class: The fully qualified class name
-		:returns: The absolute path to where the class will be saved.
-		:rtype: string
-		:throws: RuntimeException
+        :param string $class: The fully qualified class name
+        :returns: The absolute path to where the class will be saved.
+        :rtype: string
+        :throws: RuntimeException
 
-		Builds the file path from the class name.
+        Builds the file path from the class name.
 
-	.. php:method:: modifyBasename(string $filename)
+    .. php:method:: modifyBasename(string $filename)
 
-		:param string $filename: The basename of the file path.
-		:returns: A modified basename for the file.
-		:rtype: string
+        :param string $filename: The basename of the file path.
+        :returns: A modified basename for the file.
+        :rtype: string
 
-		Provides last chance for child generators to change the file's basename before saving.
-		This is useful for migration files where the basename has a date component.
+        Provides last chance for child generators to change the file's basename before saving.
+        This is useful for migration files where the basename has a date component.
 
-	.. php:method:: buildClassContents(string $class)
+    .. php:method:: buildClassContents(string $class)
 
-		:param string $class: The fully qualified class name.
-		:rtype: string
+        :param string $class: The fully qualified class name.
+        :rtype: string
 
-		Builds the contents for class being generated, doing all the replacements necessary in the template.
+        Builds the contents for class being generated, doing all the replacements necessary in the template.
 
-	.. php:method:: getTemplate()
+    .. php:method:: getTemplate()
 
-		:rtype: string
+        :rtype: string
 
-		Gets the template for the class being generated. This must be implemented.
+        Gets the template for the class being generated. This must be implemented.
 
-	.. php:method:: getNamespace(string $class)
+    .. php:method:: getNamespace(string $class)
 
-		:param string $class: The fully qualified class name.
-		:rtype: string
+        :param string $class: The fully qualified class name.
+        :rtype: string
 
-		Retrieves the namespace part from the fully qualified class name.
+        Retrieves the namespace part from the fully qualified class name.
 
-	.. php:method:: setReplacements(string $template, string $class)
+    .. php:method:: setReplacements(string $template, string $class)
 
-		:param string $template: The template string to use.
-		:param string $class: The fully qualified class name.
-		:returns: The template string with all annotations replaced.
-		:rtype: string
+        :param string $template: The template string to use.
+        :param string $class: The fully qualified class name.
+        :returns: The template string with all annotations replaced.
+        :rtype: string
 
-		Performs all the necessary replacements.
+        Performs all the necessary replacements.
 
-	.. php:method:: sortImports(string $template)
+    .. php:method:: sortImports(string $template)
 
-		:param string $template: The template file.
-		:returns: The template file with all imports already sorted.
-		:rtype: string
+        :param string $template: The template file.
+        :returns: The template file with all imports already sorted.
+        :rtype: string
 
-		Alphabetically sorts the imports for a given template.
+        Alphabetically sorts the imports for a given template.
 
 .. warning:: Child generators should make sure to implement ``GeneratorCommand``'s two abstract methods:
-	``getNamespacedClass`` and ``getTemplate``, or else you will get a PHP fatal error.
+    ``getNamespacedClass`` and ``getTemplate``, or else you will get a PHP fatal error.
 
 .. note:: ``GeneratorCommand`` has the default argument of ``['name' => 'Class name']``. You can
-	override the description by supplying the name in your ``$arguments`` property, e.g. ``['name' => 'Module class name']``.
+    override the description by supplying the name in your ``$arguments`` property, e.g., ``['name' => 'Module class name']``.
 
 .. note:: ``GeneratorCommand`` has the default options of ``-n`` and ``--force``. Child classes cannot override
-	these two properties as they are crucial in the implementation of the code generation.
+    these two properties as they are crucial in the implementation of the code generation.
 
 .. note:: Generators are default listed under the ``Generators`` namespace because it is the default group
-	name in ``GeneratorCommand``. If you want to have your own generator listed elsewhere under a different
-	namespace, you will just need to provide the ``$group`` property in your child generator,
-	e.g. ``protected $group = 'CodeIgniter';``.
+    name in ``GeneratorCommand``. If you want to have your own generator listed elsewhere under a different
+    namespace, you will just need to provide the ``$group`` property in your child generator,
+    e.g., ``protected $group = 'CodeIgniter';``.

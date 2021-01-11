@@ -25,18 +25,17 @@ parameters:
 		- system/Config/Routes.php
 		- system/Debug/Toolbar/Views/toolbar.tpl.php
 		- system/Images/Handlers/GDHandler.php
+		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
 	ignoreErrors:
 		- '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
 		- '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli|\$schema#'
 		- '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers|\$schema)#'
-		- '#Access to an undefined property CodeIgniter\\HTTP\\Request::\$uri#'
 		- '#Access to protected property CodeIgniter\\Database\\BaseConnection::(\$DBDebug|\$DBPrefix|\$swapPre|\$charset|\$DBCollat|\$database)#'
 		- '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::supportsForeignKeys\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Database\\ConnectionInterface::(tableExists|protectIdentifiers|setAliasedTables|escapeIdentifiers|affectedRows|addTableAlias|getIndexData)\(\)#'
-		- '#Call to an undefined method CodeIgniter\\HTTP\\Request::(getPath|getSegments|getMethod|setLocale|getPost)\(\)#'
 		- '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getRoutesOptions)\(\)#'
 		- '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
 		- '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'

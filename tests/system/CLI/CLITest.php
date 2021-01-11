@@ -435,6 +435,24 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'| 3  | bar + bar + bar |' . PHP_EOL .
 				'+----+-----------------+' . PHP_EOL . PHP_EOL,
 			],
+			// Multibyte letters
+			[
+				[
+					[
+						'id'  => 'ほげ',
+						'foo' => 'bar',
+					],
+				],
+				[
+					'ID',
+					'タイトル',
+				],
+				'+------+----------+' . PHP_EOL .
+				'| ID   | タイトル |' . PHP_EOL .
+				'+------+----------+' . PHP_EOL .
+				'| ほげ | bar      |' . PHP_EOL .
+				'+------+----------+' . PHP_EOL . PHP_EOL,
+			],
 		];
 	}
 

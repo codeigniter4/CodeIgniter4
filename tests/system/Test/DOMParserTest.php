@@ -97,6 +97,19 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($dom->see('<h1>'));
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3984
+	 */
+	public function testSeeHTMLOutsideBodyTag()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><head><title>My Title</title></head><body><h1>Hello World</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->see('My Title', 'title'));
+	}
+
 	public function testSeeFail()
 	{
 		$dom = new DOMParser();

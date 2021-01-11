@@ -2,9 +2,7 @@
 
 namespace Config;
 
-use CodeIgniter\Config\BaseConfig;
-
-class Cookie extends BaseConfig
+class Cookie
 {
 	/**
 	 * --------------------------------------------------------------------------
@@ -16,6 +14,17 @@ class Cookie extends BaseConfig
 	 * @var string
 	 */
 	public $prefix = '';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Cookie Expires
+	 * --------------------------------------------------------------------------
+	 *
+	 * Default expires timestamp for cookie.
+	 *
+	 * @var integer
+	 */
+	public $expires = 0;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -66,11 +75,11 @@ class Cookie extends BaseConfig
 	 * Cookie SameSite
 	 * --------------------------------------------------------------------------
 	 *
-	 * Setting for cookie SameSite.
+	 * Setting for cookie samesite.
 	 *
-	 * Allowed values are: [None - Lax - Strict - ''].
+	 * Allowed values are: [None - Lax - Strict].
 	 *
-	 * Defaults to `Lax` as recommended in this link:
+	 * Default: `Lax` as recommended in this link:
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
 	 * @var string

@@ -15,8 +15,5 @@ use CodeIgniter\Cookie\Cookie;
 
 class MockCookie extends Cookie
 {
-	/**
-	 * Stores all cookies.
-	 */
-	public $cookies = [];
+	
 }

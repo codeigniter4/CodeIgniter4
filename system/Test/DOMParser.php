@@ -218,12 +218,13 @@ class DOMParser
 	/**
 	 * Search the DOM using an XPath expression.
 	 *
-	 * @param  string $search
-	 * @param  string $element
-	 * @param  array  $paths
+	 * @param  string|null $search
+	 * @param  string      $element
+	 * @param  array       $paths
+	 *
 	 * @return DOMNodeList
 	 */
-	protected function doXPath(string $search = null, string $element, array $paths = [])
+	protected function doXPath(?string $search, string $element, array $paths = [])
 	{
 		// Otherwise, grab any elements that match
 		// the selector
@@ -236,19 +237,19 @@ class DOMParser
 		{
 			$path = empty($selector['tag'])
 				? "id(\"{$selector['id']}\")"
-				: "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
+				: "//{$selector['tag']}[@id=\"{$selector['id']}\"]";
 		}
 		// By Class
 		elseif (! empty($selector['class']))
 		{
 			$path = empty($selector['tag'])
 				? "//*[@class=\"{$selector['class']}\"]"
-				: "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
+				: "//{$selector['tag']}[@class=\"{$selector['class']}\"]";
 		}
 		// By tag only
 		elseif (! empty($selector['tag']))
 		{
-			$path = "//body//{$selector['tag']}";
+			$path = "//{$selector['tag']}";
 		}
 
 		if (! empty($selector['attr']))

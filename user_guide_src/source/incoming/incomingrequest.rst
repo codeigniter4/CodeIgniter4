@@ -15,7 +15,9 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -39,6 +41,7 @@ It's preferable, though, to pass the request in as a dependency if the class is 
 the controller, where you can save it as a class property::
 
     <?php
+
     use CodeIgniter\HTTP\RequestInterface;
 
     class SomeClass
@@ -71,18 +74,18 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
         // ...
     }
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
     // Returns 'post'
     $method = $request->getMethod();
 
-By default, the method is returned as a lower-case string (i.e. 'get', 'post', etc). You can get an
-uppercase version by passing in ``true`` as the only parameter::
+By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
+uppercase version by wrapping the call in ``str_to_upper()``::
 
     // Returns 'GET'
-    $method = $request->getMethod(true);
+    $method = str_to_upper($request->getMethod());
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 

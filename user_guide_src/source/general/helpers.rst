@@ -34,7 +34,7 @@ Loading a Helper
 
 Loading a helper file is quite simple using the following method::
 
-	helper('name');
+    helper('name');
 
 Where **name** is the file name of the helper, without the .php file
 extension or the "_helper" part.
@@ -92,7 +92,7 @@ use, you'll call it the way you would a standard PHP function.
 For example, to create a link using the ``anchor()`` function in one of
 your view files you would do this::
 
-    <?php echo anchor('blog/comments', 'Click Here');?>
+    <?= anchor('blog/comments', 'Click Here') ?>
 
 Where "Click Here" is the name of the link, and "blog/comments" is the
 URI to the controller/method you wish to link to.
@@ -126,11 +126,11 @@ functions::
         {
             if (in_array($item, $haystack))
             {
-                return TRUE;
+                return true;
             }
-            }
+        }
 
-        return FALSE;
+        return false;
     }
 
     // random_element() is included in Array Helper, so it overrides the native function

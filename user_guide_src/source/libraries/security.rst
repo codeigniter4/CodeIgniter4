@@ -75,7 +75,7 @@ meta tag for you::
 	// Generates: <meta name="{csrf_header}" content="{csrf_hash}" />
 	<?= csrf_meta() ?>
 
-The order of checking the avability of the CSRF token is as follows:
+The order of checking the availability of the CSRF token is as follows:
 
 1. ``$_POST`` array
 2. Http header
@@ -112,7 +112,7 @@ you might find helpful that are not related to the CSRF protection.
 Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.
 
-If it is acceptable for the user input to include relative paths, e.g. file/in/some/approved/folder.txt, you can set
+If it is acceptable for the user input to include relative paths, e.g., file/in/some/approved/folder.txt, you can set
 the second optional parameter, $relative_path to true.
 ::
 

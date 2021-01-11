@@ -99,7 +99,9 @@ Let's step through an example command whose only function is to report basic inf
 itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
 should contain the following code::
 
-    <?php namespace App\Commands;
+    <?php
+
+    namespace App\Commands;
 
     use CodeIgniter\CLI\BaseCommand;
     use CodeIgniter\CLI\CLI;
@@ -112,7 +114,7 @@ should contain the following code::
 
         public function run(array $params)
         {
-
+            // ...
         }
     }
 
@@ -204,7 +206,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
             $pad = $this->getPad($this->options, 6);
             foreach ($this->options as $option => $description)
             {
-                    CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+                CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
             }
 
             // Output will be

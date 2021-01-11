@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Cookie;
+namespace CodeIgniter\Cookie\Collection;
 
 use Config\Services;
 
-class CookiePresenter extends BaseCookie implements CookiePresenterInterface
+class Cookie extends BaseCookie implements CookieInterface
 {
 	/**
 	 * Stores all cookies.
@@ -38,9 +38,9 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 	 * @param string       $prefix   The cookie name prefix (e.g.: 'mk_')
 	 * @param boolean      $secure   Whether to transfer the cookie over a SSL only
 	 * @param boolean      $httponly Whether to access the cookie through HTTP only
-	 * @param string|null  $samesite The cookie samesite
+	 * @param string       $samesite The cookie samesite
 	 *
-	 * @return CookiePresenterInterface
+	 * @return CookieInterface
 	 */
 	public function set(
 		$name,
@@ -51,8 +51,8 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 		string $prefix = '',
 		bool $secure = false,
 		bool $httponly = false,
-		string $samesite = null
-	): CookiePresenterInterface
+		string $samesite = ''
+	): CookieInterface
 	{
 		if (is_array($name))
 		{
@@ -70,39 +70,19 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 			}
 		}
 
-		$name	  = $this->prefixName($name, $prefix); 
-		$expires  = $expires > 0 ? time() + $expires : time() - YEAR;
-		$path     = $path === '/' && $this->path !== '/' ? $this->path : $path;
-		$domain   = empty($domain) && ! empty($this->domain) ? $this->domain : $domain;
-		$secure   = ! $secure && $this->secure ? $this->secure : $secure;
-		$httponly = ! $httponly && $this->httponly ? $this->httponly : $httponly;
-		$samesite = ucfirst(strtolower($samesite ?? $this->samesite));
-
-		$presenter = new Cookie(
-			$name, $value, $expires, $path, $domain, $secure, $httponly, $samesite
-		);
-
-		$cookie = [
-			'name'     => $presenter->getName(),
-			'value'    => $presenter->getValue(),
-			'expires'  => $presenter->getExpires(),
-			'path'     => $presenter->getPath(),
-			'domain'   => $presenter->getDomain(),
-			'secure'   => $presenter->isSecure(),
-			'httponly' => $presenter->isHTTPOnly(),
+		$this->cookies[] = [
+			'name'     => $this->prefixName($name, $prefix),
+			'value'    => $value,
+			'expires'  => $expires > 0 ? time() + $expires : time() - YEAR,
+			'path'     => $path === '/' && $this->path !== '/' ? $this->path : $path,
+			'domain'   => empty($domain) && ! empty($this->domain) ? $this->domain : $domain,
+			'secure'   => ! $secure && $this->secure ? $this->secure : $secure,
+			'httponly' => ! $httponly && $this->httponly ? $this->httponly : $httponly,
+			'samesite' => ucfirst(strtolower(empty($samesite) && ! empty($this->samesite) ? $this->samesite : $samesite)),
 		];
-
-		if (! empty($samesite))
-		{
-			$cookie['samesite'] = $presenter->getSameSite();
-		}
-
-		$this->cookies[] = $cookie;
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get a cookie.
@@ -133,8 +113,6 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 		return null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Remove a cookie.
 	 *
@@ -143,9 +121,9 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 	 * @param string $name	 The cookie name
 	 * @param string $prefix The cookie prefix
 	 *
-	 * @return CookiePresenterInterface
+	 * @return CookieInterface
 	 */
-	public function remove(string $name, string $prefix = ''): CookiePresenterInterface
+	public function remove(string $name, string $prefix = ''): CookieInterface
 	{
 		$hasFlag = false;
 
@@ -167,7 +145,41 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Put a cookie.
+	 *
+	 * Merges a new cookie with the current collection, and returns instance 
+	 * of the new collection without changing the original collection.
+	 *
+	 * @param array $cookie
+	 *
+	 * @return CookieInterface
+	 */
+	public function put(array $cookie): CookieInterface
+	{
+		$collection = clone $this;
+
+		$collection->cookies[] = $cookie;
+
+		return $collection;
+	}
+
+	/**
+	 * Push a cookie.
+	 *
+	 * Merges a new cookie with the current collection, and returns instance
+	 * of the current collection with the new merged values.
+	 *
+	 * @param array $cookie
+	 *
+	 * @return CookieInterface
+	 */
+	public function push(array $cookie): CookieInterface
+	{
+		$this->cookies[] = $cookie;
+
+		return $this;
+	}
 
 	/**
 	 * Has a cookie.
@@ -191,8 +203,6 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Send the cookies.
@@ -228,8 +238,6 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 		$this->clear();
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Clear stored cookies.
 	 *
@@ -239,8 +247,6 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 	{
 		$this->cookies = [];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Fetch a cookie.
@@ -260,8 +266,6 @@ class CookiePresenter extends BaseCookie implements CookiePresenterInterface
 
 		return Services::request()->fetchGlobal('cookie', $name, $filter);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Prefix cookie name.

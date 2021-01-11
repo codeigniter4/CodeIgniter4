@@ -414,11 +414,11 @@ class CommonFunctionsTest extends CIUnitTestCase
 	 */
 	public function testForceHttpsNullRequestAndResponse()
 	{
-		$this->assertNull(Services::response()->getHeader('Location'));
+		$this->assertNull(Services::response()->header('Location'));
 
 		force_https();
 
-		$this->assertEquals('https://example.com/', Services::response()->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', Services::response()->header('Location')->getValue());
 	}
 
 	/**

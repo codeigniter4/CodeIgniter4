@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database\Postgre;
 
+use CodeIgniter\Database\Forge as BaseForge;
+
 /**
  * Forge for Postgre
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
 	/**
 	 * CHECK DATABASE EXIST statement
@@ -226,7 +228,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
-
 }

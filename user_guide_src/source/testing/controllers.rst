@@ -16,7 +16,9 @@ The Helper Trait
 You can use either of the base test classes, but you do need to use the ``ControllerTester`` trait
 within your tests::
 
-    <?php namespace CodeIgniter;
+    <?php
+
+    namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
 
@@ -30,7 +32,9 @@ the request body, URI, and more. You specify the controller to use with the ``co
 fully qualified class name of your controller. Finally, call the ``execute()`` method with the name of the method
 to run as the parameter::
 
-    <?php namespace CodeIgniter;
+    <?php
+
+    namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
 
@@ -54,7 +58,7 @@ Helper Methods
 **controller($class)**
 
 Specifies the class name of the controller to test. The first parameter must be a fully qualified class name
-(i.e. include the namespace)::
+(i.e., include the namespace)::
 
     $this->controller(\App\Controllers\ForumController::class);
 

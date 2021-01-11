@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Config;
+<?php
+
+namespace Tests\Support\Config;
 
 /**
  * Class Registrar
@@ -71,13 +73,13 @@ class Registrar
 			'failover' => [],
 			'port'     => 3306,
 		],
-		'Sqlsrv'  => [
+		'SQLSRV'  => [
 			'DSN'      => '',
 			'hostname' => 'localhost',
 			'username' => 'sa',
 			'password' => '1Secure*Password1',
 			'database' => 'test',
-			'DBDriver' => 'Sqlsrv',
+			'DBDriver' => 'SQLSRV',
 			'DBPrefix' => 'db_',
 			'pConnect' => false,
 			'DBDebug'  => (ENVIRONMENT !== 'production'),

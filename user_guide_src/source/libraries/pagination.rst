@@ -25,7 +25,9 @@ It even reads the current page it should display from the current URL via a ``pa
 
 To provide a paginated list of users in your application, your controller's method would look something like::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -37,7 +39,7 @@ To provide a paginated list of users in your application, your controller's meth
 
             $data = [
                 'users' => $model->paginate(10),
-                'pager' => $model->pager
+                'pager' => $model->pager,
             ];
 
             echo view('users/index', $data);

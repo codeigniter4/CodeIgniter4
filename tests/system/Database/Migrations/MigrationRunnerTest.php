@@ -68,9 +68,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testGetHistory()
 	{
 		$runner = new MigrationRunner($this->config);
-
-		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
-		$tableMaker();
+		$runner->ensureTable();
 
 		$history = [
 			'id'        => 4,
@@ -82,7 +80,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			'batch'     => 1,
 		];
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
 		}
@@ -91,7 +89,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertEquals($history, (array) $runner->getHistory()[0]);
 
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
 
@@ -103,9 +101,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testGetHistoryReturnsEmptyArrayWithNoResults()
 	{
 		$runner = new MigrationRunner($this->config);
-
-		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
-		$tableMaker();
+		$runner->ensureTable();
 
 		$this->assertEquals([], $runner->getHistory());
 	}

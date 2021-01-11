@@ -85,7 +85,7 @@ The following functions are available:
 
     Note that $path must exist and be a readable image format supported by the ``data:`` protocol.
     This function is not recommended for very large files, but it provides a convenient way
-    of serving images from your app that are not web-accessible (e.g. in **public/**).
+    of serving images from your app that are not web-accessible (e.g., in **public/**).
 
 .. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false[, $hreflang = '']]]]]]])
 

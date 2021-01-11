@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Cookie;
+namespace CodeIgniter\Cookie\Collection;
 
-interface CookiePresenterInterface
+interface CookieInterface
 {
 	/**
 	 * Set a cookie.
@@ -27,8 +27,8 @@ interface CookiePresenterInterface
 	 * @param string       $prefix   The cookie name prefix (e.g.: 'mk_')
 	 * @param boolean      $secure   Whether to transfer the cookie over a SSL only
 	 * @param boolean      $httponly Whether to access the cookie through HTTP only
-	 * @param string|null  $samesite The cookie samesite
-	 * @return CookiePresenterInterface
+	 * @param string       $samesite The cookie samesite
+	 * @return CookieInterface
 	 */
 	public function set(
 		$name,
@@ -39,8 +39,8 @@ interface CookiePresenterInterface
 		string $prefix = '',
 		bool $secure = false,
 		bool $httponly = false,
-		string $samesite = null
-	): CookiePresenterInterface;
+		string $samesite = 'Lax'
+	): CookieInterface;
 
 	/**
 	 * Get a cookie
@@ -63,9 +63,33 @@ interface CookiePresenterInterface
 	 * @param string $name	 The cookie name
 	 * @param string $prefix The cookie prefix
 	 *
-	 * @return CookiePresenterInterface
+	 * @return CookieInterface
 	 */
-	public function remove(string $name, string $prefix = ''): CookiePresenterInterface;
+	public function remove(string $name, string $prefix = ''): CookieInterface;
+
+	/**
+	 * Put a cookie.
+	 *
+	 * Merges a new cookie with the current collection.
+	 * The original collection is left unchanged.
+	 *
+	 * @param array $cookie
+	 *
+	 * @return CookieInterface
+	 */
+	public function put(array $cookie): CookieInterface;
+
+	/**
+	 * Push a cookie.
+	 *
+	 * Merges a new cookie with the current collection, and returns instance
+	 * of the current collection with the new merged values.
+	 *
+	 * @param array $cookie
+	 *
+	 * @return CookieInterface
+	 */
+	public function push(array $cookie): CookieInterface;
 
 	/**
 	 * Has a cookie.

@@ -22,6 +22,7 @@ interface RequestInterface
 {
 	/**
 	 * Gets the user's IP address.
+	 * Supplied by RequestTrait.
 	 *
 	 * @return string IP address
 	 */
@@ -36,6 +37,8 @@ interface RequestInterface
 	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
 	 *
 	 * @return boolean
+	 *
+	 * @deprecated Use Validation instead
 	 */
 	public function isValidIP(string $ip, string $which = null): bool;
 
@@ -43,10 +46,13 @@ interface RequestInterface
 
 	/**
 	 * Get the request method.
+	 * An extension of PSR-7's getMethod to allow casing.
 	 *
 	 * @param boolean $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
+	 *
+	 * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
 	 */
 	public function getMethod(bool $upper = false): string;
 
@@ -54,6 +60,7 @@ interface RequestInterface
 
 	/**
 	 * Fetch an item from the $_SERVER array.
+	 * Supplied by RequestTrait.
 	 *
 	 * @param  string $index  Index for item to be fetched from $_SERVER
 	 * @param  null   $filter A filter name to be applied

@@ -1499,7 +1499,7 @@ class RulesTest extends CIDatabaseTestCase
 			'foo' => 'bar',
 			'bar' => 'something',
 			'baz' => null,
-			'ar'  => [],// Was running into issues with array values
+			'array'  => ['nonEmptyField1'=>'value1','nonEmptyField2'=>'value2', 'emptyField1'=>null, 'emptyField2'=>null],
 		];
 
 		$this->validation->setRules([
@@ -1544,6 +1544,26 @@ class RulesTest extends CIDatabaseTestCase
 				null,
 				true,
 			],
+			[
+				'array.emptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.emptyField1',
+				'array.nonEmptyField2',
+				false,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.nonEmptyField2',
+				true,
+			],
 		];
 	}
 
@@ -1561,6 +1581,7 @@ class RulesTest extends CIDatabaseTestCase
 			'foo' => 'bar',
 			'bar' => 'something',
 			'baz' => null,
+			'array'  => ['nonEmptyField1'=>'value1','nonEmptyField2'=>'value2', 'emptyField1'=>null, 'emptyField2'=>null],
 		];
 
 		$this->validation->setRules([
@@ -1600,6 +1621,26 @@ class RulesTest extends CIDatabaseTestCase
 				null,
 				true,
 			],
+			[
+				'array.emptyField1',
+				'array.emptyField2',
+				false,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.emptyField1',
+				'array.nonEmptyField2',
+				true,
+			],
+				[
+				'array.nonEmptyField1',
+				'array.nonEmptyField2',
+				true,
+			],			
 		];
 	}
 

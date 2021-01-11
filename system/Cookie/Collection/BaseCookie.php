@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Cookie;
+namespace CodeIgniter\Cookie\Collection;
 
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use Config\Cookie as CookieConfig;
@@ -31,6 +31,15 @@ abstract class BaseCookie
 	 * @var string
 	 */
 	protected $prefix = '';
+
+	/**
+	 * Cookie Expires
+	 *
+	 * Default expires timestamp for cookie.
+	 *
+	 * @var integer
+	 */
+	protected $expires = 0;
 
 	/**
 	 * Cookie Path
@@ -71,11 +80,11 @@ abstract class BaseCookie
 	/**
 	 * Cookie SameSite
 	 *
-	 * Setting for cookie SameSite.
+	 * Setting for cookie samesite.
 	 *
-	 * Allowed values are: [None - Lax - Strict - ''].
+	 * Allowed values are: [None - Lax - Strict].
 	 *
-	 * Defaults to `Lax` as recommended in this link:
+	 * Defaults: `Lax` as recommended in this link:
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
 	 * @var string
@@ -103,7 +112,7 @@ abstract class BaseCookie
 			}
 		}
 
-		if (! in_array(strtolower($this->samesite), ['none', 'lax', 'strict', ''], true))
+		if (! in_array(strtolower($this->samesite), ['none', 'lax', 'strict'], true))
 		{
 			throw CookieException::forInvalidSameSite($this->samesite);
 		}
@@ -202,7 +211,7 @@ abstract class BaseCookie
 	 *
 	 * @return $this
 	 */
-	public function setSecure(bool $secure = true)
+	public function setSecure(bool $secure)
 	{
 		$this->secure = $secure;
 
@@ -230,7 +239,7 @@ abstract class BaseCookie
 	 *
 	 * @return $this
 	 */
-	public function setHTTPOnly(bool $httponly = true)
+	public function setHTTPOnly(bool $httponly)
 	{
 		$this->httponly = $httponly;
 
@@ -260,9 +269,9 @@ abstract class BaseCookie
 	 *
 	 * @return $this
 	 */
-	public function setSameSite(string $samesite)
+	public function setSamesite(string $samesite)
 	{
-		if (! in_array(strtolower($samesite), ['none', 'lax', 'strict', ''], true))
+		if (! in_array(strtolower($samesite), ['none', 'lax', 'strict'], true))
 		{
 			$samesite = $this->properties['samesite'];
 		}
@@ -279,7 +288,7 @@ abstract class BaseCookie
 	 *
 	 * @return string
 	 */
-	public function getSameSite(): string
+	public function getSamesite(): string
 	{
 		return $this->samesite;
 	}

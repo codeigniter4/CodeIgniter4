@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\Session;
 
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App;
+use Config\Services;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
@@ -99,6 +101,13 @@ class Session implements SessionInterface
 	protected $sessionRegenerateDestroy = false;
 
 	/**
+	 * Session Cookie instance.
+	 *
+	 * @var Cookie
+	 */
+	protected $cookie;
+
+	/**
 	 * The domain name to use for cookies.
 	 * Set to .your-domain.com for site-wide cookies.
 	 *
@@ -165,15 +174,10 @@ class Session implements SessionInterface
 		$this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
 		$this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
 
-		$this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
-		$this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
-		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
-		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
-
-		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
-		{
-			throw SessionException::forInvalidSameSiteSetting($this->cookieSameSite);
-		}
+		$this->cookie = Cookie::pump($this->sessionCookieName, '', [
+			'expires' => empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
+			'httponly' => true
+		]);
 
 		helper('array');
 	}
@@ -244,7 +248,9 @@ class Session implements SessionInterface
 		// unless it is being currently created or regenerated
 		elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id())
 		{
-			$this->setCookie();
+			Services::cookie()->set(
+				$this->cookie->withValue(session_id())->dump()
+			)->send();
 		}
 
 		$this->initVars();
@@ -265,9 +271,9 @@ class Session implements SessionInterface
 	 */
 	public function stop()
 	{
-		setcookie(
-				$this->sessionCookieName, session_id(), 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
-		);
+		Services::cookie()->set(
+			$this->cookie->withValue(session_id())->withExpires(1)->dump()
+		)->send();
 
 		session_regenerate_id(true);
 	}
@@ -293,16 +299,16 @@ class Session implements SessionInterface
 		if (PHP_VERSION_ID < 70300)
 		{
 			$sameSite = '';
-			if ($this->cookieSameSite !== '')
+			if ($this->cookie->getSamesite() !== '')
 			{
-				$sameSite = '; samesite=' . $this->cookieSameSite;
+				$sameSite = '; samesite=' . $this->cookie->getSamesite();
 			}
 
 			session_set_cookie_params(
 				$this->sessionExpiration,
-				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
-				$this->cookieDomain,
-				$this->cookieSecure,
+				$this->cookie->getPath() . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
+				$this->cookie->getDomain(),
+				$this->cookie->isSecure(),
 				true // HTTP only; Yes, this is intentional and not configurable for security reasons.
 			);
 		}
@@ -311,16 +317,16 @@ class Session implements SessionInterface
 			// PHP 7.3 adds support for setting samesite in session_set_cookie_params()
 			$params = [
 				'lifetime' => $this->sessionExpiration,
-				'path'     => $this->cookiePath,
-				'domain'   => $this->cookieDomain,
-				'secure'   => $this->cookieSecure,
+				'path'     => $this->cookie->getPath(),
+				'domain'   => $this->cookie->getDomain(),
+				'secure'   => $this->cookie->isSecure(),
 				'httponly' => true, // HTTP only; Yes, this is intentional and not configurable for security reasons.
 			];
 
-			if ($this->cookieSameSite !== '')
+			if ($this->cookie->getSamesite() !== '')
 			{
-				$params['samesite'] = $this->cookieSameSite;
-				ini_set('session.cookie_samesite', $this->cookieSameSite);
+				$params['samesite'] = $this->cookie->getSamesite();
+				ini_set('session.cookie_samesite', $this->cookie->getSamesite());
 			}
 
 			session_set_cookie_params($params);
@@ -425,9 +431,8 @@ class Session implements SessionInterface
 			{
 				$_SESSION['__ci_vars'][$key] = 'old';
 			}
-			// Hacky, but 'old' will (implicitly) always be less than time() ;)
 			// DO NOT move this above the 'new' check!
-			elseif ($value < $currentTime)
+			elseif ($value === 'old' || $value < $currentTime)
 			{
 				unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 			}
@@ -1034,50 +1039,12 @@ class Session implements SessionInterface
 	/**
 	 * Takes care of setting the cookie on the client side.
 	 * Extracted for testing reasons.
+	 * @deprecated Use CookiePresenter::send() instead
 	 */
 	protected function setCookie()
 	{
-		if (PHP_VERSION_ID < 70300)
-		{
-			$sameSite = '';
-			if ($this->cookieSameSite !== '')
-			{
-				$sameSite = '; samesite=' . $this->cookieSameSite;
-			}
-
-			setcookie(
-				$this->sessionCookieName,
-				session_id(),
-				empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
-				$this->cookiePath . $sameSite, // Hacky way to set SameSite for PHP 7.2 and earlier
-				$this->cookieDomain,
-				$this->cookieSecure,
-				true
-			);
-		}
-		else
-		{
-			// PHP 7.3 adds another function signature allowing setting of samesite
-			$params = [
-				'expires'  => empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration,
-				'path'     => $this->cookiePath,
-				'domain'   => $this->cookieDomain,
-				'secure'   => $this->cookieSecure,
-				'httponly' => true,
-			];
-
-			if ($this->cookieSameSite !== '')
-			{
-				$params['samesite'] = $this->cookieSameSite;
-			}
-
-			setcookie(
-				$this->sessionCookieName,
-				session_id(),
-				$params
-			);
-		}
+		Services::cookie()->set(
+			$this->cookie->withValue(session_id())->dump()
+		)->send();
 	}
-
-	//--------------------------------------------------------------------
 }

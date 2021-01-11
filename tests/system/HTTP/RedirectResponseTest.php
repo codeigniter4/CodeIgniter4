@@ -4,12 +4,15 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Cookie\Collection\Cookie;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
+use Config\Cookie as CookieConfig;
 
-class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class RedirectResponseTest extends CIUnitTestCase
 {
 
 	/**
@@ -35,8 +38,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $this->request);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectToFullURI()
 	{
 		$response = new RedirectResponse(new App());
@@ -46,8 +47,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRedirectRoute()
 	{
@@ -79,8 +78,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response->route('differentRoute');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRedirectRelativeConvertsToFullURI()
 	{
 		$response = new RedirectResponse($this->config);
@@ -90,8 +87,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -112,8 +107,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -136,8 +129,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -154,8 +145,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey('foo', $_SESSION);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -169,7 +158,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new RedirectResponse(new App());
 
 		$returned = $response->back();
-		$this->assertEquals('http://somewhere.com', $returned->getHeader('location')->getValue());
+		$this->assertEquals('http://somewhere.com', $returned->header('location')->getValue());
 	}
 
 	/**
@@ -218,15 +207,15 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SESSION = [];
 
-		$baseResponse = service('response');
-		$baseResponse->setCookie('foo', 'bar');
+		$cookie = new Cookie(new CookieConfig());
+		$cookie->set('foo', 'bar');
 
 		$response = new RedirectResponse(new App());
-		$this->assertFalse($response->hasCookie('foo', 'bar'));
-
 		$response = $response->withCookies();
+		$cookie->set('baz', 'qux');
 
-		$this->assertTrue($response->hasCookie('foo', 'bar'));
+		$this->assertTrue($cookie->has('foo'));
+		$this->assertTrue($cookie->has('baz'));
 	}
 
 	/**
@@ -255,10 +244,10 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response = $response->withHeaders();
 
-		foreach ($baseResponse->getHeaders() as $name => $header)
+		foreach ($baseResponse->headers() as $name => $header)
 		{
 			$this->assertTrue($response->hasHeader($name));
-			$this->assertEquals($header->getValue(), $response->getHeader($name)->getValue());
+			$this->assertEquals($header->getValue(), $response->header($name)->getValue());
 		}
 	}
 
@@ -267,7 +256,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SESSION = [];
 
 		$baseResponse = service('response');
-		foreach ($baseResponse->getHeaders() as $key => $val)
+		foreach ($baseResponse->headers() as $key => $val)
 		{
 			$baseResponse->removeHeader($key);
 		}
@@ -275,6 +264,6 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$response = new RedirectResponse(new App());
 		$response = $response->withHeaders();
 
-		$this->assertEmpty($baseResponse->getHeaders());
+		$this->assertEmpty($baseResponse->headers());
 	}
 }

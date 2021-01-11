@@ -28,10 +28,10 @@ to the server and waits for a response.
 
 The request would look something like this::
 
-	GET / HTTP/1.1
-	Host codeigniter.com
-	Accept: text/html
-	User-Agent: Chrome/46.0.2490.80
+    GET / HTTP/1.1
+    Host codeigniter.com
+    Accept: text/html
+    User-Agent: Chrome/46.0.2490.80
 
 This message displays all of the information necessary to know what the client is requesting. It tells the
 method for the request (GET, POST, DELETE, etc), and the version of HTTP it supports.
@@ -48,14 +48,14 @@ Once the server receives the request, your application will take that informatio
 The server will bundle your output as part of its response to the client. This is also represented as
 a simple text message that looks something like this::
 
-	HTTP/1.1 200 OK
-	Server: nginx/1.8.0
-	Date: Thu, 05 Nov 2015 05:33:22 GMT
-	Content-Type: text/html; charset=UTF-8
+    HTTP/1.1 200 OK
+    Server: nginx/1.8.0
+    Date: Thu, 05 Nov 2015 05:33:22 GMT
+    Content-Type: text/html; charset=UTF-8
 
-	<html>
-		. . .
-	</html>
+    <html>
+        . . .
+    </html>
 
 The response tells the client what version of the HTTP specification that it's using and, probably most
 importantly, the status code (200). The status code is one of a number of codes that have been standardized
@@ -70,37 +70,37 @@ While PHP provides ways to interact with the request and response headers, CodeI
 abstracts them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </incoming/incomingrequest>`
 is an object-oriented representation of the HTTP request. It provides everything you need::
 
-	use CodeIgniter\HTTP\IncomingRequest;
+    use CodeIgniter\HTTP\IncomingRequest;
 
-	$request = service('request');
+    $request = service('request');
 
-	// the URI being requested (i.e. /about)
-	$request->uri->getPath();
+    // the URI being requested (i.e., /about)
+    $request->uri->getPath();
 
-	// Retrieve $_GET and $_POST variables
-	$request->getGet('foo');
-	$request->getPost('foo');
+    // Retrieve $_GET and $_POST variables
+    $request->getGet('foo');
+    $request->getPost('foo');
 
-	// Retrieve from $_REQUEST which should include
-	// both $_GET and $_POST contents
-	$request->getVar('foo');
+    // Retrieve from $_REQUEST which should include
+    // both $_GET and $_POST contents
+    $request->getVar('foo');
 
-	// Retrieve JSON from AJAX calls
-	$request->getJSON();
+    // Retrieve JSON from AJAX calls
+    $request->getJSON();
 
-	// Retrieve server variables
-	$request->getServer('Host');
+    // Retrieve server variables
+    $request->getServer('Host');
 
-	// Retrieve an HTTP Request header, with case-insensitive names
-	$request->getHeader('host');
-	$request->getHeader('Content-Type');
+    // Retrieve an HTTP Request header, with case-insensitive names
+    $request->getHeader('host');
+    $request->getHeader('Content-Type');
 
-	$request->getMethod();  // GET, POST, PUT, etc
+    $request->getMethod();  // GET, POST, PUT, etc
 
 The request class does a lot of work in the background for you, that you never need to worry about.
 The `isAJAX()` and `isSecure()` methods check several different methods to determine the correct answer.
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 CodeIgniter also provides a :doc:`Response class </outgoing/response>` that is an object-oriented representation
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client::

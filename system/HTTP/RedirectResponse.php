@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Cookie\Kit\Cookie;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 
@@ -135,13 +136,15 @@ class RedirectResponse extends Response
 	 * set a cookie but need ensure that's actually sent
 	 * with the response instead of lost.
 	 *
-	 * @return $this|RedirectResponse
+	 * @return RedirectResponse
 	 */
 	public function withCookies()
 	{
-		foreach (Services::response()->getCookies() as $cookie)
+		$cookie = Services::cookie();
+
+		foreach ($cookie->get() as $value)
 		{
-			$this->cookies[] = $cookie;
+			$cookie->push($value);
 		}
 
 		return $this;

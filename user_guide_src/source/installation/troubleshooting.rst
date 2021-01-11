@@ -36,11 +36,11 @@ alternate settings. If it still doesn't work after you've tried this
 you'll need to force CodeIgniter to add a question mark to your URLs. To
 do this open your *app/Config/App.php* file and change this::
 
-	public $indexPage = 'index.php';
+    public $indexPage = 'index.php';
 
 To this::
 
-	public $indexPage = 'index.php?';
+    public $indexPage = 'index.php?';
 
 The tutorial gives 404 errors everywhere :(
 -------------------------------------------

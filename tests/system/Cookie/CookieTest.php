@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cookie;
 
+use CodeIgniter\Cookie\Collection\Cookie;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
@@ -26,7 +27,7 @@ class CookieTest extends CIUnitTestCase
 
 	protected function setUp(): void
 	{
-		$this->cookie = new CookiePresenter(new CookieConfig());
+		$this->cookie = new Cookie(new CookieConfig());
 	}
 
 	public function testGetCookieWhenArrayReturns()
@@ -265,7 +266,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieSecureTrueViaConfig()
 	{
-		$this->cookie->setSecure()->set('foo', 'bar');
+		$this->cookie->setSecure(true)->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -323,7 +324,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieHTTPOnlyTrueViaConfig()
 	{
-		$this->cookie->setHTTPOnly()->set('foo', 'bar');
+		$this->cookie->setHTTPOnly(true)->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -367,7 +368,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieNoneSameSiteViaConfig()
 	{
-		$this->cookie->setSameSite('None')->set('foo', 'bar');
+		$this->cookie->setSamesite('None')->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -401,7 +402,7 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieLaxSameSiteViaConfig()
 	{
-		$this->cookie->setSameSite('Lax')->set('foo', 'bar');
+		$this->cookie->setSamesite('Lax')->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
@@ -435,37 +436,12 @@ class CookieTest extends CIUnitTestCase
 
 	public function testCookieStrictSameSiteViaConfig()
 	{
-		$this->cookie->setSameSite('Strict')->set('foo', 'bar');
+		$this->cookie->setSamesite('Strict')->set('foo', 'bar');
 
 		$item = $this->cookie->get('foo');
 
 		$this->assertArrayHasKey('samesite', $item);
 		$this->assertEquals('Strict', $item['samesite']);
-	}
-
-	public function testCookieBlankSameSite()
-	{
-		$this->cookie->set('foo', 'bar', 0, '', '', '', false, false, '');
-
-		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
-	}
-
-	public function testCookieBlankSameSiteViaArray()
-	{
-		$this->cookie->set([
-			'name'     => 'foo',
-			'value'    => 'bar',
-			'samesite' => '',
-		]);
-
-		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
-	}
-
-	public function testCookieBlankSameSiteViaConfig()
-	{
-		$this->cookie->setSameSite('')->set('foo', 'bar');
-
-		$this->assertArrayNotHasKey('samesite', $this->cookie->get('foo'));
 	}
 
 	public function testSetCookiePrefix()
@@ -487,7 +463,7 @@ class CookieTest extends CIUnitTestCase
 	{
 		$this->assertFalse($this->cookie->setSecure(false)->isSecure());
 		$this->assertEquals(false, $this->cookie->isSecure());
-		$this->assertTrue($this->cookie->setSecure()->isSecure());
+		$this->assertTrue($this->cookie->setSecure(true)->isSecure());
 		$this->assertEquals(true, $this->cookie->isSecure());
 	}
 
@@ -495,7 +471,7 @@ class CookieTest extends CIUnitTestCase
 	{
 		$this->assertFalse($this->cookie->setHTTPOnly(false)->isHTTPOnly());
 		$this->assertEquals(false, $this->cookie->isHTTPOnly());
-		$this->assertTrue($this->cookie->setHTTPOnly()->isHTTPOnly());
+		$this->assertTrue($this->cookie->setHTTPOnly(true)->isHTTPOnly());
 		$this->assertEquals(true, $this->cookie->isHTTPOnly());
 	}
 }

@@ -12,6 +12,5 @@ class MockSecurityConfig extends SecurityConfig
 	public $expires     = 7200;
 	public $regenerate  = true;
 	public $redirect    = false;
-	public $samesite    = 'Lax';
 	public $excludeURIs = ['http://example.com'];
 }

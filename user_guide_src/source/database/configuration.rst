@@ -65,7 +65,7 @@ add the config variables as a query string::
 	// Postgre
 	$default['DSN'] = 'Postgre://username:password@hostname:5432/database?charset=utf8&connect_timeout=5&sslmode=1';
 
-.. note:: If you provide a DSN string and it is missing some valid settings (e.g. the
+.. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
 	database character set), which are present in the rest of the configuration
 	fields, CodeIgniter will append them.
 
@@ -198,7 +198,7 @@ Explanation of Values:
 **swapPre**		A default table prefix that should be swapped with dbprefix. This is useful for distributed
 			applications where you might run manually written queries, and need the prefix to still be
 			customizable by the end user.
-**schema**		The database schema, defaults to 'public'. Used by PostgreSQL and ODBC drivers.
+**schema**		The database schema, default value varies by driver. Used by PostgreSQL and SQLSRV drivers.
 **encrypt**		Whether or not to use an encrypted connection.
 
 			  - 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE

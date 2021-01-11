@@ -62,7 +62,7 @@ class CodeIgniter
 	/**
 	 * Main application configuration
 	 *
-	 * @var \Config\App
+	 * @var App
 	 */
 	protected $config;
 
@@ -76,7 +76,7 @@ class CodeIgniter
 	/**
 	 * Current request.
 	 *
-	 * @var HTTP\Request|HTTP\IncomingRequest|CLIRequest
+	 * @var Request|HTTP\IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
@@ -380,7 +380,7 @@ class CodeIgniter
 	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 
@@ -395,7 +395,7 @@ class CodeIgniter
 			$filters->enableFilter($routeFilter, 'after');
 		}
 
-		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
+		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->getUri()->getPath();
 
 		// Never run filters when running through Spark cli
 		if (! defined('SPARKED'))
@@ -714,9 +714,7 @@ class CodeIgniter
 			$headers[$header->getName()] = $header->getValueLine();
 		}
 
-		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL
-		);
+		return cache()->save($this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL);
 	}
 
 	//--------------------------------------------------------------------
@@ -745,24 +743,20 @@ class CodeIgniter
 	 */
 	protected function generateCacheName(Cache $config): string
 	{
-		if (get_class($this->request) === CLIRequest::class)
+		if ($this->request instanceof CLIRequest)
 		{
 			return md5($this->request->getPath());
 		}
 
-		$uri = $this->request->uri;
+		$uri = $this->request->getUri();
 
 		if ($config->cacheQueryString)
 		{
-			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery()
-			);
+			$name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
 		}
 		else
 		{
-			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath()
-			);
+			$name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
 		}
 
 		return md5($name);
@@ -821,7 +815,7 @@ class CodeIgniter
 		// then we need to set the correct locale on our Request.
 		if ($this->router->hasLocale())
 		{
-			$this->request->setLocale($this->router->getLocale());
+			$this->request->setLocale($this->router->getLocale()); // @phpstan-ignore-line
 		}
 
 		$this->benchmark->stop('routing');
@@ -926,7 +920,7 @@ class CodeIgniter
 	protected function runController($class)
 	{
 		// If this is a console request then use the input segments as parameters
-		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
 
 		if (method_exists($class, '_remap'))
 		{
@@ -1107,7 +1101,7 @@ class CodeIgniter
 			return;
 		}
 
-		$method = $this->request->getPost('_method');
+		$method = $this->request->getPost('_method'); // @phpstan-ignore-line
 
 		if (empty($method))
 		{

@@ -14,7 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
-use CodeIgniter\Cookie\CookiePresenter;
+use CodeIgniter\Cookie\Collection\Cookie;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -161,7 +161,7 @@ class Services extends BaseService
 	 * @param CookieConfig|null $config
 	 * @param boolean           $getShared
 	 *
-	 * @return CookiePresenter
+	 * @return Cookie
 	 */
 	public static function cookie(CookieConfig $config = null, bool $getShared = true)
 	{
@@ -172,7 +172,7 @@ class Services extends BaseService
 
 		$config = $config ?? config('Cookie');
 
-		return new CookiePresenter($config);
+		return new Cookie($config);
 	}
 
 	//--------------------------------------------------------------------

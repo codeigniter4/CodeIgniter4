@@ -957,8 +957,9 @@ class MigrationRunner
 				'null'       => false,
 			],
 			'class'     => [
-				'type' => 'TEXT',
-				'null' => false,
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
 			],
 			'group'     => [
 				'type'       => 'VARCHAR',

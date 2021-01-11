@@ -581,7 +581,7 @@ class CLI
 
 		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
 
-		return mb_strlen($string);
+		return mb_strwidth($string);
 	}
 
 	//--------------------------------------------------------------------
@@ -869,7 +869,7 @@ class CLI
 	 */
 	protected static function parseCommandLine()
 	{
-		$args = $_SERVER['argv'];
+		$args = $_SERVER['argv'] ?? [];
 		array_shift($args); // scrap invoking program
 		$optionValue = false;
 

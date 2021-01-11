@@ -21,11 +21,11 @@ class FormatRules
 	/**
 	 * Alpha
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha(string $str = null): bool
+	public function alpha(?string $str = null): bool
 	{
 		return ctype_alpha($str);
 	}
@@ -33,11 +33,11 @@ class FormatRules
 	/**
 	 * Alpha with spaces.
 	 *
-	 * @param string $value Value.
+	 * @param string|null $value Value.
 	 *
 	 * @return boolean True if alpha with spaces, else false.
 	 */
-	public function alpha_space(string $value = null): bool
+	public function alpha_space(?string $value = null): bool
 	{
 		if ($value === null)
 		{
@@ -50,11 +50,11 @@ class FormatRules
 	/**
 	 * Alphanumeric with underscores and dashes
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_dash(string $str = null): bool
+	public function alpha_dash(?string $str = null): bool
 	{
 			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
 	}
@@ -78,11 +78,11 @@ class FormatRules
 	/**
 	 * Alphanumeric
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_numeric(string $str = null): bool
+	public function alpha_numeric(?string $str = null): bool
 	{
 		return ctype_alnum($str);
 	}
@@ -90,11 +90,11 @@ class FormatRules
 	/**
 	 * Alphanumeric w/ spaces
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_numeric_space(string $str = null): bool
+	public function alpha_numeric_space(?string $str = null): bool
 	{
 		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
 	}
@@ -117,11 +117,11 @@ class FormatRules
 	/**
 	 * Decimal number
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function decimal(string $str = null): bool
+	public function decimal(?string $str = null): bool
 	{
 		return (bool) preg_match('/^[-+]?[0-9]{0,}\.?[0-9]+$/', $str);
 	}
@@ -129,11 +129,11 @@ class FormatRules
 	/**
 	 * String of hexidecimal characters
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function hex(string $str = null): bool
+	public function hex(?string $str = null): bool
 	{
 		return ctype_xdigit($str);
 	}
@@ -141,11 +141,11 @@ class FormatRules
 	/**
 	 * Integer
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function integer(string $str = null): bool
+	public function integer(?string $str = null): bool
 	{
 		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
 	}
@@ -153,10 +153,10 @@ class FormatRules
 	/**
 	 * Is a Natural number  (0,1,2,3, etc.)
 	 *
-	 * @param  string $str
+	 * @param  string|null $str
 	 * @return boolean
 	 */
-	public function is_natural(string $str = null): bool
+	public function is_natural(?string $str = null): bool
 	{
 		return ctype_digit($str);
 	}
@@ -164,10 +164,10 @@ class FormatRules
 	/**
 	 * Is a Natural number, but not a zero  (1,2,3, etc.)
 	 *
-	 * @param  string $str
+	 * @param  string|null $str
 	 * @return boolean
 	 */
-	public function is_natural_no_zero(string $str = null): bool
+	public function is_natural_no_zero(?string $str = null): bool
 	{
 		return ($str !== '0' && ctype_digit($str));
 	}
@@ -175,11 +175,11 @@ class FormatRules
 	/**
 	 * Numeric
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function numeric(string $str = null): bool
+	public function numeric(?string $str = null): bool
 	{
 		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
 	}
@@ -187,12 +187,12 @@ class FormatRules
 	/**
 	 * Compares value against a regular expression pattern.
 	 *
-	 * @param string $str
-	 * @param string $pattern
+	 * @param string|null $str
+	 * @param string      $pattern
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str = null, string $pattern): bool
+	public function regex_match(?string $str, string $pattern): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{
