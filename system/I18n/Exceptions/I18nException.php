@@ -19,6 +19,19 @@ use CodeIgniter\Exceptions\FrameworkException;
 class I18nException extends FrameworkException
 {
 	/**
+	 * Thrown when createFromFormat fails to receive a valid
+	 * DateTime back from DateTime::createFromFormat.
+	 *
+	 * @param string $format
+	 *
+	 * @return static
+	 */
+	public static function forInvalidFormat(string $format)
+	{
+		return new static(lang('Time.invalidFormat', [$format]));
+	}
+
+	/**
 	 * Thrown when the numeric representation of the month falls
 	 * outside the range of allowed months.
 	 *
