@@ -185,11 +185,11 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('txt', $file->getExtension());
 
 		// proposed extension matches finfo_open mime type (text/plain)
-		// but not client mime type
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
-		$this->assertNotEquals('txt', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
+		// but not client mime type
+		$this->assertEquals(null, \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
 
 		// proposed extension does not match finfo_open mime type (text/plain)
 		// but can be resolved by reverse searching
@@ -206,8 +206,11 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		// this is a zip file (userFile4) but hat been renamed to 'rar'
 		$file = $collection->getFile('userfile5');
 		$this->assertInstanceOf(UploadedFile::class, $file);
-		$this->assertNotEquals('rar', $file->getExtension());
-		$this->assertEquals('rar', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()) ?? $file->getClientExtension());
+		// getExtension falls back to clientExtension (insecure)
+		$this->assertEquals('rar', $file->getExtension());
+		$this->assertEquals('rar', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+		// guessExtension is secure and does not returns empty
+		$this->assertEquals('', $file->guessExtension());
 	}
 
 	//--------------------------------------------------------------------
