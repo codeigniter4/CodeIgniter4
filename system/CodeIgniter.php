@@ -408,7 +408,7 @@ class CodeIgniter
 				return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
 			}
 
-			if ($possibleResponse instanceof RequestInterface)
+			if ($possibleResponse instanceof Request)
 			{
 				$this->request = $possibleResponse;
 			}
@@ -586,6 +586,7 @@ class CodeIgniter
 			return;
 		}
 
+		// @phpstan-ignore-next-line
 		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
 			// @codeCoverageIgnoreStart
@@ -840,6 +841,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
+		// @phpstan-ignore-next-line
 		return (is_cli() && ! (ENVIRONMENT === 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
