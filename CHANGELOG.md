@@ -10,6 +10,12 @@
 - `CodeIgniter\Config\Config` is now deprecated in favor of `CodeIgniter\Config\Factories::config()`
 - HTTP Layer Refactor: Numerous deprecations have been made towards a transition to a PSR-compliant HTTP layer. [See the User Guide](user_guide_src/source/installation/upgrade_405.rst)
 
+**Mime Type Detection**
+
+- `Config\Mimes::guessExtensionFromType` now only reverse searches the `$mimes` array if no extension is proposed (i.e., usually not for uploaded files).
+- The fallback values of `UploadedFile->getExtension()` and `UploadedFile->guessExtension()` have been changed. `UploadedFile->getExtension()` now returns `$this->getClientExtension()` instead of `''`; `UploadedFile->guessExtension()` now returns `''` instead of `$this->getClientExtension()`.
+These changes increase security when handling uploaded files as the client can no longer force a wrong mime type on the application. However, these might affect how file extensions are detected in your application.
+
 ## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4) (2020-07-15)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.3...v4.0.4)
