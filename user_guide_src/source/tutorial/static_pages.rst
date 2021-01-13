@@ -1,9 +1,9 @@
 Static pages
 ###############################################################################
 
-**Note:** This tutorial assumes you've downloaded CodeIgniter and
-:doc:`installed the framework <../installation/index>` in your
-development environment.
+.. note:: This tutorial assumes you've downloaded CodeIgniter and
+   :doc:`installed the framework <../installation/index>` in your
+   development environment.
 
 The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.

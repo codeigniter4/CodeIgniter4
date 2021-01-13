@@ -325,7 +325,9 @@ Class Reference
 		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. 
+		
+		.. note:: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
 
