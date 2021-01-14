@@ -634,6 +634,23 @@ right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
 
+Anonymous functions as rule
+************************************************
+
+You need a custom rule but creating a :ref:`global custom rule <validation-creating-custom-rules>` is not a option?
+You can use a anonymous function as rule. Therefore, your anonymous function needs to be set as the second element of an array where the first element is your rule name (``foobar``)::
+
+  $validation->setRules([
+    'name' => [
+      'required',
+      ['foobar', function(mixed $value, array $data) {
+          return (bool) $value;
+      }],
+    ],
+  ]);
+
+.. _validation-creating-custom-rules:
+
 Creating Custom Rules
 ************************************************
 
