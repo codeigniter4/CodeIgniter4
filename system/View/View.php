@@ -152,12 +152,16 @@ class View implements RendererInterface
 	 * data that has already been set.
 	 *
 	 * Valid $options:
-	 *     - cache 		number of seconds to cache for
-	 *  - cache_name	Name to use for cache
+	 *  - cache      Number of seconds to cache for
+	 *  - cache_name Name to use for cache
 	 *
-	 * @param string       $view
-	 * @param array|null   $options
-	 * @param boolean|null $saveData
+	 * @param string       $view     The view contents
+	 * @param array        $options  Reserved for 3rd-party uses since
+	 *                               it might be needed to pass additional info
+	 *                               to other template engines.
+	 * @param boolean|null $saveData If true, saves data for subsequent calls,
+	 *                               if false, cleans the data after displaying,
+	 *                               if null, uses the config setting.
 	 *
 	 * @return string
 	 */
@@ -272,13 +276,13 @@ class View implements RendererInterface
 	 * data that has already been set.
 	 * Cache does not apply, because there is no "key".
 	 *
-	 * @param string  $view     The view contents
-	 * @param array   $options  Reserved for 3rd-party uses since
-	 *                          it might be needed to pass additional info
-	 *                          to other template engines.
-	 * @param boolean $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 * @param string       $view     The view contents
+	 * @param array        $options  Reserved for 3rd-party uses since
+	 *                               it might be needed to pass additional info
+	 *                               to other template engines.
+	 * @param boolean|null $saveData If true, saves data for subsequent calls,
+	 *                               if false, cleans the data after displaying,
+	 *                               if null, uses the config setting.
 	 *
 	 * @return string
 	 */
