@@ -150,12 +150,19 @@ class Throttler implements ThrottlerInterface
 		return false;
 	}
 
-	public function remove(string $key) : void
+	/**
+	 * @param string $key The name of the bucket
+	 *
+	 * @return $this
+	 */
+	public function remove(string $key): self
 	{
 		$tokenName = $this->prefix . $key;
 
 		$this->cache->delete($tokenName);
 		$this->cache->delete($tokenName . 'Time');
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
