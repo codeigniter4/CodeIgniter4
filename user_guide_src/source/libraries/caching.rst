@@ -59,9 +59,9 @@ more complex, multi-server setups.
 If you have more than one application using the same cache storage, you can add a custom prefix
 here that is prepended to all key names.
 
-**$path**
+**$file**
 
-This is used by the ``file`` handler to show where it should save the cache files to.
+This is an array of settings specific to the  ``File`` handler determine how it should save the cache files.
 
 **$memcached**
 
@@ -212,7 +212,8 @@ File-based Caching
 Unlike caching from the Output Class, the driver file-based caching
 allows for pieces of view files to be cached. Use this with care, and
 make sure to benchmark your application, as a point can come where disk
-I/O will negate positive gains by caching. This requires a writable cache directory to be really writable (0777).
+I/O will negate positive gains by caching. This requires a cache
+directory to be really writable by the application.
 
 =================
 Memcached Caching

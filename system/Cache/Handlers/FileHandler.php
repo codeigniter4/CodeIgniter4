@@ -34,6 +34,16 @@ class FileHandler implements CacheInterface
 	 */
 	protected $path;
 
+	/**
+	 * Mode for the stored files.
+	 * Must be chmod-safe (octal).
+	 *
+	 * @var int
+	 *
+	 * @see https://www.php.net/manual/en/function.chmod.php
+	 */
+	protected $mode;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -44,14 +54,23 @@ class FileHandler implements CacheInterface
 	 */
 	public function __construct(Cache $config)
 	{
-		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
-		if (! is_really_writable($path))
+		if (isset($config->file))
 		{
-			throw CacheException::forUnableToWrite($path);
+			$this->path = $config->file['storePath'] ?? WRITEPATH . 'cache';
+			$this->mode = $config->file['mode'] ?? 0640;
+		}
+		else
+		{
+			$this->path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
+		}
+
+		if (! is_really_writable($this->path))
+		{
+			throw CacheException::forUnableToWrite($this->path);
 		}
 
 		$this->prefix = $config->prefix ?: '';
-		$this->path   = rtrim($path, '/') . '/';
+		$this->path   = rtrim($this->path, '/') . '/';
 	}
 
 	//--------------------------------------------------------------------
@@ -105,7 +124,7 @@ class FileHandler implements CacheInterface
 
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path . $key, 0640);
+			chmod($this->path . $key, $this->mode);
 
 			return true;
 		}
