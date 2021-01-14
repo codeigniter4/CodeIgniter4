@@ -155,7 +155,7 @@ class View implements RendererInterface
 	 *  - cache      Number of seconds to cache for
 	 *  - cache_name Name to use for cache
 	 *
-	 * @param string       $view     The view contents
+	 * @param string       $view     File name of the view source
 	 * @param array        $options  Reserved for 3rd-party uses since
 	 *                               it might be needed to pass additional info
 	 *                               to other template engines.
