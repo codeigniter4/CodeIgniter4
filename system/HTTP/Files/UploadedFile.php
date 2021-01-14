@@ -308,24 +308,29 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Overrides SPLFileInfo's to work with uploaded files, since
 	 * the temp file that's been uploaded doesn't have an extension.
 	 *
-	 * Is simply an alias for guessExtension for a safer method
-	 * than simply relying on the provided extension.
-	 * Additionally it will return clientExtension in case if there are
-	 * other extensions with the same mime type.
+	 * This method tries to guess the extension from the files mime
+	 * type but will return the clientExtension if it fails to do so.
+	 *
+	 * This method will always return a more or less helpfull extension
+	 * but might be insecure if the mime type is not machted. Consider
+	 * using guessExtension for a more safe version.
 	 */
 	public function getExtension(): string
 	{
-		return $this->guessExtension();
+		return $this->guessExtension() ?: $this->getClientExtension();
 	}
 
 	/**
-	 * Attempts to determine the best file extension.
+	 * Attempts to determine the best file extension from the file's
+	 * mime type. In contrast to getExtension, this method will return
+	 * an empty string if it fails to determine an extension instead of
+	 * falling back to the unsecure clientExtension.
 	 *
 	 * @return string
 	 */
 	public function guessExtension(): string
 	{
-		return Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension()) ?? $this->getClientExtension();
+		return Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension()) ?? '';
 	}
 
 	//--------------------------------------------------------------------
