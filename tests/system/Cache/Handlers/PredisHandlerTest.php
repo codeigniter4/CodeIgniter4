@@ -65,6 +65,19 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 
+	public function testRemember()
+	{
+		$this->PredisHandler->remember(self::$key1, 2, function () {
+			return 'value';
+		});
+
+		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
+		$this->assertNull($this->PredisHandler->get(self::$dummy));
+
+		\CodeIgniter\CLI\CLI::wait(3);
+		$this->assertNull($this->PredisHandler->get(self::$key1));
+	}
+
 	public function testSave()
 	{
 		$this->assertTrue($this->PredisHandler->save(self::$key1, 'value'));

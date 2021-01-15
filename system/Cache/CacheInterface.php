@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Cache;
 
+use Closure;
+
 /**
  * Cache interface
  */
@@ -31,6 +33,19 @@ interface CacheInterface
 	 * @return mixed
 	 */
 	public function get(string $key);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get an item from the cache, or execute the given Closure and store the result.
+	 *
+	 * @param string  $key      Cache item name
+	 * @param integer $ttl      Time to live
+	 * @param Closure $callback Callback return value
+	 *
+	 * @return mixed
+	 */
+	public function remember(string $key, int $ttl, Closure $callback);
 
 	//--------------------------------------------------------------------
 

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use Closure;
 
 /**
  * Dummy cache handler
@@ -36,6 +37,22 @@ class DummyHandler implements CacheInterface
 	 * @return mixed
 	 */
 	public function get(string $key)
+	{
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get an item from the cache, or execute the given Closure and store the result.
+	 *
+	 * @param string  $key      Cache item name
+	 * @param integer $ttl      Time to live
+	 * @param Closure $callback Callback return value
+	 *
+	 * @return mixed
+	 */
+	public function remember(string $key, int $ttl, Closure $callback)
 	{
 		return null;
 	}
