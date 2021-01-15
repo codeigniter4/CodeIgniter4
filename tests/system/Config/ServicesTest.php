@@ -25,6 +25,14 @@ class ServicesTest extends CIUnitTestCase
 		Services::reset();
 	}
 
+	public function testCanReplaceFrameworkServices()
+	{
+		$this->expectException('RuntimeException');
+		$this->expectExceptionMessage('Service originated from Tests\Support\Config\Services');
+
+		Services::uri('testCanReplaceFrameworkServices');
+	}
+
 	public function testNewAutoloader()
 	{
 		$actual = Services::autoloader();
@@ -350,15 +358,5 @@ class ServicesTest extends CIUnitTestCase
 		rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
 		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
-	}
-
-	public function testCanReplaceFrameworkServices()
-	{
-		$this->assertArrayNotHasKey('testCanReplaceFrameworkServices', $_SESSION);
-
-		Services::uri('testCanReplaceFrameworkServices');
-
-		$this->assertArrayHasKey('testCanReplaceFrameworkServices', $_SESSION);		
-		unset($_SESSION['testCanReplaceFrameworkServices']);
 	}
 }

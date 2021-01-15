@@ -182,7 +182,7 @@ class BaseService
 	public static function serviceExists(string $name): ?string
 	{
 		static::buildServicesCache();
-		$services = array_merge([Services::class], self::$serviceNames);
+		$services = array_merge(self::$serviceNames, [Services::class]);
 		$name     = strtolower($name);
 
 		foreach ($services as $service)

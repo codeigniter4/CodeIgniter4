@@ -3,13 +3,13 @@
 namespace Tests\Support\Config;
 
 use Config\Services as BaseServices;
-use Tatter\Https\ServerRequest;
+use RuntimeException;
 
 /**
  * Services Class
  *
- * Defines our version of the HTTP services to override
- * the framework defaults.
+ * Provides a replacement uri Service
+ * to demonstrate overriding core services.
  */
 class Services extends BaseServices
 {
@@ -23,9 +23,10 @@ class Services extends BaseServices
 	 */
 	public static function uri(string $uri = null, bool $getShared = true)
 	{
+		// Intercept our test case
 		if ($uri === 'testCanReplaceFrameworkServices')
 		{
-			$_SESSION['testCanReplaceFrameworkServices'] = true;
+			throw new RuntimeException('Service originated from ' . static::class);
 		}
 
 		if ($getShared)
