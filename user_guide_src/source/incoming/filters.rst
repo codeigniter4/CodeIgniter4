@@ -69,7 +69,7 @@ This is typically used to perform redirects, like in this example::
 
         if (! $auth->isLoggedIn())
         {
-            return redirect()->to('/login');
+            return redirect()->to(site_url('login'));
         }
     }
 
