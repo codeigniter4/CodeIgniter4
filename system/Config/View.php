@@ -17,6 +17,14 @@ namespace CodeIgniter\Config;
 class View extends BaseConfig
 {
 	/**
+	 * When false, the view method will clear the data between each
+	 * call.
+	 *
+	 * @var boolean
+	 */
+	public $saveData = true;
+
+	/**
 	 * Parser Filters map a filter name with any PHP callable. When the
 	 * Parser prepares a variable for display, it will chain it
 	 * through the filters in the order defined, inserting any parameters.

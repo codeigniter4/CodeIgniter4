@@ -142,7 +142,7 @@ class View implements RendererInterface
 		$this->loader   = $loader ?? Services::locator();
 		$this->logger   = $logger ?? Services::logger();
 		$this->debug    = $debug ?? CI_DEBUG;
-		$this->saveData = $config->saveData ?? null;
+		$this->saveData = (bool) $config->saveData;
 	}
 
 	//--------------------------------------------------------------------
@@ -156,7 +156,7 @@ class View implements RendererInterface
 	 *  - cache_name Name to use for cache
 	 *
 	 * @param string       $view     File name of the view source
-	 * @param array        $options  Reserved for 3rd-party uses since
+	 * @param array|null   $options  Reserved for 3rd-party uses since
 	 *                               it might be needed to pass additional info
 	 *                               to other template engines.
 	 * @param boolean|null $saveData If true, saves data for subsequent calls,
@@ -176,7 +176,7 @@ class View implements RendererInterface
 		$fileExt                     = pathinfo($view, PATHINFO_EXTENSION);
 		$realPath                    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
 		$this->renderVars['view']    = $realPath;
-		$this->renderVars['options'] = $options;
+		$this->renderVars['options'] = $options ?? [];
 
 		// Was it cached?
 		if (isset($this->renderVars['options']['cache']))
@@ -277,7 +277,7 @@ class View implements RendererInterface
 	 * Cache does not apply, because there is no "key".
 	 *
 	 * @param string       $view     The view contents
-	 * @param array        $options  Reserved for 3rd-party uses since
+	 * @param array|null   $options  Reserved for 3rd-party uses since
 	 *                               it might be needed to pass additional info
 	 *                               to other template engines.
 	 * @param boolean|null $saveData If true, saves data for subsequent calls,
