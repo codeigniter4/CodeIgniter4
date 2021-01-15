@@ -58,7 +58,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = (string) $config->prefix;
 
 		if (! empty($config))
 		{

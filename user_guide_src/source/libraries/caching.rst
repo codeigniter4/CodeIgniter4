@@ -57,7 +57,7 @@ more complex, multi-server setups.
 **$prefix**
 
 If you have more than one application using the same cache storage, you can add a custom prefix
-here that is prepended to all key names.
+string here that is prepended to all key names.
 
 **$file**
 

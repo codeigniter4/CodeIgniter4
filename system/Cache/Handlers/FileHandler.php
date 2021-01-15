@@ -71,7 +71,7 @@ class FileHandler implements CacheInterface
 		}
 
 		$this->mode   = $config->file['mode'] ?? 0640;
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = (string) $config->prefix;
 	}
 
 	//--------------------------------------------------------------------
