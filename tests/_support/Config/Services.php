@@ -2,6 +2,7 @@
 
 namespace Tests\Support\Config;
 
+use CodeIgniter\HTTP\URI;
 use Config\Services as BaseServices;
 use RuntimeException;
 
