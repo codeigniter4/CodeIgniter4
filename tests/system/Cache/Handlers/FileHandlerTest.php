@@ -26,6 +26,11 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
+		if (! function_exists('octal_permissions'))
+		{
+			helper('filesystem');
+		}
+
 		// Initialize path
 		$this->config                     = new \Config\Cache();
 		$this->config->file['storePath'] .= self::$directory;
@@ -188,7 +193,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->fileHandler->save(self::$key1, 'value');
 
 		$file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
-		$mode = substr(sprintf('%o', fileperms($file)), -4);
+		$mode = octal_permissions(fileperms($file));
 
 		$this->assertEquals($string, $mode);
 	}
@@ -196,10 +201,10 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function modeProvider()
 	{
 		return [
-			[0640, '0640'],
-			[0600, '0600'],
-			[0660, '0660'],
-			[0777, '0777'],
+			[0640, '640'],
+			[0600, '600'],
+			[0660, '660'],
+			[0777, '777'],
 		];
 	}
 

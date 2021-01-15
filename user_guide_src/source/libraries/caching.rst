@@ -61,7 +61,7 @@ here that is prepended to all key names.
 
 **$file**
 
-This is an array of settings specific to the  ``File`` handler determine how it should save the cache files.
+This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
 
 **$memcached**
 
