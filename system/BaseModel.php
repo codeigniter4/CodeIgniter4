@@ -20,6 +20,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -715,31 +716,7 @@ abstract class BaseModel
 	{
 		$this->insertID = 0;
 
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('insert');
-		}
-
-		// If $data is using a custom class with public or protected
-		// properties representing the collection elements, we need to grab
-		// them as an array.
-		if (is_object($data) && ! $data instanceof stdClass)
-		{
-			$data = $this->objectToArray($data, false, true);
-		}
-
-		// If it's still a stdClass, go ahead and convert to
-		// an array so doProtectFields and other model methods
-		// don't have to do special checks.
-		if (is_object($data))
-		{
-			$data = (array) $data;
-		}
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('insert');
-		}
+		$data = $this->transformDataToArray($data, 'insert');
 
 		// Validate data before saving.
 		if (! $this->skipValidation && ! $this->cleanRules()->validate($data))
@@ -877,32 +854,7 @@ abstract class BaseModel
 			$id = [$id];
 		}
 
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('update');
-		}
-
-		// If $data is using a custom class with public or protected
-		// properties representing the collection elements, we need to grab
-		// them as an array.
-		if (is_object($data) && ! $data instanceof stdClass)
-		{
-			$data = $this->objectToArray($data, true, true);
-		}
-
-		// If it's still a stdClass, go ahead and convert to
-		// an array so doProtectFields and other model methods
-		// don't have to do special checks.
-		if (is_object($data))
-		{
-			$data = (array) $data;
-		}
-
-		// If it's still empty here, means $data is no change or is empty object
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('update');
-		}
+		$data = $this->transformDataToArray($data, 'update');
 
 		// Validate data before saving.
 		if (! $this->skipValidation && ! $this->cleanRules(true)->validate($data))
@@ -1690,6 +1642,55 @@ abstract class BaseModel
 		}
 
 		return $properties;
+	}
+
+	/**
+	 * Transform data to array
+	 *
+	 * @param array|object|null $data Data
+	 * @param string            $type Type of data (insert|update)
+	 *
+	 * @return array
+	 *
+	 * @throws DataException
+	 * @throws InvalidArgumentException
+	 * @throws ReflectionException
+	 */
+	protected function transformDataToArray($data, string $type): array
+	{
+		if (! in_array($type, ['insert', 'update'], true))
+		{
+			throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
+		}
+
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset($type);
+		}
+
+		// If $data is using a custom class with public or protected
+		// properties representing the collection elements, we need to grab
+		// them as an array.
+		if (is_object($data) && ! $data instanceof stdClass)
+		{
+			$data = $this->objectToArray($data, true, true);
+		}
+
+		// If it's still a stdClass, go ahead and convert to
+		// an array so doProtectFields and other model methods
+		// don't have to do special checks.
+		if (is_object($data))
+		{
+			$data = (array) $data;
+		}
+
+		// If it's still empty here, means $data is no change or is empty object
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset($type);
+		}
+
+		return $data;
 	}
 
 	// endregion
