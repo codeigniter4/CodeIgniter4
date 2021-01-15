@@ -103,15 +103,15 @@ class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRemember()
 	{
-		$this->fileHandler->remember(self::$key1, 2, function () {
+		$this->redisHandler->remember(self::$key1, 2, function () {
 			return 'value';
 		});
 
-		$this->assertSame('value', $this->fileHandler->get(self::$key1));
-		$this->assertNull($this->fileHandler->get(self::$dummy));
+		$this->assertSame('value', $this->redisHandler->get(self::$key1));
+		$this->assertNull($this->redisHandler->get(self::$dummy));
 
 		\CodeIgniter\CLI\CLI::wait(3);
-		$this->assertNull($this->fileHandler->get(self::$key1));
+		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 
 	public function testSave()
