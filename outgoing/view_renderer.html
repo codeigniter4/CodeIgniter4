@@ -454,6 +454,11 @@ context as the second parameter. Valid contexts are ‘html’, ‘js’, ‘css
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> as defined by the interface must be a boolean, but implementing
+classes (like <code class="docutils literal notranslate"><span class="pre">View</span></code> below) may extend this to include <code class="docutils literal notranslate"><span class="pre">null</span></code> values.</p>
+</div>
 </div>
 </div>
 <div class="section" id="class-reference">
@@ -469,7 +474,7 @@ context as the second parameter. Valid contexts are ‘html’, ‘js’, ‘css
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$view</strong> (<em>string</em>) – File name of the view source</p></li>
 <li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
-<li><p><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</p></li>
+<li><p><strong>$saveData</strong> (<em>boolean|null</em>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -493,7 +498,7 @@ context as the second parameter. Valid contexts are ‘html’, ‘js’, ‘css
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$view</strong> (<em>string</em>) – Contents of the view to render, for instance content retrieved from a database</p></li>
 <li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
-<li><p><strong>$saveData</strong> (<em>boolean</em>) – If true, will save data for use with any other calls, if false, will clean the data after rendering the view.</p></li>
+<li><p><strong>$saveData</strong> (<em>boolean|null</em>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
