@@ -218,4 +218,25 @@ final class InsertModelTest extends LiveModelTestCase
 		$this->assertSame($insert['key'], $this->model->getInsertID());
 		$this->seeInDatabase('without_auto_increment', $insert);
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4087
+	 */
+	public function testInsertWithSetAndEscape(): void
+	{
+		$userData = [
+			'name' => 'Scott',
+		];
+
+		$this->createModel(UserModel::class);
+
+		$this->setPrivateProperty($this->model, 'useTimestamps', true);
+
+		$this->model->set('country', '1+1', false)->set('email', '2+2')->insert($userData);
+
+		$this->assertGreaterThan(0, $this->model->getInsertID());
+		$result = $this->model->where('name', 'Scott')->where('country', '2')->where('email', '2+2')->first();
+
+		$this->assertCloseEnough(time(), strtotime($result->created_at));
+	}
 }

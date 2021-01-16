@@ -13,6 +13,9 @@
 		"mikey179/vfsstream": "^1.6",
 		"phpunit/phpunit": "^8.5"
 	},
+	"suggest": {
+		"ext-fileinfo": "Improves mime type detection for files"
+	},
 	"autoload": {
 		"psr-4": {
 			"App\\": "app",
