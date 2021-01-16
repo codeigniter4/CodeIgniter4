@@ -44,7 +44,8 @@ class FormatRules
 			return true;
 		}
 
-		return (bool) preg_match('/^[A-Z ]+$/i', $value);
+		// @see https://regex101.com/r/LhqHPO/1
+		return (bool) preg_match('/\A[A-Z ]+\z/i', $value);
 	}
 
 	/**
@@ -56,7 +57,8 @@ class FormatRules
 	 */
 	public function alpha_dash(?string $str = null): bool
 	{
-			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
+		// @see https://regex101.com/r/XfVY3d/1
+		return (bool) preg_match('/\A[a-z0-9_-]+\z/i', $str);
 	}
 
 	/**
@@ -72,7 +74,8 @@ class FormatRules
 	 */
 	public function alpha_numeric_punct($str)
 	{
-		return (bool) preg_match('/^[A-Z0-9 ~!#$%\&\*\-_+=|:.]+$/i', $str);
+		// @see https://regex101.com/r/6N8dDY/1
+		return (bool) preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str);
 	}
 
 	/**
@@ -96,7 +99,8 @@ class FormatRules
 	 */
 	public function alpha_numeric_space(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+		// @see https://regex101.com/r/0AZDME/1
+		return (bool) preg_match('/\A[A-Z0-9 ]+\z/i', $str);
 	}
 
 	/**
@@ -123,7 +127,8 @@ class FormatRules
 	 */
 	public function decimal(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[-+]?[0-9]{0,}\.?[0-9]+$/', $str);
+		// @see https://regex101.com/r/HULifl/1/
+		return (bool) preg_match('/\A[-+]?[0-9]{0,}\.?[0-9]+\z/', $str);
 	}
 
 	/**
@@ -147,7 +152,7 @@ class FormatRules
 	 */
 	public function integer(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
+		return (bool) preg_match('/\A[\-+]?[0-9]+\z/', $str);
 	}
 
 	/**
@@ -181,7 +186,8 @@ class FormatRules
 	 */
 	public function numeric(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
+		// @see https://regex101.com/r/bb9wtr/1
+		return (bool) preg_match('/\A[\-+]?[0-9]*\.?[0-9]+\z/', $str);
 	}
 
 	/**
@@ -253,6 +259,7 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
+		// @see https://regex101.com/r/wlJG1t/1/
 		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
 			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
