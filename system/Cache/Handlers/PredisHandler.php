@@ -11,17 +11,15 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
-use Closure;
 use Exception;
 use Predis\Client;
 
 /**
  * Predis cache handler
  */
-class PredisHandler implements CacheInterface
+class PredisHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.
@@ -128,31 +126,6 @@ class PredisHandler implements CacheInterface
 			default:
 				return null;
 		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get an item from the cache, or execute the given Closure and store the result.
-	 *
-	 * @param string  $key      Cache item name
-	 * @param integer $ttl      Time to live
-	 * @param Closure $callback Callback return value
-	 *
-	 * @return mixed
-	 */
-	public function remember(string $key, int $ttl, Closure $callback)
-	{
-		$value = $this->get($key);
-
-		if (! is_null($value))
-		{
-			return $value;
-		}
-
-		$this->save($key, $value = $callback(), $ttl);
-
-		return $value;
 	}
 
 	//--------------------------------------------------------------------

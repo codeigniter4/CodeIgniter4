@@ -11,8 +11,6 @@
 
 namespace CodeIgniter\Cache;
 
-use Closure;
-
 /**
  * Cache interface
  */

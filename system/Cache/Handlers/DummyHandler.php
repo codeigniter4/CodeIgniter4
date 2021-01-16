@@ -11,13 +11,12 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use Closure;
 
 /**
  * Dummy cache handler
  */
-class DummyHandler implements CacheInterface
+class DummyHandler extends BaseHandler
 {
 	/**
 	 * Takes care of any handler-specific setup that must be done.

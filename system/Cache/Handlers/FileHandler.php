@@ -11,15 +11,13 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use Config\Cache;
-use Closure;
 
 /**
  * File system cache handler
  */
-class FileHandler implements CacheInterface
+class FileHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.
@@ -81,31 +79,6 @@ class FileHandler implements CacheInterface
 		$data = $this->getItem($key);
 
 		return is_array($data) ? $data['data'] : null;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get an item from the cache, or execute the given Closure and store the result.
-	 *
-	 * @param string  $key      Cache item name
-	 * @param integer $ttl      Time to live
-	 * @param Closure $callback Callback return value
-	 *
-	 * @return mixed
-	 */
-	public function remember(string $key, int $ttl, Closure $callback)
-	{
-		$value = $this->get($key);
-
-		if (! is_null($value))
-		{
-			return $value;
-		}
-
-		$this->save($key, $value = $callback(), $ttl);
-
-		return $value;
 	}
 
 	//--------------------------------------------------------------------
