@@ -359,6 +359,7 @@
 <li><p>Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is <code class="docutils literal notranslate"><span class="pre">Lax</span></code>.</p></li>
 <li><p>Guessing file extensions from mime type in <code class="docutils literal notranslate"><span class="pre">Config\Mimes::guessExtensionFromType</span></code> now only reverse searches the <code class="docutils literal notranslate"><span class="pre">$mimes</span></code> array if no extension is proposed (i.e., usually not for uploaded files).</p></li>
 <li><p>The getter functions for file extensions of uploaded files now have different fallback values (<code class="docutils literal notranslate"><span class="pre">$this-&gt;getClientExtension()</span></code> for <code class="docutils literal notranslate"><span class="pre">UploadedFile-&gt;getExtension()</span></code> and <code class="docutils literal notranslate"><span class="pre">''</span></code> for <code class="docutils literal notranslate"><span class="pre">UploadedFile-&gt;guessExtension()</span></code>). This is a security fix and makes the process less dependent on the client.</p></li>
+<li><p>The Cache <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> now allows setting the file permissions mode via <code class="docutils literal notranslate"><span class="pre">Config\Cache</span></code></p></li>
 </ul>
 <p>Changes:</p>
 <ul class="simple">
@@ -389,6 +390,7 @@
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Config</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Factories::config()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeader</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">header()</span></code> to prepare for PSR-7</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaders</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">headers()</span></code> to prepare for PSR-7</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\Cache::$storePath</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Cache::$file['storePath']</span></code></p></li>
 </ul>
 </div>
 
