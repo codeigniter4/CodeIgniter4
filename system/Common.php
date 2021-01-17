@@ -13,6 +13,8 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\HTTP\Cookie\CookieStore;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -219,6 +221,27 @@ if (! function_exists('config'))
 	function config(string $name, bool $getShared = true)
 	{
 		return Factories::config($name, ['getShared' => $getShared]);
+	}
+}
+
+if (! function_exists('cookies'))
+{
+	/**
+	 * Fetches the global `CookieStore` instance held by `Response`.
+	 *
+	 * @param Cookie[] $cookies   If `getGlobal` is false, this is passed to CookieStore's constructor
+	 * @param boolean  $getGlobal If false, creates a new instance of CookieStore
+	 *
+	 * @return CookieStore
+	 */
+	function cookies(array $cookies = [], bool $getGlobal = true): CookieStore
+	{
+		if ($getGlobal)
+		{
+			return Services::response()->getCookieStore();
+		}
+
+		return new CookieStore($cookies);
 	}
 }
 
