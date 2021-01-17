@@ -677,7 +677,7 @@ class Services extends BaseService
 			return static::getSharedInstance('security', $config);
 		}
 
-		$config = $config ?? config('Security') ?? config('App');
+		$config = $config ?? config('App');
 
 		return new Security($config);
 	}

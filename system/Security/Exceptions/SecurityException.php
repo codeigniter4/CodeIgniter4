@@ -19,9 +19,4 @@ class SecurityException extends FrameworkException
 	{
 		return new static(lang('Security.disallowedAction'), 403);
 	}
-	
-	public static function forInvalidSameSite(string $samesite)
-	{
-		return new static(lang('Security.invalidSameSite', [$samesite]));
-	}
 }
