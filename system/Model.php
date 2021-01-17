@@ -150,7 +150,7 @@ class Model extends BaseModel
 	 */
 	protected function doFind(bool $singleton, $id = null)
 	{
-		$builder = $this->builder();
+		$builder = $this->parseId();
 
 		if ($this->tempUseSoftDeletes)
 		{
@@ -159,15 +159,11 @@ class Model extends BaseModel
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
-				->get()
-				->getResult($this->tempReturnType);
+			$row = $builder->get()->getResult($this->tempReturnType);
 		}
 		elseif ($singleton)
 		{
-			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
-				->get()
-				->getFirstRow($this->tempReturnType);
+			$row = $builder->get()->getFirstRow($this->tempReturnType);
 		}
 		else
 		{
@@ -337,12 +333,7 @@ class Model extends BaseModel
 		$escape       = $this->escape;
 		$this->escape = [];
 
-		$builder = $this->builder();
-
-		if ($id)
-		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
-		}
+		$builder = $this->parseId($id);
 
 		// Must use the set() method to ensure to set the correct escape flag
 		foreach ($data as $key => $val)
@@ -385,13 +376,8 @@ class Model extends BaseModel
 	 */
 	protected function doDelete($id = null, bool $purge = false)
 	{
-		$builder = $this->builder();
-
-		if ($id)
-		{
-			$builder = $builder->whereIn($this->primaryKey, $id);
-		}
-
+		$builder = $this->parseId($id);
+		
 		if ($this->useSoftDeletes && ! $purge)
 		{
 			if (empty($builder->getCompiledQBWhere()))
@@ -485,14 +471,34 @@ class Model extends BaseModel
 	 */
 	protected function idValue($data)
 	{
-		if (is_object($data) && isset($data->{$this->primaryKey}))
-		{
-			return $data->{$this->primaryKey};
-		}
+		if(is_string($this->primaryKey)) {
+			if (is_object($data) && isset($data->{$this->primaryKey}))
+			{
+				return $data->{$this->primaryKey};
+			}
 
-		if (is_array($data) && ! empty($data[$this->primaryKey]))
-		{
-			return $data[$this->primaryKey];
+			if (is_array($data) && ! empty($data[$this->primaryKey]))
+			{
+				return $data[$this->primaryKey];
+			}
+		}
+		
+		if(is_array($this->primaryKey)) {
+	
+			$ret = [];
+			foreach($this->primaryKey as $primaryKey)
+			{
+				if (is_object($data) && isset($data->{$this->primaryKey}))
+				{
+					$ret[] = $data->{$primaryKey} ?? null;
+				}
+
+				if (is_array($data) && ! empty($data[$this->primaryKey]))
+				{
+					$ret[] = $data[$primaryKey] ?? null;
+				}
+			}
+			return $ret;
 		}
 
 		return null;
