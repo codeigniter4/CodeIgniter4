@@ -14,21 +14,25 @@ class ConfigurableSortImportsTest extends CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 	}
 
 	protected function tearDown(): void
 	{
-		parent::tearDown();
 		stream_filter_remove($this->streamFilter);
+	}
 
-		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-		$file   = trim(substr($result, 14));
-		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
-		$dir    = dirname($file);
-		file_exists($file) && unlink($file);
-		is_dir($dir) && rmdir($dir);
+	public function testPublishLanguageWithoutOptions()
+	{
+		command('publish:language');
+
+		$file = APPPATH . 'Language/en/Foobar.php';
+		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+		$this->assertFileExists($file);
+		$this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+		is_file($file) && unlink($file);
 	}
 
 	public function testEnabledSortImportsWillDisruptLanguageFilePublish()
@@ -36,18 +40,24 @@ class ConfigurableSortImportsTest extends CIUnitTestCase
 		command('publish:language --lang es');
 
 		$file = APPPATH . 'Language/es/Foobar.php';
-		$this->assertStringContainsString('Created file: ', CITestStreamFilter::$buffer);
+		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
 		$this->assertFileExists($file);
 		$this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+		is_file($file) && unlink($file);
+		$dir    = dirname($file);
+		is_dir($dir) && rmdir($dir);
 	}
 
 	public function testDisabledSortImportsWillNotAffectLanguageFilesPublish()
 	{
-		command('publish:language --lang es --sort off');
+		command('publish:language --lang ar --sort off');
 
-		$file = APPPATH . 'Language/es/Foobar.php';
-		$this->assertStringContainsString('Created file: ', CITestStreamFilter::$buffer);
+		$file = APPPATH . 'Language/ar/Foobar.php';
+		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
 		$this->assertFileExists($file);
 		$this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+		is_file($file) && unlink($file);
+		$dir    = dirname($file);
+		is_dir($dir) && rmdir($dir);
 	}
 }

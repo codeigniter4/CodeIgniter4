@@ -2,10 +2,14 @@
 
 namespace Tests\Support\Commands;
 
-use CodeIgniter\CLI\GeneratorCommand;
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\GeneratorTrait;
 
-class LanguageCommand extends GeneratorCommand
+class LanguageCommand extends BaseCommand
 {
+	use GeneratorTrait;
+
+	protected $group       = 'Generators';
 	protected $name        = 'publish:language';
 	protected $description = 'Publishes a language file.';
 	protected $usage       = 'publish:language [options]';
@@ -16,21 +20,20 @@ class LanguageCommand extends GeneratorCommand
 
 	public function run(array $params)
 	{
+		$this->setHasClassName(false);
 		$params[0]      = 'Foobar';
 		$params['lang'] = $params['lang'] ?? 'en';
-		$sort           = (isset($params['sort']) && $params['sort'] === 'off') ? false : true;
 
+		$this->component = 'Language';
+		$this->directory = 'Language\\' . $params['lang'];
+
+		$sort = (isset($params['sort']) && $params['sort'] === 'off') ? false : true;
 		$this->setSortImports($sort);
 
-		parent::run($params);
+		$this->execute($params);
 	}
 
-	protected function getNamespacedClass(string $rootNamespace, string $class): string
-	{
-		return $rootNamespace . '\\Language\\' . $this->params['lang'] . '\\' . $class;
-	}
-
-	protected function getTemplate(): string
+	protected function prepare(string $class): string
 	{
 		return file_get_contents(__DIR__ . '/Foobar.php') ?: '';
 	}
