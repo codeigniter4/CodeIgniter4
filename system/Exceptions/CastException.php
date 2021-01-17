@@ -16,6 +16,8 @@ namespace CodeIgniter\Exceptions;
  */
 class CastException extends CriticalError
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Error code
 	 *

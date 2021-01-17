@@ -21,6 +21,8 @@ use RuntimeException;
  */
 class FrameworkException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	public static function forEnabledZlibOutputCompression()
 	{
 		return new static(lang('Core.enabledZlibOutputCompression'));

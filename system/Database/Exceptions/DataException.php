@@ -11,10 +11,13 @@
 
 namespace CodeIgniter\Database\Exceptions;
 
+use CodeIgniter\Exceptions\DebugTraceableTrait;
 use RuntimeException;
 
 class DataException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Used by the Model's trigger() method when the callback cannot be found.
 	 *

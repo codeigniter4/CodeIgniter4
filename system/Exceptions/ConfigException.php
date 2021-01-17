@@ -16,6 +16,8 @@ namespace CodeIgniter\Exceptions;
  */
 class ConfigException extends CriticalError
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Error code
 	 *
