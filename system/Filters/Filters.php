@@ -444,7 +444,7 @@ class Filters
 	}
 
 	/**
-	 * Add any method-specific flters to the mix.
+	 * Add any method-specific filters to the mix.
 	 *
 	 * @return void
 	 */

@@ -28,7 +28,7 @@ class Forge extends BaseForge
 	/**
 	 * CREATE DATABASE IF statement
 	 *
-	 * @todo missing charset, collat & check for existant
+	 * @todo missing charset, collat & check for existent
 	 *
 	 * @var string
 	 */
