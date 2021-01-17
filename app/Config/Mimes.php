@@ -149,6 +149,7 @@ class Mimes
 			'multipart/x-zip',
 		],
 		'rar'   => [
+			'application/vnd.rar',
 			'application/x-rar',
 			'application/rar',
 			'application/x-rar-compressed',
