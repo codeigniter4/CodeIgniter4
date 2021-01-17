@@ -150,7 +150,7 @@ class Model extends BaseModel
 	 */
 	protected function doFind(bool $singleton, $id = null)
 	{
-		$builder = $this->parseId();
+		$builder = $this->parseId($id);
 
 		if ($this->tempUseSoftDeletes)
 		{
