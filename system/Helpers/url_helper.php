@@ -130,17 +130,32 @@ if (! function_exists('current_url'))
 	 * Returns the full URL (including segments) of the page where this
 	 * function is placed
 	 *
-	 * @param boolean $returnObject True to return an object instead of a strong
+	 * @param boolean $returnObject True to return an object instead of a string
 	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		$uri = clone Services::request()->uri;
+		$uriCopy = clone Services::request()->uri;
+        $config  = config(App::class);
 
-		// Since we're basing off of the IncomingRequest URI,
-		// we are guaranteed to have a host based on our own configs.
-		return $returnObject ? $uri : (string) $uri->setQuery('');
+        $url  = rtrim(base_url(), '/') . '/';
+        $path = $uriCopy->getPath();
+
+        // Add index page, if so configured
+        if (! empty($config->indexPage)) 
+        {
+            $url .= rtrim($config->indexPage, '/');
+        }
+        if (! empty($path)) 
+        {
+            $url .= '/' . $path;
+        }
+
+        $uri = new URI($url);
+        $uri->setQuery($uriCopy->getQuery());
+
+        return $returnObject ? $uri : (string) $uri->setQuery('');
 	}
 }
 
