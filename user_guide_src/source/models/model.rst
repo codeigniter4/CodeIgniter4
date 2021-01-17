@@ -142,7 +142,9 @@ queries.
 
 This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
-is used with methods like ``find()`` to know what column to match the specified value to.
+is used with methods like ``find()`` to know what column to match the specified value to. 
+Tables that have a multiple column primary key, all column names concerned must be 
+specified in an array.
 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
@@ -261,6 +263,14 @@ You can specify more than one row to return by passing an array of primaryKey va
 of just one::
 
     $users = $userModel->find([1,2,3]);
+
+For primary keys with several columns, an array with all affected columns must be transferred as the primary key.
+
+    $users = $userModel->find([1,2]);   // [column1,column2]
+
+You can specify more than one row to return by passing an array of an array of primary key values instead of just one
+
+    $users = $userModel->find([[1,1],[1,2]]);   // [[column1,column2],[column1,column2]]
 
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like findAll(), though less explicit.
@@ -464,6 +474,10 @@ date and time. You can force a permanent delete by setting the second parameter 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once::
 
     $userModel->delete([1,2,3]);
+
+To delete a record on models with multiple column primary key, an array can be passed in::
+
+    $userModel->delete([1,2]);   // [pk_column1, pk_column2]
 
 If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
 previously::

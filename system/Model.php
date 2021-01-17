@@ -157,11 +157,35 @@ class Model extends BaseModel
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
 
-		if (is_array($id))
+		if (is_array($id) && !is_array($this->primaryKey))
 		{
 			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
 				->get()
 				->getResult($this->tempReturnType);
+		}
+		if (is_array($id) && is_array($this->primaryKey))
+		{
+
+			if (!is_array($id[0])) {
+				$id = array($id);
+			}
+
+			$row = $builder;
+
+			foreach ($id as $values) {
+
+				$row->orGroupStart();
+
+				for ($i=0; $i < count($this->primaryKey); $i++) { 
+					
+					$row = $row->where($this->table . '.' . $this->primaryKey[$i], $values[$i]);
+				}
+
+				$row = $row->groupEnd();
+			}
+
+			$row = $row->get()
+				       ->getResult($this->tempReturnType);
 		}
 		elseif ($singleton)
 		{
@@ -387,9 +411,17 @@ class Model extends BaseModel
 	{
 		$builder = $this->builder();
 
-		if ($id)
+		if ($id && !is_array($this->primaryKey))
 		{
 			$builder = $builder->whereIn($this->primaryKey, $id);
+
+		} elseif ($id && is_array($this->primaryKey)) {
+
+			foreach ($this->primaryKey as $key) {
+
+				$builder = $builder->where($key, $id[$key]);
+				
+			}
 		}
 
 		if ($this->useSoftDeletes && ! $purge)
