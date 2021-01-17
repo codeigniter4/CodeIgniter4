@@ -778,7 +778,7 @@ class Model extends BaseModel
 
 	
 	/**
-	 * @param  $id integer|string|array|null:
+	 * @param  integer|string|array|null $id ID to build WHERE part of the query
 	 *         int|string:  WHERE $this->table.$this->primaryKey = $id
 	 *         indexed array: WHERE $this->table.$this->primaryKey IN ([2,3]) <i.e.: $id = [2,3]>
 	 *         associative array: WHERE $this->table.key1 = 1 AND $this->table.key2 IN([2,3]) <i.e.: $id = [key1 => 1, key2 => [2,3]]>
