@@ -97,7 +97,7 @@ The following functions are available:
     .. note:: Calling this function is the same as doing this:
         ::
 
-            base_url(uri_string());
+            site_url(uri_string());
 
 .. php:function:: previous_url([$returnObject = false])
 
