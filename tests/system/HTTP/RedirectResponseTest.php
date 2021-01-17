@@ -3,15 +3,15 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Config;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
+use Config\Services;
 
-class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class RedirectResponseTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var RouteCollection
 	 */
@@ -218,14 +218,13 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SESSION = [];
 
-		$baseResponse = service('response');
+		$baseResponse = Services::response();
 		$baseResponse->setCookie('foo', 'bar');
 
 		$response = new RedirectResponse(new App());
 		$this->assertFalse($response->hasCookie('foo', 'bar'));
 
 		$response = $response->withCookies();
-
 		$this->assertTrue($response->hasCookie('foo', 'bar'));
 	}
 

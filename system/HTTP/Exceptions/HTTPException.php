@@ -231,16 +231,4 @@ class HTTPException extends FrameworkException
 	{
 		return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
 	}
-
-	/**
-	 * For Invalid SameSite attribute setting
-	 *
-	 * @param string $samesite
-	 *
-	 * @return HTTPException
-	 */
-	public static function forInvalidSameSiteSetting(string $samesite)
-	{
-		return new static(lang('Security.invalidSameSiteSetting', [$samesite]));
-	}
 }
