@@ -57,7 +57,7 @@ class Model extends BaseModel
 	/**
 	 * The table's primary key.
 	 *
-	 * @var string
+	 * @var string|array
 	 */
 	protected $primaryKey = 'id';
 
@@ -177,7 +177,7 @@ class Model extends BaseModel
 				$row->orGroupStart();
 
 				for ($i=0; $i < count($this->primaryKey); $i++) { 
-					
+
 					$row = $row->where($this->table . '.' . $this->primaryKey[$i], $values[$i]);
 				}
 
