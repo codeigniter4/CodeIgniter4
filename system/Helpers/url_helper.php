@@ -137,25 +137,25 @@ if (! function_exists('current_url'))
 	function current_url(bool $returnObject = false)
 	{
 		$uriCopy = clone Services::request()->uri;
-        $config  = config(App::class);
+		$config  = config(App::class);
 
-        $url  = rtrim(base_url(), '/') . '/';
-        $path = $uriCopy->getPath();
+		$url  = rtrim(base_url(), '/') . '/';
+		$path = $uriCopy->getPath();
 
-        // Add index page, if so configured
-        if (! empty($config->indexPage)) 
-        {
-            $url .= rtrim($config->indexPage, '/');
-        }
-        if (! empty($path)) 
-        {
-            $url .= '/' . $path;
-        }
+		// Add index page, if so configured
+		if (! empty($config->indexPage)) 
+		{
+			$url .= rtrim($config->indexPage, '/');
+		}
+		if (! empty($path)) 
+		{
+			$url .= '/' . $path;
+		}
 
-        $uri = new URI($url);
-        $uri->setQuery($uriCopy->getQuery());
+		$uri = new URI($url);
+		$uri->setQuery($uriCopy->getQuery());
 
-        return $returnObject ? $uri : (string) $uri->setQuery('');
+		return $returnObject ? $uri : (string) $uri->setQuery('');
 	}
 }
 
