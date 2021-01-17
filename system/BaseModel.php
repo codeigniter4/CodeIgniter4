@@ -849,11 +849,7 @@ abstract class BaseModel
 	 */
 	public function update($id = null, $data = null): bool
 	{
-		if (is_numeric($id) || is_string($id))
-		{
-			$id = [$id];
-		}
-
+		
 		$data = $this->transformDataToArray($data, 'update');
 
 		// Validate data before saving.
@@ -973,11 +969,6 @@ abstract class BaseModel
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
-		if ($id && (is_numeric($id) || is_string($id)))
-		{
-			$id = [$id];
-		}
-
 		$eventData = [
 			'id'    => $id,
 			'purge' => $purge,
@@ -1096,6 +1087,55 @@ abstract class BaseModel
 		return $error['message'] ?? null;
 	}
 
+	
+	
+	/**
+	 * @param  $id integer|string|array|null:
+	 *         int|string:  WHERE $this->table.$this->primaryKey = $id
+	 *         indexed array: WHERE $this->table.$this->primaryKey IN ([2,3]) <i.e.: $id = [2,3]>
+	 *         associative array: WHERE $this->table.key1 = 1 AND $this->table.key2 IN([2,3]) <i.e.: $id = [key1 => 1, key2 => [2,3]]>
+	 * @return BaseBuilder
+	 */
+	private function parseId($id = null)
+	{
+		$builder = $this->builder();
+
+		// is numeric or is non empty string
+		if (! empty($id))
+		{
+			if (is_numeric($id) || is_string($id))
+			{
+				$builder = $builder->where($this->table . '.' . $this->primaryKey, $id);
+			}
+			elseif (is_array($id))
+			{
+				//$id contains an indexed array
+				if (array_keys($id) === range(0, count($id) - 1))
+				{
+					$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+				}
+				//$id contains associative array
+				else
+				{
+					foreach ($id as $key => $value)
+					{
+						if (! empty($value) && is_array($value))
+						{
+							$builder = $builder->whereIn($this->table . '.' . $key, $value);
+						}
+						else
+						{
+							$builder = $builder->where($this->table . '.' . $key, $value);
+						}
+					}
+				}
+			}
+		}
+
+		return $builder;
+	}
+
+	
 	// endregion
 
 	// region Pager
