@@ -130,7 +130,7 @@ if (! function_exists('current_url'))
 	 * Returns the full URL (including segments) of the page where this
 	 * function is placed
 	 *
-	 * @param boolean $returnObject True to return an object instead of a strong
+	 * @param boolean $returnObject True to return an object instead of a string
 	 *
 	 * @return string|URI
 	 */
@@ -140,6 +140,37 @@ if (! function_exists('current_url'))
 
 		// Since we're basing off of the IncomingRequest URI,
 		// we are guaranteed to have a host based on our own configs.
+		return $returnObject ? $uri : (string) $uri->setQuery('');
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('this_url'))
+{
+	/**
+	 * This method is pretty much the same as current_url().
+	 * The only difference is this method is based on the site_url() instead of base_url().
+	 *
+	 * @param boolean $returnObject True to return an object instead of a string
+	 *
+	 * @return string|\CodeIgniter\HTTP\URI
+	 */
+	function this_url(bool $returnObject = false)
+	{
+		$uriCopy = clone Services::request()->uri;
+		$path    = $uriCopy->getPath();
+
+		$url = site_url('/');
+
+		if (! empty($path)) 
+		{
+			$url .= $path;
+		}
+
+		$uri = new URI($url);
+		$uri->setQuery($uriCopy->getQuery());
+		
 		return $returnObject ? $uri : (string) $uri->setQuery('');
 	}
 }
