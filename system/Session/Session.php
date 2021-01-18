@@ -479,7 +479,7 @@ class Session implements SessionInterface
 	 * to be set as session properties.
 	 *
 	 * @param string|array $data  Property name or associative array of properties
-	 * @param string|array $value Property value if single key provided
+	 * @param mixed        $value Property value if single key provided
 	 */
 	public function set($data, $value = null)
 	{
@@ -514,8 +514,8 @@ class Session implements SessionInterface
 	 *
 	 * Replaces the legacy method $session->userdata();
 	 *
-	 * @param  string $key Identifier of the session property to retrieve
-	 * @return array|null	The property value(s)
+	 * @param  string|null $key Identifier of the session property to retrieve
+	 * @return mixed	The property value(s)
 	 */
 	public function get(string $key = null)
 	{
