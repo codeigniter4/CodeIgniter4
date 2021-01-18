@@ -88,16 +88,33 @@ by adding a couple of class properties to your test.
         protected $basePath = 'path/to/database/files';
     }
 
+**$migrate**
+
+This boolean value determines whether the database migration runs before test.
+By default, the database is always migrated to the latest available state as defined by ``$namespace``.
+If false, migration never runs. If you want to disable migration, set false.
+
+**$migrateOnce**
+
+This boolean value determines whether the database migration runs only once. If you want
+to run migration once before the first test, set true. If not present or false, migration
+runs before each test.
+
 **$refresh**
 
-This boolean value determines whether the database is completely refreshed before every test. If true,
-all migrations are rolled back to version 0. The database is always migrated to the latest available
-state as defined by ``$namespace``.
+This boolean value determines whether the database is completely refreshed before test. If true,
+all migrations are rolled back to version 0.
 
 **$seed**
 
 If present and not empty, this specifies the name of a Seed file that is used to populate the database with
-test data prior to every test running.
+test data prior to test running.
+
+**$seedOnce**
+
+This boolean value determines whether the database seeding runs only once. If you want
+to run database seeding once before the first test, set true. If not present or false, database seeding
+runs before each test.
 
 **$basePath**
 

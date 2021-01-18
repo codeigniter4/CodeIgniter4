@@ -14,7 +14,7 @@ namespace CodeIgniter\Exceptions;
 use Error;
 
 /**
- * Error: Critical conditions, like component unavailble, etc.
+ * Error: Critical conditions, like component unavailable, etc.
  */
 class CriticalError extends Error
 {

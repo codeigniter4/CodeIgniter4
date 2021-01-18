@@ -20,10 +20,6 @@ CodeIgniter's robust Email Class supports the following features:
     :local:
     :depth: 2
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 ***********************
 Using the Email Library
 ***********************

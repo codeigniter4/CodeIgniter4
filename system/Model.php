@@ -84,6 +84,14 @@ class Model extends BaseModel
 	 */
 	protected $tempData = [];
 
+	/**
+	 * Escape array that maps usage of escape
+	 * flag for every parameter.
+	 *
+	 * @var array
+	 */
+	protected $escape = [];
+
 	// endregion
 
 	// region Constructor
@@ -243,13 +251,15 @@ class Model extends BaseModel
 	 * Inserts data into the current table.
 	 * This methods works only with dbCalls
 	 *
-	 * @param array        $data   Data
-	 * @param boolean|null $escape Escape
+	 * @param array $data Data
 	 *
 	 * @return BaseResult|integer|string|false
 	 */
-	protected function doInsert(array $data, ?bool $escape = null)
+	protected function doInsert(array $data)
 	{
+		$escape       = $this->escape;
+		$this->escape = [];
+
 		// Require non empty primaryKey when
 		// not using auto-increment feature
 		if (! $this->useAutoIncrement && empty($data[$this->primaryKey]))
@@ -257,10 +267,15 @@ class Model extends BaseModel
 			throw DataException::forEmptyPrimaryKey('insert');
 		}
 
-		// Must use the set() method to ensure objects get converted to arrays
-		$result = $this->builder()
-			->set($data, '', $escape)
-			->insert();
+		$builder = $this->builder();
+
+		// Must use the set() method to ensure to set the correct escape flag
+		foreach ($data as $key => $val)
+		{
+			$builder->set($key, $val, $escape[$key] ?? null);
+		}
+
+		$result = $builder->insert();
 
 		// If insertion succeeded then save the insert ID
 		if ($result->resultID)
@@ -312,14 +327,16 @@ class Model extends BaseModel
 	 * Updates a single record in $this->table.
 	 * This methods works only with dbCalls
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|null                $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|null                $data Data
 	 *
 	 * @return boolean
 	 */
-	protected function doUpdate($id = null, $data = null, ?bool $escape = null): bool
+	protected function doUpdate($id = null, $data = null): bool
 	{
+		$escape       = $this->escape;
+		$this->escape = [];
+
 		$builder = $this->builder();
 
 		if ($id)
@@ -327,10 +344,13 @@ class Model extends BaseModel
 			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
 		}
 
-		// Must use the set() method to ensure objects get converted to arrays
-		return $builder
-			->set($data, '', $escape)
-			->update();
+		// Must use the set() method to ensure to set the correct escape flag
+		foreach ($data as $key => $val)
+		{
+			$builder->set($key, $val, $escape[$key] ?? null);
+		}
+
+		return $builder->update();
 	}
 
 	/**
@@ -560,6 +580,7 @@ class Model extends BaseModel
 	 * @param string|null $table Table name
 	 *
 	 * @return BaseBuilder
+	 * @throws ModelException
 	 */
 	public function builder(?string $table = null)
 	{
@@ -617,8 +638,12 @@ class Model extends BaseModel
 	{
 		$data = is_array($key) ? $key : [$key => $value];
 
-		$this->tempData['escape'] = $escape;
-		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
+		foreach ($data as $k => $v)
+		{
+			$this->tempData['escape'][$k] = $escape;
+		}
+
+		$this->tempData['data'] = array_merge($this->tempData['data'] ?? [], $data);
 
 		return $this;
 	}
@@ -654,46 +679,62 @@ class Model extends BaseModel
 	 *
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
-	 * @param boolean|null      $escape   Escape
 	 *
 	 * @return BaseResult|object|integer|string|false
 	 *
 	 * @throws ReflectionException
 	 */
-	public function insert($data = null, bool $returnID = true, ?bool $escape = null)
+	public function insert($data = null, bool $returnID = true)
 	{
-		if (empty($data))
+		if (! empty($this->tempData['data']))
 		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
+			if (empty($data))
+			{
+				$data = $this->tempData['data'] ?? null;
+			}
+			else
+			{
+				$data = $this->transformDataToArray($data, 'insert');
+				$data = array_merge($this->tempData['data'], $data);
+			}
 		}
 
-		return parent::insert($data, $returnID, $escape);
+		$this->escape   = $this->tempData['escape'] ?? [];
+		$this->tempData = [];
+
+		return parent::insert($data, $returnID);
 	}
 
 	/**
 	 * Updates a single record in the database. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string|null $id     ID
-	 * @param array|object|null         $data   Data
-	 * @param boolean|null              $escape Escape
+	 * @param integer|array|string|null $id   ID
+	 * @param array|object|null         $data Data
 	 *
 	 * @return boolean
 	 *
 	 * @throws ReflectionException
 	 */
-	public function update($id = null, $data = null, ?bool $escape = null): bool
+	public function update($id = null, $data = null): bool
 	{
-		if (empty($data))
+		if (! empty($this->tempData['data']))
 		{
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
-			$this->tempData = [];
+			if (empty($data))
+			{
+				$data = $this->tempData['data'] ?? null;
+			}
+			else
+			{
+				$data = $this->transformDataToArray($data, 'update');
+				$data = array_merge($this->tempData['data'], $data);
+			}
 		}
 
-		return parent::update($id, $data, $escape);
+		$this->escape   = $this->tempData['escape'] ?? [];
+		$this->tempData = [];
+
+		return parent::update($id, $data);
 	}
 
 	// endregion

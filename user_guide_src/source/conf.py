@@ -18,7 +18,7 @@
 
 project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
-copyright = '2019-2020 CodeIgniter Foundation'
+copyright = '2019-2021 CodeIgniter Foundation'
 
 # The short X.Y version.
 version = '4.0'
@@ -137,4 +137,4 @@ man_pages = [
 epub_title = 'CodeIgniter4'
 epub_author = 'CodeIgniter Foundation'
 epub_publisher = 'CodeIgniter Foundation'
-epub_copyright = '2019-2020 CodeIgniter Foundation'
+epub_copyright = '2019-2021 CodeIgniter Foundation'

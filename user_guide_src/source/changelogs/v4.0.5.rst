@@ -12,6 +12,13 @@ Enhancements:
 - New URL helper function ``url_is()`` which allows you to check the current URL to see if matches the given string.
 - Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.
 - Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is ``Lax``.
+- Guessing file extensions from mime type in ``Config\Mimes::guessExtensionFromType`` now only reverse searches the ``$mimes`` array if no extension is proposed (i.e., usually not for uploaded files).
+- The getter functions for file extensions of uploaded files now have different fallback values (``$this->getClientExtension()`` for ``UploadedFile->getExtension()`` and ``''`` for ``UploadedFile->guessExtension()``). This is a security fix and makes the process less dependent on the client.
+- The Cache ``FileHandler`` now allows setting the file permissions mode via ``Config\Cache``
+
+Changes:
+
+- System messages defined in ``system/Language/en/`` are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
 
 Bugs Fixed:
 
@@ -38,3 +45,4 @@ Deprecations:
 - Deprecated ``CodeIgniter\Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``
 - Deprecated ``CodeIgniter\HTTP\Message::getHeader`` in favor of ``header()`` to prepare for PSR-7
 - Deprecated ``CodeIgniter\HTTP\Message::getHeaders`` in favor of ``headers()`` to prepare for PSR-7
+- Deprecated ``Config\Cache::$storePath`` in favor of ``Config\Cache::$file['storePath']``

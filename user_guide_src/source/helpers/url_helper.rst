@@ -7,10 +7,6 @@ The URL Helper file contains functions that assist in working with URLs.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 

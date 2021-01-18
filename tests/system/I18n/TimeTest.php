@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\I18n\Exceptions\I18nException;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
@@ -195,6 +196,16 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
 		$this->assertCloseEnoughString(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+	}
+
+	public function testCreateFromFormatWithInvalidFormat()
+	{
+		$format = 'foobar';
+
+		$this->expectException(I18nException::class);
+		$this->expectExceptionMessage(lang('Time.invalidFormat', [$format]));
+
+		$time = Time::createFromFormat($format, 'America/Chicago');
 	}
 
 	public function testCreateFromTimestamp()

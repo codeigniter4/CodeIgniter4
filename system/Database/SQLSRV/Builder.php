@@ -76,7 +76,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _truncate(string $table): string
 	{
-		return 'TRUNCATE TABLE ' . $table;
+		return 'TRUNCATE TABLE ' . $this->getFullName($table);
 	}
 
 	/**
@@ -122,10 +122,12 @@ class Builder extends BaseBuilder
 			$valstr[] = $key . ' = ' . $val;
 		}
 
-		$statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $table . ' SET '
+		$fullTableName = $this->getFullName($table);
+
+		$statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
 				. implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
 
-		return $this->keyPermission ? $this->addIdentity($this->getFullName($table), $statement) : $statement;
+		return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
 	}
 
 	/**
@@ -355,7 +357,7 @@ class Builder extends BaseBuilder
 			return $this->db->escapeIdentifiers($item);
 		}, $keyFields);
 
-		return 'INSERT INTO ' . $table . ' (' . implode(',', $keys) . ') VALUES (' . implode(',', $values) . ');';
+		return 'INSERT INTO ' . $this->getFullName($table) . ' (' . implode(',', $keys) . ') VALUES (' . implode(',', $values) . ');';
 	}
 
 	/**
@@ -409,7 +411,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _delete(string $table): string
 	{
-		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $table . $this->compileWhereHaving('QBWhere');
+		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
 	}
 
 	/**

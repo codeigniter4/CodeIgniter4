@@ -407,6 +407,11 @@ class CodeIgniter
 			{
 				return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
 			}
+
+			if ($possibleResponse instanceof Request)
+			{
+				$this->request = $possibleResponse;
+			}
 		}
 
 		$returned = $this->startController();

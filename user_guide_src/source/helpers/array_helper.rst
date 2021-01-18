@@ -13,7 +13,7 @@ Loading this Helper
 
 This helper is loaded using the following code::
 
-	helper('array');
+    helper('array');
 
 Available Functions
 ===================

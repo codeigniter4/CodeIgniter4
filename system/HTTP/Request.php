@@ -43,8 +43,6 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 */
 	protected $uri;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -68,8 +66,6 @@ class Request extends Message implements MessageInterface, RequestInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Validate an IP address
 	 *
@@ -85,8 +81,6 @@ class Request extends Message implements MessageInterface, RequestInterface
 		return (new FormatRules())->valid_ip($ip, $which);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Get the request method.
 	 *
@@ -100,8 +94,6 @@ class Request extends Message implements MessageInterface, RequestInterface
 	{
 		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the request method. Used when spoofing the request.
@@ -124,16 +116,16 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 *
 	 * @param string $method
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function withMethod($method)
 	{
-		$clone = clone $this;
+		$request = clone $this;
 
-		return $clone->setMethod($method);
+		$request->method = $method;
+
+		return $request;
 	}
-
-	//--------------------------------------------------------------------
 
     /**
      * Retrieves the URI instance.
