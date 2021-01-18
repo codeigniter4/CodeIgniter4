@@ -1,13 +1,14 @@
 <?php namespace Tests\Support;
 
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Session\SessionInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 
 class SessionTestCase extends CIUnitTestCase
 {
 	/**
-	 * @var SessionHandler
+	 * @var SessionInterface
 	 */
 	protected $session;
 
