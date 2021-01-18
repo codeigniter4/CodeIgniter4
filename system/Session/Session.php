@@ -697,7 +697,7 @@ class Session implements SessionInterface
 	 * If the item key is null, return all flashdata.
 	 *
 	 * @param  string $key Property identifier
-	 * @return array|null	The requested property value, or an associative array  of them
+	 * @return array|null	The requested property value, or an associative array of them
 	 */
 	public function getFlashdata(string $key = null)
 	{
