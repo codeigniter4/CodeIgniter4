@@ -8,10 +8,6 @@ numeric data in a locale-aware manner.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 
