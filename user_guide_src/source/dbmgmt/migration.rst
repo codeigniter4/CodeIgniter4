@@ -17,10 +17,6 @@ include migrations from all namespaces.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 ********************
 Migration file names
 ********************
