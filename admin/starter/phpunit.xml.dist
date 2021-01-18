@@ -11,7 +11,7 @@
 		stopOnIncomplete="false"
 		stopOnSkipped="false"
 		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-	<coverage includeUncoveredFiles="true" processUncoveredFiles="true">
+	<coverage includeUncoveredFiles="true">
 		<include>
 			<directory suffix=".php">./app</directory>
 		</include>
