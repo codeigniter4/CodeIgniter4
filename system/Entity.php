@@ -17,6 +17,7 @@ use DateTime;
 use Exception;
 use JsonSerializable;
 use ReflectionException;
+use UnexpectedValueException;
 use stdClass;
 
 /**
@@ -88,13 +89,13 @@ class Entity implements JsonSerializable
 	 * class properties, using any `setCamelCasedProperty()` methods
 	 * that may or may not exist.
 	 *
-	 * @param array $data
+	 * @param array|null $data
 	 *
 	 * @return $this
 	 */
 	public function fill(array $data = null)
 	{
-		if (! is_array($data))
+		if (is_null($data))
 		{
 			return $this;
 		}
@@ -102,6 +103,37 @@ class Entity implements JsonSerializable
 		foreach ($data as $key => $value)
 		{
 			$this->__set($key, $value);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Extension of `fill()` that verifies all expected
+	 * fields are present. Allows `null` input for new
+	 * empty Entities.
+	 *
+	 * @param array|null $data
+	 *
+	 * @return $this
+	 */
+	public function fillStrict(array $data = null)
+	{
+		if (is_null($data))
+		{
+			return $this;
+		}
+
+		$this->fill($data);
+
+		// Check each $casts field
+		foreach ($this->casts as $field => $type)
+		{
+			// If the type is not nullable then make sure it is set
+			if (strpos($type, '?') === false && ! isset($this->attributes[$field]))
+			{
+				throw new UnexpectedValueException(static::class . ' missing required field ' . $field);
+			}
 		}
 
 		return $this;
@@ -223,6 +255,36 @@ class Entity implements JsonSerializable
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Extension of `toRawArray()` that forces output through casts, yet
+	 * still ignored datamap and magic methods.
+	 *
+	 * @param boolean $onlyChanged
+	 * @param boolean $recursive
+	 *
+	 * @return array
+	 */
+	public function toCastArray(bool $onlyChanged = false, bool $recursive = false): array
+	{
+		$array = $this->toRawArray($onlyChanged, $recursive);
+
+		if (empty($this->casts))
+		{
+			return $array;
+		}
+
+		// Check each key for a cast
+		foreach ($array as $key => $value)
+		{
+			if (! empty($this->casts[$key]))
+			{
+				$array[$key] = $this->castAs($value, $this->casts[$key]);
+			}
+		}
+
+		return $array;
 	}
 
 	//--------------------------------------------------------------------
