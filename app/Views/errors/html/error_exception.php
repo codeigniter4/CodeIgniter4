@@ -178,7 +178,7 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (! is_array($value) && ! is_object($value) && ! is_resource($value)) : ?>
+									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
 										<?= '<pre>' . print_r($value, true) ?>
@@ -253,7 +253,7 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (! is_array($value) && ! is_object($value)) : ?>
+									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
 										<?= '<pre>' . print_r($value, true) ?>
