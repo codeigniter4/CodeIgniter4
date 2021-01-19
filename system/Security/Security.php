@@ -99,7 +99,7 @@ class Security implements SecurityInterface
 	 * Defaults to `Lax` as recommended in this link:
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
-	 * @var string
+	 * @var 'Lax'|'None'|'Strict'
 	 */
 	protected $samesite = 'Lax';
 
