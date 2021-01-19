@@ -10,6 +10,7 @@ on:
     paths:
       - 'app/**'
       - 'system/**'
+      - composer.json
       - phpstan.neon.dist
   push:
     branches:
@@ -18,6 +19,7 @@ on:
     paths:
       - 'app/**'
       - 'system/**'
+      - composer.json
       - phpstan.neon.dist
 
 jobs:
