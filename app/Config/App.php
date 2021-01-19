@@ -303,7 +303,8 @@ class App extends BaseConfig
 	 * (empty string) means no SameSite attribute will be set on cookies. If
 	 * set to `None`, `$cookieSecure` must also be set.
 	 *
-	 * @var 'Lax'|'None'|'Strict'
+	 * @var string
+	 * @phpstan-var 'Lax'|'None'|'Strict'
 	 */
 	public $cookieSameSite = 'Lax';
 
