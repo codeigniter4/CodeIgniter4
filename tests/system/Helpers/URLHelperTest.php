@@ -1149,12 +1149,89 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	// Test prep_url
 
-	public function testPrepUrl()
+	public function prepUrlProvider()
 	{
-		$this->assertEquals('http://codeigniter.com', prep_url('codeigniter.com'));
-		$this->assertEquals('http://www.codeigniter.com', prep_url('www.codeigniter.com'));
-		$this->assertEquals('', prep_url());
-		$this->assertEquals('http://www.codeigniter.com', prep_url('http://www.codeigniter.com'));
+		// input, expected, secure
+		return [
+			[
+				'',
+				'',
+				false,
+			],
+			[
+				'//',
+				'',
+				false,
+			],
+			[
+				'//codeigniter.com',
+				'http://codeigniter.com',
+				false,
+			],
+			[
+				'codeigniter.com',
+				'http://codeigniter.com',
+				false,
+			],
+			[
+				'www.codeigniter.com',
+				'http://www.codeigniter.com',
+				false,
+			],
+			[
+				'http://www.codeigniter.com',
+				'http://www.codeigniter.com',
+				false,
+			],
+			[
+				'https://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				false,
+			],
+			[
+				'',
+				'',
+				true,
+			],
+			[
+				'//',
+				'',
+				true,
+			],
+			[
+				'//codeigniter.com',
+				'https://codeigniter.com',
+				true,
+			],
+			[
+				'codeigniter.com',
+				'https://codeigniter.com',
+				true,
+			],
+			[
+				'www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+			[
+				'http://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+			[
+				'https://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider prepUrlProvider
+	 */
+	public function testPrepUrl(string $input, string $expected, bool $secure)
+	{
+		$this->assertSame($expected, prep_url($input, $secure));
 	}
 
 	//--------------------------------------------------------------------
