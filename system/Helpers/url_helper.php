@@ -522,26 +522,31 @@ if (! function_exists('auto_link'))
 if (! function_exists('prep_url'))
 {
 	/**
-	 * Prep URL - Simply adds the http:// part if no scheme is included.
+	 * Prep URL - Simply adds the http:// or https:// part if no scheme is included.
 	 *
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
 	 *
-	 * @param  string $str the URL
+	 * @param  string  $str    the URL
+	 * @param  boolean $secure set true if you want to force https://
 	 * @return string
 	 */
-	function prep_url(string $str = ''): string
+	function prep_url(string $str = '', bool $secure = false): string
 	{
-		if ($str === 'http://' || $str === '')
+		if (in_array($str, ['http://', 'https://', '//', ''], true))
 		{
 			return '';
 		}
 
-		$url = parse_url($str);
-
-		if (! $url || ! isset($url['scheme']))
+		if (parse_url($str, PHP_URL_SCHEME) === null)
 		{
-			return 'http://' . $str;
+			$str = 'http://' . ltrim($str, '/');
+		}
+
+		// force replace http:// with https://
+		if ($secure)
+		{
+			$str = preg_replace('/^(?:http):/i', 'https:', $str);
 		}
 
 		return $str;

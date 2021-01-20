@@ -356,13 +356,14 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
-.. php:function:: prep_url($str = '')
+.. php:function:: prep_url([$str = ''[, $secure = false]])
 
-    :param  string  $str: URL string
+    :param  string   $str: URL string
+    :param  boolean  $secure: TRUE for https://
     :returns: Protocol-prefixed URL string
     :rtype: string
 
-    This function will add *http://* in the event that a protocol prefix
+    This function will add *http://* or *https://* in the event that a protocol prefix
     is missing from a URL.
 
     Pass the URL string to the function like this::
