@@ -5,6 +5,10 @@ Pagination
 CodeIgniter provides a very simple, but flexible pagination library that is simple to theme, works with the model,
 and capable of supporting multiple paginators on a single page.
 
+.. contents::
+    :local:
+    :depth: 2
+
 *******************
 Loading the Library
 *******************
