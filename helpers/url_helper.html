@@ -851,11 +851,12 @@ accented characters automatically.</p>
 
 <dl class="function">
 <dt id="prep_url">
-<code class="sig-name descname">prep_url</code><span class="sig-paren">(</span><em class="sig-param">$str = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_url" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">prep_url</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$str = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#prep_url" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$str</strong> (<em>string</em>) – URL string</p></li>
+<li><p><strong>$secure</strong> (<em>boolean</em>) – TRUE for <a class="reference external" href="https://">https://</a></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -865,7 +866,7 @@ accented characters automatically.</p>
 <dd class="field-odd"><p>string</p>
 </dd>
 </dl>
-<p>This function will add <em>http://</em> in the event that a protocol prefix
+<p>This function will add <em>http://</em> or <em>https://</em> in the event that a protocol prefix
 is missing from a URL.</p>
 <p>Pass the URL string to the function like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
