@@ -3,6 +3,7 @@
 namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
+use InvalidArgumentException;
 
 class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -559,5 +560,40 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$pager = new PagerRenderer($details);
 		$this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
+	}
+
+	public function testPropertyAccessorGetProperties()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+
+		$this->assertEquals(1, $pager->first);
+		$this->assertEquals(3, $pager->current);
+		$this->assertEquals(10, $pager->last);
+	}
+
+	public function testPropertyAccessorGetPropertyThatDoesNotExists()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('No such a property: properyNeverEverExists');
+
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+
+		$pager->properyNeverEverExists;
 	}
 }

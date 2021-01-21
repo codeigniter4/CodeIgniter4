@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Pager;
 
+use InvalidArgumentException;
+
 /**
  * Class PagerRenderer
  *
@@ -93,6 +95,25 @@ class PagerRenderer
 		$this->pageCount    = $details['pageCount'];
 		$this->segment      = $details['segment'] ?? 0;
 		$this->pageSelector = $details['pageSelector'] ?? 'page';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Accessor for properties if they exist.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	public function __get(string $key)
+	{
+		if (property_exists($this, $key))
+		{
+			return $this->$key;
+		}
+
+		throw new InvalidArgumentException('No such a property: ' . $key);
 	}
 
 	//--------------------------------------------------------------------
