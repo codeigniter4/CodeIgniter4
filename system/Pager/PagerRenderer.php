@@ -401,4 +401,34 @@ class PagerRenderer
 
 		return (string) $uri;
 	}
+
+	/**
+	 * Returns the page number of the first page.
+	 *
+	 * @return integer
+	 */
+	public function getPageNumberFirst(): int
+	{
+		return $this->first;
+	}
+
+	/**
+	 * Returns the page number of the current page.
+	 *
+	 * @return integer
+	 */
+	public function getPageNumberCurrent(): int
+	{
+		return $this->current;
+	}
+
+	/**
+	 * Returns the page number of the last page.
+	 *
+	 * @return integer
+	 */
+	public function getPageNumberLast(): int
+	{
+		return $this->last;
+	}
 }

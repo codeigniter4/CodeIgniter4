@@ -560,4 +560,21 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager = new PagerRenderer($details);
 		$this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
 	}
+
+	public function testGetPageNumber()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+
+		$this->assertEquals(1, $pager->getPageNumberFirst());
+		$this->assertEquals(3, $pager->getPageNumberCurrent());
+		$this->assertEquals(10, $pager->getPageNumberLast());
+	}
 }
