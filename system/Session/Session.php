@@ -125,7 +125,6 @@ class Session implements SessionInterface
 	 * Cookie SameSite setting as described in RFC6265
 	 * Must be 'None', 'Lax' or 'Strict'.
 	 *
-	 * @var string
        * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $cookieSameSite = 'Lax';
