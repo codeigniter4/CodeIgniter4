@@ -304,7 +304,7 @@ class App extends BaseConfig
 	 * set to `None`, `$cookieSecure` must also be set.
 	 *
 	 * @var string
-	 * @phpstan-var 'Lax'|'None'|'Strict'
+       * @var string 'Lax'|'None'|'Strict'
 	 */
 	public $cookieSameSite = 'Lax';
 
