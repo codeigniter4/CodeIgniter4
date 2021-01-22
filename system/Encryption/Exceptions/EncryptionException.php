@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Encryption\Exceptions;
 
+use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\ExceptionInterface;
 use RuntimeException;
 
@@ -19,6 +20,8 @@ use RuntimeException;
  */
 class EncryptionException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Thrown when no driver is present in the active encryption session.
 	 *

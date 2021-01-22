@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\CLI\Exceptions;
 
+use CodeIgniter\Exceptions\DebugTraceableTrait;
 use RuntimeException;
 
 /**
@@ -18,6 +19,8 @@ use RuntimeException;
  */
 class CLIException extends RuntimeException
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Thrown when `$color` specified for `$type` is not within the
 	 * allowed list of colors.

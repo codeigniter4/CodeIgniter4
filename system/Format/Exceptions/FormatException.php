@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Format\Exceptions;
 
+use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\ExceptionInterface;
 use RuntimeException;
 
@@ -19,6 +20,8 @@ use RuntimeException;
  */
 class FormatException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Thrown when the instantiated class does not exist.
 	 *
