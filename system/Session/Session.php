@@ -126,7 +126,7 @@ class Session implements SessionInterface
 	 * Must be 'None', 'Lax' or 'Strict'.
 	 *
 	 * @var string
-	 * @phpstan-var 'Lax'|'None'|'Strict'
+       * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $cookieSameSite = 'Lax';
 
