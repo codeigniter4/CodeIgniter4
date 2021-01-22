@@ -125,7 +125,7 @@ class Session implements SessionInterface
 	 * Cookie SameSite setting as described in RFC6265
 	 * Must be 'None', 'Lax' or 'Strict'.
 	 *
-       * @var string 'Lax'|'None'|'Strict'
+	 * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $cookieSameSite = 'Lax';
 
@@ -1070,11 +1070,8 @@ class Session implements SessionInterface
 				$params['samesite'] = $this->cookieSameSite;
 			}
 
-			setcookie(
-				$this->sessionCookieName,
-				session_id(),
-				$params
-			);
+			// @phpstan-ignore-next-line @todo ignore to be removed in 4.1 with rector 0.9
+			setcookie($this->sessionCookieName, session_id(), $params);
 		}
 	}
 
