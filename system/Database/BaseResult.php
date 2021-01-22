@@ -61,11 +61,11 @@ abstract class BaseResult implements ResultInterface
 	public $currentRow = 0;
 
 	/**
-	 * Number of rows
+	 * The number of records in the query result
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
-	public $numRows;
+	protected $numRows = null;
 
 	/**
 	 * Row data
@@ -130,7 +130,7 @@ abstract class BaseResult implements ResultInterface
 			return $this->customResultObject[$className];
 		}
 
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID)
 		{
 			return [];
 		}
@@ -197,7 +197,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID)
 		{
 			return [];
 		}
@@ -240,7 +240,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID)
 		{
 			return [];
 		}
@@ -531,6 +531,31 @@ abstract class BaseResult implements ResultInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Number of rows in the result set; checks for previous count, falls
+	 * back on counting resultArray or resultObject, finally fetching resultArray
+	 * if nothing was previously fetched
+	 *
+	 * @return integer
+	 */
+	public function getNumRows(): int
+	{
+		if (is_int($this->numRows))
+		{
+			return $this->numRows;
+		}
+		if ($this->resultArray !== [])
+		{
+			return $this->numRows = count($this->resultArray);
+		}
+		if ($this->resultObject !== [])
+		{
+			return $this->numRows = count($this->resultObject);
+		}
+
+		return $this->numRows = count($this->getResultArray());
+	}
 
 	/**
 	 * Gets the number of fields in the result set.
