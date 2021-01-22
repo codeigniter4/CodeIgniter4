@@ -97,9 +97,10 @@ class Security implements SecurityInterface
 	 * Allowed values are: None - Lax - Strict - ''.
 	 *
 	 * Defaults to `Lax` as recommended in this link:
+	 *
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
-       * @var string 'Lax'|'None'|'Strict'
+	 * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $samesite = 'Lax';
 
@@ -147,7 +148,7 @@ class Security implements SecurityInterface
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * 
+	 *
 	 * @throws SecurityException
 	 *
 	 * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
@@ -193,7 +194,7 @@ class Security implements SecurityInterface
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * 
+	 *
 	 * @throws SecurityException
 	 */
 	public function verify(RequestInterface $request)
@@ -354,8 +355,37 @@ class Security implements SecurityInterface
 	{
 		// List of sanitize filename strings
 		$bad = [
-			'../', '<!--', '-->', '<', '>', "'", '"', '&', '$', '#', '{', '}', '[', ']', '=', ';', '?',
-			'%20', '%22', '%3c', '%253c', '%3e', '%0e', '%28', '%29', '%2528', '%26', '%24', '%3f', '%3b', '%3d',
+			'../',
+			'<!--',
+			'-->',
+			'<',
+			'>',
+			"'",
+			'"',
+			'&',
+			'$',
+			'#',
+			'{',
+			'}',
+			'[',
+			']',
+			'=',
+			';',
+			'?',
+			'%20',
+			'%22',
+			'%3c',
+			'%253c',
+			'%3e',
+			'%0e',
+			'%28',
+			'%29',
+			'%2528',
+			'%26',
+			'%24',
+			'%3f',
+			'%3b',
+			'%3d',
 		];
 
 		if (! $relativePath)
@@ -391,8 +421,7 @@ class Security implements SecurityInterface
 			// We don't necessarily want to regenerate it with
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
-			if (
-				isset($_COOKIE[$this->cookieName])
+			if (isset($_COOKIE[$this->cookieName])
 				&& is_string($_COOKIE[$this->cookieName])
 				&& preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
 			)
@@ -413,7 +442,7 @@ class Security implements SecurityInterface
 	 *
 	 * @param RequestInterface $request
 	 *
-	 * @return Security|false
+	 * @return             Security|false
 	 * @codeCoverageIgnore
 	 */
 	protected function sendCookie(RequestInterface $request)
@@ -434,7 +463,7 @@ class Security implements SecurityInterface
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
 			$samesite = '';
-			
+
 			if (! empty($this->samesite))
 			{
 				$samesite = '; samesite=' . $this->samesite;
@@ -458,6 +487,7 @@ class Security implements SecurityInterface
 				$params['samesite'] = $this->samesite;
 			}
 
+			// @phpstan-ignore-next-line @todo ignore to be removed in 4.1 with rector 0.9
 			setcookie($this->cookieName, $this->hash, $params);
 		}
 
