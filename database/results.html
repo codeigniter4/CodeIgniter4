@@ -613,6 +613,20 @@ Make sure to call the method using your query result object:</p>
     <span class="k">echo</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">();</span>
 </pre></div>
 </div>
+<p><strong>getNumRows()</strong></p>
+<p>The number of records returned by the query. Make sure to call
+the method using your query result object:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM my_table&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getNumRows</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because SQLite3 lacks an efficient method returning a record count,
+CodeIgniter will fetch and buffer the query result records internally and
+return a count of the resulting record array, which can be inefficient.</p>
+</div>
 <p><strong>freeResult()</strong></p>
 <p>It frees the memory associated with the result and deletes the result
 resource ID. Normally PHP frees its memory automatically at the end of
@@ -995,6 +1009,22 @@ result set.</p>
 field meta-data.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="method">
+<dt id="getNumRows">
+<code class="sig-name descname">getNumRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getNumRows" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p>Number of rows in result set</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+<p>Returns number of rows returned by the query</p>
+</div></blockquote>
 <dl class="method">
 <dt id="freeResult">
 <code class="sig-name descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition">¶</a></dt>
@@ -1030,7 +1060,7 @@ field meta-data.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 20, 2021.
+        Last updated on Jan 22, 2021.
       </span>
 
     </p>
