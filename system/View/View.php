@@ -124,8 +124,6 @@ class View implements RendererInterface
 	 */
 	protected $currentSection;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -144,8 +142,6 @@ class View implements RendererInterface
 		$this->debug    = $debug ?? CI_DEBUG;
 		$this->saveData = (bool) $config->saveData;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Builds the output based upon a file name and any
@@ -209,7 +205,6 @@ class View implements RendererInterface
 
 		// Make our view data available to the view.
 		$this->tempData = $this->tempData ?? $this->data;
-		extract($this->tempData);
 
 		if ($saveData)
 		{
@@ -219,10 +214,12 @@ class View implements RendererInterface
 		// Save current vars
 		$renderVars = $this->renderVars;
 
-		ob_start();
-		include $this->renderVars['file']; // PHP will be processed
-		$output = ob_get_contents();
-		@ob_end_clean();
+		$output = (function (): string {
+			extract($this->tempData);
+			ob_start();
+			include $this->renderVars['file'];
+			return ob_get_clean() ?: '';
+		})();
 
 		// Get back current vars
 		$this->renderVars = $renderVars;
@@ -243,7 +240,9 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if (($this->debug && (! isset($options['debug']) || $options['debug'] === true)) && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true))
+		if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
+			&& in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true)
+		)
 		{
 			$toolbarCollectors = config(Toolbar::class)->collectors;
 
@@ -252,7 +251,8 @@ class View implements RendererInterface
 				// Clean up our path names to make them a little cleaner
 				$this->renderVars['file'] = clean_path($this->renderVars['file']);
 				$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
-				$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
+
+				$output = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
 					. $output . PHP_EOL
 					. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 			}
@@ -268,8 +268,6 @@ class View implements RendererInterface
 
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Builds the output based upon a string and any
@@ -292,27 +290,23 @@ class View implements RendererInterface
 		$saveData       = $saveData ?? $this->saveData;
 		$this->tempData = $this->tempData ?? $this->data;
 
-		extract($this->tempData);
-
 		if ($saveData)
 		{
 			$this->data = $this->tempData;
 		}
 
-		ob_start();
-		$incoming = '?>' . $view;
-		eval($incoming);
-		$output = ob_get_contents();
-		@ob_end_clean();
+		$output = (function (string $view): string {
+			extract($this->tempData);
+			ob_start();
+			eval('?>' . $view);
+			return ob_get_clean() ?: '';
+		})($view);
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($view));
-
 		$this->tempData = null;
 
 		return $output;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Extract first bit of a long string and add ellipsis
@@ -325,8 +319,6 @@ class View implements RendererInterface
 	{
 		return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets several pieces of view data at once.
@@ -349,8 +341,6 @@ class View implements RendererInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets a single piece of view data.
@@ -375,8 +365,6 @@ class View implements RendererInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Removes all of the view data from the system.
 	 *
@@ -389,8 +377,6 @@ class View implements RendererInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current data that will be displayed in the view.
 	 *
@@ -400,8 +386,6 @@ class View implements RendererInterface
 	{
 		return $this->tempData ?? $this->data;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Specifies that the current view should extend an existing layout.
@@ -415,8 +399,6 @@ class View implements RendererInterface
 		$this->layout = $layout;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Starts holds content for a section within the layout.
 	 *
@@ -428,8 +410,6 @@ class View implements RendererInterface
 
 		ob_start();
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @throws RuntimeException
@@ -453,8 +433,6 @@ class View implements RendererInterface
 		$this->currentSection = null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Renders a section's contents.
 	 *
@@ -476,8 +454,6 @@ class View implements RendererInterface
 		}
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Used within layout views to include additional views.
 	 *
@@ -492,8 +468,6 @@ class View implements RendererInterface
 		return $this->render($view, $options, $saveData);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the performance data that might have been collected
 	 * during the execution. Used primarily in the Debug Toolbar.
@@ -504,8 +478,6 @@ class View implements RendererInterface
 	{
 		return $this->performanceData;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Logs performance data for rendering a view.
@@ -527,6 +499,4 @@ class View implements RendererInterface
 			];
 		}
 	}
-
-	//--------------------------------------------------------------------
 }
