@@ -100,7 +100,7 @@ class Security implements SecurityInterface
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
 	 * @var string
-	 * @phpstan-var 'Lax'|'None'|'Strict'
+       * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $samesite = 'Lax';
 
