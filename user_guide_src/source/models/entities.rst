@@ -114,6 +114,9 @@ When the User is passed to the model's **save()** method, it automatically takes
 and saving any changes to columns listed in the model's **$allowedFields** property. It also knows whether to create
 a new row, or update an existing one.
 
+.. note:: When we are making a call to the ``insert()`` all the values from Entity are passed to the method, but when we
+    call the ``update()``, then only values that have changed are passed.
+
 Filling Properties Quickly
 --------------------------
 
