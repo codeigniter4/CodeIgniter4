@@ -469,6 +469,11 @@ of what columns have changed since the object was created or pulled from the dat
 <p>When the User is passed to the model’s <strong>save()</strong> method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model’s <strong>$allowedFields</strong> property. It also knows whether to create
 a new row, or update an existing one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When we are making a call to the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> all the values from Entity are passed to the method, but when we
+call the <code class="docutils literal notranslate"><span class="pre">update()</span></code>, then only values that have changed are passed.</p>
+</div>
 </div>
 <div class="section" id="filling-properties-quickly">
 <h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline">¶</a></h3>
@@ -792,7 +797,7 @@ attribute to check:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 22, 2021.
+        Last updated on Jan 23, 2021.
       </span>
 
     </p>
