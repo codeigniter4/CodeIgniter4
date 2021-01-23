@@ -143,28 +143,74 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'userfile1' => [
 				'name'     => 'fileA.txt',
 				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/fileA.txt',
+				'size'     => 4,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileA.txt',
 				'error'    => 0,
 			],
 			'userfile2' => [
 				'name'     => 'fileB.txt',
 				'type'     => 'text/csv',
-				'size'     => 248,
-				'tmp_name' => '/fileB.txt',
+				'size'     => 9,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileB.txt',
+				'error'    => 0,
+			],
+			'userfile3' => [
+				'name'     => 'fileC.csv',
+				'type'     => 'text/csv',
+				'size'     => 16,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileC.csv',
+				'error'    => 0,
+			],
+			'userfile4' => [
+				'name'     => 'fileD.zip',
+				'type'     => 'application/zip',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileD.zip',
+				'error'    => 0,
+			],
+			'userfile5' => [
+				'name'     => 'fileE.zip.rar',
+				'type'     => 'application/rar',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileE.zip.rar',
 				'error'    => 0,
 			],
 		];
 
 		$collection = new FileCollection();
 
+		// proposed extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile1');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
 
+		// proposed extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
-		$this->assertEquals('csv', $file->guessExtension());
+		$this->assertEquals('txt', $file->getExtension());
+		// but not client mime type
+		$this->assertEquals(null, \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+
+		// proposed extension does not match finfo_open mime type (text/plain)
+		// but can be resolved by reverse searching
+		$file = $collection->getFile('userfile3');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('csv', $file->getExtension());
+		
+		// proposed extension matches finfo_open mime type (application/zip)
+		$file = $collection->getFile('userfile4');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('zip', $file->getExtension());
+
+		// proposed extension matches client mime type, but not finfo_open mime type (application/zip)
+		// this is a zip file (userFile4) but hat been renamed to 'rar'
+		$file = $collection->getFile('userfile5');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		// getExtension falls back to clientExtension (insecure)
+		$this->assertEquals('rar', $file->getExtension());
+		$this->assertEquals('rar', \Config\Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+		// guessExtension is secure and does not returns empty
+		$this->assertEquals('', $file->guessExtension());
 	}
 
 	//--------------------------------------------------------------------

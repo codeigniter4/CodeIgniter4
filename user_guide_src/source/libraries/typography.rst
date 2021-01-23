@@ -5,6 +5,10 @@ Typography
 The Typography library contains methods that help you format text
 in semantically relevant ways.
 
+.. contents::
+    :local:
+    :depth: 2
+
 *******************
 Loading the Library
 *******************

@@ -26,13 +26,18 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		//Initialize path
-		$this->config             = new \Config\Cache();
-		$this->config->storePath .= self::$directory;
-
-		if (! is_dir($this->config->storePath))
+		if (! function_exists('octal_permissions'))
 		{
-			mkdir($this->config->storePath, 0777, true);
+			helper('filesystem');
+		}
+
+		// Initialize path
+		$this->config                     = new \Config\Cache();
+		$this->config->file['storePath'] .= self::$directory;
+
+		if (! is_dir($this->config->file['storePath']))
+		{
+			mkdir($this->config->file['storePath'], 0777, true);
 		}
 
 		$this->fileHandler = new FileHandler($this->config);
@@ -41,20 +46,20 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tearDown(): void
 	{
-		if (is_dir($this->config->storePath))
+		if (is_dir($this->config->file['storePath']))
 		{
-			chmod($this->config->storePath, 0777);
+			chmod($this->config->file['storePath'], 0777);
 
 			foreach (self::getKeyArray() as $key)
 			{
-				if (is_file($this->config->storePath . DIRECTORY_SEPARATOR . $key))
+				if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key))
 				{
-					chmod($this->config->storePath . DIRECTORY_SEPARATOR . $key, 0777);
-					unlink($this->config->storePath . DIRECTORY_SEPARATOR . $key);
+					chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key, 0777);
+					unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key);
 				}
 			}
 
-			rmdir($this->config->storePath);
+			rmdir($this->config->file['storePath']);
 		}
 	}
 
@@ -67,15 +72,15 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
 
-		chmod($this->config->storePath, 0444);
+		chmod($this->config->file['storePath'], 0444);
 		new FileHandler($this->config);
 	}
 
 	public function testSetDefaultPath()
 	{
-		//Initialize path
-		$config            = new \Config\Cache();
-		$config->storePath = null;
+		// Initialize path
+		$config                    = new \Config\Cache();
+		$config->file['storePath'] = null;
 
 		$this->fileHandler = new FileHandler($config);
 		$this->fileHandler->initialize();
@@ -98,7 +103,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->assertTrue($this->fileHandler->save(self::$key1, 'value'));
 
-		chmod($this->config->storePath, 0444);
+		chmod($this->config->file['storePath'], 0444);
 		$this->assertFalse($this->fileHandler->save(self::$key2, 'value'));
 	}
 
@@ -173,6 +178,36 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($this->fileHandler->isSupported());
 	}
 
+	/**
+	 * @dataProvider modeProvider
+	 */
+	public function testSaveMode($int, $string)
+	{
+		// Initialize mode
+		$config               = new \Config\Cache();
+		$config->file['mode'] = $int;
+
+		$this->fileHandler = new FileHandler($config);
+		$this->fileHandler->initialize();
+
+		$this->fileHandler->save(self::$key1, 'value');
+
+		$file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
+		$mode = octal_permissions(fileperms($file));
+
+		$this->assertEquals($string, $mode);
+	}
+
+	public function modeProvider()
+	{
+		return [
+			[0640, '640'],
+			[0600, '600'],
+			[0660, '660'],
+			[0777, '777'],
+		];
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testFileHandler()
@@ -200,8 +235,8 @@ final class BaseTestFileHandler extends FileHandler
 
 	public function __construct()
 	{
-		$this->config             = new \Config\Cache();
-		$this->config->storePath .= self::$directory;
+		$this->config                     = new \Config\Cache();
+		$this->config->file['storePath'] .= self::$directory;
 
 		parent::__construct($this->config);
 	}

@@ -8,10 +8,6 @@ The Inflector Helper file contains functions that permit you to change
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 

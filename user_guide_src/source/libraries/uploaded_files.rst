@@ -201,7 +201,7 @@ Other File Info
 **getClientExtension()**
 
 Returns the original file extension, based on the file name that was uploaded. This is NOT a trusted source. For a
-trusted version, use ``getExtension()`` instead::
+trusted version, use ``guessExtension()`` instead::
 
 	$ext = $file->getClientExtension();
 

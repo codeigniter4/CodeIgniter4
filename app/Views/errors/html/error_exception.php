@@ -97,7 +97,7 @@
 										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
 												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$' . $params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
-												<td><pre><?= print_r($value, true) ?></pre></td>
+												<td><pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre></td>
 											</tr>
 										<?php endforeach ?>
 
@@ -151,7 +151,7 @@
 									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>' . print_r($value, true) ?>
+										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -178,10 +178,10 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (! is_array($value) && ! is_object($value)) : ?>
+									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>' . print_r($value, true) ?>
+										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -253,10 +253,10 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (! is_array($value) && ! is_object($value)) : ?>
+									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>' . print_r($value, true) ?>
+										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>

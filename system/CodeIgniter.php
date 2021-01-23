@@ -234,7 +234,6 @@ class CodeIgniter
 		// If we have KINT_DIR it means it's already loaded via composer
 		if (! defined('KINT_DIR'))
 		{
-			// @phpstan-ignore-next-line
 			spl_autoload_register(function ($class) {
 				$class = explode('\\', $class);
 
@@ -406,6 +405,11 @@ class CodeIgniter
 			if ($possibleResponse instanceof ResponseInterface)
 			{
 				return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
+			}
+
+			if ($possibleResponse instanceof Request)
+			{
+				$this->request = $possibleResponse;
 			}
 		}
 

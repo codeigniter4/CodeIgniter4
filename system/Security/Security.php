@@ -315,8 +315,37 @@ class Security implements SecurityInterface
 	{
 		// List of sanitize filename strings
 		$bad = [
-			'../', '<!--', '-->', '<', '>', "'", '"', '&', '$', '#', '{', '}', '[', ']', '=', ';', '?',
-			'%20', '%22', '%3c', '%253c', '%3e', '%0e', '%28', '%29', '%2528', '%26', '%24', '%3f', '%3b', '%3d',
+			'../',
+			'<!--',
+			'-->',
+			'<',
+			'>',
+			"'",
+			'"',
+			'&',
+			'$',
+			'#',
+			'{',
+			'}',
+			'[',
+			']',
+			'=',
+			';',
+			'?',
+			'%20',
+			'%22',
+			'%3c',
+			'%253c',
+			'%3e',
+			'%0e',
+			'%28',
+			'%29',
+			'%2528',
+			'%26',
+			'%24',
+			'%3f',
+			'%3b',
+			'%3d',
 		];
 
 		if (! $relativePath)
@@ -350,8 +379,7 @@ class Security implements SecurityInterface
 			// We don't necessarily want to regenerate it with
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
-			if (
-				isset($_COOKIE[$this->cookieName])
+			if (isset($_COOKIE[$this->cookieName])
 				&& is_string($_COOKIE[$this->cookieName])
 				&& preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
 			)

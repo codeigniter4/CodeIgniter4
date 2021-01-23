@@ -7,10 +7,6 @@ The Test Helper file contains functions that assist in testing your project.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 

@@ -105,4 +105,16 @@ class MockResult extends BaseResult
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the number of fields in the result set.
+	 *
+	 * @return integer
+	 */
+	public function getNumRows(): int
+	{
+		return 0;
+	}
+
+	//--------------------------------------------------------------------
 }
