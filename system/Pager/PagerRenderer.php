@@ -113,7 +113,7 @@ class PagerRenderer
 			return $this->$key;
 		}
 
-		throw new InvalidArgumentException('No such a property: ' . $key);
+		throw new InvalidArgumentException('No such property: ' . $key);
 	}
 
 	//--------------------------------------------------------------------
