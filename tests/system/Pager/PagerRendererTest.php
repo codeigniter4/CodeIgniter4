@@ -582,7 +582,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testPropertyAccessorGetPropertyThatDoesNotExists()
 	{
 		$this->expectException(InvalidArgumentException::class);
-		$this->expectExceptionMessage('No such a property: properyNeverEverExists');
+		$this->expectExceptionMessage('No such property: properyNeverEverExists');
 
 		$uri     = $this->uri;
 		$details = [
