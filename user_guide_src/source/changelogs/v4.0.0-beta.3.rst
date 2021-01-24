@@ -22,115 +22,115 @@ App changes:
 The list of changed files follows, with PR numbers shown.
 
 - admin/
-	- framework/composer.json #1935
-	- starter/composer.json #1935
+    - framework/composer.json #1935
+    - starter/composer.json #1935
 
 - app/
-	- Config/
-		- App #1973
-		- Migrations #1973
+    - Config/
+        - App #1973
+        - Migrations #1973
 
 - public/
-	- .htaccess #1973
+    - .htaccess #1973
 
 - system/
-	- API/
-		- ResponseTrait #1962
-	- Commands/
-		- Server/rewrite #1925
-	- Config/
-		- AutoloadConfig #1974
-		- BaseConfig #1947
-	- Database/ #1938
-		- BaseBuilder #1923, #1933, #1950
-		- BaseConnection #1950
-		- BaseResult #1917
-		- BaseUtils #1917
-		- Forge #1917
-		- SQLite3/
-			- Connection #1917
-			- Result #1917
-	- Debug/
-		- Toolbar #1916
-		- Toolbar/Collectors/
-			- BaseCollector #1972
-			- Config #1973
-			- History #1945
-			- Routes #1949
-		- Toolbar/Views/
-			- _config.tpl.php #1973
-			- toolbar.tpl.php #1972
-			- toolbarloader.js #1931, #1961
-	- Exceptions/
-		- EntityException #1927
-	- Filters/
-		Filters #1970, #1985
-	- Format/
-		- FormatterInterface #1918
-		- JSONFormatter #1918
-		- XMLFormatter #1918
-	- HTTP/
-		- CLIRequest #1956
-		- CURLRequest #1915
-	- Images/Handlers/
-		- BaseHandler #1956
-	- Language/en/
-		- Database #1917
-		- Validation #1952
-	- Router/
-		- Router #1968
-		- RouteCollection #1977
-	- Session/Handlers/
-		- RedisHandler #1980
-	- Test/
-		- FeatureResponse #1977
-		- FeatureTestCase #1977
-	- Validation/
-		- FormatRules #1957
-		- Rules #1952
-	- View/
-		- Table #1984
-	- Entity #1911, #1927, #1943, #1950, #1955
-	- Model #1930, #1943, #1963, #1981
+    - API/
+        - ResponseTrait #1962
+    - Commands/
+        - Server/rewrite #1925
+    - Config/
+        - AutoloadConfig #1974
+        - BaseConfig #1947
+    - Database/ #1938
+        - BaseBuilder #1923, #1933, #1950
+        - BaseConnection #1950
+        - BaseResult #1917
+        - BaseUtils #1917
+        - Forge #1917
+        - SQLite3/
+            - Connection #1917
+            - Result #1917
+    - Debug/
+        - Toolbar #1916
+        - Toolbar/Collectors/
+            - BaseCollector #1972
+            - Config #1973
+            - History #1945
+            - Routes #1949
+        - Toolbar/Views/
+            - _config.tpl.php #1973
+            - toolbar.tpl.php #1972
+            - toolbarloader.js #1931, #1961
+    - Exceptions/
+        - EntityException #1927
+    - Filters/
+        Filters #1970, #1985
+    - Format/
+        - FormatterInterface #1918
+        - JSONFormatter #1918
+        - XMLFormatter #1918
+    - HTTP/
+        - CLIRequest #1956
+        - CURLRequest #1915
+    - Images/Handlers/
+        - BaseHandler #1956
+    - Language/en/
+        - Database #1917
+        - Validation #1952
+    - Router/
+        - Router #1968
+        - RouteCollection #1977
+    - Session/Handlers/
+        - RedisHandler #1980
+    - Test/
+        - FeatureResponse #1977
+        - FeatureTestCase #1977
+    - Validation/
+        - FormatRules #1957
+        - Rules #1952
+    - View/
+        - Table #1984
+    - Entity #1911, #1927, #1943, #1950, #1955
+    - Model #1930, #1943, #1963, #1981
 
 - tests/system/
-	- Config/
-		- BaseConfigTest #1947
-	- Database/
-		- BaseQueryTest #1917
-		- Live/
-			- DbUtilsTest #1917, #1943
-			- ForgeTest #1917
-			- GetTest #1917, #1943
-			- ModelTest #1930, #1943, #1981
-		- Migrations/
-			- MigrationRunnerTest #1917
-			- MigrationTest #1943
-	- Filters/
-		- FilterTest #1985
-	- Test/
-		- FeatureTestCaseTest #1977
-	- Validation/
-		- FormatRulesTest #1957
-		- RulesTest #1952, #cbe4b1d
-	- View/
-		- TableTest #1978, #1984
-	- EntityTest #1911
+    - Config/
+        - BaseConfigTest #1947
+    - Database/
+        - BaseQueryTest #1917
+        - Live/
+            - DbUtilsTest #1917, #1943
+            - ForgeTest #1917
+            - GetTest #1917, #1943
+            - ModelTest #1930, #1943, #1981
+        - Migrations/
+            - MigrationRunnerTest #1917
+            - MigrationTest #1943
+    - Filters/
+        - FilterTest #1985
+    - Test/
+        - FeatureTestCaseTest #1977
+    - Validation/
+        - FormatRulesTest #1957
+        - RulesTest #1952, #cbe4b1d
+    - View/
+        - TableTest #1978, #1984
+    - EntityTest #1911
 
 - user_guide_src/
-	- dbmgmt/
-		- migrations #1973
-	- installation/
-		- installing_composer #1926	
-		- running #1935
-	- libraries/
-		- validation #1952, #1954, #1957
-	- outgoing/
-		- index #1978
-		- table #1978, #1984
-	- testing/
-		- feature #1977
-		- overview #1936
+    - dbmgmt/
+        - migrations #1973
+    - installation/
+        - installing_composer #1926
+        - running #1935
+    - libraries/
+        - validation #1952, #1954, #1957
+    - outgoing/
+        - index #1978
+        - table #1978, #1984
+    - testing/
+        - feature #1977
+        - overview #1936
 
 - .htaccess #1939
 - composer.json #1935
