@@ -17,8 +17,8 @@ New messages:
 
 App changes:
 
-- updated app/Config/Events 
-- added app/Controllers/BaseController 
+- updated app/Config/Events
+- added app/Controllers/BaseController
 - added tests/ folder for unit testing
 - added phpunit.xml.dist for unit testing configuration
 
@@ -27,166 +27,166 @@ The list of changed files follows, with PR numbers shown.
 - .htaccess #1900
 
 - app/
-	- Config/
-		- Events #1856
-	- Controllers/
-		- BaseController #1847
-		- Home #1847
+    - Config/
+        - Events #1856
+    - Controllers/
+        - BaseController #1847
+        - Home #1847
 
 - contributing/
-	- README.rst #1846
-	- styleguide #1872
+    - README.rst #1846
+    - styleguide #1872
 
 - contributing.md #1846
 
 - phpdoc.dist.xml #1872
 
 - system/
-	- Autoloader/
-		- FileLocator #1860
-	- Cache/Handlers/
-		- FileHandler #1895
-		- MemcachedHandler #1895
-		- PredisHandler #1895
-		- RedisHandler #1863, #1895
-		- WincacheHandler #1895
-	- CLI/
-		- CLI #1891, #1910
-	- Commands/
-		- Server/Serve #1893
-		- Utilities/Routes #1859
-	- Config/
-		- BaseConfig #1811
-		- Routes #1847, #1850
-	- Database/
-		- BaseBuilder $1776, #1902
-		- BaseConnection #1899
-		- Forge #1844, #1899
-		- MigrationRunner #1860, #1865
-		- MySQLi/Connection #1896
-		- MySQLi/Forge #1899
-		- Postgre/Builder #1902
-		- Postgre/Forge #1899
-		- Query #1805, #1771
-		- SQLite3/Builder #1902
-		- SQLite3/Forge #1899
-	- Debug/
-		- Toolbar/Collectors/History #1869
-		- Toolbar #1897
-	- Events/
-		- Events #1867
-	- Exceptions/
-		- ModelException #1829
-		- PageNotFoundException #1844
-	- Files/
-		- File #1809, #1854
-	- Helpers/
-		- date_helper #d08b68
-		- form_helper #1803
-		- html_helper #1803
-		- number_helper #d08b68, #1803
-		- security_helper #d08b68
-		- text_helper #d08b68, #1803
-		- url_helper #d08b68, #1803
-		- xml_helper #1803
-	- Honeypot/
-		- Honeypot #1894
-	- HTTP/
-		- Header #1769
-		- IncomingRequest #1831
-	- Language/en/
-		- Database #1829, #1861, #1902
-	- Router/
-		- RouteCollection #1769
-		- Router #1839, #1882
-	- Session/
-		- Session #1769
-	- Test/
-		- ControllerTester #1769, #1848, #1855
-		- DOMParser #1848
-	- Validation/
-		- FormatRules #1762, #1863
-		- Rules #1791, #1814, #1818, #1862
-		- Validation #1769
-		- Views/list #1828
-	- View/
-		- Filters #1769
-		- Parser #1769
-		- View #1769, #1827
-	- CodeIgniter #1769, #1804, #1590
-	- Common #1802, #895ae0
-	- ComposerScripts #1804
-	- Controller #1769, #1850
-	- Entity #1769, #1804
-	- Model #1793, #1769, #1804, #1808, #1812, #1813, #1817, #1829, #1746, #1861
+    - Autoloader/
+        - FileLocator #1860
+    - Cache/Handlers/
+        - FileHandler #1895
+        - MemcachedHandler #1895
+        - PredisHandler #1895
+        - RedisHandler #1863, #1895
+        - WincacheHandler #1895
+    - CLI/
+        - CLI #1891, #1910
+    - Commands/
+        - Server/Serve #1893
+        - Utilities/Routes #1859
+    - Config/
+        - BaseConfig #1811
+        - Routes #1847, #1850
+    - Database/
+        - BaseBuilder $1776, #1902
+        - BaseConnection #1899
+        - Forge #1844, #1899
+        - MigrationRunner #1860, #1865
+        - MySQLi/Connection #1896
+        - MySQLi/Forge #1899
+        - Postgre/Builder #1902
+        - Postgre/Forge #1899
+        - Query #1805, #1771
+        - SQLite3/Builder #1902
+        - SQLite3/Forge #1899
+    - Debug/
+        - Toolbar/Collectors/History #1869
+        - Toolbar #1897
+    - Events/
+        - Events #1867
+    - Exceptions/
+        - ModelException #1829
+        - PageNotFoundException #1844
+    - Files/
+        - File #1809, #1854
+    - Helpers/
+        - date_helper #d08b68
+        - form_helper #1803
+        - html_helper #1803
+        - number_helper #d08b68, #1803
+        - security_helper #d08b68
+        - text_helper #d08b68, #1803
+        - url_helper #d08b68, #1803
+        - xml_helper #1803
+    - Honeypot/
+        - Honeypot #1894
+    - HTTP/
+        - Header #1769
+        - IncomingRequest #1831
+    - Language/en/
+        - Database #1829, #1861, #1902
+    - Router/
+        - RouteCollection #1769
+        - Router #1839, #1882
+    - Session/
+        - Session #1769
+    - Test/
+        - ControllerTester #1769, #1848, #1855
+        - DOMParser #1848
+    - Validation/
+        - FormatRules #1762, #1863
+        - Rules #1791, #1814, #1818, #1862
+        - Validation #1769
+        - Views/list #1828
+    - View/
+        - Filters #1769
+        - Parser #1769
+        - View #1769, #1827
+    - CodeIgniter #1769, #1804, #1590
+    - Common #1802, #895ae0
+    - ComposerScripts #1804
+    - Controller #1769, #1850
+    - Entity #1769, #1804
+    - Model #1793, #1769, #1804, #1808, #1812, #1813, #1817, #1829, #1746, #1861
 
 - tests/system/
-	- Cache/
-		- Handlers/
-			- FileHandlerTest #1796, #1895
-			- MemcachedHandlerTest #1895
-			- RedisHandlerTest #1895
-		- CacheFactoryTest #1796
-	- CLI/
-		- CLITest #1910
-	- Config/
-		- BaseConfigTest #1811
-		- ConfigTest #1811
-	- Database/
-		- Builder/EmptyTest #1902
-		- Builder/SelectTest #1902
-		- Live/ModelTest #1817, #1829, #1861
-		- Live/WhereTest #1906
-	- Events/
-		- EventsTest #1867
-	- HTTP/
-		- ContentSecurityPolicyTest #1848
-	- Router/
-		- RouteCollectionTest #1822, #1912, #1913
-	- Test/
-		- ControllerTesterTest #1848, #1855
-		- DOMParserTest #1848
-	- Validation/
-		- FormatRulesTest #1762
-		- RulesTest #1791
-	- View/
-		- ViewTest #1827, #1836
-	- ControllerTest #1850
+    - Cache/
+        - Handlers/
+            - FileHandlerTest #1796, #1895
+            - MemcachedHandlerTest #1895
+            - RedisHandlerTest #1895
+        - CacheFactoryTest #1796
+    - CLI/
+        - CLITest #1910
+    - Config/
+        - BaseConfigTest #1811
+        - ConfigTest #1811
+    - Database/
+        - Builder/EmptyTest #1902
+        - Builder/SelectTest #1902
+        - Live/ModelTest #1817, #1829, #1861
+        - Live/WhereTest #1906
+    - Events/
+        - EventsTest #1867
+    - HTTP/
+        - ContentSecurityPolicyTest #1848
+    - Router/
+        - RouteCollectionTest #1822, #1912, #1913
+    - Test/
+        - ControllerTesterTest #1848, #1855
+        - DOMParserTest #1848
+    - Validation/
+        - FormatRulesTest #1762
+        - RulesTest #1791
+    - View/
+        - ViewTest #1827, #1836
+    - ControllerTest #1850
 
 
-- user_guide_src/	
-	- cli/
-		- cli_commands #1777
-		- cli_library #1892, #1910
-	- concepts/
-		- services #1811
-	- database/
-		- examples #1794
-	- dbmgmt/
-		- forge #1844, #1899
-		- migration #1860, #1865
-	- extending/
-		- basecontroller #1847
-		- core_classes #1847
-	- general/
-		- common_functions #1802, #1895
-	- helpers/
-		- number_helper #d08b68
-		- url_helper #1803
-	- incoming/
-		- routing #1908
-	- libraries/
-		- caching #1895
-		- files #1790, #1854
-		- pagination #1823
-		- sessions #1843
-		- validation #1814, #1828, #1862
-	- models/
-		- models #1817, #1820, #1829, #1746, #1861
-	- outgoing/
-		- view_layouts #1827
-	- testing/
-		- controllers #1848
+- user_guide_src/
+    - cli/
+        - cli_commands #1777
+        - cli_library #1892, #1910
+    - concepts/
+        - services #1811
+    - database/
+        - examples #1794
+    - dbmgmt/
+        - forge #1844, #1899
+        - migration #1860, #1865
+    - extending/
+        - basecontroller #1847
+        - core_classes #1847
+    - general/
+        - common_functions #1802, #1895
+    - helpers/
+        - number_helper #d08b68
+        - url_helper #1803
+    - incoming/
+        - routing #1908
+    - libraries/
+        - caching #1895
+        - files #1790, #1854
+        - pagination #1823
+        - sessions #1843
+        - validation #1814, #1828, #1862
+    - models/
+        - models #1817, #1820, #1829, #1746, #1861
+    - outgoing/
+        - view_layouts #1827
+    - testing/
+        - controllers #1848
 
 PRs merged:
 -----------

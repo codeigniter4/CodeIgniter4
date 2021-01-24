@@ -15,156 +15,156 @@ Highlights:
 The list of changed files follows, with PR numbers shown.
 
 - admin/
-	- docbot #1573
-	- framework/composer.json #1555
-	- release #1573
-	- release-deploy #1573
-	- starter/composer.json #1573, #1600
+    - docbot #1573
+    - framework/composer.json #1555
+    - release #1573
+    - release-deploy #1573
+    - starter/composer.json #1573, #1600
 
 - app/
-	- Config/
-		- App #1571
-		- Autoload #1579
-		- ContentSecurityPolicy #1581
-		- Events #1571, #1595
-		- Paths #1579
-		- Routes #1579
-		- Services #1579
-		- Toolbar #1571, #1579
-	- Filters/
-		- Toolbar #1571
-	- Views/
-		- errors/* #1579
+    - Config/
+        - App #1571
+        - Autoload #1579
+        - ContentSecurityPolicy #1581
+        - Events #1571, #1595
+        - Paths #1579
+        - Routes #1579
+        - Services #1579
+        - Toolbar #1571, #1579
+    - Filters/
+        - Toolbar #1571
+    - Views/
+        - errors/* #1579
 
 - public/
-	- index #1579
+    - index #1579
 
 - system/
-	- Autoloader/
-		- Autoloader #1562
-		- FileLocator #1562, #1579
-	- CLI/
-		- CommandRunner #1562
-	- Config/
-		- AutoloadConfig #1555, #1579
-		- BaseConfig #1562
-		- Services #1571, #1562
-	- Database/
-		- BaseBuilder #a0fc68
-		- MigrationRunner #1585
-		- MySQLi/Connection #1561, #8f205a
-	- Debug/
-		- Collectors/* #1571, #1589, #1579
-		- Exceptions #1579
-		- Toolbar #1571	
-		- Views/toolbar.tpl #1571
-		- Views/toolbarloader.js #1594
-	- Helpers/
-		- form_helper #1548
-		- url_helper #1588
-	- HTTP/
-		- ContentSecurityPolicy #1581
-		- DownloadResponse
-	- I18n/
-		- Time #1603
-	- Language/
-		- Language #1587, #1562, #1610
-		- en/
-			- CLI #1562
-			- HTTP #d7dfc5
-	- Log/
-		- Handlers/FileHandler #1579
-		- Logger #1562, #1579
-	- Session/
-		- Handlers/DatabaseHandler #1598
-	- Test/
-		- CIUnitTest #1581, #1593, #1579
-		- FeatureResponse #1593
-		- FeatureTestCase #1593
-	- View/
-		- View #1571, #1579
-	- bootstrap #1579
-	- CodeIgniter #ab8b5b, #1579
-	- Common #1569, #1563, #1562, #1601, #1579
-	- Entity #4c7bfe, #1575
-	- Model #1602, #a0fc68
+    - Autoloader/
+        - Autoloader #1562
+        - FileLocator #1562, #1579
+    - CLI/
+        - CommandRunner #1562
+    - Config/
+        - AutoloadConfig #1555, #1579
+        - BaseConfig #1562
+        - Services #1571, #1562
+    - Database/
+        - BaseBuilder #a0fc68
+        - MigrationRunner #1585
+        - MySQLi/Connection #1561, #8f205a
+    - Debug/
+        - Collectors/* #1571, #1589, #1579
+        - Exceptions #1579
+        - Toolbar #1571
+        - Views/toolbar.tpl #1571
+        - Views/toolbarloader.js #1594
+    - Helpers/
+        - form_helper #1548
+        - url_helper #1588
+    - HTTP/
+        - ContentSecurityPolicy #1581
+        - DownloadResponse
+    - I18n/
+        - Time #1603
+    - Language/
+        - Language #1587, #1562, #1610
+        - en/
+            - CLI #1562
+            - HTTP #d7dfc5
+    - Log/
+        - Handlers/FileHandler #1579
+        - Logger #1562, #1579
+    - Session/
+        - Handlers/DatabaseHandler #1598
+    - Test/
+        - CIUnitTest #1581, #1593, #1579
+        - FeatureResponse #1593
+        - FeatureTestCase #1593
+    - View/
+        - View #1571, #1579
+    - bootstrap #1579
+    - CodeIgniter #ab8b5b, #1579
+    - Common #1569, #1563, #1562, #1601, #1579
+    - Entity #4c7bfe, #1575
+    - Model #1602, #a0fc68
 
-- tests/	
-	- Autoloader/
-		- AutolaoderTest #1562, #1579
-		- FileLocatorTest #1562, #1579
-	- Config/
-		- ServicesTest #1562
-	- Database/
-		- Live/ModelTest #1602, #a0fc68
-	- Files/
-		- FileTest #1579
-	- Helpers/
-		- FormHelperTest #1548
-		- URLHelperTest #1588
-	- HTTP/
-		- ContentSecurityPolicyTest #1581
-		- DownloadResponseTest #1576, #1579
-		- IncomingRequestDetectingTest #1576
-		- IncomingRequestTest #1576
-		- RedirectResponseTest #1562
-		- ResponseTest #1576
-	- I18n/
-		- TimeDifferenceTest #1603
-		- TimeTest #1603
-	- Language/
-		-LanguageTest #1587, #1610
-	- Log/
-		- FileHandlerTest #1579
-	- Router/
-		- RouterCollectionTest #1562
-		- RouterTest #1562
-	- Test/
-		- FeatureResponseTest #1593
-		- FeatureTestCaseTest #1593
-		- TestCaseTest #1593
-	- Validation/
-		- ValidationTest #1562
-	- View/
-		- ParserPluginTest #1562
-		- ParserTest #1562
-		- ViewTest #1562
-	- CodeIgniterTest #1562
-	- CommonFunctionsTest #1569, #1562
-	- EntityTest #4c7bfe, #1575
-	
+- tests/
+    - Autoloader/
+        - AutolaoderTest #1562, #1579
+        - FileLocatorTest #1562, #1579
+    - Config/
+        - ServicesTest #1562
+    - Database/
+        - Live/ModelTest #1602, #a0fc68
+    - Files/
+        - FileTest #1579
+    - Helpers/
+        - FormHelperTest #1548
+        - URLHelperTest #1588
+    - HTTP/
+        - ContentSecurityPolicyTest #1581
+        - DownloadResponseTest #1576, #1579
+        - IncomingRequestDetectingTest #1576
+        - IncomingRequestTest #1576
+        - RedirectResponseTest #1562
+        - ResponseTest #1576
+    - I18n/
+        - TimeDifferenceTest #1603
+        - TimeTest #1603
+    - Language/
+        -LanguageTest #1587, #1610
+    - Log/
+        - FileHandlerTest #1579
+    - Router/
+        - RouterCollectionTest #1562
+        - RouterTest #1562
+    - Test/
+        - FeatureResponseTest #1593
+        - FeatureTestCaseTest #1593
+        - TestCaseTest #1593
+    - Validation/
+        - ValidationTest #1562
+    - View/
+        - ParserPluginTest #1562
+        - ParserTest #1562
+        - ViewTest #1562
+    - CodeIgniterTest #1562
+    - CommonFunctionsTest #1569, #1562
+    - EntityTest #4c7bfe, #1575
+
 - user_guide_src/source/
-	- cli/
-		- cli #1579
-		- cli_commands #1579
-	- concepts/
-		- autoloader #1579
-		- mvc #1579
-		- services #1579
-		- structure #1579
-	- database/
-		- configuration #1579
-	- dbmgt/
-		- migration #1579
-		- seeds #1579
-	- general/
-		- common_functions #d7dfc5, #1579
-		- configuration #1608
-		- errors #1579
-	- installation/
-		- downloads #1579
-	- models/
-		- entities #547792, #1575
-	- outgoing/
-		- localization #1610
-		- response #1581, #1579
-		- view_parser #1579
-	- testing/
-		- debugging #1579
-		- overview #1593, #1579
-	- tutorial/
-		- news_section #1586
-		- static_pages #1579
+    - cli/
+        - cli #1579
+        - cli_commands #1579
+    - concepts/
+        - autoloader #1579
+        - mvc #1579
+        - services #1579
+        - structure #1579
+    - database/
+        - configuration #1579
+    - dbmgt/
+        - migration #1579
+        - seeds #1579
+    - general/
+        - common_functions #d7dfc5, #1579
+        - configuration #1608
+        - errors #1579
+    - installation/
+        - downloads #1579
+    - models/
+        - entities #547792, #1575
+    - outgoing/
+        - localization #1610
+        - response #1581, #1579
+        - view_parser #1579
+    - testing/
+        - debugging #1579
+        - overview #1593, #1579
+    - tutorial/
+        - news_section #1586
+        - static_pages #1579
 
 - composer.json #1555
 - ComposerScripts #1551
