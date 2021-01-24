@@ -251,8 +251,8 @@ Example::
 
     if (isset($row))
     {
-        echo $row->email;                 // access attributes
-        echo $row->last_login('Y-m-d');   // access class methods
+        echo $row->email;               // access attributes
+        echo $row->last_login('Y-m-d'); // access class methods
     }
 
 You can also use the ``getRow()`` method in exactly the same way.
@@ -313,7 +313,7 @@ Example::
         echo $row->title;
     }
 
-    $query->freeResult();  // The $query result object will no longer be available
+    $query->freeResult(); // The $query result object will no longer be available
 
     $query2 = $db->query('SELECT name FROM some_table');
 

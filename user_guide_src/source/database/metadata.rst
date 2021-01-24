@@ -56,8 +56,7 @@ List the Fields in a Table
 Returns an array containing the field names. This query can be called
 two ways:
 
-1. You can supply the table name and call it from the $db->
-object::
+1. You can supply the table name and call it from the ``$db->object``::
 
     $fields = $db->getFieldNames('table_name');
 
@@ -146,7 +145,7 @@ Usage example::
     {
     echo $key->name;
     echo $key->type;
-    echo $key->fields;  // array of field names
+    echo $key->fields; // array of field names
     }
 
 The key types may be unique to the database you are using.

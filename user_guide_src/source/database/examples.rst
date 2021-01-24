@@ -36,8 +36,8 @@ Standard Query With Multiple Results (Object Version)
 
     echo 'Total Results: ' . count($results);
 
-The above getResult() function returns an array of **objects**. Example:
-$row->title
+| The above ``getResult()`` function returns an array of **objects**.
+| Example: ``$row->title``
 
 Standard Query With Multiple Results (Array Version)
 ====================================================
@@ -54,8 +54,9 @@ Standard Query With Multiple Results (Array Version)
         echo $row['email'];
     }
 
-The above getResultArray() function returns an array of standard array
-indexes. Example: $row['title']
+| The above ``getResultArray()`` function returns an array of standard array
+  indexes.
+| Example: ``$row['title']``
 
 Standard Query With Single Result
 =================================
@@ -66,7 +67,7 @@ Standard Query With Single Result
     $row   = $query->getRow();
     echo $row->name;
 
-The above getRow() function returns an **object**. Example: $row->name
+The above ``getRow()`` function returns an **object**. Example: ``$row->name``
 
 Standard Query With Single Result (Array version)
 =================================================
@@ -77,8 +78,8 @@ Standard Query With Single Result (Array version)
     $row   = $query->getRowArray();
     echo $row['name'];
 
-The above getRowArray() function returns an **array**. Example:
-$row['name']
+The above ``getRowArray()`` function returns an **array**. Example:
+``$row['name']``.
 
 Standard Insert
 ===============
@@ -102,7 +103,7 @@ means of retrieving data::
         echo $row->title;
     }
 
-The above get() function retrieves all the results from the supplied
+The above ``get()`` function retrieves all the results from the supplied
 table. The :doc:`Query Builder <query_builder>` class contains a full
 complement of functions for working with data.
 
@@ -117,5 +118,6 @@ Query Builder Insert
         'date'  => $date
     ];
 
-    $db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
+    $db->table('mytable')->insert($data);
+    // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
 

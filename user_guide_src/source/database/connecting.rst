@@ -22,7 +22,7 @@ and is provided for your convenience::
 Available Parameters
 --------------------
 
-#. The database group name, a string that must match the config class' property name. Default value is $config->defaultGroup.
+#. The database group name, a string that must match the config class' property name. Default value is ``$config->defaultGroup``.
 #. TRUE/FALSE (boolean). Whether to return the shared connection (see
    Connecting to Multiple Databases below).
 
@@ -63,8 +63,7 @@ group names you are connecting to.
 .. note:: You don't need to create separate database configurations if you
     only need to use a different database on the same connection. You
     can switch to a different database when you need to, like this:
-
-        $db->setDatabase($database2_name);
+    ``$db->setDatabase($database2_name);``
 
 Connecting with Custom Settings
 ===============================
@@ -100,11 +99,11 @@ Reconnecting / Keeping the Connection Alive
 
 If the database server's idle timeout is exceeded while you're doing
 some heavy PHP lifting (processing an image, for instance), you should
-consider pinging the server by using the reconnect() method before
+consider pinging the server by using the ``reconnect()`` method before
 sending further queries, which can gracefully keep the connection alive
 or re-establish it.
 
-.. important:: If you are using MySQLi database driver, the reconnect() method
+.. important:: If you are using MySQLi database driver, the ``reconnect()`` method
     does not ping the server but it closes the connection then connects again.
 
 ::
