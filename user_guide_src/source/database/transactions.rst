@@ -32,7 +32,7 @@ Running Transactions
 ====================
 
 To run your queries using transactions you will use the
-$this->db->transStart() and $this->db->transComplete() functions as
+``$this->db->transStart()`` and ``$this->db->transComplete()`` functions as
 follows::
 
     $this->db->transStart();
@@ -79,7 +79,7 @@ Disabling Transactions
 ======================
 
 Transactions are enabled by default. If you would like to disable transactions you
-can do so using $this->db->transOff()::
+can do so using ``$this->db->transOff()``::
 
     $this->db->transOff();
 
@@ -96,7 +96,7 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-$this->db->transStart() function to TRUE::
+``$this->db->transStart()`` function to TRUE::
 
     $this->db->transStart(true); // Query will be rolled back
     $this->db->query('AN SQL QUERY...');
@@ -122,5 +122,5 @@ If you would like to run transactions manually you can do so as follows::
         $this->db->transCommit();
     }
 
-.. note:: Make sure to use $this->db->transBegin() when running manual
-    transactions, **NOT** $this->db->transStart().
+.. note:: Make sure to use ``$this->db->transBegin()`` when running manual
+    transactions, **NOT** ``$this->db->transStart()``.

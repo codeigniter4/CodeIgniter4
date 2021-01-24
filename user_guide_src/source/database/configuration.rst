@@ -54,10 +54,10 @@ driver's underlying native PHP extension, like this::
     will try to build it with the rest of the provided settings.
 
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype::
-    
+
     $default['DSN'] = 'DBDriver://username:password@hostname:port/database';
 
-To override default config values when connecting with a universal version of the DSN string, 
+To override default config values when connecting with a universal version of the DSN string,
 add the config variables as a query string::
 
     // MySQLi
@@ -184,7 +184,7 @@ Explanation of Values:
 **username**    The username used to connect to the database.
 **password**    The password used to connect to the database.
 **database**    The name of the database you want to connect to.
-**DBDriver**    The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
+**DBDriver**    The database type. e.g.,: MySQLi, Postgre, etc. The case must match the driver name
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.

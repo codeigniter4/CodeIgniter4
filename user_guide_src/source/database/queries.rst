@@ -17,7 +17,7 @@ To submit a query, use the **query** function::
 
     $db->query('YOUR QUERY HERE');
 
-The query() function returns a database result **object** when "read"
+The ``query()`` function returns a database result **object** when "read"
 type queries are run which you can use to :doc:`show your
 results <results>`. When "write" type queries are run it simply
 returns TRUE or FALSE depending on success or failure. When retrieving
@@ -30,12 +30,12 @@ Simplified Queries
 ==================
 
 The **simpleQuery** method is a simplified version of the
-$db->query() method. It DOES
+``$db->query()`` method. It DOES
 NOT return a database result set, nor does it set the query timer, or
 compile bind data, or store your query for debugging. It simply lets you
 submit a query. Most users will rarely use this function.
 
-It returns whatever the database drivers' "execute" function returns.
+It returns whatever the database drivers "execute" function returns.
 That typically is TRUE/FALSE on success or failure for write type queries
 such as INSERT, DELETE or UPDATE statements (which is what it really
 should be used for) and a resource/object on success for queries with
@@ -111,14 +111,14 @@ this:
    single quotes around the data so you don't have to:
    ::
 
-        $sql = "INSERT INTO table (title) VALUES(".$db->escape($title).")";
+        $sql = "INSERT INTO table (title) VALUES(" . $db->escape($title) . ")";
 
 #. **$db->escapeString()** This function escapes the data passed to
    it, regardless of type. Most of the time you'll use the above
    function rather than this one. Use the function like this:
    ::
 
-        $sql = "INSERT INTO table (title) VALUES('".$db->escapeString($title)."')";
+        $sql = "INSERT INTO table (title) VALUES('" . $db->escapeString($title) . "')";
 
 #. **$db->escapeLikeString()** This method should be used when
    strings are to be used in LIKE conditions so that LIKE wildcards
@@ -128,7 +128,7 @@ this:
 
     $search = '20% raise';
     $sql = "SELECT id FROM table WHERE column LIKE '%" .
-    $db->escapeLikeString($search)."%' ESCAPE '!'";
+    $db->escapeLikeString($search) . "%' ESCAPE '!'";
 
 .. important:: The ``escapeLikeString()`` method uses '!' (exclamation mark)
     to escape special characters for *LIKE* conditions. Because this
@@ -184,7 +184,7 @@ Handling Errors
 
 **$db->error();**
 
-If you need to get the last error that has occurred, the error() method
+If you need to get the last error that has occurred, the ``error()`` method
 will return an array containing its code and message. Here's a quick
 example::
 
@@ -217,11 +217,11 @@ as placeholders. This returns a PreparedQuery object::
     $pQuery = $db->prepare(function($db)
     {
         return $db->table('user')
-                   ->insert([
-                        'name'    => 'x',
-                        'email'   => 'y',
-                        'country' => 'US'
-                   ]);
+                  ->insert([
+                       'name'    => 'x',
+                       'email'   => 'y',
+                       'country' => 'US'
+                  ]);
     });
 
 If you don't want to use the Query Builder you can create the Query object manually using question marks for
@@ -260,11 +260,11 @@ query::
     $pQuery = $db->prepare(function($db)
     {
         return $db->table('user')
-                   ->insert([
-                        'name'    => 'x',
-                        'email'   => 'y',
-                        'country' => 'US'
-                   ]);
+                  ->insert([
+                       'name'    => 'x',
+                       'email'   => 'y',
+                       'country' => 'US'
+                  ]);
     });
 
     // Collect the Data
@@ -295,7 +295,7 @@ This returns the prepared query as a string.
 
 **hasError()**
 
-Returns boolean true/false if the last execute() call created any errors.
+Returns boolean true/false if the last ``execute()`` call created any errors.
 
 **getErrorCode()**
 **getErrorMessage()**
@@ -357,7 +357,7 @@ will return true::
 
 **isWriteType()**
 
-Returns true if the query was determined to be a write-type query (i.e.
+Returns true if the query was determined to be a write-type query (i.e.,
 INSERT, UPDATE, DELETE, etc)::
 
     if ($query->isWriteType())
