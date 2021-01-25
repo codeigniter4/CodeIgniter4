@@ -526,32 +526,32 @@ then you should provide a <code class="docutils literal notranslate"><span class
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="nv">$id</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nv">$email</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nv">$username</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$id</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$email</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$username</span><span class="p">;</span>
 
-        <span class="k">protected</span> <span class="nv">$last_login</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$last_login</span><span class="p">;</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">lastLogin</span><span class="p">(</span><span class="nv">$format</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">lastLogin</span><span class="p">(</span><span class="nv">$format</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastLogin</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="nv">$format</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$name</span> <span class="o">===</span> <span class="s1">&#39;lastLogin&#39;</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastLogin</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="nv">$format</span><span class="p">);</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastLogin</span> <span class="o">=</span> <span class="nx">DateTime</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
         <span class="p">}</span>
+    <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">))</span>
         <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nv">$name</span> <span class="o">===</span> <span class="s1">&#39;lastLogin&#39;</span><span class="p">)</span>
-                <span class="p">{</span>
-                        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastLogin</span> <span class="o">=</span> <span class="nx">DateTime</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
-                <span class="p">}</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">;</span>
         <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
-        <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">))</span>
-                <span class="p">{</span>
-                        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">;</span>
-                <span class="p">}</span>
-        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -568,9 +568,9 @@ The only parameter is the name of the class to instantiate.</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$rows</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">last_login</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">last_login</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -584,8 +584,8 @@ number of the results. The second parameter is the class name to instantiate.</p
 
 <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$row</span><span class="p">))</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>                 <span class="c1">// access attributes</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">last_login</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">);</span>   <span class="c1">// access class methods</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>               <span class="c1">// access attributes</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">last_login</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">);</span> <span class="c1">// access class methods</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -610,7 +610,7 @@ the method using your query result object:</p>
 Make sure to call the method using your query result object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM my_table&#39;</span><span class="p">);</span>
 
-    <span class="k">echo</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>getNumRows()</strong></p>
@@ -638,10 +638,10 @@ result has been generated in order to cut down on memory consumption.</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nv">$query</span><span class="o">-&gt;</span><span class="na">freeResult</span><span class="p">();</span>  <span class="c1">// The $query result object will no longer be available</span>
+<span class="nv">$query</span><span class="o">-&gt;</span><span class="na">freeResult</span><span class="p">();</span> <span class="c1">// The $query result object will no longer be available</span>
 
 <span class="nv">$query2</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT name FROM some_table&#39;</span><span class="p">);</span>
 
@@ -671,8 +671,7 @@ Most notably - you won’t be able to use it with PDO.</p>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\BaseResult</code></dt>
-<dd><blockquote>
-<div><dl class="method">
+<dd><dl class="method">
 <dt id="getResult">
 <code class="sig-name descname">getResult</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getResult" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -814,14 +813,12 @@ requested form.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned</p></li>
+<li><p><strong>$n</strong> (<em>int</em>) – Index of the query results row to be returned
+:returns:       The requested row or NULL if it doesn’t exist</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The requested row or NULL if it doesn’t exist</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>stdClass</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>stdClass</p>
 </dd>
 </dl>
 <p>Returns the requested result row as an object of type
@@ -978,22 +975,21 @@ requested class.</p>
 <p>Usage: see <a class="reference internal" href="#result-helper-methods">Result Helper Methods</a>.</p>
 </dd></dl>
 
-</div></blockquote>
 <dl class="method">
 <dt id="getFieldNames">
 <code class="sig-name descname">getFieldNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldNames" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">returns</dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Array of column names</p>
 </dd>
-<dt class="field-even">rtype</dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>array</p>
 </dd>
 </dl>
 <p>Returns an array containing the field names in the
 result set.</p>
-</div></blockquote>
+</dd></dl>
+
 <dl class="method">
 <dt id="getFieldData">
 <code class="sig-name descname">getFieldData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldData" title="Permalink to this definition">¶</a></dt>
@@ -1009,22 +1005,20 @@ result set.</p>
 field meta-data.</p>
 </dd></dl>
 
-</dd></dl>
-
 <dl class="method">
 <dt id="getNumRows">
 <code class="sig-name descname">getNumRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getNumRows" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">returns</dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Number of rows in result set</p>
 </dd>
-<dt class="field-even">rtype</dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
 <p>Returns number of rows returned by the query</p>
-</div></blockquote>
+</dd></dl>
+
 <dl class="method">
 <dt id="freeResult">
 <code class="sig-name descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition">¶</a></dt>
@@ -1035,8 +1029,6 @@ field meta-data.</p>
 </dl>
 <p>Frees a result set.</p>
 <p>Usage: see <a class="reference internal" href="#result-helper-methods">Result Helper Methods</a>.</p>
-</dd></dl>
-
 </dd></dl>
 
 </dd></dl>
@@ -1060,7 +1052,7 @@ field meta-data.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 23, 2021.
+        Last updated on Jan 25, 2021.
       </span>
 
     </p>

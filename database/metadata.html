@@ -378,7 +378,7 @@ you are currently connected to. Example:</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$tables</span> <span class="k">as</span> <span class="nv">$table</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$table</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$table</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -394,7 +394,7 @@ you are currently connected to. Example:</p>
 running an operation on it. Returns a boolean TRUE/FALSE. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">tableExists</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">))</span>
 <span class="p">{</span>
-        <span class="c1">// some code...</span>
+    <span class="c1">// some code...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -411,23 +411,25 @@ running an operation on it. Returns a boolean TRUE/FALSE. Usage example:</p>
 <p><strong>$db-&gt;getFieldNames()</strong></p>
 <p>Returns an array containing the field names. This query can be called
 two ways:</p>
-<p>1. You can supply the table name and call it from the $db-&gt;
-object:</p>
+<ol class="arabic">
+<li><p>You can supply the table name and call it from the <code class="docutils literal notranslate"><span class="pre">$db-&gt;object</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</li>
+</ol>
 <p>2. You can gather the field names associated with any query you run by
 calling the function from your query result object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM some_table&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -439,7 +441,7 @@ calling the function from your query result object:</p>
 performing an action. Returns a boolean TRUE/FALSE. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">fieldExists</span><span class="p">(</span><span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;table_name&#39;</span><span class="p">))</span>
 <span class="p">{</span>
-        <span class="c1">// some code...</span>
+    <span class="c1">// some code...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -465,10 +467,10 @@ the column type, max length, etc.</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">max_length</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">primary_key</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">max_length</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">primary_key</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -496,9 +498,9 @@ database:</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">;</span>  <span class="c1">// array of field names</span>
+<span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">;</span> <span class="c1">// array of field names</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -512,11 +514,11 @@ for each key associated with a table.</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">table_name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">column_name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_table_name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_column_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">table_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">column_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_table_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_column_name</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -543,7 +545,7 @@ foreign key definitions.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 23, 2021.
+        Last updated on Jan 25, 2021.
       </span>
 
     </p>

@@ -373,7 +373,7 @@ manually if you choose to, but there’s really no benefit).</p>
 <div class="section" id="running-transactions">
 <h2>Running Transactions<a class="headerlink" href="#running-transactions" title="Permalink to this headline">¶</a></h2>
 <p>To run your queries using transactions you will use the
-$this-&gt;db-&gt;transStart() and $this-&gt;db-&gt;transComplete() functions as
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transComplete()</span></code> functions as
 follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;AN SQL QUERY...&#39;</span><span class="p">);</span>
@@ -410,7 +410,7 @@ debugging is turned off, you can manage your own errors like this:</p>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStatus</span><span class="p">()</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="c1">// generate an error... or use the log_message() function to log your error</span>
+    <span class="c1">// generate an error... or use the log_message() function to log your error</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -418,7 +418,7 @@ debugging is turned off, you can manage your own errors like this:</p>
 <div class="section" id="disabling-transactions">
 <h2>Disabling Transactions<a class="headerlink" href="#disabling-transactions" title="Permalink to this headline">¶</a></h2>
 <p>Transactions are enabled by default. If you would like to disable transactions you
-can do so using $this-&gt;db-&gt;transOff():</p>
+can do so using <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transOff()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transOff</span><span class="p">();</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
@@ -434,7 +434,7 @@ as they are when running queries without transactions.</p>
 <p>You can optionally put the transaction system into “test mode”, which
 will cause your queries to be rolled back – even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-$this-&gt;db-&gt;transStart() function to TRUE:</p>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> function to TRUE:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Query will be rolled back</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;AN SQL QUERY...&#39;</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
@@ -452,18 +452,18 @@ $this-&gt;db-&gt;transStart() function to TRUE:</p>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStatus</span><span class="p">()</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transRollback</span><span class="p">();</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transRollback</span><span class="p">();</span>
 <span class="p">}</span>
 <span class="k">else</span>
 <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transCommit</span><span class="p">();</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transCommit</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Make sure to use $this-&gt;db-&gt;transBegin() when running manual
-transactions, <strong>NOT</strong> $this-&gt;db-&gt;transStart().</p>
+<p>Make sure to use <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transBegin()</span></code> when running manual
+transactions, <strong>NOT</strong> <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>.</p>
 </div>
 </div>
 </div>
@@ -484,7 +484,7 @@ transactions, <strong>NOT</strong> $this-&gt;db-&gt;transStart().</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 23, 2021.
+        Last updated on Jan 25, 2021.
       </span>
 
     </p>

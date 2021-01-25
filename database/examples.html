@@ -372,16 +372,18 @@ automatically. See the <a class="reference internal" href="connecting.html"><spa
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">echo</span> <span class="s1">&#39;Total Results: &#39;</span> <span class="o">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$results</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above getResult() function returns an array of <strong>objects</strong>. Example:
-$row-&gt;title</p>
+<div class="line-block">
+<div class="line">The above <code class="docutils literal notranslate"><span class="pre">getResult()</span></code> function returns an array of <strong>objects</strong>.</div>
+<div class="line">Example: <code class="docutils literal notranslate"><span class="pre">$row-&gt;title</span></code></div>
+</div>
 </div>
 <div class="section" id="standard-query-with-multiple-results-array-version">
 <h2>Standard Query With Multiple Results (Array Version)<a class="headerlink" href="#standard-query-with-multiple-results-array-version" title="Permalink to this headline">¶</a></h2>
@@ -390,14 +392,17 @@ $row-&gt;title</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">];</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above getResultArray() function returns an array of standard array
-indexes. Example: $row[‘title’]</p>
+<div class="line-block">
+<div class="line">The above <code class="docutils literal notranslate"><span class="pre">getResultArray()</span></code> function returns an array of standard array
+indexes.</div>
+<div class="line">Example: <code class="docutils literal notranslate"><span class="pre">$row['title']</span></code></div>
+</div>
 </div>
 <div class="section" id="standard-query-with-single-result">
 <h2>Standard Query With Single Result<a class="headerlink" href="#standard-query-with-single-result" title="Permalink to this headline">¶</a></h2>
@@ -406,7 +411,7 @@ indexes. Example: $row[‘title’]</p>
 <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The above getRow() function returns an <strong>object</strong>. Example: $row-&gt;name</p>
+<p>The above <code class="docutils literal notranslate"><span class="pre">getRow()</span></code> function returns an <strong>object</strong>. Example: <code class="docutils literal notranslate"><span class="pre">$row-&gt;name</span></code></p>
 </div>
 <div class="section" id="standard-query-with-single-result-array-version">
 <h2>Standard Query With Single Result (Array version)<a class="headerlink" href="#standard-query-with-single-result-array-version" title="Permalink to this headline">¶</a></h2>
@@ -415,8 +420,8 @@ indexes. Example: $row[‘title’]</p>
 <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
-<p>The above getRowArray() function returns an <strong>array</strong>. Example:
-$row[‘name’]</p>
+<p>The above <code class="docutils literal notranslate"><span class="pre">getRowArray()</span></code> function returns an <strong>array</strong>. Example:
+<code class="docutils literal notranslate"><span class="pre">$row['name']</span></code>.</p>
 </div>
 <div class="section" id="standard-insert">
 <h2>Standard Insert<a class="headerlink" href="#standard-insert" title="Permalink to this headline">¶</a></h2>
@@ -434,23 +439,24 @@ means of retrieving data:</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above get() function retrieves all the results from the supplied
+<p>The above <code class="docutils literal notranslate"><span class="pre">get()</span></code> function retrieves all the results from the supplied
 table. The <a class="reference internal" href="query_builder.html"><span class="doc">Query Builder</span></a> class contains a full
 complement of functions for working with data.</p>
 </div>
 <div class="section" id="query-builder-insert">
 <h2>Query Builder Insert<a class="headerlink" href="#query-builder-insert" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
-        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span>
+    <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+    <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span>
 <span class="p">];</span>
 
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>  <span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;{$title}&#39;, &#39;{$name}&#39;, &#39;{$date}&#39;)</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;{$title}&#39;, &#39;{$name}&#39;, &#39;{$date}&#39;)</span>
 </pre></div>
 </div>
 </div>
@@ -472,7 +478,7 @@ complement of functions for working with data.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 23, 2021.
+        Last updated on Jan 25, 2021.
       </span>
 
     </p>

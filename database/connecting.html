@@ -365,7 +365,7 @@ and is provided for your convenience:</p>
 <div class="section" id="available-parameters">
 <h2>Available Parameters<a class="headerlink" href="#available-parameters" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><p>The database group name, a string that must match the config class’ property name. Default value is $config-&gt;defaultGroup.</p></li>
+<li><p>The database group name, a string that must match the config class’ property name. Default value is <code class="docutils literal notranslate"><span class="pre">$config-&gt;defaultGroup</span></code>.</p></li>
 <li><p>TRUE/FALSE (boolean). Whether to return the shared connection (see
 Connecting to Multiple Databases below).</p></li>
 </ol>
@@ -403,10 +403,8 @@ group names you are connecting to.</p>
 <p class="admonition-title">Note</p>
 <p>You don’t need to create separate database configurations if you
 only need to use a different database on the same connection. You
-can switch to a different database when you need to, like this:</p>
-<div class="line-block">
-<div class="line">$db-&gt;setDatabase($database2_name);</div>
-</div>
+can switch to a different database when you need to, like this:
+<code class="docutils literal notranslate"><span class="pre">$db-&gt;setDatabase($database2_name);</span></code></p>
 </div>
 </div>
 <div class="section" id="connecting-with-custom-settings">
@@ -415,24 +413,24 @@ can switch to a different database when you need to, like this:</p>
 a connection that uses your custom settings. The array passed in must be
 the same format as the groups are defined in the configuration file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$custom</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-            <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">!==</span> <span class="s1">&#39;production&#39;</span><span class="p">),</span>
-            <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-            <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-            <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-            <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
-            <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
-    <span class="p">];</span>
+    <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">!==</span> <span class="s1">&#39;production&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+    <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
+<span class="p">];</span>
 <span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="nv">$custom</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -441,12 +439,12 @@ the same format as the groups are defined in the configuration file:</p>
 <h3>Reconnecting / Keeping the Connection Alive<a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline">¶</a></h3>
 <p>If the database server’s idle timeout is exceeded while you’re doing
 some heavy PHP lifting (processing an image, for instance), you should
-consider pinging the server by using the reconnect() method before
+consider pinging the server by using the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method before
 sending further queries, which can gracefully keep the connection alive
 or re-establish it.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If you are using MySQLi database driver, the reconnect() method
+<p>If you are using MySQLi database driver, the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method
 does not ping the server but it closes the connection then connects again.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>
@@ -480,7 +478,7 @@ connections, you can explicitly close the connection.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 23, 2021.
+        Last updated on Jan 25, 2021.
       </span>
 
     </p>
