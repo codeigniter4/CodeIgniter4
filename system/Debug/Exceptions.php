@@ -94,7 +94,7 @@ class Exceptions
 	public function initialize()
 	{
 		//Set the Exception Handler
-		set_exception_handler([$this, 'exceptionHandler']); // @phpstan-ignore-line
+		set_exception_handler([$this, 'exceptionHandler']);
 
 		// Set the Error Handler
 		set_error_handler([$this, 'errorHandler']);
