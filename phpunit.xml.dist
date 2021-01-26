@@ -31,11 +31,11 @@
 		</report>
 	</coverage>
 	<testsuites>
-		<testsuite name="system">
+		<testsuite name="System">
 			<directory>./tests/system</directory>
 			<exclude>./tests/system/Database</exclude>
 		</testsuite>
-		<testsuite name="database">
+		<testsuite name="Database">
 			<directory>./tests/system/Database</directory>
 		</testsuite>
 	</testsuites>
