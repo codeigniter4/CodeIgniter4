@@ -10,7 +10,7 @@
 		stopOnIncomplete="false"
 		stopOnSkipped="false">
 	<testsuites>
-		<testsuite name="app">
+		<testsuite name="App">
 			<directory>./tests</directory>
 		</testsuite>
 	</testsuites>
