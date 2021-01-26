@@ -102,7 +102,7 @@ class CreateDatabase extends BaseCommand
 					$ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
 				}
 
-				if (strpos($name, ':memory:') === false)
+				if ($name !== ':memory:')
 				{
 					$name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
 				}
@@ -110,7 +110,7 @@ class CreateDatabase extends BaseCommand
 				$config->{$group}['DBDriver'] = 'SQLite3';
 				$config->{$group}['database'] = $name;
 
-				if (strpos($name, ':memory:') === false)
+				if ($name !== ':memory:')
 				{
 					$dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
 
@@ -131,7 +131,7 @@ class CreateDatabase extends BaseCommand
 				$db->connect();
 				Factories::reset('config');
 
-				if (! is_file($db->getDatabase()) && strpos($name, ':memory:') === false)
+				if (! is_file($db->getDatabase()) && $name !== ':memory:')
 				{
 					// @codeCoverageIgnoreStart
 					CLI::error('Database creation failed.', 'light_gray', 'red');
