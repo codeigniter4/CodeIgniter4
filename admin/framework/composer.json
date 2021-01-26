@@ -28,7 +28,10 @@
 	"autoload": {
 		"psr-4": {
 			"CodeIgniter\\": "system/"
-		}
+		},
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
+		]
 	},
 	"scripts": {
 		"post-update-cmd": [
