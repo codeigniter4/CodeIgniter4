@@ -180,7 +180,7 @@ class Table
 
 			if (count($temp) < $columnLimit)
 			{
-				for ($i = count($temp); $i < $columnLimit; $i ++)
+				for ($i = count($temp); $i < $columnLimit; $i++)
 				{
 					$temp[] = '&nbsp;';
 				}
@@ -272,7 +272,8 @@ class Table
 	/**
 	 * Generate the table
 	 *
-	 * @param  mixed $tableData
+	 * @param mixed $tableData
+	 *
 	 * @return string
 	 */
 	public function generate($tableData = null)
@@ -307,7 +308,6 @@ class Table
 		}
 
 		// Build the table!
-
 		$out = $this->template['table_open'] . $this->newline;
 
 		// Add any caption here
@@ -345,10 +345,11 @@ class Table
 			$out .= $this->template['tbody_open'] . $this->newline;
 
 			$i = 1;
+
 			foreach ($this->rows as $row)
 			{
 				// We use modulus to alternate the row colors
-				$name = fmod($i ++, 2) ? '' : 'alt_';
+				$name = fmod($i++, 2) ? '' : 'alt_';
 
 				$out .= $this->template['row_' . $name . 'start'] . $this->newline;
 
@@ -385,6 +386,8 @@ class Table
 
 				$out .= $this->template['row_' . $name . 'end'] . $this->newline;
 			}
+
+			$out .= $this->template['tbody_close'] . $this->newline;
 		}
 
 		// Any table footing to display?
@@ -409,8 +412,6 @@ class Table
 
 			$out .= $this->template['footing_row_end'] . $this->newline . $this->template['tfoot_close'] . $this->newline;
 		}
-
-		$out .= $this->template['tbody_close'] . $this->newline;
 
 		// And finally, close off the table
 		$out .= $this->template['table_close'];
