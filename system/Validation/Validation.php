@@ -222,7 +222,6 @@ class Validation implements ValidationInterface
 			{
 				return true;
 			}
-			unset($val);
 			// Otherwise remove the if_exist rule and continue the process
 			$rules = array_diff($rules, ['if_exist']);
 		}
