@@ -218,7 +218,7 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if (!($val = dot_array_search($field, $data)) || empty($val))
+			if (!($val = dot_array_search($field, $data)) || empty(array_filter($val)))
 			{
 				return true;
 			}
