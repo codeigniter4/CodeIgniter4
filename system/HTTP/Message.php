@@ -140,7 +140,7 @@ class Message implements MessageInterface
 	 *
 	 * @deprecated Use header calls directly
 	 */
-	public function isJSON(): bool
+      public function isJSON()
 	{
 		if (! $this->hasHeader('Content-Type'))
 		{
