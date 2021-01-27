@@ -218,10 +218,11 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if (! array_key_exists($field, $data))
+			if (!($val = dot_array_search($field, $data)) || empty($val))
 			{
 				return true;
 			}
+			unset($val);
 			// Otherwise remove the if_exist rule and continue the process
 			$rules = array_diff($rules, ['if_exist']);
 		}
