@@ -303,6 +303,64 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('test', $router->getFilter());
 	}
 
+	public function testRouteWorksWithAlternateContentTypes()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', function ($routes) {
+			$routes->add('bar', 'TestController::default', [
+				'alternate-content' => [
+					'application/json'                                                     => 'AnotherTestController::json',
+					'application/xml'                                                      => 'AnotherTestController::xml',
+					'text/xml'                                                             => 'AnotherTestController::xml',
+					'application/activity+json'                                            => 'ActivityPubTest::actor',
+					'application/ld+json; profile="https://www.w3.org/ns/activitystreams"' => 'ActivityPubTest::actor',
+				],
+			]);
+		});
+
+		// user requests json content
+		$this->request->setHeader('accept', 'application/json');
+
+		$router = new Router($collection, $this->request);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\AnotherTestController', $router->controllerName());
+		$this->assertEquals('json', $router->methodName());
+
+		// user requests xml content
+		$this->request->setHeader('accept', 'application/xml,text/xml');
+
+		$router = new Router($collection, $this->request);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\AnotherTestController', $router->controllerName());
+		$this->assertEquals('xml', $router->methodName());
+
+		// user requests activitystream content
+		$this->request->setHeader('accept', 'application/activity+json,application/ld+json; profile="https://www.w3.org/ns/activitystreams"');
+
+		$router = new Router($collection, $this->request);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\ActivityPubTest', $router->controllerName());
+		$this->assertEquals('actor', $router->methodName());
+
+		// anything other than the explicitly defined alternate content type
+		// options must redirect to the default controller method
+		$this->request->setHeader('accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8');
+
+		$router = new Router($collection, $this->request);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('default', $router->methodName());
+	}
+
 	//--------------------------------------------------------------------
 
 	/**

@@ -317,7 +317,7 @@ class Negotiate
 	 *
 	 * @return boolean
 	 */
-	protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
+	public function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
 	{
 		$supported = $this->parseHeader($supported);
 		if (is_array($supported) && count($supported) === 1)

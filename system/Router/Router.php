@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
@@ -408,6 +409,10 @@ class Router implements RouterInterface
 			// Does the RegEx match?
 			if (preg_match('#^' . $key . '$#u', $uri, $matches))
 			{
+				$this->matchedRouteOptions = $this->collection->getRoutesOptions(
+					$matchedKey
+				);
+
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
@@ -439,10 +444,39 @@ class Router implements RouterInterface
 						$val,
 					];
 
-					$this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
-
 					return true;
 				}
+
+				// Is there an alternate content for the matchedRoute?
+
+				// check if the alternate-content has been requested in the accept
+				// header and overwrite the $val with the matching controller method
+				if (array_key_exists('alternate-content', $this->matchedRouteOptions)
+					&& is_array($this->matchedRouteOptions['alternate-content']))
+				{
+					$request   = Services::request();
+					$negotiate = Services::negotiator();
+
+					$acceptHeader = $request->getHeader('Accept')->getValue();
+					$parsedHeader = $negotiate->parseHeader($acceptHeader);
+
+					$supported = array_keys($this->matchedRouteOptions['alternate-content']);
+
+					$expectedContentType = $parsedHeader[0];
+					foreach ($supported as $available)
+					{
+						if ($negotiate->match($expectedContentType, $available, true))
+						{
+							$val = $this->collection->getDefaultNamespace()
+							. $this->directory
+							. $this->matchedRouteOptions['alternate-content'][$available];
+
+							// no need to continue loop as $val has been overwritten
+							break;
+						}
+					}
+				}
+
 				// Are we using the default method for back-references?
 
 				// Support resource route when function with subdirectory
@@ -476,8 +510,6 @@ class Router implements RouterInterface
 					$matchedKey,
 					$val,
 				];
-
-				$this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
 
 				return true;
 			}
