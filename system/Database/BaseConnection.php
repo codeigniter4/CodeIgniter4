@@ -675,7 +675,7 @@ abstract class BaseConnection implements ConnectionInterface
 				Events::trigger('DBQuery', $query);
 			}
 
-			return new $resultClass($this->connID, $this->resultID);
+			return false;
 		}
 
 		$query->setDuration($startTime);
