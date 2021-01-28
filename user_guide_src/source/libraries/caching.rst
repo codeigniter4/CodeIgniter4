@@ -19,7 +19,7 @@ The following example shows a common usage pattern within your controllers.
 
 ::
 
-	if ( ! $foo = cache('foo'))
+	if (! $foo = cache('foo'))
 	{
 		echo 'Saving to the cache!<br />';
 		$foo = 'foobarbaz!';
@@ -75,15 +75,15 @@ The settings for the Redis server that you wish to use when using the ``Redis`` 
 Class Reference
 ***************
 
-.. php:method:: ⠀isSupported()
+.. php:method:: isSupported()
 
-	:returns:	TRUE if supported, FALSE if not
+	:returns: ``true`` if supported, ``false`` if not
 	:rtype:	bool
 
-.. php:method:: ⠀get($key)
+.. php:method:: get($key): mixed
 
-	:param	string	$key: Cache item name
-	:returns:	Item value or NULL if not found
+	:param string $key: Cache item name
+	:returns: Item value or ``null`` if not found
 	:rtype:	mixed
 
 	This method will attempt to fetch an item from the cache store. If the
@@ -93,17 +93,28 @@ Class Reference
 
 		$foo = $cache->get('my_cached_item');
 
-.. php:method:: ⠀save($key, $data[, $ttl = 60[, $raw = FALSE]])
+.. php:method:: remember(string $key, int $ttl, Closure $callback)
 
-	:param	string	$key: Cache item name
-	:param	mixed	$data: the data to save
-	:param	int	$ttl: Time To Live, in seconds (default 60)
-	:param	bool	$raw: Whether to store the raw value
-	:returns:	TRUE on success, FALSE on failure
+	:param string $key: Ccahe item name
+	:param int $ttl: Time to live in seconds
+	:param Closure $callback: Callback to invoke when the cache item returns null
+	:returns: The value of the cache item
+	:rtype: mixed
+	
+	Gets an item from the cache. If ``null`` was returned, this will invoke the callback
+	and save the result. Either way, this will return the value.
+
+.. php:method::⠀save(string $key, $data[, int $ttl = 60[, $raw = false]])
+
+	:param string $key: Cache item name
+	:param mixed $data: the data to save
+	:param int $ttl: Time To Live, in seconds (default 60)
+	:param bool $raw: Whether to store the raw value
+	:returns: ``true`` on success, ``false`` on failure
 	:rtype:	bool
 
 	This method will save an item to the cache store. If saving fails, the
-	method will return FALSE.
+	method will return ``false``.
 
 	Example::
 
@@ -112,10 +123,10 @@ Class Reference
 .. note:: The ``$raw`` parameter is only utilized by Memcache,
 		  in order to allow usage of ``increment()`` and ``decrement()``.
 
-.. php:method:: ⠀delete($key)
+.. php:method:: delete($key): bool
 
-	:param	string	$key: name of cached item
-	:returns:	TRUE on success, FALSE on failure
+	:param string $key: name of cached item
+	:returns: ``true`` on success, ``false`` on failure
 	:rtype:	bool
 
 	This method will delete a specific item from the cache store. If item
@@ -125,11 +136,11 @@ Class Reference
 
 		$cache->delete('cache_item_id');
 
-.. php:method:: ⠀increment($key[, $offset = 1])
+.. php:method:: increment($key[, $offset = 1]): mixed
 
-	:param	string	$key: Cache ID
-	:param	int	$offset: Step/value to add
-	:returns:	New value on success, FALSE on failure
+	:param string $key: Cache ID
+	:param int $offset: Step/value to add
+	:returns: New value on success, ``false`` on failure
    	:rtype:	mixed
 
 	Performs atomic incrementation of a raw stored value.
@@ -137,16 +148,14 @@ Class Reference
 	Example::
 
 		// 'iterator' has a value of 2
-
 		$cache->increment('iterator'); // 'iterator' is now 3
-
 		$cache->increment('iterator', 3); // 'iterator' is now 6
 
-.. php:method:: ⠀decrement($key[, $offset = 1])
+.. php:method:: decrement($key[, $offset = 1]): mixed
 
-	:param	string	$key: Cache ID
-	:param	int	$offset: Step/value to reduce by
-	:returns:	New value on success, FALSE on failure
+	:param string $key: Cache ID
+	:param int $offset: Step/value to reduce by
+	:returns: New value on success, ``false`` on failure
 	:rtype:	mixed
 
 	Performs atomic decrementation of a raw stored value.
@@ -154,14 +163,12 @@ Class Reference
 	Example::
 
 		// 'iterator' has a value of 6
-
 		$cache->decrement('iterator'); // 'iterator' is now 5
-
 		$cache->decrement('iterator', 2); // 'iterator' is now 3
 
-.. php:method:: ⠀clean()
+.. php:method:: clean()
 
-	:returns:	TRUE on success, FALSE on failure
+	:returns: ``true`` on success, ``false`` on failure
 	:rtype:	bool
 
 	This method will 'clean' the entire cache. If the deletion of the
@@ -171,9 +178,9 @@ Class Reference
 
 			$cache->clean();
 
-.. php:method:: ⠀getCacheInfo()
+.. php:method:: getCacheInfo()
 
-	:returns:	Information on the entire cache database
+	:returns: Information on the entire cache database
 	:rtype:	mixed
 
 	This method will return information on the entire cache.
@@ -185,10 +192,10 @@ Class Reference
 .. note:: The information returned and the structure of the data is dependent
 		  on which adapter is being used.
 
-.. php:method:: ⠀getMetadata($key)
+.. php:method:: getMetadata(string $key)
 
-	:param	string	$key: Cache item name
-	:returns:	Metadata for the cached item
+	:param string $key: Cache item name
+	:returns: Metadata for the cached item
 	:rtype:	mixed
 
 	This method will return detailed information on a specific item in the

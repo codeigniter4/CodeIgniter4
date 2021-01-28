@@ -11,14 +11,13 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use Config\Cache;
 
 /**
  * File system cache handler
  */
-class FileHandler implements CacheInterface
+class FileHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.

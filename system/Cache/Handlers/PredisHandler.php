@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Exception;
@@ -20,7 +19,7 @@ use Predis\Client;
 /**
  * Predis cache handler
  */
-class PredisHandler implements CacheInterface
+class PredisHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.

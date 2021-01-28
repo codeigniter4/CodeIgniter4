@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Exception;
@@ -21,7 +20,7 @@ use Memcached;
 /**
  * Mamcached cache handler
  */
-class MemcachedHandler implements CacheInterface
+class MemcachedHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.
