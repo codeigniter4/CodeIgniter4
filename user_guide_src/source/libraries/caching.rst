@@ -80,7 +80,7 @@ Class Reference
 	:returns: ``true`` if supported, ``false`` if not
 	:rtype:	bool
 
-.. php:method:: get($key)
+.. php:method:: get($key): mixed
 
 	:param string $key: Cache item name
 	:returns: Item value or ``null`` if not found
@@ -123,7 +123,7 @@ Class Reference
 .. note:: The ``$raw`` parameter is only utilized by Memcache,
 		  in order to allow usage of ``increment()`` and ``decrement()``.
 
-.. php:method:: delete($key)
+.. php:method:: delete($key): bool
 
 	:param string $key: name of cached item
 	:returns: ``true`` on success, ``false`` on failure
@@ -136,7 +136,7 @@ Class Reference
 
 		$cache->delete('cache_item_id');
 
-.. php:method:: increment($key[, $offset = 1])
+.. php:method:: increment($key[, $offset = 1]): mixed
 
 	:param string $key: Cache ID
 	:param int $offset: Step/value to add
@@ -151,7 +151,7 @@ Class Reference
 		$cache->increment('iterator'); // 'iterator' is now 3
 		$cache->increment('iterator', 3); // 'iterator' is now 6
 
-.. php:method:: decrement($key[, $offset = 1])
+.. php:method:: decrement($key[, $offset = 1]): mixed
 
 	:param string $key: Cache ID
 	:param int $offset: Step/value to reduce by
