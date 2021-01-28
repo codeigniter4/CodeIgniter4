@@ -95,7 +95,7 @@ Class Reference
 
 .. php:method:: remember(string $key, int $ttl, Closure $callback)
 
-	:param string $key: Ccahe item name
+	:param string $key: Cache item name
 	:param int $ttl: Time to live in seconds
 	:param Closure $callback: Callback to invoke when the cache item returns null
 	:returns: The value of the cache item
