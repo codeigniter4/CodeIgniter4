@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">
 
-	<title><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8') ?></title>
+	<title><?= esc($title) ?></title>
 	<style type="text/css">
 		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
 	</style>
@@ -19,7 +19,7 @@
 	<!-- Header -->
 	<div class="header">
 		<div class="container">
-			<h1><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+			<h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
 			<p>
 				<?= esc($exception->getMessage()) ?>
 				<a href="https://www.google.com/search?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
@@ -96,8 +96,8 @@
 										}
 										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
-												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$' . $params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
-												<td><pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre></td>
+												<td><code><?= esc(isset($params[$key]) ? '$' . $params[$key]->name : "#$key") ?></code></td>
+												<td><pre><?= esc(print_r($value, true)) ?></pre></td>
 											</tr>
 										<?php endforeach ?>
 
@@ -146,12 +146,12 @@
 						<tbody>
 						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= esc($key) ?></td>
 								<td>
 									<?php if (is_string($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+										<?= esc($value) ?>
 									<?php else: ?>
-										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
+										<pre><?= esc(print_r($value, true)) ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -176,12 +176,12 @@
 						<tbody>
 						<?php foreach ($constants['user'] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= esc($key) ?></td>
 								<td>
 									<?php if (is_string($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+										<?= esc($value) ?>
 									<?php else: ?>
-										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
+										<pre><?= esc(print_r($value, true)) ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -251,12 +251,12 @@
 						<tbody>
 						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= esc($key) ?></td>
 								<td>
 									<?php if (is_string($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+										<?= esc($value) ?>
 									<?php else: ?>
-										<pre><?= htmlspecialchars(print_r($value, true), ENT_SUBSTITUTE, 'UTF-8') ?></pre>
+										<pre><?= esc(print_r($value, true)) ?></pre>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -354,7 +354,7 @@
 
 				<ol>
 				<?php foreach ($files as $file) :?>
-					<li><?= htmlspecialchars(static::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
+					<li><?= esc(static::cleanPath($file)) ?></li>
 				<?php endforeach ?>
 				</ol>
 			</div>
