@@ -104,7 +104,7 @@ Class Reference
 	Gets an item from the cache. If ``null`` was returned, this will invoke the callback
 	and save the result. Either way, this will return the value.
 
-.. php:method::⠀save(string $key, $data[, int $ttl = 60[, $raw = false]])
+.. php:method:: save(string $key, $data[, int $ttl = 60[, $raw = false]])
 
 	:param string $key: Cache item name
 	:param mixed $data: the data to save
