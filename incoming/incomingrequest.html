@@ -496,6 +496,40 @@ method if you know that you’re expecting JSON.</p>
 arrays, pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter.</p>
 <p>The second and third parameters match up to the <code class="docutils literal notranslate"><span class="pre">depth</span></code> and <code class="docutils literal notranslate"><span class="pre">options</span></code> arguments of the
 <a class="reference external" href="https://www.php.net/manual/en/function.json-decode.php">json_decode</a> PHP function.</p>
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to “application/json”, you can also use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> to get
+the JSON stream. Using <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> in this way will always return an object.</p>
+<p><strong>Get Specific Data from JSON</strong></p>
+<p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> for the
+data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With a request body of:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fizz&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;buzz&quot;</span><span class="o">:</span> <span class="s2">&quot;baz&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="c1">//$data = &quot;bar&quot;</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;fizz.buzz&#39;</span><span class="p">);</span>
+<span class="c1">//$data = &quot;baz&quot;</span>
+</pre></div>
+</div>
+<p>If you want the result to be an associative array instead of an object, you can use <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> instead and pass
+true in the second parameter. This function can also be used if you can’t guarantee that the incoming request will have the
+correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With the same request as above</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">);</span>
+<span class="c1">//$data-&gt;buzz = &quot;baz&quot;</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">//$data = [&quot;buzz&quot; =&gt; &quot;baz&quot;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See the documentation for <code class="docutils literal notranslate"><span class="pre">dot_array_search()</span></code> in the <code class="docutils literal notranslate"><span class="pre">Array</span></code> helper for more information on “dot” notation.</p>
+</div>
 <p><strong>Retrieving Raw data (PUT, PATCH, DELETE)</strong></p>
 <p>Finally, you can grab the contents of php://input as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInput</span><span class="p">();</span>
@@ -956,7 +990,7 @@ as an array.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 27, 2021.
+        Last updated on Jan 28, 2021.
       </span>
 
     </p>
