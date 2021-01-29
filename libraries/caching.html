@@ -377,11 +377,11 @@ requirements are not met.</p>
 <p>The following example shows a common usage pattern within your controllers.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Saving to the cache!&lt;br /&gt;&#39;</span><span class="p">;</span>
-        <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;foobarbaz!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Saving to the cache!&lt;br /&gt;&#39;</span><span class="p">;</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;foobarbaz!&#39;</span><span class="p">;</span>
 
-        <span class="c1">// Save into the cache for 5 minutes</span>
-        <span class="nx">cache</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+    <span class="c1">// Save into the cache for 5 minutes</span>
+    <span class="nx">cache</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">echo</span> <span class="nv">$foo</span><span class="p">;</span>
@@ -460,7 +460,7 @@ item does not exist, the method will return NULL.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Ccahe item name</p></li>
+<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
 <li><p><strong>$ttl</strong> (<em>int</em>) – Time to live in seconds</p></li>
 <li><p><strong>$callback</strong> (<em>Closure</em>) – Callback to invoke when the cache item returns null</p></li>
 </ul>
@@ -474,6 +474,33 @@ item does not exist, the method will return NULL.</p>
 </dl>
 <p>Gets an item from the cache. If <code class="docutils literal notranslate"><span class="pre">null</span></code> was returned, this will invoke the callback
 and save the result. Either way, this will return the value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">string $key</em>, <em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">int $ttl = 60</em><span class="optional">[</span>, <em class="sig-param">$raw = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#save" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
+<li><p><strong>$data</strong> (<em>mixed</em>) – the data to save</p></li>
+<li><p><strong>$ttl</strong> (<em>int</em>) – Time To Live, in seconds (default 60)</p></li>
+<li><p><strong>$raw</strong> (<em>bool</em>) – Whether to store the raw value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>This method will save an item to the cache store. If saving fails, the
+method will return <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;data_to_cache&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <div class="admonition note">
@@ -525,7 +552,7 @@ deletion fails, the method will return FALSE.</p>
 <p>Performs atomic incrementation of a raw stored value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 2</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span>    <span class="c1">// &#39;iterator&#39; is now 3</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 6</span>
 </pre></div>
 </div>
@@ -551,7 +578,7 @@ deletion fails, the method will return FALSE.</p>
 <p>Performs atomic decrementation of a raw stored value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 6</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 5</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span>    <span class="c1">// &#39;iterator&#39; is now 5</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
 </pre></div>
 </div>
@@ -643,10 +670,10 @@ directory to be really writable by the application.</p>
 <h3><a class="toc-backref" href="#id6">Memcached Caching</a><a class="headerlink" href="#memcached-caching" title="Permalink to this headline">¶</a></h3>
 <p>Memcached servers can be specified in the cache configuration file. Available options are:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$memcached</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;host&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;port&#39;</span>   <span class="o">=&gt;</span> <span class="mi">11211</span><span class="p">,</span>
-        <span class="s1">&#39;weight&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;raw&#39;</span>    <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;host&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;port&#39;</span>   <span class="o">=&gt;</span> <span class="mi">11211</span><span class="p">,</span>
+    <span class="s1">&#39;weight&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;raw&#39;</span>    <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -665,11 +692,11 @@ directory to be really writable by the application.</p>
 To use it, you need <a class="reference external" href="https://github.com/phpredis/phpredis">Redis server and phpredis PHP extension</a>.</p>
 <p>Config options to connect to redis server stored in the cache configuration file. Available options are:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$redis</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;host&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
-        <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;host&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
+    <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -711,7 +738,7 @@ support your chosen cache.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 28, 2021.
+        Last updated on Jan 29, 2021.
       </span>
 
     </p>
