@@ -18,15 +18,14 @@ use DateTime;
  */
 class FormatRules
 {
-
 	/**
 	 * Alpha
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha(string $str = null): bool
+	public function alpha(?string $str = null): bool
 	{
 		return ctype_alpha($str);
 	}
@@ -34,56 +33,59 @@ class FormatRules
 	/**
 	 * Alpha with spaces.
 	 *
-	 * @param string $value Value.
+	 * @param string|null $value Value.
 	 *
 	 * @return boolean True if alpha with spaces, else false.
 	 */
-	public function alpha_space(string $value = null): bool
+	public function alpha_space(?string $value = null): bool
 	{
 		if ($value === null)
 		{
 			return true;
 		}
 
-		return (bool) preg_match('/^[A-Z ]+$/i', $value);
+		// @see https://regex101.com/r/LhqHPO/1
+		return (bool) preg_match('/\A[A-Z ]+\z/i', $value);
 	}
 
 	/**
 	 * Alphanumeric with underscores and dashes
 	 *
+	 * @param string|null $str
+	 *
+	 * @return boolean
+	 */
+	public function alpha_dash(?string $str = null): bool
+	{
+		// @see https://regex101.com/r/XfVY3d/1
+		return (bool) preg_match('/\A[a-z0-9_-]+\z/i', $str);
+	}
+
+	/**
+	 * Alphanumeric, spaces, and a limited set of punctuation characters.
+	 * Accepted punctuation characters are: ~ tilde, ! exclamation,
+	 * # number, $ dollar, % percent, & ampersand, * asterisk, - dash,
+	 * _ underscore, + plus, = equals, | vertical bar, : colon, . period
+	 * ~ ! # $ % & * - _ + = | : .
+	 *
 	 * @param string $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_dash(string $str = null): bool
-	{
-			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
-	}
-
-		/**
-		 * Alphanumeric, spaces, and a limited set of punctuation characters.
-		 * Accepted punctuation characters are: ~ tilde, ! exclamation,
-		 * # number, $ dollar, % percent, & ampersand, * asterisk, - dash,
-		 * _ underscore, + plus, = equals, | vertical bar, : colon, . period
-		 * ~ ! # $ % & * - _ + = | : .
-		 *
-		 * @param string $str
-		 *
-		 * @return boolean
-		 */
 	public function alpha_numeric_punct($str)
 	{
-		return (bool) preg_match('/^[A-Z0-9 ~!#$%\&\*\-_+=|:.]+$/i', $str);
+		// @see https://regex101.com/r/6N8dDY/1
+		return (bool) preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str);
 	}
 
 	/**
 	 * Alphanumeric
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_numeric(string $str = null): bool
+	public function alpha_numeric(?string $str = null): bool
 	{
 		return ctype_alnum($str);
 	}
@@ -91,13 +93,14 @@ class FormatRules
 	/**
 	 * Alphanumeric w/ spaces
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function alpha_numeric_space(string $str = null): bool
+	public function alpha_numeric_space(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+		// @see https://regex101.com/r/0AZDME/1
+		return (bool) preg_match('/\A[A-Z0-9 ]+\z/i', $str);
 	}
 
 	/**
@@ -118,23 +121,24 @@ class FormatRules
 	/**
 	 * Decimal number
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function decimal(string $str = null): bool
+	public function decimal(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[-+]?[0-9]{0,}\.?[0-9]+$/', $str);
+		// @see https://regex101.com/r/HULifl/1/
+		return (bool) preg_match('/\A[-+]?[0-9]{0,}\.?[0-9]+\z/', $str);
 	}
 
 	/**
 	 * String of hexidecimal characters
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function hex(string $str = null): bool
+	public function hex(?string $str = null): bool
 	{
 		return ctype_xdigit($str);
 	}
@@ -142,22 +146,22 @@ class FormatRules
 	/**
 	 * Integer
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function integer(string $str = null): bool
+	public function integer(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
+		return (bool) preg_match('/\A[\-+]?[0-9]+\z/', $str);
 	}
 
 	/**
 	 * Is a Natural number  (0,1,2,3, etc.)
 	 *
-	 * @param  string $str
+	 * @param  string|null $str
 	 * @return boolean
 	 */
-	public function is_natural(string $str = null): bool
+	public function is_natural(?string $str = null): bool
 	{
 		return ctype_digit($str);
 	}
@@ -165,10 +169,10 @@ class FormatRules
 	/**
 	 * Is a Natural number, but not a zero  (1,2,3, etc.)
 	 *
-	 * @param  string $str
+	 * @param  string|null $str
 	 * @return boolean
 	 */
-	public function is_natural_no_zero(string $str = null): bool
+	public function is_natural_no_zero(?string $str = null): bool
 	{
 		return ($str !== '0' && ctype_digit($str));
 	}
@@ -176,24 +180,25 @@ class FormatRules
 	/**
 	 * Numeric
 	 *
-	 * @param string $str
+	 * @param string|null $str
 	 *
 	 * @return boolean
 	 */
-	public function numeric(string $str = null): bool
+	public function numeric(?string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
+		// @see https://regex101.com/r/bb9wtr/1
+		return (bool) preg_match('/\A[\-+]?[0-9]*\.?[0-9]+\z/', $str);
 	}
 
 	/**
 	 * Compares value against a regular expression pattern.
 	 *
-	 * @param string $str
-	 * @param string $pattern
+	 * @param string|null $str
+	 * @param string      $pattern
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str = null, string $pattern): bool
+	public function regex_match(?string $str, string $pattern): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{
@@ -254,6 +259,7 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
+		// @see https://regex101.com/r/wlJG1t/1/
 		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
 			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
@@ -369,5 +375,4 @@ class FormatRules
 
 		return (bool) $date && DateTime::getLastErrors()['warning_count'] === 0 && DateTime::getLastErrors()['error_count'] === 0;
 	}
-
 }

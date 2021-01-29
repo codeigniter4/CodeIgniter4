@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use Config\Cache;
 
 /**
@@ -19,9 +18,8 @@ use Config\Cache;
  * Windows-only, so not testable on travis-ci.
  * Unusable methods flagged for code coverage ignoring.
  */
-class WincacheHandler implements CacheInterface
+class WincacheHandler extends BaseHandler
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -38,7 +36,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = (string) $config->prefix;
 	}
 
 	//--------------------------------------------------------------------

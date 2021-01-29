@@ -50,53 +50,53 @@ to retrieve all records from a table::
 The first and second parameters enable you to set a limit and offset
 clause::
 
-	$query = $builder->get(10, 20);
+    $query = $builder->get(10, 20);
 
-	// Executes: SELECT * FROM mytable LIMIT 20, 10
-	// (in MySQL. Other databases have slightly different syntax)
+    // Executes: SELECT * FROM mytable LIMIT 20, 10
+    // (in MySQL. Other databases have slightly different syntax)
 
 You'll notice that the above function is assigned to a variable named
 $query, which can be used to show the results::
 
-	$query = $builder->get();
+    $query = $builder->get();
 
-	foreach ($query->getResult() as $row)
-	{
-		echo $row->title;
-	}
+    foreach ($query->getResult() as $row)
+    {
+        echo $row->title;
+    }
 
 Please visit the :doc:`result functions <results>` page for a full
 discussion regarding result generation.
 
 **$builder->getCompiledSelect()**
 
-Compiles the selection query just like **$builder->get()** but does not *run*
+Compiles the selection query just like ``$builder->get()`` but does not *run*
 the query. This method simply returns the SQL query as a string.
 
 Example::
 
-	$sql = $builder->getCompiledSelect();
-	echo $sql;
+    $sql = $builder->getCompiledSelect();
+    echo $sql;
 
-	// Prints string: SELECT * FROM mytable
+    // Prints string: SELECT * FROM mytable
 
 The first parameter enables you to set whether or not the query builder query
-will be reset (by default it will be reset, just like when using `$builder->get()`)::
+will be reset (by default it will be reset, just like when using ``$builder->get()``)::
 
-	echo $builder->limit(10,20)->getCompiledSelect(false);
+    echo $builder->limit(10,20)->getCompiledSelect(false);
 
-	// Prints string: SELECT * FROM mytable LIMIT 20, 10
-	// (in MySQL. Other databases have slightly different syntax)
+    // Prints string: SELECT * FROM mytable LIMIT 20, 10
+    // (in MySQL. Other databases have slightly different syntax)
 
-	echo $builder->select('title, content, date')->getCompiledSelect();
+    echo $builder->select('title, content, date')->getCompiledSelect();
 
-	// Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10
+    // Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10
 
 The key thing to notice in the above example is that the second query did not
-utilize **$builder->from()** and did not pass a table name into the first
+utilize ``$builder->from()`` and did not pass a table name into the first
 parameter. The reason for this outcome is because the query has not been
-executed using **$builder->get()** which resets values or reset directly
-using **$builder->resetQuery()**.
+executed using ``$builder->get()`` which resets values or reset directly
+using ``$builder->resetQuery()``.
 
 **$builder->getWhere()**
 
@@ -104,7 +104,7 @@ Identical to the ``get()`` function except that it permits you to add a
 "where" clause in the first parameter, instead of using the db->where()
 function::
 
-	$query = $builder->getWhere(['id' => $id], $limit, $offset);
+    $query = $builder->getWhere(['id' => $id], $limit, $offset);
 
 Please read about the `where` function below for more information.
 
@@ -112,14 +112,14 @@ Please read about the `where` function below for more information.
 
 Permits you to write the SELECT portion of your query::
 
-	$builder->select('title, content, date');
-	$query = $builder->get();
+    $builder->select('title, content, date');
+    $query = $builder->get();
 
-	// Executes: SELECT title, content, date FROM mytable
+    // Executes: SELECT title, content, date FROM mytable
 
 .. note:: If you are selecting all (\*) from a table you do not need to
-	use this function. When omitted, CodeIgniter assumes that you wish
-	to select all fields and automatically adds 'SELECT \*'.
+    use this function. When omitted, CodeIgniter assumes that you wish
+    to select all fields and automatically adds ``SELECT \*``.
 
 ``$builder->select()`` accepts an optional second parameter. If you set it
 to ``false``, CodeIgniter will not try to protect your field or table names.
@@ -128,8 +128,8 @@ escaping of fields may break them.
 
 ::
 
-	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', false);
-	$query = $builder->get();
+    $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', false);
+    $query = $builder->get();
 
 **$builder->selectMax()**
 
@@ -138,11 +138,13 @@ include a second parameter to rename the resulting field.
 
 ::
 
-	$builder->selectMax('age');
-	$query = $builder->get();  // Produces: SELECT MAX(age) as age FROM mytable
+    $builder->selectMax('age');
+    $query = $builder->get();
+    // Produces: SELECT MAX(age) as age FROM mytable
 
-	$builder->selectMax('age', 'member_age');
-	$query = $builder->get(); // Produces: SELECT MAX(age) as member_age FROM mytable
+    $builder->selectMax('age', 'member_age');
+    $query = $builder->get();
+    // Produces: SELECT MAX(age) as member_age FROM mytable
 
 **$builder->selectMin()**
 
@@ -152,8 +154,9 @@ the resulting field.
 
 ::
 
-	$builder->selectMin('age');
-	$query = $builder->get(); // Produces: SELECT MIN(age) as age FROM mytable
+    $builder->selectMin('age');
+    $query = $builder->get();
+    // Produces: SELECT MIN(age) as age FROM mytable
 
 **$builder->selectAvg()**
 
@@ -163,24 +166,26 @@ the resulting field.
 
 ::
 
-	$builder->selectAvg('age');
-	$query = $builder->get(); // Produces: SELECT AVG(age) as age FROM mytable
+    $builder->selectAvg('age');
+    $query = $builder->get();
+    // Produces: SELECT AVG(age) as age FROM mytable
 
 **$builder->selectSum()**
 
 Writes a "SELECT SUM(field)" portion for your query. As with
-selectMax(), You can optionally include a second parameter to rename
+``selectMax()``, You can optionally include a second parameter to rename
 the resulting field.
 
 ::
 
-	$builder->selectSum('age');
-	$query = $builder->get(); // Produces: SELECT SUM(age) as age FROM mytable
+    $builder->selectSum('age');
+    $query = $builder->get();
+    // Produces: SELECT SUM(age) as age FROM mytable
 
 **$builder->selectCount()**
 
-Writes a "SELECT COUNT(field)" portion for your query. As with
-selectMax(), You can optionally include a second parameter to rename
+Writes a ``"SELECT COUNT(field)"`` portion for your query. As with
+``selectMax()``, You can optionally include a second parameter to rename
 the resulting field.
 
 .. note:: This method is particularly helpful when used with ``groupBy()``. For
@@ -188,20 +193,22 @@ the resulting field.
 
 ::
 
-	$builder->selectCount('age');
-	$query = $builder->get(); // Produces: SELECT COUNT(age) as age FROM mytable
+    $builder->selectCount('age');
+    $query = $builder->get();
+    // Produces: SELECT COUNT(age) as age FROM mytable
 
 **$builder->from()**
 
 Permits you to write the FROM portion of your query::
 
-	$builder->select('title, content, date');
-	$builder->from('mytable');
-	$query = $builder->get();  // Produces: SELECT title, content, date FROM mytable
+    $builder->select('title, content, date');
+    $builder->from('mytable');
+    $query = $builder->get();
+    // Produces: SELECT title, content, date FROM mytable
 
 .. note:: As shown earlier, the FROM portion of your query can is specified
-	in the $db->table() function. Additional calls to from() will add more tables
-	to the FROM portion of your query.
+    in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
+    to the FROM portion of your query.
 
 **$builder->join()**
 
@@ -224,8 +231,8 @@ outer, and right outer.
 
 ::
 
-	$builder->join('comments', 'comments.id = blogs.id', 'left');
-	// Produces: LEFT JOIN comments ON comments.id = blogs.id
+    $builder->join('comments', 'comments.id = blogs.id', 'left');
+    // Produces: LEFT JOIN comments ON comments.id = blogs.id
 
 *************************
 Looking for Specific Data
@@ -237,56 +244,58 @@ This function enables you to set **WHERE** clauses using one of four
 methods:
 
 .. note:: All values passed to this function are escaped automatically,
-	producing safer queries.
+    producing safer queries.
 
 #. **Simple key/value method:**
 
-	::
+    ::
 
-		$builder->where('name', $name); // Produces: WHERE name = 'Joe'
+        $builder->where('name', $name);
+        // Produces: WHERE name = 'Joe'
 
-	Notice that the equal sign is added for you.
+    Notice that the equal sign is added for you.
 
-	If you use multiple function calls they will be chained together with
-	AND between them:
+    If you use multiple function calls they will be chained together with
+    AND between them:
 
-	::
+    ::
 
-		$builder->where('name', $name);
-		$builder->where('title', $title);
-		$builder->where('status', $status);
-		// WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
+        $builder->where('name', $name);
+        $builder->where('title', $title);
+        $builder->where('status', $status);
+        // WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
 
 #. **Custom key/value method:**
 
-	You can include an operator in the first parameter in order to
-	control the comparison:
+    You can include an operator in the first parameter in order to
+    control the comparison:
 
-	::
+    ::
 
-		$builder->where('name !=', $name);
-		$builder->where('id <', $id); // Produces: WHERE name != 'Joe' AND id < 45
+        $builder->where('name !=', $name);
+        $builder->where('id <', $id);
+        // Produces: WHERE name != 'Joe' AND id < 45
 
 #. **Associative array method:**
 
-	::
+    ::
 
-		$array = ['name' => $name, 'title' => $title, 'status' => $status];
-		$builder->where($array);
-		// Produces: WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
+        $array = ['name' => $name, 'title' => $title, 'status' => $status];
+        $builder->where($array);
+        // Produces: WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
 
-	You can include your own operators using this method as well:
+    You can include your own operators using this method as well:
 
-	::
+    ::
 
-		$array = ['name !=' => $name, 'id <' => $id, 'date >' => $date];
-		$builder->where($array);
+        $array = ['name !=' => $name, 'id <' => $id, 'date >' => $date];
+        $builder->where($array);
 
 #. **Custom string:**
-	You can write your own clauses manually::
+    You can write your own clauses manually::
 
-		$where = "name='Joe' AND status='boss' OR status='active'";
-		$builder->where($where);
+        $where = "name='Joe' AND status='boss' OR status='active'";
+        $builder->where($where);
 
     ``$builder->where()`` accepts an optional third parameter. If you set it to
     ``false``, CodeIgniter will not try to protect your field or table names.
@@ -312,8 +321,9 @@ instances are joined by OR
 
     ::
 
-	$builder->where('name !=', $name);
-	$builder->orWhere('id >', $id);  // Produces: WHERE name != 'Joe' OR id > 50
+        $builder->where('name !=', $name);
+        $builder->orWhere('id >', $id);
+        // Produces: WHERE name != 'Joe' OR id > 50
 
 **$builder->whereIn()**
 
@@ -337,7 +347,7 @@ You can use subqueries instead of an array of values.
 
 **$builder->orWhereIn()**
 
-Generates a WHERE field IN ('item', 'item') SQL query joined with OR if
+Generates a ``WHERE field IN ('item', 'item')`` SQL query joined with OR if
 appropriate
 
     ::
@@ -380,7 +390,7 @@ You can use subqueries instead of an array of values.
 
 **$builder->orWhereNotIn()**
 
-Generates a WHERE field NOT IN ('item', 'item') SQL query joined with OR
+Generates a ``WHERE field NOT IN ('item', 'item')`` SQL query joined with OR
 if appropriate
 
     ::
@@ -412,74 +422,76 @@ searches.
 
 .. note:: All ``like*`` method variations can be forced to perform case-insensitive searches by passing
         a fifth parameter of ``true`` to the method. This will use platform-specific features where available
-        otherwise, will force the values to be lowercase, i.e. ``WHERE LOWER(column) LIKE '%search%'``. This
+        otherwise, will force the values to be lowercase, i.e., ``WHERE LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
 #. **Simple key/value method:**
 
-	::
+    ::
 
-		$builder->like('title', 'match');
-		// Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
+        $builder->like('title', 'match');
+        // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
 
-	If you use multiple method calls they will be chained together with
-	AND between them::
+    If you use multiple method calls they will be chained together with
+    AND between them::
 
-		$builder->like('title', 'match');
-		$builder->like('body', 'match');
-		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match%' ESCAPE '!'
+        $builder->like('title', 'match');
+        $builder->like('body', 'match');
+        // WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match%' ESCAPE '!'
 
-	If you want to control where the wildcard (%) is placed, you can use
-	an optional third argument. Your options are 'before', 'after' and
-	'both' (which is the default).
+    If you want to control where the wildcard (%) is placed, you can use
+    an optional third argument. Your options are 'before', 'after' and
+    'both' (which is the default).
 
-	::
+    ::
 
-		$builder->like('title', 'match', 'before'); // Produces: WHERE `title` LIKE '%match' ESCAPE '!'
-		$builder->like('title', 'match', 'after');  // Produces: WHERE `title` LIKE 'match%' ESCAPE '!'
-		$builder->like('title', 'match', 'both');   // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
+        $builder->like('title', 'match', 'before'); // Produces: WHERE `title` LIKE '%match' ESCAPE '!'
+        $builder->like('title', 'match', 'after');  // Produces: WHERE `title` LIKE 'match%' ESCAPE '!'
+        $builder->like('title', 'match', 'both');   // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
 
 #. **Associative array method:**
 
-	::
+    ::
 
-		$array = ['title' => $match, 'page1' => $match, 'page2' => $match];
-		$builder->like($array);
-		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
+        $array = ['title' => $match, 'page1' => $match, 'page2' => $match];
+        $builder->like($array);
+        // WHERE `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
 
 **$builder->orLike()**
 
 This method is identical to the one above, except that multiple
 instances are joined by OR::
 
-	$builder->like('title', 'match'); $builder->orLike('body', $match);
-	// WHERE `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
+    $builder->like('title', 'match'); $builder->orLike('body', $match);
+    // WHERE `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
 
 **$builder->notLike()**
 
 This method is identical to ``like()``, except that it generates
 NOT LIKE statements::
 
-	$builder->notLike('title', 'match');	// WHERE `title` NOT LIKE '%match% ESCAPE '!'
+    $builder->notLike('title', 'match'); // WHERE `title` NOT LIKE '%match% ESCAPE '!'
 
 **$builder->orNotLike()**
 
 This method is identical to ``notLike()``, except that multiple
 instances are joined by OR::
 
-	$builder->like('title', 'match');
-	$builder->orNotLike('body', 'match');
-	// WHERE `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
+    $builder->like('title', 'match');
+    $builder->orNotLike('body', 'match');
+    // WHERE `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
 
 **$builder->groupBy()**
 
 Permits you to write the GROUP BY portion of your query::
 
-	$builder->groupBy("title"); // Produces: GROUP BY title
+    $builder->groupBy("title");
+    // Produces: GROUP BY title
 
 You can also pass an array of multiple values as well::
 
-	$builder->groupBy(["title", "date"]);  // Produces: GROUP BY title, date
+    $builder->groupBy(["title", "date"]);
+    // Produces: GROUP BY title, date
 
 **$builder->distinct()**
 
@@ -487,21 +499,22 @@ Adds the "DISTINCT" keyword to a query
 
 ::
 
-	$builder->distinct();
-	$builder->get(); // Produces: SELECT DISTINCT * FROM mytable
+    $builder->distinct();
+    $builder->get();
+    // Produces: SELECT DISTINCT * FROM mytable
 
 **$builder->having()**
 
 Permits you to write the HAVING portion of your query. There are 2
 possible syntaxes, 1 argument or 2::
 
-	$builder->having('user_id = 45');  // Produces: HAVING user_id = 45
-	$builder->having('user_id',  45);  // Produces: HAVING user_id = 45
+    $builder->having('user_id = 45'); // Produces: HAVING user_id = 45
+    $builder->having('user_id',  45); // Produces: HAVING user_id = 45
 
 You can also pass an array of multiple values as well::
 
-	$builder->having(['title =' => 'My Title', 'id <' => $id]);
-	// Produces: HAVING title = 'My Title', id < 45
+    $builder->having(['title =' => 'My Title', 'id <' => $id]);
+    // Produces: HAVING title = 'My Title', id < 45
 
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
@@ -509,96 +522,96 @@ setting it to ``false``.
 
 ::
 
-	$builder->having('user_id',  45);  // Produces: HAVING `user_id` = 45 in some databases such as MySQL
-	$builder->having('user_id',  45, false);  // Produces: HAVING user_id = 45
+    $builder->having('user_id',  45); // Produces: HAVING `user_id` = 45 in some databases such as MySQL
+    $builder->having('user_id',  45, false); // Produces: HAVING user_id = 45
 
 **$builder->orHaving()**
 
-Identical to having(), only separates multiple clauses with "OR".
+Identical to ``having()``, only separates multiple clauses with "OR".
 
 **$builder->havingIn()**
 
-Generates a HAVING field IN ('item', 'item') SQL query joined with AND if
+Generates a ``HAVING field IN ('item', 'item')`` SQL query joined with AND if
 appropriate
 
-    ::
+::
 
-        $groups = [1, 2, 3];
-        $builder->havingIn('group_id', $groups);
-        // Produces: HAVING group_id IN (1, 2, 3)
+    $groups = [1, 2, 3];
+    $builder->havingIn('group_id', $groups);
+    // Produces: HAVING group_id IN (1, 2, 3)
 
 You can use subqueries instead of an array of values.
 
-    ::
+::
 
-        $builder->havingIn('id', function(BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+    $builder->havingIn('id', function(BaseBuilder $builder) {
+        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+    });
+    // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->orHavingIn()**
 
-Generates a HAVING field IN ('item', 'item') SQL query joined with OR if
+Generates a ``HAVING field IN ('item', 'item')`` SQL query joined with OR if
 appropriate
 
-    ::
+::
 
-        $groups = [1, 2, 3];
-        $builder->orHavingIn('group_id', $groups);
-        // Produces: OR group_id IN (1, 2, 3)
+    $groups = [1, 2, 3];
+    $builder->orHavingIn('group_id', $groups);
+    // Produces: OR group_id IN (1, 2, 3)
 
 You can use subqueries instead of an array of values.
 
-    ::
+::
 
-        $builder->orHavingIn('id', function(BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
+    $builder->orHavingIn('id', function(BaseBuilder $builder) {
+        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+    });
 
-        // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+    // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingNotIn()**
 
-Generates a HAVING field NOT IN ('item', 'item') SQL query joined with
+Generates a ``HAVING field NOT IN ('item', 'item')`` SQL query joined with
 AND if appropriate
 
-    ::
+::
 
-        $groups = [1, 2, 3];
-        $builder->havingNotIn('group_id', $groups);
-        // Produces: HAVING group_id NOT IN (1, 2, 3)
+    $groups = [1, 2, 3];
+    $builder->havingNotIn('group_id', $groups);
+    // Produces: HAVING group_id NOT IN (1, 2, 3)
 
 You can use subqueries instead of an array of values.
 
-    ::
+::
 
-        $builder->havingNotIn('id', function(BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
+    $builder->havingNotIn('id', function(BaseBuilder $builder) {
+        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+    });
 
-        // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+    // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 
 **$builder->orHavingNotIn()**
 
-Generates a HAVING field NOT IN ('item', 'item') SQL query joined with OR
+Generates a ``HAVING field NOT IN ('item', 'item')`` SQL query joined with OR
 if appropriate
 
-    ::
+::
 
-        $groups = [1, 2, 3];
-        $builder->havingNotIn('group_id', $groups);
-        // Produces: OR group_id NOT IN (1, 2, 3)
+    $groups = [1, 2, 3];
+    $builder->havingNotIn('group_id', $groups);
+    // Produces: OR group_id NOT IN (1, 2, 3)
 
 You can use subqueries instead of an array of values.
 
-    ::
+::
 
-        $builder->orHavingNotIn('id', function(BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
+    $builder->orHavingNotIn('id', function(BaseBuilder $builder) {
+        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+    });
 
-        // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+    // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingLike()**
 
@@ -608,65 +621,66 @@ searches.
 .. note:: All values passed to this method are escaped automatically.
 
 .. note:: All ``havingLike*`` method variations can be forced to perform case-insensitive searches by passing
-        a fifth parameter of ``true`` to the method. This will use platform-specific features where available
-        otherwise, will force the values to be lowercase, i.e. ``HAVING LOWER(column) LIKE '%search%'``. This
-        may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
+    a fifth parameter of ``true`` to the method. This will use platform-specific features where available
+    otherwise, will force the values to be lowercase, i.e., ``HAVING LOWER(column) LIKE '%search%'``. This
+    may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
 #. **Simple key/value method:**
 
-	::
+    ::
 
-		$builder->havingLike('title', 'match');
-		// Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
+        $builder->havingLike('title', 'match');
+        // Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
 
-	If you use multiple method calls they will be chained together with
-	AND between them::
+    If you use multiple method calls they will be chained together with
+    AND between them::
 
-		$builder->havingLike('title', 'match');
-		$builder->havingLike('body', 'match');
-		// HAVING `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match% ESCAPE '!'
+        $builder->havingLike('title', 'match');
+        $builder->havingLike('body', 'match');
+        // HAVING `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match% ESCAPE '!'
 
-	If you want to control where the wildcard (%) is placed, you can use
-	an optional third argument. Your options are 'before', 'after' and
-	'both' (which is the default).
+    If you want to control where the wildcard (%) is placed, you can use
+    an optional third argument. Your options are 'before', 'after' and
+    'both' (which is the default).
 
-	::
+    ::
 
-		$builder->havingLike('title', 'match', 'before');	// Produces: HAVING `title` LIKE '%match' ESCAPE '!'
-		$builder->havingLike('title', 'match', 'after');	// Produces: HAVING `title` LIKE 'match%' ESCAPE '!'
-		$builder->havingLike('title', 'match', 'both');	// Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
+        $builder->havingLike('title', 'match', 'before'); // Produces: HAVING `title` LIKE '%match' ESCAPE '!'
+        $builder->havingLike('title', 'match', 'after');  // Produces: HAVING `title` LIKE 'match%' ESCAPE '!'
+        $builder->havingLike('title', 'match', 'both');	  // Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
 
 #. **Associative array method:**
 
-	::
+    ::
 
-		$array = ['title' => $match, 'page1' => $match, 'page2' => $match];
-		$builder->havingLike($array);
-		// HAVING `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
+        $array = ['title' => $match, 'page1' => $match, 'page2' => $match];
+        $builder->havingLike($array);
+        // HAVING `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
 
 **$builder->orHavingLike()**
 
 This method is identical to the one above, except that multiple
 instances are joined by OR::
 
-	$builder->havingLike('title', 'match'); $builder->orHavingLike('body', $match);
-	// HAVING `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
+    $builder->havingLike('title', 'match'); $builder->orHavingLike('body', $match);
+    // HAVING `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
 
 **$builder->notHavingLike()**
 
 This method is identical to ``havingLike()``, except that it generates
 NOT LIKE statements::
 
-	$builder->notHavingLike('title', 'match');	// HAVING `title` NOT LIKE '%match% ESCAPE '!'
+    $builder->notHavingLike('title', 'match');
+    // HAVING `title` NOT LIKE '%match% ESCAPE '!'
 
 **$builder->orNotHavingLike()**
 
 This method is identical to ``notHavingLike()``, except that multiple
 instances are joined by OR::
 
-	$builder->havingLike('title', 'match');
-	$builder->orNotHavingLike('body', 'match');
-	// HAVING `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
+    $builder->havingLike('title', 'match');
+    $builder->orNotHavingLike('body', 'match');
+    // HAVING `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
 
 ****************
 Ordering results
@@ -683,35 +697,35 @@ Options are **ASC**, **DESC** AND **RANDOM**.
 
 ::
 
-	$builder->orderBy('title', 'DESC');
-	// Produces: ORDER BY `title` DESC
+    $builder->orderBy('title', 'DESC');
+    // Produces: ORDER BY `title` DESC
 
 You can also pass your own string in the first parameter::
 
-	$builder->orderBy('title DESC, name ASC');
-	// Produces: ORDER BY `title` DESC, `name` ASC
+    $builder->orderBy('title DESC, name ASC');
+    // Produces: ORDER BY `title` DESC, `name` ASC
 
 Or multiple function calls can be made if you need multiple fields.
 
 ::
 
-	$builder->orderBy('title', 'DESC');
-	$builder->orderBy('name', 'ASC');
-	// Produces: ORDER BY `title` DESC, `name` ASC
+    $builder->orderBy('title', 'DESC');
+    $builder->orderBy('name', 'ASC');
+    // Produces: ORDER BY `title` DESC, `name` ASC
 
 If you choose the **RANDOM** direction option, then the first parameters will
 be ignored, unless you specify a numeric seed value.
 
 ::
 
-	$builder->orderBy('title', 'RANDOM');
-	// Produces: ORDER BY RAND()
+    $builder->orderBy('title', 'RANDOM');
+    // Produces: ORDER BY RAND()
 
-	$builder->orderBy(42, 'RANDOM');
-	// Produces: ORDER BY RAND(42)
+    $builder->orderBy(42, 'RANDOM');
+    // Produces: ORDER BY RAND(42)
 
 .. note:: Random ordering is not currently supported in Oracle and
-	will default to ASC instead.
+    will default to ASC instead.
 
 ****************************
 Limiting or Counting Results
@@ -721,13 +735,15 @@ Limiting or Counting Results
 
 Lets you limit the number of rows you would like returned by the query::
 
-	$builder->limit(10);  // Produces: LIMIT 10
+    $builder->limit(10);
+    // Produces: LIMIT 10
 
 The second parameter lets you set a result offset.
 
 ::
 
-	$builder->limit(10, 20);  // Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)
+    $builder->limit(10, 20);
+    // Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)
 
 
 **$builder->countAllResults()**
@@ -736,23 +752,25 @@ Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
 ``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example::
 
-	echo $builder->countAllResults();  // Produces an integer, like 25
-	$builder->like('title', 'match');
-	$builder->from('my_table');
-	echo $builder->countAllResults(); // Produces an integer, like 17
+    echo $builder->countAllResults(); // Produces an integer, like 25
+    $builder->like('title', 'match');
+    $builder->from('my_table');
+    echo $builder->countAllResults(); // Produces an integer, like 17
 
 However, this method also resets any field values that you may have passed
 to ``select()``. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
-	echo $builder->countAllResults(false); // Produces an integer, like 17
+::
+
+    echo $builder->countAllResults(false); // Produces an integer, like 17
 
 **$builder->countAll()**
 
 Permits you to determine the number of rows in a particular table.
 Example::
 
-	echo $builder->countAll();  // Produces an integer, like 25
+    echo $builder->countAll(); // Produces an integer, like 25
 
 As is in countAllResult method, this method resets any field values that you may have passed
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
@@ -765,21 +783,21 @@ Query grouping
 Query grouping allows you to create groups of WHERE clauses by enclosing them in parentheses. This will allow
 you to create queries with complex WHERE clauses. Nested groups are supported. Example::
 
-	$builder->select('*')->from('my_table')
-		->groupStart()
-			->where('a', 'a')
-			->orGroupStart()
-				->where('b', 'b')
-				->where('c', 'c')
-			->groupEnd()
-		->groupEnd()
-		->where('d', 'd')
-	->get();
+    $builder->select('*')->from('my_table')
+        ->groupStart()
+            ->where('a', 'a')
+            ->orGroupStart()
+                ->where('b', 'b')
+                ->where('c', 'c')
+            ->groupEnd()
+        ->groupEnd()
+        ->where('d', 'd')
+    ->get();
 
-	// Generates:
-	// SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
+    // Generates:
+    // SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
 
-.. note:: Groups need to be balanced, make sure every groupStart() is matched by a groupEnd().
+.. note:: Groups need to be balanced, make sure every ``groupStart()`` is matched by a ``groupEnd()``.
 
 **$builder->groupStart()**
 
@@ -831,29 +849,29 @@ Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
-	$data = [
-		'title' => 'My title',
-		'name'  => 'My Name',
-		'date'  => 'My date',
-	];
+    $data = [
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+    ];
 
-	$builder->insert($data);
-	// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+    $builder->insert($data);
+    // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
 
 The first parameter is an associative array of values.
 
 Here is an example using an object::
 
-	class Myclass
-	{
-		public $title   = 'My Title';
-		public $content = 'My Content';
-		public $date    = 'My Date';
-	}
+    class Myclass
+    {
+        public $title   = 'My Title';
+        public $content = 'My Content';
+        public $date    = 'My Date';
+    }
 
-	$object = new Myclass;
-	$builder->insert($object);
-	// Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')
+    $object = new Myclass;
+    $builder->insert($object);
+    // Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')
 
 The first parameter is an object.
 
@@ -865,50 +883,50 @@ Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won't be inserted.
 You can optionally pass an **boolean** to the function. Here is an example using the array of the above example::
 
-	$data = [
-		'title' => 'My title',
-		'name'  => 'My Name',
-		'date'  => 'My date',
-	];
+    $data = [
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+    ];
 
-	$builder->ignore(true)->insert($data);
-	// Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+    $builder->ignore(true)->insert($data);
+    // Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
 
 
 **$builder->getCompiledInsert()**
 
-Compiles the insertion query just like $builder->insert() but does not
+Compiles the insertion query just like ``$builder->insert()`` but does not
 *run* the query. This method simply returns the SQL query as a string.
 
 Example::
 
-	$data = [
-		'title' => 'My title',
-		'name'  => 'My Name',
-		'date'  => 'My date',
-	];
+    $data = [
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+    ];
 
-	$sql = $builder->set($data)->getCompiledInsert('mytable');
-	echo $sql;
+    $sql = $builder->set($data)->getCompiledInsert('mytable');
+    echo $sql;
 
-	// Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')
+    // Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')
 
 The second parameter enables you to set whether or not the query builder query
-will be reset (by default it will be--just like $builder->insert())::
+will be reset (by default it will be--just like ``$builder->insert()``)::
 
-	echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', false);
+    echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', false);
 
-	// Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
+    // Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
 
-	echo $builder->set('content', 'My Content')->getCompiledInsert();
+    echo $builder->set('content', 'My Content')->getCompiledInsert();
 
-	// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
+    // Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
 The key thing to notice in the above example is that the second query did not
-utilize `$builder->from()` nor did it pass a table name into the first
+utilize ``$builder->from()`` nor did it pass a table name into the first
 parameter. The reason this worked is that the query has not been executed
-using `$builder->insert()` which resets values or reset directly using
-`$builder->resetQuery()`.
+using ``$builder->insert()`` which resets values or reset directly using
+``$builder->resetQuery()``.
 
 .. note:: This method doesn't work for batch inserts.
 
@@ -918,21 +936,21 @@ Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
-	$data = [
-		[
-			'title' => 'My title',
-			'name'  => 'My Name',
-			'date'  => 'My date',
-		],
-		[
-			'title' => 'Another title',
-			'name'  => 'Another Name',
-			'date'  => 'Another date',
-		],
-	];
+    $data = [
+        [
+            'title' => 'My title',
+            'name'  => 'My Name',
+            'date'  => 'My date',
+        ],
+        [
+            'title' => 'Another title',
+            'name'  => 'Another Name',
+            'date'  => 'Another date',
+        ],
+    ];
 
-	$builder->insertBatch($data);
-	// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
+    $builder->insertBatch($data);
+    // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
 
 The first parameter is an associative array of values.
 
@@ -953,15 +971,15 @@ logics with different combinations of  ``select()``, ``update()``,
 
 Example::
 
-	$data = [
-		'title' => 'My title',
-		'name'  => 'My Name',
-		'date'  => 'My date',
-	];
+    $data = [
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+    ];
 
-	$builder->replace($data);
+    $builder->replace($data);
 
-	// Executes: REPLACE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+    // Executes: REPLACE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
 
 In the above example, if we assume that the *title* field is our primary
 key, then if a row containing 'My title' as the *title* value, that row
@@ -979,16 +997,17 @@ or update functions:**
 
 ::
 
-	$builder->set('name', $name);
-	$builder->insert();  // Produces: INSERT INTO mytable (`name`) VALUES ('{$name}')
+    $builder->set('name', $name);
+    $builder->insert();
+    // Produces: INSERT INTO mytable (`name`) VALUES ('{$name}')
 
 If you use multiple function called they will be assembled properly
 based on whether you are doing an insert or an update::
 
-	$builder->set('name', $name);
-	$builder->set('title', $title);
-	$builder->set('status', $status);
-	$builder->insert();
+    $builder->set('name', $name);
+    $builder->set('title', $title);
+    $builder->set('status', $status);
+    $builder->insert();
 
 **set()** will also accept an optional third parameter (``$escape``), that
 will prevent data from being escaped if set to ``false``. To illustrate the
@@ -997,37 +1016,39 @@ parameter.
 
 ::
 
-	$builder->set('field', 'field+1', false);
-	$builder->where('id', 2);
-	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
+    $builder->set('field', 'field+1', false);
+    $builder->where('id', 2);
+    $builder->update();
+    // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
 
-	$builder->set('field', 'field+1');
-	$builder->where('id', 2);
-	$builder->update(); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+    $builder->set('field', 'field+1');
+    $builder->where('id', 2);
+    $builder->update();
+    // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
 
 You can also pass an associative array to this function::
 
-	$array = [
-		'name'   => $name,
-		'title'  => $title,
-		'status' => $status,
-	];
+    $array = [
+        'name'   => $name,
+        'title'  => $title,
+        'status' => $status,
+    ];
 
-	$builder->set($array);
-	$builder->insert();
+    $builder->set($array);
+    $builder->insert();
 
 Or an object::
 
-	class Myclass
-	{
-		public $title   = 'My Title';
-		public $content = 'My Content';
-		public $date    = 'My Date';
-	}
+    class Myclass
+    {
+        public $title   = 'My Title';
+        public $content = 'My Content';
+        public $date    = 'My Date';
+    }
 
-	$object = new Myclass;
-	$builder->set($object);
-	$builder->insert();
+    $object = new Myclass;
+    $builder->set($object);
+    $builder->insert();
 
 **$builder->update()**
 
@@ -1035,51 +1056,51 @@ Generates an update string and runs the query based on the data you
 supply. You can pass an **array** or an **object** to the function. Here
 is an example using an array::
 
-	$data = [
-		'title' => $title,
-		'name'  => $name,
-		'date'  => $date,
-	];
+    $data = [
+        'title' => $title,
+        'name'  => $name,
+        'date'  => $date,
+    ];
 
-	$builder->where('id', $id);
-	$builder->update($data);
-	// Produces:
-	//
-	//	UPDATE mytable
-	//	SET title = '{$title}', name = '{$name}', date = '{$date}'
-	//	WHERE id = $id
+    $builder->where('id', $id);
+    $builder->update($data);
+    // Produces:
+    //
+    //	UPDATE mytable
+    //	SET title = '{$title}', name = '{$name}', date = '{$date}'
+    //	WHERE id = $id
 
 Or you can supply an object::
 
-	class Myclass
-	{
-		public $title   = 'My Title';
-		public $content = 'My Content';
-		public $date    = 'My Date';
-	}
+    class Myclass
+    {
+        public $title   = 'My Title';
+        public $content = 'My Content';
+        public $date    = 'My Date';
+    }
 
-	$object = new Myclass;
-	$builder->where('id', $id);
-	$builder->update($object);
-	// Produces:
-	//
-	// UPDATE `mytable`
-	// SET `title` = '{$title}', `name` = '{$name}', `date` = '{$date}'
-	// WHERE id = `$id`
+    $object = new Myclass;
+    $builder->where('id', $id);
+    $builder->update($object);
+    // Produces:
+    //
+    // UPDATE `mytable`
+    // SET `title` = '{$title}', `name` = '{$name}', `date` = '{$date}'
+    // WHERE id = `$id`
 
 .. note:: All values are escaped automatically producing safer queries.
 
-You'll notice the use of the $builder->where() function, enabling you
+You'll notice the use of the ``$builder->where()`` function, enabling you
 to set the WHERE clause. You can optionally pass this information
 directly into the update function as a string::
 
-	$builder->update($data, "id = 4");
+    $builder->update($data, "id = 4");
 
 Or as an array::
 
-	$builder->update($data, ['id' => $id]);
+    $builder->update($data, ['id' => $id]);
 
-You may also use the $builder->set() function described above when
+You may also use the ``$builder->set()`` function described above when
 performing updates.
 
 **$builder->updateBatch()**
@@ -1088,46 +1109,46 @@ Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the function.
 Here is an example using an array::
 
-	$data = [
-	   [
-	      'title' => 'My title' ,
-	      'name'  => 'My Name 2' ,
-	      'date'  => 'My date 2',
-	   ],
-	   [
-	      'title' => 'Another title' ,
-	      'name'  => 'Another Name 2' ,
-	      'date'  => 'Another date 2',
-	   ],
-	];
+    $data = [
+       [
+          'title' => 'My title' ,
+          'name'  => 'My Name 2' ,
+          'date'  => 'My date 2',
+       ],
+       [
+          'title' => 'Another title' ,
+          'name'  => 'Another Name 2' ,
+          'date'  => 'Another date 2',
+       ],
+    ];
 
-	$builder->updateBatch($data, 'title');
+    $builder->updateBatch($data, 'title');
 
-	// Produces:
-	// UPDATE `mytable` SET `name` = CASE
-	// WHEN `title` = 'My title' THEN 'My Name 2'
-	// WHEN `title` = 'Another title' THEN 'Another Name 2'
-	// ELSE `name` END,
-	// `date` = CASE
-	// WHEN `title` = 'My title' THEN 'My date 2'
-	// WHEN `title` = 'Another title' THEN 'Another date 2'
-	// ELSE `date` END
-	// WHERE `title` IN ('My title','Another title')
+    // Produces:
+    // UPDATE `mytable` SET `name` = CASE
+    // WHEN `title` = 'My title' THEN 'My Name 2'
+    // WHEN `title` = 'Another title' THEN 'Another Name 2'
+    // ELSE `name` END,
+    // `date` = CASE
+    // WHEN `title` = 'My title' THEN 'My date 2'
+    // WHEN `title` = 'Another title' THEN 'Another date 2'
+    // ELSE `date` END
+    // WHERE `title` IN ('My title','Another title')
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
 .. note:: All values are escaped automatically producing safer queries.
 
 .. note:: ``affectedRows()`` won't give you proper results with this method,
-	due to the very nature of how it works. Instead, ``updateBatch()``
-	returns the number of rows affected.
+    due to the very nature of how it works. Instead, ``updateBatch()``
+    returns the number of rows affected.
 
 **$builder->getCompiledUpdate()**
 
 This works exactly the same way as ``$builder->getCompiledInsert()`` except
 that it produces an UPDATE SQL string instead of an INSERT SQL string.
 
-For more information view documentation for `$builder->getCompiledInsert()`.
+For more information view documentation for ``$builder->getCompiledInsert()``.
 
 .. note:: This method doesn't work for batched updates.
 
@@ -1141,28 +1162,30 @@ Generates a delete SQL string and runs the query.
 
 ::
 
-	$builder->delete(['id' => $id]);  // Produces: // DELETE FROM mytable  // WHERE id = $id
+    $builder->delete(['id' => $id]);
+    // Produces: // DELETE FROM mytable  // WHERE id = $id
 
 The first parameter is the where clause.
-You can also use the where() or or_where() functions instead of passing
+You can also use the ``where()`` or ``or_where()`` functions instead of passing
 the data to the first parameter of the function::
 
-	$builder->where('id', $id);
-	$builder->delete();
+    $builder->where('id', $id);
+    $builder->delete();
 
-	// Produces:
-	// DELETE FROM mytable
-	// WHERE id = $id
+    // Produces:
+    // DELETE FROM mytable
+    // WHERE id = $id
 
-If you want to delete all data from a table, you can use the truncate()
-function, or emptyTable().
+If you want to delete all data from a table, you can use the ``truncate()``
+function, or ``emptyTable()``.
 
 **$builder->emptyTable()**
 
 Generates a delete SQL string and runs the
 query::
 
-	  $builder->emptyTable('mytable'); // Produces: DELETE FROM mytable
+      $builder->emptyTable('mytable');
+      // Produces: DELETE FROM mytable
 
 **$builder->truncate()**
 
@@ -1170,20 +1193,20 @@ Generates a truncate SQL string and runs the query.
 
 ::
 
-	$builder->truncate();
+    $builder->truncate();
 
-	// Produce:
-	// TRUNCATE mytable
+    // Produce:
+    // TRUNCATE mytable
 
-.. note:: If the TRUNCATE command isn't available, truncate() will
-	execute as "DELETE FROM table".
+.. note:: If the TRUNCATE command isn't available, ``truncate()`` will
+    execute as "DELETE FROM table".
 
 **$builder->getCompiledDelete()**
 
 This works exactly the same way as ``$builder->getCompiledInsert()`` except
 that it produces a DELETE SQL string instead of an INSERT SQL string.
 
-For more information view documentation for $builder->getCompiledInsert().
+For more information view documentation for ``$builder->getCompiledInsert()``.
 
 ***************
 Method Chaining
@@ -1192,10 +1215,10 @@ Method Chaining
 Method chaining allows you to simplify your syntax by connecting
 multiple functions. Consider this example::
 
-	$query = $builder->select('title')
-			 ->where('id', $id)
-			 ->limit(10, 20)
-			 ->get();
+    $query = $builder->select('title')
+                     ->where('id', $id)
+                     ->limit(10, 20)
+                     ->get();
 
 .. _ar-caching:
 
@@ -1206,13 +1229,13 @@ Resetting Query Builder
 **$builder->resetQuery()**
 
 Resetting Query Builder allows you to start fresh with your query without
-executing it first using a method like $builder->get() or $builder->insert().
+executing it first using a method like ``$builder->get()`` or ``$builder->insert()``.
 
 This is useful in situations where you are using Query Builder to generate SQL
-(ex. ``$builder->getCompiledSelect()``) but then choose to, for instance,
+(e.g., ``$builder->getCompiledSelect()``) but then choose to, for instance,
 run the query::
 
-    // Note that the second parameter of the get_compiled_select method is false
+    // Note that the second parameter of the ``get_compiled_select`` method is false
     $sql = $builder->select(['field1','field2'])
                    ->where('field3',5)
                    ->getCompiledSelect(false);
@@ -1233,563 +1256,563 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Database\\BaseBuilder
 
-	.. php:method:: db()
+    .. php:method:: db()
 
-		:returns: The database connection in use
-		:rtype:	``ConnectionInterface``
+        :returns: The database connection in use
+        :rtype:	``ConnectionInterface``
 
-		Returns the current database connection from ``$db``. Useful for
-		accessing ``ConnectionInterface`` methods that are not directly
-		available to the Query Builder, like ``insertID()`` or ``errors()``.
+        Returns the current database connection from ``$db``. Useful for
+        accessing ``ConnectionInterface`` methods that are not directly
+        available to the Query Builder, like ``insertID()`` or ``errors()``.
 
-	.. php:method:: resetQuery()
+    .. php:method:: resetQuery()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Resets the current Query Builder state. Useful when you want
-		to build a query that can be canceled under certain conditions.
+        Resets the current Query Builder state. Useful when you want
+        to build a query that can be canceled under certain conditions.
 
-	.. php:method:: countAllResults([$reset = true])
+    .. php:method:: countAllResults([$reset = true])
 
-		:param bool $reset: Whether to reset values for SELECTs
-		:returns: Number of rows in the query result
-		:rtype:	int
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns: Number of rows in the query result
+        :rtype:	int
 
-		Generates a platform-specific query string that counts
-		all records returned by an Query Builder query.
+        Generates a platform-specific query string that counts
+        all records returned by an Query Builder query.
 
-	.. php:method:: countAll([$reset = true])
+    .. php:method:: countAll([$reset = true])
 
-		:param bool $reset: Whether to reset values for SELECTs
-		:returns: Number of rows in the query result
-		:rtype:	int
+        :param bool $reset: Whether to reset values for SELECTs
+        :returns: Number of rows in the query result
+        :rtype:	int
 
-		Generates a platform-specific query string that counts
-		all records returned by an Query Builder query.
+        Generates a platform-specific query string that counts
+        all records in the particular table.
 
-	.. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
+    .. php:method:: get([$limit = null[, $offset = null[, $reset = true]]]])
 
-		:param int $limit: The LIMIT clause
-		:param int $offset: The OFFSET clause
-		:param bool $reset: Do we want to clear query builder values?
-		:returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
-		:rtype:	``\CodeIgniter\Database\ResultInterface``
+        :param int $limit: The LIMIT clause
+        :param int $offset: The OFFSET clause
+        :param bool $reset: Do we want to clear query builder values?
+        :returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
+        :rtype:	``\CodeIgniter\Database\ResultInterface``
 
-		Compiles and runs ``SELECT`` statement based on the already
-		called Query Builder methods.
+        Compiles and runs ``SELECT`` statement based on the already
+        called Query Builder methods.
 
-	.. php:method:: getWhere([$where = null[, $limit = null[, $offset = null[, $reset = true]]]]])
+    .. php:method:: getWhere([$where = null[, $limit = null[, $offset = null[, $reset = true]]]]])
 
-		:param string $where: The WHERE clause
-		:param int $limit: The LIMIT clause
-		:param int $offset: The OFFSET clause
-		:param bool $reset: Do we want to clear query builder values?
-		:returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
-		:rtype:	``\CodeIgniter\Database\ResultInterface``
+        :param string $where: The WHERE clause
+        :param int $limit: The LIMIT clause
+        :param int $offset: The OFFSET clause
+        :param bool $reset: Do we want to clear query builder values?
+        :returns: ``\CodeIgniter\Database\ResultInterface`` instance (method chaining)
+        :rtype:	``\CodeIgniter\Database\ResultInterface``
 
-		Same as ``get()``, but also allows the WHERE to be added directly.
+        Same as ``get()``, but also allows the WHERE to be added directly.
 
-	.. php:method:: select([$select = '*'[, $escape = null]])
+    .. php:method:: select([$select = '*'[, $escape = null]])
 
-		:param string $select: The SELECT portion of a query
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: The SELECT portion of a query
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT`` clause to a query.
+        Adds a ``SELECT`` clause to a query.
 
-	.. php:method:: selectAvg([$select = ''[, $alias = '']])
+    .. php:method:: selectAvg([$select = ''[, $alias = '']])
 
-		:param string $select: Field to compute the average of
-		:param string $alias: Alias for the resulting value name
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: Field to compute the average of
+        :param string $alias: Alias for the resulting value name
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT AVG(field)`` clause to a query.
+        Adds a ``SELECT AVG(field)`` clause to a query.
 
-	.. php:method:: selectMax([$select = ''[, $alias = '']])
+    .. php:method:: selectMax([$select = ''[, $alias = '']])
 
-		:param string $select: Field to compute the maximum of
-		:param string $alias: Alias for the resulting value name
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: Field to compute the maximum of
+        :param string $alias: Alias for the resulting value name
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT MAX(field)`` clause to a query.
+        Adds a ``SELECT MAX(field)`` clause to a query.
 
-	.. php:method:: selectMin([$select = ''[, $alias = '']])
+    .. php:method:: selectMin([$select = ''[, $alias = '']])
 
-		:param string $select: Field to compute the minimum of
-		:param string $alias: Alias for the resulting value name
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: Field to compute the minimum of
+        :param string $alias: Alias for the resulting value name
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT MIN(field)`` clause to a query.
+        Adds a ``SELECT MIN(field)`` clause to a query.
 
-	.. php:method:: selectSum([$select = ''[, $alias = '']])
+    .. php:method:: selectSum([$select = ''[, $alias = '']])
 
-		:param string $select: Field to compute the sum of
-		:param string $alias: Alias for the resulting value name
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: Field to compute the sum of
+        :param string $alias: Alias for the resulting value name
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT SUM(field)`` clause to a query.
+        Adds a ``SELECT SUM(field)`` clause to a query.
 
-	.. php:method:: selectCount([$select = ''[, $alias = '']])
+    .. php:method:: selectCount([$select = ''[, $alias = '']])
 
-		:param string $select: Field to compute the average of
-		:param string $alias: Alias for the resulting value name
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $select: Field to compute the average of
+        :param string $alias: Alias for the resulting value name
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``SELECT COUNT(field)`` clause to a query.
+        Adds a ``SELECT COUNT(field)`` clause to a query.
 
-	.. php:method:: distinct([$val = true])
+    .. php:method:: distinct([$val = true])
 
-		:param bool $val: Desired value of the "distinct" flag
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param bool $val: Desired value of the "distinct" flag
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Sets a flag which tells the query builder to add
-		a ``DISTINCT`` clause to the ``SELECT`` portion of the query.
+        Sets a flag which tells the query builder to add
+        a ``DISTINCT`` clause to the ``SELECT`` portion of the query.
 
-	.. php:method:: from($from[, $overwrite = false])
+    .. php:method:: from($from[, $overwrite = false])
 
-		:param mixed $from: Table name(s); string or array
-		:param bool	$overwrite: Should we remove the first table existing?
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $from: Table name(s); string or array
+        :param bool	$overwrite: Should we remove the first table existing?
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Specifies the ``FROM`` clause of a query.
+        Specifies the ``FROM`` clause of a query.
 
-	.. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
+    .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
-		:param string $table: Table name to join
-		:param string $cond: The JOIN ON condition
-		:param string $type: The JOIN type
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $table: Table name to join
+        :param string $cond: The JOIN ON condition
+        :param string $type: The JOIN type
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``JOIN`` clause to a query.
+        Adds a ``JOIN`` clause to a query.
 
-	.. php:method:: where($key[, $value = null[, $escape = null]])
+    .. php:method:: where($key[, $value = null[, $escape = null]])
 
-		:param mixed $key: Name of field to compare, or associative array
-		:param mixed $value: If a single key, compared to this value
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Name of field to compare, or associative array
+        :param mixed $value: If a single key, compared to this value
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates the ``WHERE`` portion of the query. Separates multiple calls with ``AND``.
+        Generates the ``WHERE`` portion of the query. Separates multiple calls with ``AND``.
 
-	.. php:method:: orWhere($key[, $value = null[, $escape = null]])
+    .. php:method:: orWhere($key[, $value = null[, $escape = null]])
 
-		:param mixed $key: Name of field to compare, or associative array
-		:param mixed $value: If a single key, compared to this value
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Name of field to compare, or associative array
+        :param mixed $value: If a single key, compared to this value
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates the ``WHERE`` portion of the query. Separates multiple calls with ``OR``.
+        Generates the ``WHERE`` portion of the query. Separates multiple calls with ``OR``.
 
-	.. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: The field to search
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: The field to search
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
+        Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: orWhereNotIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orWhereNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: The field to search
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: The field to search
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
+        Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: whereIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: whereIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: Name of field to examine
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: Name of field to examine
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
+        Generates a ``WHERE`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: whereNotIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: whereNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: Name of field to examine
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: Name of field to examine
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
+        Generates a ``WHERE`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: groupStart()
+    .. php:method:: groupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression, using ``AND`` for the conditions inside it.
+        Starts a group expression, using ``AND`` for the conditions inside it.
 
-	.. php:method:: orGroupStart()
+    .. php:method:: orGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression, using ``OR`` for the conditions inside it.
+        Starts a group expression, using ``OR`` for the conditions inside it.
 
-	.. php:method:: notGroupStart()
+    .. php:method:: notGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression, using ``AND NOT`` for the conditions inside it.
+        Starts a group expression, using ``AND NOT`` for the conditions inside it.
 
-	.. php:method:: orNotGroupStart()
+    .. php:method:: orNotGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression, using ``OR NOT`` for the conditions inside it.
+        Starts a group expression, using ``OR NOT`` for the conditions inside it.
 
-	.. php:method:: groupEnd()
+    .. php:method:: groupEnd()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Ends a group expression.
+        Ends a group expression.
 
-	.. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``LIKE`` clause to a query, separating multiple calls with ``AND``.
+        Adds a ``LIKE`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``LIKE`` clause to a query, separating multiple class with ``OR``.
+        Adds a ``LIKE`` clause to a query, separating multiple class with ``OR``.
 
-	.. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``AND``.
+        Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``OR``.
+        Adds a ``NOT LIKE`` clause to a query, separating multiple calls with ``OR``.
 
-	.. php:method:: having($key[, $value = null[, $escape = null]])
+    .. php:method:: having($key[, $value = null[, $escape = null]])
 
-		:param mixed $key: Identifier (string) or associative array of field/value pairs
-		:param string $value: Value sought if $key is an identifier
-		:param string $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Identifier (string) or associative array of field/value pairs
+        :param string $value: Value sought if $key is an identifier
+        :param string $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``HAVING`` clause to a query, separating multiple calls with ``AND``.
+        Adds a ``HAVING`` clause to a query, separating multiple calls with ``AND``.
 
-	.. php:method:: orHaving($key[, $value = null[, $escape = null]])
+    .. php:method:: orHaving($key[, $value = null[, $escape = null]])
 
-		:param mixed $key: Identifier (string) or associative array of field/value pairs
-		:param string $value: Value sought if $key is an identifier
-		:param string $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Identifier (string) or associative array of field/value pairs
+        :param string $value: Value sought if $key is an identifier
+        :param string $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``HAVING`` clause to a query, separating multiple calls with ``OR``.
+        Adds a ``HAVING`` clause to a query, separating multiple calls with ``OR``.
 
-	.. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: The field to search
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: The field to search
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``HAVING`` field IN('item', 'item') SQL query, joined with ``OR`` if appropriate.
+        Generates a ``HAVING`` field IN('item', 'item') SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: orHavingNotIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: orHavingNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: The field to search
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: The field to search
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
+        Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``OR`` if appropriate.
 
-	.. php:method:: havingIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: havingIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: Name of field to examine
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: Name of field to examine
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``HAVING`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
+        Generates a ``HAVING`` field ``IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: havingNotIn([$key = null[, $values = null[, $escape = null]]])
+    .. php:method:: havingNotIn([$key = null[, $values = null[, $escape = null]]])
 
-		:param string $key: Name of field to examine
-		:param array|Closure $values: Array of target values, or anonymous function for subquery
-		:param bool $escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $key: Name of field to examine
+        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param bool $escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
+        Generates a ``HAVING`` field ``NOT IN('item', 'item')`` SQL query, joined with ``AND`` if appropriate.
 
-	.. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
+        Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
 
-	.. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple class with ``OR``.
+        Adds a ``LIKE`` clause to a ``HAVING`` part of the query, separating multiple class with ``OR``.
 
-	.. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:param bool $insensitiveSearch: Whether to force a case-insensitive search
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :param bool $insensitiveSearch: Whether to force a case-insensitive search
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
+        Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``AND``.
 
-	.. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
+    .. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-		:param string $field: Field name
-		:param string $match: Text portion to match
-		:param string $side: Which side of the expression to put the '%' wildcard on
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $field: Field name
+        :param string $match: Text portion to match
+        :param string $side: Which side of the expression to put the '%' wildcard on
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``OR``.
+        Adds a ``NOT LIKE`` clause to a ``HAVING`` part of the query, separating multiple calls with ``OR``.
 
-	.. php:method:: havingGroupStart()
+    .. php:method:: havingGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression for ``HAVING`` clause, using ``AND`` for the conditions inside it.
+        Starts a group expression for ``HAVING`` clause, using ``AND`` for the conditions inside it.
 
-	.. php:method:: orHavingGroupStart()
+    .. php:method:: orHavingGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression for ``HAVING`` clause, using ``OR`` for the conditions inside it.
+        Starts a group expression for ``HAVING`` clause, using ``OR`` for the conditions inside it.
 
-	.. php:method:: notHavingGroupStart()
+    .. php:method:: notHavingGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression for ``HAVING`` clause, using ``AND NOT`` for the conditions inside it.
+        Starts a group expression for ``HAVING`` clause, using ``AND NOT`` for the conditions inside it.
 
-	.. php:method:: orNotHavingGroupStart()
+    .. php:method:: orNotHavingGroupStart()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Starts a group expression for ``HAVING`` clause, using ``OR NOT`` for the conditions inside it.
+        Starts a group expression for ``HAVING`` clause, using ``OR NOT`` for the conditions inside it.
 
-	.. php:method:: havingGroupEnd()
+    .. php:method:: havingGroupEnd()
 
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Ends a group expression for ``HAVING`` clause.
+        Ends a group expression for ``HAVING`` clause.
 
-	.. php:method:: groupBy($by[, $escape = null])
+    .. php:method:: groupBy($by[, $escape = null])
 
-		:param mixed $by: Field(s) to group by; string or array
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $by: Field(s) to group by; string or array
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds a ``GROUP BY`` clause to a query.
+        Adds a ``GROUP BY`` clause to a query.
 
-	.. php:method:: orderBy($orderby[, $direction = ''[, $escape = null]])
+    .. php:method:: orderBy($orderby[, $direction = ''[, $escape = null]])
 
-		:param string $orderby: Field to order by
-		:param string $direction: The order requested - ASC, DESC or random
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param string $orderby: Field to order by
+        :param string $direction: The order requested - ASC, DESC or random
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds an ``ORDER BY`` clause to a query.
+        Adds an ``ORDER BY`` clause to a query.
 
-	.. php:method:: limit($value[, $offset = 0])
+    .. php:method:: limit($value[, $offset = 0])
 
-		:param int $value: Number of rows to limit the results to
-		:param int $offset: Number of rows to skip
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param int $value: Number of rows to limit the results to
+        :param int $offset: Number of rows to skip
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds ``LIMIT`` and ``OFFSET`` clauses to a query.
+        Adds ``LIMIT`` and ``OFFSET`` clauses to a query.
 
-	.. php:method:: offset($offset)
+    .. php:method:: offset($offset)
 
-		:param int $offset: Number of rows to skip
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param int $offset: Number of rows to skip
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds an ``OFFSET`` clause to a query.
+        Adds an ``OFFSET`` clause to a query.
 
-	.. php:method:: set($key[, $value = ''[, $escape = null]])
+    .. php:method:: set($key[, $value = ''[, $escape = null]])
 
-		:param mixed $key: Field name, or an array of field/value pairs
-		:param string $value: Field value, if $key is a single field
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Field name, or an array of field/value pairs
+        :param string $value: Field value, if $key is a single field
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds field/value pairs to be passed later to ``insert()``, ``update()`` or ``replace()``.
+        Adds field/value pairs to be passed later to ``insert()``, ``update()`` or ``replace()``.
 
-	.. php:method:: insert([$set = null[, $escape = null]])
+    .. php:method:: insert([$set = null[, $escape = null]])
 
-		:param array $set: An associative array of field/value pairs
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :param array $set: An associative array of field/value pairs
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:	bool
 
-		Compiles and executes an ``INSERT`` statement.
+        Compiles and executes an ``INSERT`` statement.
 
-	.. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
+    .. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
 
-		:param array $set: Data to insert
-		:param bool $escape: Whether to escape values and identifiers
-		:param int $batch_size: Count of rows to insert at once
-		:returns: Number of rows inserted or ``false`` on failure
-		:rtype:	int|false
+        :param array $set: Data to insert
+        :param bool $escape: Whether to escape values and identifiers
+        :param int $batch_size: Count of rows to insert at once
+        :returns: Number of rows inserted or ``false`` on failure
+        :rtype:	int|false
 
-		Compiles and executes batch ``INSERT`` statements.
+        Compiles and executes batch ``INSERT`` statements.
 
-		.. note:: When more than ``$batch_size`` rows are provided, multiple
-			``INSERT`` queries will be executed, each trying to insert
-			up to ``$batch_size`` rows.
+        .. note:: When more than ``$batch_size`` rows are provided, multiple
+            ``INSERT`` queries will be executed, each trying to insert
+            up to ``$batch_size`` rows.
 
-	.. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
+    .. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
 
-		:param mixed $key: Field name or an array of field/value pairs
-		:param string $value: Field value, if $key is a single field
-		:param bool $escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Field name or an array of field/value pairs
+        :param string $value: Field value, if $key is a single field
+        :param bool $escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
+        Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
 
-	.. php:method:: update([$set = null[, $where = null[, $limit = null]]])
+    .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
-		:param array $set: An associative array of field/value pairs
-		:param string $where: The WHERE clause
-		:param int $limit: The LIMIT clause
-		:returns: ``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :param array $set: An associative array of field/value pairs
+        :param string $where: The WHERE clause
+        :param int $limit: The LIMIT clause
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:	bool
 
-		Compiles and executes an ``UPDATE`` statement.
+        Compiles and executes an ``UPDATE`` statement.
 
-	.. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
+    .. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
 
-		:param array $set: Field name, or an associative array of field/value pairs
-		:param string $value: Field value, if $set is a single field
-		:param int $batch_size: Count of conditions to group in a single query
-		:returns: Number of rows updated or ``false`` on failure
-		:rtype:	int|false
+        :param array $set: Field name, or an associative array of field/value pairs
+        :param string $value: Field value, if $set is a single field
+        :param int $batch_size: Count of conditions to group in a single query
+        :returns: Number of rows updated or ``false`` on failure
+        :rtype:	int|false
 
-		Compiles and executes batch ``UPDATE`` statements.
+        Compiles and executes batch ``UPDATE`` statements.
 
-		.. note:: When more than ``$batch_size`` field/value pairs are provided,
-			multiple queries will be executed, each handling up to
-			``$batch_size`` field/value pairs.
+        .. note:: When more than ``$batch_size`` field/value pairs are provided,
+            multiple queries will be executed, each handling up to
+            ``$batch_size`` field/value pairs.
 
-	.. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+    .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
 
-		:param mixed $key: Field name or an array of field/value pairs
-		:param string $value: Field value, if $key is a single field
-		:param bool	$escape: Whether to escape values and identifiers
-		:returns: ``BaseBuilder`` instance (method chaining)
-		:rtype:	``BaseBuilder``
+        :param mixed $key: Field name or an array of field/value pairs
+        :param string $value: Field value, if $key is a single field
+        :param bool	$escape: Whether to escape values and identifiers
+        :returns: ``BaseBuilder`` instance (method chaining)
+        :rtype:	``BaseBuilder``
 
-		Adds field/value pairs to be updated in a table later via ``updateBatch()``.
+        Adds field/value pairs to be updated in a table later via ``updateBatch()``.
 
-	.. php:method:: replace([$set = null])
+    .. php:method:: replace([$set = null])
 
-		:param array $set: An associative array of field/value pairs
-		:returns: ``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :param array $set: An associative array of field/value pairs
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:	bool
 
-		Compiles and executes a ``REPLACE`` statement.
+        Compiles and executes a ``REPLACE`` statement.
 
-	.. php:method:: delete([$where = ''[, $limit = null[, $reset_data = true]]])
+    .. php:method:: delete([$where = ''[, $limit = null[, $reset_data = true]]])
 
-		:param string $where: The WHERE clause
-		:param int $limit: The LIMIT clause
-		:param bool $reset_data: true to reset the query "write" clause
-		:returns: ``BaseBuilder`` instance (method chaining) or ``false`` on failure
-		:rtype:	``BaseBuilder|false``
+        :param string $where: The WHERE clause
+        :param int $limit: The LIMIT clause
+        :param bool $reset_data: true to reset the query "write" clause
+        :returns: ``BaseBuilder`` instance (method chaining) or ``false`` on failure
+        :rtype:	``BaseBuilder|false``
 
-		Compiles and executes a ``DELETE`` query.
+        Compiles and executes a ``DELETE`` query.
 
-	.. php:method:: increment($column[, $value = 1])
+    .. php:method:: increment($column[, $value = 1])
 
         :param string $column: The name of the column to increment
         :param int $value: The amount to increment in the column
@@ -1798,7 +1821,7 @@ Class Reference
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
 
-	.. php:method:: decrement($column[, $value = 1])
+    .. php:method:: decrement($column[, $value = 1])
 
         :param string $column: The name of the column to decrement
         :param int $value:  The amount to decrement in the column
@@ -1807,51 +1830,51 @@ Class Reference
         is not a numeric field, like a ``VARCHAR``, it will likely be replaced
         with ``$value``.
 
-	.. php:method:: truncate()
+    .. php:method:: truncate()
 
-		:returns: ``true`` on success, ``false`` on failure, string on test mode
-		:rtype:	bool|string
+        :returns: ``true`` on success, ``false`` on failure, string on test mode
+        :rtype:	bool|string
 
-		Executes a ``TRUNCATE`` statement on a table.
+        Executes a ``TRUNCATE`` statement on a table.
 
-		.. note:: If the database platform in use doesn't support ``TRUNCATE``,
-			a ``DELETE`` statement will be used instead.
+        .. note:: If the database platform in use doesn't support ``TRUNCATE``,
+            a ``DELETE`` statement will be used instead.
 
-	.. php:method:: emptyTable()
+    .. php:method:: emptyTable()
 
-		:returns: ``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype:	bool
 
-		Deletes all records from a table via a ``DELETE`` statement.
+        Deletes all records from a table via a ``DELETE`` statement.
 
-	.. php:method:: getCompiledSelect([$reset = true])
+    .. php:method:: getCompiledSelect([$reset = true])
 
-		:param bool $reset: Whether to reset the current QB values or not
-		:returns: The compiled SQL statement as a string
-		:rtype:	string
+        :param bool $reset: Whether to reset the current QB values or not
+        :returns: The compiled SQL statement as a string
+        :rtype:	string
 
-		Compiles a ``SELECT`` statement and returns it as a string.
+        Compiles a ``SELECT`` statement and returns it as a string.
 
-	.. php:method:: getCompiledInsert([$reset = true])
+    .. php:method:: getCompiledInsert([$reset = true])
 
-		:param bool $reset: Whether to reset the current QB values or not
-		:returns: The compiled SQL statement as a string
-		:rtype:	string
+        :param bool $reset: Whether to reset the current QB values or not
+        :returns: The compiled SQL statement as a string
+        :rtype:	string
 
-		Compiles an ``INSERT`` statement and returns it as a string.
+        Compiles an ``INSERT`` statement and returns it as a string.
 
-	.. php:method:: getCompiledUpdate([$reset = true])
+    .. php:method:: getCompiledUpdate([$reset = true])
 
-		:param bool $reset: Whether to reset the current QB values or not
-		:returns: The compiled SQL statement as a string
-		:rtype:	string
+        :param bool $reset: Whether to reset the current QB values or not
+        :returns: The compiled SQL statement as a string
+        :rtype:	string
 
-		Compiles an ``UPDATE`` statement and returns it as a string.
+        Compiles an ``UPDATE`` statement and returns it as a string.
 
-	.. php:method:: getCompiledDelete([$reset = true])
+    .. php:method:: getCompiledDelete([$reset = true])
 
-		:param bool $reset: Whether to reset the current QB values or not
-		:returns: The compiled SQL statement as a string
-		:rtype:	string
+        :param bool $reset: Whether to reset the current QB values or not
+        :returns: The compiled SQL statement as a string
+        :rtype:	string
 
-		Compiles a ``DELETE`` statement and returns it as a string.
+        Compiles a ``DELETE`` statement and returns it as a string.

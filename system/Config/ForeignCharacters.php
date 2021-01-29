@@ -19,7 +19,6 @@ class ForeignCharacters
 	/**
 	 * Without further ado, the list of foreign characters.
 	 */
-
 	public $characterList = [
 		'/ä|æ|ǽ/'                                                     => 'ae',
 		'/ö|œ/'                                                       => 'oe',
@@ -111,5 +110,4 @@ class ForeignCharacters
 		'/Я/'                                                         => 'Ya',
 		'/я/'                                                         => 'ya',
 	];
-
 }

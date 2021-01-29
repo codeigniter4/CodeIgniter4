@@ -25,7 +25,6 @@ use SessionHandlerInterface;
  */
 class Session implements SessionInterface
 {
-
 	use LoggerAwareTrait;
 
 	/**
@@ -126,7 +125,7 @@ class Session implements SessionInterface
 	 * Cookie SameSite setting as described in RFC6265
 	 * Must be 'None', 'Lax' or 'Strict'.
 	 *
-	 * @var string
+	 * @var string 'Lax'|'None'|'Strict'
 	 */
 	protected $cookieSameSite = 'Lax';
 
@@ -227,8 +226,9 @@ class Session implements SessionInterface
 		$this->startSession();
 
 		// Is session ID auto-regeneration configured? (ignoring ajax requests)
-		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerateTime = $this->sessionTimeToUpdate) > 0
+		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+			|| strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
+			&& ($regenerateTime = $this->sessionTimeToUpdate) > 0
 		)
 		{
 			if (! isset($_SESSION['__ci_last_regenerate']))
@@ -372,9 +372,11 @@ class Session implements SessionInterface
 		$bitsPerCharacter = (int) (ini_get('session.sid_bits_per_character') !== false
 			? ini_get('session.sid_bits_per_character')
 			: 4);
-		$sidLength        = (int) (ini_get('session.sid_length') !== false
+
+		$sidLength = (int) (ini_get('session.sid_length') !== false
 			? ini_get('session.sid_length')
 			: 40);
+
 		if (($sidLength * $bitsPerCharacter) < 160)
 		{
 			$bits = ($sidLength * $bitsPerCharacter);
@@ -423,9 +425,8 @@ class Session implements SessionInterface
 			{
 				$_SESSION['__ci_vars'][$key] = 'old';
 			}
-			// Hacky, but 'old' will (implicitly) always be less than time() ;)
 			// DO NOT move this above the 'new' check!
-			elseif ($value < $currentTime)
+			elseif ($value === 'old' || $value < $currentTime)
 			{
 				unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 			}
@@ -478,7 +479,7 @@ class Session implements SessionInterface
 	 * to be set as session properties.
 	 *
 	 * @param string|array $data  Property name or associative array of properties
-	 * @param string|array $value Property value if single key provided
+	 * @param mixed        $value Property value if single key provided
 	 */
 	public function set($data, $value = null)
 	{
@@ -513,8 +514,8 @@ class Session implements SessionInterface
 	 *
 	 * Replaces the legacy method $session->userdata();
 	 *
-	 * @param  string $key Identifier of the session property to retrieve
-	 * @return array|null	The property value(s)
+	 * @param  string|null $key Identifier of the session property to retrieve
+	 * @return mixed	The property value(s)
 	 */
 	public function get(string $key = null)
 	{
@@ -566,14 +567,14 @@ class Session implements SessionInterface
 
 	   //--------------------------------------------------------------------
 
-	  /**
-	   * Push new value onto session value that is array.
-	   *
-	   * @param string $key  Identifier of the session property we are interested in.
-	   * @param array  $data value to be pushed to existing session key.
-	   *
-	   * @return void
-	   */
+	/**
+	 * Push new value onto session value that is array.
+	 *
+	 * @param string $key  Identifier of the session property we are interested in.
+	 * @param array  $data value to be pushed to existing session key.
+	 *
+	 * @return void
+	 */
 	public function push(string $key, array $data)
 	{
 		if ($this->has($key) && is_array($value = $this->get($key)))
@@ -696,7 +697,7 @@ class Session implements SessionInterface
 	 * If the item key is null, return all flashdata.
 	 *
 	 * @param  string $key Property identifier
-	 * @return array|null	The requested property value, or an associative array  of them
+	 * @return array|null	The requested property value, or an associative array of them
 	 */
 	public function getFlashdata(string $key = null)
 	{
@@ -1069,11 +1070,8 @@ class Session implements SessionInterface
 				$params['samesite'] = $this->cookieSameSite;
 			}
 
-			setcookie(
-				$this->sessionCookieName,
-				session_id(),
-				$params
-			);
+			// @phpstan-ignore-next-line @todo ignore to be removed in 4.1 with rector 0.9
+			setcookie($this->sessionCookieName, session_id(), $params);
 		}
 	}
 

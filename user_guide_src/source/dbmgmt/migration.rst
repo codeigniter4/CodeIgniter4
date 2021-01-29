@@ -17,17 +17,13 @@ include migrations from all namespaces.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 ********************
 Migration file names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
 method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
+was created, in **YYYYMMDDHHIISS** format (e.g., **20121031100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
@@ -47,13 +43,14 @@ migrations go in the **app/Database/Migrations/** directory and have names such
 as *20121031100537_add_blog.php*.
 ::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
 	class AddBlog extends Migration
 	{
-
 		public function up()
 		{
 			$this->forge->addField([
@@ -64,12 +61,12 @@ as *20121031100537_add_blog.php*.
 					'auto_increment' => true,
 				],
 				'blog_title'       => [
-					'type'           => 'VARCHAR',
-					'constraint'     => '100',
+					'type'       => 'VARCHAR',
+					'constraint' => '100',
 				],
 				'blog_description' => [
-					'type'           => 'TEXT',
-					'null'           => true,
+					'type' => 'TEXT',
+					'null' => true,
 				],
 			]);
 			$this->forge->addKey('blog_id', true);
@@ -117,7 +114,9 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
@@ -125,9 +124,15 @@ match the name of the database group exactly::
 	{
 		protected $DBGroup = 'alternate_db_group';
 
-		public function up() { . . . }
+		public function up()
+		{
+			// ...
+		}
 
-		public function down() { . . . }
+		public function down()
+		{
+			// ...
+		}
 	}
 
 Namespaces
@@ -159,11 +164,12 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
-
 		public function index()
 		{
 			$migrate = \Config\Services::migrations();
@@ -177,7 +183,6 @@ to update the schema::
 				// Do something with the error here...
 			}
 		}
-
 	}
 
 *******************
@@ -297,7 +302,7 @@ Class Reference
 
 	.. php:method:: regress($batch, $group)
 
-		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
+		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	``true`` on success, ``false`` on failure or no migrations are found
 		:rtype:	bool
@@ -305,8 +310,8 @@ Class Reference
 		Regress can be used to roll back changes to a previous state, batch by batch.
 		::
 
-			$migration->batch(5);
-			$migration->batch(-1);
+			$migration->regress(5);
+			$migration->regress(-1);
 
 	.. php:method:: force($path, $namespace, $group)
 
@@ -316,7 +321,9 @@ Class Reference
 		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. 
+		
+		.. note:: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
 

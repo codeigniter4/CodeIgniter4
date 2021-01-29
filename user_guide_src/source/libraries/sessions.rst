@@ -12,10 +12,6 @@ in the last section of the table of contents:
     :local:
     :depth: 2
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Using the Session Class
 *********************************************************************
 

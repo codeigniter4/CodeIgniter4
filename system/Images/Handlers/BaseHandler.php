@@ -15,13 +15,13 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
+use InvalidArgumentException;
 
 /**
  * Base image handling implementation
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {
-
 	/**
 	 * Configuration settings.
 	 *
@@ -663,8 +663,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return array
 	 */
-	protected function calcAspectRatio($width, $height = null, $origWidth, $origHeight): array
+	protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
 	{
+		if (empty($origWidth) || empty($origHeight))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
+		}
+
 		// If $height is null, then we have it easy.
 		// Calc based on full image size and be done.
 		if (is_null($height))
@@ -711,7 +716,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
 	{
 		$position = strtolower($position);
-		$x        = $y = 0;
+
+		$x = $y = 0;
 
 		switch ($position)
 		{
@@ -830,12 +836,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) ||
-				$this->image()->origWidth === 0 ||
-				$this->image()->origHeight === 0 ||
-				(! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
-				! ctype_digit((string) $this->image()->origWidth) ||
-				! ctype_digit((string) $this->image()->origHeight)
+		if (($this->width === 0 && $this->height === 0) || $this->image()->origWidth === 0 || $this->image()->origHeight === 0 || (! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image()->origWidth) || ! ctype_digit((string) $this->image()->origHeight)
 		)
 		{
 			return;
@@ -897,5 +898,4 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;
 	}
-
 }

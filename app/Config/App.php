@@ -303,7 +303,7 @@ class App extends BaseConfig
 	 * (empty string) means no SameSite attribute will be set on cookies. If
 	 * set to `None`, `$cookieSecure` must also be set.
 	 *
-	 * @var string
+       * @var string 'Lax'|'None'|'Strict'
 	 */
 	public $cookieSameSite = 'Lax';
 
@@ -334,6 +334,8 @@ class App extends BaseConfig
 	 *
 	 * The token name.
 	 *
+	 * @deprecated Use `Config\Security` $tokenName property instead of using this property.
+	 *
 	 * @var string
 	 */
 	public $CSRFTokenName = 'csrf_test_name';
@@ -344,6 +346,8 @@ class App extends BaseConfig
 	 * --------------------------------------------------------------------------
 	 *
 	 * The header name.
+	 *
+	 * @deprecated Use `Config\Security` $headerName property instead of using this property.
 	 *
 	 * @var string
 	 */
@@ -356,6 +360,8 @@ class App extends BaseConfig
 	 *
 	 * The cookie name.
 	 *
+	 * @deprecated Use `Config\Security` $cookieName property instead of using this property.
+	 *
 	 * @var string
 	 */
 	public $CSRFCookieName = 'csrf_cookie_name';
@@ -366,6 +372,8 @@ class App extends BaseConfig
 	 * --------------------------------------------------------------------------
 	 *
 	 * The number in seconds the token should expire.
+	 *
+	 * @deprecated Use `Config\Security` $expire property instead of using this property.
 	 *
 	 * @var integer
 	 */
@@ -378,6 +386,8 @@ class App extends BaseConfig
 	 *
 	 * Regenerate token on every submission?
 	 *
+	 * @deprecated Use `Config\Security` $regenerate property instead of using this property.
+	 *
 	 * @var boolean
 	 */
 	public $CSRFRegenerate = true;
@@ -388,6 +398,8 @@ class App extends BaseConfig
 	 * --------------------------------------------------------------------------
 	 *
 	 * Redirect to previous page with error on failure?
+	 *
+	 * @deprecated Use `Config\Security` $redirect property instead of using this property.
 	 *
 	 * @var boolean
 	 */
@@ -407,6 +419,8 @@ class App extends BaseConfig
 	 * Defaults to `Lax` as recommended in this link:
 	 *
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
+	 *
+	 * @deprecated Use `Config\Security` $samesite property instead of using this property.
 	 *
 	 * @var string
 	 */

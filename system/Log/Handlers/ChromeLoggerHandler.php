@@ -111,7 +111,7 @@ class ChromeLoggerHandler extends BaseHandler
 		$message = $this->format($message);
 
 		// Generate Backtrace info
-		$backtrace = debug_backtrace(false, $this->backtraceLevel);
+		$backtrace = debug_backtrace(0, $this->backtraceLevel);
 		$backtrace = end($backtrace);
 
 		$backtraceMessage = 'unknown';
@@ -181,5 +181,4 @@ class ChromeLoggerHandler extends BaseHandler
 
 		$response->setHeader($this->header, $data);
 	}
-
 }

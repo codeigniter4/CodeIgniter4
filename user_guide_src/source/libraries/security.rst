@@ -1,6 +1,6 @@
-##############
-Security Class
-##############
+########
+Security
+########
 
 The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.
 
@@ -75,7 +75,7 @@ meta tag for you::
 	// Generates: <meta name="{csrf_header}" content="{csrf_hash}" />
 	<?= csrf_meta() ?>
 
-The order of checking the avability of the CSRF token is as follows:
+The order of checking the availability of the CSRF token is as follows:
 
 1. ``$_POST`` array
 2. Http header
@@ -86,17 +86,17 @@ kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
-may alter this behavior by editing the following config parameter
-::
+may alter this behavior by editing the following config parameter value in
+**app/Config/Security.php**::
 
-	public $CSRFRegenerate  = true;
+	public $regenerate  = true;
 
 When a request fails the CSRF validation check, it will redirect to the previous page by default,
 setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
-than simply crashing. This can be turned off by editing the ``$CSRFRedirect`` value in
-**app/Config/App.php**::
+than simply crashing. This can be turned off by editing the following config parameter value in
+**app/Config/Security.php**::
 
-	public $CSRFRedirect = false;
+	public $redirect = false;
 
 Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
 
@@ -112,7 +112,7 @@ you might find helpful that are not related to the CSRF protection.
 Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.
 
-If it is acceptable for the user input to include relative paths, e.g. file/in/some/approved/folder.txt, you can set
+If it is acceptable for the user input to include relative paths, e.g., file/in/some/approved/folder.txt, you can set
 the second optional parameter, $relative_path to true.
 ::
 

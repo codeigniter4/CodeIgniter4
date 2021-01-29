@@ -308,6 +308,53 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGroupingWorksWithEmptyStringPrefix()
+	{
+		$routes = $this->getCollector();
+
+		$routes->group(
+				'', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
+		);
+
+		$expected = [
+			'users/list' => '\Users::list',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNestedGroupingWorksWithEmptyPrefix()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('verify/begin', '\VerifyController::begin');
+
+		$routes->group('admin', function ($routes) {
+			$routes->group(
+				'', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+					
+					$routes->group('delegate', function ($routes) {
+						$routes->add('foo', '\Users::foo');
+					});
+			});
+		});
+
+		$expected = [
+			'verify/begin'       => '\VerifyController::begin',
+			'admin/users/list'   => '\Users::list',
+			'admin/delegate/foo' => '\Users::foo'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testHostnameOption()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';

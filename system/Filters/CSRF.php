@@ -26,7 +26,6 @@ use Config\Services;
  */
 class CSRF implements FilterInterface
 {
-
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during
@@ -54,11 +53,11 @@ class CSRF implements FilterInterface
 
 		try
 		{
-			$security->CSRFVerify($request);
+			$security->verify($request);
 		}
 		catch (SecurityException $e)
 		{
-			if (config('App')->CSRFRedirect && ! $request->isAJAX())
+			if ($security->shouldRedirect() && ! $request->isAJAX())
 			{
 				return redirect()->back()->with('error', $e->getMessage());
 			}

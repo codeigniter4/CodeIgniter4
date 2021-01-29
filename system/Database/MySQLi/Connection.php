@@ -30,6 +30,7 @@ class Connection extends BaseConnection
 	 * @var string
 	 */
 	public $DBDriver = 'MySQLi';
+
 	/**
 	 * DELETE hack flag
 	 *
@@ -40,14 +41,18 @@ class Connection extends BaseConnection
 	 * @var boolean
 	 */
 	public $deleteHack = true;
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
 	public $escapeChar = '`';
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * MySQLi object
 	 *
@@ -56,6 +61,7 @@ class Connection extends BaseConnection
 	 * @var MySQLi
 	 */
 	public $mysqli;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -113,10 +119,11 @@ class Connection extends BaseConnection
 
 		if (is_array($this->encrypt))
 		{
-			$ssl                                                  = [];
-			empty($this->encrypt['ssl_key']) || $ssl['key']       = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) || $ssl['cert']     = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) || $ssl['ca']         = $this->encrypt['ssl_ca'];
+			$ssl = [];
+
+			empty($this->encrypt['ssl_key'])    || $ssl['key']    = $this->encrypt['ssl_key'];
+			empty($this->encrypt['ssl_cert'])   || $ssl['cert']   = $this->encrypt['ssl_cert'];
+			empty($this->encrypt['ssl_ca'])     || $ssl['ca']     = $this->encrypt['ssl_ca'];
 			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
 			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
 
@@ -127,7 +134,7 @@ class Connection extends BaseConnection
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, 1);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -709,5 +716,6 @@ class Connection extends BaseConnection
 
 		return false;
 	}
+
 	//--------------------------------------------------------------------
 }

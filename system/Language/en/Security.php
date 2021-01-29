@@ -9,7 +9,8 @@
  * file that was distributed with this source code.
  */
 
-// Language system language settings
+// Security language settings
 return [
-   'languageGetLineInvalidArgumentException' => 'Get line must be a string or array of strings.',
+	'disallowedAction' => 'The action you requested is not allowed.',
+	'invalidSameSite'  => 'The SameSite value must be None, Lax, Strict, or a blank string. Given: {0}',
 ];

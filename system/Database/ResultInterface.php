@@ -16,7 +16,6 @@ namespace CodeIgniter\Database;
  */
 interface ResultInterface
 {
-
 	/**
 	 * Retrieve the results of the query. Typically an array of
 	 * individual data rows, which can be either an 'array', an

@@ -113,27 +113,19 @@ class Autoloader
 	 */
 	public function register()
 	{
-		// Since the default file extensions are searched
-		// in order of .inc then .php, but we always use .php,
-		// put the .php extension first to eek out a bit
-		// better performance.
-		// http://php.net/manual/en/function.spl-autoload.php#78053
-		spl_autoload_extensions('.php,.inc');
-
 		// Prepend the PSR4  autoloader for maximum performance.
 		spl_autoload_register([$this, 'loadClass'], true, true); // @phpstan-ignore-line
 
 		// Now prepend another loader for the files in our class map.
-		$config = $this->classmap;
 
 		// @phpstan-ignore-next-line
-		spl_autoload_register(function ($class) use ($config) {
-			if (empty($config[$class]))
+		spl_autoload_register(function ($class) {
+			if (empty($this->classmap[$class]))
 			{
 				return false;
 			}
 
-			include_once $config[$class];
+			include_once $this->classmap[$class];
 		}, true, // Throw exception
 			true // Prepend
 		);

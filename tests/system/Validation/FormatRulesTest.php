@@ -72,7 +72,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider urlProvider
 	 */
-	public function testValidURL(string $url = null, bool $expected)
+	public function testValidURL(?string $url, bool $expected)
 	{
 		$data = [
 			'foo' => $url,
@@ -425,6 +425,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				true,
 			],
 			[
+				FormatRulesTest::ALPHABET . "\n",
+				false,
+			],
+			[
 				FormatRulesTest::ALPHABET . '1',
 				false,
 			],
@@ -504,6 +508,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 			[
 				FormatRulesTest::ALPHANUMERIC . '`',
+				false,
+			],
+			[
+				FormatRulesTest::ALPHANUMERIC . "\n",
 				false,
 			],
 			[
@@ -600,6 +608,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				false,
 			],
 			[
+				' ' . FormatRulesTest::ALPHANUMERIC . "\n",
+				false,
+			],
+			[
 				null,
 				false,
 			],
@@ -634,6 +646,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 			[
 				FormatRulesTest::ALPHANUMERIC . '-\ ',
+				false,
+			],
+			[
+				FormatRulesTest::ALPHANUMERIC . "-\n",
 				false,
 			],
 			[
@@ -723,6 +739,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				true,
 			],
 			[
+				"+42\n",
+				false,
+			],
+			[
 				'123a',
 				false,
 			],
@@ -770,6 +790,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'-1',
 				true,
+			],
+			[
+				"+42\n",
+				false,
 			],
 			[
 				'123a',
@@ -823,6 +847,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'0',
 				true,
+			],
+			[
+				"0\n",
+				false,
 			],
 			[
 				'1.0a',

@@ -18,7 +18,6 @@ use CodeIgniter\Debug\Exceptions;
  */
 class BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -283,5 +282,4 @@ class BaseCollector
 			'timelineData'    => $this->timelineData(),
 		];
 	}
-
 }

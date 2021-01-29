@@ -67,6 +67,7 @@ class Controller
 	protected $validator;
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Constructor.
 	 *

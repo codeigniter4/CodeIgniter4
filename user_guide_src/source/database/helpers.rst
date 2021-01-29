@@ -10,8 +10,8 @@ Information From Executing a Query
 The insert ID number when performing database inserts.
 
 .. note:: If using the PDO driver with PostgreSQL, or using the Interbase
-	driver, this function requires a $name parameter, which specifies the
-	appropriate sequence to check for the insert id.
+    driver, this function requires a $name parameter, which specifies the
+    appropriate sequence to check for the insert id.
 
 **$db->affectedRows()**
 
@@ -19,9 +19,9 @@ Displays the number of affected rows, when doing "write" type queries
 (insert, update, etc.).
 
 .. note:: In MySQL "DELETE FROM TABLE" returns 0 affected rows. The database
-	class has a small hack that allows it to return the correct number of
-	affected rows. By default this hack is enabled but it can be turned off
-	in the database driver file.
+    class has a small hack that allows it to return the correct number of
+    affected rows. By default this hack is enabled but it can be turned off
+    in the database driver file.
 
 **$db->getLastQuery()**
 
@@ -36,29 +36,29 @@ Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example::
 
-	echo $db->table('my_table')->countAll();
+    echo $db->table('my_table')->countAll();
 
-	// Produces an integer, like 25
+    // Produces an integer, like 25
 
-**$db->countAllResults()**
+    **$db->countAllResults()**
 
 Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example::
 
-	echo $db->table('my_table')->countAllResults();
+    echo $db->table('my_table')->countAllResults();
 
-	// Produces an integer, like 5
+    // Produces an integer, like 5
 
 **$db->getPlatform()**
 
 Outputs the database platform you are running (MySQL, MS SQL, Postgres,
 etc...)::
 
-	echo $db->getPlatform();
+    echo $db->getPlatform();
 
 **$db->getVersion()**
 
 Outputs the database version you are running::
 
-	echo $db->getVersion();
+    echo $db->getVersion();

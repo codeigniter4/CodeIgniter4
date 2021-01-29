@@ -32,7 +32,6 @@ use Config\Toolbar as ToolbarConfig;
  */
 class Toolbar
 {
-
 	/**
 	 * Toolbar configuration settings.
 	 *
@@ -141,22 +140,9 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->getHeaders() as $value)
+		foreach ($request->headers() as $name => $header)
 		{
-			if (empty($value))
-			{
-				continue;
-			}
-
-			if (! is_array($value))
-			{
-				$value = [$value];
-			}
-
-			foreach ($value as $h)
-			{
-				$data['vars']['headers'][esc($h->getName())] = esc($h->getValueLine());
-			}
+			$data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
 		}
 
 		foreach ($request->getCookie() as $name => $value)
@@ -215,11 +201,12 @@ class Toolbar
 			$length = (((float) $row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output                                     .= '</td>';
-			$output                                     .= '</tr>';
 
-			$styleCount ++;
+			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output .= '</td>';
+			$output .= '</tr>';
+
+			$styleCount++;
 		}
 
 		return $output;
@@ -481,5 +468,4 @@ class Toolbar
 
 		return $output;
 	}
-
 }

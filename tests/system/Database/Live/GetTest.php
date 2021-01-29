@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -162,7 +164,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
 			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
 		}
-		if ($this->db->DBDriver === 'Sqlsrv')
+		if ($this->db->DBDriver === 'SQLSRV')
 		{
 			$this->assertEquals('int', $type_test[0]->type_name); //INTEGER AUTOINC
 			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
@@ -313,6 +315,4 @@ class GetTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Richard A Causey', $user->name);
 	}
-
-	//--------------------------------------------------------------------
 }

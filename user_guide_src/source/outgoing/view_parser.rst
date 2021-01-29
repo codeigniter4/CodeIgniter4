@@ -613,7 +613,7 @@ template, the original pseudo-variable is shown in the result::
 	// Result: Hello, John {initials} Doe
 
 If you provide a string substitution parameter when an array is expected,
-i.e. for a variable pair, the substitution is done for the opening variable
+i.e., for a variable pair, the substitution is done for the opening variable
 pair tag, but the closing variable pair tag is not rendered properly::
 
 	$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';

@@ -16,7 +16,6 @@ namespace CodeIgniter\Log\Handlers;
  */
 abstract class BaseHandler implements HandlerInterface
 {
-
 	/**
 	 * Handles
 	 *

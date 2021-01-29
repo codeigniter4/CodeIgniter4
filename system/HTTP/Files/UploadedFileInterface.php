@@ -23,7 +23,6 @@ use RuntimeException;
  */
 interface UploadedFileInterface
 {
-
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *

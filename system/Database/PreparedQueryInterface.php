@@ -16,7 +16,6 @@ namespace CodeIgniter\Database;
  */
 interface PreparedQueryInterface
 {
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.

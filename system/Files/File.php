@@ -21,7 +21,6 @@ use SplFileInfo;
  */
 class File extends SplFileInfo
 {
-
 	/**
 	 * The files size in bytes
 	 *

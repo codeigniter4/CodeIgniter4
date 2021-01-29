@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.2",
+		"php": "^7.2 || ^8.0",
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -22,10 +22,16 @@
 		"predis/predis": "^1.1",
 		"squizlabs/php_codesniffer": "^3.3"
 	},
+	"suggest": {
+		"ext-fileinfo": "Improves mime type detection for files"
+	},
 	"autoload": {
 		"psr-4": {
 			"CodeIgniter\\": "system/"
-		}
+		},
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
+		]
 	},
 	"scripts": {
 		"post-update-cmd": [

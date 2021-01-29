@@ -12,6 +12,7 @@
 namespace CodeIgniter\Validation;
 
 use Config\Database;
+use InvalidArgumentException;
 
 /**
  * Validation Rules.
@@ -274,7 +275,7 @@ class Rules
 	 */
 	public function max_length(string $str = null, string $val): bool
 	{
-		return ($val >= mb_strlen($str));
+		return (is_numeric($val) && $val >= mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -289,7 +290,7 @@ class Rules
 	 */
 	public function min_length(string $str = null, string $val): bool
 	{
-		return ($val <= mb_strlen($str));
+		return (is_numeric($val) && $val <= mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -352,13 +353,18 @@ class Rules
 	 *     required_with[password]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields List of fields that we should check if present
+	 * @param string|null $fields List of fields that we should check if present
 	 * @param array       $data   Complete list of fields from the form
 	 *
 	 * @return boolean
 	 */
-	public function required_with($str = null, string $fields, array $data): bool
+	public function required_with($str = null, string $fields = null, array $data = []): bool
 	{
+		if (is_null($fields) || empty($data))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
+		}
+
 		$fields = explode(',', $fields);
 
 		// If the field is present we can safely assume that
@@ -378,17 +384,14 @@ class Rules
 
 		foreach ($fields as $field)
 		{
-			if (array_key_exists($field, $data))
+			if (
+				(array_key_exists($field, $data) && ! empty($data[$field])) ||
+				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))	
+			)
 			{
 				$requiredFields[] = $field;
 			}
 		}
-
-		// Remove any keys with empty values since, that means they
-		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
-			return ! empty($data[$item]);
-		});
 
 		return empty($requiredFields);
 	}
@@ -404,13 +407,18 @@ class Rules
 	 *     required_without[id,email]
 	 *
 	 * @param string|null $str
-	 * @param string      $fields
+	 * @param string|null $fields
 	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
-	public function required_without($str = null, string $fields, array $data): bool
+	public function required_without($str = null, string $fields = null, array $data = []): bool
 	{
+		if (is_null($fields) || empty($data))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: fields, data.');
+		}
+
 		$fields = explode(',', $fields);
 
 		// If the field is present we can safely assume that
@@ -427,7 +435,10 @@ class Rules
 		// any of the fields are not present in $data
 		foreach ($fields as $field)
 		{
-			if (! array_key_exists($field, $data))
+			if (
+				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
+				(strpos($field, '.') !== false && empty(dot_array_search($field, $data)))
+			)
 			{
 				return false;
 			}

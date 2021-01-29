@@ -3,77 +3,77 @@ CodeIgniter4 User Guide
 #######################
 
 .. toctree::
-	:includehidden:
-        :titlesonly:
+    :includehidden:
+    :titlesonly:
 
-        intro/index
+    intro/index
 
 ***************
 Getting Started
 ***************
 
 .. toctree::
-	:maxdepth: 2
-	:titlesonly:
+    :maxdepth: 2
+    :titlesonly:
 
-	installation/index
+    installation/index
 
 ****************************
 Build Your First Application
 ****************************
 
 .. toctree::
-	:includehidden:
-	:titlesonly:
+    :includehidden:
+    :titlesonly:
 
-    	tutorial/index
+    tutorial/index
 
 *************************
 Overview & General Topics
 *************************
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	concepts/index
+    concepts/index
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	general/index
+    general/index
 
 ****************
 Request Handling
 ****************
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	incoming/index
+    incoming/index
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	outgoing/index
+    outgoing/index
 
 ******************
 Handling Databases
 ******************
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	database/index
-
-.. toctree::
-	:titlesonly:
-
-	models/index
+    database/index
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	dbmgmt/index
+    models/index
+
+.. toctree::
+    :titlesonly:
+
+    dbmgmt/index
 
 
 *******************
@@ -81,36 +81,36 @@ Libraries & Helpers
 *******************
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	libraries/index
+    libraries/index
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	helpers/index
+    helpers/index
 
 ***************
 Advanced Topics
 ***************
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	testing/index
-
-.. toctree::
-	:titlesonly:
-
-	cli/index
+    testing/index
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	extending/index
+    cli/index
 
 .. toctree::
-        :hidden:
+    :titlesonly:
 
-        license
-        changelogs/index
+    extending/index
+
+.. toctree::
+    :hidden:
+
+    license
+    changelogs/index

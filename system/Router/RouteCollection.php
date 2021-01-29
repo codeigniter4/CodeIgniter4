@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
 
 /**
  * Class RouteCollection
@@ -25,7 +26,6 @@ use Config\Services;
  */
 class RouteCollection implements RouteCollectionInterface
 {
-
 	/**
 	 * The namespace to be added to any Controllers.
 	 * Defaults to the global namespaces (\)
@@ -713,7 +713,8 @@ class RouteCollection implements RouteCollectionInterface
 
 		// To register a route, we'll set a flag so that our router
 		// so it will see the group name.
-		$this->group = ltrim($oldGroup . '/' . $name, '/');
+		// If the group name is empty, we go on using the previously built group name.
+		$this->group = $name ? ltrim($oldGroup . '/' . $name, '/') : $oldGroup;
 
 		$callback = array_pop($params);
 
@@ -988,8 +989,13 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function match(array $verbs = [], string $from, $to, array $options = null): RouteCollectionInterface
+	public function match(array $verbs = [], string $from = '', $to = '', array $options = null): RouteCollectionInterface
 	{
+		if (empty($from) || empty($to))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: from, to.');
+		}
+
 		foreach ($verbs as $verb)
 		{
 			$verb = strtolower($verb);
@@ -1590,5 +1596,4 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $options;
 	}
-
 }

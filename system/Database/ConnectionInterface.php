@@ -16,7 +16,6 @@ namespace CodeIgniter\Database;
  */
 interface ConnectionInterface
 {
-
 	/**
 	 * Initializes the database connection/settings.
 	 *

@@ -18,7 +18,6 @@ use CodeIgniter\Database\Query;
  */
 class Database extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has timeline data.
 	 *
@@ -58,7 +57,7 @@ class Database extends BaseCollector
 	 * The query instances that have been collected
 	 * through the DBQuery Event.
 	 *
-	 * @var array
+	 * @var Query[]
 	 */
 	protected static $queries = [];
 
@@ -139,59 +138,12 @@ class Database extends BaseCollector
 	 */
 	public function display(): array
 	{
-		// Key words we want bolded
-		$highlight = [
-			'SELECT',
-			'DISTINCT',
-			'FROM',
-			'WHERE',
-			'AND',
-			'LEFT&nbsp;JOIN',
-			'RIGHT&nbsp;JOIN',
-			'JOIN',
-			'ORDER&nbsp;BY',
-			'GROUP&nbsp;BY',
-			'LIMIT',
-			'INSERT',
-			'INTO',
-			'VALUES',
-			'UPDATE',
-			'OR&nbsp;',
-			'HAVING',
-			'OFFSET',
-			'NOT&nbsp;IN',
-			'IN',
-			'LIKE',
-			'NOT&nbsp;LIKE',
-			'COUNT',
-			'MAX',
-			'MIN',
-			'ON',
-			'AS',
-			'AVG',
-			'SUM',
-			'(',
-			')',
-		];
-
-		$data = [
-			'queries' => [],
-		];
-
-		foreach (static::$queries as $query)
-		{
-			$sql = $query->getQuery();
-
-			foreach ($highlight as $term)
-			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-			}
-
-			$data['queries'][] = [
-				'duration' => ($query->getDuration(5) * 1000) . ' ms',
-				'sql'      => $sql,
+		$data['queries'] = array_map(function (Query $query) {
+			return [
+				'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
+				'sql'      => $query->debugToolbarDisplay(),
 			];
-		}
+		}, static::$queries);
 
 		return $data;
 	}
@@ -246,5 +198,4 @@ class Database extends BaseCollector
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
 	}
-
 }

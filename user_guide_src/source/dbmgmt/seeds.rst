@@ -71,11 +71,11 @@ Using Faker
 ===========
 
 If you want to automate the generation of seed data, you can use
-the `Faker library <https://github.com/fzaninotto/faker>`_.
+the `Faker library <https://github.com/fakerphp/faker>`_.
 
 To install Faker into your project::
 
-	> composer require --dev fzaninotto/faker
+	> composer require --dev fakerphp/faker
 
 After installation, an instance of ``Faker\Generator`` is available in the main ``Seeder``
 class and is accessible by all child seeders. You must use the static method ``faker()``

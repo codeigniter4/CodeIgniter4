@@ -15,7 +15,9 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -39,6 +41,7 @@ It's preferable, though, to pass the request in as a dependency if the class is 
 the controller, where you can save it as a class property::
 
     <?php
+
     use CodeIgniter\HTTP\RequestInterface;
 
     class SomeClass
@@ -71,18 +74,18 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
         // ...
     }
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
     // Returns 'post'
     $method = $request->getMethod();
 
-By default, the method is returned as a lower-case string (i.e. 'get', 'post', etc). You can get an
-uppercase version by passing in ``true`` as the only parameter::
+By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
+uppercase version by wrapping the call in ``str_to_upper()``::
 
     // Returns 'GET'
-    $method = $request->getMethod(true);
+    $method = str_to_upper($request->getMethod());
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 
@@ -138,6 +141,45 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
+If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
+the JSON stream. Using ``getVar()`` in this way will always return an object.
+
+**Get Specific Data from JSON**
+
+You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
+data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
+
+::
+
+    //With a request body of:
+    {
+        "foo": "bar",
+        "fizz": {
+            "buzz": "baz"
+        }
+    }
+    $data = $request->getVar('foo');
+    //$data = "bar"
+
+    $data = $request->getVar('fizz.buzz');
+    //$data = "baz"
+
+
+If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
+true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
+correct ``CONTENT_TYPE`` header.
+
+::
+
+    //With the same request as above
+    $data = $request->getJsonVar('fizz');
+    //$data->buzz = "baz"
+
+    $data = $request->getJsonVar('fizz', true);
+    //$data = ["buzz" => "baz"]
+
+.. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
+
 **Retrieving Raw data (PUT, PATCH, DELETE)**
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``::
@@ -170,11 +212,11 @@ exception of ``getJSON()``.
 Retrieving Headers
 ----------------------------------------------------------------------------
 
-You can get access to any header that was sent with the request with the ``getHeaders()`` method, which returns
+You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 ``CodeIgniter\HTTP\Header``::
 
-    var_dump($request->getHeaders());
+    var_dump($request->headers());
 
     [
         'Host'          => CodeIgniter\HTTP\Header,
@@ -182,13 +224,13 @@ an array of all headers, with the key as the name of the header, and the value i
         'Accept'        => CodeIgniter\HTTP\Header,
     ]
 
-If you only need a single header, you can pass the name into the ``getHeader()`` method. This will grab the
+If you only need a single header, you can pass the name into the ``header()`` method. This will grab the
 specified header object in a case-insensitive manner if it exists. If not, then it will return ``null``::
 
     // these are all equivalent
-    $host = $request->getHeader('host');
-    $host = $request->getHeader('Host');
-    $host = $request->getHeader('HOST');
+    $host = $request->header('host');
+    $host = $request->header('Host');
+    $host = $request->header('HOST');
 
 You can always use ``hasHeader()`` to see if the header existed in this request::
 
@@ -297,8 +339,8 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::appendBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
-* :meth:`CodeIgniter\\HTTP\\Message::getHeaders`
-* :meth:`CodeIgniter\\HTTP\\Message::getHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::headers`
+* :meth:`CodeIgniter\\HTTP\\Message::header`
 * :meth:`CodeIgniter\\HTTP\\Message::hasHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::getHeaderLine`
 * :meth:`CodeIgniter\\HTTP\\Message::setHeader`

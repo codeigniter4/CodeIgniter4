@@ -1,8 +1,11 @@
-<?php namespace CodeIgniter\Session;
+<?php
+
+namespace CodeIgniter\Session;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\Mock\MockSession;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
 use Config\Logger;
@@ -11,7 +14,7 @@ use Config\Logger;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
+class SessionTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -618,7 +621,7 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testInvalidSameSite()
 	{
 		$this->expectException(SessionException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+		$this->expectExceptionMessage(lang('Session.invalidSameSiteSetting', ['Invalid']));
 
 		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
 		$session->start();

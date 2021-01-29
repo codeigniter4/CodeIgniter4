@@ -15,6 +15,8 @@ use OutOfBoundsException;
 
 class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Error code
 	 *

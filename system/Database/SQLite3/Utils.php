@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Utils extends BaseUtils
 {
-
 	/**
 	 * OPTIMIZE TABLE statement
 	 *

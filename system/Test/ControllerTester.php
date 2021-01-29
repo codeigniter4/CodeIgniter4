@@ -36,7 +36,6 @@ use Throwable;
  */
 trait ControllerTester
 {
-
 	/**
 	 * Controller configuration.
 	 *
@@ -50,30 +49,35 @@ trait ControllerTester
 	 * @var Request
 	 */
 	protected $request;
+
 	/**
 	 * Response.
 	 *
 	 * @var Response
 	 */
 	protected $response;
+
 	/**
 	 * Message logger.
 	 *
 	 * @var LoggerInterface
 	 */
 	protected $logger;
+
 	/**
 	 * Initialized controller.
 	 *
 	 * @var Controller
 	 */
 	protected $controller;
+
 	/**
 	 * URI of this request.
 	 *
 	 * @var string
 	 */
 	protected $uri = 'http://example.com';
+
 	/**
 	 * Request or response body.
 	 *
@@ -284,5 +288,4 @@ trait ControllerTester
 
 		return $this;
 	}
-
 }

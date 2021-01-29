@@ -170,8 +170,8 @@ EOH;
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="foo" value="bar" style="display:none;" />
-<input type="hidden" name="$Name" value="$Value" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
+<input type="hidden" name="$Name" value="$Value" />
 
 EOH;
 		}
@@ -180,7 +180,7 @@ EOH;
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
-<input type="hidden" name="foo" value="bar" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
 
 EOH;
 		}
@@ -242,7 +242,7 @@ EOH;
 	{
 		$expected = <<<EOH
 
-<input type="hidden" name="username" value="johndoe" style="display:none;" />\n
+<input type="hidden" name="username" value="johndoe" />\n
 EOH;
 		$this->assertEquals($expected, form_hidden('username', 'johndoe'));
 	}
@@ -255,7 +255,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="foo" value="bar" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden($data, null));
@@ -269,7 +269,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="name[foo]" value="bar" style="display:none;" />
+<input type="hidden" name="name[foo]" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden('name', $data));
@@ -279,7 +279,7 @@ EOH;
 	public function testFormInput()
 	{
 		$expected = <<<EOH
-<input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%"  />\n
+<input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
 EOH;
 		$data     = [
 			'name'      => 'username',
@@ -296,7 +296,7 @@ EOH;
 	public function testFormPassword()
 	{
 		$expected = <<<EOH
-<input type="password" name="password" value=""  />\n
+<input type="password" name="password" value="" />\n
 EOH;
 		$this->assertEquals($expected, form_password('password'));
 	}
@@ -305,7 +305,7 @@ EOH;
 	public function testFormUpload()
 	{
 		$expected = <<<EOH
-<input type="file" name="attachment"  />\n
+<input type="file" name="attachment" />\n
 EOH;
 		$this->assertEquals($expected, form_upload('attachment'));
 	}
@@ -586,7 +586,7 @@ EOH;
 	public function testFormCheckbox()
 	{
 		$expected = <<<EOH
-<input type="checkbox" name="newsletter" value="accept" checked="checked"  />\n
+<input type="checkbox" name="newsletter" value="accept" checked="checked" />\n
 EOH;
 		$this->assertEquals($expected, form_checkbox('newsletter', 'accept', true));
 	}
@@ -600,7 +600,7 @@ EOH;
 			'checked' => true,
 		];
 		$expected = <<<EOH
-<input type="checkbox" name="foo" value="bar" checked="checked"  />
+<input type="checkbox" name="foo" value="bar" checked="checked" />
 
 EOH;
 		$this->assertEquals($expected, form_checkbox($data));
@@ -615,7 +615,7 @@ EOH;
 			'checked' => false,
 		];
 		$expected = <<<EOH
-<input type="checkbox" name="foo" value="bar"  />
+<input type="checkbox" name="foo" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_checkbox($data));
@@ -625,7 +625,7 @@ EOH;
 	public function testFormRadio()
 	{
 		$expected = <<<EOH
-<input type="radio" name="newsletter" value="accept" checked="checked"  />\n
+<input type="radio" name="newsletter" value="accept" checked="checked" />\n
 EOH;
 		$this->assertEquals($expected, form_radio('newsletter', 'accept', true));
 	}
@@ -634,7 +634,7 @@ EOH;
 	public function testFormSubmit()
 	{
 		$expected = <<<EOH
-<input type="submit" name="mysubmit" value="Submit Post!"  />\n
+<input type="submit" name="mysubmit" value="Submit Post!" />\n
 EOH;
 		$this->assertEquals($expected, form_submit('mysubmit', 'Submit Post!'));
 	}
@@ -664,7 +664,7 @@ EOH;
 	public function testFormReset()
 	{
 		$expected = <<<EOH
-<input type="reset" name="myreset" value="Reset"  />\n
+<input type="reset" name="myreset" value="Reset" />\n
 EOH;
 		$this->assertEquals($expected, form_reset('myreset', 'Reset'));
 	}
@@ -673,7 +673,7 @@ EOH;
 	public function testFormButton()
 	{
 		$expected = <<<EOH
-<button name="name" type="button" >content</button>\n
+<button name="name" type="button">content</button>\n
 EOH;
 		$this->assertEquals($expected, form_button('name', 'content'));
 	}
@@ -686,7 +686,7 @@ EOH;
 			'content' => 'bar',
 		];
 		$expected = <<<EOH
-<button name="foo" type="button" >bar</button>
+<button name="foo" type="button">bar</button>
 
 EOH;
 		$this->assertEquals($expected, form_button($data));
@@ -709,7 +709,7 @@ EOH;
 			'bar1',
 		];
 		$expected = <<<EOH
-<input type="text" name="foo" value="bar" list="foo_list"  />
+<input type="text" name="foo" value="bar" list="foo_list" />
 
 <datalist id='foo_list'><option value='foo1'>
 <option value='bar1'>
@@ -904,35 +904,35 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesNull()
 	{
-		$expected = 'bar="" ';
+		$expected = 'bar=""';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => null], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringEmpty()
 	{
-		$expected = 'bar="" ';
+		$expected = 'bar=""';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => ''], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringFoo()
 	{
-		$expected = 'bar="foo" ';
+		$expected = 'bar="foo"';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => 'foo'], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt0()
 	{
-		$expected = 'ok="0" ';
+		$expected = 'ok="0"';
 		$this->assertEquals($expected, parse_form_attributes(['ok' => 0], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt1()
 	{
-		$expected = 'ok="1" ';
+		$expected = 'ok="1"';
 		$this->assertEquals($expected, parse_form_attributes(['ok' => 1], []));
 	}
 }

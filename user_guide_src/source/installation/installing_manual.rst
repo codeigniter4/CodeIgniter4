@@ -9,8 +9,8 @@ Develop your app inside the ``app`` folder, and the ``public`` folder
 will be your public-facing document root. Do not change anything inside the ``system``
 folder!
 
-**Note**: This is the installation technique closest to that described
-for `CodeIgniter 3 <https://codeigniter.com/user_guide/installation/index.html>`_.
+.. note:: This is the installation technique closest to that described
+   for `CodeIgniter 3 <https://codeigniter.com/user_guide/installation/index.html>`_.
 
 Installation
 ============================================================

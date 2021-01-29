@@ -23,7 +23,6 @@ use InvalidArgumentException;
  */
 class Validation implements ValidationInterface
 {
-
 	/**
 	 * Files to load with validation functions.
 	 *
@@ -207,8 +206,13 @@ class Validation implements ValidationInterface
 	 *
 	 * @return boolean
 	 */
-	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data): bool
+	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data = null): bool
 	{
+		if (is_null($data))
+		{
+			throw new InvalidArgumentException('You must supply the parameter: data.');
+		}
+
 		// If the if_exist rule is defined...
 		if (in_array('if_exist', $rules, true))
 		{
@@ -388,7 +392,8 @@ class Validation implements ValidationInterface
 			'label' => $label,
 			'rules' => $rules,
 		];
-		$this->customErrors  = array_merge($this->customErrors, [
+
+		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors,
 		]);
 

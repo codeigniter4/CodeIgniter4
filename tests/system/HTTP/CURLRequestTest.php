@@ -161,10 +161,10 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'headers'  => ['fruit' => 'apple'],
 		];
 		$request = $this->getRequest([]);
-		$this->assertNull($request->getHeader('fruit'));
+		$this->assertNull($request->header('fruit'));
 
 		$request = $this->getRequest($options);
-		$this->assertEquals('apple', $request->getHeader('fruit')->getValue());
+		$this->assertEquals('apple', $request->header('fruit')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -185,11 +185,11 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $this->getRequest($options);
 		$request->get('example');
 		// we fill the Accept-Language header from _SERVER when no headers are defined for the request
-		$this->assertEquals('en-US', $request->getHeader('Accept-Language')->getValue());
+		$this->assertEquals('en-US', $request->header('Accept-Language')->getValue());
 		// but we skip Host header - since it would corrupt the request
-		$this->assertNull($request->getHeader('Host'));
+		$this->assertNull($request->header('Host'));
 		// and Accept-Encoding
-		$this->assertNull($request->getHeader('Accept-Encoding'));
+		$this->assertNull($request->header('Accept-Encoding'));
 	}
 
 	/**
@@ -211,9 +211,9 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = $this->getRequest($options);
 		$request->get('example');
 		// if headers for the request are defined we use them
-		$this->assertNull($request->getHeader('Accept-Language'));
-		$this->assertEquals('www.foo.com', $request->getHeader('Host')->getValue());
-		$this->assertEquals('', $request->getHeader('Accept-Encoding')->getValue());
+		$this->assertNull($request->header('Accept-Language'));
+		$this->assertEquals('www.foo.com', $request->header('Host')->getValue());
+		$this->assertEquals('', $request->header('Accept-Encoding')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -765,7 +765,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 			'Pragma',
 			'Transfer-Encoding',
 		];
-		$this->assertEquals($responseHeaderKeys, array_keys($response->getHeaders()));
+		$this->assertEquals($responseHeaderKeys, array_keys($response->headers()));
 
 		$this->assertEquals(200, $response->getStatusCode());
 	}

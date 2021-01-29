@@ -23,7 +23,6 @@ use Config\Services;
  */
 class Filters
 {
-
 	/**
 	 * The processed filters that will
 	 * be used to check against.
@@ -445,7 +444,7 @@ class Filters
 	}
 
 	/**
-	 * Add any method-specific flters to the mix.
+	 * Add any method-specific filters to the mix.
 	 *
 	 * @return void
 	 */
@@ -509,6 +508,7 @@ class Filters
 	/**
 	 * Maps filter aliases to the equivalent filter classes
 	 *
+	 * @param  string $position
 	 * @throws FilterException
 	 *
 	 * @return void
@@ -536,6 +536,11 @@ class Filters
 				$this->filtersClass[$position][] = $this->config->aliases[$alias];
 			}
 		}
+
+		// when using enableFilter() we already write the class name in ->filtersClass as well as the
+		// alias in ->filters. This leads to duplicates when using route filters.
+		// Since some filters like rate limiters rely on being executed once a request we filter em here.
+		$this->filtersClass[$position] = array_unique($this->filtersClass[$position]);
 	}
 
 	/**

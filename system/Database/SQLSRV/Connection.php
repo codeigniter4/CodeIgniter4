@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -17,7 +17,7 @@ use Exception;
 use stdClass;
 
 /**
- * Connection for Sqlsrv
+ * Connection for SQLSRV
  */
 class Connection extends BaseConnection
 {
@@ -26,7 +26,7 @@ class Connection extends BaseConnection
 	 *
 	 * @var string
 	 */
-	public $DBDriver = 'Sqlsrv';
+	public $DBDriver = 'SQLSRV';
 
 	/**
 	 * Database name
@@ -521,10 +521,11 @@ class Connection extends BaseConnection
 	 */
 	public function getError()
 	{
-		$error        = [
+		$error = [
 			'code'    => '00000',
 			'message' => '',
 		];
+
 		$sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
 		if (! is_array($sqlsrvErrors))
@@ -579,5 +580,4 @@ class Connection extends BaseConnection
 
 		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
-
 }

@@ -16,7 +16,6 @@ namespace CodeIgniter\Database;
  */
 class Query implements QueryInterface
 {
-
 	/**
 	 * The query string, as provided by the user.
 	 *
@@ -353,9 +352,10 @@ class Query implements QueryInterface
 
 		$hasNamedBinds = strpos($sql, ':') !== false && strpos($sql, ':=') === false;
 
-		if (empty($this->binds) || empty($this->bindMarker) ||
-				(strpos($sql, $this->bindMarker) === false &&
-				$hasNamedBinds === false)
+		if (empty($this->binds)
+			|| empty($this->bindMarker)
+			|| (strpos($sql, $this->bindMarker) === false
+			&& $hasNamedBinds === false)
 		)
 		{
 			return;
@@ -472,6 +472,58 @@ class Query implements QueryInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns string to display in debug toolbar
+	 *
+	 * @return string
+	 */
+	public function debugToolbarDisplay(): string
+	{
+		// Key words we want bolded
+		static $highlight = [
+			'SELECT',
+			'DISTINCT',
+			'FROM',
+			'WHERE',
+			'AND',
+			'LEFT&nbsp;JOIN',
+			'RIGHT&nbsp;JOIN',
+			'JOIN',
+			'ORDER&nbsp;BY',
+			'GROUP&nbsp;BY',
+			'LIMIT',
+			'INSERT',
+			'INTO',
+			'VALUES',
+			'UPDATE',
+			'OR&nbsp;',
+			'HAVING',
+			'OFFSET',
+			'NOT&nbsp;IN',
+			'IN',
+			'LIKE',
+			'NOT&nbsp;LIKE',
+			'COUNT',
+			'MAX',
+			'MIN',
+			'ON',
+			'AS',
+			'AVG',
+			'SUM',
+			'(',
+			')',
+		];
+
+		$sql = $this->getQuery();
+
+		foreach ($highlight as $term)
+		{
+			$sql = str_replace($term, '<strong>' . $term . '</strong>', $sql);
+		}
+
+		return $sql;
+	}
 
 	/**
 	 * Return text representation of the query

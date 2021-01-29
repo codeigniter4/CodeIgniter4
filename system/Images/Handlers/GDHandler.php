@@ -19,7 +19,6 @@ use Config\Images;
  */
 class GDHandler extends BaseHandler
 {
-
 	/**
 	 * Constructor.
 	 *
@@ -278,7 +277,7 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if (! function_exists('imagegif'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
 				}
 
 				if (! @imagegif($this->resource, $target))
@@ -289,7 +288,7 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_JPEG:
 				if (! function_exists('imagejpeg'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
 				}
 
 				if (! @imagejpeg($this->resource, $target, $quality))
@@ -300,7 +299,7 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_PNG:
 				if (! function_exists('imagepng'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
 				}
 
 				if (! @imagepng($this->resource, $target))
@@ -311,7 +310,7 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_WEBP:
 				if (! function_exists('imagewebp'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
 				}
 
 				if (! @imagewebp($this->resource, $target))
@@ -397,28 +396,28 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if (! function_exists('imagecreatefromgif'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
 				if (! function_exists('imagecreatefromjpeg'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
 				if (! function_exists('imagecreatefrompng'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
 				}
 
 				return imagecreatefrompng($path);
 			case IMAGETYPE_WEBP:
 				if (! function_exists('imagecreatefromwebp'))
 				{
-					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
 				}
 
 				return imagecreatefromwebp($path);
@@ -598,5 +597,4 @@ class GDHandler extends BaseHandler
 	{
 		return imagesy($this->resource);
 	}
-
 }

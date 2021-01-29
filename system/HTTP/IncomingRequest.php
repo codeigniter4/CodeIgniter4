@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\App;
 use Config\Services;
+use InvalidArgumentException;
 use Locale;
 
 /**
@@ -43,7 +44,6 @@ use Locale;
  */
 class IncomingRequest extends Request
 {
-
 	/**
 	 * Enable CSRF flag
 	 *
@@ -129,8 +129,13 @@ class IncomingRequest extends Request
 	 * @param string|null $body
 	 * @param UserAgent   $userAgent
 	 */
-	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
+	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent = null)
 	{
+		if (empty($uri) || empty($userAgent))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
+		}
+
 		// Get our body from php://input
 		if ($body === 'php://input')
 		{
@@ -249,7 +254,7 @@ class IncomingRequest extends Request
 	 */
 	public function isAJAX(): bool
 	{
-		return $this->hasHeader('X-Requested-With') && strtolower($this->getHeader('X-Requested-With')->getValue()) === 'xmlhttprequest';
+		return $this->hasHeader('X-Requested-With') && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
 	}
 
 	//--------------------------------------------------------------------
@@ -267,12 +272,12 @@ class IncomingRequest extends Request
 			return true;
 		}
 
-		if ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
+		if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https')
 		{
 			return true;
 		}
 
-		if ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
+		if ($this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off')
 		{
 			return true;
 		}
@@ -283,7 +288,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch an item from the $_REQUEST object. This is the simplest way
+	 * Fetch an item from the $_REQUEST object or a JSON input stream. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
@@ -295,6 +300,26 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
+		if ($this->isJSON())
+		{
+			if (is_null($index))
+			{
+				return $this->getJSON();
+			}
+
+			if (is_array($index))
+			{
+				$output = [];
+				foreach ($index as $key)
+				{
+					$output[$key] = $this->getJsonVar($key);
+				}
+				return $output;
+			}
+
+			return $this->getJsonVar($index);
+		}
+
 		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
@@ -318,6 +343,26 @@ class IncomingRequest extends Request
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
 		return json_decode($this->body, $assoc, $depth, $options);
+	}
+
+	/**
+	 * Get a specific variable from a JSON input stream
+	 *
+	 * @param string  $index The variable that you want which can use dot syntax for getting specific values.
+	 * @param boolean $assoc If true, return the result as an associative array.
+	 *
+	 * @return mixed
+	 */
+	public function getJsonVar(string $index, bool $assoc = false)
+	{
+		helper('array');
+
+		$data = dot_array_search($index, $this->getJSON(true));
+		if (is_array($data) && ! $assoc)
+		{
+			return json_decode(json_encode($data));
+		}
+		return $data;
 	}
 
 	//--------------------------------------------------------------------

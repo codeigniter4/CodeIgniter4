@@ -51,11 +51,11 @@ If you've found a critical vulnerability, we'd be happy to credit you in our
 Tips for a Good Issue Report
 ****************************
 
-Use a descriptive subject line (eg parser library chokes on commas) rather than a vague one (eg. your code broke).
+Use a descriptive subject line (eg parser library chokes on commas) rather than a vague one (e.g., your code broke).
 
 Address a single issue in a report.
 
-Identify the CodeIgniter version (eg 4.0.1) and the component if you know it (eg. parser library)
+Identify the CodeIgniter version (eg 4.0.1) and the component if you know it (e.g., parser library)
 
 Explain what you expected to happen, and what did happen.
 Include error messages and stack trace, if any.

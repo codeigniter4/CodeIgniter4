@@ -2,17 +2,17 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
 
-class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseTest extends CIUnitTestCase
 {
-
 	protected $server;
 
 	protected function setUp(): void
@@ -24,7 +24,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function tearDown(): void
 	{
 		$_SERVER = $this->server;
-		Config::reset();
+		Factories::reset('config');
 	}
 
 	public function testCanSetStatusCode()
@@ -65,7 +65,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setStatusCode(200);
 
-		$this->assertEquals('OK', $response->getReason());
+		$this->assertEquals('OK', $response->getReasonPhrase());
 	}
 
 	//--------------------------------------------------------------------
@@ -76,7 +76,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setStatusCode(200, 'Not the mama');
 
-		$this->assertEquals('Not the mama', $response->getReason());
+		$this->assertEquals('Not the mama', $response->getReasonPhrase());
 	}
 
 	//--------------------------------------------------------------------
@@ -120,7 +120,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setStatusCode(300);
 
-		$this->assertEquals('Multiple Choices', $response->getReason());
+		$this->assertEquals('Multiple Choices', $response->getReasonPhrase());
 	}
 
 	//--------------------------------------------------------------------
@@ -131,7 +131,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$response->setStatusCode(300, 'My Little Pony');
 
-		$this->assertEquals('My Little Pony', $response->getReason());
+		$this->assertEquals('My Little Pony', $response->getReasonPhrase());
 	}
 
 	//--------------------------------------------------------------------
@@ -140,7 +140,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->assertEquals('OK', $response->getReason());
+		$this->assertEquals('OK', $response->getReasonPhrase());
 	}
 
 	//--------------------------------------------------------------------
@@ -166,7 +166,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		// Ensure our URL is not getting overridden
 		$config          = new App();
 		$config->baseURL = 'http://example.com/test/';
-		Config::injectMock('App', $config);
+		Factories::injectMock('config', 'App', $config);
 
 		$response = new Response($config);
 		$pager    = \Config\Services::pager();
@@ -176,7 +176,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=2>; rel="prev",<http://example.com/test/?page=4>; rel="next",<http://example.com/test/?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 
 		$pager->store('default', 1, 10, 200);
@@ -184,7 +184,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=2>; rel="next",<http://example.com/test/?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 
 		$pager->store('default', 20, 10, 200);
@@ -192,7 +192,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(
 			'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=19>; rel="prev"',
-			$response->getHeader('Link')->getValue()
+			$response->header('Link')->getValue()
 		);
 	}
 
@@ -552,7 +552,7 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config->cookieSameSite = 'Invalid';
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+		$this->expectExceptionMessage(lang('Security.invalidSameSiteSetting', ['Invalid']));
 		new Response($config);
 	}
 }

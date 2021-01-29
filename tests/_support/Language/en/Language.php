@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-// Redirect language settings
+// Language system language settings
 return [
-   'forUnableToRedirect' => 'Unable to redirect to "{0}". Error status code "{1}"',
+	'languageGetLineInvalidArgumentException' => 'Get line must be a string or array of strings.',
 ];

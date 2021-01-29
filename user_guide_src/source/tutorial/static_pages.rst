@@ -1,9 +1,9 @@
 Static pages
 ###############################################################################
 
-**Note:** This tutorial assumes you've downloaded CodeIgniter and
-:doc:`installed the framework <../installation/index>` in your
-development environment.
+.. note:: This tutorial assumes you've downloaded CodeIgniter and
+   :doc:`installed the framework <../installation/index>` in your
+   development environment.
 
 The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.
@@ -35,7 +35,9 @@ code.
 
 ::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -48,8 +50,10 @@ code.
 
         public function view($page = 'home')
         {
+            // ...
         }
     }
+
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
@@ -81,7 +85,7 @@ the following code:
     </head>
     <body>
 
-        <h1><?= esc($title); ?></h1>
+        <h1><?= esc($title) ?></h1>
 
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
@@ -91,7 +95,7 @@ includes the following code:
 
 ::
 
-        <em>&copy; 2020</em>
+        <em>&copy; 2021</em>
     </body>
     </html>
 

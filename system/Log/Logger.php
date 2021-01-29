@@ -462,7 +462,7 @@ class Logger implements LoggerInterface
 		];
 
 		// Generate Backtrace info
-		$trace = \debug_backtrace(false);
+		$trace = \debug_backtrace(0);
 
 		// So we search from the bottom (earliest) of the stack frames
 		$stackFrames = \array_reverse($trace);

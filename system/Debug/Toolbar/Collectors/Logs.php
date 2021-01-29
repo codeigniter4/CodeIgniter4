@@ -18,7 +18,6 @@ use Config\Services;
  */
 class Logs extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.

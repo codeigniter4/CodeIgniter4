@@ -26,7 +26,6 @@ use Config\Pager as PagerConfig;
  */
 class Pager implements PagerInterface
 {
-
 	/**
 	 * The group data.
 	 *
@@ -116,16 +115,16 @@ class Pager implements PagerInterface
 	 * Allows for a simple, manual, form of pagination where all of the data
 	 * is provided by the user. The URL is the current URI.
 	 *
-	 * @param integer $page
-	 * @param integer $perPage
-	 * @param integer $total
-	 * @param string  $template The output template alias to render.
-	 * @param integer $segment  (if page number is provided by URI segment)
+	 * @param integer      $page
+	 * @param integer|null $perPage
+	 * @param integer      $total
+	 * @param string       $template The output template alias to render.
+	 * @param integer      $segment  (whether page number is provided by URI segment)
+	 * @param string|null  $group    optional group (i.e. if we'd like to define custom path)
 	 *
-	 * @param  string  $group    optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage = null, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
+	public function makeLinks(int $page, ?int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
 	{
 		$group = $group === '' ? 'default' : $group;
 
@@ -164,15 +163,15 @@ class Pager implements PagerInterface
 	 * Stores a set of pagination data for later display. Most commonly used
 	 * by the model to automate the process.
 	 *
-	 * @param string  $group
-	 * @param integer $page
-	 * @param integer $perPage
-	 * @param integer $total
-	 * @param integer $segment
+	 * @param string       $group
+	 * @param integer      $page
+	 * @param integer|null $perPage
+	 * @param integer      $total
+	 * @param integer      $segment
 	 *
 	 * @return $this
 	 */
-	public function store(string $group, int $page, int $perPage = null, int $total, int $segment = 0)
+	public function store(string $group, int $page, ?int $perPage, int $total, int $segment = 0)
 	{
 		if ($segment)
 		{

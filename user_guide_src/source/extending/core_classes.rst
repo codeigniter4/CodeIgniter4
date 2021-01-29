@@ -49,13 +49,15 @@ can find your class, that your new class extends the appropriate interface, and 
 For example, if you have a new ``App\Libraries\RouteCollection`` class that you would like to use in place of
 the core system class, you would create your class like this::
 
-    <?php namespace App\Libraries;
+    <?php
+
+    namespace App\Libraries;
 
     use CodeIgniter\Router\RouteCollectionInterface;
 
     class RouteCollection implements RouteCollectionInterface
     {
-
+        // ...
     }
 
 Then  you would modify the ``routes`` service to load your class instead::
@@ -81,28 +83,32 @@ identical to replacing a class with one exception:
 
 For example, to extend the native RouteCollection class, you would declare your class with::
 
-    <?php namespace App\Libraries;
+    <?php
+
+    namespace App\Libraries;
 
     use CodeIgniter\Router\RouteCollection;
 
     class RouteCollection extends RouteCollection
     {
-
+        // ...
     }
 
 If you need to use a constructor in your class make sure you extend the parent constructor::
 
-    <?php namespace App\Libraries;
+    <?php
+
+    namespace App\Libraries;
 
     use CodeIgniter\Router\RouteCollection as BaseRouteCollection;
 
     class RouteCollection extends BaseRouteCollection
     {
-         public function __construct()
-         {
-             parent::__construct();
-         }
-     }
+        public function __construct()
+        {
+            parent::__construct();
+        }
+    }
 
 **Tip:**  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.

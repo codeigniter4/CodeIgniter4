@@ -33,10 +33,6 @@ A more comprehensive package like `Halite <https://github.com/paragonie/halite>`
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 .. _usage:
 
 ****************************
@@ -72,7 +68,7 @@ The example above uses the configuration settings found in ``app/Config/Encrypti
 Option     Possible values (default in parentheses)
 ========== ====================================================
 key        Encryption key starter
-driver     Preferred handler, e.g. OpenSSL or Sodium (``OpenSSL``)
+driver     Preferred handler, e.g., OpenSSL or Sodium (``OpenSSL``)
 blockSize  Padding length in bytes for SodiumHandler (``16``)
 digest     Message digest algorithm (``SHA512``)
 ========== ====================================================
@@ -124,7 +120,7 @@ Encoding Keys or Results
 ------------------------
 
 You'll notice that the ``createKey()`` method outputs binary data, which
-is hard to deal with (i.e. a copy-paste may damage it), so you may use
+is hard to deal with (i.e., a copy-paste may damage it), so you may use
 ``bin2hex()``, or ``base64_encode`` to work with the key in
 a more friendly manner. For example::
 

@@ -6,3 +6,4 @@
 /app export-ignore
 /public export-ignore
 /writable export-ignore
+/phpunit.xml.dist export-ignore

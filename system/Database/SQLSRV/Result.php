@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity;
 use stdClass;
 
 /**
- * Result for Sqlsrv
+ * Result for SQLSRV
  */
 class Result extends BaseResult
 {
@@ -182,4 +182,21 @@ class Result extends BaseResult
 		return sqlsrv_fetch_object($this->resultID, $className);
 	}
 
+	//--------------------------------------------------------------------
+	/**
+	 * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
+	 *
+	 * @return integer Returns the number of rows retrieved on success
+	 */
+	public function getNumRows(): int
+	{
+		if (! is_int($this->numRows))
+		{
+			$this->numRows = sqlsrv_num_rows($this->resultID);
+		}
+
+		return $this->numRows;
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -74,16 +74,16 @@ CodeIgniter ships with several Collectors that, as the name implies, collect dat
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
 the **app/Config/Toolbar.php** configuration file::
 
-	public $collectors = [
-		\CodeIgniter\Debug\Toolbar\Collectors\Timers::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Database::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Logs::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Views::class,
- 		\CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Files::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Routes::class,
-		\CodeIgniter\Debug\Toolbar\Collectors\Events::class,
-	];
+    public $collectors = [
+        \CodeIgniter\Debug\Toolbar\Collectors\Timers::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Database::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Logs::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Views::class,
+         \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Files::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Routes::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Events::class,
+    ];
 
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
@@ -119,20 +119,22 @@ that you can override, and has four required class properties that you must corr
 the Collector to work
 ::
 
-	<?php namespace MyNamespace;
+    <?php
 
-	use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
+    namespace MyNamespace;
 
-	class MyCollector extends BaseCollector
-	{
-		protected $hasTimeline   = false;
+    use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 
-		protected $hasTabContent = false;
+    class MyCollector extends BaseCollector
+    {
+        protected $hasTimeline = false;
 
-		protected $hasVarData    = false;
+        protected $hasTabContent = false;
 
-		protected $title         = '';
-	}
+        protected $hasVarData = false;
+
+        protected $title = '';
+    }
 
 **$hasTimeline** should be set to ``true`` for any Collector that wants to display information in the toolbar's
 timeline. If this is true, you will need to implement the ``formatTimelineData()`` method to format and return the
@@ -176,12 +178,12 @@ To provide information to be displayed in the Timeline you must:
 The ``formatTimelineData()`` method must return an array of arrays formatted in a way that the timeline can use
 it to sort it correctly and display the correct information. The inner arrays must include the following information::
 
-	$data[] = [
-		'name'      => '',     // Name displayed on the left of the timeline
-		'component' => '',     // Name of the Component listed in the middle of timeline
-		'start'     => 0.00,   // start time, like microtime(true)
-		'duration'  => 0.00    // duration, like mircrotime(true) - microtime(true)
-	];
+    $data[] = [
+        'name'      => '',     // Name displayed on the left of the timeline
+        'component' => '',     // Name of the Component listed in the middle of timeline
+        'start'     => 0.00,   // start time, like microtime(true)
+        'duration'  => 0.00    // duration, like mircrotime(true) - microtime(true)
+    ];
 
 Providing Vars
 --------------
@@ -194,13 +196,13 @@ To add data to the Vars tab you must:
 The ``getVarData()`` method should return an array containing arrays of key/value pairs to display. The name of the
 outer array's key is the name of the section on the Vars tab::
 
-	$data = [
-		'section 1' => [
-		    'foo' => 'bar',
-		    'bar' => 'baz'
-		],
-		'section 2' => [
-		    'foo' => 'bar',
-		    'bar' => 'baz'
-		]
-	 ];
+    $data = [
+        'section 1' => [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ],
+        'section 2' => [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ]
+     ];

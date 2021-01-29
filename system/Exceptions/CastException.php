@@ -16,6 +16,7 @@ namespace CodeIgniter\Exceptions;
  */
 class CastException extends CriticalError
 {
+	use DebugTraceableTrait;
 
 	/**
 	 * Error code
@@ -42,5 +43,4 @@ class CastException extends CriticalError
 				return new static(lang('Cast.jsonErrorUnknown'));
 		}
 	}
-
 }

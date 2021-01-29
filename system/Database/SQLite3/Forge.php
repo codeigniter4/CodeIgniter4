@@ -13,13 +13,13 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
  * Forge for SQLite3
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -298,7 +298,4 @@ class Forge extends \CodeIgniter\Database\Forge
 			->dropForeignKey($foreignName)
 			->run();
 	}
-
-	//--------------------------------------------------------------------
-
 }

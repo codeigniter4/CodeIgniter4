@@ -18,8 +18,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 /**
  * Testable response from a controller
  */
-class ControllerResponse {
-
+class ControllerResponse
+{
 	/**
 	 * The request.
 	 *
@@ -197,5 +197,4 @@ class ControllerResponse {
 			return $this->dom->{$function}(...$params);
 		}
 	}
-
 }

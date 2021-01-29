@@ -22,7 +22,6 @@ use Exception;
  */
 class Console
 {
-
 	/**
 	 * Main CodeIgniter instance.
 	 *

@@ -18,7 +18,6 @@ namespace CodeIgniter\View;
  */
 interface RendererInterface
 {
-
 	/**
 	 * Builds the output based upon a file name and any
 	 * data that has already been set.
@@ -27,9 +26,7 @@ interface RendererInterface
 	 * @param array   $options  Reserved for 3rd-party uses since
 	 *                          it might be needed to pass additional info
 	 *                          to other template engines.
-	 * @param boolean $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 * @param boolean $saveData Whether to save data for subsequent calls
 	 *
 	 * @return string
 	 */
@@ -45,9 +42,7 @@ interface RendererInterface
 	 * @param array   $options  Reserved for 3rd-party uses since
 	 *                          it might be needed to pass additional info
 	 *                          to other template engines.
-	 * @param boolean $saveData If true, will save data for use with any other calls,
-	 *                          if false, will clean the data after displaying the view,
-	 *                             if not specified, use the config setting.
+	 * @param boolean $saveData Whether to save data for subsequent calls
 	 *
 	 * @return string
 	 */

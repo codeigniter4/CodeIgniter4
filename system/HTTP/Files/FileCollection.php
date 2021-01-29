@@ -21,7 +21,6 @@ use RecursiveIteratorIterator;
  */
 class FileCollection
 {
-
 	/**
 	 * An array of UploadedFile instances for any files
 	 * uploaded as part of this request.
@@ -293,5 +292,4 @@ class FileCollection
 
 		return (isset($currentIndex) && isset($value[$currentIndex])) ? $value[$currentIndex] : null;
 	}
-
 }

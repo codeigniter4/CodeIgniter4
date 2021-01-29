@@ -158,7 +158,7 @@ if (! function_exists('form_hidden'))
 
 		if (! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value) . "\" style=\"display:none;\" />\n";
+			$form .= form_input($name, $value, '', 'hidden');
 		}
 		else
 		{
@@ -241,12 +241,14 @@ if (! function_exists('form_upload'))
 	 */
 	function form_upload($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults                = [
+		$defaults = [
 			'type' => 'file',
 			'name' => '',
 		];
+
 		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
-		$data['type']            = 'file';
+
+		$data['type'] = 'file';
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
 	}
@@ -362,7 +364,8 @@ if (! function_exists('form_dropdown'))
 		}
 
 		is_array($selected) || $selected = [$selected]; // @phpstan-ignore-line
-		is_array($options) || $options   = [$options]; // @phpstan-ignore-line
+
+		is_array($options) || $options = [$options]; // @phpstan-ignore-line
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -629,7 +632,8 @@ if (! function_exists('form_datalist'))
 			'value' => $value,
 		];
 
-		$out  = form_input($data) . "\n";
+		$out = form_input($data) . "\n";
+
 		$out .= "<datalist id='" . $name . '_list' . "'>";
 
 		foreach ($options as $option)
@@ -940,7 +944,7 @@ if (! function_exists('parse_form_attributes'))
 				{
 					continue;
 				}
-				$att .= $key . '="' . $val . '" ';
+				$att .= $key . '="' . $val . '"' . ($val === end($default) ? '' : ' ');
 			}
 			else
 			{

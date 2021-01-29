@@ -9,14 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Sqlsrv;
+namespace CodeIgniter\Database\SQLSRV;
+
+use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for Sqlsrv
+ * Forge for SQLSRV
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
-
 	/**
 	 * DROP CONSTRAINT statement
 	 *
@@ -27,7 +28,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * CREATE DATABASE IF statement
 	 *
-	 * @todo missing charset, collat & check for existant
+	 * @todo missing charset, collat & check for existent
 	 *
 	 * @var string
 	 */
@@ -406,5 +407,4 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
-
 }

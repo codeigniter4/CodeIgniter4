@@ -7,10 +7,6 @@ The URL Helper file contains functions that assist in working with URLs.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 
@@ -24,7 +20,7 @@ The following functions are available:
 .. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
 
     :param  mixed         $uri: URI string or array of URI segments
-    :param  string        $protocol: Protocol, e.g. 'http' or 'https'
+    :param  string        $protocol: Protocol, e.g., 'http' or 'https'
     :param  \\Config\\App $altConfig: Alternate configuration to use
     :returns: Site URL
     :rtype:	string
@@ -58,7 +54,7 @@ The following functions are available:
 .. php:function:: base_url([$uri = ''[, $protocol = NULL]])
 
     :param  mixed   $uri: URI string or array of URI segments
-    :param  string  $protocol: Protocol, e.g. 'http' or 'https'
+    :param  string  $protocol: Protocol, e.g., 'http' or 'https'
     :returns: Base URL
     :rtype: string
 
@@ -356,13 +352,14 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
-.. php:function:: prep_url($str = '')
+.. php:function:: prep_url([$str = ''[, $secure = false]])
 
-    :param  string  $str: URL string
+    :param  string   $str: URL string
+    :param  boolean  $secure: TRUE for https://
     :returns: Protocol-prefixed URL string
     :rtype: string
 
-    This function will add *http://* in the event that a protocol prefix
+    This function will add *http://* or *https://* in the event that a protocol prefix
     is missing from a URL.
 
     Pass the URL string to the function like this::

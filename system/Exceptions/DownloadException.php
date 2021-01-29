@@ -18,6 +18,7 @@ use RuntimeException;
  */
 class DownloadException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
 
 	public static function forCannotSetFilePath(string $path)
 	{

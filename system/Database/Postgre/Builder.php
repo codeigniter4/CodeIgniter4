@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * ORDER BY random keyword
 	 *
@@ -362,15 +361,15 @@ class Builder extends BaseBuilder
 	 *
 	 * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
 	 *
-	 * @param string  $prefix
-	 * @param string  $column
-	 * @param string  $not
-	 * @param string  $bind
-	 * @param boolean $insensitiveSearch
+	 * @param string|null  $prefix
+	 * @param string       $column
+	 * @param string|null  $not
+	 * @param string       $bind
+	 * @param boolean      $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */
-	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	public function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
 	{
 		$op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
 
