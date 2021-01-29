@@ -236,7 +236,7 @@ class CLI
 		{
 			throw new InvalidArgumentException('$rules can only be of type string|array');
 		}
-		
+
 		if (! is_array($validation))
 		{
 			$validation = $validation ? explode('|', $validation) : [];
