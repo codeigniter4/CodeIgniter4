@@ -1,6 +1,10 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
 
-class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Helpers;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class ArrayHelperTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -182,7 +186,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
 	{
 		// Morph to objects
-		foreach($data as $index => $dataSet){
+		foreach ($data as $index => $dataSet)
+		{
 			$data[$index] = (object) $dataSet;
 		}
 
@@ -228,7 +233,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			$this->expectException('ValueError');
 		}
-		
+
 		$this->expectExceptionMessage('Array sizes are inconsistent');
 
 		$sortColumns = [
@@ -236,10 +241,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			'positions'   => SORT_ASC,
 		];
 
-		$success = array_sort_by_multiple_keys($data, $sortColumns);
+		array_sort_by_multiple_keys($data, $sortColumns);
 	}
-
-	//--------------------------------------------------------------------
 
 	public static function deepSearchProvider()
 	{
@@ -318,5 +321,26 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				],
 			],
 		];
+	}
+
+	public function testArrayFlattening(): void
+	{
+		$vars = [
+			'id'   => '12',
+			'user' => [
+				'first_name' => 'john',
+				'last_name'  => 'smith',
+				'age'        => '26 years',
+			],
+		];
+
+		$flattened = [
+			'id'              => '12',
+			'user.first_name' => 'john',
+			'user.last_name'  => 'smith',
+			'user.age'        => '26 years',
+		];
+
+		$this->assertSame($flattened, array_flatten_with_dots($vars));
 	}
 }

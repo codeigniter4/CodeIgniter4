@@ -179,6 +179,17 @@ class RulesTest extends CIDatabaseTestCase
 				[],
 				true,
 			],
+			// Testing for multi-dimensional data
+			[
+				['foo.bar' => 'if_exist|required'],
+				['foo' => ['bar' => '']],
+				false,
+			],
+			[
+				['foo.bar' => 'if_exist|required'],
+				['foo' => []],
+				true,
+			],
 		];
 	}
 
@@ -1496,10 +1507,15 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredWith($field, $check, $expected = false)
 	{
 		$data = [
-			'foo' => 'bar',
-			'bar' => 'something',
-			'baz' => null,
-			'array'  => ['nonEmptyField1'=>'value1','nonEmptyField2'=>'value2', 'emptyField1'=>null, 'emptyField2'=>null],
+			'foo'   => 'bar',
+			'bar'   => 'something',
+			'baz'   => null,
+			'array' => [
+				'nonEmptyField1' => 'value1',
+				'nonEmptyField2' => 'value2',
+				'emptyField1'    => null,
+				'emptyField2'    => null,
+			],
 		];
 
 		$this->validation->setRules([
@@ -1578,10 +1594,15 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredWithout($field, $check, $expected = false)
 	{
 		$data = [
-			'foo' => 'bar',
-			'bar' => 'something',
-			'baz' => null,
-			'array'  => ['nonEmptyField1'=>'value1','nonEmptyField2'=>'value2', 'emptyField1'=>null, 'emptyField2'=>null],
+			'foo'   => 'bar',
+			'bar'   => 'something',
+			'baz'   => null,
+			'array' => [
+				'nonEmptyField1' => 'value1',
+				'nonEmptyField2' => 'value2',
+				'emptyField1'    => null,
+				'emptyField2'    => null,
+			],
 		];
 
 		$this->validation->setRules([
@@ -1636,11 +1657,11 @@ class RulesTest extends CIDatabaseTestCase
 				'array.nonEmptyField2',
 				true,
 			],
-				[
+			[
 				'array.nonEmptyField1',
 				'array.nonEmptyField2',
 				true,
-			],			
+			],
 		];
 	}
 
