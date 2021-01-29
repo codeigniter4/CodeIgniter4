@@ -51,9 +51,7 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$builder->where('id', 1);
-		$builder->limit(10);
-		$sql = $builder->getCompiledDelete();
+		$sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
 
 		$expectedSQL = 'DELETE FROM "jobs"'
 			. "\n" . 'WHERE "id" = 1 LIMIT 10';
