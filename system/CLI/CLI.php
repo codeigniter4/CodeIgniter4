@@ -13,8 +13,8 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
 use Config\Services;
-use Throwable;
 use InvalidArgumentException;
+use Throwable;
 
 /**
  * Set of static methods useful for CLI request handling.
@@ -236,6 +236,7 @@ class CLI
 		{
 			throw new InvalidArgumentException('$rules can only be of type string|array');
 		}
+		
 		if (! is_array($validation))
 		{
 			$validation = $validation ? explode('|', $validation) : [];
