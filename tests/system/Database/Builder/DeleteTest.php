@@ -35,4 +35,28 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
+	public function testGetCompiledDelete()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->where('id', 1);
+		$sql = $builder->getCompiledDelete();
+
+		$expectedSQL = 'DELETE FROM "jobs"'
+			. "\n" . 'WHERE "id" = 1';
+		$this->assertEquals($expectedSQL, $sql);
+	}
+
+	public function testGetCompiledDeleteWithLimit()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->where('id', 1);
+		$builder->limit(10);
+		$sql = $builder->getCompiledDelete();
+
+		$expectedSQL = 'DELETE FROM "jobs"'
+			. "\n" . 'WHERE "id" = 1 LIMIT 10';
+		$this->assertEquals($expectedSQL, $sql);
+	}
 }
