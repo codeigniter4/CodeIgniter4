@@ -133,13 +133,11 @@ if (! function_exists('array_sort_by_multiple_keys'))
 	 * Both arrays of objects and arrays of array can be sorted.
 	 *
 	 * Example:
-	 * 	array_sort_by_multiple_keys($players,
-	 * 		[
-	 * 			'team.hierarchy' => SORT_ASC,
-	 * 			'position'       => SORT_ASC,
-	 * 			'name'           => SORT_STRING,
-	 * 		]
-	 * 	);
+	 *     array_sort_by_multiple_keys($players, [
+	 *         'team.hierarchy' => SORT_ASC,
+	 *         'position'       => SORT_ASC,
+	 *         'name'           => SORT_STRING,
+	 *     ]);
 	 *
 	 * The '.' dot operator in the column name indicates a deeper array or
 	 * object level. In principle, any number of sublevels could be used,
@@ -180,7 +178,7 @@ if (! function_exists('array_sort_by_multiple_keys'))
 					{
 						$carry[$index] = $object->$keySegment;
 					}
-					
+
 					continue;
 				}
 
@@ -198,5 +196,37 @@ if (! function_exists('array_sort_by_multiple_keys'))
 
 		// Pass sorting arrays and flags as an argument list.
 		return array_multisort(...$tempArray);
+	}
+}
+
+if (! function_exists('array_flatten_with_dots'))
+{
+	/**
+	 * Flatten a multidimensional array using dots as separators.
+	 *
+	 * @param iterable $array The multi-dimensional array
+	 * @param string   $id    Something to initially prepend to the flattened keys
+	 *
+	 * @return array The flattened array
+	 */
+	function array_flatten_with_dots(iterable $array, string $id = ''): array
+	{
+		$flattened = [];
+
+		foreach ($array as $key => $value)
+		{
+			$newKey = $id . $key;
+
+			if (is_array($value))
+			{
+				$flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
+			}
+			else
+			{
+				$flattened[$newKey] = $value;
+			}
+		}
+
+		return $flattened;
 	}
 }

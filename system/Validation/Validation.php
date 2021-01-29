@@ -202,7 +202,7 @@ class Validation implements ValidationInterface
 	 * @param string|null  $label
 	 * @param string|array $value Value to be validated, can be a string or an array
 	 * @param array|null   $rules
-	 * @param array        $data  // All of the fields to check.
+	 * @param array        $data  All of the fields to check.
 	 *
 	 * @return boolean
 	 */
@@ -213,15 +213,16 @@ class Validation implements ValidationInterface
 			throw new InvalidArgumentException('You must supply the parameter: data.');
 		}
 
-		// If the if_exist rule is defined...
 		if (in_array('if_exist', $rules, true))
 		{
-			// and the current field does not exists in the input data
-			// we can return true. Ignoring all other rules to this field.
-			if (! array_key_exists($field, $data))
+			// If the if_exist rule is defined
+			// and the current field does not exist in the input data
+			// we can return true, ignoring all other rules to this field.
+			if (! array_key_exists($field, array_flatten_with_dots($data)))
 			{
 				return true;
 			}
+
 			// Otherwise remove the if_exist rule and continue the process
 			$rules = array_diff($rules, ['if_exist']);
 		}

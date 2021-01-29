@@ -1,6 +1,10 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
 
-class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Helpers;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+class ArrayHelperTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -182,7 +186,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
 	{
 		// Morph to objects
-		foreach($data as $index => $dataSet){
+		foreach ($data as $index => $dataSet)
+		{
 			$data[$index] = (object) $dataSet;
 		}
 
@@ -228,7 +233,7 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			$this->expectException('ValueError');
 		}
-		
+
 		$this->expectExceptionMessage('Array sizes are inconsistent');
 
 		$sortColumns = [
@@ -236,10 +241,8 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			'positions'   => SORT_ASC,
 		];
 
-		$success = array_sort_by_multiple_keys($data, $sortColumns);
+		array_sort_by_multiple_keys($data, $sortColumns);
 	}
-
-	//--------------------------------------------------------------------
 
 	public static function deepSearchProvider()
 	{
@@ -318,5 +321,99 @@ class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				],
 			],
 		];
+	}
+
+	/**
+	 * @dataProvider arrayFlattenProvider
+	 *
+	 * @param iterable $input
+	 * @param iterable $expected
+	 *
+	 * @return void
+	 */
+	public function testArrayFlattening($input, $expected): void
+	{
+		$this->assertSame($expected, array_flatten_with_dots($input));
+	}
+
+	public function arrayFlattenProvider(): iterable
+	{
+		yield 'normal' => [
+				  [
+					  'id'   => '12',
+					  'user' => [
+						  'first_name' => 'john',
+						  'last_name'  => 'smith',
+						  'age'        => '26 years',
+					  ],
+				  ],
+				  [
+					  'id'              => '12',
+					  'user.first_name' => 'john',
+					  'user.last_name'  => 'smith',
+					  'user.age'        => '26 years',
+				  ],
+			  ];
+
+		yield 'many-levels' => [
+				  [
+					  'foo' => 1,
+					  'bar' => [
+						  'bax' => [
+							  'baz' => 2,
+							  'biz' => 3,
+						  ],
+					  ],
+					  'baz' => [
+						  'fizz' => 4,
+					  ],
+				  ],
+				  [
+					  'foo'         => 1,
+					  'bar.bax.baz' => 2,
+					  'bar.bax.biz' => 3,
+					  'baz.fizz'    => 4,
+				  ],
+			  ];
+
+		yield 'with-empty-arrays' => [
+				  [
+					  'foo' => 'bar',
+					  'baz' => [],
+					  'bar' => [
+						  'fizz' => 'buzz',
+						  'nope' => 'yeah',
+						  'why'  => [],
+					  ],
+				  ],
+				  [
+					  'foo'      => 'bar',
+					  'bar.fizz' => 'buzz',
+					  'bar.nope' => 'yeah',
+				  ],
+			  ];
+
+		yield 'with-mixed-empty' => [
+				  [
+					  'foo' => 1,
+					  ''    => [
+						  'bar' => 2,
+						  'baz' => 3,
+					  ],
+					  0     => [
+						  'fizz' => 4,
+					  ],
+					  1     => [
+						  'buzz' => 5,
+					  ],
+				  ],
+				  [
+					  'foo'    => 1,
+					  '.bar'   => 2,
+					  '.baz'   => 3,
+					  '0.fizz' => 4,
+					  '1.buzz' => 5,
+				  ],
+			  ];
 	}
 }
