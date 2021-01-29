@@ -11,6 +11,7 @@ on:
       - 'app/**'
       - 'system/**'
       - '.github/workflows/test-rector.yml'
+      - composer.json
       - 'rector.php'
   push:
     branches:
@@ -20,6 +21,7 @@ on:
       - 'app/**'
       - 'system/**'
       - '.github/workflows/test-rector.yml'
+      - composer.json
       - 'rector.php'
 
 jobs:
