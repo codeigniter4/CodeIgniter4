@@ -2803,8 +2803,7 @@ class BaseBuilder
 	 */
 	public function getCompiledDelete(bool $reset = true): string
 	{
-		$this->testMode();
-		$sql = $this->delete('', null, $reset);
+		$sql = $this->testMode()->delete('', null, $reset);
 		$this->testMode(false);
 
 		return $this->compileFinalQuery($sql);
