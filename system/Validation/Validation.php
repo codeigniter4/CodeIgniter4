@@ -216,8 +216,8 @@ class Validation implements ValidationInterface
 		if (in_array('if_exist', $rules, true))
 		{
 			// If the if_exist rule is defined
-			// and the current field does not exists in the input data
-			// we can return true. Ignoring all other rules to this field.
+			// and the current field does not exist in the input data
+			// we can return true, ignoring all other rules to this field.
 			if (! array_key_exists($field, array_flatten_with_dots($data)))
 			{
 				return true;

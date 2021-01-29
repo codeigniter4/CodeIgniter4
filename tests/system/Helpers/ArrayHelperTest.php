@@ -323,24 +323,97 @@ class ArrayHelperTest extends CIUnitTestCase
 		];
 	}
 
-	public function testArrayFlattening(): void
+	/**
+	 * @dataProvider arrayFlattenProvider
+	 *
+	 * @param iterable $input
+	 * @param iterable $expected
+	 *
+	 * @return void
+	 */
+	public function testArrayFlattening($input, $expected): void
 	{
-		$vars = [
-			'id'   => '12',
-			'user' => [
-				'first_name' => 'john',
-				'last_name'  => 'smith',
-				'age'        => '26 years',
-			],
-		];
+		$this->assertSame($expected, array_flatten_with_dots($input));
+	}
 
-		$flattened = [
-			'id'              => '12',
-			'user.first_name' => 'john',
-			'user.last_name'  => 'smith',
-			'user.age'        => '26 years',
-		];
+	public function arrayFlattenProvider(): iterable
+	{
+		yield 'normal' => [
+				  [
+					  'id'   => '12',
+					  'user' => [
+						  'first_name' => 'john',
+						  'last_name'  => 'smith',
+						  'age'        => '26 years',
+					  ],
+				  ],
+				  [
+					  'id'              => '12',
+					  'user.first_name' => 'john',
+					  'user.last_name'  => 'smith',
+					  'user.age'        => '26 years',
+				  ],
+			  ];
 
-		$this->assertSame($flattened, array_flatten_with_dots($vars));
+		yield 'many-levels' => [
+				  [
+					  'foo' => 1,
+					  'bar' => [
+						  'bax' => [
+							  'baz' => 2,
+							  'biz' => 3,
+						  ],
+					  ],
+					  'baz' => [
+						  'fizz' => 4,
+					  ],
+				  ],
+				  [
+					  'foo'         => 1,
+					  'bar.bax.baz' => 2,
+					  'bar.bax.biz' => 3,
+					  'baz.fizz'    => 4,
+				  ],
+			  ];
+
+		yield 'with-empty-arrays' => [
+				  [
+					  'foo' => 'bar',
+					  'baz' => [],
+					  'bar' => [
+						  'fizz' => 'buzz',
+						  'nope' => 'yeah',
+						  'why'  => [],
+					  ],
+				  ],
+				  [
+					  'foo'      => 'bar',
+					  'bar.fizz' => 'buzz',
+					  'bar.nope' => 'yeah',
+				  ],
+			  ];
+
+		yield 'with-mixed-empty' => [
+				  [
+					  'foo' => 1,
+					  ''    => [
+						  'bar' => 2,
+						  'baz' => 3,
+					  ],
+					  0     => [
+						  'fizz' => 4,
+					  ],
+					  1     => [
+						  'buzz' => 5,
+					  ],
+				  ],
+				  [
+					  'foo'    => 1,
+					  '.bar'   => 2,
+					  '.baz'   => 3,
+					  '0.fizz' => 4,
+					  '1.buzz' => 5,
+				  ],
+			  ];
 	}
 }
