@@ -42,8 +42,10 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->where('id', 1);
 		$sql = $builder->getCompiledDelete();
 
-		$expectedSQL = 'DELETE FROM "jobs"'
-			. "\n" . 'WHERE "id" = 1';
+		$expectedSQL = <<<'EOL'
+DELETE FROM "jobs"
+WHERE "id" = 1
+EOL;
 		$this->assertEquals($expectedSQL, $sql);
 	}
 
@@ -53,8 +55,10 @@ class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
 
-		$expectedSQL = 'DELETE FROM "jobs"'
-			. "\n" . 'WHERE "id" = 1 LIMIT 10';
+		$expectedSQL = <<<'EOL'
+DELETE FROM "jobs"
+WHERE "id" = 1 LIMIT 10
+EOL;
 		$this->assertEquals($expectedSQL, $sql);
 	}
 }
