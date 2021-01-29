@@ -450,7 +450,7 @@ sort flags as an associative array.</p></li>
 <dd class="field-even"><p>Whether sorting was successful or not.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>boolean</p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 <p>This method sorts the elements of a multidimensional array by the values of one or
@@ -489,12 +489,10 @@ from, e.g., the <code class="docutils literal notranslate"><span class="pre">fin
 </div>
 <p>Now sort this array by two keys. Note that the method supports the dot-notation
 to access values in deeper array levels, but does not support wildcards:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">array_sort_by_multiple_keys</span><span class="p">(</span><span class="nv">$players</span><span class="p">,</span>
-    <span class="p">[</span>
-        <span class="s1">&#39;team.order&#39;</span> <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
-        <span class="s1">&#39;position&#39;</span>   <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
-    <span class="p">]</span>
-<span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">array_sort_by_multiple_keys</span><span class="p">(</span><span class="nv">$players</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;team.order&#39;</span> <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
+    <span class="s1">&#39;position&#39;</span>   <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
+<span class="p">]);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$players</span></code> array is now sorted by the ‘order’ value in each players’
@@ -535,6 +533,66 @@ will be ordered by their ‘position’. The resulting array is:</p>
 above it is further possible that each ‘player’ is represented by an array,
 while the ‘teams’ are objects. The method will detect the type of elements in
 each nesting level and handle it accordingly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="sig-name descname">array_flatten_with_dots(iterable $array[, string $id = '']): array</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$array</strong> (<em>iterable</em>) – The multidimensional array to flatten</p></li>
+<li><p><strong>$id</strong> (<em>string</em>) – Optional ID to prepend to the outer keys. Used internally for flattening keys.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The flattened array</p>
+</dd>
+</dl>
+<p>This function flattens a multidimensional array to a single key-value array by using dots
+as separators for the keys.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$arrayToFlatten</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;personal&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;age&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;address&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;other_details&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;marines officer&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$flattened</span> <span class="o">=</span> <span class="nx">array_flatten_with_dots</span><span class="p">(</span><span class="nv">$arrayToFlatten</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>On inspection, <code class="docutils literal notranslate"><span class="pre">$flattened</span></code> is equal to:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;personal.first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;personal.last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;personal.age&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;personal.address&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;other_details&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;marines officer&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Users may use the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter on their own, but are not required to do so.
+The function uses this parameter internally to track the flattened keys. If users
+will be supplying an initial <code class="docutils literal notranslate"><span class="pre">$id</span></code>, it will be prepended to all keys.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// using the same data from above</span>
+<span class="nv">$flattened</span> <span class="o">=</span> <span class="nx">array_flatten_with_dots</span><span class="p">(</span><span class="nv">$arrayToFlatten</span><span class="p">,</span> <span class="s1">&#39;foo_&#39;</span><span class="p">);</span>
+
+<span class="c1">// $flattened is now:</span>
+<span class="p">[</span>
+    <span class="s1">&#39;foo_personal.first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo_personal.last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo_personal.age&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo_personal.address&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo_other_details&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;marines officer&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
