@@ -3,7 +3,7 @@ Error Handling
 ##############
 
 CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <https://www.php.net/manual/en/spl.exceptions.php>`_, as
-well as a few custom exceptions that are provided by the framework. Depending on your environment's setup, the
+well as a few custom exceptions that are provided by the framework. Depending on your environment's setup,
 the default action when an error or exception is thrown is to display a detailed error report unless the application
 is running under the ``production`` environment. In this case, a more generic message is displayed to
 keep the best user experience for your users.
