@@ -39,7 +39,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_GET['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getGet('TEST'));
-		$this->assertNull($this->request->getGEt('TESTY'));
+		$this->assertNull($this->request->getGet('TESTY'));
 	}
 
 	public function testCanGrabPostVars()
