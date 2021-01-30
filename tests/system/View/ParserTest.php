@@ -942,6 +942,8 @@ class ParserTest extends CIUnitTestCase
 	public function testRenderCannotFindView()
 	{
 		$this->expectException(ViewException::class);
+		$this->expectExceptionMessageMatches('!/View/Views/Simplest\.php\z!');
+
 		$this->parser->setData(['testString' => 'Hello World']);
 		$this->parser->render('Simplest');
 	}

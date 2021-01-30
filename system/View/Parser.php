@@ -117,13 +117,14 @@ class Parser extends View
 
 		if (! is_file($file))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
-		}
+			$fileOrig = $file;
+			$file     = $this->loader->locateFile($view, 'Views');
 
-		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
-		{
-			throw ViewException::forInvalidFile($file);
+			// locateFile will return an empty string if the file cannot be found.
+			if (empty($file))
+			{
+				throw ViewException::forInvalidFile($fileOrig);
+			}
 		}
 
 		if (is_null($this->tempData))
@@ -328,8 +329,8 @@ class Parser extends View
 		// Find all matches of space-flexible versions of {tag}{/tag} so we
 		// have something to loop over.
 		preg_match_all(
-				'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
-				$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
+			'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
+			$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
 		);
 
 		/*
