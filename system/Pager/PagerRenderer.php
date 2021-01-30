@@ -42,14 +42,14 @@ class PagerRenderer
 	protected $current;
 
 	/**
-	 * Total number of pages? unused?
+	 * Total number of items.
 	 *
 	 * @var integer
 	 */
 	protected $total;
 
 	/**
-	 * Page count?
+	 * Total number of pages.
 	 *
 	 * @var integer
 	 */
