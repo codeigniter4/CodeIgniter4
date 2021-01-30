@@ -238,6 +238,8 @@ class HTTPException extends FrameworkException
 	 * @param string $samesite
 	 *
 	 * @return HTTPException
+	 *
+	 * @deprecated
 	 */
 	public static function forInvalidSameSiteSetting(string $samesite)
 	{

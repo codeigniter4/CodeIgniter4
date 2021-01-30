@@ -2,16 +2,16 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Config\Config;
-use CodeIgniter\Config\Services;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
+use Config\Services;
 
-class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class RedirectResponseTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var RouteCollection
 	 */
@@ -197,7 +197,7 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config          = new App();
 		$config->baseURL = 'http://example.com/test/';
-		Config::injectMock('App', $config);
+		Factories::injectMock('config', 'App', $config);
 
 		$request = new MockIncomingRequest($config, new URI('http://example.com/test/'), null, new UserAgent());
 		Services::injectMock('request', $request);
@@ -211,21 +211,20 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
 
-		Config::reset();
+		Factories::reset('config');
 	}
 
 	public function testWithCookies()
 	{
 		$_SESSION = [];
 
-		$baseResponse = service('response');
+		$baseResponse = Services::response();
 		$baseResponse->setCookie('foo', 'bar');
 
 		$response = new RedirectResponse(new App());
 		$this->assertFalse($response->hasCookie('foo', 'bar'));
 
 		$response = $response->withCookies();
-
 		$this->assertTrue($response->hasCookie('foo', 'bar'));
 	}
 
