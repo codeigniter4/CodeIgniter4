@@ -9,14 +9,18 @@
  * file that was distributed with this source code.
  */
 
+use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Database;
@@ -901,17 +905,17 @@ if (! function_exists('redirect'))
 	 *
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
-	 * @param string $uri
+	 * @param string $route
 	 *
 	 * @return RedirectResponse
 	 */
-	function redirect(string $uri = null): RedirectResponse
+	function redirect(string $route = null): RedirectResponse
 	{
 		$response = Services::redirectResponse(null, true);
 
-		if (! empty($uri))
+		if (! empty($route))
 		{
-			return $response->route($uri);
+			return $response->route($route);
 		}
 
 		return $response;
