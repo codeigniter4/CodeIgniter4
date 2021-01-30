@@ -560,4 +560,103 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager = new PagerRenderer($details);
 		$this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
 	}
+
+	public function testGetPageNumber()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+
+		$this->assertEquals(1, $pager->getFirstPageNumber());
+		$this->assertEquals(3, $pager->getCurrentPageNumber());
+		$this->assertEquals(10, $pager->getLastPageNumber());
+	}
+
+	public function testGetPageNumberSetSurroundCount()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 5,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertEquals(3, $pager->getFirstPageNumber());
+		$this->assertEquals(5, $pager->getCurrentPageNumber());
+		$this->assertEquals(7, $pager->getLastPageNumber());
+	}
+
+	public function testGetPreviousPageNumber()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 5,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertEquals(4, $pager->getPreviousPageNumber());
+	}
+
+	public function testGetPreviousPageNumberNull()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 1,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertNull($pager->getPreviousPageNumber());
+	}
+
+	public function testGetNextPageNumber()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 5,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertEquals(6, $pager->getNextPageNumber());
+	}
+
+	public function testGetNextPageNumberNull()
+	{
+		$uri     = $this->uri;
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 10,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+		$pager   = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertNull($pager->getNextPageNumber());
+	}
 }
