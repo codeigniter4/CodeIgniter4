@@ -12,4 +12,24 @@ Changes:
 Removed:
 
 - `Autoloader::loadLegacy()` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since `4.1.0`, this support was removed.
+
+Enhancements:
+
+- New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
+
+Changes:
+
+- ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
+- ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
+- To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
+
+Bugs Fixed:
+
+Deprecations:
+
 - Deprecated `Model::fillPlaceholders(array $rules, array $data)` method, use `fillPlaceholders(array $rules, array $data)` from Validation instead.
+- Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
+- Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Security`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
+- Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
