@@ -833,11 +833,11 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 
 <dl class="function">
 <dt id="redirect">
-<code class="sig-name descname">redirect</code><span class="sig-paren">(</span><em class="sig-param">string $uri</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">redirect</code><span class="sig-paren">(</span><em class="sig-param">string $route</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$uri</strong> (<em>string</em>) – The URI to redirect the user to.</p></li>
+<li><p><strong>$route</strong> (<em>string</em>) – The reverse-routed or named route to redirect the user to.</p></li>
 </ul>
 </dd>
 </dl>
@@ -864,7 +864,7 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withHeaders</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI,
+<p>When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
 treating it the same as using redirect()-&gt;route():</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
