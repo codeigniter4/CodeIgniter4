@@ -278,9 +278,9 @@ Miscellaneous Functions
     Context can be used to substitute values in the message string. For full details, see the
     :doc:`Logging Information <logging>` page.
 
-.. php:function:: redirect( string $uri )
+.. php:function:: redirect( string $route )
 
-    :param  string  $uri: The URI to redirect the user to.
+    :param  string  $route: The reverse-routed or named route to redirect the user to.
 
     Returns a RedirectResponse instance allowing you to easily create redirects::
 
@@ -305,7 +305,7 @@ Miscellaneous Functions
         // Copies all headers from the global response instance
         return redirect()->back()->withHeaders();
 
-    When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI,
+    When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
     treating it the same as using redirect()->route()::
 
         // Go to a named/reverse-routed URI
