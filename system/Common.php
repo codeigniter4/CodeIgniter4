@@ -901,17 +901,17 @@ if (! function_exists('redirect'))
 	 *
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
-	 * @param string $uri
+	 * @param string $route
 	 *
 	 * @return RedirectResponse
 	 */
-	function redirect(string $uri = null): RedirectResponse
+	function redirect(string $route = null): RedirectResponse
 	{
 		$response = Services::redirectResponse(null, true);
 
-		if (! empty($uri))
+		if (! empty($route))
 		{
-			return $response->route($uri);
+			return $response->route($route);
 		}
 
 		return $response;
