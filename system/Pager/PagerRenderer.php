@@ -431,4 +431,24 @@ class PagerRenderer
 	{
 		return $this->last;
 	}
+
+	/**
+	 * Returns the previous page number.
+	 *
+	 * @return integer|null
+	 */
+	public function getPreviousPageNumber(): ?int
+	{
+		return ($this->current === 1) ? null : $this->current - 1;
+	}
+
+	/**
+	 * Returns the next page number.
+	 *
+	 * @return integer|null
+	 */
+	public function getNextPageNumber(): ?int
+	{
+		return ($this->current === $this->pageCount) ? null : $this->current + 1;
+	}
 }
