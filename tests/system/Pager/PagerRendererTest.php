@@ -625,7 +625,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager   = new PagerRenderer($details);
 		$pager->setSurroundCount(2);
 
-		$this->assertEquals(null, $pager->getPreviousPageNumber());
+		$this->assertNull($pager->getPreviousPageNumber());
 	}
 
 	public function testGetNextPageNumber()
