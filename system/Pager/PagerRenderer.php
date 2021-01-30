@@ -407,7 +407,7 @@ class PagerRenderer
 	 *
 	 * @return integer
 	 */
-	public function getPageNumberFirst(): int
+	public function getFirstPageNumber(): int
 	{
 		return $this->first;
 	}
@@ -417,7 +417,7 @@ class PagerRenderer
 	 *
 	 * @return integer
 	 */
-	public function getPageNumberCurrent(): int
+	public function getCurrentPageNumber(): int
 	{
 		return $this->current;
 	}
@@ -427,7 +427,7 @@ class PagerRenderer
 	 *
 	 * @return integer
 	 */
-	public function getPageNumberLast(): int
+	public function getLastPageNumber(): int
 	{
 		return $this->last;
 	}

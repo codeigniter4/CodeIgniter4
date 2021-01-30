@@ -573,9 +573,9 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$pager   = new PagerRenderer($details);
 
-		$this->assertEquals(1, $pager->getPageNumberFirst());
-		$this->assertEquals(3, $pager->getPageNumberCurrent());
-		$this->assertEquals(10, $pager->getPageNumberLast());
+		$this->assertEquals(1, $pager->getFirstPageNumber());
+		$this->assertEquals(3, $pager->getCurrentPageNumber());
+		$this->assertEquals(10, $pager->getLastPageNumber());
 	}
 
 	public function testGetPageNumberSetSurroundCount()
@@ -591,8 +591,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$pager   = new PagerRenderer($details);
 		$pager->setSurroundCount(2);
 
-		$this->assertEquals(3, $pager->getPageNumberFirst());
-		$this->assertEquals(5, $pager->getPageNumberCurrent());
-		$this->assertEquals(7, $pager->getPageNumberLast());
+		$this->assertEquals(3, $pager->getFirstPageNumber());
+		$this->assertEquals(5, $pager->getCurrentPageNumber());
+		$this->assertEquals(7, $pager->getLastPageNumber());
 	}
 }
