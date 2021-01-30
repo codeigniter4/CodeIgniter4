@@ -117,13 +117,14 @@ class Parser extends View
 
 		if (! is_file($file))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
-		}
+			$fileOrig = $file;
+			$file     = $this->loader->locateFile($view, 'Views');
 
-		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
-		{
-			throw ViewException::forInvalidFile($file);
+			// locateFile will return an empty string if the file cannot be found.
+			if (empty($file))
+			{
+				throw ViewException::forInvalidFile($fileOrig);
+			}
 		}
 
 		if (is_null($this->tempData))
