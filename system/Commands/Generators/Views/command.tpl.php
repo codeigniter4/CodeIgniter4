@@ -2,45 +2,75 @@
 
 namespace {namespace};
 
+use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-{useStatement}
+<?php if ($type === 'generator'): ?>
+use CodeIgniter\CLI\GeneratorTrait;
+<?php endif ?>
 
-class {class} {extends}
+class {class} extends BaseCommand
 {
-	{commandGroup}
+<?php if ($type === 'generator'): ?>
+	use GeneratorTrait;
+
+<?php endif ?>
 	/**
-	 * The Command's name
+	 * The Command's Group
 	 *
 	 * @var string
 	 */
-	protected $name = '{commandName}';
+	protected $group = '{group}';
 
 	/**
-	 * The Command's short description
+	 * The Command's Name
+	 *
+	 * @var string
+	 */
+	protected $name = '{command}';
+
+	/**
+	 * The Command's Description
 	 *
 	 * @var string
 	 */
 	protected $description = '';
 
 	/**
-	 * The Command's usage
+	 * The Command's Usage
 	 *
 	 * @var string
 	 */
-	protected $usage = '{commandName} [arguments] [options]';
+	protected $usage = '{command} [arguments] [options]';
 
 	/**
-	 * The Command's arguments.
+	 * The Command's Arguments
 	 *
 	 * @var array
 	 */
 	protected $arguments = [];
 
 	/**
-	 * The Command's options.
+	 * The Command's Options
 	 *
 	 * @var array
 	 */
 	protected $options = [];
-	{commandAbstractMethodsToImplement}
+
+	/**
+	 * Actually execute a command.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
+	{
+<?php if ($type === 'generator'): ?>
+		$this->component = 'Command';
+		$this->directory = 'Commands';
+		$this->template  = 'command.tpl.php';
+
+		$this->execute($params);
+<?php else: ?>
+		//
+<?php endif ?>
+	}
 }
