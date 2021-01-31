@@ -5,7 +5,7 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ComponentGeneratorTest extends CIUnitTestCase
+class ScaffoldGeneratorTest extends CIUnitTestCase
 {
 	protected $streamFilter;
 
@@ -19,7 +19,7 @@ class ComponentGeneratorTest extends CIUnitTestCase
 
 	protected function tearDown(): void
 	{
-		stream_filter_remove($this->streamFilter);	
+		stream_filter_remove($this->streamFilter);
 	}
 
 	protected function getFileContents(string $filepath): string

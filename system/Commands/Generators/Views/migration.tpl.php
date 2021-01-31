@@ -8,7 +8,7 @@ class {class} extends Migration
 {
 <?php if ($session): ?>
 	protected $DBGroup = '<?= $DBGroup ?>';
-	
+
 	public function up()
 	{
 		$this->forge->addField([

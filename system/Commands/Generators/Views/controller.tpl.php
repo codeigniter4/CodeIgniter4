@@ -16,7 +16,7 @@ class {class} extends {extends}
 	{
 		//
 	}
-	
+
 	/**
 	 * Return the properties of a resource object
 	 *

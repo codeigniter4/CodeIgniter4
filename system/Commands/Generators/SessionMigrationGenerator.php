@@ -18,8 +18,8 @@ use CodeIgniter\CLI\GeneratorTrait;
 /**
  * Generates a migration file for database sessions.
  *
- * @deprecated Use make:migration instead.
- * 
+ * @deprecated Use make:migration --session instead.
+ *
  * @codeCoverageIgnore
  */
 class SessionMigrationGenerator extends BaseCommand
@@ -76,12 +76,12 @@ class SessionMigrationGenerator extends BaseCommand
 		$this->template  = 'migration.tpl.php';
 
 		$table = 'ci_sessions';
-		
+
 		if (array_key_exists('t', $params) || CLI::getOption('t'))
 		{
 			$table = $params['t'] ?? CLI::getOption('t');
 		}
-		
+
 		$params[0] = "_create_{$table}_table";
 
 		$this->execute($params);
