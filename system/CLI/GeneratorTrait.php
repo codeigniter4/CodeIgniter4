@@ -116,7 +116,7 @@ trait GeneratorTrait
 		// we are duplicating things, If 'force' option is not supplied, we bail.
 		if (! $this->getOption('force') && $isFile)
 		{
-			CLI::write(lang('CLI.generator.fileExist', [clean_path($path)]), 'red');
+			CLI::error(lang('CLI.generator.fileExist', [clean_path($path)]), 'light_gray', 'red');
 			CLI::newLine();
 
 			return;
@@ -131,7 +131,7 @@ trait GeneratorTrait
 		}
 
 		helper('filesystem');
-		
+
 		// Build the class based on the details we have, We'll be getting our file
 		// contents from the template, and then we'll do the necessary replacements.
 		if (! write_file($path, $this->buildContent($class)))
@@ -170,7 +170,7 @@ trait GeneratorTrait
 
 	/**
 	 * Change file basename before saving.
-	 * 
+	 *
 	 * Useful for components where the file name has a date.
 	 *
 	 * @param string $filename
@@ -219,7 +219,7 @@ trait GeneratorTrait
 
 		if (strncmp($class, $namespace, strlen($namespace)) === 0)
 		{
-			return $class;
+			return $class; // @codeCoverageIgnore
 		}
 
 		return $namespace . '\\' . $this->directory . '\\' . str_replace('/', '\\', $class);
@@ -326,20 +326,28 @@ trait GeneratorTrait
 	 * Allows child generators to modify the internal `$hasClassName` flag.
 	 *
 	 * @param boolean $hasClassName
+	 *
+	 * @return $this
 	 */
 	protected function setHasClassName(bool $hasClassName)
 	{
 		$this->hasClassName = $hasClassName;
+
+		return $this;
 	}
 
 	/**
 	 * Allows child generators to modify the internal `$sortImports` flag.
 	 *
 	 * @param boolean $sortImports
+	 *
+	 * @return $this
 	 */
 	protected function setSortImports(bool $sortImports)
 	{
 		$this->sortImports = $sortImports;
+
+		return $this;
 	}
 
 	/**

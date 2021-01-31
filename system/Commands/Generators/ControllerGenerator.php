@@ -72,7 +72,7 @@ class ControllerGenerator extends BaseCommand
 		'--force'     => 'Force overwrite existing file.',
 	];
 
- 	/**
+	/**
 	 * Actually execute a command.
 	 *
 	 * @param array $params
@@ -100,7 +100,7 @@ class ControllerGenerator extends BaseCommand
 
 		$useStatement = trim(APP_NAMESPACE, '\\') . '\Controllers\BaseController';
 		$extends      = 'BaseController';
-			
+
 		// Gets the appropriate parent class to extend.
 		if ($bare || $rest)
 		{
@@ -112,7 +112,7 @@ class ControllerGenerator extends BaseCommand
 			elseif ($rest)
 			{
 				$rest = is_string($rest) ? $rest : 'controller';
-				
+
 				if (! in_array($rest, ['controller', 'presenter'], true))
 				{
 					// @codeCoverageIgnoreStart

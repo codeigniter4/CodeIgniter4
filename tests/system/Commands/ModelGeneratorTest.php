@@ -101,7 +101,15 @@ class ModelGeneratorTest extends CIUnitTestCase
 
 	public function testGenerateModelWithOptionSuffix()
 	{
-		command('make:model user -suffix');
-		$this->assertFileExists(APPPATH . 'Models/UserModel.php');
+		command('make:model user -suffix -return entity');
+
+		$model  = APPPATH . 'Models/UserModel.php';
+		$entity = APPPATH . 'Entities/UserEntity.php';
+
+		$this->assertFileExists($model);
+		$this->assertFileExists($entity);
+		unlink($model);
+		unlink($entity);
+		rmdir(dirname($entity));
 	}
 }

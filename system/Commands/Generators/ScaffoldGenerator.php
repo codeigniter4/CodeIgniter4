@@ -18,7 +18,7 @@ use CodeIgniter\CLI\GeneratorTrait;
 /**
  * Generates a complete set of scaffold files.
  */
-class ComponentGenerator extends BaseCommand
+class ScaffoldGenerator extends BaseCommand
 {
 	use GeneratorTrait;
 
@@ -34,7 +34,7 @@ class ComponentGenerator extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'make:component';
+	protected $name = 'make:scaffold';
 
 	/**
 	 * The Command's Description
@@ -48,7 +48,7 @@ class ComponentGenerator extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:component <name> [options]';
+	protected $usage = 'make:scaffold <name> [options]';
 
 	/**
 	 * The Command's Arguments
@@ -65,13 +65,13 @@ class ComponentGenerator extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'--bare'      => 'Add the \'--bare\' option to controller component.',
-		'--restful'   => 'Add the \'--restful\' option to controller component.',
-		'--table'     => 'Add the \'--table\' option to the model component.',
-		'--dbgroup'   => 'Add the \'--dbgroup\' option to model component.',
-		'--return'    => 'Add the \'--return\' option to the model component.',
+		'--bare'      => 'Add the "--bare" option to controller component.',
+		'--restful'   => 'Add the "--restful" option to controller component.',
+		'--table'     => 'Add the "--table" option to the model component.',
+		'--dbgroup'   => 'Add the "--dbgroup" option to model component.',
+		'--return'    => 'Add the "--return" option to the model component.',
 		'--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-		'--suffix'    => 'Append the component title to the class name (e.g. User => UserComponent).',
+		'--suffix'    => 'Append the component title to the class name.',
 		'--force'     => 'Force overwrite existing file.',
 	];
 
@@ -83,7 +83,7 @@ class ComponentGenerator extends BaseCommand
 	public function run(array $params)
 	{
 		$this->params = $params;
-		
+
 		$options = [];
 
 		if ($this->getOption('namespace'))

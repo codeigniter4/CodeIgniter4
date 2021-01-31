@@ -12,11 +12,10 @@
 namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
 
 /**
- * Generates a skeleton Config file.
+ * Generates a skeleton config file.
  */
 class ConfigGenerator extends BaseCommand
 {
@@ -93,9 +92,13 @@ class ConfigGenerator extends BaseCommand
 	 */
 	protected function prepare(string $class): string
 	{
-		$namespace = $this->getOption('namespace');
-		$namespace = is_string($namespace) ? $namespace . '\\' . $this->directory : $this->directory;
+		$namespace = $this->getOption('namespace') ?? APP_NAMESPACE;
 
-		return $this->parseTemplate($class, ['{namespace}'], [$namespace]);
+		if ($namespace === APP_NAMESPACE)
+		{
+			$class = substr($class, strlen($namespace . '\\'));
+		}
+
+		return $this->parseTemplate($class);
 	}
 }
