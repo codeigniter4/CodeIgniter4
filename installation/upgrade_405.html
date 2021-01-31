@@ -399,6 +399,9 @@ updated requirements. These methods are as follows:</p>
 </ul>
 <p>To facilitate use of this interface these methods have been moved from the framework’s <code class="docutils literal notranslate"><span class="pre">Response</span></code> into a <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>
 which you may use, and <code class="docutils literal notranslate"><span class="pre">DownloadResponse</span></code> now extends <code class="docutils literal notranslate"><span class="pre">Response</span></code> directly to ensure maximum compatibility.</p>
+<p><strong>ConfigServices</strong></p>
+<p>Service discovery has been updated to allow third-party services (when enabled via Modules) to take precedence over core services. Update
+<strong>app/Config/Services.php</strong> so the class extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p>
 </div>
 
 
@@ -417,7 +420,7 @@ which you may use, and <code class="docutils literal notranslate"><span class="p
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jan 30, 2021.
+        Last updated on Jan 31, 2021.
       </span>
 
     </p>
