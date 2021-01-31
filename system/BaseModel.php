@@ -728,6 +728,13 @@ abstract class BaseModel
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
 
+		// doProtectFields() can further remove elements from
+		// $data so we need to check for empty dataset again
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('insert');
+		}
+
 		// Set created_at and updated_at with same time
 		$date = $this->setDate();
 
@@ -865,6 +872,13 @@ abstract class BaseModel
 		// Must be called first so we don't
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
+
+		// doProtectFields() can further remove elements from
+		// $data so we need to check for empty dataset again
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
+		}
 
 		if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $data))
 		{
