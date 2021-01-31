@@ -34,7 +34,7 @@ class ScaffoldGeneratorTest extends CIUnitTestCase
 
 	public function testCreateComponentProducesManyFiles()
 	{
-		command('make:component people');
+		command('make:scaffold people');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
 		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
@@ -57,7 +57,7 @@ class ScaffoldGeneratorTest extends CIUnitTestCase
 
 	public function testCreateComponentWithManyOptions()
 	{
-		command('make:component user -restful -return entity');
+		command('make:scaffold user -restful -return entity');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
 		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
@@ -86,7 +86,7 @@ class ScaffoldGeneratorTest extends CIUnitTestCase
 
 	public function testCreateComponentWithOptionSuffix()
 	{
-		command('make:component order -suffix');
+		command('make:scaffold order -suffix');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
 		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
@@ -115,7 +115,7 @@ class ScaffoldGeneratorTest extends CIUnitTestCase
 		$this->assertFileExists(APPPATH . 'Controllers/Fixer.php');
 		CITestStreamFilter::$buffer = '';
 
-		command('make:component fixer -bare -force');
+		command('make:scaffold fixer -bare -force');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
 		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
@@ -142,7 +142,7 @@ class ScaffoldGeneratorTest extends CIUnitTestCase
 
 	public function testCreateComponentWithOptionNamespace()
 	{
-		command('make:component product -namespace App');
+		command('make:scaffold product -namespace App');
 
 		$dir       = '\\' . DIRECTORY_SEPARATOR;
 		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
