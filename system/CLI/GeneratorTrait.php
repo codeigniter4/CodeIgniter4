@@ -311,7 +311,7 @@ trait GeneratorTrait
 			// @codeCoverageIgnoreStart
 			CLI::error(lang('CLI.namespaceNotDefined', [$namespace]), 'light_gray', 'red');
 			CLI::newLine();
-			
+
 			return '';
 			// @codeCoverageIgnoreEnd
 		}
