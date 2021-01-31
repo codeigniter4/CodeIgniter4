@@ -911,7 +911,7 @@ if (! function_exists('redirect'))
 	 */
 	function redirect(string $route = null): RedirectResponse
 	{
-		$response = Services::redirectResponse(null, true);
+		$response = Services::redirectresponse(null, true);
 
 		if (! empty($route))
 		{
