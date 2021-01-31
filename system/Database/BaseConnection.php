@@ -592,8 +592,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	abstract protected function execute(string $sql);
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.

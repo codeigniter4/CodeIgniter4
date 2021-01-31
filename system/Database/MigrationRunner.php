@@ -119,8 +119,6 @@ class MigrationRunner
 	 */
 	protected $groupSkip = false;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
