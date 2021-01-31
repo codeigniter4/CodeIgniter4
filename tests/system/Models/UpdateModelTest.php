@@ -260,11 +260,11 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->createModel(EventModel::class);
 
 		$data = (object) [
-							 'name'    => 'Foo',
-							 'email'   => 'foo@example.com',
-							 'country' => 'US',
-							 'deleted' => 0,
-						 ];
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
 
 		$id = $this->model->insert($data);
 
