@@ -178,7 +178,7 @@ final class InsertModelTest extends LiveModelTestCase
 		$this->assertSame(2, $this->model->insertBatch([$entity, $entity]));
 	}
 
-	public function testInsertArrayWithDataException(): void
+	public function testInsertArrayWithNoDataException(): void
 	{
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to insert.');
@@ -191,6 +191,45 @@ final class InsertModelTest extends LiveModelTestCase
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to insert.');
 		$this->createModel(UserModel::class)->insert($data);
+	}
+
+	public function testInsertArrayWithNoDataExceptionNoAllowedData(): void
+	{
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to insert.');
+		$this->createModel(UserModel::class)->insert(['thisKeyIsNotAllowed' => 'Bar']);
+	}
+
+	public function testInsertEntityWithNoDataExceptionNoAllowedData(): void
+	{
+		$this->createModel(UserModel::class);
+
+		$entity = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+
+		$entity->fill(['thisKeyIsNotAllowed' => 'Bar']);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to insert.');
+		$this->model->insert($entity);
 	}
 
 	public function testUseAutoIncrementSetToFalseInsertException(): void
