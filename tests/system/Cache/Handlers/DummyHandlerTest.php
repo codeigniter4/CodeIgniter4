@@ -20,6 +20,15 @@ class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->dummyHandler->get('key'));
 	}
 
+	public function testRemember()
+	{
+		$dummyHandler = $this->dummyHandler->remember('key', 2, function () {
+			return 'value';
+		});
+
+		$this->assertNull($dummyHandler);
+	}
+
 	public function testSave()
 	{
 		$this->assertTrue($this->dummyHandler->save('key', 'value'));

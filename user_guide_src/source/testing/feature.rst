@@ -20,7 +20,9 @@ class or use the ``CodeIgniter\Test\FeatureTestTrait``. Since these testing tool
 are called before you take your actions.
 ::
 
-    <?php namespace App;
+    <?php
+
+    namespace App;
 
     use CodeIgniter\Test\FeatureTestCase;
 
@@ -48,10 +50,10 @@ populated, while a **post** request would have the **$_POST** array populated.
 ::
 
     // Get a simple page
-    $result = $this->call('get', site_url());
+    $result = $this->call('get', '/');
 
     // Submit a form
-    $result = $this->call('post', site_url('contact'), [
+    $result = $this->call('post', 'contact'), [
         'name' => 'Fred Flintstone',
         'email' => 'flintyfred@example.com'
     ]);
@@ -105,6 +107,18 @@ that the current values of ``$_SESSION`` should be used. This is handy for testi
     
     $result = $this->withSession()->get('admin');
 
+Setting Headers
+---------------
+
+You can set header values with the ``withHeaders()`` method. This takes an array of key/value pairs that would be
+passed as a header into the call.::
+
+    $headers = [
+        'CONTENT_TYPE' => 'application/json'
+    ];
+
+    $result = $this->withHeaders($headers)->post('users');
+
 Bypassing Events
 ----------------
 
@@ -114,6 +128,28 @@ to send out emails. You can tell the system to skip any event handling with the 
     $result = $this->skipEvents()
         ->post('users', $userInfo);
 
+Formatting The Request
+-----------------------
+
+You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
+`json` or `xml`. This will take the parameters passed into ``call(), post(), get()...`` and assign them to the
+body of the request in the given format. This will also set the `Content-Type` header for your request accordingly.
+This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
+::
+
+    //If your feature test contains this:
+    $result = $this->withBodyFormat('json')
+        ->post('users', $userInfo);
+
+    //Your controller can then get the parameters passed in with:
+    $userInfo = $this->request->getJson();
+
+Setting the Body
+----------------
+
+You can set the body of your request with the ``withBody()`` method. This allows you to format the body how you want
+to format it. It is recommended that you use this if you have more complicated xml's to test. This will also not set
+the Content-Type header for you so if you need that, you can set it with the ``withHeaders()`` method.
 
 Testing the Response
 ====================
@@ -143,7 +179,7 @@ a response status code in the 200 or 300's.
 This assertion simply uses the **isOK()** method to test a response.
 ::
 
-    $this->assertOK();
+    $result->assertOK();
 
 **isRedirect()**
 
@@ -160,7 +196,7 @@ Returns a boolean true/false based on whether the response is a redirected respo
 Asserts that the Response is an instance of RedirectResponse.
 ::
 
-    $this->assertRedirect();
+    $result->assertRedirect();
 
 **getRedirectUrl()**
 
@@ -175,7 +211,7 @@ Returns the URL set for a RedirectResponse, or null for failure.
 Asserts that the HTTP status code returned matches $code.
 ::
 
-    $this->assertStatus(403);
+    $result->assertStatus(403);
 
 
 Session Assertions
@@ -187,14 +223,14 @@ Asserts that a value exists in the resulting session. If $value is passed, will 
 matches what was specified.
 ::
 
-    $this->assertSessionHas('logged_in', 123);
+    $result->assertSessionHas('logged_in', 123);
 
 **assertSessionMissing(string $key)**
 
 Asserts that the resulting session does not include the specified $key.
 ::
 
-    $this->assertSessionMissin('logged_in');
+    $result->assertSessionMissin('logged_in');
 
 
 Header Assertions
@@ -206,14 +242,14 @@ Asserts that a header named **$key** exists in the response. If **$value** is no
 the values match.
 ::
 
-    $this->assertHeader('Content-Type', 'text/html');
+    $result->assertHeader('Content-Type', 'text/html');
 
 **assertHeaderMissing(string $key)**
 
 Asserts that a header name **$key** does not exist in the response.
 ::
 
-    $this->assertHeader('Accepts');
+    $result->assertHeader('Accepts');
 
 
 
@@ -226,14 +262,14 @@ Asserts that a cookie named **$key** exists in the response. If **$value** is no
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
 ::
 
-    $this->assertCookie('foo', 'bar');
+    $result->assertCookie('foo', 'bar');
 
 **assertCookieMissing(string $key)**
 
 Asserts that a cookie named **$key** does not exist in the response.
 ::
 
-    $this->assertCookieMissing('ci_session');
+    $result->assertCookieMissing('ci_session');
 
 **assertCookieExpired(string $key, string $prefix = '')**
 
@@ -241,7 +277,7 @@ Asserts that a cookie named **$key** exists, but has expired. You can set the co
 in as the second parameter.
 ::
 
-    $this->assertCookieExpired('foo');
+    $result->assertCookieExpired('foo');
 
 
 DOM Assertions
@@ -256,13 +292,13 @@ Asserts that text/HTML is on the page, either by itself or - more specifically -
 a tag, as specified by type, class, or id::
 
     // Check that "Hello World" is on the page
-    $this->assertSee('Hello World');
+    $result->assertSee('Hello World');
     // Check that "Hello World" is within an h1 tag
-    $this->assertSee('Hello World', 'h1');
+    $result->assertSee('Hello World', 'h1');
     // Check that "Hello World" is within an element with the "notice" class
-    $this->assertSee('Hello World', '.notice');
+    $result->assertSee('Hello World', '.notice');
     // Check that "Hello World" is within an element with id of "title"
-    $this->assertSee('Hellow World', '#title');
+    $result->assertSee('Hellow World', '#title');
 
 
 **assertDontSee(string $search = null, string $element = null)**
@@ -305,9 +341,9 @@ Asserts that an anchor tag is found with matching **$text** as the body of the t
 Asserts that an input tag exists with the name and value::
 
     // Check that an input exists named 'user' with the value 'John Snow'
-    $results->seeInField('user', 'John Snow');
+    $results->assertSeeInField('user', 'John Snow');
     // Check a multi-dimensional input
-    $results->seeInField('user[name]', 'John Snow');
+    $results->assertSeeInField('user[name]', 'John Snow');
 
 
 
@@ -345,10 +381,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
     ]
 
     // Is true
-    $this->assertJSONFragment(['config' => ['key-a']);
-
-.. note:: This simply uses phpUnit's own `assertArraySubset() <https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset>`_
-    method to do the comparison.
+    $result->assertJSONFragment(['config' => ['key-a']]);
 
 **assertJSONExact($test)**
 
@@ -361,4 +394,3 @@ Working With XML
 **getXML()**
 
 If your application returns XML, you can retrieve it through this method.
-

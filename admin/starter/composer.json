@@ -5,13 +5,25 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.2",
+		"php": "^7.2 || ^8.0",
 		"codeigniter4/framework": "^4"
 	},
 	"require-dev": {
-		"fzaninotto/faker": "^1.9@dev",
-		"mikey179/vfsstream": "1.6.*",
+		"fakerphp/faker": "^1.9",
+		"mikey179/vfsstream": "^1.6",
 		"phpunit/phpunit": "^8.5"
+	},
+	"suggest": {
+		"ext-fileinfo": "Improves mime type detection for files"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app",
+			"Config\\": "app/Config"
+		},
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
@@ -19,9 +31,6 @@
 		}
 	},
 	"scripts": {
-		"post-update-cmd": [
-			"@composer dump-autoload"
-		],
 		"test": "phpunit"
 	},
 	"support": {

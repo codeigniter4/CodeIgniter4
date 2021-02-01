@@ -101,7 +101,9 @@ with methods that correspond to the resource routes above.
 Extend it, over-riding the `modelName` and `format` properties, and then
 implement those methods that you want handled.::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\RESTful\ResourceController;
 
@@ -146,7 +148,7 @@ Its usage is similar to the resource routing::
     $routes->get('photos/edit/(:segment)',    'Photos::edit/$1');
     $routes->post('photos/update/(:segment)', 'Photos::update/$1');
     $routes->get('photos/remove/(:segment)',  'Photos::remove/$1');
-    $routes->post('photos/delete/(:segment)', 'Photos::update/$1');
+    $routes->post('photos/delete/(:segment)', 'Photos::delete/$1');
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
@@ -205,7 +207,9 @@ with methods that align to the resource routes above.
 Extend it, over-riding the `modelName` property, and then
 implement those methods that you want handled.::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use CodeIgniter\RESTful\ResourcePresenter;
 
@@ -216,7 +220,7 @@ implement those methods that you want handled.::
 
         public function index()
         {
-            return view('templates/list',$this->model->findAll());
+            return view('templates/list', $this->model->findAll());
         }
 
         // ...

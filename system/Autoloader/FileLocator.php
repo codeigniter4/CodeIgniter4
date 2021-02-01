@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Autoloader;
@@ -44,8 +16,6 @@ namespace CodeIgniter\Autoloader;
  *
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
- *
- * @package CodeIgniter
  */
 class FileLocator
 {
@@ -169,11 +139,11 @@ class FileLocator
 	 */
 	public function getClassname(string $file) : string
 	{
-		$php        = file_get_contents($file);
-		$tokens     = token_get_all($php);
-		$dlm        = false;
-		$namespace  = '';
-		$class_name = '';
+		$php       = file_get_contents($file);
+		$tokens    = token_get_all($php);
+		$dlm       = false;
+		$namespace = '';
+		$className = '';
 
 		foreach ($tokens as $i => $token)
 		{
@@ -202,17 +172,17 @@ class FileLocator
 				&& $tokens[$i - 1][0] === T_WHITESPACE
 				&& $token[0] === T_STRING)
 			{
-				$class_name = $token[1];
+				$className = $token[1];
 				break;
 			}
 		}
 
-		if (empty( $class_name ))
+		if (empty($className))
 		{
 			return '';
 		}
 
-		return $namespace . '\\' . $class_name;
+		return $namespace . '\\' . $className;
 	}
 
 	//--------------------------------------------------------------------
@@ -354,16 +324,16 @@ class FileLocator
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
-		$path = realpath($path);
+		$path = realpath($path) ?: $path;
 
-		if (! $path)
+		if (! is_file($path))
 		{
 			return false;
 		}
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$namespace['path'] = realpath($namespace['path']);
+			$namespace['path'] = realpath($namespace['path']) ?: $namespace['path'];
 
 			if (empty($namespace['path']))
 			{
@@ -412,7 +382,8 @@ class FileLocator
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$fullPath = realpath($namespace['path'] . $path);
+			$fullPath = $namespace['path'] . $path;
+			$fullPath = realpath($fullPath) ?: $fullPath;
 
 			if (! is_dir($fullPath))
 			{
@@ -454,7 +425,8 @@ class FileLocator
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{
-			$fullPath = realpath(rtrim($namespacePath, '/') . '/' . $path);
+			$fullPath = rtrim($namespacePath, '/') . '/' . $path;
+			$fullPath = realpath($fullPath) ?: $fullPath;
 
 			if (! is_dir($fullPath))
 			{
@@ -475,7 +447,7 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Checks the application folder to see if the file can be found.
+	 * Checks the app folder to see if the file can be found.
 	 * Only for use with filenames that DO NOT include namespacing.
 	 *
 	 * @param string      $file
@@ -485,19 +457,12 @@ class FileLocator
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{
-		$paths = [
-			APPPATH,
-			SYSTEMPATH,
-		];
+		$path = APPPATH . (empty($folder) ? $file : $folder . '/' . $file);
+		$path = realpath($path) ?: $path;
 
-		foreach ($paths as $path)
+		if (is_file($path))
 		{
-			$path .= empty($folder) ? $file : $folder . '/' . $file;
-
-			if (is_file($path))
-			{
-				return $path;
-			}
+			return $path;
 		}
 
 		return false;

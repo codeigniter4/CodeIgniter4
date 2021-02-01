@@ -53,7 +53,7 @@ subforum for an up-to-date list!
 - Classes are instantiated where needed, and components are managed
   by ``Services``
 - The class loader automatically handles PSR4 style class locating,
-  within the ``App`` (application) and ``CodeIgniter`` (i.e. system) top level
+  within the ``App`` (application) and ``CodeIgniter`` (i.e., system) top level
   namespaces; with composer autoloading support, and even using educated
   guessing to find your models and libraries if they are in the right
   folder even though not namespaced
@@ -68,7 +68,7 @@ subforum for an up-to-date list!
 - CI provides ``Request`` and ``Response`` objects for you to work with -
   more powerful than the CI3-way
 - If you want a base controller (MY_Controller in CI3), make it
-  where you like, e.g. BaseController extends Controller, and then
+  where you like, e.g., BaseController extends Controller, and then
   have your controllers extend it
 
 **Models**

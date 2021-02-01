@@ -1,56 +1,29 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\App as AppConfig;
+use Memcached;
 
 /**
  * Session handler using Memcache for persistence
  */
-class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
+class MemcachedHandler extends BaseHandler
 {
-
 	/**
 	 * Memcached instance
 	 *
-	 * @var \Memcached
+	 * @var Memcached|null
 	 */
 	protected $memcached;
 
@@ -64,7 +37,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Lock key
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $lockKey;
 
@@ -80,11 +53,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param  BaseConfig $config
-	 * @param  string     $ipAddress
-	 * @throws \CodeIgniter\Session\Exceptions\SessionException
+	 * @param  AppConfig $config
+	 * @param  string    $ipAddress
+	 * @throws SessionException
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct(AppConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -113,21 +86,21 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Sanitizes save_path and initializes connections.
 	 *
-	 * @param string $save_path Server path(s)
-	 * @param string $name      Session cookie name, unused
+	 * @param string $savePath Server path(s)
+	 * @param string $name     Session cookie name, unused
 	 *
 	 * @return boolean
 	 */
-	public function open($save_path, $name): bool
+	public function open($savePath, $name): bool
 	{
-		$this->memcached = new \Memcached();
-		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
+		$this->memcached = new Memcached();
+		$this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
 
-		$server_list = [];
+		$serverList = [];
 
 		foreach ($this->memcached->getServerList() as $server)
 		{
-			$server_list[] = $server['host'] . ':' . $server['port'];
+			$serverList[] = $server['host'] . ':' . $server['port'];
 		}
 
 		if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
@@ -142,7 +115,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		foreach ($matches as $match)
 		{
 			// If Memcached already has this server (or if the port is invalid), skip it
-			if (in_array($match[1] . ':' . $match[2], $server_list, true))
+			if (in_array($match[1] . ':' . $match[2], $serverList, true))
 			{
 				$this->logger->debug('Session: Memcached server pool already has ' . $match[1] . ':' . $match[2]);
 				continue;
@@ -154,11 +127,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 			else
 			{
-				$server_list[] = $match[1] . ':' . $match[2];
+				$serverList[] = $match[1] . ':' . $match[2];
 			}
 		}
 
-		if (empty($server_list))
+		if (empty($serverList))
 		{
 			$this->logger->error('Session: Memcached server pool is empty.');
 
@@ -184,15 +157,15 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if (is_null($this->sessionID)) // @phpstan-ignore-line
 			{
 				$this->sessionID = $sessionID;
 			}
 
-			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-			$this->fingerprint = md5($session_data);
+			$sessionData       = (string) $this->memcached->get($this->keyPrefix . $sessionID);
+			$this->fingerprint = md5($sessionData);
 
-			return $session_data;
+			return $sessionData;
 		}
 
 		return '';
@@ -216,8 +189,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			return false;
 		}
+
 		// Was the ID regenerated?
-		elseif ($sessionID !== $this->sessionID)
+		if ($sessionID !== $this->sessionID)
 		{
 			if (! $this->releaseLock() || ! $this->lockSession($sessionID))
 			{
@@ -285,15 +259,15 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param string $session_id Session ID
+	 * @param string $sessionId Session ID
 	 *
 	 * @return boolean
 	 */
-	public function destroy($session_id): bool
+	public function destroy($sessionId): bool
 	{
 		if (isset($this->memcached, $this->lockKey))
 		{
-			$this->memcached->delete($this->keyPrefix . $session_id);
+			$this->memcached->delete($this->keyPrefix . $sessionId);
 
 			return $this->destroyCookie();
 		}
@@ -337,25 +311,25 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
-		$lock_key = $this->keyPrefix . $sessionID . ':lock';
-		$attempt  = 0;
+		$lockKey = $this->keyPrefix . $sessionID . ':lock';
+		$attempt = 0;
 
 		do
 		{
-			if ($this->memcached->get($lock_key))
+			if ($this->memcached->get($lockKey))
 			{
 				sleep(1);
 				continue;
 			}
 
-			if (! $this->memcached->set($lock_key, time(), 300))
+			if (! $this->memcached->set($lockKey, time(), 300))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
 				return false;
 			}
 
-			$this->lockKey = $lock_key;
+			$this->lockKey = $lockKey;
 			break;
 		}
 		while (++ $attempt < 30);
@@ -386,7 +360,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached, $this->lockKey) && $this->lock)
 		{
 			if (! $this->memcached->delete($this->lockKey) &&
-					$this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND
+					$this->memcached->getResultCode() !== Memcached::RES_NOTFOUND
 			)
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);

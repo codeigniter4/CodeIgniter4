@@ -17,17 +17,13 @@ include migrations from all namespaces.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 ********************
 Migration file names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
 method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
+was created, in **YYYYMMDDHHIISS** format (e.g., **20121031100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
@@ -47,13 +43,14 @@ migrations go in the **app/Database/Migrations/** directory and have names such
 as *20121031100537_add_blog.php*.
 ::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
 	class AddBlog extends Migration
 	{
-
 		public function up()
 		{
 			$this->forge->addField([
@@ -64,12 +61,12 @@ as *20121031100537_add_blog.php*.
 					'auto_increment' => true,
 				],
 				'blog_title'       => [
-					'type'           => 'VARCHAR',
-					'constraint'     => '100',
+					'type'       => 'VARCHAR',
+					'constraint' => '100',
 				],
 				'blog_description' => [
-					'type'           => 'TEXT',
-					'null'           => true,
+					'type' => 'TEXT',
+					'null' => true,
 				],
 			]);
 			$this->forge->addKey('blog_id', true);
@@ -117,7 +114,9 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-	<?php namespace App\Database\Migrations;
+	<?php
+
+	namespace App\Database\Migrations;
 
 	use CodeIgniter\Database\Migration;
 
@@ -125,9 +124,15 @@ match the name of the database group exactly::
 	{
 		protected $DBGroup = 'alternate_db_group';
 
-		public function up() { . . . }
+		public function up()
+		{
+			// ...
+		}
 
-		public function down() { . . . }
+		public function down()
+		{
+			// ...
+		}
 	}
 
 Namespaces
@@ -138,7 +143,7 @@ The migration library can automatically scan all namespaces you have defined wit
 the ``$psr4`` property for matching directory names. It will include all migrations
 it finds in Database/Migrations.
 
-Each namespace has it's own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
+Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
 For example, assume that we have the following namespaces defined in our Autoload
 configuration file::
@@ -159,11 +164,12 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-	<?php namespace App\Controllers;
+	<?php
+
+	namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
-
 		public function index()
 		{
 			$migrate = \Config\Services::migrations();
@@ -177,7 +183,6 @@ to update the schema::
 				// Do something with the error here...
 			}
 		}
-
 	}
 
 *******************
@@ -203,7 +208,7 @@ This example will migrate Blog namespace with any new migrations on the test dat
 
     > php spark migrate -g test -n Blog
 
-When using the `-all` option, it will scan through all namespaces attempting to find any migrations that have
+When using the ``-all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
@@ -244,7 +249,7 @@ You can use (status) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 
-**create**
+**make:migration**
 
 Creates a skeleton migration file in **app/Database/Migrations**.
 It automatically prepends the current timestamp. The class name it
@@ -252,11 +257,12 @@ creates is the Pascal case version of the filename.
 
 ::
 
-  > php spark migrate:create [filename]
+  > php spark make:migration <class> [options]
 
-You can use (create) with the following options:
+You can use (make:migration) with the following options:
 
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-n`` - to choose namespace, otherwise the value of ``APP_NAMESPACE`` will be used.
+- ``-force`` - If a similarly named migration file is present in destination, this will be overwritten.
 
 *********************
 Migration Preferences
@@ -269,7 +275,7 @@ Preference                 Default                Options                    Des
 ========================== ====================== ========================== =============================================================
 **enabled**                true                   true / false               Enable or disable migrations.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**timestampFormat**        Y-m-d-His\_                                        The format to use for timestamps when creating a migration.
+**timestampFormat**        Y-m-d-His\_                                       The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
 
 ***************
@@ -296,7 +302,7 @@ Class Reference
 
 	.. php:method:: regress($batch, $group)
 
-		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
+		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	``true`` on success, ``false`` on failure or no migrations are found
 		:rtype:	bool
@@ -304,8 +310,8 @@ Class Reference
 		Regress can be used to roll back changes to a previous state, batch by batch.
 		::
 
-			$migration->batch(5);
-			$migration->batch(-1);
+			$migration->regress(5);
+			$migration->regress(-1);
 
 	.. php:method:: force($path, $namespace, $group)
 
@@ -315,7 +321,9 @@ Class Reference
 		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. 
+		
+		.. note:: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
 
@@ -323,9 +331,9 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-	  Sets the path the library should look for migration files::
+	  Sets the namespace the library should look for migration files::
 
-	    $migration->setNamespace($path)
+	    $migration->setNamespace($namespace)
 	              ->latest();
 	.. php:method:: setGroup($group)
 
@@ -333,7 +341,7 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-	  Sets the path the library should look for migration files::
+	  Sets the group the library should look for migration files::
 
-	    $migration->setNamespace($path)
+	    $migration->setGroup($group)
 	              ->latest();

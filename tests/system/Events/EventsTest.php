@@ -1,14 +1,17 @@
 <?php
+
 namespace CodeIgniter\Events;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
+use Config\Modules;
 
-class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
+class EventsTest extends CIUnitTestCase
 {
-
 	/**
 	 * Accessible event manager instance
+	 *
+	 * @var MockEvents
 	 */
 	protected $manager;
 
@@ -21,7 +24,10 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		Events::removeAllListeners();
 	}
 
-	//--------------------------------------------------------------------
+	protected function tearDown(): void
+	{
+		Events::simulate(false);
+	}
 
 	/**
 	 * @runInSeparateProcess
@@ -29,30 +35,30 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testInitialize()
 	{
-		$config                  = config('Modules');
-		$config->activeExplorers = [];
-		Config::injectMock('Modules', $config);
+		/**
+		 * @var Modules
+		 */
+		$config          = config('Modules');
+		$config->aliases = [];
 
 		// it should start out empty
-		$default = [APPPATH . 'Config/Events.php'];
-		$this->manager->setFiles([]);
+		MockEvents::setFiles([]);
 		$this->assertEmpty($this->manager->getFiles());
 
 		// make sure we have a default events file
+		$default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
 		$this->manager->unInitialize();
-		$this->manager::initialize();
+		MockEvents::initialize();
 		$this->assertEquals($default, $this->manager->getFiles());
 
 		// but we should be able to change it through the backdoor
-		$this->manager::setFiles(['/peanuts']);
+		MockEvents::setFiles(['/peanuts']);
 		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
 
 		// re-initializing should have no effect
-		Events::initialize();
+		MockEvents::initialize();
 		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPerformance()
 	{
@@ -67,8 +73,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertGreaterThan(0, count($logged));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testListeners()
 	{
 		$callback1 = function () {
@@ -82,8 +86,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([$callback2, $callback1], Events::listeners('foo'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHandleEvent()
 	{
 		$result = null;
@@ -96,8 +98,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('bar', $result);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCancelEvent()
 	{
@@ -117,8 +117,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testPriority()
 	{
 		$result = 0;
@@ -137,8 +135,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse(Events::trigger('foo', 'bar'));
 		$this->assertEquals(2, $result);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testPriorityWithMultiple()
 	{
@@ -164,8 +160,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['c', 'd', 'a', 'b'], $result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveListener()
 	{
 		$result = false;
@@ -185,8 +179,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		Events::trigger('foo');
 		$this->assertFalse($result);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRemoveListenerTwice()
 	{
@@ -209,8 +201,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveUnknownListener()
 	{
 		$result = false;
@@ -231,8 +221,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testRemoveAllListenersWithSingleEvent()
 	{
 		$result = false;
@@ -249,8 +237,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals([], $listeners);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testRemoveAllListenersWithMultipleEvents()
 	{
@@ -269,24 +255,16 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([], Events::listeners('bar'));
 	}
 
-	//--------------------------------------------------------------------
-
 	// Basically if it doesn't crash this should be good...
 	public function testHandleEventCallableInternalFunc()
 	{
-		$result = null;
-
 		Events::on('foo', 'strlen');
 
 		$this->assertTrue(Events::trigger('foo', 'bar'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHandleEventCallableClass()
 	{
-		$result = null;
-
 		$box = new class() {
 			public $logged;
 
@@ -302,8 +280,6 @@ class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('bar', $box->logged);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimulate()
 	{

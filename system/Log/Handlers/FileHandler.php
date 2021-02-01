@@ -1,50 +1,24 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Log\Handlers;
 
+use DateTime;
+use Exception;
+
 /**
  * Log error messages to file system
  */
-class FileHandler extends BaseHandler implements HandlerInterface
+class FileHandler extends BaseHandler
 {
-
 	/**
 	 * Folder to hold logs
 	 *
@@ -93,11 +67,11 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * will stop. Any handlers that have not run, yet, will not
 	 * be run.
 	 *
-	 * @param $level
-	 * @param $message
+	 * @param string $level
+	 * @param string $message
 	 *
 	 * @return boolean
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function handle($level, $message): bool
 	{
@@ -124,10 +98,10 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
 		if (strpos($this->dateFormat, 'u') !== false)
 		{
-			$microtime_full  = microtime(true);
-			$microtime_short = sprintf('%06d', ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
-			$date            = $date->format($this->dateFormat);
+			$microtimeFull  = microtime(true);
+			$microtimeShort = sprintf('%06d', ($microtimeFull - floor($microtimeFull)) * 1000000);
+			$date           = new DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));
+			$date           = $date->format($this->dateFormat);
 		}
 		else
 		{
@@ -157,7 +131,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 			chmod($filepath, $this->filePermissions);
 		}
 
-		return is_int($result);
+		return is_int($result); // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

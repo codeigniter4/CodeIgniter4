@@ -1,45 +1,18 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
+use Config\Mimes;
 use Config\Services;
 
 /**
@@ -47,7 +20,6 @@ use Config\Services;
  */
 class FileRules
 {
-
 	/**
 	 * Request instance. So we can get access to the files.
 	 *
@@ -77,12 +49,12 @@ class FileRules
 	/**
 	 * Verifies that $name is the name of a valid uploaded file.
 	 *
-	 * @param string $blank
-	 * @param string $name
+	 * @param string|null $blank
+	 * @param string      $name
 	 *
 	 * @return boolean
 	 */
-	public function uploaded(string $blank = null, string $name): bool
+	public function uploaded(?string $blank, string $name): bool
 	{
 		if (! ($files = $this->request->getFileMultiple($name)))
 		{
@@ -128,7 +100,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function max_size(string $blank = null, string $params): bool
+	public function max_size(?string $blank, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -177,7 +149,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function is_image(string $blank = null, string $params): bool
+	public function is_image(?string $blank, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -203,7 +175,7 @@ class FileRules
 
 			// We know that our mimes list always has the first mime
 			// start with `image` even when then are multiple accepted types.
-			$type = \Config\Mimes::guessTypeFromExtension($file->getExtension());
+			$type = Mimes::guessTypeFromExtension($file->getExtension());
 
 			if (mb_strpos($type, 'image') !== 0)
 			{
@@ -224,7 +196,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function mime_in(string $blank = null, string $params): bool
+	public function mime_in(?string $blank, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -248,7 +220,7 @@ class FileRules
 				return true;
 			}
 
-			if (! in_array($file->getMimeType(), $params))
+			if (! in_array($file->getMimeType(), $params, true))
 			{
 				return false;
 			}
@@ -267,7 +239,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function ext_in(string $blank = null, string $params): bool
+	public function ext_in(?string $blank, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -291,7 +263,7 @@ class FileRules
 				return true;
 			}
 
-			if (! in_array($file->getExtension(), $params))
+			if (! in_array($file->guessExtension(), $params, true))
 			{
 				return false;
 			}
@@ -311,7 +283,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function max_dims(string $blank = null, string $params): bool
+	public function max_dims(?string $blank, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.

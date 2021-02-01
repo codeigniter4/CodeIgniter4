@@ -6,12 +6,15 @@ CodeIgniter's core Controller should not be changed, but a default class extensi
 **app/Controllers/BaseController.php**. Any new controllers you make should extend ``BaseController`` to take
 advantage of preloaded components and any additional functionality you provide::
 
-	<?php namespace App\Controllers;
-	
+	<?php
+
+	namespace App\Controllers;
+
 	use CodeIgniter\Controller;
-	
-	class Home extends BaseController {
-	
+
+	class Home extends BaseController
+	{
+		// ...
 	}
 
 Preloading Components

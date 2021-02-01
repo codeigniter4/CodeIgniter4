@@ -1,40 +1,12 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     EllisLab Dev Team
- * @copyright  Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright  Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 1.3.1
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\View;
@@ -45,15 +17,9 @@ use CodeIgniter\Database\BaseResult;
  * HTML Table Generating Class
  *
  * Lets you create tables manually or from database result objects, or arrays.
- *
- * @package    CodeIgniter
- * @subpackage Libraries
- * @category   HTML Tables
- * @author     EllisLab Dev Team
  */
 class Table
 {
-
 	/**
 	 * Data for table rows
 	 *
@@ -85,7 +51,7 @@ class Table
 	/**
 	 * Table caption
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	public $caption;
 
@@ -113,7 +79,7 @@ class Table
 	/**
 	 * Callback for custom table layout
 	 *
-	 * @var function
+	 * @var callable|null
 	 */
 	public $function;
 
@@ -189,11 +155,11 @@ class Table
 	 *
 	 * @param  array   $array
 	 * @param  integer $columnLimit
-	 * @return array
+	 * @return array|false
 	 */
 	public function makeColumns($array = [], $columnLimit = 0)
 	{
-		if (! is_array($array) || count($array) === 0 || ! is_int($columnLimit))
+		if (! is_array($array) || $array === [] || ! is_int($columnLimit))
 		{
 			return false;
 		}
@@ -214,7 +180,7 @@ class Table
 
 			if (count($temp) < $columnLimit)
 			{
-				for ($i = count($temp); $i < $columnLimit; $i ++)
+				for ($i = count($temp); $i < $columnLimit; $i++)
 				{
 					$temp[] = '&nbsp;';
 				}
@@ -224,6 +190,7 @@ class Table
 		}
 		while (count($array) > 0);
 
+		// @phpstan-ignore-next-line
 		return $new;
 	}
 
@@ -265,10 +232,10 @@ class Table
 	 *
 	 * Ensures a standard associative array format for all cell data
 	 *
-	 * @param  array
+	 * @param  array $args
 	 * @return array
 	 */
-	protected function _prepArgs($args)
+	protected function _prepArgs(array $args)
 	{
 		// If there is no $args[0], skip this and treat as an associative array
 		// This can happen if there is only a single key, for example this is passed to table->generate
@@ -280,7 +247,7 @@ class Table
 
 		foreach ($args as $key => $val)
 		{
-			is_array($val) || $args[$key] = ['data' => $val];
+			is_array($val) || $args[$key] = ['data' => $val]; // @phpstan-ignore-line
 		}
 
 		return $args;
@@ -305,7 +272,8 @@ class Table
 	/**
 	 * Generate the table
 	 *
-	 * @param  mixed $tableData
+	 * @param mixed $tableData
+	 *
 	 * @return string
 	 */
 	public function generate($tableData = null)
@@ -340,7 +308,6 @@ class Table
 		}
 
 		// Build the table!
-
 		$out = $this->template['table_open'] . $this->newline;
 
 		// Add any caption here
@@ -378,10 +345,11 @@ class Table
 			$out .= $this->template['tbody_open'] . $this->newline;
 
 			$i = 1;
+
 			foreach ($this->rows as $row)
 			{
 				// We use modulus to alternate the row colors
-				$name = fmod($i ++, 2) ? '' : 'alt_';
+				$name = fmod($i++, 2) ? '' : 'alt_';
 
 				$out .= $this->template['row_' . $name . 'start'] . $this->newline;
 
@@ -418,6 +386,8 @@ class Table
 
 				$out .= $this->template['row_' . $name . 'end'] . $this->newline;
 			}
+
+			$out .= $this->template['tbody_close'] . $this->newline;
 		}
 
 		// Any table footing to display?
@@ -442,8 +412,6 @@ class Table
 
 			$out .= $this->template['footing_row_end'] . $this->newline . $this->template['tfoot_close'] . $this->newline;
 		}
-
-		$out .= $this->template['tbody_close'] . $this->newline;
 
 		// And finally, close off the table
 		$out .= $this->template['table_close'];
@@ -529,12 +497,12 @@ class Table
 			return;
 		}
 
-		$this->temp = $this->_defaultTemplate();
+		$temp = $this->_defaultTemplate();
 		foreach (['table_open', 'thead_open', 'thead_close', 'heading_row_start', 'heading_row_end', 'heading_cell_start', 'heading_cell_end', 'tbody_open', 'tbody_close', 'row_start', 'row_end', 'cell_start', 'cell_end', 'row_alt_start', 'row_alt_end', 'cell_alt_start', 'cell_alt_end', 'table_close'] as $val)
 		{
 			if (! isset($this->template[$val]))
 			{
-				$this->template[$val] = $this->temp[$val];
+				$this->template[$val] = $temp[$val];
 			}
 		}
 	}

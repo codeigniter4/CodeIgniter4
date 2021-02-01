@@ -1,6 +1,8 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,11 +11,11 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class CLIRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var \CodeIgniter\HTTP\CLIRequest
 	 */
 	protected $request;
 
@@ -38,7 +40,6 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'-foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -58,15 +59,19 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
+			'--foo-bar',
+			'yes',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$options = ['foo' => 'bar'];
+		$options = [
+			'foo'     => 'bar',
+			'foo-bar' => 'yes',
+		];
 		$this->assertEquals($options, $this->request->getOptions());
 	}
 
@@ -77,10 +82,9 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -96,18 +100,17 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expected = '-foo bar -baz "queue some stuff"';
-		$this->assertEquals($expected, $this->request->getOptionString());
+		$this->assertEquals('-foo bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo bar --baz "queue some stuff"', $this->request->getOptionString(true));
 	}
 
 	public function testParsingNoOptions()
@@ -118,7 +121,6 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'21',
 			'profile',
 		];
-		$_SERVER['argc'] = 4;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
@@ -134,16 +136,14 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'bar',
 		];
-		$_SERVER['argc'] = 6;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expected = 'users/21/profile';
-		$this->assertEquals($expected, $this->request->getPath());
+		$this->assertEquals('users/21/profile', $this->request->getPath());
 	}
 
 	public function testParsingMalformed()
@@ -153,20 +153,18 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'pro-file',
-			'-foo',
+			'--foo',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21/pro-file';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo bar --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/pro-file', $this->request->getPath());
 	}
 
 	public function testParsingMalformed2()
@@ -176,20 +174,18 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'oops-bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 8;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo oops-bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21/profile';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo oops-bar -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo oops-bar --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/profile', $this->request->getPath());
 	}
 
 	public function testParsingMalformed3()
@@ -199,21 +195,19 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 			'users',
 			'21',
 			'profile',
-			'-foo',
+			'--foo',
 			'oops',
 			'bar',
-			'-baz',
+			'--baz',
 			'queue some stuff',
 		];
-		$_SERVER['argc'] = 9;
 
 		// reinstantiate it to force parsing
 		$this->request = new CLIRequest(new App());
 
-		$expectedOptions = '-foo oops -baz "queue some stuff"';
-		$expectedPath    = 'users/21/profile';
-		$this->assertEquals($expectedOptions, $this->request->getOptionString());
-		$this->assertEquals($expectedPath, $this->request->getPath());
+		$this->assertEquals('-foo oops -baz "queue some stuff"', $this->request->getOptionString());
+		$this->assertEquals('--foo oops --baz "queue some stuff"', $this->request->getOptionString(true));
+		$this->assertEquals('users/21/profile/bar', $this->request->getPath());
 	}
 
 	//--------------------------------------------------------------------
@@ -630,4 +624,10 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('CLI', $this->request->getMethod(true));
 	}
 
+	//---------------------------------------------------------------------
+
+	public function testMethodIsCliReturnsAlwaysTrue()
+	{
+		$this->assertTrue($this->request->isCLI());
+	}
 }

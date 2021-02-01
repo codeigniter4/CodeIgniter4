@@ -109,3 +109,5 @@ The following is a list of available event points within the CodeIgniter core co
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
 * **post_system** Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.
 * **email** Called after an email sent successfully from ``CodeIgniter\Email\Email``. Receives an array of the ``Email`` class's properties as a parameter.
+* **DBQuery** Called after a successfully-completed database query. Receives the ``Query`` object.
+* **migrate** Called after a successful migration call to ``latest()`` or ``regress()``. Receives the current properties of ``MigrationRunner`` as well as the name of the method.

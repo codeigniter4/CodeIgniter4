@@ -1,9 +1,19 @@
-<?php namespace CodeIgniter\View\Exceptions;
+<?php
 
-use CodeIgniter\Exceptions\ExceptionInterface;
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\View\Exceptions;
+
 use CodeIgniter\Exceptions\FrameworkException;
 
-class ViewException extends FrameworkException implements ExceptionInterface
+class ViewException extends FrameworkException
 {
 	public static function forInvalidCellMethod(string $class, string $method)
 	{

@@ -15,8 +15,8 @@ Which is right for you?
 .. toctree::
     :titlesonly:
 
-    installing_manual
     installing_composer
+    installing_manual
     running
     upgrading
     troubleshooting

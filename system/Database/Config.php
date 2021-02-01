@@ -1,52 +1,24 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use InvalidArgumentException;
 
 /**
  * Class Config
  */
 class Config extends BaseConfig
 {
-
 	/**
 	 * Cache for instance of any connections that
 	 * have been requested as a "shared" instance.
@@ -59,7 +31,7 @@ class Config extends BaseConfig
 	 * The main instance used to manage all of
 	 * our open database connections.
 	 *
-	 * @var \CodeIgniter\Database\Database
+	 * @var Database|null
 	 */
 	static protected $factory;
 
@@ -97,7 +69,7 @@ class Config extends BaseConfig
 
 		if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0)
 		{
-			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
+			throw new InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
 		if ($getShared && isset(static::$instances[$group]))
@@ -114,7 +86,7 @@ class Config extends BaseConfig
 
 		$connection = static::$factory->load($config, $group);
 
-		static::$instances[$group] = & $connection;
+		static::$instances[$group] = &$connection;
 
 		return $connection;
 	}
@@ -137,7 +109,7 @@ class Config extends BaseConfig
 	 * Loads and returns an instance of the Forge for the specified
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
-	 * @param string|array|null $group
+	 * @param ConnectionInterface|string|array|null $group
 	 *
 	 * @return Forge
 	 */

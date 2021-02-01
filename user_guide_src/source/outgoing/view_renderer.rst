@@ -70,7 +70,7 @@ If you choose not to escape data, or you are passing in an object instance, you 
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
 context to escape the data for (see below)::
 
-	<?= \esc($object->getStat()) ?>
+	<?= esc($object->getStat()) ?>
 
 Escaping Contexts
 -----------------
@@ -102,17 +102,20 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 		ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
 
+.. note:: ``saveData`` as defined by the interface must be a boolean, but implementing
+	classes (like ``View`` below) may extend this to include ``null`` values.
+
 Class Reference
 ***************
 
 .. php:class:: CodeIgniter\\View\\View
 
-	.. php:method:: render($view[, $options[, $saveData=false]]])
+	.. php:method:: render($view[, $options[, $saveData=false]])
                 :noindex:
 
-		:param  string  $view: File name of the view source
-		:param  array   $options: Array of options, as key/value pairs
-		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+		:param  string       $view: File name of the view source
+		:param  array        $options: Array of options, as key/value pairs
+		:param  boolean|null $saveData: If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.
 		:returns: The rendered text for the chosen view
 		:rtype: string
 
@@ -120,12 +123,12 @@ Class Reference
 
 			echo $view->render('myview');
 
-	.. php:method:: renderString($view[, $options[, $saveData=false]]])
+	.. php:method:: renderString($view[, $options[, $saveData=false]])
                 :noindex:
 
-		:param  string  $view: Contents of the view to render, for instance content retrieved from a database
-		:param  array   $options: Array of options, as key/value pairs
-		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+		:param  string       $view: Contents of the view to render, for instance content retrieved from a database
+		:param  array        $options: Array of options, as key/value pairs
+		:param  boolean|null $saveData: If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.
 		:returns: The rendered text for the chosen view
 		:rtype: string
 

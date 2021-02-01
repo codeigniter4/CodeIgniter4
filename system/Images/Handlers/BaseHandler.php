@@ -1,39 +1,12 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT    MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Images\Handlers;
@@ -42,17 +15,17 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
+use InvalidArgumentException;
 
 /**
  * Base image handling implementation
  */
 abstract class BaseHandler implements ImageHandlerInterface
 {
-
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Config\Images
+	 * @var Images
 	 */
 	protected $config;
 
@@ -94,14 +67,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * X-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $xAxis = 0;
 
 	/**
 	 * Y-axis.
 	 *
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $yAxis = 0;
 
@@ -133,9 +106,19 @@ abstract class BaseHandler implements ImageHandlerInterface
 	];
 
 	/**
+	 * Image types with support for transparency.
+	 *
+	 * @var array
+	 */
+	protected $supportTransparency = [
+		IMAGETYPE_PNG,
+		IMAGETYPE_WEBP,
+	];
+
+	/**
 	 * Temporary image used by the different engines.
 	 *
-	 * @var resource
+	 * @var resource|null
 	 */
 	protected $resource;
 
@@ -144,7 +127,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Images|null $config
+	 * @param Images|null $config
 	 */
 	public function __construct($config = null)
 	{
@@ -189,7 +172,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Returns the image instance.
 	 *
-	 * @return \CodeIgniter\Images\Image
+	 * @return Image
 	 */
 	public function getFile()
 	{
@@ -338,7 +321,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Changes the stored image type to indicate the new file format to use when saving.
 	 * Does not touch the actual resource.
 	 *
-	 * @param integer|null $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @param integer $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 *
 	 * @return $this
 	 */
@@ -361,12 +344,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		// Allowed rotation values
 		$degs = [
-			90,
-			180,
-			270,
+			90.0,
+			180.0,
+			270.0,
 		];
 
-		if ($angle === '' || ! in_array($angle, $degs))
+		if (! in_array($angle, $degs, true))
 		{
 			throw ImageException::forMissingAngle();
 		}
@@ -404,7 +387,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$this->width  = $this->image()->origWidth;
 		$this->height = $this->image()->origHeight;
 
-		return $this->_flatten();
+		return $this->_flatten($red, $green, $blue);
 	}
 
 	//--------------------------------------------------------------------
@@ -511,6 +494,44 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Handles the actual resizing of the image.
+	 *
+	 * @param boolean $maintainRatio
+	 *
+	 * @return $this
+	 */
+	public abstract function _resize(bool $maintainRatio = false);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Crops the image.
+	 *
+	 * @return $this
+	 */
+	public abstract function _crop();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getWidth();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the height of an image.
+	 *
+	 * @return integer
+	 */
+	public abstract function _getHeight();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser. This is especially an issue
 	 * with images taken by smartphones who always store the image up-right,
@@ -559,6 +580,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 * @param boolean     $silent If true, will not throw our own exceptions.
 	 *
+	 * @throws ImageException
+	 *
 	 * @return mixed
 	 */
 	public function getEXIF(string $key = null, bool $silent = false)
@@ -569,6 +592,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 			{
 				return null;
 			}
+
+			throw ImageException::forEXIFUnsupported(); // @codeCoverageIgnore
 		}
 
 		$exif = null; // default
@@ -576,7 +601,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		{
 			case IMAGETYPE_JPEG:
 			case IMAGETYPE_TIFF_II:
-				$exif = exif_read_data($this->image()->getPathname());
+				$exif = @exif_read_data($this->image()->getPathname());
 				if (! is_null($key) && is_array($exif))
 				{
 					$exif = $exif[$key] ?? false;
@@ -606,7 +631,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $height
 	 * @param string  $position
 	 *
-	 * @return $this
+	 * @return BaseHandler
 	 */
 	public function fit(int $width, int $height = null, string $position = 'center')
 	{
@@ -638,8 +663,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return array
 	 */
-	protected function calcAspectRatio($width, $height = null, $origWidth, $origHeight): array
+	protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
 	{
+		if (empty($origWidth) || empty($origHeight))
+		{
+			throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
+		}
+
 		// If $height is null, then we have it easy.
 		// Calc based on full image size and be done.
 		if (is_null($height))
@@ -686,7 +716,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
 	{
 		$position = strtolower($position);
-		$x        = $y = 0;
+
+		$x = $y = 0;
 
 		switch ($position)
 		{
@@ -805,12 +836,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) ||
-				$this->image()->origWidth === 0 ||
-				$this->image()->origHeight === 0 ||
-				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
-				! ctype_digit((string) $this->image()->origWidth) ||
-				! ctype_digit((string) $this->image()->origHeight)
+		if (($this->width === 0 && $this->height === 0) || $this->image()->origWidth === 0 || $this->image()->origHeight === 0 || (! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image()->origWidth) || ! ctype_digit((string) $this->image()->origHeight)
 		)
 		{
 			return;
@@ -872,5 +898,4 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;
 	}
-
 }

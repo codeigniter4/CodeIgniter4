@@ -1,0 +1,54 @@
+# When changes are pushed to the develop branch,
+# build the current version of the User Guide
+# with Sphinx and deploy it to the gh-pages branch.
+#
+# @todo Consolidate checkouts
+name: Deploy User Guide (latest)
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'user_guide_src/**'
+
+jobs:
+  build:
+    name: Deploy to gh-pages
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build the latest User Guide
+      - name: Build with Sphinx
+        uses: ammaraskar/sphinx-action@0.4
+        with:
+          docs-folder: user_guide_src/
+
+      # Create an artifact of the html output
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: HTML Documentation
+          path: user_guide_src/build/html/
+
+      # Commit changes to the gh-pages branch
+      - name: Commit changes
+        run: |
+          git clone https://github.com/codeigniter4/CodeIgniter4.git --branch gh-pages --single-branch gh-pages
+          cp -r user_guide_src/build/html/* gh-pages/
+          cd gh-pages
+          git config --local user.email "action@github.com"
+          git config --local user.name "${GITHUB_ACTOR}"
+          git add .
+          # Ignore failures due to lack of changes
+          git commit -m "Update User Guide" -a || true
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          branch: gh-pages
+          directory: gh-pages
+          github_token: ${{ secrets.ACCESS_TOKEN }}

@@ -179,6 +179,17 @@ class RulesTest extends CIDatabaseTestCase
 				[],
 				true,
 			],
+			// Testing for multi-dimensional data
+			[
+				['foo.bar' => 'if_exist|required'],
+				['foo' => ['bar' => '']],
+				false,
+			],
+			[
+				['foo.bar' => 'if_exist|required'],
+				['foo' => []],
+				true,
+			],
 		];
 	}
 
@@ -398,6 +409,42 @@ class RulesTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testMatcheNestedsTrue()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'match',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'matches[nested.bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMatchesNestedFalse()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'nope',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'matches[nested.bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testDiffersNull()
 	{
 		$data = [
@@ -439,6 +486,42 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->validation->setRules([
 			'foo' => 'differs[bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersNestedTrue()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'nope',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'differs[nested.bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersNestedFalse()
+	{
+		$data = [
+			'nested' => [
+				'foo' => 'match',
+				'bar' => 'match',
+			],
+		];
+
+		$this->validation->setRules([
+			'nested.foo' => 'differs[nested.bar]',
 		]);
 
 		$this->assertFalse($this->validation->run($data));
@@ -1319,8 +1402,9 @@ class RulesTest extends CIDatabaseTestCase
 	/**
 	 * @dataProvider inListProvider
 	 *
-	 * @param $str
-	 * @param $expected
+	 * @param string  $first
+	 * @param string  $second
+	 * @param boolean $expected
 	 */
 	public function testInList($first, $second, $expected)
 	{
@@ -1330,6 +1414,30 @@ class RulesTest extends CIDatabaseTestCase
 
 		$this->validation->setRules([
 			'foo' => "in_list[{$second}]",
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider inListProvider
+	 *
+	 * @param string  $first
+	 * @param string  $second
+	 * @param boolean $expected
+	 */
+	public function testNotInList($first, $second, $expected)
+	{
+		$expected = ! $expected;
+
+		$data = [
+			'foo' => $first,
+		];
+
+		$this->validation->setRules([
+			'foo' => "not_in_list[{$second}]",
 		]);
 
 		$this->assertEquals($expected, $this->validation->run($data));
@@ -1399,10 +1507,15 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredWith($field, $check, $expected = false)
 	{
 		$data = [
-			'foo' => 'bar',
-			'bar' => 'something',
-			'baz' => null,
-			'ar'  => [],// Was running into issues with array values
+			'foo'   => 'bar',
+			'bar'   => 'something',
+			'baz'   => null,
+			'array' => [
+				'nonEmptyField1' => 'value1',
+				'nonEmptyField2' => 'value2',
+				'emptyField1'    => null,
+				'emptyField2'    => null,
+			],
 		];
 
 		$this->validation->setRules([
@@ -1447,6 +1560,26 @@ class RulesTest extends CIDatabaseTestCase
 				null,
 				true,
 			],
+			[
+				'array.emptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.emptyField1',
+				'array.nonEmptyField2',
+				false,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.nonEmptyField2',
+				true,
+			],
 		];
 	}
 
@@ -1461,9 +1594,15 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredWithout($field, $check, $expected = false)
 	{
 		$data = [
-			'foo' => 'bar',
-			'bar' => 'something',
-			'baz' => null,
+			'foo'   => 'bar',
+			'bar'   => 'something',
+			'baz'   => null,
+			'array' => [
+				'nonEmptyField1' => 'value1',
+				'nonEmptyField2' => 'value2',
+				'emptyField1'    => null,
+				'emptyField2'    => null,
+			],
 		];
 
 		$this->validation->setRules([
@@ -1501,6 +1640,26 @@ class RulesTest extends CIDatabaseTestCase
 			[
 				'foo',
 				null,
+				true,
+			],
+			[
+				'array.emptyField1',
+				'array.emptyField2',
+				false,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.emptyField2',
+				true,
+			],
+			[
+				'array.emptyField1',
+				'array.nonEmptyField2',
+				true,
+			],
+			[
+				'array.nonEmptyField1',
+				'array.nonEmptyField2',
 				true,
 			],
 		];

@@ -10,11 +10,11 @@
 		stopOnIncomplete="false"
 		stopOnSkipped="false">
 	<testsuites>
-		<testsuite name="system">
+		<testsuite name="System">
 			<directory>./tests/system</directory>
 			<exclude>./tests/system/Database</exclude>
 		</testsuite>
-		<testsuite name="database">
+		<testsuite name="Database">
 			<directory>./tests/system/Database</directory>
 		</testsuite>
 	</testsuites>
@@ -23,12 +23,12 @@
 		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">./system</directory>
 			<exclude>
+				<directory>./system/Commands/Generators/Views</directory>
 				<directory>./system/Debug/Toolbar/Views</directory>
 				<directory>./system/Pager/Views</directory>
 				<directory>./system/ThirdParty</directory>
 				<directory>./system/Validation/Views</directory>
 				<file>./system/bootstrap.php</file>
-				<file>./system/Commands/Sessions/Views/migration.tpl.php</file>
 				<file>./system/ComposerScripts.php</file>
 				<file>./system/Config/Routes.php</file>
 				<file>./system/Test/bootstrap.php</file>
@@ -41,7 +41,8 @@
 	</logging>
 
 	<php>
-		<server name="app.baseURL" value="http://example.com"/>
+		<env name="XDEBUG_MODE" value="coverage"/>
+		<server name="app.baseURL" value="http://example.com/"/>
 
 		<!-- Directory containing phpunit.xml -->
 		<const name="HOMEPATH" value="./"/>

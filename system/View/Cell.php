@@ -1,39 +1,12 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\View;
@@ -41,6 +14,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
+use ReflectionException;
 use ReflectionMethod;
 
 /**
@@ -67,12 +41,9 @@ use ReflectionMethod;
  *         class Class {
  *             function method(array $params=null)
  *         }
- *
- * @package CodeIgniter\View
  */
 class Cell
 {
-
 	/**
 	 * Instance of the current Cache Instance
 	 *
@@ -85,7 +56,7 @@ class Cell
 	/**
 	 * Cell constructor.
 	 *
-	 * @param \CodeIgniter\Cache\CacheInterface $cache
+	 * @param CacheInterface $cache
 	 */
 	public function __construct(CacheInterface $cache)
 	{
@@ -103,7 +74,7 @@ class Cell
 	 * @param string|null $cacheName
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
@@ -148,21 +119,22 @@ class Cell
 
 			$output = $instance->{$method}();
 		}
-		elseif (($paramCount === 1) && (
-				( ! array_key_exists($refParams[0]->name, $paramArray)) ||
-				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+		elseif (($paramCount === 1)
+			&& ((! array_key_exists($refParams[0]->name, $paramArray))
+			|| (array_key_exists($refParams[0]->name, $paramArray)
+			&& count($paramArray) !== 1))
 		)
 		{
 			$output = $instance->{$method}($paramArray);
 		}
 		else
 		{
-			$fireArgs      = [];
-			$method_params = [];
+			$fireArgs     = [];
+			$methodParams = [];
 
 			foreach ($refParams as $arg)
 			{
-				$method_params[$arg->name] = true;
+				$methodParams[$arg->name] = true;
 				if (array_key_exists($arg->name, $paramArray))
 				{
 					$fireArgs[$arg->name] = $paramArray[$arg->name];
@@ -171,7 +143,7 @@ class Cell
 
 			foreach ($paramArray as $key => $val)
 			{
-				if (! isset($method_params[$key]))
+				if (! isset($methodParams[$key]))
 				{
 					throw ViewException::forInvalidCellParameter($key);
 				}
@@ -194,21 +166,21 @@ class Cell
 	 * If a string, it should be in the format "key1=value key2=value".
 	 * It will be split and returned as an array.
 	 *
-	 * @param $params
+	 * @param mixed $params
 	 *
 	 * @return array|null
 	 */
 	public function prepareParams($params)
 	{
-		if (empty($params) || ( ! is_string($params) && ! is_array($params)))
+		if (empty($params) || (! is_string($params) && ! is_array($params)))
 		{
 			return [];
 		}
 
 		if (is_string($params))
 		{
-			$new_params = [];
-			$separator  = ' ';
+			$newParams = [];
+			$separator = ' ';
 
 			if (strpos($params, ',') !== false)
 			{
@@ -222,14 +194,14 @@ class Cell
 			{
 				if (! empty($p))
 				{
-					list($key, $val)        = explode('=', $p);
-					$new_params[trim($key)] = trim($val, ', ');
+					list($key, $val)       = explode('=', $p);
+					$newParams[trim($key)] = trim($val, ', ');
 				}
 			}
 
-			$params = $new_params;
+			$params = $newParams;
 
-			unset($new_params);
+			unset($newParams);
 		}
 
 		if (is_array($params) && empty($params))

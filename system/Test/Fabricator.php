@@ -1,46 +1,22 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Fabricator
@@ -60,7 +36,7 @@ class Fabricator
 	/**
 	 * Locale-specific Faker instance
 	 *
-	 * @var \Faker\Generator
+	 * @var Generator
 	 */
 	protected $faker;
 
@@ -81,7 +57,7 @@ class Fabricator
 	/**
 	 * Map of properties and their formatter to use
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	protected $formatters;
 
@@ -122,7 +98,7 @@ class Fabricator
 	 * @param array|null    $formatters Array of property => formatter
 	 * @param string|null   $locale     Locale for Faker provider
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($model, array $formatters = null, string $locale = null)
 	{
@@ -134,7 +110,7 @@ class Fabricator
 
 		if (! is_object($model))
 		{
-			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
+			throw new InvalidArgumentException(lang('Fabricator.invalidModel'));
 		}
 
 		$this->model = $model;
@@ -249,7 +225,7 @@ class Fabricator
 	/**
 	 * Returns the Faker generator
 	 *
-	 * @return Faker\Generator
+	 * @return Generator
 	 */
 	public function getFaker(): Generator
 	{
@@ -352,7 +328,7 @@ class Fabricator
 	/**
 	 * Guess at the correct formatter to match a field name.
 	 *
-	 * @param $field  Name of the field
+	 * @param string $field Name of the field
 	 *
 	 * @return string  Name of the formatter
 	 */
@@ -364,27 +340,22 @@ class Fabricator
 			$this->faker->getFormatter($field);
 			return $field;
 		}
-		catch (\InvalidArgumentException $e)
+		catch (InvalidArgumentException $e)
 		{
 			// No match, keep going
 		}
 
 		// Next look for known model fields
-		if (in_array($field, $this->dateFields))
+		if (in_array($field, $this->dateFields, true))
 		{
 			switch ($this->model->dateFormat)
 			{
 				case 'datetime':
 					return 'date';
-				break;
-
 				case 'date':
 					return 'date';
-				break;
-
 				case 'int':
 					return 'unixTime';
-				break;
 			}
 		}
 		elseif ($field === $this->model->primaryKey)
@@ -446,7 +417,7 @@ class Fabricator
 	 *
 	 * @return array  An array of faked data
 	 *
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function makeArray()
 	{
@@ -480,7 +451,7 @@ class Fabricator
 		// Nothing left to do but give up
 		else
 		{
-			throw new \RuntimeException(lang('Fabricator.missingFormatters'));
+			throw new RuntimeException(lang('Fabricator.missingFormatters'));
 		}
 
 		// Replace overridden fields
@@ -494,7 +465,7 @@ class Fabricator
 	 *
 	 * @return object  An instance of the class with faked data
 	 *
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function makeObject(string $className = null): object
 	{
@@ -552,11 +523,12 @@ class Fabricator
 	/**
 	 * Generate new entities from the database
 	 *
-	 * @param integer|null $count    Optional number to create a collection
-	 * @param array        $override Array of data to add/override
-	 * @param boolean      $mock     Whether to execute or mock the insertion
+	 * @param integer|null $count Optional number to create a collection
+	 * @param boolean      $mock  Whether to execute or mock the insertion
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 *
+	 * @throws FrameworkException
 	 */
 	public function create(int $count = null, bool $mock = false)
 	{
@@ -575,7 +547,10 @@ class Fabricator
 			{
 				$ids[] = $id;
 				self::upCount($this->model->table);
+				continue;
 			}
+
+			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', $this->model->errors() ?? []));
 		}
 
 		// If the model defines a "withDeleted" method for handling soft deletes then use it
@@ -611,13 +586,13 @@ class Fabricator
 
 		if (! empty($this->model->useTimestamps))
 		{
-			$fields[$this->model->createdField] = $datetime;
-			$fields[$this->model->updatedField] = $datetime;
+			$fields[$this->model->createdField] = $datetime; // @phpstan-ignore-line
+			$fields[$this->model->updatedField] = $datetime; // @phpstan-ignore-line
 		}
 
 		if (! empty($this->model->useSoftDeletes))
 		{
-			$fields[$this->model->deletedField] = null;
+			$fields[$this->model->deletedField] = null; // @phpstan-ignore-line
 		}
 
 		// Iterate over new entities and add the necessary fields

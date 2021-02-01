@@ -1,0 +1,98 @@
+# When a new Release is created, deploy relevant
+# files to each of the generated repos.
+name: Deploy Framework
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  framework:
+    name: Deploy to framework
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Identify
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          path: source
+
+      - name: Checkout target
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/framework
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: framework
+
+      - name: Chmod
+        run: chmod +x ./source/.github/scripts/deploy-framework
+
+      - name: Deploy
+        run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
+
+      - name: Release
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.ACCESS_TOKEN}}
+          script: |
+            const release = await github.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+            github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: 'framework',
+              tag_name: release.data.tag_name,
+              name: release.data.name,
+              body: release.data.body
+            })
+
+  appstarter:
+    name: Deploy to appstarter
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Identify
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          path: source
+
+      - name: Checkout target
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/appstarter
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: appstarter
+
+      - name: Chmod
+        run: chmod +x ./source/.github/scripts/deploy-appstarter
+
+      - name: Deploy
+        run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
+
+      - name: Release
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.ACCESS_TOKEN}}
+          script: |
+            const release = await github.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+            github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: 'appstarter',
+              tag_name: release.data.tag_name,
+              name: release.data.name,
+              body: release.data.body
+            })

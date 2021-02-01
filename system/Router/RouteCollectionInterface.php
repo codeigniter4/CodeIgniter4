@@ -1,43 +1,17 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Router;
+
+use Closure;
 
 /**
  * Interface RouteCollectionInterface
@@ -48,12 +22,9 @@ namespace CodeIgniter\Router;
  *
  * The RouteCollection provides the Router with the routes so that it can determine
  * which controller should be ran.
- *
- * @package CodeIgniter\Router
  */
 interface RouteCollectionInterface
 {
-
 	/**
 	 * Adds a single route to the collection.
 	 *
@@ -88,7 +59,7 @@ interface RouteCollectionInterface
 	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */
@@ -100,7 +71,7 @@ interface RouteCollectionInterface
 	 * Sets the default controller to use when no other controller has been
 	 * specified.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */
@@ -112,7 +83,7 @@ interface RouteCollectionInterface
 	 * Sets the default method to call on the controller when no other
 	 * method has been set in the route.
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return mixed
 	 */
@@ -170,7 +141,7 @@ interface RouteCollectionInterface
 	 * Returns the 404 Override setting, which can be null, a closure
 	 * or the controller/string.
 	 *
-	 * @return string|\Closure|null
+	 * @return string|Closure|null
 	 */
 	public function get404Override();
 

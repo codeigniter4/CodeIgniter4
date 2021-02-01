@@ -29,7 +29,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -41,6 +41,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$config = array_merge($config, $userConfig);
@@ -81,6 +82,11 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 				$this->request   = $request;
 				$this->response  = $response;
 				$this->formatter = $formatter;
+			}
+
+			public function resetFormatter()
+			{
+				$this->formatter = null;
 			}
 		};
 
@@ -465,7 +471,7 @@ EOH;
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -477,6 +483,7 @@ EOH;
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
@@ -511,10 +518,23 @@ EOH;
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
+		$this->assertEquals($this->formatter->format($data), $this->response->getJSON());
 
 		$controller->setResponseFormat('xml');
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
+	}
+
+	public function testXMLResponseFormat()
+	{
+		$data       = ['foo' => 'bar'];
+		$controller = $this->makeController();
+		$controller->resetFormatter();
+		$controller->setResponseFormat('xml');
+		$controller->respond($data, 201);
+
+		$xmlFormatter = new XMLFormatter();
+		$this->assertEquals($xmlFormatter->format($data), $this->response->getXML());
 	}
 }

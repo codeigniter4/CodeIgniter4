@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
@@ -7,9 +9,9 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class MetadataTest extends CIDatabaseTestCase
 {
-	protected $refresh = true;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected $refresh = true;
+	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	/**
 	 * Array of expected tables.
@@ -29,15 +31,17 @@ class MetadataTest extends CIDatabaseTestCase
 			$prefix . 'user',
 			$prefix . 'job',
 			$prefix . 'misc',
+			$prefix . 'type_test',
 			$prefix . 'empty',
 			$prefix . 'secondary',
 			$prefix . 'stringifypkey',
+			$prefix . 'without_auto_increment',
 		];
 	}
 
 	public function testListTables()
 	{
-		$result = $this->db->listTables();
+		$result = $this->db->listTables(true);
 
 		$this->assertEquals($this->expectedTables, array_values($result));
 	}
@@ -88,5 +92,4 @@ class MetadataTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 }

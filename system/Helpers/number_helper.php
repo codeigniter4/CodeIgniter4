@@ -1,46 +1,18 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 1.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
+use Config\Services;
 
 /**
  * CodeIgniter Number Helpers
- *
- * @package CodeIgniter
  */
 
 if (! function_exists('number_to_size'))
@@ -59,16 +31,16 @@ if (! function_exists('number_to_size'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
-		catch (\ErrorException $ee)
+		catch (ErrorException $ee)
 		{
 			return false;
 		}
 
 		// ignore sub part
 		$generalLocale = $locale;
-		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
+		if (! empty($locale) && ($underscorePos = strpos($locale, '_')))
 		{
 			$generalLocale = substr($locale, 0, $underscorePos);
 		}
@@ -128,9 +100,9 @@ if (! function_exists('number_to_amount'))
 		// Strip any formatting & ensure numeric input
 		try
 		{
-			$num = 0 + str_replace(',', '', $num);
+			$num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
 		}
-		catch (\ErrorException $ee)
+		catch (ErrorException $ee)
 		{
 			return false;
 		}
@@ -139,7 +111,7 @@ if (! function_exists('number_to_amount'))
 
 		// ignore sub part
 		$generalLocale = $locale;
-		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
+		if (! empty($locale) && ($underscorePos = strpos($locale, '_')))
 		{
 			$generalLocale = substr($locale, 0, $underscorePos);
 		}
@@ -154,17 +126,17 @@ if (! function_exists('number_to_amount'))
 			$suffix = lang('Number.trillion', [], $generalLocale);
 			$num    = round(($num / 1000000000000), $precision);
 		}
-		else if ($num > 1000000000)
+		elseif ($num > 1000000000)
 		{
 			$suffix = lang('Number.billion', [], $generalLocale);
 			$num    = round(($num / 1000000000), $precision);
 		}
-		else if ($num > 1000000)
+		elseif ($num > 1000000)
 		{
 			$suffix = lang('Number.million', [], $generalLocale);
 			$num    = round(($num / 1000000), $precision);
 		}
-		else if ($num > 1000)
+		elseif ($num > 1000)
 		{
 			$suffix = lang('Number.thousand', [], $generalLocale);
 			$num    = round(($num / 1000), $precision);
@@ -214,7 +186,7 @@ if (! function_exists('format_number'))
 	function format_number(float $num, int $precision = 1, string $locale = null, array $options = []): string
 	{
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
-		$locale = $locale ?? \Config\Services::request()->getLocale();
+		$locale = $locale ?? Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
 		$type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);
@@ -285,19 +257,19 @@ if (! function_exists('number_to_roman'))
 			$key2   = null;
 			switch ($th) {
 				case 1:
-					$key1  = 'I';
-					$key2  = 'V';
-					$key_f = 'X';
+					$key1 = 'I';
+					$key2 = 'V';
+					$keyF = 'X';
 					break;
 				case 2:
-					$key1  = 'X';
-					$key2  = 'L';
-					$key_f = 'C';
+					$key1 = 'X';
+					$key2 = 'L';
+					$keyF = 'C';
 					break;
 				case 3:
-					$key1  = 'C';
-					$key2  = 'D';
-					$key_f = 'M';
+					$key1 = 'C';
+					$key2 = 'D';
+					$keyF = 'M';
 					break;
 				case 4:
 					$key1 = 'M';
@@ -322,12 +294,12 @@ if (! function_exists('number_to_roman'))
 					$return = $key2 . str_repeat($key1, $n - 5);
 					break;
 				case 9:
-					$return = $key1 . $key_f;
+					$return = $key1 . $keyF; // @phpstan-ignore-line
 					break;
 			}
 			switch ($num) {
 				case 10:
-					$return = $key_f;
+					$return = $keyF; // @phpstan-ignore-line
 					break;
 			}
 			if ($num > 10)

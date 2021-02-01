@@ -120,7 +120,7 @@ introduction to all of the cache headers power, but you can get a good understan
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
 circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
-to set the Cache values to what you need, though, through the ``setCache()`` method::
+to set the Cache values to what you need, through the ``setCache()`` method::
 
 	$options = [
 		'max-age'  => 300,
@@ -303,14 +303,14 @@ The methods provided by the parent class that are available are:
 
 			$response->setStatusCode(230, "Tardis initiated");
 
-	.. php:method:: getReason()
+	.. php:method:: getReasonPhrase()
 
 		:returns: The current reason phrase.
 		:rtype: string
 
 		Returns the current status code for this response. If not status has been set, will return an empty string::
 
-			echo $response->getReason();
+			echo $response->getReasonPhrase();
 
 	.. php:method:: setDate($date)
 
@@ -396,7 +396,7 @@ The methods provided by the parent class that are available are:
 		followed by the response body. For the main application response, you do not need to call
 		this as it is handled automatically by CodeIgniter.
 
-	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE]]]]]]])
+	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE[, $samesite = null]]]]]]]])
 
 		:param	mixed	$name: Cookie name or an array of parameters
 		:param	string	$value: Cookie value
@@ -406,6 +406,8 @@ The methods provided by the parent class that are available are:
 		:param	string	$prefix: Cookie name prefix
 		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
+		:param	string	$samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to `null`, the default value from `config/App.php` will be used
+
 		:rtype:	void
 
 		Sets a cookie containing the values you specify. There are two ways to
@@ -425,7 +427,8 @@ The methods provided by the parent class that are available are:
 				'path'   => '/',
 				'prefix' => 'myprefix_',
 				'secure' => TRUE,
-                                'httponly' => FALSE
+				'httponly' => FALSE,
+				'samesite' => 'Lax'
 			];
 
 			$response->setCookie($cookie);
@@ -452,12 +455,17 @@ The methods provided by the parent class that are available are:
 		The secure boolean is only needed if you want to make it a secure cookie
 		by setting it to TRUE.
 
+		The SameSite value controls how cookies are shared between domains and sub-domains.
+		Allowed values are 'None', 'Lax', 'Strict' or a blank string ``''``.
+		If set to blank string, no SameSite attribute will be set on the cookie sent to the client.
+		If set to ``null``, the default from ``config/App.php`` is used.
+
 		**Discrete Parameters**
 
 		If you prefer, you can set the cookie by passing data using individual
 		parameters::
 
-			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly, $samesite);
 
 	.. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
@@ -528,7 +536,7 @@ The methods provided by the parent class that are available are:
 
     .. php:method:: getCookies()
 
-        :rtype array
+        :rtype: array
 
         Returns all cookies currently set within the Response instance.
         These are any cookies that you have specifically specified to set during the current

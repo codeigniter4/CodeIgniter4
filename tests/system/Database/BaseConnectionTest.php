@@ -14,8 +14,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'DBPrefix' => 'test_',
 		'pConnect' => true,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => 'my/cacheDir',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -35,8 +33,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'DBPrefix' => 'test_',
 		'pConnect' => true,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => 'my/cacheDir',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -59,8 +55,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('MockDriver', $db->DBDriver);
 		$this->assertTrue($db->pConnect);
 		$this->assertTrue($db->DBDebug);
-		$this->assertFalse($db->cacheOn);
-		$this->assertSame('my/cacheDir', $db->cacheDir);
 		$this->assertSame('utf8', $db->charset);
 		$this->assertSame('utf8_general_ci', $db->DBCollat);
 		$this->assertSame('', $db->swapPre);

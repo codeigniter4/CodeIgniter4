@@ -8,7 +8,7 @@ Highlights:
 There are some breaking changes...
 
 - The Entity class has been refactored;
-- The Model class changing has been updated to better handle soft deletes 
+- The Model class changing has been updated to better handle soft deletes
 - The routing has been beefed up
 
 New messages:
@@ -27,129 +27,130 @@ The list of changed files follows, with PR numbers shown.
 - admin/
 
 - app/
-	- Controllers/
-		- Home #1999
+    - Controllers/
+        - Home #1999
 
 - public/
 
 - system/
-	- Autoloader/
-		- FileLocator #2059, #2064
-	- Cache/
-		- CacheFactory #2060
-		- Handlers/
-			- MemcachedHandler #2060
-			- PredisHandler #2060
-			- RedisHandler #2060
-	- Commands/
-		- Utilities/Routes #2008
-	- Config/
-		- Config #2079
-		- Services #2024
-	- Database/
-		- MySQLi/
-			- Connection #2042
-			- Result #2011
-		- Postgre/
-			- Connection #2042
-			- Result #2011
-		- SQLite3/
-			- Connection #2042
-			- Forge #2042
-			- Result #2011
-			- Table #2042
-		- BaseBuilder #1989
-		- BaseConnection #2042
-		- BaseResult #2002
-		- Forge #2042
-		- MigratiopnRollback #2035
-		- MigrationRunner #2019
-	- Debug/
-		- Toolbar/Collectors/Routes #2030
-	- Exceptions.
-		- ModelException #2054
-	- Files/
-		- File #2104
-	- Filters/
-		- Filters #2039	- helpers/
-		- date_helper #2091
-	- HTTP/
-		- CLIRequest #2024
-		- CURLRequest #1996, #2050
-		- IncomingRequest #2063
-		- Request #2024
-	- Language/en/
-		- Database #2054
-	- Pager/
-		- Pager #2026
-	- Router/
-		- RouteCollection #1959, #2012, #2024
-		- Router #2024, #2031, #2043
-		- RouterInterface #2024
-	- Session/
-		- Handlers/ArrayHandler #2014
-	- Test/
-		- CIUnitTestCase #2002
-		- FeatureTestCase #2043
-	- Throttle/
-		- Throttler #2074
-	- CodeIgniter #2012, #2024
-	- Common #2036
-	- Entity #2002, #2004, #2011, #2081
-	- Model #2050, #2051, #2053, #2054
+    - Autoloader/
+        - FileLocator #2059, #2064
+    - Cache/
+        - CacheFactory #2060
+        - Handlers/
+            - MemcachedHandler #2060
+            - PredisHandler #2060
+            - RedisHandler #2060
+    - Commands/
+        - Utilities/Routes #2008
+    - Config/
+        - Config #2079
+        - Services #2024
+    - Database/
+        - MySQLi/
+            - Connection #2042
+            - Result #2011
+        - Postgre/
+            - Connection #2042
+            - Result #2011
+        - SQLite3/
+            - Connection #2042
+            - Forge #2042
+            - Result #2011
+            - Table #2042
+        - BaseBuilder #1989
+        - BaseConnection #2042
+        - BaseResult #2002
+        - Forge #2042
+        - MigratiopnRollback #2035
+        - MigrationRunner #2019
+    - Debug/
+        - Toolbar/Collectors/Routes #2030
+    - Exceptions.
+        - ModelException #2054
+    - Files/
+        - File #2104
+    - Filters/
+        - Filters #2039
+    - helpers/
+        - date_helper #2091
+    - HTTP/
+        - CLIRequest #2024
+        - CURLRequest #1996, #2050
+        - IncomingRequest #2063
+        - Request #2024
+    - Language/en/
+        - Database #2054
+    - Pager/
+        - Pager #2026
+    - Router/
+        - RouteCollection #1959, #2012, #2024
+        - Router #2024, #2031, #2043
+        - RouterInterface #2024
+    - Session/
+        - Handlers/ArrayHandler #2014
+    - Test/
+        - CIUnitTestCase #2002
+        - FeatureTestCase #2043
+    - Throttle/
+        - Throttler #2074
+    - CodeIgniter #2012, #2024
+    - Common #2036
+    - Entity #2002, #2004, #2011, #2081
+    - Model #2050, #2051, #2053, #2054
 
 - tests/system/
-	- CLI/
-		- ConsoleTest #2024
-	- Database/
-		- Live/
-			- DbUtilsTest #2051, #2053
-			- ForgeTest #2019, #2042
-			- ModelTest #2002, #2051, #2053, #2054
-			- SQLite/AlterTablesTest #2042
-			- WhereTest #2052
-		- Migrations/MigrationRunnerTest #2019
-	- HTTP/
-		- CLIRequest #2024
-		- CURLRequestTest #1996
-	- Router/
-		- RouteCollectionTest #1959, #2012, #2024
-		- RouterTest #2024, #2043
-	- Test/
-		- FeatureTestCaseTest #2043
-	- Throttle/
-		- ThrottleTest #2074
-	- View/
-		- ParserTest #2005
-	- CodeIgniterTest #2024
-	- EntityTest #2002, #2004
+    - CLI/
+        - ConsoleTest #2024
+    - Database/
+        - Live/
+            - DbUtilsTest #2051, #2053
+            - ForgeTest #2019, #2042
+            - ModelTest #2002, #2051, #2053, #2054
+            - SQLite/AlterTablesTest #2042
+            - WhereTest #2052
+        - Migrations/MigrationRunnerTest #2019
+    - HTTP/
+        - CLIRequest #2024
+        - CURLRequestTest #1996
+    - Router/
+        - RouteCollectionTest #1959, #2012, #2024
+        - RouterTest #2024, #2043
+    - Test/
+        - FeatureTestCaseTest #2043
+    - Throttle/
+        - ThrottleTest #2074
+    - View/
+        - ParserTest #2005
+    - CodeIgniterTest #2024
+    - EntityTest #2002, #2004
 
 - user_guide_src/
-	- concepts/
-		- autoloader #2035, #2071
-	- database/
-		- query_builder #2035
-	- dbmgmt/
-		- forge #2042
-		- migration #2042
-	- helpers/
-		- date_helper #2091
-	- incoming/
-		- routing #2035
-	- installation/
-		- installing_composer #2015, #2035
-	- libraries/
-		- pagination #2026
-		- sessions #2014, #2035
-		- validaiton #2069
-		- uploaded_files #2104
-	- models/
-		- entitites #2002, #2004, #2035
-		- model #2051, #2053, #2054
-	- outgoing/
-		- view_parser #e21823, 32005
-	- testing/
-		- database #2051, #2053
+    - concepts/
+        - autoloader #2035, #2071
+    - database/
+        - query_builder #2035
+    - dbmgmt/
+        - forge #2042
+        - migration #2042
+    - helpers/
+        - date_helper #2091
+    - incoming/
+        - routing #2035
+    - installation/
+        - installing_composer #2015, #2035
+    - libraries/
+        - pagination #2026
+        - sessions #2014, #2035
+        - validaiton #2069
+        - uploaded_files #2104
+    - models/
+        - entitites #2002, #2004, #2035
+        - model #2051, #2053, #2054
+    - outgoing/
+        - view_parser #e21823, 32005
+    - testing/
+        - database #2051, #2053
 
 
 PRs merged:

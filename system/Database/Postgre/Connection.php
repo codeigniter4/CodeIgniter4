@@ -1,59 +1,32 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use ErrorException;
+use stdClass;
 
 /**
  * Connection for Postgre
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
-
 	/**
 	 * Database driver
 	 *
 	 * @var string
 	 */
-	public $DBDriver = 'postgre';
+	public $DBDriver = 'Postgre';
 
 	//--------------------------------------------------------------------
 
@@ -172,7 +145,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
-		if (! $this->connID || ( $pgVersion = pg_version($this->connID)) === false)
+		// @phpstan-ignore-next-line
+		if (! $this->connID || ($pgVersion = pg_version($this->connID)) === false)
 		{
 			$this->initialize();
 		}
@@ -195,7 +169,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return pg_query($this->connID, $sql);
 		}
-		catch (\ErrorException $e)
+		catch (ErrorException $e)
 		{
 			log_message('error', $e);
 			if ($this->DBDebug)
@@ -235,11 +209,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || (is_object($str) && method_exists($str, '__toString')))
 		{
 			return pg_escape_literal($this->connID, $str);
 		}
-		elseif (is_bool($str))
+
+		if (is_bool($str))
 		{
 			return $str ? 'TRUE' : 'FALSE';
 		}
@@ -302,7 +277,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape($this->DBPrefix . strtolower($table));
+				. $this->escape($this->DBPrefix . strtolower($table))
+				. ' ORDER BY "ordinal_position"';
 	}
 
 	//--------------------------------------------------------------------
@@ -311,7 +287,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -319,7 +295,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape(strtolower($table));
+				. $this->escape(strtolower($table))
+				. ' ORDER BY "ordinal_position"';
 
 		if (($query = $this->query($sql)) === false)
 		{
@@ -330,7 +307,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i ++)
 		{
-			$retVal[$i]             = new \stdClass();
+			$retVal[$i]             = new stdClass();
 			$retVal[$i]->name       = $query[$i]->column_name;
 			$retVal[$i]->type       = $query[$i]->data_type;
 			$retVal[$i]->default    = $query[$i]->column_default;
@@ -346,7 +323,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _indexData(string $table): array
@@ -365,7 +342,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj         = new \stdClass();
+			$obj         = new stdClass();
 			$obj->name   = $row->indexname;
 			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
 			$obj->fields = array_map(function ($v) {
@@ -393,7 +370,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _foreignKeyData(string $table): array
@@ -419,7 +396,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj                      = new \stdClass();
+			$obj                      = new stdClass();
 			$obj->constraint_name     = $row->constraint_name;
 			$obj->table_name          = $row->table_name;
 			$obj->column_name         = $row->column_name;
@@ -479,9 +456,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Insert ID
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	public function insertID(): int
+	public function insertID()
 	{
 		$v = pg_version($this->connID);
 		// 'server' key is only available since PostgreSQL 7.4
@@ -530,7 +507,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' || $this->DSN = '';
+		$this->DSN === '' || $this->DSN = ''; // @phpstan-ignore-line
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)
@@ -561,7 +538,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		// array, but they might be set by parse_url() if the configuration was
 		// provided via string> Example:
 		//
-		// postgre://username:password@localhost:5432/database?connect_timeout=5&sslmode=1
+		// Postgre://username:password@localhost:5432/database?connect_timeout=5&sslmode=1
 		foreach (['connect_timeout', 'options', 'sslmode', 'service'] as $key)
 		{
 			if (isset($this->{$key}) && is_string($this->{$key}) && $this->{$key} !== '')

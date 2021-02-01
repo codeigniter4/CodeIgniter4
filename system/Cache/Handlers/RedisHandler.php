@@ -1,53 +1,26 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
+use Config\Cache;
+use Redis;
+use RedisException;
 
 /**
  * Redis cache handler
  */
-class RedisHandler implements CacheInterface
+class RedisHandler extends BaseHandler
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -71,7 +44,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Redis connection
 	 *
-	 * @var \Redis
+	 * @var Redis
 	 */
 	protected $redis;
 
@@ -80,11 +53,11 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Cache $config
+	 * @param Cache $config
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = (string) $config->prefix;
 
 		if (! empty($config))
 		{
@@ -99,7 +72,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function __destruct()
 	{
-		if ($this->redis)
+		if ($this->redis) // @phpstan-ignore-line
 		{
 			$this->redis->close();
 		}
@@ -114,7 +87,7 @@ class RedisHandler implements CacheInterface
 	{
 		$config = $this->config;
 
-		$this->redis = new \Redis();
+		$this->redis = new Redis();
 
 		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
 		// so that the CacheFactory can attempt to initiate the next cache handler.
@@ -142,7 +115,7 @@ class RedisHandler implements CacheInterface
 				throw new CriticalError('Cache: Redis select database failed.');
 			}
 		}
-		catch (\RedisException $e)
+		catch (RedisException $e)
 		{
 			// $this->redis->connect() can sometimes throw a RedisException.
 			// We need to convert the exception into a CriticalError exception and throw it.
@@ -202,7 +175,7 @@ class RedisHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		switch ($data_type = gettype($value))
+		switch ($dataType = gettype($value))
 		{
 			case 'array':
 			case 'object':
@@ -219,11 +192,12 @@ class RedisHandler implements CacheInterface
 				return false;
 		}
 
-		if (! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hMSet($key, ['__ci_type' => $dataType, '__ci_value' => $value]))
 		{
 			return false;
 		}
-		elseif ($ttl)
+
+		if ($ttl)
 		{
 			$this->redis->expireAt($key, time() + $ttl);
 		}

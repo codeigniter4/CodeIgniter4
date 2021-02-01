@@ -59,13 +59,15 @@ Creating Your Model
 To take advantage of CodeIgniter's model, you would simply create a new model class
 that extends ``CodeIgniter\Model``::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
     class UserModel extends Model
     {
-
+        // ...
     }
 
 This empty class provides convenient access to the database connection, the Query Builder,
@@ -81,7 +83,9 @@ This ensures that within the model any references to ``$this->db`` are made thro
 connection.
 ::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
@@ -100,7 +104,9 @@ The model class has a few configuration options that can be set to allow the cla
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
@@ -108,6 +114,8 @@ what table to use and how we can find the required records::
     {
         protected $table      = 'users';
         protected $primaryKey = 'id';
+
+        protected $useAutoIncrement = true;
 
         protected $returnType     = 'array';
         protected $useSoftDeletes = true;
@@ -138,6 +146,16 @@ is used with methods like ``find()`` to know what column to match the specified 
 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
+
+**$useAutoIncrement**
+
+Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
+then you are responsible for providing primary key value for every record in the table. This 
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
+
+.. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
+    key in the database to ``unique``. This way you will make sure that all of Model's features
+    will still work the same as before.
 
 **$returnType**
 
@@ -175,8 +193,8 @@ data type.
 
 **$createdField**
 
-Specifies which database field should use for keep data record create timestamp.
-Leave it empty to avoid update it (even useTimestamps is enabled)
+Specifies which database field to use for data record create timestamp.
+Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled)
 
 **$updatedField**
 
@@ -656,9 +674,12 @@ Working With Query Builder
 You can get access to a shared instance of the Query Builder for that model's database connection any time you
 need it::
 
-	$builder = $userModel->builder();
+    $builder = $userModel->builder();
 
-This builder is already set up with the model's $table.
+This builder is already set up with the model's $table. If you need access to another table
+you can pass it in as a parameter, but be aware that this will not return a shared instance::
+
+    $groupBuilder = $userModel->builder('groups');
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::
@@ -720,7 +741,7 @@ Model Events
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
-**$beforeUpdate**, **afterUpdate**, **afterFind**, and **afterDelete**.
+**$beforeUpdate**, **$afterUpdate**, **$afterFind**, and **$afterDelete**.
 
 Defining Callbacks
 ------------------
@@ -756,12 +777,12 @@ use the same callback in multiple events::
 
 Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
 
-	protected $allowCallbacks = false;
+    protected $allowCallbacks = false;
 
 You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method::
 
-	$model->allowCallbacks(false)->find(1); // No callbacks triggered
-	$model->find(1);                        // Callbacks subject to original property value
+    $model->allowCallbacks(false)->find(1); // No callbacks triggered
+    $model->find(1);                        // Callbacks subject to original property value
 
 Event Parameters
 ----------------
@@ -777,29 +798,47 @@ beforeInsert      **data** = the key/value pairs that are being inserted. If an 
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
-beforeUpdate      **id** = the primary key of the row being updated.
+beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
-afterUpdate       **id** = the primary key of the row being updated.
+afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
-afterFind         Varies by find* method. See the following:
+beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
+- first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
-                  **data** = The resulting row of data, or null if no result found.
-- findAll()       **data** = the resulting rows of data, or null if no result found.
-                  **limit** = the number of rows to find.
+- findAll()       **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
-- first()         **data** = the resulting row found during the search, or null if none found.
+afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
 ================ =========================================================================================================
 
+Modifying Find* Data
+--------------------
+
+The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
+from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
+to the calling context. In order for ``beforeFind`` to intercept the find workflow it must also return an additional
+boolean, ``returnData``::
+
+    protected $beforeFind = ['checkCache'];
+    // ...
+    protected function checkCache(array $data)
+    {
+        // Check if the requested item is already in our cache
+        if (isset($data['id']) && $item = $this->getCachedItem($data['id']]))
+        {
+            $data['data']       = $item;
+            $data['returnData'] = true;
+
+            return $data;
+    // ...
 
 Manual Model Creation
 =====================
@@ -810,7 +849,9 @@ Model gives you out of the box, and create a fully custom experience.
 
 ::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Database\ConnectionInterface;
 
@@ -820,6 +861,6 @@ Model gives you out of the box, and create a fully custom experience.
 
         public function __construct(ConnectionInterface &$db)
         {
-            $this->db =& $db;
+            $this->db = &$db;
         }
     }

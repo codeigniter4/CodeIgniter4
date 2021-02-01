@@ -1,57 +1,26 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
+use Config\View as ViewConfig;
+use ParseError;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class Parser
- *
- *  ClassFormerlyKnownAsTemplateParser
- *
- * @package CodeIgniter\View
+ * Class for parsing pseudo-vars
  */
 class Parser extends View
 {
-
 	/**
 	 * Left delimiter character for pseudo vars
 	 *
@@ -93,13 +62,13 @@ class Parser extends View
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View    $config
+	 * @param ViewConfig      $config
 	 * @param string          $viewPath
 	 * @param mixed           $loader
 	 * @param boolean         $debug
 	 * @param LoggerInterface $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		// Ensure user plugins override core plugins.
 		$this->plugins = $config->plugins ?? [];
@@ -148,13 +117,14 @@ class Parser extends View
 
 		if (! is_file($file))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
-		}
+			$fileOrig = $file;
+			$file     = $this->loader->locateFile($view, 'Views');
 
-		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
-		{
-			throw ViewException::forInvalidFile($file);
+			// locateFile will return an empty string if the file cannot be found.
+			if (empty($file))
+			{
+				throw ViewException::forInvalidFile($fileOrig);
+			}
 		}
 
 		if (is_null($this->tempData))
@@ -173,7 +143,7 @@ class Parser extends View
 		// Should we cache?
 		if (isset($options['cache']))
 		{
-			cache()->save($cacheName, $output, (int) $options['cache']);
+			cache()->save($cacheName, $output, (int) $options['cache']); // @phpstan-ignore-line
 		}
 		$this->tempData = null;
 		return $output;
@@ -333,7 +303,7 @@ class Parser extends View
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#ms';
+		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#ms';
 
 		return [$pattern => $val];
 	}
@@ -359,8 +329,8 @@ class Parser extends View
 		// Find all matches of space-flexible versions of {tag}{/tag} so we
 		// have something to loop over.
 		preg_match_all(
-				'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
-				$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
+			'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
+			$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
 		);
 
 		/*
@@ -383,9 +353,9 @@ class Parser extends View
 					$row = $row->toArray();
 				}
 				// Otherwise, cast as an array and it will grab public properties.
-				else if (is_object($row))
+				elseif (is_object($row))
 				{
-					$row = (array)$row;
+					$row = (array) $row;
 				}
 
 				$temp  = [];
@@ -400,37 +370,39 @@ class Parser extends View
 
 						if (! empty($pair))
 						{
-							$pairs[array_keys( $pair )[0]] = true;
-							$temp                          = array_merge($temp, $pair);
+							$pairs[array_keys($pair)[0]] = true;
+
+							$temp = array_merge($temp, $pair);
 						}
 
 						continue;
 					}
-					else if (is_object($val))
+
+					if (is_object($val))
 					{
 						$val = 'Class: ' . get_class($val);
 					}
-					else if (is_resource($val))
+					elseif (is_resource($val))
 					{
 						$val = 'Resource';
 					}
 
-					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
+					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = $this->replaceSingle($pattern, $content, $out, ! isset( $pairs[$pattern] ) );
+					$out = $this->replaceSingle($pattern, $content, $out, ! isset($pairs[$pattern]));
 				}
 
 				$str .= $out;
 			}
 
 			//Escape | character from filters as it's handled as OR in regex
-			$escaped_match = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
+			$escapedMatch = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
 
-			$replace['#' . $escaped_match . '#s'] = $str;
+			$replace['#' . $escapedMatch . '#s'] = $str;
 		}
 
 		return $replace;
@@ -558,7 +530,7 @@ class Parser extends View
 		{
 			eval('?>' . $template . '<?php ');
 		}
-		catch (\ParseError $e)
+		catch (ParseError $e)
 		{
 			ob_end_clean();
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
@@ -589,21 +561,28 @@ class Parser extends View
 	 * Handles replacing a pseudo-variable with the actual content. Will double-check
 	 * for escaping brackets.
 	 *
-	 * @param $pattern
-	 * @param $content
-	 * @param $template
-	 * @param boolean  $escape
+	 * @param mixed   $pattern
+	 * @param string  $content
+	 * @param string  $template
+	 * @param boolean $escape
 	 *
 	 * @return string
 	 */
 	protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
 	{
-		// Any dollar signs in the pattern will be mis-interpreted, so slash them
+		// Any dollar signs in the pattern will be misinterpreted, so slash them
 		$pattern = addcslashes($pattern, '$');
+
+		// Flesh out the main pattern from the delimiters and escape the hash
+		// See https://regex101.com/r/1GIHTa/1
+		if (preg_match('/^(#)(.*)(#(m?s)?)$/', $pattern, $parts))
+		{
+			$pattern = $parts[1] . addcslashes($parts[2], '#') . $parts[3];
+		}
 
 		// Replace the content in the template
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
-			// Check for {! !} syntax to not-escape this one.
+			// Check for {! !} syntax to not escape this one.
 			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) === '!}')
 			{
 				$escape = false;
@@ -632,9 +611,9 @@ class Parser extends View
 
 		// Our regex earlier will leave all chained values on a single line
 		// so we need to break them apart so we can apply them all.
-		$filters = isset($matches[0]) ? explode('|', $matches[0]) : [];
+		$filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
 
-		if ($escape && ! isset($matches[0]))
+		if ($escape && empty($filters))
 		{
 			if ($context = $this->shouldAddEscaping($orig))
 			{
@@ -747,9 +726,7 @@ class Parser extends View
 
 	/**
 	 * Scans the template for any parser plugins, and attempts to execute them.
-	 * Plugins are notated based on {+ +} opening and closing braces.
-	 *
-	 * When encountered,
+	 * Plugins are delimited by {+ ... +}
 	 *
 	 * @param string $template
 	 *
@@ -763,7 +740,10 @@ class Parser extends View
 			$isPair   = is_array($callable);
 			$callable = $isPair ? array_shift($callable) : $callable;
 
-			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}#ims';
+			// See https://regex101.com/r/BCBBKB/1
+			$pattern = $isPair
+				? '#\{\+\s*' . $plugin . '([\w=\-_:\+\s\(\)/"@.]*)?\s*\+\}(.+?)\{\+\s*/' . $plugin . '\s*\+\}#ims'
+				: '#\{\+\s*' . $plugin . '([\w=\-_:\+\s\(\)/"@.]*)?\s*\+\}#ims';
 
 			/**
 			 * Match tag pairs
@@ -773,9 +753,7 @@ class Parser extends View
 			 *   $matches[1] = all parameters string in opening tag
 			 *   $matches[2] = content between the tags to send to the plugin.
 			 */
-			preg_match_all($pattern, $template, $matches, PREG_SET_ORDER);
-
-			if (empty($matches))
+			if (! preg_match_all($pattern, $template, $matches, PREG_SET_ORDER))
 			{
 				continue;
 			}
@@ -785,9 +763,11 @@ class Parser extends View
 				$params = [];
 
 				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)|(\"[^"]+\")|(\S+)/', trim($match[1]), $matchesParams);
+
 				foreach ($matchesParams[0] as $item)
 				{
 					$keyVal = explode('=', $item);
+
 					if (count($keyVal) === 2)
 					{
 						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
@@ -798,7 +778,9 @@ class Parser extends View
 					}
 				}
 
-				$template = $isPair ? str_replace($match[0], $callable($match[2], $params), $template) : str_replace($match[0], $callable($params), $template);
+				$template = $isPair
+					? str_replace($match[0], $callable($match[2], $params), $template)
+					: str_replace($match[0], $callable($params), $template);
 			}
 		}
 
@@ -842,7 +824,7 @@ class Parser extends View
 	 * Converts an object to an array, respecting any
 	 * toArray() methods on an object.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return mixed
 	 */
@@ -855,9 +837,9 @@ class Parser extends View
 			$value = $value->toArray();
 		}
 		// Otherwise, cast as an array and it will grab public properties.
-		else if (is_object($value))
+		elseif (is_object($value))
 		{
-			$value = (array)$value;
+			$value = (array) $value;
 		}
 
 		return $value;

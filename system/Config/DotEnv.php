@@ -1,50 +1,23 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Config;
+
+use InvalidArgumentException;
 
 /**
  * Environment-specific configuration
  */
 class DotEnv
 {
-
 	/**
 	 * The directory where the .env file can be located.
 	 *
@@ -99,7 +72,7 @@ class DotEnv
 		// Ensure the file is readable
 		if (! is_readable($this->path))
 		{
-			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
+			throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
 
 		$vars = [];
@@ -142,10 +115,12 @@ class DotEnv
 		{
 			putenv("$name=$value");
 		}
+
 		if (empty($_ENV[$name]))
 		{
 			$_ENV[$name] = $value;
 		}
+
 		if (empty($_SERVER[$name]))
 		{
 			$_SERVER[$name] = $value;
@@ -165,7 +140,7 @@ class DotEnv
 	 */
 	public function normaliseVariable(string $name, string $value = ''): array
 	{
-		// Split our compound string into it's parts.
+		// Split our compound string into its parts.
 		if (strpos($name, '=') !== false)
 		{
 			list($name, $value) = explode('=', $name, 2);
@@ -181,12 +156,6 @@ class DotEnv
 		$value = $this->sanitizeValue($value);
 
 		$value = $this->resolveNestedVariables($value);
-
-		// Handle hex2bin prefix
-              if ($name === 'encryption.key' && strpos($value, 'hex2bin:') === 0)
-		{
-			$value = hex2bin(substr($value, 8));
-		}
 
 		return [
 			$name,
@@ -205,7 +174,7 @@ class DotEnv
 	 * @param string $value
 	 *
 	 * @return string
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function sanitizeValue(string $value): string
 	{
@@ -233,9 +202,10 @@ class DotEnv
 					.*$           # and discard any string after the closing quote
 					/mx', $quote
 			);
-			$value        = preg_replace($regexPattern, '$1', $value);
-			$value        = str_replace("\\$quote", $quote, $value);
-			$value        = str_replace('\\\\', '\\', $value);
+
+			$value = preg_replace($regexPattern, '$1', $value);
+			$value = str_replace("\\$quote", $quote, $value);
+			$value = str_replace('\\\\', '\\', $value);
 		}
 		else
 		{
@@ -246,7 +216,7 @@ class DotEnv
 			// Unquoted values cannot contain whitespace
 			if (preg_match('/\s+/', $value) > 0)
 			{
-				throw new \InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
+				throw new InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
 			}
 		}
 
@@ -264,7 +234,7 @@ class DotEnv
 	 * This was borrowed from the excellent phpdotenv with very few changes.
 	 * https://github.com/vlucas/phpdotenv
 	 *
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return string
 	 */
@@ -272,12 +242,10 @@ class DotEnv
 	{
 		if (strpos($value, '$') !== false)
 		{
-			$loader = $this;
-
 			$value = preg_replace_callback(
 				'/\${([a-zA-Z0-9_]+)}/',
-				function ($matchedPatterns) use ($loader) {
-					$nestedVariable = $loader->getVariable($matchedPatterns[1]);
+				function ($matchedPatterns) {
+					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 
 					if (is_null($nestedVariable))
 					{

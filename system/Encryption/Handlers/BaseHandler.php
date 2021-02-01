@@ -1,93 +1,58 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Encryption\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Encryption\EncrypterInterface;
+use Config\Encryption;
+use Psr\Log\LoggerInterface;
 
 /**
  * Base class for encryption handling
  */
-abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
+abstract class BaseHandler implements EncrypterInterface
 {
-
-	/**
-	 * Configuraiton passed from encryption manager
-	 *
-	 * @var string
-	 */
-	protected $config;
-
 	/**
 	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var \PSR\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
+	 * @param Encryption|null $config
 	 */
-	public function __construct(BaseConfig $config = null)
+	public function __construct(Encryption $config = null)
 	{
-		if (empty($config))
-		{
-			$config = new \Config\Encryption();
-		}
+		$config = $config ?? config('Encryption');
 
 		// make the parameters conveniently accessible
-		foreach ($config as $pkey => $value)
+		foreach (get_object_vars($config) as $key => $value)
 		{
-			$this->$pkey = $value;
+			if (property_exists($this, $key))
+			{
+				$this->{$key} = $value;
+			}
 		}
 	}
 
 	/**
 	 * Byte-safe substr()
 	 *
-	 * @param  string  $str
-	 * @param  integer $start
-	 * @param  integer $length
+	 * @param string  $str
+	 * @param integer $start
+	 * @param integer $length
+	 *
 	 * @return string
 	 */
 	protected static function substr($str, $start, $length = null)
@@ -103,7 +68,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['cipher', 'key'], true))
+		if ($this->__isset($key))
 		{
 			return $this->{$key};
 		}
@@ -119,6 +84,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function __isset($key): bool
 	{
-		return in_array($key, ['cipher', 'key'], true);
+		return property_exists($this, $key);
 	}
 }

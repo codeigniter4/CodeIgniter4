@@ -1,11 +1,13 @@
 <?php
+
 namespace Config;
 
+use CodeIgniter\Format\Format;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 
-class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
+class ServicesTest extends CIUnitTestCase
 {
-
 	protected $config;
 	protected $original;
 
@@ -14,15 +16,21 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		$this->original = $_SERVER;
-		//      $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
-		$this->config = new App();
-		//      $this->config->negotiateLocale = true;
-		//      $this->config->supportedLocales = ['en', 'es'];
+		$this->config   = new App();
 	}
 
 	public function tearDown(): void
 	{
 		$_SERVER = $this->original;
+		Services::reset();
+	}
+
+	public function testCanReplaceFrameworkServices()
+	{
+		$this->expectException('RuntimeException');
+		$this->expectExceptionMessage('Service originated from Tests\Support\Config\Services');
+
+		Services::uri('testCanReplaceFrameworkServices');
 	}
 
 	public function testNewAutoloader()
@@ -61,9 +69,15 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
 	}
 
-	public function testNewUnsharedEmail()
+	public function testNewUnsharedEmailWithEmptyConfig()
 	{
-		$actual = Services::email(null, true);
+		$actual = Services::email(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+	}
+
+	public function testNewUnsharedEmailWithNonEmptyConfig()
+	{
+		$actual = Services::email(new \Config\Email(), false);
 		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
 	}
 
@@ -275,6 +289,16 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Filters\Filters::class, $result);
 	}
 
+	public function testFormat()
+	{
+		$this->assertInstanceOf(Format::class, Services::format());
+	}
+
+	public function testUnsharedFormat()
+	{
+		$this->assertInstanceOf(Format::class, Services::format(null, false));
+	}
+
 	public function testHoneypot()
 	{
 		$result = Services::honeypot();
@@ -335,5 +359,4 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
 	}
-
 }

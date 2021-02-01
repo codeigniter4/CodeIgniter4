@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -95,6 +97,90 @@ class GetTest extends CIDatabaseTestCase
 
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
+
+		$type_test = $this->db->table('type_test')
+							  ->get()
+							  ->getFieldData();
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
+			$this->assertEquals('text', $type_test[1]->type_name);  //VARCHAR
+			$this->assertEquals('text', $type_test[2]->type_name);  //CHAR
+			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
+			$this->assertEquals('integer', $type_test[4]->type_name);  //SMALLINT
+			$this->assertEquals('integer', $type_test[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
+			$this->assertEquals('float', $type_test[7]->type_name);  //NUMERIC
+			$this->assertEquals('text', $type_test[8]->type_name);  //DATE
+			$this->assertEquals('text', $type_test[9]->type_name);  //TIME
+			$this->assertEquals('text', $type_test[10]->type_name);  //DATETIME
+			$this->assertEquals('text', $type_test[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('integer', $type_test[12]->type_name);  //BIGINT
+			$this->assertEquals('float', $type_test[13]->type_name);  //REAL
+			$this->assertEquals('text', $type_test[14]->type_name);  //ENUM
+			$this->assertEquals('text', $type_test[15]->type_name);  //SET
+			$this->assertEquals('text', $type_test[16]->type_name);  //MEDIUMTEXT
+			$this->assertEquals('float', $type_test[17]->type_name);  //DOUBLE
+			$this->assertEquals('float', $type_test[18]->type_name);  //DECIMAL
+			$this->assertEquals('text', $type_test[19]->type_name);  //BLOB
+		}
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$this->assertEquals('long', $type_test[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('var_string', $type_test[1]->type_name);  //VARCHAR
+			$this->assertEquals('string', $type_test[2]->type_name);  //CHAR
+			$this->assertEquals('blob', $type_test[3]->type_name);  //TEXT
+			$this->assertEquals('short', $type_test[4]->type_name);  //SMALLINT
+			$this->assertEquals('long', $type_test[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
+			$this->assertEquals('newdecimal', $type_test[7]->type_name);  //NUMERIC
+			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
+			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
+			$this->assertEquals('datetime', $type_test[10]->type_name);  //DATETIME
+			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('longlong', $type_test[12]->type_name); //BIGINT
+			$this->assertEquals('double', $type_test[13]->type_name);  //REAL
+			$this->assertEquals('string', $type_test[14]->type_name);  //ENUM
+			$this->assertEquals('string', $type_test[15]->type_name);  //SET
+			$this->assertEquals('blob', $type_test[16]->type_name);  //MEDIUMTEXT
+			$this->assertEquals('double', $type_test[17]->type_name);  //DOUBLE
+			$this->assertEquals('newdecimal', $type_test[18]->type_name);  //DECIMAL
+			$this->assertEquals('blob', $type_test[19]->type_name);  //BLOB
+		}
+		if ($this->db->DBDriver === 'Postgre')
+		{
+			$this->assertEquals('int4', $type_test[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
+			$this->assertEquals('bpchar', $type_test[2]->type_name);  //CHAR
+			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
+			$this->assertEquals('int2', $type_test[4]->type_name);  //SMALLINT
+			$this->assertEquals('int4', $type_test[5]->type_name);  //INTEGER
+			$this->assertEquals('float8', $type_test[6]->type_name);  //FLOAT
+			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
+			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
+			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
+			$this->assertEquals('timestamp', $type_test[10]->type_name);  //DATETIME
+			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
+		}
+		if ($this->db->DBDriver === 'SQLSRV')
+		{
+			$this->assertEquals('int', $type_test[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
+			$this->assertEquals('char', $type_test[2]->type_name);  //CHAR
+			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
+			$this->assertEquals('smallint', $type_test[4]->type_name);  //SMALLINT
+			$this->assertEquals('int', $type_test[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
+			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
+			$this->assertEquals(null, $type_test[8]->type_name);  //DATE
+			$this->assertEquals(null, $type_test[9]->type_name);  //TIME
+			$this->assertEquals(null, $type_test[10]->type_name);  //DATETIME
+			$this->assertEquals('bigint', $type_test[11]->type_name); //BIGINT
+			$this->assertEquals('real', $type_test[12]->type_name);  //REAL
+			$this->assertEquals('decimal', $type_test[13]->type_name);  //DECIMAL
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -229,6 +315,4 @@ class GetTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Richard A Causey', $user->name);
 	}
-
-	//--------------------------------------------------------------------
 }

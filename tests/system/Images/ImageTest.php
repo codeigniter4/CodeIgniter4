@@ -75,6 +75,13 @@ class ImageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($this->root->hasChild('new-logo.png'));
 	}
 
+	public function testCopyNewFolder()
+	{
+		$targetPath = $this->start . 'work/subfolder';
+		$this->image->copy($targetPath, 'new-logo.png');
+		$this->assertTrue($this->root->hasChild('work/subfolder/new-logo.png'));
+	}
+
 	public function testCopyNowhere()
 	{
 		$this->expectException(ImageException::class);

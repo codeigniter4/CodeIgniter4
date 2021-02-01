@@ -5,14 +5,14 @@ CodeIgniter URLs
 By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
 "query-string" approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a **segment-based** approach::
 
-	example.com/news/article/my_article
+    example.com/news/article/my_article
 
 URI Segments
 ============
 
 The segments in the URL, in following with the Model-View-Controller approach, usually represent::
 
-	example.com/class/method/ID
+    example.com/class/method/ID
 
 1. The first segment represents the controller **class** that should be invoked.
 2. The second segment represents the class **method** that should be called.
@@ -27,7 +27,7 @@ Removing the index.php file
 
 By default, the **index.php** file will be included in your URLs::
 
-	example.com/index.php/news/article/my_article
+    example.com/index.php/news/article/my_article
 
 If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.
@@ -41,10 +41,10 @@ items:
 
 .. code-block:: apache
 
-	RewriteEngine On
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php/$1 [L]
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
 
 In this example, any HTTP request other than those for existing directories and existing files are treated as a
 request for your index.php file.
@@ -61,9 +61,9 @@ the above Apache configuration:
 
 .. code-block:: nginx
 
-	location / {
-		try_files $uri $uri/ /index.php$is_args$args;
-	}
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
 
 This will first look for a file or directory matching the URI (constructing the full path to each file from the
 settings of the root and alias directives), and then sends the request to the index.php file along with any arguments.

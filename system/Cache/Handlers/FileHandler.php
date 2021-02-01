@@ -1,53 +1,24 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
+use Config\Cache;
 
 /**
  * File system cache handler
  */
-class FileHandler implements CacheInterface
+class FileHandler extends BaseHandler
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -62,24 +33,44 @@ class FileHandler implements CacheInterface
 	 */
 	protected $path;
 
+	/**
+	 * Mode for the stored files.
+	 * Must be chmod-safe (octal).
+	 *
+	 * @var integer
+	 *
+	 * @see https://www.php.net/manual/en/function.chmod.php
+	 */
+	protected $mode;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param  \Config\Cache $config
+	 * @param  Cache $config
 	 * @throws CacheException
 	 */
-	public function __construct($config)
+	public function __construct(Cache $config)
 	{
-		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
-		if (! is_really_writable($path))
+		if (! property_exists($config, 'file'))
 		{
-			throw CacheException::forUnableToWrite($path);
+			$config->file = [
+				'storePath' => $config->storePath ?? WRITEPATH . 'cache',
+				'mode'      => 0640,
+			];
 		}
 
-		$this->prefix = $config->prefix ?: '';
-		$this->path   = rtrim($path, '/') . '/';
+		$this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
+		$this->path = rtrim($this->path, '/') . '/';
+
+		if (! is_really_writable($this->path))
+		{
+			throw CacheException::forUnableToWrite($this->path);
+		}
+
+		$this->mode   = $config->file['mode'] ?? 0640;
+		$this->prefix = (string) $config->prefix;
 	}
 
 	//--------------------------------------------------------------------
@@ -133,7 +124,7 @@ class FileHandler implements CacheInterface
 
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path . $key, 0640);
+			chmod($this->path . $key, $this->mode);
 
 			return true;
 		}
@@ -185,9 +176,9 @@ class FileHandler implements CacheInterface
 			return false;
 		}
 
-		$new_value = $data['data'] + $offset;
+		$newValue = $data['data'] + $offset;
 
-		return $this->save($key, $new_value, $data['ttl']) ? $new_value : false;
+		return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -218,9 +209,9 @@ class FileHandler implements CacheInterface
 			return false;
 		}
 
-		$new_value = $data['data'] - $offset;
+		$newValue = $data['data'] - $offset;
 
-		return $this->save($key, $new_value, $data['ttl']) ? $new_value : false;
+		return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -320,6 +311,7 @@ class FileHandler implements CacheInterface
 
 		$data = unserialize(file_get_contents($this->path . $key));
 
+		// @phpstan-ignore-next-line
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
 			// If the file is still there then remove it
@@ -381,30 +373,30 @@ class FileHandler implements CacheInterface
 	 * If the second parameter is set to TRUE, any directories contained
 	 * within the supplied base directory will be nuked as well.
 	 *
-	 * @param string  $path    File path
-	 * @param boolean $del_dir Whether to delete any directories found in the path
-	 * @param boolean $htdocs  Whether to skip deleting .htaccess and index page files
-	 * @param integer $_level  Current directory depth level (default: 0; internal use only)
+	 * @param string  $path   File path
+	 * @param boolean $delDir Whether to delete any directories found in the path
+	 * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
+	 * @param integer $_level Current directory depth level (default: 0; internal use only)
 	 *
 	 * @return boolean
 	 */
-	protected function deleteFiles(string $path, bool $del_dir = false, bool $htdocs = false, int $_level = 0): bool
+	protected function deleteFiles(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
 	{
 		// Trim the trailing slash
 		$path = rtrim($path, '/\\');
 
-		if (! $current_dir = @opendir($path))
+		if (! $currentDir = @opendir($path))
 		{
 			return false;
 		}
 
-		while (false !== ($filename = @readdir($current_dir)))
+		while (false !== ($filename = @readdir($currentDir)))
 		{
 			if ($filename !== '.' && $filename !== '..')
 			{
 				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
-					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $del_dir, $htdocs, $_level + 1);
+					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
 				}
 				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
@@ -413,9 +405,9 @@ class FileHandler implements CacheInterface
 			}
 		}
 
-		closedir($current_dir);
+		closedir($currentDir);
 
-		return ($del_dir === true && $_level > 0) ? @rmdir($path) : true;
+		return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
 	}
 
 	//--------------------------------------------------------------------
@@ -428,37 +420,37 @@ class FileHandler implements CacheInterface
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $source_dir     Path to source
-	 * @param boolean $top_level_only Look only at the top level directory specified?
-	 * @param boolean $_recursion     Internal variable to determine recursion status - do not use in calls
+	 * @param string  $sourceDir    Path to source
+	 * @param boolean $topLevelOnly Look only at the top level directory specified?
+	 * @param boolean $_recursion   Internal variable to determine recursion status - do not use in calls
 	 *
 	 * @return array|false
 	 */
-	protected function getDirFileInfo(string $source_dir, bool $top_level_only = true, bool $_recursion = false)
+	protected function getDirFileInfo(string $sourceDir, bool $topLevelOnly = true, bool $_recursion = false)
 	{
 		static $_filedata = [];
-		$relative_path    = $source_dir;
+		$relativePath     = $sourceDir;
 
-		if ($fp = @opendir($source_dir))
+		if ($fp = @opendir($sourceDir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($_recursion === false)
 			{
-				$_filedata  = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$_filedata = [];
+				$sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
 			while (false !== ($file = readdir($fp)))
 			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+				if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false)
 				{
-					$this->getDirFileInfo($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
+					$this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
 				}
 				elseif ($file[0] !== '.')
 				{
-					$_filedata[$file]                  = $this->getFileInfo($source_dir . $file);
-					$_filedata[$file]['relative_path'] = $relative_path;
+					$_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
+					$_filedata[$file]['relative_path'] = $relativePath;
 				}
 			}
 
@@ -480,24 +472,24 @@ class FileHandler implements CacheInterface
 	 * Options are: name, server_path, size, date, readable, writable, executable, fileperms
 	 * Returns FALSE if the file cannot be found.
 	 *
-	 * @param string $file            Path to file
-	 * @param mixed  $returned_values Array or comma separated string of information returned
+	 * @param string $file           Path to file
+	 * @param mixed  $returnedValues Array or comma separated string of information returned
 	 *
 	 * @return array|false
 	 */
-	protected function getFileInfo(string $file, $returned_values = ['name', 'server_path', 'size', 'date'])
+	protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
 	{
 		if (! is_file($file))
 		{
 			return false;
 		}
 
-		if (is_string($returned_values))
+		if (is_string($returnedValues))
 		{
-			$returned_values = explode(',', $returned_values);
+			$returnedValues = explode(',', $returnedValues);
 		}
 
-		foreach ($returned_values as $key)
+		foreach ($returnedValues as $key)
 		{
 			switch ($key)
 			{
@@ -528,7 +520,7 @@ class FileHandler implements CacheInterface
 			}
 		}
 
-		return $fileInfo;
+		return $fileInfo; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------

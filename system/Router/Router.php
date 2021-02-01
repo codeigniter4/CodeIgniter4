@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Router;
@@ -49,11 +21,10 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class Router implements RouterInterface
 {
-
 	/**
 	 * A RouteCollection instance.
 	 *
-	 * @var RouteCollection
+	 * @var RouteCollectionInterface
 	 */
 	protected $collection;
 
@@ -61,7 +32,7 @@ class Router implements RouterInterface
 	 * Sub-directory that contains the requested controller class.
 	 * Primarily used by 'autoRoute'.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $directory;
 
@@ -127,7 +98,7 @@ class Router implements RouterInterface
 	 * The filter info from Route Collection
 	 * if the matched route should be filtered.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $filterInfo;
 
@@ -146,6 +117,7 @@ class Router implements RouterInterface
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
 
+		// @phpstan-ignore-next-line
 		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
@@ -155,8 +127,8 @@ class Router implements RouterInterface
 	 * @param string|null $uri
 	 *
 	 * @return mixed|string
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \CodeIgniter\Exceptions\PageNotFoundException
+	 * @throws RedirectException
+	 * @throws PageNotFoundException
 	 */
 	public function handle(string $uri = null)
 	{
@@ -173,6 +145,9 @@ class Router implements RouterInterface
 
 		// Decode URL-encoded string
 		$uri = urldecode($uri);
+
+		// Restart filterInfo
+		$this->filterInfo = null;
 
 		if ($this->checkRoutes($uri))
 		{
@@ -229,7 +204,7 @@ class Router implements RouterInterface
 	 * Returns the name of the method to run in the
 	 * chosen container.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function methodName(): string
 	{
@@ -273,7 +248,7 @@ class Router implements RouterInterface
 	 * during the parsing process as an array, ready to send to
 	 * instance->method(...$params).
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function params(): array
 	{
@@ -328,9 +303,9 @@ class Router implements RouterInterface
 	 * something like mod_rewrite to remove the page. This allows you to set
 	 * it a blank.
 	 *
-	 * @param $page
+	 * @param string $page
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function setIndexPage($page): self
 	{
@@ -391,15 +366,11 @@ class Router implements RouterInterface
 	 * @param string $uri The URI path to compare against the routes
 	 *
 	 * @return boolean Whether the route was matched or not.
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @throws RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
-
-		$uri = $uri === '/'
-			? $uri
-			: ltrim($uri, '/ ');
 
 		// Don't waste any time
 		if (empty($routes))
@@ -407,9 +378,16 @@ class Router implements RouterInterface
 			return false;
 		}
 
+		$uri = $uri === '/'
+			? $uri
+			: ltrim($uri, '/ ');
+
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			// Reset localeSegment
+			$localeSegment = null;
+
 			$key = $key === '/'
 				? $key
 				: ltrim($key, '/ ');
@@ -419,7 +397,7 @@ class Router implements RouterInterface
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key));
+				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key), true);
 
 				// Replace it with a regex so it
 				// will actually match.
@@ -442,7 +420,6 @@ class Router implements RouterInterface
 					// The following may be inefficient, but doesn't upset NetBeans :-/
 					$temp                 = (explode('/', $uri));
 					$this->detectedLocale = $temp[$localeSegment];
-					unset($localeSegment);
 				}
 
 				// Are we using Closures? If so, then we need
@@ -485,7 +462,7 @@ class Router implements RouterInterface
 					[
 						$controller,
 						$method,
-					] = explode( '::', $val );
+					] = explode('::', $val);
 
 					// Only replace slashes in the controller, not in the method.
 					$controller = str_replace('/', '\\', $controller);
@@ -552,11 +529,13 @@ class Router implements RouterInterface
 		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $defaultNamespace;
+			$controller = '\\' . $defaultNamespace;
+
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $controllerName;
-			$controller  = strtolower($controller);
-			$methodName  = strtolower($this->methodName());
+
+			$controller = strtolower($controller);
+			$methodName = strtolower($this->methodName());
 
 			foreach ($this->collection->getRoutes('cli') as $route)
 			{
@@ -603,12 +582,13 @@ class Router implements RouterInterface
 	protected function validateRequest(array $segments): array
 	{
 		$segments = array_filter($segments, function ($segment) {
+			// @phpstan-ignore-next-line
 			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
 		});
 		$segments = array_values($segments);
 
-		$c                  = count($segments);
-		$directory_override = isset($this->directory);
+		$c                 = count($segments);
+		$directoryOverride = isset($this->directory);
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
@@ -616,7 +596,7 @@ class Router implements RouterInterface
 		{
 			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
+			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directoryOverride === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
 			{
 				$this->setDirectory(array_shift($segments), true);
 				continue;

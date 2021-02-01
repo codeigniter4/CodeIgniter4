@@ -130,7 +130,7 @@ Several core placeholders exist that will be automatically expanded for you base
 +----------------+---------------------------------------------------+
 | {session_vars} | $_SESSION variables                               |
 +----------------+---------------------------------------------------+
-| {env}          | Current environment name, i.e. development        |
+| {env}          | Current environment name, i.e., development       |
 +----------------+---------------------------------------------------+
 | {file}         | The name of file calling the logger               |
 +----------------+---------------------------------------------------+
@@ -152,11 +152,3 @@ like Composer. Next, you should modify ``/app/Config/Services.php`` to point the
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.
-
-LoggerAware Trait
-=================
-
-If you would like to implement your libraries in a framework-agnostic method, you can use
-the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
-Then, when you use your library under different environments for frameworks, your library should
-still be able to log as it would expect, as long as it can find a PSR3 compatible logger.

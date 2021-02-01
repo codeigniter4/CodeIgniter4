@@ -97,16 +97,16 @@ one row, it returns only the first row. The result is returned as an
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter::
 
-	$row = $query->getRow(5);
+    $row = $query->getRow(5);
 
 You can also add a second String parameter, which is the name of a class
 to instantiate the row with::
 
-	$query = $db->query("SELECT * FROM users LIMIT 1;");
-	$row = $query->getRow(0, 'User');
+    $query = $db->query("SELECT * FROM users LIMIT 1;");
+    $row = $query->getRow(0, 'User');
 
-	echo $row->name; // access attributes
-	echo $row->reverse_name(); // or methods defined on the 'User' class
+    echo $row->name; // access attributes
+    echo $row->reverse_name(); // or methods defined on the 'User' class
 
 **getRowArray()**
 
@@ -127,27 +127,27 @@ Example::
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter::
 
-	$row = $query->getRowArray(5);
+    $row = $query->getRowArray(5);
 
 In addition, you can walk forward/backwards/first/last through your
 results using these variations:
 
-	| **$row = $query->getFirstRow()**
-	| **$row = $query->getLastRow()**
-	| **$row = $query->getNextRow()**
-	| **$row = $query->getPreviousRow()**
+    | **$row = $query->getFirstRow()**
+    | **$row = $query->getLastRow()**
+    | **$row = $query->getNextRow()**
+    | **$row = $query->getPreviousRow()**
 
 By default they return an object unless you put the word "array" in the
 parameter:
 
-	| **$row = $query->getFirstRow('array')**
-	| **$row = $query->getLastRow('array')**
-	| **$row = $query->getNextRow('array')**
-	| **$row = $query->getPreviousRow('array')**
+    | **$row = $query->getFirstRow('array')**
+    | **$row = $query->getLastRow('array')**
+    | **$row = $query->getNextRow('array')**
+    | **$row = $query->getPreviousRow('array')**
 
 .. note:: All the methods above will load the whole result into memory
-	(prefetching). Use ``getUnbufferedRow()`` for processing large
-	result sets.
+    (prefetching). Use ``getUnbufferedRow()`` for processing large
+    result sets.
 
 **getUnbufferedRow()**
 
@@ -169,9 +169,9 @@ it returns the current row and moves the internal data pointer ahead.
 You can optionally pass 'object' (default) or 'array' in order to specify
 the returned value's type::
 
-	$query->getUnbufferedRow();         // object
-	$query->getUnbufferedRow('object'); // object
-	$query->getUnbufferedRow('array');  // associative array
+    $query->getUnbufferedRow();         // object
+    $query->getUnbufferedRow('object'); // object
+    $query->getUnbufferedRow('array');  // associative array
 
 *********************
 Custom Result Objects
@@ -186,35 +186,35 @@ then you should provide a ``__set()`` method to allow them to be set.
 
 Example::
 
-	class User
-	{
-		public $id;
-		public $email;
-		public $username;
+    class User
+    {
+        public $id;
+        public $email;
+        public $username;
 
-		protected $last_login;
+        protected $last_login;
 
-		public function lastLogin($format)
-		{
-			return $this->lastLogin->format($format);
-		}
+        public function lastLogin($format)
+        {
+            return $this->lastLogin->format($format);
+        }
 
-		public function __set($name, $value)
-		{
-			if ($name === 'lastLogin')
-			{
-				$this->lastLogin = DateTime::createFromFormat('U', $value);
-			}
-		}
+        public function __set($name, $value)
+        {
+            if ($name === 'lastLogin')
+            {
+                $this->lastLogin = DateTime::createFromFormat('U', $value);
+            }
+        }
 
-		public function __get($name)
-		{
-			if (isset($this->$name))
-			{
-				return $this->$name;
-			}
-		}
-	}
+        public function __get($name)
+        {
+            if (isset($this->$name))
+            {
+                return $this->$name;
+            }
+        }
+    }
 
 In addition to the two methods listed below, the following methods also can
 take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
@@ -227,16 +227,16 @@ The only parameter is the name of the class to instantiate.
 
 Example::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	$rows = $query->getCustomResultObject('User');
+    $rows = $query->getCustomResultObject('User');
 
-	foreach ($rows as $row)
-	{
-		echo $row->id;
-		echo $row->email;
-		echo $row->last_login('Y-m-d');
-	}
+    foreach ($rows as $row)
+    {
+        echo $row->id;
+        echo $row->email;
+        echo $row->last_login('Y-m-d');
+    }
 
 **getCustomRowObject()**
 
@@ -245,21 +245,21 @@ number of the results. The second parameter is the class name to instantiate.
 
 Example::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	$row = $query->getCustomRowObject(0, 'User');
+    $row = $query->getCustomRowObject(0, 'User');
 
-	if (isset($row))
-	{
-		echo $row->email;                 // access attributes
-		echo $row->last_login('Y-m-d');   // access class methods
-	}
+    if (isset($row))
+    {
+        echo $row->email;               // access attributes
+        echo $row->last_login('Y-m-d'); // access class methods
+    }
 
 You can also use the ``getRow()`` method in exactly the same way.
 
 Example::
 
-	$row = $query->getCustomRowObject(0, 'User');
+    $row = $query->getCustomRowObject(0, 'User');
 
 *********************
 Result Helper Methods
@@ -270,9 +270,9 @@ Result Helper Methods
 The number of FIELDS (columns) returned by the query. Make sure to call
 the method using your query result object::
 
-	$query = $db->query('SELECT * FROM my_table');
+    $query = $db->query('SELECT * FROM my_table');
 
-	echo $query->getFieldCount();
+    echo $query->getFieldCount();
 
 **getFieldNames()**
 
@@ -281,7 +281,20 @@ Make sure to call the method using your query result object::
 
     $query = $db->query('SELECT * FROM my_table');
 
-	echo $query->getFieldNames();
+    echo $query->getFieldNames();
+
+**getNumRows()**
+
+The number of records returned by the query. Make sure to call
+the method using your query result object::
+
+    $query = $db->query('SELECT * FROM my_table');
+
+    echo $query->getNumRows();
+
+.. note:: Because SQLite3 lacks an efficient method returning a record count,
+    CodeIgniter will fetch and buffer the query result records internally and
+    return a count of the resulting record array, which can be inefficient.
 
 **freeResult()**
 
@@ -293,20 +306,20 @@ result has been generated in order to cut down on memory consumption.
 
 Example::
 
-	$query = $thisdb->query('SELECT title FROM my_table');
+    $query = $thisdb->query('SELECT title FROM my_table');
 
-	foreach ($query->getResult() as $row)
-	{
-		echo $row->title;
-	}
+    foreach ($query->getResult() as $row)
+    {
+        echo $row->title;
+    }
 
-	$query->freeResult();  // The $query result object will no longer be available
+    $query->freeResult(); // The $query result object will no longer be available
 
-	$query2 = $db->query('SELECT name FROM some_table');
+    $query2 = $db->query('SELECT name FROM some_table');
 
-	$row = $query2->getRow();
-	echo $row->name;
-	$query2->freeResult(); // The $query2 result object will no longer be available
+    $row = $query2->getRow();
+    echo $row->name;
+    $query2->freeResult(); // The $query2 result object will no longer be available
 
 **dataSeek()**
 
@@ -318,12 +331,12 @@ TRUE on success or FALSE on failure.
 
 ::
 
-	$query = $db->query('SELECT `field_name` FROM `table_name`');
-	$query->dataSeek(5); // Skip the first 5 rows
-	$row = $query->getUnbufferedRow();
+    $query = $db->query('SELECT `field_name` FROM `table_name`');
+    $query->dataSeek(5); // Skip the first 5 rows
+    $row = $query->getUnbufferedRow();
 
 .. note:: Not all database drivers support this feature and will return FALSE.
-	Most notably - you won't be able to use it with PDO.
+    Most notably - you won't be able to use it with PDO.
 
 ***************
 Class Reference
@@ -331,179 +344,186 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Database\\BaseResult
 
-	.. php:method:: getResult([$type = 'object'])
+    .. php:method:: getResult([$type = 'object'])
 
-		:param	string	$type: Type of requested results - array, object, or class name
-		:returns:	Array containing the fetched rows
-		:rtype:	array
+        :param	string	$type: Type of requested results - array, object, or class name
+        :returns:	Array containing the fetched rows
+        :rtype:	array
 
-		A wrapper for the ``getResultArray()``, ``getResultObject()``
-		and ``getCustomResultObject()`` methods.
+        A wrapper for the ``getResultArray()``, ``getResultObject()``
+        and ``getCustomResultObject()`` methods.
 
-		Usage: see `Result Arrays`_.
+        Usage: see `Result Arrays`_.
 
-	.. php:method:: getResultArray()
+    .. php:method:: getResultArray()
 
-		:returns:	Array containing the fetched rows
-		:rtype:	array
+        :returns:	Array containing the fetched rows
+        :rtype:	array
 
-		Returns the query results as an array of rows, where each
-		row is itself an associative array.
+        Returns the query results as an array of rows, where each
+        row is itself an associative array.
 
-		Usage: see `Result Arrays`_.
+        Usage: see `Result Arrays`_.
 
-	.. php:method:: getResultObject()
+    .. php:method:: getResultObject()
 
-		:returns:	Array containing the fetched rows
-		:rtype:	array
+        :returns:	Array containing the fetched rows
+        :rtype:	array
 
-		Returns the query results as an array of rows, where each
-		row is an object of type ``stdClass``.
+        Returns the query results as an array of rows, where each
+        row is an object of type ``stdClass``.
 
-		Usage: see `Result Arrays`_.
+        Usage: see `Result Arrays`_.
 
-	.. php:method:: getCustomResultObject($class_name)
+    .. php:method:: getCustomResultObject($class_name)
 
-		:param	string	$class_name: Class name for the resulting rows
-		:returns:	Array containing the fetched rows
-		:rtype:	array
+        :param	string	$class_name: Class name for the resulting rows
+        :returns:	Array containing the fetched rows
+        :rtype:	array
 
-		Returns the query results as an array of rows, where each
-		row is an instance of the specified class.
+        Returns the query results as an array of rows, where each
+        row is an instance of the specified class.
 
-	.. php:method:: getRow([$n = 0[, $type = 'object']])
+    .. php:method:: getRow([$n = 0[, $type = 'object']])
 
-		:param	int	$n: Index of the query results row to be returned
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	The requested row or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	int	$n: Index of the query results row to be returned
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	The requested row or NULL if it doesn't exist
+        :rtype:	mixed
 
-		A wrapper for the ``getRowArray()``, ``getRowObject()`` and
-		``getCustomRowObject()`` methods.
+        A wrapper for the ``getRowArray()``, ``getRowObject()`` and
+        ``getCustomRowObject()`` methods.
 
-		Usage: see `Result Rows`_.
+        Usage: see `Result Rows`_.
 
-	.. php:method:: getUnbufferedRow([$type = 'object'])
+    .. php:method:: getUnbufferedRow([$type = 'object'])
 
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	Next row from the result set or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	Next row from the result set or NULL if it doesn't exist
+        :rtype:	mixed
 
-		Fetches the next result row and returns it in the
-		requested form.
+        Fetches the next result row and returns it in the
+        requested form.
 
-		Usage: see `Result Rows`_.
+        Usage: see `Result Rows`_.
 
-	.. php:method:: getRowArray([$n = 0])
+    .. php:method:: getRowArray([$n = 0])
 
-		:param	int	$n: Index of the query results row to be returned
-		:returns:	The requested row or NULL if it doesn't exist
-		:rtype:	array
+        :param	int	$n: Index of the query results row to be returned
+        :returns:	The requested row or NULL if it doesn't exist
+        :rtype:	array
 
-		Returns the requested result row as an associative array.
+        Returns the requested result row as an associative array.
 
-		Usage: see `Result Rows`_.
+        Usage: see `Result Rows`_.
 
-	.. php:method:: getRowObject([$n = 0])
+    .. php:method:: getRowObject([$n = 0])
 
-		:param	int	$n: Index of the query results row to be returned
+        :param	int	$n: Index of the query results row to be returned
                 :returns:	The requested row or NULL if it doesn't exist
-		:rtype:	stdClass
+        :rtype:	stdClass
 
-		Returns the requested result row as an object of type
-		``stdClass``.
+        Returns the requested result row as an object of type
+        ``stdClass``.
 
-		Usage: see `Result Rows`_.
+        Usage: see `Result Rows`_.
 
-	.. php:method:: getCustomRowObject($n, $type)
+    .. php:method:: getCustomRowObject($n, $type)
 
-		:param	int	$n: Index of the results row to return
-		:param	string	$class_name: Class name for the resulting row
-		:returns:	The requested row or NULL if it doesn't exist
-		:rtype:	$type
+        :param	int	$n: Index of the results row to return
+        :param	string	$class_name: Class name for the resulting row
+        :returns:	The requested row or NULL if it doesn't exist
+        :rtype:	$type
 
-		Returns the requested result row as an instance of the
-		requested class.
+        Returns the requested result row as an instance of the
+        requested class.
 
-	.. php:method:: dataSeek([$n = 0])
+    .. php:method:: dataSeek([$n = 0])
 
-		:param	int	$n: Index of the results row to be returned next
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+        :param	int	$n: Index of the results row to be returned next
+        :returns:	TRUE on success, FALSE on failure
+        :rtype:	bool
 
-		Moves the internal results row pointer to the desired offset.
+        Moves the internal results row pointer to the desired offset.
 
-		Usage: see `Result Helper Methods`_.
+        Usage: see `Result Helper Methods`_.
 
-	.. php:method:: setRow($key[, $value = NULL])
+    .. php:method:: setRow($key[, $value = NULL])
 
-		:param	mixed	$key: Column name or array of key/value pairs
-		:param	mixed	$value: Value to assign to the column, $key is a single field name
-		:rtype:	void
+        :param	mixed	$key: Column name or array of key/value pairs
+        :param	mixed	$value: Value to assign to the column, $key is a single field name
+        :rtype:	void
 
-		Assigns a value to a particular column.
+        Assigns a value to a particular column.
 
-	.. php:method:: getNextRow([$type = 'object'])
+    .. php:method:: getNextRow([$type = 'object'])
 
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	Next row of result set, or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	Next row of result set, or NULL if it doesn't exist
+        :rtype:	mixed
 
-		Returns the next row from the result set.
+        Returns the next row from the result set.
 
-	.. php:method:: getPreviousRow([$type = 'object'])
+    .. php:method:: getPreviousRow([$type = 'object'])
 
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	Previous row of result set, or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	Previous row of result set, or NULL if it doesn't exist
+        :rtype:	mixed
 
-		Returns the previous row from the result set.
+        Returns the previous row from the result set.
 
-	.. php:method:: getFirstRow([$type = 'object'])
+    .. php:method:: getFirstRow([$type = 'object'])
 
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	First row of result set, or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	First row of result set, or NULL if it doesn't exist
+        :rtype:	mixed
 
-		Returns the first row from the result set.
+        Returns the first row from the result set.
 
-	.. php:method:: getLastRow([$type = 'object'])
+    .. php:method:: getLastRow([$type = 'object'])
 
-		:param	string	$type: Type of the requested result - array, object, or class name
-		:returns:	Last row of result set, or NULL if it doesn't exist
-		:rtype:	mixed
+        :param	string	$type: Type of the requested result - array, object, or class name
+        :returns:	Last row of result set, or NULL if it doesn't exist
+        :rtype:	mixed
 
-		Returns the last row from the result set.
+        Returns the last row from the result set.
 
-	.. php:method:: getFieldCount()
+    .. php:method:: getFieldCount()
 
-		:returns:	Number of fields in the result set
-		:rtype:	int
+        :returns:	Number of fields in the result set
+        :rtype:	int
 
-		Returns the number of fields in the result set.
+        Returns the number of fields in the result set.
 
-		Usage: see `Result Helper Methods`_.
+        Usage: see `Result Helper Methods`_.
 
     .. php:method:: getFieldNames()
 
-		:returns:	Array of column names
-		:rtype:	array
+        :returns:	Array of column names
+        :rtype:	array
 
-		Returns an array containing the field names in the
-		result set.
+        Returns an array containing the field names in the
+        result set.
 
-	.. php:method:: getFieldData()
+    .. php:method:: getFieldData()
 
-		:returns:	Array containing field meta-data
-		:rtype:	array
+        :returns:	Array containing field meta-data
+        :rtype:	array
 
-		Generates an array of ``stdClass`` objects containing
-		field meta-data.
+        Generates an array of ``stdClass`` objects containing
+        field meta-data.
 
-	.. php:method:: freeResult()
+    .. php:method:: getNumRows()
 
-		:rtype:	void
+        :returns:	Number of rows in result set
+        :rtype:	int
 
-		Frees a result set.
+        Returns number of rows returned by the query
 
-		Usage: see `Result Helper Methods`_.
+    .. php:method:: freeResult()
+
+        :rtype:	void
+
+        Frees a result set.
+
+        Usage: see `Result Helper Methods`_.

@@ -308,6 +308,53 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGroupingWorksWithEmptyStringPrefix()
+	{
+		$routes = $this->getCollector();
+
+		$routes->group(
+				'', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
+		);
+
+		$expected = [
+			'users/list' => '\Users::list',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNestedGroupingWorksWithEmptyPrefix()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('verify/begin', '\VerifyController::begin');
+
+		$routes->group('admin', function ($routes) {
+			$routes->group(
+				'', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+					
+					$routes->group('delegate', function ($routes) {
+						$routes->add('foo', '\Users::foo');
+					});
+			});
+		});
+
+		$expected = [
+			'verify/begin'       => '\VerifyController::begin',
+			'admin/users/list'   => '\Users::list',
+			'admin/delegate/foo' => '\Users::foo'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testHostnameOption()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -1244,6 +1291,48 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$options = $routes->getRoutesOptions('administrator');
 
 		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
+	}
+
+	public function testRoutesOptionsForDifferentVerbs()
+	{
+		$routes = $this->getCollector();
+
+		// options need to be declared separately, to not confuse PHPCBF
+		$options1 = [
+			'as'  => 'admin1',
+			'foo' => 'baz1',
+		];
+		$options2 = [
+			'as'  => 'admin2',
+			'foo' => 'baz2',
+		];
+		$options3 = [
+			'bar' => 'baz',
+		];
+		$routes->get(
+				'administrator', function () {
+				}, $options1
+		);
+		$routes->post(
+				'administrator', function () {
+				}, $options2
+		);
+		$routes->add(
+				'administrator', function () {
+				}, $options3
+		);
+
+		$options = $routes->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz']);
+
+		$options = $routes->setHTTPVerb('post')->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
+
+		$options = $routes->setHTTPVerb('get')->getRoutesOptions('administrator', 'post');
+
+		$this->assertEquals($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
 	}
 
 	public function testRouteGroupWithFilterSimple()
