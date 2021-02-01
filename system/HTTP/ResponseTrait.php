@@ -106,7 +106,7 @@ trait ResponseTrait
 	 *
 	 * @deprecated Use the dedicated Cookie class instead.
 	 */
-	protected $cookieSameSite = 'Lax';
+	protected $cookieSameSite = Cookie::SAMESITE_LAX;
 
 	/**
 	 * Stores all cookies that were set in the response.

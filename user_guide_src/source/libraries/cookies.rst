@@ -2,7 +2,7 @@
 Cookies
 #######
 
-An **HTTP cookie** (_web cookie, browser cookie_) is a small piece of data that a
+An **HTTP cookie** (web cookie, browser cookie) is a small piece of data that a
 server sends to the user's web browser. The browser may store it and send it
 back with later requests to the same server. Typically, it's used to tell if
 two requests came from the same browser — keeping a user logged-in, for
@@ -316,7 +316,7 @@ To check whether a ``Cookie`` object exists in the ``CookieStore`` instance, you
     Services::response()->hasCookie('remember_token');
 
     // using the cookie helper to check the current Response
-    // not available to v4.0.5 and lower
+    // not available to v4.1.1 and lower
     helper('cookie');
     has_cookie('login_token');
 
@@ -447,18 +447,18 @@ Sane defaults are already in place inside the ``Cookie`` class to ensure the smo
 objects. However, you may wish to define your own settings by changing the following settings in the
 ``Config\App`` class in ``app/Config/App.php`` file.
 
-==================== ==================================== ========= =====================================================
-Setting              Options/ Types                       Default   Description
-==================== ==================================== ========= =====================================================
-**$cookiePrefix**    ``string``                           ``''``    Prefix to prepend to the cookie name.
-**$cookieDomain**    ``string``                           ``''``    The domain property of the cookie.
-**$cookiePath**      ``string``                           ``/``     The path property of the cookie, with trailing slash.
-**$cookieSecure**    ``true/false``                       ``false`` If to be sent over secure HTTPS.
-**$cookieHTTPOnly**  ``true/false``                       ``true``  If not accessible to JavaScript.
-**$cookieSameSite**  ``Lax|None|Strict|''``               ``Lax``   The SameSite attribute.
-**$cookieRaw**       ``true/false``                       ``false`` If to be dispatched using ``setrawcookie``.
-**$cookieExpires**   ``DateTimeInterface|string|int``     ``0``     The expires timestamp.
-==================== ==================================== ========= =====================================================
+==================== ===================================== ========= =====================================================
+Setting              Options/ Types                        Default   Description
+==================== ===================================== ========= =====================================================
+**$cookiePrefix**    ``string``                            ``''``    Prefix to prepend to the cookie name.
+**$cookieDomain**    ``string``                            ``''``    The domain property of the cookie.
+**$cookiePath**      ``string``                            ``/``     The path property of the cookie, with trailing slash.
+**$cookieSecure**    ``true/false``                        ``false`` If to be sent over secure HTTPS.
+**$cookieHTTPOnly**  ``true/false``                        ``true``  If not accessible to JavaScript.
+**$cookieSameSite**  ``Lax|None|Strict|lax|none|strict''`` ``Lax``   The SameSite attribute.
+**$cookieRaw**       ``true/false``                        ``false`` If to be dispatched using ``setrawcookie()``.
+**$cookieExpires**   ``DateTimeInterface|string|int``      ``0``     The expires timestamp.
+==================== ===================================== ========= =====================================================
 
 In runtime, you can manually supply a new default using the ``Cookie::setDefaults()`` method.
 

@@ -36,7 +36,7 @@ use LogicException;
  * $cookie2->getName(); // prod_cookie
  * ```
  */
-class Cookie implements ArrayAccess, ClonableCookieInterface
+class Cookie implements ArrayAccess, CloneableCookieInterface
 {
 	/**
 	 * @var boolean
@@ -611,7 +611,7 @@ class Cookie implements ArrayAccess, ClonableCookieInterface
 
 		$cookie = clone $this;
 
-		$cookie->sameSite = $sameSite;
+		$cookie->sameSite = ucfirst(strtolower($sameSite));
 
 		return $cookie;
 	}

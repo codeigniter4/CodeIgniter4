@@ -138,11 +138,11 @@ class Session implements SessionInterface
 	 * Cookie SameSite setting as described in RFC6265
 	 * Must be 'None', 'Lax' or 'Strict'.
 	 *
-	 * @var string 'Lax'|'None'|'Strict'
+	 * @var string
 	 *
 	 * @deprecated
 	 */
-	protected $cookieSameSite = 'Lax';
+	protected $cookieSameSite = Cookie::SAMESITE_LAX;
 
 	/**
 	 * sid regex expression
@@ -309,31 +309,17 @@ class Session implements SessionInterface
 
 		$sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
 
-		if (PHP_VERSION_ID < 70300)
-		{
-			session_set_cookie_params(
-				$this->sessionExpiration,
-				$this->cookie->getPath() . '; SameSite=' . $sameSite,
-				$this->cookie->getDomain(),
-				$this->cookie->isSecure(),
-				true // HTTP only; Yes, this is intentional and not configurable for security reasons.
-			);
-		}
-		else
-		{
-			// PHP 7.3 adds support for setting samesite in session_set_cookie_params()
-			$params = [
-				'lifetime' => $this->sessionExpiration,
-				'path'     => $this->cookie->getPath(),
-				'domain'   => $this->cookie->getDomain(),
-				'secure'   => $this->cookie->isSecure(),
-				'httponly' => true, // HTTP only; Yes, this is intentional and not configurable for security reasons.
-				'samesite' => $sameSite,
-			];
+		$params = [
+			'lifetime' => $this->sessionExpiration,
+			'path'     => $this->cookie->getPath(),
+			'domain'   => $this->cookie->getDomain(),
+			'secure'   => $this->cookie->isSecure(),
+			'httponly' => true, // HTTP only; Yes, this is intentional and not configurable for security reasons.
+			'samesite' => $sameSite,
+		];
 
-			ini_set('session.cookie_samesite', $sameSite);
-			session_set_cookie_params($params);
-		}
+		ini_set('session.cookie_samesite', $sameSite);
+		session_set_cookie_params($params);
 
 		if (! isset($this->sessionExpiration))
 		{

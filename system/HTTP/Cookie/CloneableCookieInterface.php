@@ -17,7 +17,7 @@ use DateTimeInterface;
  * Interface for a fresh Cookie instance with selected attribute(s)
  * only changed from the original instance.
  */
-interface ClonableCookieInterface extends CookieInterface
+interface CloneableCookieInterface extends CookieInterface
 {
 	/**
 	 * Creates a new Cookie with URL encoding option updated.

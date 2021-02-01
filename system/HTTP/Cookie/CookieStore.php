@@ -287,18 +287,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 */
 	protected function setRawCookie(string $name, string $value, array $options)
 	{
-		if (PHP_VERSION_ID < 70300)
-		{
-			$options['path'] .= '; SameSite=' . $options['samesite'];
-			unset($options['samesite']);
-
-			$options = array_values($options);
-			setrawcookie($name, $value, ...$options);
-		}
-		else
-		{
-			setrawcookie($name, $value, $options);
-		}
+		setrawcookie($name, $value, $options);
 	}
 
 	/**
@@ -314,17 +303,6 @@ class CookieStore implements Countable, IteratorAggregate
 	 */
 	protected function setCookie(string $name, string $value, array $options)
 	{
-		if (PHP_VERSION_ID < 70300)
-		{
-			$options['path'] .= '; SameSite=' . $options['samesite'];
-			unset($options['samesite']);
-
-			$options = array_values($options);
-			setcookie($name, $value, ...$options);
-		}
-		else
-		{
-			setcookie($name, $value, $options);
-		}
+		setcookie($name, $value, $options);
 	}
 }

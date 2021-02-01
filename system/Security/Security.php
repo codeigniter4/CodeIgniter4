@@ -110,11 +110,11 @@ class Security implements SecurityInterface
 	 *
 	 * @see https://portswigger.net/web-security/csrf/samesite-cookies
 	 *
-	 * @var string 'Lax'|'None'|'Strict'
+	 * @var string
 	 *
 	 * @deprecated
 	 */
-	protected $samesite = 'Lax';
+	protected $samesite = Cookie::SAMESITE_LAX;
 
 	/**
 	 * Constructor.
