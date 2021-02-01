@@ -1,9 +1,13 @@
 Version 4.1.0
 ====================================================
 
-Release Date: Not released
+Release Date: January 31, 2021
 
 **4.1.0 release of CodeIgniter4**
+
+Changes:
+
+- Dropped support for PHP 7.2
 
 Removed:
 
