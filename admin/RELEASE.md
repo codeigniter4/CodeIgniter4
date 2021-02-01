@@ -66,7 +66,9 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 
 ## Website
 
-Currently the User Guide on the website has to be updated manually. Process TBD.
+Currently the User Guide on the website has to be updated manually. Visit Jim's user home
+where the served directory **codeigniter.com** exists. Copy the latest **docs** folder from
+the User Guide repo into **public** and updated the symlink.
 
 ## Announcement
 
