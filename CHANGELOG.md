@@ -2,7 +2,18 @@
 
 ## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.5...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.0...HEAD)
+
+## [v4.1.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.0) (2021-01-31)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.5...v4.1.0)
+
+**Implemented enhancements:**
+
+- Rector 0.9 fixes [\#4196](https://github.com/codeigniter4/CodeIgniter4/issues/#4196)
+- Cannot declare class Config\App error on running PHPUnit [\#4114](https://github.com/codeigniter4/CodeIgniter4/issues/4114)
+- Backfill non-optional parameters (https://github.com/codeigniter4/CodeIgniter4/pull/3938)
+- Change deprecated assertFileNotExists (https://github.com/codeigniter4/CodeIgniter4/pull/3862)
 
 ## [v4.0.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.5) (2021-01-31)
 
