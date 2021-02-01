@@ -433,6 +433,16 @@ class PagerRenderer
 	}
 
 	/**
+	 * Returns total number of pages.
+	 *
+	 * @return integer
+	 */
+	public function getPageCount(): int
+	{
+		return $this->pageCount;
+	}
+
+	/**
 	 * Returns the previous page number.
 	 *
 	 * @return integer|null

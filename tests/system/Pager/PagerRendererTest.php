@@ -576,6 +576,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $pager->getFirstPageNumber());
 		$this->assertEquals(3, $pager->getCurrentPageNumber());
 		$this->assertEquals(10, $pager->getLastPageNumber());
+		$this->assertEquals(10, $pager->getPageCount());
 	}
 
 	public function testGetPageNumberSetSurroundCount()
