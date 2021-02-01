@@ -302,7 +302,10 @@ class CLI
 		$label      = $field;
 		$field      = 'temp';
 		$validation = Services::validation(null, false);
-		$validation->setRule($field, $label, $rules);
+		$validation->setRules([$field => [
+			'label' => $label,
+			'rules' => $rules,
+		]]);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
