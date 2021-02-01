@@ -44,7 +44,7 @@ interface MessageInterface
 	/**
 	 * Returns an array containing all Headers.
 	 *
-	 * @return array<string,Header> An array of the Header objects
+	 * @return array<string, Header> An array of the Header objects
 	 */
 	public function headers(): array;
 

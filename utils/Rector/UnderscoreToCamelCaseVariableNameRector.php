@@ -13,9 +13,9 @@ use Rector\BetterPhpDocParser\PhpDocManipulator\PropertyDocBlockManipulator;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
 use Rector\Core\RectorDefinition\CodeSample;
-use Rector\Core\RectorDefinition\RectorDefinition;
 use Rector\Core\Util\StaticRectorStrings;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * Adapted from https://github.com/rectorphp/rector/blob/4578e6d8490c1acfbf59bb17c4537a672fa77193/rules/naming/src/Rector/Variable/UnderscoreToCamelCaseVariableNameRector.php
@@ -48,9 +48,9 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 		$this->reservedKeywordAnalyzer     = $reservedKeywordAnalyzer;
 	}
 
-	public function getDefinition(): RectorDefinition
+	public function getRuleDefinition(): RuleDefinition
 	{
-		return new RectorDefinition('Change under_score names to camelCase', [
+		return new RuleDefinition('Change under_score names to camelCase', [
 			new CodeSample(
 				<<<'CODE_SAMPLE'
 final class SomeClass

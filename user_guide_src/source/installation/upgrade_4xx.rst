@@ -30,7 +30,7 @@ subforum for an up-to-date list!
 
 **Namespaces**
 
-- CI4 is built for PHP7.2+, and everything in the framework is namespaced, except for the helpers.
+- CI4 is built for PHP7.3+, and everything in the framework is namespaced, except for the helpers.
 
 **Application Structure**
 
