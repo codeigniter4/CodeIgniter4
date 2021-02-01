@@ -1,7 +1,7 @@
 Version 4.0.5
 ====================================================
 
-Release Date: Not released
+Release Date: January 31, 2021
 
 **4.0.5 release of CodeIgniter4**
 
