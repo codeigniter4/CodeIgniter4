@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.0...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.1...HEAD)
+
+## [v4.1.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.0) (2021-02-01)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.0...v4.1.1)
+
+**Fixed bugs:**
+
+- Fixed an issue where **.gitattributes** was preventing framework downloads
 
 ## [v4.1.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.0) (2021-01-31)
 

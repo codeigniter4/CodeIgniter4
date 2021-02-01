@@ -1,0 +1,6 @@
+Version 4.1.2
+====================================================
+
+Release Date: Not released
+
+**4.1.2 release of CodeIgniter4**
