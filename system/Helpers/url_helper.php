@@ -447,9 +447,9 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		foreach ($x as $i => $x)
+		foreach ($x as $i => $value)
 		{
-			$output .= 'l[' . $i . "] = '" . $x . "';";
+			$output .= 'l[' . $i . "] = '" . $value . "';";
 		}
 
 		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
