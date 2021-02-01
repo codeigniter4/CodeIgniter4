@@ -93,7 +93,7 @@ configuration file, e.g., ``apache2/conf/httpd.conf``::
 Also make sure that the default document root's <Directory> element enables this too,
 in the "AllowOverride" setting::
 
-    <Directory "/opt/lamp7.2/apache2/htdocs">
+    <Directory "/opt/lamp/apache2/htdocs">
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
@@ -120,7 +120,7 @@ Add a <VirtualHost> element for your webapp inside the virtual hosting configura
 e.g., ``apache2/conf/extra/httpd-vhost.conf``::
 
     <VirtualHost *:80>
-        DocumentRoot "/opt/lamp7.2/apache2/htdocs/myproject/public"
+        DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
         ServerName myproject.local
         ErrorLog "logs/myproject-error_log"
         CustomLog "logs/myproject-access_log" common

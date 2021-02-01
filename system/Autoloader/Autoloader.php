@@ -225,16 +225,7 @@ class Autoloader
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
 
-		$mapped_file = $this->loadInNamespace($class);
-
-		// Nothing? One last chance by looking
-		// in common CodeIgniter folders.
-		if (! $mapped_file)
-		{
-			$mapped_file = $this->loadLegacy($class);
-		}
-
-		return $mapped_file;
+		return $this->loadInNamespace($class);
 	}
 
 	//--------------------------------------------------------------------
@@ -282,45 +273,6 @@ class Autoloader
 		}
 
 		// never found a mapped file
-		return false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to load the class from common locations in previous
-	 * version of CodeIgniter, namely 'app/Libraries', and
-	 * 'app/Models'.
-	 *
-	 * @param string $class The class name. This typically should NOT have a namespace.
-	 *
-	 * @return mixed    The mapped file name on success, or boolean false on failure
-	 */
-	protected function loadLegacy(string $class)
-	{
-		// If there is a namespace on this class, then
-		// we cannot load it from traditional locations.
-		if (strpos($class, '\\') !== false)
-		{
-			return false;
-		}
-
-		$paths = [
-			APPPATH . 'Controllers/',
-			APPPATH . 'Libraries/',
-			APPPATH . 'Models/',
-		];
-
-		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-
-		foreach ($paths as $path)
-		{
-			if ($file = $this->includeFile($path . $class))
-			{
-				return $file;
-			}
-		}
-
 		return false;
 	}
 

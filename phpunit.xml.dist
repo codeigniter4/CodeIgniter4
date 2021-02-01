@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="system/Test/bootstrap.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		bootstrap="system/Test/bootstrap.php"
 		backupGlobals="false"
 		colors="true"
 		convertErrorsToExceptions="true"
@@ -8,7 +9,27 @@
 		stopOnError="false"
 		stopOnFailure="false"
 		stopOnIncomplete="false"
-		stopOnSkipped="false">
+		stopOnSkipped="false"
+		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+	<coverage processUncoveredFiles="true">
+		<include>
+			<directory suffix=".php">./system</directory>
+		</include>
+		<exclude>
+			<directory>./system/Commands/Generators/Views</directory>
+			<directory>./system/Debug/Toolbar/Views</directory>
+			<directory>./system/Pager/Views</directory>
+			<directory>./system/ThirdParty</directory>
+			<directory>./system/Validation/Views</directory>
+			<file>./system/bootstrap.php</file>
+			<file>./system/ComposerScripts.php</file>
+			<file>./system/Config/Routes.php</file>
+			<file>./system/Test/bootstrap.php</file>
+		</exclude>
+		<report>
+			<clover outputFile="build/logs/clover.xml"/>
+		</report>
+	</coverage>
 	<testsuites>
 		<testsuite name="System">
 			<directory>./tests/system</directory>
@@ -18,38 +39,14 @@
 			<directory>./tests/system/Database</directory>
 		</testsuite>
 	</testsuites>
-
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./system</directory>
-			<exclude>
-				<directory>./system/Commands/Generators/Views</directory>
-				<directory>./system/Debug/Toolbar/Views</directory>
-				<directory>./system/Pager/Views</directory>
-				<directory>./system/ThirdParty</directory>
-				<directory>./system/Validation/Views</directory>
-				<file>./system/bootstrap.php</file>
-				<file>./system/ComposerScripts.php</file>
-				<file>./system/Config/Routes.php</file>
-				<file>./system/Test/bootstrap.php</file>
-			</exclude>
-		</whitelist>
-	</filter>
-
-	<logging>
-		<log type="coverage-clover" target="build/logs/clover.xml"/>
-	</logging>
-
+	<logging/>
 	<php>
 		<env name="XDEBUG_MODE" value="coverage"/>
 		<server name="app.baseURL" value="http://example.com/"/>
-
 		<!-- Directory containing phpunit.xml -->
 		<const name="HOMEPATH" value="./"/>
-
 		<!-- Directory containing the Paths config file -->
 		<const name="CONFIGPATH" value="./app/Config/"/>
-
 		<!-- Directory containing the front controller (index.php) -->
 		<const name="PUBLICPATH" value="./public/"/>
 	</php>

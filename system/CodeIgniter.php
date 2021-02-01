@@ -18,13 +18,14 @@ use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
-use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
+use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
 use Config\Services;
@@ -43,7 +44,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.5';
+	const CI_VERSION = '4.1.0';
 
 	/**
 	 * App startup time.
@@ -76,7 +77,7 @@ class CodeIgniter
 	/**
 	 * Current request.
 	 *
-	 * @var Request|HTTP\IncomingRequest|CLIRequest
+	 * @var Request|IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
@@ -90,7 +91,7 @@ class CodeIgniter
 	/**
 	 * Router to use.
 	 *
-	 * @var Router\Router
+	 * @var Router
 	 */
 	protected $router;
 

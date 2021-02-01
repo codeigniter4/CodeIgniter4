@@ -14,8 +14,6 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
-use DateTime;
-use DateTimeZone;
 
 /**
  * HTTP response when a download is requested.

@@ -11,7 +11,7 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use Rector\Core\Rector\AbstractRector;
 use Rector\Core\RectorDefinition\CodeSample;
-use Rector\Core\RectorDefinition\RectorDefinition;
+use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * Pass strict to function parameter on specific position argument when no value provided
@@ -25,9 +25,9 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
 		'in_array'      => 2,
 	];
 
-	public function getDefinition(): RectorDefinition
+	public function getRuleDefinition(): RuleDefinition
 	{
-		return new RectorDefinition('Pass strict to function parameter on specific position argument when no value provided', [
+		return new RuleDefinition('Pass strict to function parameter on specific position argument when no value provided', [
 			new CodeSample('array_search($value, $array);', 'array_search($value, $array, true);'),
 			new CodeSample('base64_decode($string);', 'base64_decode($string, true);'),
 			new CodeSample("in_array('a', \$array);", "in_array('a', \$array, true);"),
