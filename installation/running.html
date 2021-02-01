@@ -444,7 +444,7 @@ configuration file, e.g., <code class="docutils literal notranslate"><span class
 </div>
 <p>Also make sure that the default document root’s &lt;Directory&gt; element enables this too,
 in the “AllowOverride” setting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">Directory</span> <span class="s2">&quot;/opt/lamp7.2/apache2/htdocs&quot;</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">Directory</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs&quot;</span><span class="o">&gt;</span>
     <span class="nx">Options</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
     <span class="nx">AllowOverride</span> <span class="nx">All</span>
     <span class="k">Require</span> <span class="nx">all</span> <span class="nx">granted</span>
@@ -470,7 +470,7 @@ Add a line to the file. This could be “myproject.local” or “myproject.test
 <p>Add a &lt;VirtualHost&gt; element for your webapp inside the virtual hosting configuration,
 e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/extra/httpd-vhost.conf</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">VirtualHost</span> <span class="o">*:</span><span class="mi">80</span><span class="o">&gt;</span>
-    <span class="nx">DocumentRoot</span> <span class="s2">&quot;/opt/lamp7.2/apache2/htdocs/myproject/public&quot;</span>
+    <span class="nx">DocumentRoot</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs/myproject/public&quot;</span>
     <span class="nx">ServerName</span> <span class="nx">myproject</span><span class="o">.</span><span class="nx">local</span>
     <span class="nx">ErrorLog</span> <span class="s2">&quot;logs/myproject-error_log&quot;</span>
     <span class="nx">CustomLog</span> <span class="s2">&quot;logs/myproject-access_log&quot;</span> <span class="nx">common</span>
