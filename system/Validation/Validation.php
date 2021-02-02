@@ -717,8 +717,7 @@ class Validation implements ValidationInterface
 	{
 		if ($field === null && count($this->rules) === 1)
 		{
-			reset($this->rules);
-			$field = key($this->rules);
+			$field = array_key_first($this->rules);
 		}
 
 		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';

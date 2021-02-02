@@ -7,6 +7,7 @@ use Rector\Core\ValueObject\PhpVersion;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\Performance\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
+use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
 use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -45,4 +46,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ForToForeachRector::class);
 	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
 	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
+	$services->set(ArrayKeyFirstLastRector::class);
 };
