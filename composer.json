@@ -18,7 +18,7 @@
 		"codeigniter4/codeigniter4-standard": "^1.0",
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
-		"phpstan/phpstan": "0.12.69",
+		"phpstan/phpstan": "0.12.71",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
 		"rector/rector": "^0.9",
