@@ -4,6 +4,7 @@ use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\Performance\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -41,4 +42,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(PassStrictParameterToFunctionParameterRector::class);
 	$services->set(CountArrayToEmptyArrayComparisonRector::class);
 	$services->set(ForToForeachRector::class);
+	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
 };
