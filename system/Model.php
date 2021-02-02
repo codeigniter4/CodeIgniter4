@@ -415,14 +415,10 @@ class Model extends BaseModel
 				$set[$this->updatedField] = $this->setDate();
 			}
 
-			$result = $builder->update($set);
-		}
-		else
-		{
-			$result = $builder->delete();
+			return $builder->update($set);
 		}
 
-		return $result;
+		return $builder->delete();
 	}
 
 	/**
