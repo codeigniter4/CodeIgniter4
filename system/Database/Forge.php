@@ -1144,6 +1144,11 @@ class Forge
 				$attributes['NULL'] = true;
 				$field['null']      = empty($this->null) ? '' : ' ' . $this->null;
 			}
+			// CURRENT_TIMESTAMP must not be escaped
+			else if ($attributes['DEFAULT'] === 'CURRENT_TIMESTAMP')
+			{
+				$field['default'] = $this->default . $attributes['DEFAULT'];
+			}
 			else
 			{
 				$field['default'] = $this->default . $this->db->escape($attributes['DEFAULT']);
