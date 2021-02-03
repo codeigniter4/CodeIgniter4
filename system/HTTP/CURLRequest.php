@@ -797,8 +797,20 @@ class CURLRequest extends Request
 
 		curl_setopt_array($ch, $curlOptions);
 
+		// Stop session to avoid deadlock if target is the same server
+		if(isset($_SESSION) && strstr($curlOptions[CURLOPT_URL], base_url()))
+		{
+			session_write_close();
+		}
+
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
+
+		// Resume session
+		if(isset($_SESSION) && strstr($curlOptions[CURLOPT_URL], base_url()))
+		{
+			session_start();
+		}
 
 		if ($output === false)
 		{
