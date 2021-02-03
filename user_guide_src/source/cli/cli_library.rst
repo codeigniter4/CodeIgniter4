@@ -53,9 +53,13 @@ You can restrict the acceptable answers by passing in an array of allowed answer
 
     $overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
 
-Finally, you can pass validation rules to the answer input as the third parameter::
+Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter::
 
     $email = CLI::prompt('What is your email?', null, 'required|valid_email');
+
+Validation rules can also be written in the array syntax.::
+
+	$email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
 
 Providing Feedback
 ==================

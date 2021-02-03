@@ -430,14 +430,16 @@ class Validation implements ValidationInterface
 
 		foreach ($rules as $field => &$rule)
 		{
-			if (is_array($rule))
+			if (! is_array($rule))
 			{
-				if (array_key_exists('errors', $rule))
-				{
-					$this->customErrors[$field] = $rule['errors'];
-					unset($rule['errors']);
-				}
+				continue;
 			}
+			if (! array_key_exists('errors', $rule))
+			{
+				continue;
+			}
+			$this->customErrors[$field] = $rule['errors'];
+			unset($rule['errors']);
 		}
 
 		$this->rules = $rules;
@@ -715,8 +717,7 @@ class Validation implements ValidationInterface
 	{
 		if ($field === null && count($this->rules) === 1)
 		{
-			reset($this->rules);
-			$field = key($this->rules);
+			$field = array_key_first($this->rules);
 		}
 
 		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';

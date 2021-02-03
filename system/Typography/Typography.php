@@ -187,13 +187,12 @@ class Typography
 		// Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
 		$str = $this->formatCharacters($str);
 
-		// restore HTML comments
-		for ($i = 0, $total = count($htmlComments); $i < $total; $i ++)
+		foreach ($htmlComments as $i => $htmlComment)
 		{
 			// remove surrounding paragraph tags, but only if there's an opening paragraph tag
 			// otherwise HTML comments at the ends of paragraphs will have the closing tag removed
 			// if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
-			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $htmlComments[$i], $str);
+			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $htmlComment, $str);
 		}
 
 		// Final clean up
