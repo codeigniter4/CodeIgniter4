@@ -187,7 +187,7 @@ class Services extends BaseService
 	 * @param EmailConfig|array|null $config
 	 * @param boolean                $getShared
 	 *
-	 * @return Email|mixed
+	 * @return Email
 	 */
 	public static function email($config = null, bool $getShared = true)
 	{
