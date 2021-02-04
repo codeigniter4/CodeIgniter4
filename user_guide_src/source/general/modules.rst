@@ -92,7 +92,7 @@ all discovery, optimizing performance, but negating the special capabilities of 
 Specify Discovery Items
 =======================
 
-With the **$activeExplorers** option, you can specify which items are automatically discovered. If the item is not
+With the **$aliases** option, you can specify which items are automatically discovered. If the item is not
 present, then no auto-discovery will happen for that item, but the others in the array will still be discovered.
 
 Discovery and Composer
