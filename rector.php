@@ -1,6 +1,7 @@
 <?php
 
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
+use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
@@ -47,4 +48,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
 	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
 	$services->set(ArrayKeyFirstLastRector::class);
+	$services->set(SimplifyStrposLowerRector::class);
 };
