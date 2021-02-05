@@ -613,12 +613,9 @@ class Parser extends View
 		// so we need to break them apart so we can apply them all.
 		$filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
 
-		if ($escape && empty($filters))
+		if ($escape && empty($filters) && ($context = $this->shouldAddEscaping($orig)))
 		{
-			if ($context = $this->shouldAddEscaping($orig))
-			{
-				$filters[] = "esc({$context})";
-			}
+			$filters[] = "esc({$context})";
 		}
 
 		return $this->applyFilters($replace, $filters);

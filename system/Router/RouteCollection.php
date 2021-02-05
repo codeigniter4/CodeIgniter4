@@ -1418,21 +1418,17 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		//If is redirect, No processing
-		if (! isset($options['redirect']))
+		if (! isset($options['redirect']) && is_string($to))
 		{
-			if (is_string($to))
-			{
-				// If no namespace found, add the default namespace
-				if (strpos($to, '\\') === false || strpos($to, '\\') > 0)
+			// If no namespace found, add the default namespace
+			if (strpos($to, '\\') === false || strpos($to, '\\') > 0)
 				{
 					$namespace = $options['namespace'] ?? $this->defaultNamespace;
 					$to        = trim($namespace, '\\') . '\\' . $to;
-				}
-
-				// Always ensure that we escape our namespace so we're not pointing to
-				// \CodeIgniter\Routes\Controller::method.
-				$to = '\\' . ltrim($to, '\\');
 			}
+			// Always ensure that we escape our namespace so we're not pointing to
+			// \CodeIgniter\Routes\Controller::method.
+			$to = '\\' . ltrim($to, '\\');
 		}
 
 		$name = $options['as'] ?? $from;

@@ -176,7 +176,7 @@ trait ResponseTrait
 	 * @see http://tools.ietf.org/html/rfc5988
 	 *
 	 * @return Response
-	 * @todo Recommend moving to Pager
+	 * @todo   Recommend moving to Pager
 	 */
 	public function setLink(PagerInterface $pager)
 	{
@@ -342,8 +342,8 @@ trait ResponseTrait
 	 * is not cached by the browsers.
 	 *
 	 * @return Response
-	 * @todo Recommend researching these directives, might need: 'private', 'no-transform', 'no-store', 'must-revalidate'
-	 * @see DownloadResponse::noCache()
+	 * @todo   Recommend researching these directives, might need: 'private', 'no-transform', 'no-store', 'must-revalidate'
+	 * @see    DownloadResponse::noCache()
 	 */
 	public function noCache()
 	{
@@ -548,12 +548,9 @@ trait ResponseTrait
 
 		// override status code for HTTP/1.1 & higher
 		// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-		if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
+		if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1 && $method !== 'refresh')
 		{
-			if ($method !== 'refresh')
-			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
-			}
+			$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
 		}
 
 		switch ($method)

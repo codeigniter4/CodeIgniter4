@@ -110,12 +110,9 @@ if (! function_exists('array_deep_search'))
 
 		foreach ($array as $value)
 		{
-			if (is_array($value))
+			if (is_array($value) && ($result = array_deep_search($key, $value)))
 			{
-				if ($result = array_deep_search($key, $value))
-				{
-					return $result;
-				}
+				return $result;
 			}
 		}
 

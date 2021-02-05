@@ -109,21 +109,17 @@ class BaseConfig
 		}
 		else
 		{
-			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false)
+			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
 			{
-				if (! is_null($value))
-				{
-					if ($value === 'false')
+				if ($value === 'false')
 					{
 						$value = false;
-					}
-					elseif ($value === 'true')
-					{
-						$value = true;
-					}
-
-					$property = is_bool($value) ? $value : trim($value, '\'"');
 				}
+				elseif ($value === 'true')
+					{
+					$value = true;
+				}
+				$property = is_bool($value) ? $value : trim($value, '\'"');
 			}
 		}
 		return $property;

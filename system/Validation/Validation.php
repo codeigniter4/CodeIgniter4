@@ -745,12 +745,9 @@ class Validation implements ValidationInterface
 		// If we already have errors, we'll use those.
 		// If we don't, check the session to see if any were
 		// passed along from a redirect_with_input request.
-		if (empty($this->errors) && ! is_cli())
+		if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors']))
 		{
-			if (isset($_SESSION, $_SESSION['_ci_validation_errors']))
-			{
-				$this->errors = unserialize($_SESSION['_ci_validation_errors']);
-			}
+			$this->errors = unserialize($_SESSION['_ci_validation_errors']);
 		}
 
 		return $this->errors ?? [];

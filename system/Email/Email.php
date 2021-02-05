@@ -1199,13 +1199,10 @@ class Email
 	 */
 	protected function writeHeaders()
 	{
-		if ($this->protocol === 'mail')
+		if ($this->protocol === 'mail' && isset($this->headers['Subject']))
 		{
-			if (isset($this->headers['Subject']))
-			{
-				$this->subject = $this->headers['Subject'];
-				unset($this->headers['Subject']);
-			}
+			$this->subject = $this->headers['Subject'];
+			unset($this->headers['Subject']);
 		}
 
 		reset($this->headers);

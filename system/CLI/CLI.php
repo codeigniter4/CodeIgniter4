@@ -302,10 +302,12 @@ class CLI
 		$label      = $field;
 		$field      = 'temp';
 		$validation = Services::validation(null, false);
-		$validation->setRules([$field => [
-			'label' => $label,
-			'rules' => $rules,
-		]]);
+		$validation->setRules([
+			$field => [
+				'label' => $label,
+				'rules' => $rules,
+			],
+		]);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
@@ -728,15 +730,12 @@ class CLI
 					$output = [];
 					exec('mode CON', $output, $return);
 
-					if ($return === 0 && $output)
+					// Look for the next lines ending in ": <number>"
+					// Searching for "Columns:" or "Lines:" will fail on non-English locales
+					if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
 					{
-						// Look for the next lines ending in ": <number>"
-						// Searching for "Columns:" or "Lines:" will fail on non-English locales
-						if (preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
-						{
-							static::$height = (int) $matches[1];
-							static::$width  = (int) $matches[2];
-						}
+						static::$height = (int) $matches[1];
+						static::$width  = (int) $matches[2];
 					}
 				}
 				// @codeCoverageIgnoreEnd
