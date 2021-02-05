@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Config\Config;
@@ -1237,69 +1238,128 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	// Test url_title
 
-	public function testUrlTitle()
+	public function urlTitleProvider()
 	{
-		$words = [
-			'foo bar /'       => 'foo-bar',
-			'\  testing 12'   => 'testing-12',
-			'Éléphant de PHP' => 'éléphant-de-php',
+		// input, expected, separator, lowercase
+		return [
+			[
+				'foo bar /',
+				'foo-bar',
+			],
+			[
+				'\  testing 12',
+				'testing-12',
+			],
+			[
+				'Éléphant de PHP',
+				'éléphant-de-php',
+				'-',
+				true,
+			],
+			[
+				'_foo bar_',
+				'foo_bar',
+				'_',
+			],
+			[
+				'_What\'s wrong with CSS?_',
+				'Whats_wrong_with_CSS',
+				'_',
+			],
+			[
+				'Éléphant de PHP',
+				'Éléphant_de_PHP',
+				'_',
+			],
+			[
+				'How to use url_title() function?',
+				'how-to-use-url-title-function',
+				'-',
+				true,
+			],
+			[
+				'Welcome to the chat-room',
+				'welcome_to_the_chat_room',
+				'_',
+				true,
+			],
+			[
+				'মশিউর রহমান', // see #3180, #3427
+				'মশিউর-রহমান',
+				'-',
+				true,
+			],
+			[
+				'Example: with dash (-) and underscore ( _ )',
+				'Example-with-dash-and-underscore',
+			],
 		];
-
-		foreach ($words as $in => $out)
-		{
-			$this->assertEquals($out, url_title($in, '-', true));
-		}
 	}
 
-	public function testUrlTitleExtraDashes()
+	/**
+	 * @dataProvider urlTitleProvider
+	 */
+	public function testUrlTitle(string $input, string $expected, string $separator = '-', bool $lowercase = false)
 	{
-		$words = [
-			'_foo bar_'                 => 'foo_bar',
-			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
-			'Éléphant de PHP'           => 'Éléphant_de_PHP',
-		];
-
-		foreach ($words as $in => $out)
-		{
-			$this->assertEquals($out, url_title($in, '_'));
-		}
+		$this->assertSame($expected, url_title($input, $separator, $lowercase));
 	}
 
 	//--------------------------------------------------------------------
-	// Test mb_url_title
+	// Test
 
-	public function testMbUrlTitle()
+	public function mbUrlTitleProvider()
 	{
-		helper('text');
-
-		$words = [
-			'foo bar /'       => 'foo-bar',
-			'\  testing 12'   => 'testing-12',
-			'Éléphant de PHP' => 'elephant-de-php',
-			'ä ö ü Ĝ β ę'     => 'ae-oe-ue-g-v-e',
+		// input, expected, separator, lowercase
+		return [
+			[
+				'foo bar /',
+				'foo-bar',
+			],
+			[
+				'\  testing 12',
+				'testing-12',
+			],
+			[
+				'Éléphant de PHP',
+				'elephant-de-php',
+				'-',
+				true,
+			],
+			[
+				'ä ö ü Ĝ β ę',
+				'ae-oe-ue-g-v-e',
+				'-',
+				true,
+			],
+			[
+				'foo bar /',
+				'foo-bar',
+			],
+			[
+				'\  testing 12',
+				'testing-12',
+			],
+			[
+				'Éléphant de PHP',
+				'elephant-de-php',
+				'-',
+				true,
+			],
+			[
+				'ä ö ü Ĝ β ę',
+				'ae-oe-ue-g-v-e',
+				'-',
+				true,
+			],
 		];
-
-		foreach ($words as $in => $out)
-		{
-			$this->assertEquals($out, mb_url_title($in, '-', true));
-		}
 	}
 
-	public function testMbUrlTitleExtraDashes()
+	/**
+	 * @dataProvider mbUrlTitleProvider
+	 */
+	public function testMbUrlTitle(string $input, string $expected, string $separator = '-', bool $lowercase = false)
 	{
-		helper('text');
-
-		$words = [
-			'_foo bar_'                 => 'foo_bar',
-			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
-			'Éléphant de PHP'           => 'Elephant_de_PHP',
-			'ä ö ü Ĝ β ę'               => 'ae_oe_ue_G_v_e',
-		];
-
-		foreach ($words as $in => $out)
-		{
-			$this->assertEquals($out, mb_url_title($in, '_'));
-		}
+		$this->assertSame($expected, mb_url_title($input, $separator, $lowercase));
 	}
 
 	//--------------------------------------------------------------------
