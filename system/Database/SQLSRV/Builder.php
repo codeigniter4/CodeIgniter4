@@ -481,20 +481,17 @@ class Builder extends BaseBuilder
 			$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
 			// SQL Server can't work with select * if group by is specified
-			if (empty($this->QBSelect) && ! empty($this->QBGroupBy))
+			if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy))
 			{
-				if (is_array($this->QBGroupBy))
-				{
-					foreach ($this->QBGroupBy as $field)
+				foreach ($this->QBGroupBy as $field)
 					{
-						if (is_array($field))
+					if (is_array($field))
 						{
-							$this->QBSelect[] = $field['field'];
-						}
-						else
+						$this->QBSelect[] = $field['field'];
+					}
+					else
 						{
-							$this->QBSelect[] = $field;
-						}
+						$this->QBSelect[] = $field;
 					}
 				}
 			}

@@ -606,16 +606,12 @@ class Entity implements JsonSerializable
 	private function castAsJson($value, bool $asArray = false)
 	{
 		$tmp = ! is_null($value) ? ($asArray ? [] : new stdClass) : null;
-		if (function_exists('json_decode'))
+		if (function_exists('json_decode') && ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value)))
 		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value))
-			{
-				$tmp = json_decode($value, $asArray);
-
-				if (json_last_error() !== JSON_ERROR_NONE)
+			$tmp = json_decode($value, $asArray);
+			if (json_last_error() !== JSON_ERROR_NONE)
 				{
 					throw CastException::forInvalidJsonFormatException(json_last_error());
-				}
 			}
 		}
 		return $tmp;

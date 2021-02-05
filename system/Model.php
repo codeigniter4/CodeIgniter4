@@ -753,14 +753,11 @@ class Model extends BaseModel
 	{
 		$properties = parent::objectToRawArray($data, $onlyChanged);
 
-		if (method_exists($data, 'toRawArray'))
+		// Always grab the primary key otherwise updates will fail.
+		if (method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey})))
 		{
-			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-				&& ! empty($data->{$this->primaryKey}))
-			{
-				$properties[$this->primaryKey] = $data->{$this->primaryKey};
-			}
+			$properties[$this->primaryKey] = $data->{$this->primaryKey};
 		}
 
 		return $properties;

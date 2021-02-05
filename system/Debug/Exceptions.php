@@ -189,13 +189,10 @@ class Exceptions
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if (! is_null($error))
+		// Fatal Error?
+		if (! is_null($error) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
 		{
-			// Fatal Error?
-			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
-			{
-				$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
-			}
+			$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 		}
 	}
 

@@ -93,18 +93,14 @@ class Time extends DateTime
 		$timezone       = ! empty($timezone) ? $timezone : date_default_timezone_get();
 		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
-		if (! empty($time))
+		// If the time string was a relative string (i.e. 'next Tuesday')
+		// then we need to adjust the time going in so that we have a current
+		// timezone to work with.
+		if (! empty($time) && (is_string($time) && static::hasRelativeKeywords($time)))
 		{
-			// If the time string was a relative string (i.e. 'next Tuesday')
-			// then we need to adjust the time going in so that we have a current
-			// timezone to work with.
-			if (is_string($time) && static::hasRelativeKeywords($time))
-			{
-				$instance = new DateTime('now', $this->timezone);
-				$instance->modify($time);
-
-				$time = $instance->format('Y-m-d H:i:s');
-			}
+			$instance = new DateTime('now', $this->timezone);
+			$instance->modify($time);
+			$time = $instance->format('Y-m-d H:i:s');
 		}
 
 		parent::__construct($time, $this->timezone);

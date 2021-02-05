@@ -2,6 +2,7 @@
 
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
@@ -49,4 +50,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
 	$services->set(ArrayKeyFirstLastRector::class);
 	$services->set(SimplifyStrposLowerRector::class);
+	$services->set(CombineIfRector::class);
 };

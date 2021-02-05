@@ -101,12 +101,9 @@ class Table
 		// Remove the prefix, if any, since it's
 		// already been added by the time we get here...
 		$prefix = $this->db->DBPrefix; // @phpstan-ignore-line
-		if (! empty($prefix))
+		if (! empty($prefix) && strpos($table, $prefix) === 0)
 		{
-			if (strpos($table, $prefix) === 0)
-			{
-				$table = substr($table, strlen($prefix));
-			}
+			$table = substr($table, strlen($prefix));
 		}
 
 		if (! $this->db->tableExists($this->prefixedTableName))
