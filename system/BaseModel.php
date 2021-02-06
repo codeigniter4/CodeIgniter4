@@ -1746,13 +1746,7 @@ abstract class BaseModel
 		{
 			return true;
 		}
-
-		if (isset($this->db->$name))
-		{
-			return true;
-		}
-
-		return false;
+		return isset($this->db->$name);
 	}
 
 	/**

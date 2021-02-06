@@ -72,14 +72,8 @@ class FeatureResponse extends TestCase
 		{
 			return false;
 		}
-
 		// Empty bodies are not considered valid, unless in redirects
-		if ($status < 300 && empty($this->response->getBody()))
-		{
-			return false;
-		}
-
-		return true;
+		return ! ($status < 300 && empty($this->response->getBody()));
 	}
 
 	/**

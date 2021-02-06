@@ -157,14 +157,8 @@ class ControllerResponse
 		{
 			return false;
 		}
-
 		// Empty bodies are not considered valid.
-		if (empty($this->response->getBody()))
-		{
-			return false;
-		}
-
-		return true;
+		return ! empty($this->response->getBody());
 	}
 
 	/**
