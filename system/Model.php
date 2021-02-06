@@ -802,13 +802,7 @@ class Model extends BaseModel
 		{
 			return true;
 		}
-
-		if (isset($this->builder()->$name))
-		{
-			return true;
-		}
-
-		return false;
+		return isset($this->builder()->$name);
 	}
 
 	/**

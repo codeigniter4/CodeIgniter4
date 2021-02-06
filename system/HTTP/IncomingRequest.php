@@ -276,13 +276,7 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-
-		if ($this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off')
-		{
-			return true;
-		}
-
-		return false;
+		return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
 	}
 
 	//--------------------------------------------------------------------
