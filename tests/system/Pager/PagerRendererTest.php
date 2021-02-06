@@ -563,9 +563,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetPageNumber()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 3,
 			'total'       => 100,
@@ -576,13 +575,13 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(1, $pager->getFirstPageNumber());
 		$this->assertEquals(3, $pager->getCurrentPageNumber());
 		$this->assertEquals(10, $pager->getLastPageNumber());
+		$this->assertEquals(10, $pager->getPageCount());
 	}
 
 	public function testGetPageNumberSetSurroundCount()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 5,
 			'total'       => 100,
@@ -598,9 +597,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetPreviousPageNumber()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 5,
 			'total'       => 100,
@@ -614,9 +612,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetPreviousPageNumberNull()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 1,
 			'total'       => 100,
@@ -630,9 +627,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetNextPageNumber()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 5,
 			'total'       => 100,
@@ -646,9 +642,8 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetNextPageNumberNull()
 	{
-		$uri     = $this->uri;
 		$details = [
-			'uri'         => $uri,
+			'uri'         => $this->uri,
 			'pageCount'   => 10,
 			'currentPage' => 10,
 			'total'       => 100,
