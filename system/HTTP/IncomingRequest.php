@@ -294,7 +294,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		if ($this->isJSON())
+		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false)
 		{
 			if (is_null($index))
 			{

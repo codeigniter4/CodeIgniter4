@@ -132,24 +132,4 @@ class Message implements MessageInterface
 	{
 		return $this->protocolVersion ?? '1.1';
 	}
-
-	/**
-	 * Determines if this is a json message based on the Content-Type header
-	 *
-	 * @return boolean
-	 *
-	 * @deprecated Use header calls directly
-	 */
-	public function isJSON()
-	{
-		if (! $this->hasHeader('Content-Type'))
-		{
-			return false;
-		}
-
-		$header = $this->header('Content-Type')->getValue();
-		$parts  = explode(';', $header);
-
-		return in_array('application/json', $parts, true);
-	}
 }
