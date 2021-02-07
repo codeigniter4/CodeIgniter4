@@ -42,6 +42,13 @@ trait GeneratorTrait
 	protected $template;
 
 	/**
+	 * Language string key for required class names.
+	 *
+	 * @var string
+	 */
+	protected $classNameLang = '';
+
+	/**
 	 * Whether to require class name.
 	 *
 	 * @internal
@@ -195,7 +202,9 @@ trait GeneratorTrait
 		if (is_null($class) && $this->hasClassName)
 		{
 			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('CLI.generator.className'), null, 'required');
+			$nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
+
+			$class = CLI::prompt(lang($nameLang), null, 'required');
 			CLI::newLine();
 			// @codeCoverageIgnoreEnd
 		}

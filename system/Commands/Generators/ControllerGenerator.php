@@ -83,6 +83,7 @@ class ControllerGenerator extends BaseCommand
 		$this->directory = 'Controllers';
 		$this->template  = 'controller.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.controller';
 		$this->execute($params);
 	}
 

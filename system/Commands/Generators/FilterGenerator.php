@@ -12,7 +12,6 @@
 namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
 
 /**
@@ -81,6 +80,7 @@ class FilterGenerator extends BaseCommand
 		$this->directory = 'Filters';
 		$this->template  = 'filter.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.filter';
 		$this->execute($params);
 	}
 }
