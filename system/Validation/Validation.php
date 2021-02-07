@@ -346,7 +346,7 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		if (strpos('application/json', $request->getHeaderLine('Content-Type')) !== false)
+		if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false)
 		{
 			$this->data = $request->getJSON(true);
 			return $this;
