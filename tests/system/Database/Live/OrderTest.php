@@ -68,7 +68,8 @@ class OrderTest extends CIDatabaseTestCase
 			->orderBy('name', 'random')
 			->getCompiledSelect();
 
-		$key = 'RANDOM()';
+		$key   = 'RANDOM()';
+		$table = $this->db->protectIdentifiers('job', true);
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
@@ -76,10 +77,11 @@ class OrderTest extends CIDatabaseTestCase
 		}
 		elseif ($this->db->DBDriver === 'SQLSRV')
 		{
-			$key = 'NEWID()';
+			$key   = 'NEWID()';
+			$table = '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '".' . $table;
 		}
 
-		$expected = 'SELECT * FROM ' . $this->db->protectIdentifiers('job', true) . ' ORDER BY ' . $key;
+		$expected = 'SELECT * FROM ' . $table . ' ORDER BY ' . $key;
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $sql));
 	}
