@@ -2,6 +2,7 @@
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -78,6 +79,21 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->join('users as u', 'users.id = jobs.id', 'full outer');
 
 		$expectedSQL = 'SELECT * FROM "jobs" FULL OUTER JOIN "users" as "u" ON "users"."id" = "jobs"."id"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testJoinWithAlias()
+	{
+		$this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+		$builder = new SQLSRVBuilder('jobs', $this->db);
+		$builder->testMode();
+		$builder->join('users u', 'u.id = jobs.id', 'LEFT');
+
+		$expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
