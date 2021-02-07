@@ -95,8 +95,6 @@ class Builder extends BaseBuilder
 	 */
 	protected function _insert(string $table, array $keys, array $unescapedKeys): string
 	{
-
-
 		$fullTableName = $this->getFullName($table);
 
 		// insert statement
@@ -191,17 +189,16 @@ class Builder extends BaseBuilder
 	 */
 	private function getFullName(string $table): string
 	{
-
-		$table_exploded = explode('.', $table);
-		if(count($table_exploded) === 2)
+		$tableExploded = explode('.', $table);
+		if (count($tableExploded) === 2)
 		{
-			$this->db->schema = str_replace('"', '', $table_exploded[0]);
-			$tableName = $table_exploded[1];
-		}else
+			$this->db->schema = str_replace('"', '', $tableExploded[0]);
+			$tableName        = $tableExploded[1];
+		}
+		else
 		{
 			$tableName = $table;
 		}
-
 
 		if ($this->db->escapeChar === '"')
 		{
