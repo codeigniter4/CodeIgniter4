@@ -680,6 +680,16 @@ title, which is just the number, and a boolean that tells whether the link is th
 <p>Their difference to <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> is that they are based on the current page while <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> are based on the set of links to be displayed before and after the current page based on the value passed in <code class="docutils literal notranslate"><span class="pre">setSurroundCount</span></code>.</p>
 <p><strong>getPreviousPage()</strong> &amp; <strong>getNextPage()</strong></p>
 <p>These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike <code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNext()</span></code> that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.</p>
+<p>If you want page numbers instead of URLs, you can use the following methods:</p>
+<p><strong>getPreviousPageNumber()</strong> &amp; <strong>getNextPageNumber()</strong></p>
+<p>These methods return the page number for the previous or next pages in relation to the current page being displayed.</p>
+<p><strong>getFirstPageNumber()</strong> &amp; <strong>getLastPageNumber()</strong></p>
+<p>These methods return page numbers to the first and last pages in the
+result set.</p>
+<p><strong>getCurrentPageNumber()</strong></p>
+<p>This method returns the page number of the current page.</p>
+<p><strong>getPageCount()</strong></p>
+<p>This method returns total number of pages.</p>
 </div>
 </div>
 </div>
@@ -700,7 +710,7 @@ title, which is just the number, and a boolean that tells whether the link is th
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Feb 08, 2021.
       </span>
 
     </p>
