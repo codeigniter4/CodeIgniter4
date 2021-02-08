@@ -60,6 +60,15 @@ trait GeneratorTrait
 	private $sortImports = true;
 
 	/**
+	 * Whether the `--suffix` option has any effect.
+	 *
+	 * @internal
+	 *
+	 * @var boolean
+	 */
+	private $enabledSuffixing = true;
+
+	/**
 	 * The params array for easy access by other methods.
 	 *
 	 * @internal
@@ -206,7 +215,7 @@ trait GeneratorTrait
 		$class     = strtolower($class);
 		$class     = strpos($class, $component) !== false ? str_replace($component, ucfirst($component), $class) : $class;
 
-		if ($this->getOption('suffix') && ! strripos($class, $component))
+		if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component))
 		{
 			$class .= ucfirst($component);
 		}
@@ -308,12 +317,10 @@ trait GeneratorTrait
 
 		if (! $base = reset($base))
 		{
-			// @codeCoverageIgnoreStart
 			CLI::error(lang('CLI.namespaceNotDefined', [$namespace]), 'light_gray', 'red');
 			CLI::newLine();
 
 			return '';
-			// @codeCoverageIgnoreEnd
 		}
 
 		$base = realpath($base) ?: $base;
@@ -346,6 +353,20 @@ trait GeneratorTrait
 	protected function setSortImports(bool $sortImports)
 	{
 		$this->sortImports = $sortImports;
+
+		return $this;
+	}
+
+	/**
+	 * Allows child generators to modify the internal `$enabledSuffixing` flag.
+	 *
+	 * @param boolean $enabledSuffixing
+	 *
+	 * @return $this
+	 */
+	protected function setEnabledSuffixing(bool $enabledSuffixing)
+	{
+		$this->enabledSuffixing = $enabledSuffixing;
 
 		return $this;
 	}
