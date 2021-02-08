@@ -360,3 +360,22 @@ Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based o
 **getPreviousPage()** & **getNextPage()**
 
 These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
+
+If you want page numbers instead of URLs, you can use the following methods:
+
+**getPreviousPageNumber()** & **getNextPageNumber()**
+
+These methods return the page number for the previous or next pages in relation to the current page being displayed.
+
+**getFirstPageNumber()** & **getLastPageNumber()**
+
+These methods return page numbers to the first and last pages in the
+result set.
+
+**getCurrentPageNumber()**
+
+This method returns the page number of the current page.
+
+**getPageCount()**
+
+This method returns total number of pages.
