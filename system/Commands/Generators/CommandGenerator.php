@@ -84,6 +84,7 @@ class CommandGenerator extends BaseCommand
 		$this->directory = 'Commands';
 		$this->template  = 'command.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.command';
 		$this->execute($params);
 	}
 
