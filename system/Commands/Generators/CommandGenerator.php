@@ -101,7 +101,6 @@ class CommandGenerator extends BaseCommand
 		$type    = $this->getOption('type');
 
 		$command = is_string($command) ? $command : 'command:name';
-		$group   = is_string($group) ? $group : 'CodeIgniter';
 		$type    = is_string($type) ? $type : 'basic';
 
 		if (! in_array($type, ['basic', 'generator'], true))
@@ -112,9 +111,9 @@ class CommandGenerator extends BaseCommand
 			// @codeCoverageIgnoreEnd
 		}
 
-		if ($type === 'generator')
+		if (! is_string($group))
 		{
-			$group = 'Generators';
+			$group = $type === 'generator' ? 'Generators' : 'CodeIgniter';
 		}
 
 		return $this->parseTemplate(
