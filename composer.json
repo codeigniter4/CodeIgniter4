@@ -21,7 +21,7 @@
 		"phpstan/phpstan": "0.12.74",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
-		"rector/rector": "^0.9",
+		"rector/rector-prefixed": "^0.9",
 		"squizlabs/php_codesniffer": "^3.3"
 	},
 	"suggest": {
