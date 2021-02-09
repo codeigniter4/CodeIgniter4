@@ -136,12 +136,7 @@ abstract class BaseUtils
 
 		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
 
-		if ($query !== false)
-		{
-			return true;
-		}
-
-		return false;
+		return ($query !== false) ? true : false;
 	}
 
 	//--------------------------------------------------------------------
