@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
@@ -509,7 +510,7 @@ class Connection extends BaseConnection
 	 */
 	public function isWriteType($sql)
 	{
-		return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
+		return Query::sqlIsWriteType($sql);
 	}
 
 	/**

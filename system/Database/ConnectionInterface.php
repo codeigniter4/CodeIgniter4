@@ -128,7 +128,7 @@ interface ConnectionInterface
 	 * @param string $sql
 	 * @param mixed  ...$binds
 	 *
-	 * @return mixed
+	 * @return BaseResult|Query|boolean
 	 */
 	public function query(string $sql, $binds = null);
 

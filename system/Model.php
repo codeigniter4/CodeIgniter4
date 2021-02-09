@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -253,7 +254,7 @@ class Model extends BaseModel
 	 *
 	 * @param array $data Data
 	 *
-	 * @return BaseResult|integer|string|false
+	 * @return Query|boolean
 	 */
 	protected function doInsert(array $data)
 	{
@@ -278,7 +279,7 @@ class Model extends BaseModel
 		$result = $builder->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result->resultID)
+		if ($result)
 		{
 			if (! $this->useAutoIncrement)
 			{
@@ -379,7 +380,7 @@ class Model extends BaseModel
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return BaseResult|boolean
+	 * @return string|boolean
 	 *
 	 * @throws DatabaseException
 	 */

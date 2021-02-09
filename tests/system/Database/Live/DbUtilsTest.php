@@ -115,8 +115,14 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$this->setPrivateProperty($util, 'optimizeTable', false);
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+		if ($this->db->DBDebug) {
+			$this->expectException(DatabaseException::class);
+			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+			$util->optimizeDatabase();
+		} else {
+			$result = $util->optimizeDatabase();
+			$this->assertFalse($result);
+		}
 
 		$util->optimizeDatabase();
 	}
@@ -128,15 +134,8 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util = (new Database())->loadUtils($this->db);
 
 		$d = $util->optimizeTable('db_job');
-
-		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'SQLSRV']))
-		{
-			$this->assertFalse((bool) $d);
-		}
-		else
-		{
-			$this->assertTrue((bool) $d);
-		}
+		
+		$this->assertTrue((bool) $d);
 	}
 
 	//--------------------------------------------------------------------
