@@ -544,7 +544,7 @@ to the FROM portion of your query.</p>
 </div>
 <p><strong>$builder-&gt;join()</strong></p>
 <p>Permits you to write the JOIN portion of your query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;blogs&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
