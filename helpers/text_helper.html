@@ -393,13 +393,8 @@ specifies the length. The following choices are available:</p>
 <li><p><strong>numeric</strong>: Numeric string.</p></li>
 <li><p><strong>nozero</strong>: Numeric string with no zeros.</p></li>
 <li><p><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
-<li><dl class="simple">
-<dt><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</dt><dd><ul>
+<li><p><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
 </ul>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
