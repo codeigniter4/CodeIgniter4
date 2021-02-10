@@ -32,14 +32,14 @@ The following functions are available:
     The first parameter specifies the type of string, the second parameter
     specifies the length. The following choices are available:
 
-    -  **alpha**: A string with lower and uppercase letters only.
-    -  **alnum**: Alphanumeric string with lower and uppercase characters.
-    -  **basic**: A random number based on ``mt_rand()`` (length ignored).
-    -  **numeric**: Numeric string.
-    -  **nozero**: Numeric string with no zeros.
-    -  **md5**: An encrypted random number based on ``md5()`` (fixed length of 32).
-    -  **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
-        -  **crypto**: A random string based on ``random_bytes()``.
+    - **alpha**: A string with lower and uppercase letters only.
+    - **alnum**: Alphanumeric string with lower and uppercase characters.
+    - **basic**: A random number based on ``mt_rand()`` (length ignored).
+    - **numeric**: Numeric string.
+    - **nozero**: Numeric string with no zeros.
+    - **md5**: An encrypted random number based on ``md5()`` (fixed length of 32).
+    - **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
+    - **crypto**: A random string based on ``random_bytes()``.
 
     Usage example::
 
