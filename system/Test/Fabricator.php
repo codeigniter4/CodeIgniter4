@@ -351,7 +351,6 @@ class Fabricator
 			switch ($this->model->dateFormat)
 			{
 				case 'datetime':
-					return 'date';
 				case 'date':
 					return 'date';
 				case 'int':
