@@ -109,7 +109,7 @@ class Toolbar
 			{
 				foreach ($items as $key => $value)
 				{
-					$varData[esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
+					$varData[esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc($this->processVar($value)) . '</pre>';
 				}
 			}
 
@@ -467,5 +467,28 @@ class Toolbar
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Process the varable to string for display
+	 *
+	 * @param mixed $var Variable
+	 *
+	 * @return boolean|string
+	 */
+	protected function processVar($var)
+	{
+		if (is_object($var))
+		{
+			$var = is_callable([$var, 'toArray']) ? $var->toArray() : get_class($var);
+		}
+		if (is_array($var))
+		{
+			foreach ($var as &$aVar)
+			{
+				$aVar = $this->processVar($aVar);
+			}
+		}
+		return print_r($var, true);
 	}
 }
