@@ -214,7 +214,7 @@ Permits you to write the FROM portion of your query::
 
 Permits you to write the JOIN portion of your query::
 
-    $builder->db->table('blog');
+    $builder->db->table('blogs');
     $builder->select('*');
     $builder->join('comments', 'comments.id = blogs.id');
     $query = $builder->get();
