@@ -368,9 +368,18 @@ class Entity implements JsonSerializable
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
-			if ($castTo === 'array' || strpos($castTo, 'class:') === 0)
+			if ($castTo === 'array')
 			{
 				$value = serialize($value);
+			}
+
+			if (strpos($castTo, 'class:') === 0)
+			{
+				$type = substr($castTo,6);
+
+				if(class_exists($type)) {
+					$value = serialize(new $type($value));
+				}
 			}
 
 			// JSON casting requires that we JSONize the value
