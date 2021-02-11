@@ -14,7 +14,6 @@ on:
       - spark
       - phpunit.xml.dist
       - '**.php'
-      - phpunit.xml.dist
       - .github/workflows/test-phpunit.yml
   pull_request:
     branches:
@@ -29,7 +28,6 @@ on:
       - spark
       - phpunit.xml.dist
       - '**.php'
-      - phpunit.xml.dist
       - .github/workflows/test-phpunit.yml
 
 jobs:
