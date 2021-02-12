@@ -2380,7 +2380,7 @@ class BaseBuilder
 	 * Groups tables in FROM clauses if needed, so there is no confusion
 	 * about operator precedence.
 	 *
-	 * Note: This is only used (and overridden) by MySQL and CUBRID.
+	 * Note: This is only used (and overridden) by MySQL and SQLSRV.
 	 *
 	 * @return string
 	 */
