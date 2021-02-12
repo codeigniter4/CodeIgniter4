@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\HTTP\Cookie\CookieStore;
+use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 
@@ -119,7 +122,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
 	/**
 	 * The current status code for this response.
 	 * The status code is a 3-digit integer result code of the server's attempt
-     * to understand and satisfy the request.
+	 * to understand and satisfy the request.
 	 *
 	 * @var integer
 	 */
@@ -133,8 +136,6 @@ class Response extends Message implements MessageInterface, ResponseInterface
 	 * @internal Used for framework testing, should not be relied on otherwise
 	 */
 	protected $pretend = false;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -152,24 +153,29 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		// We need CSP object even if not enabled to avoid calls to non existing methods
 		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 
-		$this->CSPEnabled     = $config->CSPEnabled;
+		$this->CSPEnabled = $config->CSPEnabled;
+
+		//---------------------------------------------------------------------
+		// DEPRECATED COOKIE MANAGEMENT
+		//---------------------------------------------------------------------
 		$this->cookiePrefix   = $config->cookiePrefix;
 		$this->cookieDomain   = $config->cookieDomain;
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
-		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+		$this->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
 
-		if (! in_array(strtolower($this->cookieSameSite), ['', 'none', 'lax', 'strict'], true))
+		if (! in_array(strtolower($config->cookieSameSite ?: Cookie::SAMESITE_LAX), Cookie::ALLOWED_SAMESITE_VALUES, true))
 		{
-			throw HTTPException::forInvalidSameSiteSetting($this->cookieSameSite);
+			throw CookieException::forInvalidSameSite($config->cookieSameSite);
 		}
+
+		$this->cookieStore = new CookieStore([]);
+		Cookie::setDefaults($config);
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Turns "pretend" mode on or off to aid in testing.
@@ -220,21 +226,22 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		return $this->getReasonPhrase();
 	}
 
-    /**
-     * Gets the response reason phrase associated with the status code.
-     *
-     * Because a reason phrase is not a required element in a response
-     * status line, the reason phrase value MAY be null. Implementations MAY
-     * choose to return the default RFC 7231 recommended reason phrase (or those
-     * listed in the IANA HTTP Status Code Registry) for the response's
-     * status code.
-     *
-     * @link http://tools.ietf.org/html/rfc7231#section-6
-     * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-     * @return string Reason phrase; must return an empty string if none present.
-     */
-    public function getReasonPhrase()
-    {
+	/**
+	 * Gets the response reason phrase associated with the status code.
+	 *
+	 * Because a reason phrase is not a required element in a response
+	 * status line, the reason phrase value MAY be null. Implementations MAY
+	 * choose to return the default RFC 7231 recommended reason phrase (or those
+	 * listed in the IANA HTTP Status Code Registry) for the response's
+	 * status code.
+	 *
+	 * @link http://tools.ietf.org/html/rfc7231#section-6
+	 * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+	 *
+	 * @return string Reason phrase; must return an empty string if none present.
+	 */
+	public function getReasonPhrase()
+	{
 		if ($this->reason === '')
 		{
 			return ! empty($this->statusCode) ? static::$statusCodes[$this->statusCode] : '';

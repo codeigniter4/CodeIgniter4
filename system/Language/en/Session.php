@@ -16,5 +16,7 @@ return [
 	'writeProtectedSavePath' => 'Session: Configured save path "{0}" is not writable by the PHP process.',
 	'emptySavePath'          => 'Session: No save path configured.',
 	'invalidSavePathFormat'  => 'Session: Invalid Redis save path format: {0}',
+
+	// @deprecated
 	'invalidSameSiteSetting' => 'Session: The SameSite setting must be None, Lax, Strict, or a blank string. Given: {0}',
 ];

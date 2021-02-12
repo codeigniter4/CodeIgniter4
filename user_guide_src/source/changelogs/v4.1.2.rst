@@ -4,3 +4,21 @@ Version 4.1.2
 Release Date: Not released
 
 **4.1.2 release of CodeIgniter4**
+
+Enhancements:
+
+- New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
+
+Changes:
+
+- ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
+- ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
+- To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
+
+Deprecations:
+
+- Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
+- Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Security`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
+- Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.

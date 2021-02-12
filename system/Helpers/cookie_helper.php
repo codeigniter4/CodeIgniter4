@@ -12,11 +12,10 @@
 use Config\App;
 use Config\Services;
 
-// --------------------------------------------------------------------
+//=============================================================================
+// CodeIgniter Cookie Helpers
+//=============================================================================
 
-/**
- * CodeIgniter Cookie Helpers
- */
 if (! function_exists('set_cookie'))
 {
 	/**
@@ -28,16 +27,13 @@ if (! function_exists('set_cookie'))
 	 * @param string|array $name     Cookie name or array containing binds
 	 * @param string       $value    The value of the cookie
 	 * @param string       $expire   The number of seconds until expiration
-	 * @param string       $domain   For site-wide cookie.
-	 *                                 Usually: .yourdomain.com
+	 * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com
 	 * @param string       $path     The cookie path
 	 * @param string       $prefix   The cookie prefix
 	 * @param boolean      $secure   True makes the cookie secure
-	 * @param boolean      $httpOnly True makes the cookie accessible via
-	 *                                 http(s) only (no javascript)
+	 * @param boolean      $httpOnly True makes the cookie accessible via http(s) only (no javascript)
 	 * @param string|null  $sameSite The cookie SameSite value
 	 *
-	 * @see (\Config\Services::response())->setCookie()
 	 * @see \CodeIgniter\HTTP\Response::setCookie()
 	 */
 	function set_cookie(
@@ -52,47 +48,37 @@ if (! function_exists('set_cookie'))
 		string $sameSite = null
 	)
 	{
-		// The following line shows as a syntax error in NetBeans IDE
-		//(\Config\Services::response())->setcookie
 		$response = Services::response();
-		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
+		$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
 	}
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('get_cookie'))
 {
 	/**
-	 * Fetch an item from the COOKIE array
+	 * Fetch an item from the $_COOKIE array
 	 *
 	 * @param string  $index
 	 * @param boolean $xssClean
 	 *
 	 * @return mixed
 	 *
-	 * @see (\Config\Services::request())->getCookie()
 	 * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
-		$app             = config(App::class);
-		$appCookiePrefix = $app->cookiePrefix;
-		$prefix          = isset($_COOKIE[$index]) ? '' : $appCookiePrefix;
-
+		$prefix  = isset($_COOKIE[$index]) ? '' : config(App::class)->cookiePrefix;
 		$request = Services::request();
-		$filter  = true === $xssClean ? FILTER_SANITIZE_STRING : null;
+		$filter  = $xssClean ? FILTER_SANITIZE_STRING : FILTER_DEFAULT;
 
 		return $request->getCookie($prefix . $index, $filter);
 	}
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('delete_cookie'))
 {
 	/**
-	 * Delete a COOKIE
+	 * Delete a cookie
 	 *
 	 * @param mixed  $name
 	 * @param string $domain the cookie domain. Usually: .yourdomain.com
@@ -101,11 +87,27 @@ if (! function_exists('delete_cookie'))
 	 *
 	 * @return void
 	 *
-	 * @see (\Config\Services::response())->deleteCookie()
 	 * @see \CodeIgniter\HTTP\Response::deleteCookie()
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{
 		Services::response()->deleteCookie($name, $domain, $path, $prefix);
+	}
+}
+
+if (! function_exists('has_cookie'))
+{
+	/**
+	 * Checks if a cookie exists by name.
+	 *
+	 * @param string      $name
+	 * @param string|null $value
+	 * @param string      $prefix
+	 *
+	 * @return boolean
+	 */
+	function has_cookie(string $name, string $value = null, string $prefix = ''): bool
+	{
+		return Services::response()->hasCookie($name, $value, $prefix);
 	}
 }
