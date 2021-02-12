@@ -1,0 +1,1499 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Cookies &mdash; CodeIgniter 4.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CURLRequest Class" href="curlrequest.html" />
+    <link rel="prev" title="Caching Driver" href="caching.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #DD4814" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli.html">Running via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Custom CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Library Reference</a> &raquo;</li>
+        
+      <li>Cookies</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cookies">
+<h1>Cookies<a class="headerlink" href="#cookies" title="Permalink to this headline">¶</a></h1>
+<p>An <strong>HTTP cookie</strong> (web cookie, browser cookie) is a small piece of data that a
+server sends to the user’s web browser. The browser may store it and send it
+back with later requests to the same server. Typically, it’s used to tell if
+two requests came from the same browser — keeping a user logged-in, for
+example. It remembers stateful information for the stateless HTTP protocol.</p>
+<p>Cookies are mainly used for three purposes:</p>
+<ul class="simple">
+<li><p><strong>Session management</strong>: Logins, shopping carts, game scores, or anything else the server should remember</p></li>
+<li><p><strong>Personalization</strong>: User preferences, themes, and other settings</p></li>
+<li><p><strong>Tracking</strong>: Recording and analyzing user behavior</p></li>
+</ul>
+<p>To help you efficiently use cookies across browsers with your request and response,
+CodeIgniter provides the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Cookie\Cookie</span></code> class to abstract the
+cookie interaction.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#creating-cookies" id="id1">Creating Cookies</a></p></li>
+<li><p><a class="reference internal" href="#accessing-cookie-s-attributes" id="id2">Accessing Cookie’s Attributes</a></p></li>
+<li><p><a class="reference internal" href="#immutable-cookies" id="id3">Immutable Cookies</a></p></li>
+<li><p><a class="reference internal" href="#validating-a-cookie-s-attributes" id="id4">Validating a Cookie’s Attributes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validating-the-name-attribute" id="id5">Validating the Name Attribute</a></p></li>
+<li><p><a class="reference internal" href="#validating-the-prefix-attribute" id="id6">Validating the Prefix Attribute</a></p></li>
+<li><p><a class="reference internal" href="#validating-the-samesite-attribute" id="id7">Validating the SameSite Attribute</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#using-the-cookie-store" id="id8">Using the Cookie Store</a></p>
+<ul>
+<li><p><a class="reference internal" href="#checking-cookies-in-store" id="id9">Checking Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#getting-cookies-in-store" id="id10">Getting Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#adding-removing-cookies-in-store" id="id11">Adding/Removing Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#dispatching-cookies-in-store" id="id12">Dispatching Cookies in Store</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cookie-personalization" id="id13">Cookie Personalization</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id14">Class Reference</a></p></li>
+</ul>
+</div>
+<div class="section" id="creating-cookies">
+<h2><a class="toc-backref" href="#id1">Creating Cookies</a><a class="headerlink" href="#creating-cookies" title="Permalink to this headline">¶</a></h2>
+<p>There are currently five (5) ways to create a new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> value object.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">DateTime</span><span class="p">;</span>
+
+<span class="c1">// Providing all arguments in the constructor</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span> <span class="c1">// name</span>
+    <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span> <span class="c1">// value</span>
+    <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;+2 hours&#39;</span><span class="p">),</span> <span class="c1">// expires</span>
+    <span class="s1">&#39;__Secure-&#39;</span><span class="p">,</span> <span class="c1">// prefix</span>
+    <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="c1">// path</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1">// domain</span>
+    <span class="k">true</span><span class="p">,</span> <span class="c1">// secure</span>
+    <span class="k">true</span><span class="p">,</span> <span class="c1">// httponly</span>
+    <span class="k">false</span><span class="p">,</span> <span class="c1">// raw</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span> <span class="c1">// samesite</span>
+<span class="p">);</span>
+
+<span class="c1">// Using the static constructor</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;expires&#39;</span>  <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;+2 hours&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;prefix&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;__Secure-&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;path&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;domain&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;secure&#39;</span>   <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;raw&#39;</span>      <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+
+<span class="c1">// Supplying a Set-Cookie header string</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">fromHeaderString</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token=f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6; Path=/; Secure; HttpOnly; SameSite=Lax&#39;</span><span class="p">,</span>
+    <span class="k">false</span><span class="p">,</span> <span class="c1">// raw</span>
+<span class="p">);</span>
+
+<span class="c1">// Using the fluent builder interface</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">withValue</span><span class="p">(</span><span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withPrefix</span><span class="p">(</span><span class="s1">&#39;__Secure-&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withExpires</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;+2 hours&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">withPath</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withDomain</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withSecure</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withHttpOnly</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">withSameSite</span><span class="p">(</span><span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">);</span>
+
+<span class="c1">// Using the global function `cookie` which implicitly calls `Cookie::create()`</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">,</span> <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When constructing the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object, only the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is required. All other else are optional.
+If the optional attributes are not modified, their values will be filled up by the default values saved in
+the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class. To override the defaults currently stored in the class, you can pass a <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>
+instance or an array of defaults to the static <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\App</span><span class="p">;</span>
+
+<span class="c1">// pass in an App instance before constructing a Cookie class</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">App</span><span class="p">());</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// pass in an array of defaults</span>
+<span class="nv">$myDefaults</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;expires&#39;</span>  <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="nv">$myDefaults</span><span class="p">);</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Passing the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> instance or an array to <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> will effectively
+overwrite your defaults and will persist until new defaults are passed. If you do not want this
+behavior but only want to change defaults for a limited time, you can take advantage of
+<code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> return which returns the old defaults array.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\App</span><span class="p">;</span>
+
+<span class="nv">$oldDefaults</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">App</span><span class="p">());</span>
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;my_token&#39;</span><span class="p">,</span> <span class="s1">&#39;muffins&#39;</span><span class="p">);</span>
+
+<span class="c1">// return the old defaults</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="nv">$oldDefaults</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-cookie-s-attributes">
+<h2><a class="toc-backref" href="#id2">Accessing Cookie’s Attributes</a><a class="headerlink" href="#accessing-cookie-s-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Once instantiated, you can easily access a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s attribute by using one of its getter methods.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">DateTime</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">DateTimeZone</span><span class="p">;</span>
+
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;expires&#39;</span>  <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;2025-02-14 00:00:00&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">DateTimeZone</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">)),</span>
+        <span class="s1">&#39;prefix&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;__Secure-&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;path&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;domain&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;secure&#39;</span>   <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;raw&#39;</span>      <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;remember_token&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefix</span><span class="p">();</span> <span class="c1">// &#39;__Secure-&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefixedName</span><span class="p">();</span> <span class="c1">// &#39;__Secure-remember_token&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresTimestamp</span><span class="p">();</span> <span class="c1">// Unix timestamp</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresString</span><span class="p">();</span> <span class="c1">// &#39;Fri, 14-Feb-2025 00:00:00 GMT&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isExpired</span><span class="p">();</span> <span class="c1">// false</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getMaxAge</span><span class="p">();</span> <span class="c1">// the difference from time() to expires</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isRaw</span><span class="p">();</span> <span class="c1">// false</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">();</span> <span class="c1">// true</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span> <span class="c1">// &#39;/&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getDomain</span><span class="p">();</span> <span class="c1">// &#39;&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isHttpOnly</span><span class="p">();</span> <span class="c1">// true</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getSameSite</span><span class="p">();</span> <span class="c1">// &#39;Lax&#39;</span>
+
+<span class="c1">// additional getter</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">();</span> <span class="c1">// &#39;__Secure-remember_token;;/&#39;</span>
+
+<span class="c1">// when using `setcookie()`&#39;s alternative signature on PHP 7.3+</span>
+<span class="c1">// you can easily use the `getOptions()` method to supply the</span>
+<span class="c1">// $options parameter</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getOptions</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="immutable-cookies">
+<h2><a class="toc-backref" href="#id3">Immutable Cookies</a><a class="headerlink" href="#immutable-cookies" title="Permalink to this headline">¶</a></h2>
+<p>A new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance is an immutable value object representation of an HTTP cookie. Being immutable,
+modifying any of the instance’s attributes will not affect the original instance. The modification <strong>always</strong>
+returns a new instance. You need to retain this new instance in order to use it.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">);</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;login_token&#39;</span>
+
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">withName</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;login_token&#39;</span>
+
+<span class="nv">$new</span> <span class="o">=</span> <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">withName</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+<span class="nv">$new</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;remember_token&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validating-a-cookie-s-attributes">
+<h2><a class="toc-backref" href="#id4">Validating a Cookie’s Attributes</a><a class="headerlink" href="#validating-a-cookie-s-attributes" title="Permalink to this headline">¶</a></h2>
+<p>An HTTP cookie is regulated by several specifications that need to be followed in order to be
+accepted by browsers. Thus, when creating or modifying certain attributes of the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>,
+these are validated in order to check if these follow the specifications.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">CookieException</span></code> is thrown if violations were reported.</p>
+<div class="section" id="validating-the-name-attribute">
+<h3><a class="toc-backref" href="#id5">Validating the Name Attribute</a><a class="headerlink" href="#validating-the-name-attribute" title="Permalink to this headline">¶</a></h3>
+<p>A cookie name can be any US-ASCII character, except for the following:</p>
+<ul class="simple">
+<li><p>control characters;</p></li>
+<li><p>spaces or tabs;</p></li>
+<li><p>separator characters, such as <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span> <span class="pre">&lt;</span> <span class="pre">&gt;</span> <span class="pre">&#64;</span> <span class="pre">,</span> <span class="pre">;</span> <span class="pre">:</span> <span class="pre">\</span> <span class="pre">&quot;</span> <span class="pre">/</span> <span class="pre">[</span> <span class="pre">]</span> <span class="pre">?</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">}</span></code></p></li>
+</ul>
+<p>If setting the <code class="docutils literal notranslate"><span class="pre">$raw</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> this validation will be strictly made. This is because
+PHP’s <code class="docutils literal notranslate"><span class="pre">setcookie</span></code> and <code class="docutils literal notranslate"><span class="pre">setrawcookie</span></code> will reject cookies with invalid names. Additionally, cookie
+names cannot be an empty string.</p>
+</div>
+<div class="section" id="validating-the-prefix-attribute">
+<h3><a class="toc-backref" href="#id6">Validating the Prefix Attribute</a><a class="headerlink" href="#validating-the-prefix-attribute" title="Permalink to this headline">¶</a></h3>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">__Secure-</span></code> prefix, cookies must be set with the <code class="docutils literal notranslate"><span class="pre">$secure</span></code> flag set to <code class="docutils literal notranslate"><span class="pre">true</span></code>. If
+using the <code class="docutils literal notranslate"><span class="pre">__Host-</span></code> prefix, cookies must exhibit the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$secure</span></code> flag set to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$domain</span></code> is empty</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$path</span></code> must be <code class="docutils literal notranslate"><span class="pre">/</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="validating-the-samesite-attribute">
+<h3><a class="toc-backref" href="#id7">Validating the SameSite Attribute</a><a class="headerlink" href="#validating-the-samesite-attribute" title="Permalink to this headline">¶</a></h3>
+<p>The SameSite attribute only accepts three (3) values:</p>
+<ul class="simple">
+<li><p><strong>Lax</strong>: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site (<em>i.e.</em> when following a link).</p></li>
+<li><p><strong>Strict</strong>: Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.</p></li>
+<li><p><strong>None</strong>: Cookies will be sent in all contexts, <em>i.e.</em> in responses to both first-party and cross-origin requests.</p></li>
+</ul>
+<p>CodeIgniter, however, allows you to set the SameSite attribute to an empty string. When an empty string is
+provided, the default SameSite setting saved in the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class is used. You can change the default SameSite
+by using the <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> as discussed above.</p>
+<p>Recent cookie specifications have changed such that modern browsers are being required to give a default SameSite
+if nothing was provided. This default is <code class="docutils literal notranslate"><span class="pre">Lax</span></code>. If you have set the SameSite to be an empty string and your
+default SameSite is also an empty string, your cookie will be given the <code class="docutils literal notranslate"><span class="pre">Lax</span></code> value.</p>
+<p>If the SameSite is set to <code class="docutils literal notranslate"><span class="pre">None</span></code> you need to make sure that <code class="docutils literal notranslate"><span class="pre">Secure</span></code> is also set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>When writing the SameSite attribute, the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class accepts any of the values case-insensitively. You can
+also take advantage of the class’s constants to make it not a hassle.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span> <span class="c1">// &#39;lax&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span> <span class="c1">// &#39;strict&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_NONE</span><span class="p">;</span> <span class="c1">// &#39;none&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-the-cookie-store">
+<h2><a class="toc-backref" href="#id8">Using the Cookie Store</a><a class="headerlink" href="#using-the-cookie-store" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> class represents an immutable collection of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects. The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>
+instance can be accessed from the current <code class="docutils literal notranslate"><span class="pre">Response</span></code> object.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="nv">$cookieStore</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookieStore</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>CodeIgniter provides three (3) other ways to create a new instance of the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+
+<span class="c1">// Passing an array of `Cookie` objects in the constructor</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">),</span>
+<span class="p">]);</span>
+
+<span class="c1">// Passing an array of `Set-Cookie` header strings</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="nx">CookieStore</span><span class="o">::</span><span class="na">fromCookieHeaders</span><span class="p">([</span>
+    <span class="s1">&#39;remember_token=me; Path=/; SameSite=Lax&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;login_token=admin; Path=/; SameSite=Lax&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+
+<span class="c1">// using the global `cookies` function</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="nx">cookies</span><span class="p">([</span><span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">)],</span> <span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// retrieving the `CookieStore` instance saved in our current `Response` object</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="nx">cookies</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the global <code class="docutils literal notranslate"><span class="pre">cookies()</span></code> function, the passed <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> array will only be considered
+if the second argument, <code class="docutils literal notranslate"><span class="pre">$getGlobal</span></code>, is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</div>
+<div class="section" id="checking-cookies-in-store">
+<h3><a class="toc-backref" href="#id9">Checking Cookies in Store</a><a class="headerlink" href="#checking-cookies-in-store" title="Permalink to this headline">¶</a></h3>
+<p>To check whether a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object exists in the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance, you can use several ways:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="c1">// check if cookie is in the current cookie collection</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">),</span>
+<span class="p">]);</span>
+<span class="nv">$store</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// check if cookie is in the current Response&#39;s cookie collection</span>
+<span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// using the cookie helper to check the current Response</span>
+<span class="c1">// not available to v4.1.1 and lower</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<span class="nx">has_cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-cookies-in-store">
+<h3><a class="toc-backref" href="#id10">Getting Cookies in Store</a><a class="headerlink" href="#getting-cookies-in-store" title="Permalink to this headline">¶</a></h3>
+<p>Retrieving a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance in a cookie collection is very easy:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="c1">// getting cookie in the current cookie collection</span>
+<span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">),</span>
+<span class="p">]);</span>
+<span class="nv">$store</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// getting cookie in the current Response&#39;s cookie collection</span>
+<span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// using the cookie helper to get cookie from the Response&#39;s cookie collection</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<span class="nx">get_cookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When getting a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance directly from a <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>, an invalid name
+will throw a <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// throws CookieException</span>
+<span class="nv">$store</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;unknown_cookie&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When getting a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance from the current <code class="docutils literal notranslate"><span class="pre">Response</span></code>’s cookie collection,
+an invalid name will just return <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;unknown_cookie&#39;</span><span class="p">);</span> <span class="c1">// null</span>
+</pre></div>
+</div>
+<p>If no arguments are supplied in when getting cookies from the <code class="docutils literal notranslate"><span class="pre">Response</span></code>, all <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects
+in store will be displayed.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// array of Cookie objects</span>
+
+<span class="c1">// alternatively, you can use the display method</span>
+<span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">display</span><span class="p">();</span>
+
+<span class="c1">// or even from the Response</span>
+<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookies</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The helper function <code class="docutils literal notranslate"><span class="pre">get_cookie()</span></code> gets the cookie from the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> object, not
+from <code class="docutils literal notranslate"><span class="pre">Response</span></code>. This function checks the <cite>$_COOKIE</cite> array if that cookie is set and fetches it
+right away.</p>
+</div>
+</div>
+<div class="section" id="adding-removing-cookies-in-store">
+<h3><a class="toc-backref" href="#id11">Adding/Removing Cookies in Store</a><a class="headerlink" href="#adding-removing-cookies-in-store" title="Permalink to this headline">¶</a></h3>
+<p>As previously mentioned, <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> objects are immutable. You need to save the modified instance
+in order to work on it. The original instance is left unchanged.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">),</span>
+<span class="p">]);</span>
+
+<span class="c1">// adding a new Cookie instance</span>
+<span class="nv">$new</span> <span class="o">=</span> <span class="nv">$store</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;admin_token&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">));</span>
+
+<span class="c1">// removing a Cookie instance</span>
+<span class="nv">$new</span> <span class="o">=</span> <span class="nv">$store</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Removing a cookie from the store <strong>DOES NOT</strong> delete it from the browser.
+If you intend to delete a cookie <em>from the browser</em>, you must put an empty value
+cookie with the same name to the store.</p>
+</div>
+<p>When interacting with the cookies in store in the current <code class="docutils literal notranslate"><span class="pre">Response</span></code> object, you can safely add or delete
+cookies without worrying the immutable nature of the cookie collection. The <code class="docutils literal notranslate"><span class="pre">Response</span></code> object will replace
+the instance with the modified instance.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;admin_token&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">);</span>
+<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+
+<span class="c1">// using the cookie helper</span>
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<span class="nx">set_cookie</span><span class="p">(</span><span class="s1">&#39;admin_token&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">);</span>
+<span class="nx">delete_cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dispatching-cookies-in-store">
+<h3><a class="toc-backref" href="#id12">Dispatching Cookies in Store</a><a class="headerlink" href="#dispatching-cookies-in-store" title="Permalink to this headline">¶</a></h3>
+<p>More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
+for you. However, if you really need to manually send cookies, you can use the <code class="docutils literal notranslate"><span class="pre">dispatch</span></code> method. Just like
+in sending other headers, you need to make sure the headers are not yet sent by checking the value
+of <code class="docutils literal notranslate"><span class="pre">headers_sent()</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+
+<span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
+    <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">),</span>
+<span class="p">]);</span>
+
+<span class="nv">$store</span><span class="o">-&gt;</span><span class="na">dispatch</span><span class="p">();</span> <span class="c1">// After dispatch, the collection is now empty.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cookie-personalization">
+<h2><a class="toc-backref" href="#id13">Cookie Personalization</a><a class="headerlink" href="#cookie-personalization" title="Permalink to this headline">¶</a></h2>
+<p>Sane defaults are already in place inside the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class to ensure the smooth creation of cookie
+objects. However, you may wish to define your own settings by changing the following settings in the
+<code class="docutils literal notranslate"><span class="pre">Config\App</span></code> class in <code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code> file.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 31%" />
+<col style="width: 8%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Options/ Types</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>$cookiePrefix</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
+<td><p>Prefix to prepend to the cookie name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>$cookieDomain</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
+<td><p>The domain property of the cookie.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>$cookiePath</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p>The path property of the cookie, with trailing slash.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>$cookieSecure</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true/false</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If to be sent over secure HTTPS.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>$cookieHTTPOnly</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true/false</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If not accessible to JavaScript.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>$cookieSameSite</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Lax|None|Strict|lax|none|strict''</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Lax</span></code></p></td>
+<td><p>The SameSite attribute.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>$cookieRaw</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true/false</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If to be dispatched using <code class="docutils literal notranslate"><span class="pre">setrawcookie()</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>$cookieExpires</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DateTimeInterface|string|int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>The expires timestamp.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In runtime, you can manually supply a new default using the <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<code class="sig-name descname">CodeIgniter\HTTP\Cookie\Cookie</code></dt>
+<dd><dl class="staticmethod">
+<dt id="setDefaults">
+<em class="property">static </em><code class="sig-name descname">setDefaults</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$config = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setDefaults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$config</strong> (<em>App|array</em>) – The configuration array or instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array&lt;string, mixed&gt;</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The old defaults</p>
+</dd>
+</dl>
+<p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">App</span></code> config or an array.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="fromHeaderString">
+<em class="property">static </em><code class="sig-name descname">fromHeaderString</code><span class="sig-paren">(</span><em class="sig-param">string $header</em><span class="optional">[</span>, <em class="sig-param">bool $raw = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromHeaderString" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$header</strong> (<em>string</em>) – The <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header string</p></li>
+<li><p><strong>$raw</strong> (<em>bool</em>) – Whether this cookie is not to be URL encoded and sent via <code class="docutils literal notranslate"><span class="pre">setrawcookie()</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+<p>Create a new Cookie instance from a <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="create">
+<em class="property">static </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">string $value = ''</em><span class="optional">[</span>, <em class="sig-param">array $options = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#create" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – The cookie name</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – The cookie value</p></li>
+<li><p><strong>$options</strong> (<em>aray</em>) – The cookie options</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+<p>Create Cookie objects on the fly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="__construct">
+<code class="sig-name descname">__construct</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">string $value = ''</em><span class="optional">[</span>, <em class="sig-param">$expires = 0</em><span class="optional">[</span>, <em class="sig-param">?string $prefix = null</em><span class="optional">[</span>, <em class="sig-param">?string $path = null</em><span class="optional">[</span>, <em class="sig-param">?string $domain = null</em><span class="optional">[</span>, <em class="sig-param">bool $secure = false</em><span class="optional">[</span>, <em class="sig-param">bool $httpOnly = true</em><span class="optional">[</span>, <em class="sig-param">bool $raw = false</em><span class="optional">[</span>, <em class="sig-param">string $sameSite = self::SAMESITE_LAX</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#__construct" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$expires</strong> (<em>DateTimeInterface|string|int</em>) – </p></li>
+<li><p><strong>$prefix</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$path</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$domain</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$secure</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$httpOnly</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$raw</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$sameSite</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+<p>Construct a new Cookie instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="getId">
+<code class="sig-name descname">getId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getId" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The ID used in indexing in the cookie collection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">isRaw(): bool</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getPrefix(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getName(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getPrefixedName(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getValue(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getExpiresTimestamp(): int</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getExpiresString(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">isExpired(): bool</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getMaxAge(): int</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getDomain(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getPath(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">isSecure(): bool</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">isHttpOnly(): bool</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getSameSite(): string</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">getOptions(): array</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="withRaw">
+<code class="sig-name descname">withRaw</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $raw = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withRaw" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$raw</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with URL encoding option updated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withPrefix">
+<code class="sig-name descname">withPrefix</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">string $prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withPrefix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$prefix</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new prefix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withName">
+<code class="sig-name descname">withName</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="sig-paren">)</span><a class="headerlink" href="#withName" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withValue">
+<code class="sig-name descname">withValue</code><span class="sig-paren">(</span><em class="sig-param">string $value</em><span class="sig-paren">)</span><a class="headerlink" href="#withValue" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$value</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withExpiresAt">
+<code class="sig-name descname">withExpiresAt</code><span class="sig-paren">(</span><em class="sig-param">$expires</em><span class="sig-paren">)</span><a class="headerlink" href="#withExpiresAt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$expires</strong> (<em>DateTimeInterface|string|int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new cookie expires time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withExpired">
+<code class="sig-name descname">withExpired</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withExpired" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie that will expire from the browser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withNeverExpiring">
+<code class="sig-name descname">withNeverExpiring</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withNeverExpiring" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie that will virtually never expire.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withDomain">
+<code class="sig-name descname">withDomain</code><span class="sig-paren">(</span><em class="sig-param">?string $domain</em><span class="sig-paren">)</span><a class="headerlink" href="#withDomain" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$domain</strong> (<em>string|null</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new domain.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withPath">
+<code class="sig-name descname">withPath</code><span class="sig-paren">(</span><em class="sig-param">?string $path</em><span class="sig-paren">)</span><a class="headerlink" href="#withPath" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$path</strong> (<em>string|null</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withSecure">
+<code class="sig-name descname">withSecure</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $secure = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withSecure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$secure</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new “Secure” attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withHttpOnly">
+<code class="sig-name descname">withHttpOnly</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $httpOnly = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withHttpOnly" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$httpOnly</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new “HttpOnly” attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="withSameSite">
+<code class="sig-name descname">withSameSite</code><span class="sig-paren">(</span><em class="sig-param">string $sameSite</em><span class="sig-paren">)</span><a class="headerlink" href="#withSameSite" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$sameSite</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+</dl>
+<p>Creates a new Cookie with new “SameSite” attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="toHeaderString">
+<code class="sig-name descname">toHeaderString</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toHeaderString" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the string representation that can be passed as a header string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="toArray">
+<code class="sig-name descname">toArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toArray" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the array representation of the Cookie instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<code class="sig-name descname">CodeIgniter\HTTP\Cookie\CookieStore</code></dt>
+<dd><dl class="staticmethod">
+<dt id="fromCookieHeaders">
+<em class="property">static </em><code class="sig-name descname">fromCookieHeaders</code><span class="sig-paren">(</span><em class="sig-param">array $headers</em><span class="optional">[</span>, <em class="sig-param">bool $raw = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromCookieHeaders" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$header</strong> (<em>array</em>) – Array of <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> headers</p></li>
+<li><p><strong>$raw</strong> (<em>bool</em>) – Whether not to use URL encoding</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+<p>Creates a CookieStore from an array of <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> headers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">__construct</code><span class="sig-paren">(</span><em class="sig-param">array $cookies</em><span class="sig-paren">)</span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$cookies</strong> (<em>array</em>) – Array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">has(string $name[, string $prefix = ''[, ?string $value = null]]): bool</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+<li><p><strong>$value</strong> (<em>string|null</em>) – Cookie value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Checks if a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object identified by name and prefix is present in the collection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">get(string $name[, string $prefix = '']): Cookie</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Retrieves an instance of Cookie identified by a name and prefix.</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">put(Cookie $cookie): CookieStore</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$cookie</strong> (<em>Cookie</em>) – A Cookie object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance</p>
+</dd>
+</dl>
+<p>Store a new cookie and return a new collection. The original collection is left unchanged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">remove(string $name[, string $prefix = '']): CookieStore</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>new <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance</p>
+</dd>
+</dl>
+<p>Removes a cookie from a collection and returns an updated collection.
+The original collection is left unchanged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">dispatch(): void</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>void</p>
+</dd>
+</dl>
+<p>Dispatches all cookies in store.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">display(): array</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns all cookie instances in store.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">clear(): void</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>void</p>
+</dd>
+</dl>
+<p>Clears the cookie collection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="curlrequest.html" class="btn btn-neutral float-right" title="CURLRequest Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="caching.html" class="btn btn-neutral float-left" title="Caching Driver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">
+        Last updated on Feb 12, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -210,6 +210,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -397,8 +398,52 @@ or null if no value is found.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="cookie">
+<code class="sig-name descname">cookie</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">string $value = ''</em><span class="optional">[</span>, <em class="sig-param">array $options = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$value</strong> (<em>string</em>) – Cookie value</p></li>
+<li><p><strong>$options</strong> (<em>array</em>) – Cookie options</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance</p>
+</dd>
+<dt class="field-even">Throws</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieException</span></code></p>
+</dd>
+</dl>
+<p>Simpler way to create a new Cookie instance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cookies">
+<code class="sig-name descname">cookies</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">array $cookies = []</em><span class="optional">[</span>, <em class="sig-param">bool $getGlobal = true</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookies" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$cookies</strong> (<em>array</em>) – If <code class="docutils literal notranslate"><span class="pre">getGlobal</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, this is passed to <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>’s constructor.</p></li>
+<li><p><strong>$getGlobal</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">false</span></code>, creates a new instance of <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CookieStore</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance of <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> saved in the current <code class="docutils literal notranslate"><span class="pre">Response</span></code>, or a new <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance.</p>
+</dd>
+</dl>
+<p>Fetches the global <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance held by <code class="docutils literal notranslate"><span class="pre">Response</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="env">
-<code class="sig-name descname">env</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default=null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">env</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -423,7 +468,7 @@ settings, API keys, etc.</p>
 
 <dl class="function">
 <dt id="esc">
-<code class="sig-name descname">esc</code><span class="sig-paren">(</span><em class="sig-param">$data</em>, <em class="sig-param">$context='html'</em><span class="optional">[</span>, <em class="sig-param">$encoding</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">esc</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context = 'html'</em><span class="optional">[</span>, <em class="sig-param">$encoding</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1110,7 +1155,7 @@ instance every time.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 10, 2021.
+        Last updated on Feb 12, 2021.
       </span>
 
     </p>

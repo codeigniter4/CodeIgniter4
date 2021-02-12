@@ -210,6 +210,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -350,6 +351,24 @@
 <h1>Version 4.1.2<a class="headerlink" href="#version-4-1-2" title="Permalink to this headline">¶</a></h1>
 <p>Release Date: Not released</p>
 <p><strong>4.1.2 release of CodeIgniter4</strong></p>
+<p>Enhancements:</p>
+<ul class="simple">
+<li><p>New HTTP classes, <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> and <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>, for abstracting web cookies.</p></li>
+</ul>
+<p>Changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookie</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance instead of an array of cookie attributes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookies</span></code> now returns an array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances instead of array of array of attributes.</p></li>
+<li><p>To eliminate warnings from modern browsers’ consoles, empty samesite values will be defaulted to <code class="docutils literal notranslate"><span class="pre">Lax</span></code> on cookie dispatch.</p></li>
+</ul>
+<p>Deprecations:</p>
+<ul class="simple">
+<li><p>Language strings and exceptions on invalid cookie samesite are deprecated for the <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>’s own exception message.</p></li>
+<li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Response</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
+<li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Security</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
+<li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Session</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Security::isExpired()</span></code> to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s internal expires status.</p></li>
+</ul>
 </div>
 
 
@@ -368,7 +387,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 10, 2021.
+        Last updated on Feb 12, 2021.
       </span>
 
     </p>

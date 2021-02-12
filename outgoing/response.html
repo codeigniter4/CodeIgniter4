@@ -210,6 +210,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -367,6 +368,7 @@ a server responding to the client that called it.</p>
 <li><p><a class="reference internal" href="#inline-content" id="id9">Inline Content</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#class-reference" id="id10">Class Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="working-with-the-response">
@@ -381,8 +383,7 @@ powerful HTTP caching, it’s there for you.</p>
 <p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
 the response:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-               <span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The reason phrase (‘OK’, ‘Created’, ‘Moved Permanently’) will be automatically added, but you can add custom reasons
@@ -393,12 +394,12 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 <p>You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
 <code class="docutils literal notranslate"><span class="pre">setJSON</span></code> and <code class="docutils literal notranslate"><span class="pre">setXML</span></code> methods. Typically, you will send an array of data to be converted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span>
+    <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-        <span class="k">or</span>
+<span class="c1">// or</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setXML</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -473,9 +474,9 @@ introduction to all of the cache headers power, but you can get a good understan
 circumstances are too varied for us to be able to create a good default other than turning it off. It’s simple
 to set the Cache values to what you need, through the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;max-age&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
-        <span class="s1">&#39;s-maxage&#39;</span> <span class="o">=&gt;</span> <span class="mi">900</span><span class="p">,</span>
-        <span class="s1">&#39;etag&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;abcde&#39;</span>
+    <span class="s1">&#39;max-age&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">&#39;s-maxage&#39;</span> <span class="o">=&gt;</span> <span class="mi">900</span><span class="p">,</span>
+    <span class="s1">&#39;etag&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;abcde&#39;</span>
 <span class="p">];</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
@@ -533,8 +534,10 @@ name or an array of them.:</p>
 
 <span class="c1">// specify the origin to use if none provided for a directive</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">CSP</span><span class="o">-&gt;</span><span class="na">setDefaultSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
+
 <span class="c1">// specify the URL that &quot;report-only&quot; reports get sent to</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">CSP</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">&#39;http://example.com/csp/reports&#39;</span><span class="p">);</span>
+
 <span class="c1">// specify that HTTP requests be upgraded to HTTPS</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">CSP</span><span class="o">-&gt;</span><span class="na">upgradeInsecureRequests</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 
@@ -587,12 +590,14 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
 <span class="c1">// OR</span>
 <span class="o">&lt;</span><span class="nx">style</span> <span class="p">{</span><span class="nx">csp</span><span class="o">-</span><span class="nx">style</span><span class="o">-</span><span class="nx">nonce</span><span class="p">}</span><span class="o">&gt;</span>
-        <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
 <span class="o">&lt;/</span><span class="nx">style</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+</div>
+</div>
 <div class="section" id="class-reference">
-<h4>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h4>
+<h2><a class="toc-backref" href="#id10">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -620,8 +625,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\HTTP\Response</code></dt>
-<dd><blockquote>
-<div><dl class="method">
+<dd><dl class="method">
 <dt id="getStatusCode">
 <code class="sig-name descname">getStatusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -653,7 +657,7 @@ will be thrown:</p>
 <dd class="field-even"><p>The current Response instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Response</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the HTTP status code that should be sent with this response:</p>
@@ -697,7 +701,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <dd class="field-even"><p>The current response instance.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the date used for this response. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> argument must be an instance of <code class="docutils literal notranslate"><span class="pre">DateTime</span></code>:</p>
@@ -721,7 +725,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <dd class="field-even"><p>The current response instance.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the content type this response represents:</p>
@@ -745,7 +749,7 @@ pass the character set as the second parameter:</p>
 <dd class="field-odd"><p>The current response instance.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header to turn off all HTTP caching. This is the default setting
@@ -771,7 +775,7 @@ of all response messages:</p>
 <dd class="field-even"><p>The current response instance.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> headers, including <code class="docutils literal notranslate"><span class="pre">ETags</span></code> and <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code>. Typical keys are:</p>
@@ -802,7 +806,7 @@ of all response messages:</p>
 <dd class="field-even"><p>The current response instance.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Sets the <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> object can be either a string or a <code class="docutils literal notranslate"><span class="pre">DateTime</span></code>
@@ -815,13 +819,13 @@ instance:</p>
 
 <dl class="method">
 <dt>
-<code class="sig-name descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">send(): Response</code></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current response instance.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>CodeIgniterHTTPResponse</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
 <p>Tells the response to send everything back to the client. This will first send the headers,
@@ -857,15 +861,15 @@ Method, and Discrete Parameters:</p>
 <p>Using this method, an associative array is passed as the first
 parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;value&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The Value&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;expire&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;86500&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;domain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;path&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-        <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
-        <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Lax&#39;</span>
+    <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The Value&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;expire&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;86500&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;domain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+    <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
+    <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Lax&#39;</span>
 <span class="p">];</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
@@ -884,12 +888,11 @@ URL to the <strong>domain</strong> starting with a period, like this:
 <p>The path is usually not needed since the method sets a root path.</p>
 <p>The prefix is only needed if you need to avoid name collisions with
 other identically named cookies for your server.</p>
-<p>The secure boolean is only needed if you want to make it a secure cookie
-by setting it to TRUE.</p>
+<p>The secure flag is only needed if you want to make it a secure cookie
+by setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <p>The SameSite value controls how cookies are shared between domains and sub-domains.
 Allowed values are ‘None’, ‘Lax’, ‘Strict’ or a blank string <code class="docutils literal notranslate"><span class="pre">''</span></code>.
-If set to blank string, no SameSite attribute will be set on the cookie sent to the client.
-If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default from <code class="docutils literal notranslate"><span class="pre">config/App.php</span></code> is used.</p>
+If set to blank string, default SameSite attribute will be set.</p>
 <p><strong>Discrete Parameters</strong></p>
 <p>If you prefer, you can set the cookie by passing data using individual
 parameters:</p>
@@ -914,7 +917,7 @@ parameters:</p>
 <dd class="field-even"><p>void</p>
 </dd>
 </dl>
-<p>Delete an existing cookie by setting its expiry to blank.</p>
+<p>Delete an existing cookie by setting its expiry to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <p><strong>Notes</strong></p>
 <p>Only the name is required.</p>
 <p>The prefix is only needed if you need to avoid name collisions with
@@ -942,16 +945,15 @@ cookie will be deleted across all that apply.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>boolean</p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 <p>Checks to see if the Response has a specified cookie or not.</p>
 <p><strong>Notes</strong></p>
-<p>Only the name is required. If a prefix is specified, it will be
-pre-pended to the cookie name.</p>
-<p>If no value is given, the method just checks for the existence
-of the named cookie. If a value is given, then the method checks
-that the cookie exists, and that it has the prescribed value.</p>
+<p>Only the name is required. If a prefix is specified, it will be prepended to the cookie name.</p>
+<p>If no value is given, the method just checks for the existence of the named cookie.
+If a value is given, then the method checks that the cookie exists, and that it
+has the prescribed value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="o">...</span>
 </pre></div>
@@ -959,35 +961,33 @@ that the cookie exists, and that it has the prescribed value.</p>
 </dd></dl>
 
 <dl class="method">
-<dt>
-<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt id="getCookie">
+<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>mixed</em>) – Cookie name</p></li>
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
 <li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>boolean</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie|Cookie[]|null</span></code></p>
 </dd>
 </dl>
-<p>Returns the named cookie, if found, or null.</p>
-<p>If no name is given, returns the array of cookies.</p>
-<p>Each cookie is returned as an associative array.</p>
+<p>Returns the named cookie, if found, or <code class="docutils literal notranslate"><span class="pre">null</span></code>.
+If no name is given, returns the array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-</div></blockquote>
 <dl class="method">
 <dt id="getCookies">
 <code class="sig-name descname">getCookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookies" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie[]</span></code></p>
 </dd>
 </dl>
 <p>Returns all cookies currently set within the Response instance.
@@ -997,8 +997,6 @@ request only.</p>
 
 </dd></dl>
 
-</div>
-</div>
 </div>
 </div>
 
@@ -1018,7 +1016,7 @@ request only.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 10, 2021.
+        Last updated on Feb 12, 2021.
       </span>
 
     </p>

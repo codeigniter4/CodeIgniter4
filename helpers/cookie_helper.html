@@ -210,6 +210,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -448,6 +449,24 @@ parameters.</p>
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="has_cookie">
+<code class="sig-name descname">has_cookie</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">?string $value = null</em><span class="optional">[</span>, <em class="sig-param">string $prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#has_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
+<li><p><strong>$value</strong> (<em>string|null</em>) – Cookie value</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p>Checks if a cookie exists by name. This is an alias of <code class="docutils literal notranslate"><span class="pre">Response::hasCookie()</span></code>.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -467,7 +486,7 @@ parameters.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 10, 2021.
+        Last updated on Feb 12, 2021.
       </span>
 
     </p>
