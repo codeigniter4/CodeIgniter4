@@ -57,7 +57,7 @@ class FeatureResponse extends TestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * Boils down the possible responses into a bolean valid/not-valid
+	 * Boils down the possible responses into a boolean valid/not-valid
 	 * response type.
 	 *
 	 * @return boolean
@@ -96,6 +96,27 @@ class FeatureResponse extends TestCase
 	public function assertRedirect()
 	{
 		$this->assertTrue($this->isRedirect(), 'Response is not a redirect or RedirectResponse.');
+	}
+
+	/**
+	 * Assert that a given response was a redirect
+	 * and it was redirect to a specific URI.
+	 *
+	 * @param string $uri
+	 */
+	public function assertRedirectedTo(string $uri)
+	{
+		if (! $this->isRedirect())
+		{
+			return false;
+		}
+
+		$uri         = trim(strtolower($uri));
+		$redirectUri = $this->getRedirectUrl();
+
+		$matches = $uri === $redirectUri || site_url($uri) === $redirectUri;
+
+		$this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
 	}
 
 	/**
