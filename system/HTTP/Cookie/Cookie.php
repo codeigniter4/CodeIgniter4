@@ -126,7 +126,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	 */
 	public static function setDefaults($config = [])
 	{
-		$oldDefaults = static::$defaults;
+		$oldDefaults = self::$defaults;
 		$newDefaults = [];
 
 		if ($config instanceof App)
@@ -149,7 +149,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
 		// This array union ensures that even if passed `$config`
 		// is not `App` or `array`, no empty defaults will occur.
-		static::$defaults = $newDefaults + $oldDefaults;
+		self::$defaults = $newDefaults + $oldDefaults;
 
 		return $oldDefaults;
 	}
