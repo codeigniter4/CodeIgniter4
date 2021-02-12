@@ -348,6 +348,7 @@ class Entity implements JsonSerializable
 			$value = $this->mutateDate($value);
 		}
 
+		$castTo = false;
 		$isNullable = false;
 		$isGzipped = false;
 
