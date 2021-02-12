@@ -821,35 +821,17 @@ trait ResponseTrait
 
 		foreach ($this->cookies as $params)
 		{
-			if (PHP_VERSION_ID < 70300)
+			$name  = $params['name'];
+			$value = $params['value'];
+			unset($params['name'], $params['value']);
+
+			// If samesite is blank string, skip setting the attribute on the cookie
+			if (isset($params['samesite']) && $params['samesite'] === '')
 			{
-				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
-				if (isset($params['samesite']) && in_array(strtolower($params['samesite']), ['none', 'lax', 'strict'], true))
-				{
-					$params['path'] .= '; samesite=' . $params['samesite'];
-					unset($params['samesite']);
-				}
-
-				// PHP cannot unpack array with string keys
-				$params = array_values($params);
-				setcookie(...$params);
+				unset($params['samesite']);
 			}
-			else
-			{
-				// PHP 7.3 and later have a signature for setcookie() with options array as third argument
-				// and SameSite is possible to set there
-				$name  = $params['name'];
-				$value = $params['value'];
-				unset($params['name'], $params['value']);
 
-				// If samesite is blank string, skip setting the attribute on the cookie
-				if (isset($params['samesite']) && $params['samesite'] === '')
-				{
-					unset($params['samesite']);
-				}
-
-				setcookie($name, $value, $params);
-			}
+			setcookie($name, $value, $params);
 		}
 	}
 
