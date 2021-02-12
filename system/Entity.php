@@ -338,7 +338,7 @@ class Entity implements JsonSerializable
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function __set(string $key, $value = null, $castTo = false)
+	public function __set(string $key, $value = null)
 	{
 		$key = $this->mapProperty($key);
 
@@ -349,22 +349,18 @@ class Entity implements JsonSerializable
 		}
 
 		$isNullable = false;
+		$isGzipped = false;
 
 		if (array_key_exists($key, $this->casts))
 		{
-			$isNullable = substr($this->casts[$key], 0, 1) === '?';
-			$castTo     = $isNullable ? substr($castTo ?? $this->casts[$key], 1) : $castTo ?? $this->casts[$key];
+			$isGzipped = substr($this->casts[$key], 0, 5) === 'gzip:';
+			$isNullable = substr($this->casts[$key], $isGzipped ? 5 : 0, 1) === '?';
+			$castTo     =  substr($this->casts[$key],  ($isGzipped ? 5 : 0) + ($isNullable ? 1 : 0));
 		}
 
 
 		if (! $isNullable || ! is_null($value))
 		{
-			
-			if(strpos($castTo, 'gzip:') === 0)
-			{
-				$castTo = substr($castTo, 5);
-				return gzdeflate($this->__set($key, $value, $castTo));
-			}
 			
 			// CSV casts need to be imploded.
 			if ($castTo === 'csv')
@@ -392,6 +388,11 @@ class Entity implements JsonSerializable
 					throw CastException::forInvalidJsonFormatException(json_last_error());
 				}
 			}
+		}
+
+		if($isGzipped)
+		{
+			$value = gzdeflate($value);
 		}
 
 		// if a set* method exists for this key,
