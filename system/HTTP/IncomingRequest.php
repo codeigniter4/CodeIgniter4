@@ -718,8 +718,15 @@ class IncomingRequest extends Request
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
+			// if index.php is implied
+			if (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+			{
+				$uri = $uri === '/index.php'
+					? '/'
+					: (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+			}
 			// strip the script name from the beginning of the URI
-			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
 			{
 				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
 			}
@@ -727,11 +734,6 @@ class IncomingRequest extends Request
 			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
 			{
 				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
-			}
-			// or if index.php is implied
-			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
-			{
-				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
 			}
 		}
 
