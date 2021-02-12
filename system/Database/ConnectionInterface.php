@@ -116,7 +116,6 @@ interface ConnectionInterface
 	public function getVersion(): string;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
