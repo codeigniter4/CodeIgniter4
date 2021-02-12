@@ -43,7 +43,7 @@ class Fabricator
 	/**
 	 * Model instance (can be non-framework if it follows framework design)
 	 *
-	 * @var CodeIgniter\Model|object
+	 * @var \CodeIgniter\Model|object
 	 */
 	protected $model;
 
@@ -549,7 +549,7 @@ class Fabricator
 				continue;
 			}
 
-			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', $this->model->errors() ?? []));
+			throw FrameworkException::forFabricatorCreateFailed($this->model->table, implode(' ', (array)$this->model->errors()));
 		}
 
 		// If the model defines a "withDeleted" method for handling soft deletes then use it
