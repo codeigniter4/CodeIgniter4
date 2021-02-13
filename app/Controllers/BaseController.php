@@ -25,8 +25,7 @@ class BaseController extends Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @phpstan-ignore-next-line
-         * @var IncomingRequest&CLIRequest
+	 * @var IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
