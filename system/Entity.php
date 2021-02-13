@@ -342,6 +342,17 @@ class Entity implements JsonSerializable
 	{
 		$key = $this->mapProperty($key);
 
+		// if a set* method exists for this key,
+		// use that method to insert this value.
+		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		if (method_exists($this, $method))
+		{
+			$this->$method($value);
+
+			return $this;
+		}
+
 		// Check if the field should be mutated into a date
 		if (in_array($key, $this->dates, true))
 		{
@@ -385,17 +396,6 @@ class Entity implements JsonSerializable
 					throw CastException::forInvalidJsonFormatException(json_last_error());
 				}
 			}
-		}
-
-		// if a set* method exists for this key,
-		// use that method to insert this value.
-		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-		if (method_exists($this, $method))
-		{
-			$this->$method($value);
-
-			return $this;
 		}
 
 		// Otherwise, just the value.
