@@ -8,5 +8,5 @@ Release Date: Not released
 Enhancements/Additions
 ----------------------
 
-- New `assertRedirectedTo()` assertion available for HTTP tests.
+- New `assertRedirectTo()` assertion available for HTTP tests.
 

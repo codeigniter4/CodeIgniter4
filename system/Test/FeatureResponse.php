@@ -104,7 +104,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $uri
 	 */
-	public function assertRedirectedTo(string $uri)
+	public function assertRedirectTo(string $uri)
 	{
 		if (! $this->isRedirect())
 		{
@@ -112,7 +112,7 @@ class FeatureResponse extends TestCase
 		}
 
 		$uri         = trim(strtolower($uri));
-		$redirectUri = $this->getRedirectUrl();
+		$redirectUri = strtolower($this->getRedirectUrl());
 
 		$matches = $uri === $redirectUri || site_url($uri) === $redirectUri;
 
