@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -24,7 +25,7 @@ class BaseController extends Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var IncomingRequest
+	 * @var IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
