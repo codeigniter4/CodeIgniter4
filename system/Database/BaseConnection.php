@@ -342,6 +342,7 @@ abstract class BaseConnection implements ConnectionInterface
 		//--------------------------------------------------------------------
 
 		$this->connectTime = microtime(true);
+		$connectionErrors  = [];
 
 		try
 		{
@@ -350,6 +351,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 		catch (Throwable $e)
 		{
+			$connectionErrors[] = sprintf('Main connection [%s]: %s', $this->DBDriver, $e->getMessage());
 			log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 		}
 
@@ -360,7 +362,7 @@ abstract class BaseConnection implements ConnectionInterface
 			if (! empty($this->failover) && is_array($this->failover))
 			{
 				// Go over all the failovers
-				foreach ($this->failover as $failover)
+				foreach ($this->failover as $index => $failover)
 				{
 					// Replace the current settings with those of the failover
 					foreach ($failover as $key => $val)
@@ -378,6 +380,7 @@ abstract class BaseConnection implements ConnectionInterface
 					}
 					catch (Throwable $e)
 					{
+						$connectionErrors[] = sprintf('Failover #%d [%s]: %s', ++$index, $this->DBDriver, $e->getMessage());
 						log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 					}
 
@@ -392,7 +395,11 @@ abstract class BaseConnection implements ConnectionInterface
 			// We still don't have a connection?
 			if (! $this->connID)
 			{
-				throw new DatabaseException('Unable to connect to the database.');
+				throw new DatabaseException(sprintf(
+					'Unable to connect to the database.%s%s',
+					PHP_EOL,
+					implode(PHP_EOL, $connectionErrors)
+				));
 			}
 		}
 
