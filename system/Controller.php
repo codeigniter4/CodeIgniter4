@@ -12,12 +12,9 @@
 namespace CodeIgniter;
 
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\Validation\Validation;
@@ -47,8 +44,7 @@ class Controller
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @phpstan-ignore-next-line
-	 * @var                      ResponseInterface&RedirectResponse&DownloadResponse
+	 * @var ResponseInterface
 	 */
 	protected $response;
 
