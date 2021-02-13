@@ -19,7 +19,7 @@ class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBaseUrlHasBeenSet()
 	{
 		$validation = Services::validation();
-		$env = false;
+		$env        = false;
 
 		// Check the baseURL in .env
 		if (is_file(HOMEPATH . '.env'))
@@ -40,7 +40,7 @@ class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 
 		// Get the baseURL in app/Config/App.php
-		// Don't forget phpunit.xml.dist sets app.baseURL
+		// You can't use Config\App, because phpunit.xml.dist sets app.baseURL
 		$reader = new \Tests\Support\Libraries\ConfigReader();
 
 		// BaseURL in app/Config/App.php is a valid URL?
