@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Security;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
@@ -10,6 +11,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
+use Config\Security as SecurityConfig;
 
 /**
  * @backupGlobals enabled
@@ -149,6 +151,46 @@ class SecurityTest extends CIUnitTestCase
 		$filename = './<!--foo-->';
 
 		$this->assertEquals('foo', $security->sanitizeFilename($filename));
+	}
+
+	public function testRegenerateWithFalseSecurityRegenerateProperty()
+	{
+		$config             = new SecurityConfig();
+		$config->regenerate = false;
+		Factories::injectMock('config', 'Security', $config);
+
+		$security = new MockSecurity(new MockAppConfig());
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+
+		$_SERVER['REQUEST_METHOD']   = 'POST';
+		$_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
+		$_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+
+		$oldHash = $security->getHash();
+		$security->verify($request);
+		$newHash = $security->getHash();
+
+		$this->assertSame($oldHash, $newHash);
+	}
+
+	public function testRegenerateWithTrueSecurityRegenerateProperty()
+	{
+		$config             = new SecurityConfig();
+		$config->regenerate = true;
+		Factories::injectMock('config', 'Security', $config);
+
+		$security = new MockSecurity(new MockAppConfig());
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+
+		$_SERVER['REQUEST_METHOD']   = 'POST';
+		$_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
+		$_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+
+		$oldHash = $security->getHash();
+		$security->verify($request);
+		$newHash = $security->getHash();
+
+		$this->assertNotSame($oldHash, $newHash);
 	}
 
 	public function testGetters(): void
