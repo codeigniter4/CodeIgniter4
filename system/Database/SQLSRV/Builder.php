@@ -336,13 +336,14 @@ class Builder extends BaseBuilder
 	 */
 	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
+		if (empty($this->QBOrderBy))
+		{
+			$this->QBOrderBy	= ' ORDER BY (SELECT NULL) ';
+			$sql				.= $this->QBOrderBy;
+		}
+
 		if (version_compare($this->db->getVersion(), '11', '>='))
 		{
-			if (empty($this->QBOrderBy))
-			{
-				$sql .= ' ORDER BY (SELECT NULL) ';
-			}
-
 			if ($offsetIgnore)
 			{
 				$sql .= ' OFFSET 0 ';
@@ -360,10 +361,10 @@ class Builder extends BaseBuilder
 		// An ORDER BY clause is required for ROW_NUMBER() to work
 		if ($this->QBOffset && ! empty($this->QBOrderBy))
 		{
-			$orderby = $this->compileOrderBy();
+			$orderBy = $this->compileOrderBy();
 
 			// We have to strip the ORDER BY clause
-			$sql = trim(substr($sql, 0, strrpos($sql, $orderby)));
+			$sql = trim(substr($sql, 0, strrpos($sql, $orderBy)));
 
 			// Get the fields to select from our subquery, so that we can avoid CI_rownum appearing in the actual results
 			if (count($this->QBSelect) === 0 OR strpos(implode(',', $this->QBSelect), '*') !== FALSE)
@@ -383,7 +384,7 @@ class Builder extends BaseBuilder
 				$select = implode(', ', $select);
 			}
 
-			return 'SELECT ' . $select . " FROM (\n\n" . preg_replace('/^(SELECT( DISTINCT)?)/i', '\\1 ROW_NUMBER() OVER(' . trim($orderby) . ') AS ' . $this->db->escapeIdentifiers('CI_rownum') . ', ', $sql) . "\n\n) " . $this->db->escapeIdentifiers('CI_subquery') . "\nWHERE " . $this->db->escapeIdentifiers('CI_rownum').' BETWEEN ' . ($this->QBOffset + 1) . ' AND ' . $limit;
+			return 'SELECT ' . $select . " FROM (\n\n" . preg_replace('/^(SELECT( DISTINCT)?)/i', '\\1 ROW_NUMBER() OVER(' . trim($orderBy) . ') AS ' . $this->db->escapeIdentifiers('CI_rownum') . ', ', $sql) . "\n\n) " . $this->db->escapeIdentifiers('CI_subquery') . "\nWHERE " . $this->db->escapeIdentifiers('CI_rownum').' BETWEEN ' . ($this->QBOffset + 1) . ' AND ' . $limit;
 		}
 
 		return preg_replace('/(^\SELECT (DISTINCT)?)/i','\\1 TOP ' . $limit . ' ', $sql);
