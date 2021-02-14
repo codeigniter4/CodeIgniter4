@@ -448,6 +448,11 @@ class Session implements SessionInterface
 	 */
 	public function destroy()
 	{
+		if (ENVIRONMENT === 'testing')
+		{
+			return;
+		}
+
 		session_destroy();
 	}
 
