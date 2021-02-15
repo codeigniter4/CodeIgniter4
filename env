@@ -36,6 +36,8 @@
 # app.cookieSecure = false
 # app.cookieHTTPOnly = false
 # app.cookieSameSite = 'Lax'
+# app.cookieRaw = false
+# app.cookieExpires = 0
 
 # app.CSRFProtection  = false
 # app.CSRFTokenName   = 'csrf_test_name'
