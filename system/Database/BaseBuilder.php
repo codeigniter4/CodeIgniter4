@@ -140,6 +140,20 @@ class BaseBuilder
 	protected $QBWhereGroupCount = 0;
 
 	/**
+	 * Collection of union queries
+	 *
+	 * @var string[]
+	 */
+	protected $QBUnion = [];
+
+	/**
+	 * UNION ORDER BY data
+	 *
+	 * @var array
+	 */
+	protected $QBUnionOrderBy = [];
+
+	/**
 	 * Ignore data that cause certain
 	 * exceptions, for example in case of
 	 * duplicate keys.
@@ -3022,7 +3036,14 @@ class BaseBuilder
 		// LIMIT
 		if ($this->QBLimit)
 		{
-			return $this->_limit($sql . "\n");
+			$sql = $this->_limit($sql . "\n");
+		}
+
+		if ($this->QBUnion)
+		{
+			$sql = '(' . $sql . ')'
+				. $this->compileUnion()
+				. $this->compileUnionOrderBy();
 		}
 
 		return $sql;
@@ -3358,16 +3379,18 @@ class BaseBuilder
 	protected function resetSelect()
 	{
 		$this->resetRun([
-			'QBSelect'   => [],
-			'QBJoin'     => [],
-			'QBWhere'    => [],
-			'QBGroupBy'  => [],
-			'QBHaving'   => [],
-			'QBOrderBy'  => [],
-			'QBNoEscape' => [],
-			'QBDistinct' => false,
-			'QBLimit'    => false,
-			'QBOffset'   => false,
+			'QBSelect'       => [],
+			'QBJoin'         => [],
+			'QBWhere'        => [],
+			'QBGroupBy'      => [],
+			'QBHaving'       => [],
+			'QBOrderBy'      => [],
+			'QBNoEscape'     => [],
+			'QBUnion'        => [],
+			'QBUnionOrderBy' => [],
+			'QBDistinct'     => false,
+			'QBLimit'        => false,
+			'QBOffset'       => false,
 		]);
 
 		if (! empty($this->db))
@@ -3490,6 +3513,103 @@ class BaseBuilder
 		];
 
 		return $key . $count;
+	}
+
+	/**
+	 * Union queries
+	 *
+	 * @param Closure $closure Contains a query to combine
+	 *
+	 * @return static
+	 */
+	public function union(Closure $closure)
+	{
+		return $this->unionBuilder($closure);
+	}
+
+	/**
+	 * Union queries
+	 *
+	 * @param Closure $closure Contains a query to combine
+	 *
+	 * @return static
+	 */
+	public function unionAll(Closure $closure)
+	{
+		return $this->unionBuilder($closure, true);
+	}
+
+	/**
+	 * Union query builder
+	 *
+	 * @param Closure $closure Contains a query to combine
+	 * @param boolean $all     Using UNION ALL construction
+	 *
+	 * @return static
+	 */
+	protected function unionBuilder(Closure $closure, bool $all = false)
+	{
+		$builder = $closure($this->cleanClone());
+
+		if (! ($builder instanceof BaseBuilder))
+		{
+			throw new DatabaseException(
+				'BaseBuilder::union(). The closure must return an instance of the BaseBuilder class'
+			);
+		}
+		$sql = $builder->getCompiledSelect();
+
+		$all = $all ? 'ALL ' : '';
+
+		$this->QBUnion[] = ' UNION ' . $all . '(' . $sql . ')';
+
+		return $this;
+	}
+
+	/**
+	 * Compile UNION queries
+	 *
+	 * @return string
+	 */
+	protected function compileUnion() : string
+	{
+		return count($this->QBUnion) ? join('', $this->QBUnion) : '';
+	}
+
+	/**
+	 * ORDER BY
+	 *
+	 * @param string  $orderBy   Field
+	 * @param string  $direction ASC, DESC or RANDOM
+	 * @param boolean $escape    Escape
+	 *
+	 * @return static
+	 */
+	public function unionOrderBy(string $orderBy, string $direction = '', bool $escape = null)
+	{
+		$this->QBUnionOrderBy[] = [
+			$orderBy,
+			$direction,
+			$escape,
+		];
+
+		return $this;
+	}
+
+	/**
+	 * Compile UNION ORDER BY data
+	 *
+	 * @return string
+	 */
+	protected function compileUnionOrderBy() : string
+	{
+		$builder = $this->cleanClone();
+		foreach ($this->QBUnionOrderBy as $order)
+		{
+			$builder->orderBy(...$order);
+		}
+
+		return $builder->compileOrderBy();
 	}
 
 	//--------------------------------------------------------------------

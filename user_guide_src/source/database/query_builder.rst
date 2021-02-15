@@ -839,6 +839,100 @@ Starts a new group by adding an opening parenthesis to the HAVING clause of the 
 
 Ends the current group by adding a closing parenthesis to the HAVING clause of the query.
 
+*************************
+Combining queries (UNION)
+*************************
+
+.. note:: To understand how UNION works, it is recommended to study the documentation for the used DBMS.
+
+**$builder->union()**
+
+The method combines the results of several queries into one common one and takes a Closure as an argument.
+The Closure must return an instance of the BaseBuilder class::
+
+    //Add the following line after the namespace keyword
+    use CodeIgniter\Database\BaseBuilder;
+
+    $builder = $db->table('movies');
+
+    $builder->select('title, year')
+        ->union(function (BaseBuilder $builder) {
+            return $builder->select('title, year')->from('top_movies');
+        })
+        ->get();
+
+    // (SELECT title, year FROM movies) UNION (SELECT title, year FROM top_movies)
+
+Nested UNION and variable passing::
+
+    //Add the following line after the namespace keyword
+    use CodeIgniter\Database\BaseBuilder;
+
+    $year = 2000;
+    $yearTop = 2010;
+    $yearBad = 2020;
+
+    $builder = $db->table('movies');
+
+    $builder->select('title, year')
+        ->where('year', $year)
+        ->union(function (BaseBuilder $builder) use ($yearTop, $yearBad){
+            return $builder->select('title, year')
+                ->from('top_movies')
+                ->where('year', $yearTop)
+                ->union(function (BaseBuilder $builder) use ($yearBad){
+                    return $builder->select('title, year')
+                        ->from('bad_movies')
+                        ->where('year', $yearBad)
+                });
+        })
+        ->get();
+
+    // (SELECT title, year FROM movies WHERE year = 2000)
+    //  UNION (
+    //      (SELECT title, year FROM top_movies WHERE year = 2010)
+    //      UNION (SELECT title, year FROM bad_movies WHERE year = 2020)
+    //  )
+
+
+**$builder->unionAll()**
+
+The method adds ALL to UNION::
+
+    //Add the following line after the namespace keyword
+    use CodeIgniter\Database\BaseBuilder;
+
+    $builder = $db->table('movies');
+
+    $builder->select('title, year')
+        ->unionAll(function (BaseBuilder $builder) {
+            return $builder->select('title, year')->from('top_movies');
+        })
+        ->get();
+
+    // (SELECT title, year FROM movies) UNION ALL (SELECT title, year FROM top_movies)
+
+
+**$builder->unionOrderBy()**
+
+The method adds a sort for the final query result after combining queries using UNION [ALL].
+The principle is the same as for ``orderBy()``::
+
+    //Add the following line after the namespace keyword
+    use CodeIgniter\Database\BaseBuilder;
+
+    $builder = $db->table('movies');
+
+    $builder->select('title, year')
+        ->unionAll(function (BaseBuilder $builder) {
+            return $builder->select('title, year')->from('top_movies');
+        })
+        ->unionOrderBy('title', 'DESC')
+        ->get();
+
+    // (SELECT title, year FROM movies) UNION ALL (SELECT title, year FROM top_movies) ORDER BY title DESC
+
+
 **************
 Inserting Data
 **************
