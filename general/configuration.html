@@ -365,9 +365,10 @@ the application configuration files in the <strong>/app/Config</strong> folder.<
 <li><p><a class="reference internal" href="#nesting-variables" id="id6">Nesting Variables</a></p></li>
 <li><p><a class="reference internal" href="#namespaced-variables" id="id7">Namespaced Variables</a></p></li>
 <li><p><a class="reference internal" href="#configuration-classes-and-environment-variables" id="id8">Configuration Classes and Environment Variables</a></p></li>
-<li><p><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id9">Treating Environment Variables as Arrays</a></p></li>
-<li><p><a class="reference internal" href="#handling-different-environments" id="id10">Handling Different Environments</a></p></li>
-<li><p><a class="reference internal" href="#registrars" id="id11">Registrars</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables-as-replacements-for-data" id="id9">Environment Variables as Replacements for Data</a></p></li>
+<li><p><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id10">Treating Environment Variables as Arrays</a></p></li>
+<li><p><a class="reference internal" href="#handling-different-environments" id="id11">Handling Different Environments</a></p></li>
+<li><p><a class="reference internal" href="#registrars" id="id12">Registrars</a></p></li>
 </ul>
 </div>
 <div class="section" id="working-with-configuration-files">
@@ -452,7 +453,7 @@ application by either renaming the template to <strong>.env</strong>, or by maki
 <p>Settings are stored in <strong>.env</strong> files as a simple a collection of name/value pairs separated by an equal sign.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">S3_BUCKET</span> <span class="o">=</span> <span class="nx">dotenv</span>
 <span class="nx">SECRET_KEY</span> <span class="o">=</span> <span class="nx">super_secret_key</span>
-    <span class="nx">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="nx">development</span>
+<span class="nx">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="nx">development</span>
 </pre></div>
 </div>
 <p>When your application runs, <strong>.env</strong> will be loaded automatically, and the variables put
@@ -510,7 +511,7 @@ property. If it matches an existing configuration property, the environment vari
 value will replace the corresponding value from the configuration file. If there is no match,
 the configuration class properties are left unchanged. In this usage, the prefix must be
 the full (case-sensitive) namespace of the class.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSRFProtection</span>  <span class="o">=</span> <span class="k">true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSRFProtection</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSRFCookieName</span> <span class="o">=</span> <span class="nx">csrf_cookie</span>
 <span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSPEnabled</span> <span class="o">=</span> <span class="k">true</span>
 </pre></div>
@@ -522,7 +523,7 @@ the full (case-sensitive) namespace of the class.</p>
 <p>The same holds for a <em>short prefix</em>, which is a namespace using only the lowercase version of
 the configuration class name. If the short prefix matches the class name,
 the value from <strong>.env</strong> replaces the configuration file value.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">CSRFProtection</span>  <span class="o">=</span> <span class="k">true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">CSRFProtection</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">app</span><span class="o">.</span><span class="nx">CSRFCookieName</span> <span class="o">=</span> <span class="nx">csrf_cookie</span>
 <span class="nx">app</span><span class="o">.</span><span class="nx">CSPEnabled</span> <span class="o">=</span> <span class="k">true</span>
 </pre></div>
@@ -532,8 +533,20 @@ the value from <strong>.env</strong> replaces the configuration file value.</p>
 <p>When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
 </div>
 </div>
+<div class="section" id="environment-variables-as-replacements-for-data">
+<h2><a class="toc-backref" href="#id9">Environment Variables as Replacements for Data</a><a class="headerlink" href="#environment-variables-as-replacements-for-data" title="Permalink to this headline">¶</a></h2>
+<p>It is very important to always remember that environment variables contained in your <strong>.env</strong> are
+<strong>only replacements for existing data</strong>. This means that you cannot expect to fill your <code class="docutils literal notranslate"><span class="pre">.env</span></code> with all
+the replacements for your configurations but have nothing to receive these replacements in the
+related configuration file(s).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.env</span></code> only serves to fill or replace the values in your configuration files. That said, your
+configuration files should have a container or receiving property for those. Adding so many variables in
+your <code class="docutils literal notranslate"><span class="pre">.env</span></code> with nothing to contain them in the receiving end is useless.</p>
+<p>Simply put, you cannot just put <code class="docutils literal notranslate"><span class="pre">app.myNewConfig</span> <span class="pre">=</span> <span class="pre">foo</span></code> in your <code class="docutils literal notranslate"><span class="pre">.env</span></code> and expect your <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>
+to magically have that property and value at run time.</p>
+</div>
 <div class="section" id="treating-environment-variables-as-arrays">
-<h2><a class="toc-backref" href="#id9">Treating Environment Variables as Arrays</a><a class="headerlink" href="#treating-environment-variables-as-arrays" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Treating Environment Variables as Arrays</a><a class="headerlink" href="#treating-environment-variables-as-arrays" title="Permalink to this headline">¶</a></h2>
 <p>A namespaced environment variable can be further treated as an array.
 If the prefix matches the configuration class, then the remainder of the
 environment variable name is treated as an array reference if it also
@@ -561,14 +574,14 @@ held the following then the result would be the same as above.</p>
 </div>
 </div>
 <div class="section" id="handling-different-environments">
-<h2><a class="toc-backref" href="#id10">Handling Different Environments</a><a class="headerlink" href="#handling-different-environments" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">Handling Different Environments</a><a class="headerlink" href="#handling-different-environments" title="Permalink to this headline">¶</a></h2>
 <p>Configuring multiple environments is easily accomplished by using a separate <strong>.env</strong> file with values modified to meet that environment’s needs.</p>
 <p>The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.</p>
 <p>In each environment, place the <strong>.env</strong> file in the project’s root folder. For most setups, this will be the same level as the <code class="docutils literal notranslate"><span class="pre">system</span></code> and <code class="docutils literal notranslate"><span class="pre">app</span></code> directories.</p>
 <p>Do not track <strong>.env</strong> files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.</p>
 </div>
 <div class="section" id="registrars">
-<span id="id1"></span><h2><a class="toc-backref" href="#id11">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id12">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this headline">¶</a></h2>
 <p>A configuration file can also specify any number of “registrars”, which are any
 other classes which might provide additional configuration properties.
 This is done by adding a <code class="docutils literal notranslate"><span class="pre">$registrars</span></code> property to your configuration file,
@@ -648,7 +661,7 @@ described above, using methods named for each configuration class you wish to ex
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 12, 2021.
+        Last updated on Feb 15, 2021.
       </span>
 
     </p>
