@@ -2367,7 +2367,10 @@ class Email
 
 		is_array($include) || $include = [$include]; // @phpstan-ignore-line
 
-		in_array('headers', $include, true) && $rawData  = htmlspecialchars($this->headerStr) . "\n";
+		if (in_array('headers', $include, true))
+		{
+			$rawData = htmlspecialchars($this->headerStr) . "\n";
+		}
 		in_array('subject', $include, true) && $rawData .= htmlspecialchars($this->subject) . "\n";
 		in_array('body', $include, true) && $rawData    .= htmlspecialchars($this->finalBody);
 
