@@ -429,14 +429,13 @@ class Fabricator
 				$result[$field] = $this->faker->{$formatter};
 			}
 		}
-
 		// If no formatters were defined then look for a model fake() method
 		elseif (method_exists($this->model, 'fake'))
 		{
 			$result = $this->model->fake($this->faker);
 
 			// This should cover entities
-			if (method_exists($result, 'toArray'))
+			if (is_object($result) && method_exists($result, 'toArray'))
 			{
 				$result = $result->toArray();
 			}
@@ -446,7 +445,6 @@ class Fabricator
 				$result = (array) $result;
 			}
 		}
-
 		// Nothing left to do but give up
 		else
 		{
