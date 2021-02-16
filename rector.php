@@ -1,5 +1,6 @@
 <?php
 
+use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
@@ -55,4 +56,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(CombineIfRector::class);
 	$services->set(SimplifyIfReturnBoolRector::class);
 	$services->set(RemoveDuplicatedCaseInSwitchRector::class);
+	$services->set(InlineIfToExplicitIfRector::class);
 };
