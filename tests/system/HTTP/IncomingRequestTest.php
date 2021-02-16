@@ -545,4 +545,32 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->request->getPostGet('gc'));
 		$this->assertNull($this->request->getGetPost('gc'));
 	}
+
+	public function providePathChecks()
+	{
+		return [
+			'not /index.php' => [
+				'/test.php',
+				'test.php',
+			],
+			'/index.php'     => [
+				'/index.php',
+				'/',
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider providePathChecks
+	 */
+	public function testExtensionPHP($path, $detectPath)
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$_SERVER['REQUEST_URI'] = $path;
+		$_SERVER['SCRIPT_NAME'] = $path;
+		$request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
+		$this->assertEquals($detectPath, $request->detectPath());
+	}
 }

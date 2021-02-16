@@ -63,6 +63,25 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * FROM tables
+	 *
+	 * Groups tables in FROM clauses if needed, so there is no confusion
+	 * about operator precedence.
+	 *
+	 * @return string
+	 */
+	protected function _fromTables(): string
+	{
+		$from = [];
+		foreach ($this->QBFrom as $value)
+		{
+			$from[] = $this->getFullName($value);
+		}
+
+		return implode(', ', $from);
+	}
+
+	/**
 	 * Truncate statement
 	 *
 	 * Generates a platform-specific truncate string from the supplied data
@@ -77,6 +96,94 @@ class Builder extends BaseBuilder
 	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE TABLE ' . $this->getFullName($table);
+	}
+
+	/**
+	 * JOIN
+	 *
+	 * Generates the JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param string  $type   The type of join
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return $this
+	 */
+	public function join(string $table, string $cond, string $type = '', bool $escape = null)
+	{
+		if ($type !== '')
+		{
+			$type = strtoupper(trim($type));
+
+			if (! in_array($type, $this->joinTypes, true))
+			{
+				$type = '';
+			}
+			else
+			{
+				$type .= ' ';
+			}
+		}
+
+		// Extract any aliases that might exist. We use this information
+		// in the protectIdentifiers to know whether to add a table prefix
+		$this->trackAliases($table);
+
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+
+		if (! $this->hasOperator($cond))
+		{
+			$cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
+		}
+		elseif ($escape === false)
+		{
+			$cond = ' ON ' . $cond;
+		}
+		else
+		{
+			// Split multiple conditions
+			if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
+			{
+				$conditions = [];
+				$joints     = $joints[0];
+				array_unshift($joints, ['', 0]);
+
+				for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i --)
+				{
+					$joints[$i][1] += strlen($joints[$i][0]); // offset
+					$conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
+					$pos            = $joints[$i][1] - strlen($joints[$i][0]);
+					$joints[$i]     = $joints[$i][0];
+				}
+				ksort($conditions);
+			}
+			else
+			{
+				$conditions = [$cond];
+				$joints     = [''];
+			}
+
+			$cond = ' ON ';
+			foreach ($conditions as $i => $condition)
+			{
+				$operator = $this->getOperator($condition);
+
+				$cond .= $joints[$i];
+				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+			}
+		}
+
+		// Do we want to escape the table name?
+		if ($escape === true)
+		{
+			$table = $this->db->protectIdentifiers($table, true, null, false);
+		}
+
+		// Assemble the JOIN statement
+		$this->QBJoin[] = $join = $type . 'JOIN ' . $this->getFullName($table) . $cond;
+
+		return $this;
 	}
 
 	/**
@@ -189,11 +296,21 @@ class Builder extends BaseBuilder
 	 */
 	private function getFullName(string $table): string
 	{
+		$alias = '';
+
+		if (strpos($table, ' ') !== false)
+		{
+			$alias = explode(' ', $table);
+			$table = array_shift($alias);
+			$alias = ' ' . implode(' ', $alias);
+		}
+
 		if ($this->db->escapeChar === '"')
 		{
-			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"';
+			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
 		}
-		return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']';
+
+		return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']' . str_replace('"', '', $alias);
 	}
 
 	/**

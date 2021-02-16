@@ -6,6 +6,7 @@ Library Reference
     :titlesonly:
 
     caching
+    cookies
     curlrequest
     email
     encryption

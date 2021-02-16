@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\HTTP\Cookie\CookieStore;
+use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use Config\Services;
@@ -23,6 +26,8 @@ use InvalidArgumentException;
  *
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
+ *
+ * @property array $statusCodes
  *
  * @see https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php
  */
@@ -43,9 +48,18 @@ trait ResponseTrait
 	public $CSP;
 
 	/**
+	 * CookieStore instance.
+	 *
+	 * @var CookieStore
+	 */
+	protected $cookieStore;
+
+	/**
 	 * Set a cookie name prefix if you need to avoid collisions
 	 *
 	 * @var string
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookiePrefix = '';
 
@@ -53,6 +67,8 @@ trait ResponseTrait
 	 * Set to .your-domain.com for site-wide cookies
 	 *
 	 * @var string
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookieDomain = '';
 
@@ -60,6 +76,8 @@ trait ResponseTrait
 	 * Typically will be a forward slash
 	 *
 	 * @var string
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookiePath = '/';
 
@@ -67,6 +85,8 @@ trait ResponseTrait
 	 * Cookie will only be set if a secure HTTPS connection exists.
 	 *
 	 * @var boolean
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookieSecure = false;
 
@@ -74,6 +94,8 @@ trait ResponseTrait
 	 * Cookie will only be accessible via HTTP(S) (no javascript)
 	 *
 	 * @var boolean
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookieHTTPOnly = false;
 
@@ -81,13 +103,17 @@ trait ResponseTrait
 	 * Cookie SameSite setting
 	 *
 	 * @var string
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
-	protected $cookieSameSite = 'Lax';
+	protected $cookieSameSite = Cookie::SAMESITE_LAX;
 
 	/**
 	 * Stores all cookies that were set in the response.
 	 *
 	 * @var array
+	 *
+	 * @deprecated Use the dedicated Cookie class instead.
 	 */
 	protected $cookies = [];
 
@@ -98,8 +124,6 @@ trait ResponseTrait
 	 * @var string
 	 */
 	protected $bodyFormat = 'html';
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Return an instance with the specified status code and, optionally, reason phrase.
@@ -166,8 +190,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set the Link Header
 	 *
@@ -176,7 +198,8 @@ trait ResponseTrait
 	 * @see http://tools.ietf.org/html/rfc5988
 	 *
 	 * @return Response
-	 * @todo   Recommend moving to Pager
+	 *
+	 * @todo Recommend moving to Pager
 	 */
 	public function setLink(PagerInterface $pager)
 	{
@@ -204,8 +227,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Content Type header for this response with the mime type
 	 * and, optionally, the charset.
@@ -229,8 +250,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
@@ -245,8 +264,6 @@ trait ResponseTrait
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the current body, converted to JSON is it isn't already.
@@ -267,8 +284,6 @@ trait ResponseTrait
 		return $body ?: null;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Converts $body into XML, and sets the correct Content-Type.
 	 *
@@ -282,8 +297,6 @@ trait ResponseTrait
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieves the current body into XML and returns it.
@@ -302,8 +315,6 @@ trait ResponseTrait
 
 		return $body;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles conversion of the of the data into the appropriate format,
@@ -331,7 +342,6 @@ trait ResponseTrait
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
 	// http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
@@ -342,19 +352,18 @@ trait ResponseTrait
 	 * is not cached by the browsers.
 	 *
 	 * @return Response
-	 * @todo   Recommend researching these directives, might need: 'private', 'no-transform', 'no-store', 'must-revalidate'
-	 * @see    DownloadResponse::noCache()
+	 *
+	 * @todo Recommend researching these directives, might need: 'private', 'no-transform', 'no-store', 'must-revalidate'
+	 *
+	 * @see DownloadResponse::noCache()
 	 */
 	public function noCache()
 	{
 		$this->removeHeader('Cache-control');
-
 		$this->setHeader('Cache-control', ['no-store', 'max-age=0', 'no-cache']);
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * A shortcut method that allows the developer to set all of the
@@ -414,8 +423,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Last-Modified date header.
 	 *
@@ -441,7 +448,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
@@ -471,8 +477,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sends the headers of this HTTP request to the browser.
 	 *
@@ -494,8 +498,7 @@ trait ResponseTrait
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true,
-				$this->getStatusCode());
+		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true, $this->getStatusCode());
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
@@ -505,8 +508,6 @@ trait ResponseTrait
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sends the Body of the message to the browser.
@@ -519,8 +520,6 @@ trait ResponseTrait
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
@@ -568,8 +567,6 @@ trait ResponseTrait
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Set a cookie
 	 *
@@ -612,71 +609,37 @@ trait ResponseTrait
 			}
 		}
 
-		if ($prefix === '' && $this->cookiePrefix !== '')
+		if (is_numeric($expire))
 		{
-			$prefix = $this->cookiePrefix;
+			$expire = $expire > 0 ? time() + $expire : 0;
 		}
 
-		if ($domain === '' && $this->cookieDomain !== '')
-		{
-			$domain = $this->cookieDomain;
-		}
-
-		if ($path === '/' && $this->cookiePath !== '/')
-		{
-			$path = $this->cookiePath;
-		}
-
-		if ($secure === false && $this->cookieSecure === true)
-		{
-			$secure = $this->cookieSecure;
-		}
-
-		if ($httponly === false && $this->cookieHTTPOnly !== false)
-		{
-			$httponly = $this->cookieHTTPOnly;
-		}
-
-		if (is_null($samesite))
-		{
-			$samesite = $this->cookieSameSite ?? '';
-		}
-
-		if (! in_array(strtolower($samesite), ['', 'none', 'lax', 'strict'], true))
-		{
-			throw HTTPException::forInvalidSameSiteSetting($samesite);
-		}
-
-		if (! is_numeric($expire))
-		{
-			$expire = time() - 86500;
-		}
-		else
-		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
-		}
-
-		$cookie = [
-			'name'     => $prefix . $name,
-			'value'    => $value,
-			'expires'  => $expire,
-			'path'     => $path,
+		$options = [
+			'expires'  => $expire ?: 0,
 			'domain'   => $domain,
+			'path'     => $path,
+			'prefix'   => $prefix,
 			'secure'   => $secure,
 			'httponly' => $httponly,
+			'samesite' => $samesite ?? '',
 		];
 
-		if ($samesite !== '')
-		{
-			$cookie['samesite'] = $samesite;
-		}
+		$cookie = Cookie::create($name, $value, $options);
 
-		$this->cookies[] = $cookie;
+		$this->cookieStore = $this->cookieStore->put($cookie);
 
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Returns the `CookieStore` instance.
+	 *
+	 * @return CookieStore
+	 */
+	public function getCookieStore()
+	{
+		return $this->cookieStore;
+	}
 
 	/**
 	 * Checks to see if the Response has a specified cookie or not.
@@ -689,29 +652,9 @@ trait ResponseTrait
 	 */
 	public function hasCookie(string $name, string $value = null, string $prefix = ''): bool
 	{
-		if ($prefix === '' && $this->cookiePrefix !== '')
-		{
-			$prefix = $this->cookiePrefix;
-		}
+		$prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
 
-		$name = $prefix . $name;
-
-		foreach ($this->cookies as $cookie)
-		{
-			if ($cookie['name'] !== $name)
-			{
-				continue;
-			}
-
-			if ($value === null)
-			{
-				return true;
-			}
-
-			return $cookie['value'] === $value;
-		}
-
-		return false;
+		return $this->cookieStore->has($name, $prefix, $value);
 	}
 
 	/**
@@ -720,31 +663,26 @@ trait ResponseTrait
 	 * @param string|null $name
 	 * @param string      $prefix
 	 *
-	 * @return mixed
+	 * @return Cookie[]|Cookie|null
 	 */
 	public function getCookie(string $name = null, string $prefix = '')
 	{
-		// if no name given, return them all
-		if (empty($name))
+		if ((string) $name === '')
 		{
-			return $this->cookies;
+			return $this->cookieStore->display();
 		}
 
-		if ($prefix === '' && $this->cookiePrefix !== '')
+		try
 		{
-			$prefix = $this->cookiePrefix;
+			$prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+
+			return $this->cookieStore->get($name, $prefix);
 		}
-
-		$name = $prefix . $name;
-
-		foreach ($this->cookies as $cookie)
+		catch (CookieException $e)
 		{
-			if ($cookie['name'] === $name)
-			{
-				return $cookie;
-			}
+			log_message('error', $e->getMessage());
+			return null;
 		}
-		return null;
 	}
 
 	/**
@@ -759,39 +697,40 @@ trait ResponseTrait
 	 */
 	public function deleteCookie(string $name = '', string $domain = '', string $path = '/', string $prefix = '')
 	{
-		if (empty($name))
+		if ($name === '')
 		{
 			return $this;
 		}
 
-		if ($prefix === '' && $this->cookiePrefix !== '')
-		{
-			$prefix = $this->cookiePrefix;
-		}
+		$prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
 
-		$prefixedName = $prefix . $name;
+		$prefixed = $prefix . $name;
+		$store    = $this->cookieStore;
+		$found    = false;
 
-		$cookieHasFlag = false;
-		foreach ($this->cookies as &$cookie)
+		foreach ($store as $cookie)
 		{
-			if ($cookie['name'] === $prefixedName)
+			if ($cookie->getPrefixedName() === $prefixed)
 			{
-				if (! empty($domain) && $cookie['domain'] !== $domain)
+				if ($domain !== $cookie->getDomain())
 				{
 					continue;
 				}
-				if (! empty($path) && $cookie['path'] !== $path)
+
+				if ($path !== $cookie->getPath())
 				{
 					continue;
 				}
-				$cookie['value']   = '';
-				$cookie['expires'] = '';
-				$cookieHasFlag     = true;
+
+				$cookie = $cookie->withValue('')->withExpired();
+				$found  = true;
+
+				$this->cookieStore = $store->put($cookie);
 				break;
 			}
 		}
 
-		if (! $cookieHasFlag)
+		if (! $found)
 		{
 			$this->setCookie($name, '', '', $domain, $path, $prefix);
 		}
@@ -802,11 +741,11 @@ trait ResponseTrait
 	/**
 	 * Returns all cookies currently set.
 	 *
-	 * @return array
+	 * @return Cookie[]
 	 */
 	public function getCookies()
 	{
-		return $this->cookies;
+		return $this->cookieStore->display();
 	}
 
 	/**
@@ -819,38 +758,7 @@ trait ResponseTrait
 			return;
 		}
 
-		foreach ($this->cookies as $params)
-		{
-			if (PHP_VERSION_ID < 70300)
-			{
-				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
-				if (isset($params['samesite']) && in_array(strtolower($params['samesite']), ['none', 'lax', 'strict'], true))
-				{
-					$params['path'] .= '; samesite=' . $params['samesite'];
-					unset($params['samesite']);
-				}
-
-				// PHP cannot unpack array with string keys
-				$params = array_values($params);
-				setcookie(...$params);
-			}
-			else
-			{
-				// PHP 7.3 and later have a signature for setcookie() with options array as third argument
-				// and SameSite is possible to set there
-				$name  = $params['name'];
-				$value = $params['value'];
-				unset($params['name'], $params['value']);
-
-				// If samesite is blank string, skip setting the attribute on the cookie
-				if (isset($params['samesite']) && $params['samesite'] === '')
-				{
-					unset($params['samesite']);
-				}
-
-				setcookie($name, $value, $params);
-			}
-		}
+		$this->cookieStore->dispatch();
 	}
 
 	/**

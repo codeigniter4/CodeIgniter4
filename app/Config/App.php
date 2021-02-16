@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use DateTimeInterface;
 
 class App extends BaseConfig
 {
@@ -279,14 +280,14 @@ class App extends BaseConfig
 
 	/**
 	 * --------------------------------------------------------------------------
-	 * Cookie HTTP Only
+	 * Cookie HttpOnly
 	 * --------------------------------------------------------------------------
 	 *
 	 * Cookie will only be accessible via HTTP(S) (no JavaScript).
 	 *
 	 * @var boolean
 	 */
-	public $cookieHTTPOnly = false;
+	public $cookieHTTPOnly = true;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -299,13 +300,49 @@ class App extends BaseConfig
 	 * - Strict
 	 * - ''
 	 *
-	 * Defaults to `Lax` for compatibility with modern browsers. Setting `''`
-	 * (empty string) means no SameSite attribute will be set on cookies. If
-	 * set to `None`, `$cookieSecure` must also be set.
+	 * Alternatively, you can use the constant names:
+	 * - `Cookie::SAMESITE_NONE`
+	 * - `Cookie::SAMESITE_LAX`
+	 * - `Cookie::SAMESITE_STRICT`
 	 *
-       * @var string 'Lax'|'None'|'Strict'
+	 * Defaults to `Lax` for compatibility with modern browsers. Setting `''`
+	 * (empty string) means default SameSite attribute set by browsers (`Lax`)
+	 * will be set on cookies. If set to `None`, `$cookieSecure` must also be set.
+	 *
+	 * @var string
 	 */
 	public $cookieSameSite = 'Lax';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Cookie Raw
+	 * --------------------------------------------------------------------------
+	 *
+	 * This flag allows setting a "raw" cookie, i.e., its name and value are
+	 * not URL encoded using `rawurlencode()`.
+	 *
+	 * If this is set to `true`, cookie names should be compliant of RFC 2616's
+	 * list of allowed characters.
+	 *
+	 * @var boolean
+	 *
+	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
+	 * @see https://tools.ietf.org/html/rfc2616#section-2.2
+	 */
+	public $cookieRaw = false;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Cookie Expires Timestamp
+	 * --------------------------------------------------------------------------
+	 *
+	 * Default expires timestamp for cookies. Setting this to `0` will mean the
+	 * cookie will not have the `Expires` attribute and will behave as a session
+	 * cookie.
+	 *
+	 * @var DateTimeInterface|integer|string
+	 */
+	public $cookieExpires = 0;
 
 	/**
 	 * --------------------------------------------------------------------------

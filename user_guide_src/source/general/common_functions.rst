@@ -17,7 +17,7 @@ Global Functions
 Service Accessors
 =================
 
-.. php:function:: cache ( [$key] )
+.. php:function:: cache([$key])
 
     :param  string $key: The cache name of the item to retrieve from cache (Optional)
     :returns: Either the cache object, or the item retrieved from the cache
@@ -32,7 +32,27 @@ Service Accessors
         $foo = cache('foo');
         $cache = cache();
 
-.. php:function:: env ( $key[, $default=null])
+.. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
+
+    :param string $name: Cookie name
+    :param string $value: Cookie value
+    :param array $options: Cookie options
+    :rtype: ``Cookie``
+    :returns: ``Cookie`` instance
+    :throws: ``CookieException``
+
+    Simpler way to create a new Cookie instance.
+
+.. php:function:: cookies([array $cookies = [][, bool $getGlobal = true]])
+
+    :param array $cookies: If ``getGlobal`` is ``false``, this is passed to ``CookieStore``'s constructor.
+    :param bool $getGlobal: If ``false``, creates a new instance of ``CookieStore``.
+    :rtype: ``CookieStore``
+    :returns: Instance of ``CookieStore`` saved in the current ``Response``, or a new ``CookieStore`` instance.
+
+    Fetches the global ``CookieStore`` instance held by ``Response``.
+
+.. php:function:: env($key[, $default = null])
 
     :param string $key: The name of the environment variable to retrieve
     :param mixed  $default: The default value to return if no value is found.
@@ -47,7 +67,7 @@ Service Accessors
     values that are specific to the environment itself, like database
     settings, API keys, etc.
 
-.. php:function:: esc ( $data, $context='html' [, $encoding])
+.. php:function:: esc($data[, $context = 'html' [, $encoding]])
 
     :param   string|array   $data: The information to be escaped.
     :param   string   $context: The escaping context. Default is 'html'.
@@ -63,7 +83,7 @@ Service Accessors
 
     Valid context values: html, js, css, url, attr, raw, null
 
-.. php:function:: helper( $filename )
+.. php:function:: helper($filename)
 
     :param   string|array  $filename: The name of the helper file to load, or an array of names.
 

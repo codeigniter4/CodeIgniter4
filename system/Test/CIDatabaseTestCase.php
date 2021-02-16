@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Database\Seeder;
@@ -158,6 +159,22 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 			$this->seeder = Database::seeder($this->DBGroup);
 			$this->seeder->setSilent(true);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Loads the Builder class appropriate for the current database.
+	 *
+	 * @param string $tableName
+	 *
+	 * @return BaseBuilder
+	 */
+	public function loadBuilder(string $tableName)
+	{
+		$builderClass = str_replace('Connection', 'Builder', get_class($this->db));
+
+		return new $builderClass($tableName, $this->db);
 	}
 
 	//--------------------------------------------------------------------
