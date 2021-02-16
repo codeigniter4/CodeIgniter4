@@ -198,13 +198,13 @@ Asserts that the Response is an instance of RedirectResponse.
 
     $result->assertRedirect();
 
-**assertRedirectedTo()**
+**assertRedirectTo()**
 
 Asserts that the Response is an instance of RedirectResponse and the destination
 matches the uri given.
 ::
 
-    $result->assertRedirectedTo('foo/bar');
+    $result->assertRedirectTo('foo/bar');
 
 **getRedirectUrl()**
 
