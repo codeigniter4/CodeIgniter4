@@ -844,6 +844,8 @@ Combining queries (UNION)
 *************************
 
 .. note:: To understand how UNION works, it is recommended to study the documentation for the used DBMS.
+.. note:: Each separate query containing LIMIT and ORDER BY will be wrapped in a
+``SELECT * FROM (...) as wrapper_alias`` so that the DBMS will process queries correctly
 
 **$builder->union()**
 
@@ -857,42 +859,14 @@ The Closure must return an instance of the BaseBuilder class::
 
     $builder->select('title, year')
         ->union(function (BaseBuilder $builder) {
-            return $builder->select('title, year')->from('top_movies');
-        })
-        ->get();
-
-    // (SELECT title, year FROM movies) UNION (SELECT title, year FROM top_movies)
-
-Nested UNION and variable passing::
-
-    //Add the following line after the namespace keyword
-    use CodeIgniter\Database\BaseBuilder;
-
-    $year = 2000;
-    $yearTop = 2010;
-    $yearBad = 2020;
-
-    $builder = $db->table('movies');
-
-    $builder->select('title, year')
-        ->where('year', $year)
-        ->union(function (BaseBuilder $builder) use ($yearTop, $yearBad){
             return $builder->select('title, year')
-                ->from('top_movies')
-                ->where('year', $yearTop)
-                ->union(function (BaseBuilder $builder) use ($yearBad){
-                    return $builder->select('title, year')
-                        ->from('bad_movies')
-                        ->where('year', $yearBad)
-                });
+            ->from('top_movies')
+            ->orderBy('title');
         })
         ->get();
 
-    // (SELECT title, year FROM movies WHERE year = 2000)
-    //  UNION (
-    //      (SELECT title, year FROM top_movies WHERE year = 2010)
-    //      UNION (SELECT title, year FROM bad_movies WHERE year = 2020)
-    //  )
+    // SELECT title, year FROM movies
+    // UNION SELECT * FROM (SELECT title, year FROM top_movies ORDER BY title) as wrapper_alias
 
 
 **$builder->unionAll()**
@@ -905,12 +879,14 @@ The method adds ALL to UNION::
     $builder = $db->table('movies');
 
     $builder->select('title, year')
+        ->limit(1)
         ->unionAll(function (BaseBuilder $builder) {
             return $builder->select('title, year')->from('top_movies');
         })
         ->get();
 
-    // (SELECT title, year FROM movies) UNION ALL (SELECT title, year FROM top_movies)
+    // SELECT * FROM (SELECT title, year FROM movies LIMIT 1) as wrapper_alias
+    // UNION ALL SELECT title, year FROM top_movies
 
 
 **$builder->unionOrderBy()**
@@ -930,8 +906,7 @@ The principle is the same as for ``orderBy()``::
         ->unionOrderBy('title', 'DESC')
         ->get();
 
-    // (SELECT title, year FROM movies) UNION ALL (SELECT title, year FROM top_movies) ORDER BY title DESC
-
+    // SELECT title, year FROM movies UNION ALL SELECT title, year FROM top_movies ORDER BY title DESC
 
 **************
 Inserting Data

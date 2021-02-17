@@ -22,11 +22,13 @@ class UnionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder = $this->db->table('movies');
 
 		$builder->select('title, year')
+			->orderBy('title')
 			->union(function (BaseBuilder $builder) {
 				return $builder->select('title, year')->from('top_movies');
 			});
 
-		$sql = '(SELECT "title", "year" FROM "movies") UNION (SELECT "title", "year" FROM "top_movies")';
+		$sql = 'SELECT * FROM (SELECT "title", "year" FROM "movies" ORDER BY "title") as wrapper_alias '
+			. 'UNION SELECT "title", "year" FROM "top_movies"';
 
 		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -55,71 +57,15 @@ class UnionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder = $this->db->table('movies');
 
 		$builder->select('title, year')
+			->orderBy('title')
 			->unionAll(function (BaseBuilder $builder) {
-				return $builder->select('title, year')->from('top_movies');
-			});
-
-		$sql = '(SELECT "title", "year" FROM "movies") UNION ALL (SELECT "title", "year" FROM "top_movies")';
-
-		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	public function testMultiQueryUnion()
-	{
-		$builder = $this->db->table('movies');
-
-		$builder->select('title, year')
-			->union(function (BaseBuilder $builder) {
 				return $builder->select('title, year')
 					->from('top_movies')
-					->unionAll(function (BaseBuilder $builder) {
-						return $builder->select('title, year')->from('tomato_movies');
-					});
+					->orderBy('title');
 			});
 
-		$sql = '(SELECT "title", "year" FROM "movies") '
-				. 'UNION ((SELECT "title", "year" FROM "top_movies") '
-					. 'UNION ALL (SELECT "title", "year" FROM "tomato_movies"))';
-
-		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
-
-		$builder->resetQuery();
-
-		$builder->select('title, year')
-			->union(function (BaseBuilder $builder) {
-				return $builder->select('title, year')->from('top_movies');
-			})->unionAll(function (BaseBuilder $builder) {
-				return $builder->select('title, year')->from('tomato_movies');
-			});
-
-		$sql = '(SELECT "title", "year" FROM "movies") '
-				. 'UNION (SELECT "title", "year" FROM "top_movies") '
-				. 'UNION ALL (SELECT "title", "year" FROM "tomato_movies")';
-
-		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
-
-		$builder->resetQuery();
-
-		$year1 = 2000;
-		$year2 = 2010;
-		$year3 = 2020;
-
-		$builder->select('title, year')
-			->where('year', $year1)
-			->union(function (BaseBuilder $builder) use ($year2, $year3) {
-				return $builder->select('title, year')
-					->from('top_movies')
-					->where('year', $year2)
-					->unionAll(function (BaseBuilder $builder) use ($year3) {
-						return $builder->select('title, year')
-							->from('tomato_movies')
-							->where('year', $year3);
-					});
-			});
-
-		$sql = '(SELECT "title", "year" FROM "movies" WHERE "year" = 2000) '
-			. 'UNION ((SELECT "title", "year" FROM "top_movies" WHERE "year" = 2010) '
-			. 'UNION ALL (SELECT "title", "year" FROM "tomato_movies" WHERE "year" = 2020))';
+		$sql = 'SELECT * FROM (SELECT "title", "year" FROM "movies" ORDER BY "title") as wrapper_alias '
+			. 'UNION ALL SELECT * FROM (SELECT "title", "year" FROM "top_movies" ORDER BY "title") as wrapper_alias';
 
 		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -135,8 +81,8 @@ class UnionTest extends \CodeIgniter\Test\CIUnitTestCase
 			->unionOrderBy('title', 'DESC')
 			->unionOrderBy('year', 'ASC');
 
-		$sql = '(SELECT "title", "year" FROM "movies") '
-			. 'UNION ALL (SELECT "title", "year" FROM "top_movies") ORDER BY "title" DESC, "year" ASC';
+		$sql = 'SELECT "title", "year" FROM "movies" '
+			. 'UNION ALL SELECT "title", "year" FROM "top_movies" ORDER BY "title" DESC, "year" ASC';
 
 		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -149,11 +95,27 @@ class UnionTest extends \CodeIgniter\Test\CIUnitTestCase
 					->unionAll(function (BaseBuilder $builder) {
 						return $builder->select('title, year')->from('tomato_movies');
 					})->unionOrderBy('title', 'DESC');
-			});
+			})->unionOrderBy('title');
 
-		$sql = '(SELECT "title", "year" FROM "movies") '
-			. 'UNION ((SELECT "title", "year" FROM "top_movies") '
-			. 'UNION ALL (SELECT "title", "year" FROM "tomato_movies") ORDER BY "title" DESC)';
+		$sql = 'SELECT "title", "year" FROM "movies" '
+			. 'UNION SELECT * FROM (SELECT "title", "year" FROM "top_movies" '
+			. 'UNION ALL SELECT "title", "year" FROM "tomato_movies" ORDER BY "title" DESC) as wrapper_alias ORDER BY "title"';
+
+		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$builder->select('title, year')
+			->union(function (BaseBuilder $builder) {
+				return $builder->select('title, year')
+					->from('top_movies')
+					->unionAll(function (BaseBuilder $builder) {
+						return $builder->select('title, year')->from('tomato_movies');
+					})->limit(1);
+			})
+			->unionOrderBy('title');
+
+		$sql = 'SELECT "title", "year" FROM "movies" '
+			. 'UNION SELECT * FROM (SELECT "title", "year" FROM "top_movies"  LIMIT 1) as wrapper_alias '
+			. 'UNION ALL SELECT "title", "year" FROM "tomato_movies" ORDER BY "title"';
 
 		$this->assertEquals($sql, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

@@ -3041,9 +3041,12 @@ class BaseBuilder
 
 		if ($this->QBUnion)
 		{
-			$sql = '(' . $sql . ')'
-				. $this->compileUnion()
-				. $this->compileUnionOrderBy();
+			if ($this->QBOrderBy || $this->QBLimit)
+			{
+				$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
+			}
+
+			$sql .= $this->compileUnion() . $this->compileUnionOrderBy();
 		}
 
 		return $sql;
@@ -3557,11 +3560,20 @@ class BaseBuilder
 				'BaseBuilder::union(). The closure must return an instance of the BaseBuilder class'
 			);
 		}
-		$sql = $builder->getCompiledSelect();
+
+		$sql = $builder->getCompiledSelect(false);
 
 		$all = $all ? 'ALL ' : '';
 
-		$this->QBUnion[] = ' UNION ' . $all . '(' . $sql . ')';
+		if (($builder->QBOrderBy || $builder->QBLimit || $builder->QBUnionOrderBy)
+			&& strpos($sql, 'wrapper_alias UNION') === false)
+		{
+			$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
+		}
+
+		$builder->resetSelect();
+
+		$this->QBUnion[] = ' UNION ' . $all . $sql;
 
 		return $this;
 	}

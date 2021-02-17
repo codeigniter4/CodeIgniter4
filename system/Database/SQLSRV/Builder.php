@@ -651,7 +651,17 @@ class Builder extends BaseBuilder
 		// LIMIT
 		if ($this->QBLimit)
 		{
-			return $sql = $this->_limit($sql . "\n");
+			$sql = $this->_limit($sql . "\n");
+		}
+
+		if ($this->QBUnion)
+		{
+			if ($this->QBOrderBy || $this->QBLimit)
+			{
+				$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
+			}
+
+			$sql .= $this->compileUnion() . $this->compileUnionOrderBy();
 		}
 
 		return $sql;
