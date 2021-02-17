@@ -645,10 +645,16 @@ Rules are stored within simple, namespaced classes. They can be stored any locat
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
 add the new file to the ``$ruleSets`` array::
 
+    use CodeIgniter\Validation\CreditCardRules;
+    use CodeIgniter\Validation\FileRules;
+    use CodeIgniter\Validation\FormatRules;
+    use CodeIgniter\Validation\Rules;
+
     public $ruleSets = [
-        \CodeIgniter\Validation\Rules::class,
-        \CodeIgniter\Validation\FileRules::class,
-        \CodeIgniter\Validation\CreditCardRules::class,
+        Rules::class,
+        FormatRules::class,
+        FileRules::class,
+        CreditCardRules::class,
     ];
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
