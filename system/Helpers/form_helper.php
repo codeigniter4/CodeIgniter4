@@ -944,7 +944,7 @@ if (! function_exists('parse_form_attributes'))
 				{
 					continue;
 				}
-				$att .= $key . '="' . $val . '"' . ($val === end($default) ? '' : ' ');
+				$att .= $key . '="' . $val . '"' . ($key === key(array_slice($default, -1, 1, true)) ? '' : ' ');
 			}
 			else
 			{
