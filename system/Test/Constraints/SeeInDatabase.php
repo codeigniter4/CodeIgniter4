@@ -16,7 +16,7 @@ class SeeInDatabase extends Constraint
 	protected $show = 3;
 
 	/**
-	 * @var \CodeIgniter\Database\ConnectionInterface
+	 * @var ConnectionInterface
 	 */
 	protected $db;
 
@@ -30,8 +30,8 @@ class SeeInDatabase extends Constraint
 	/**
 	 * SeeInDatabase constructor.
 	 *
-	 * @param \CodeIgniter\Database\ConnectionInterface $db
-	 * @param array                                     $data
+	 * @param ConnectionInterface $db
+	 * @param array               $data
 	 */
 	public function __construct(ConnectionInterface $db, array $data)
 	{
