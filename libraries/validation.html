@@ -1016,10 +1016,16 @@ right after the name of the field the error should belong to:</p>
 <p>Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit <strong>Config/Validation.php</strong> and
 add the new file to the <code class="docutils literal notranslate"><span class="pre">$ruleSets</span></code> array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nx">\CodeIgniter\Validation\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">\CodeIgniter\Validation\FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">\CodeIgniter\Validation\CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Validation\CreditCardRules</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Validation\FileRules</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Validation\FormatRules</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Validation\Rules</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nx">Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="nx">FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="nx">FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="nx">CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -1451,7 +1457,7 @@ the field data).</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 15, 2021.
+        Last updated on Feb 17, 2021.
       </span>
 
     </p>
