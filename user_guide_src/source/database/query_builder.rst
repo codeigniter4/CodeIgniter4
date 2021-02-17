@@ -845,7 +845,8 @@ Combining queries (UNION)
 
 .. note:: To understand how UNION works, it is recommended to study the documentation for the used DBMS.
 .. note:: Each separate query containing LIMIT and ORDER BY will be wrapped in a
-``SELECT * FROM (...) as wrapper_alias`` so that the DBMS will process queries correctly
+``SELECT * FROM (...) as wrapper_alias`` so that the DBMS will process queries correctly.
+
 
 **$builder->union()**
 
