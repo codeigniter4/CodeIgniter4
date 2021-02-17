@@ -3,6 +3,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -551,8 +552,8 @@ class ResponseTest extends CIUnitTestCase
 		$config                 = new App();
 		$config->cookieSameSite = 'Invalid';
 
-		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('Security.invalidSameSiteSetting', ['Invalid']));
+		$this->expectException(CookieException::class);
+		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
 		new Response($config);
 	}
 }

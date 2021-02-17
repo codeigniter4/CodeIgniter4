@@ -1,6 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class FromTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -93,6 +94,21 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expectedSQL = 'SELECT * FROM "jobs"';
 
 		$builder->from('jobs');
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFromWithMultipleTablesAsStringWithSQLSRV()
+	{
+		$this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+		$builder = new SQLSRVBuilder('user', $this->db);
+
+		$builder->from(['jobs, roles']);
+
+		$expectedSQL = 'SELECT * FROM "test"."dbo"."user", "test"."dbo"."jobs", "test"."dbo"."roles"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
