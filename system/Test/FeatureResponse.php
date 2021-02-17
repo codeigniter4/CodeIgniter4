@@ -114,7 +114,9 @@ class FeatureResponse extends TestCase
 		$uri         = trim(strtolower($uri));
 		$redirectUri = strtolower($this->getRedirectUrl());
 
-		$matches = $uri === $redirectUri || site_url($uri) === $redirectUri;
+		$matches = $uri === $redirectUri
+				   || strtolower(site_url($uri)) === $redirectUri
+				   || $uri === site_url($redirectUri);
 
 		$this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
 	}
