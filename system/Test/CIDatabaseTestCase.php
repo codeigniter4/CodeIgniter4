@@ -17,6 +17,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -385,11 +386,8 @@ abstract class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
-		$count = $this->db->table($table)
-				->where($where)
-				->countAllResults();
-
-		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
+		$constraint = new SeeInDatabase($this->db, $where);
+		static::assertThat($table, $constraint);
 	}
 
 	//--------------------------------------------------------------------
