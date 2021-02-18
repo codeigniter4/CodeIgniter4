@@ -83,7 +83,7 @@ class SeeInDatabase extends Constraint
 			)->limit($this->show)
 			->get()->getResultArray();
 
-		if (count($similar))
+		if ($similar !== [])
 		{
 			$description = 'Found similar results: ' . json_encode($similar, JSON_PRETTY_PRINT);
 		}
