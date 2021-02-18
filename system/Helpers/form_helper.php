@@ -383,6 +383,11 @@ if (! function_exists('form_dropdown'))
 			}
 		}
 
+		//standardize selected as strings, like  the option keys will be.
+		foreach($selected as $key => $item) {
+			$selected[$key] = (string) $item;
+		}
+
 		$extra    = stringify_attributes($extra);
 		$multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
 		$form     = '<select ' . rtrim(parse_form_attributes($data, $defaults)) . $extra . $multiple . ">\n";
