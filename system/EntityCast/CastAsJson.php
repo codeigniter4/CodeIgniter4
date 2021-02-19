@@ -3,6 +3,7 @@
 
 namespace CodeIgniter\EntityCast;
 
+use stdClass;
 use CodeIgniter\Exceptions\CastException;
 
 /**
@@ -18,7 +19,7 @@ class CastAsJson extends AbstractCast
 	 */
 	public static function get($value, array $params = [])
 	{
-		$tmp = ! is_null($value) ? (in_array('array', $params, true) ? [] : new \stdClass) : null;
+		$tmp = ! is_null($value) ? (in_array('array', $params, true) ? [] : new stdClass) : null;
 		if (function_exists('json_decode')
 			&& ((is_string($value)
 					&& strlen($value) > 1

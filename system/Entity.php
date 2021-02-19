@@ -510,7 +510,7 @@ class Entity implements JsonSerializable
 		//In order not to create a separate handler for the json-array type, we transform the required one.
 		$type = $type === 'json-array' ? 'json[array]' : $type;
 
-		if (! in_array($method, ['get', 'set']))
+		if (! in_array($method, ['get', 'set'], true))
 		{
 			throw CastException::invalidCastMethod();
 		}

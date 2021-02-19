@@ -3,6 +3,8 @@
 
 namespace CodeIgniter\EntityCast;
 
+use Exception;
+use DateTime;
 use CodeIgniter\I18n\Time;
 
 /**
@@ -16,7 +18,7 @@ class CastAsDatetime extends AbstractCast
 	/**
 	 * @inheritDoc
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function get($value, array $params = [])
 	{
@@ -25,7 +27,7 @@ class CastAsDatetime extends AbstractCast
 			return $value;
 		}
 
-		if ($value instanceof \DateTime)
+		if ($value instanceof DateTime)
 		{
 			return Time::instance($value);
 		}
