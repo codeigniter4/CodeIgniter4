@@ -11,13 +11,23 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\EntityCast\CastAsArray;
+use CodeIgniter\EntityCast\CastAsBoolean;
+use CodeIgniter\EntityCast\CastAsCommaSeparatedValues;
+use CodeIgniter\EntityCast\CastAsDatetime;
+use CodeIgniter\EntityCast\CastAsDouble;
+use CodeIgniter\EntityCast\CastAsFloat;
+use CodeIgniter\EntityCast\CastAsInteger;
+use CodeIgniter\EntityCast\CastInterface;
+use CodeIgniter\EntityCast\CastAsJson;
+use CodeIgniter\EntityCast\CastAsObject;
+use CodeIgniter\EntityCast\CastAsString;
+use CodeIgniter\EntityCast\CastAsTimestamp;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
-use DateTime;
 use Exception;
 use JsonSerializable;
 use ReflectionException;
-use stdClass;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
@@ -47,6 +57,34 @@ class Entity implements JsonSerializable
 	 * when they are accessed.
 	 */
 	protected $casts = [];
+
+	/**
+	 * Custom convert handlers
+	 *
+	 * @var array<string, string>
+	 */
+	protected $castHandlers = [];
+
+	/**
+	 * Default convert handlers
+	 *
+	 * @var array<string, string>
+	 */
+	private $defaultCastHandlers = [
+		'array'     => CastAsArray::class,
+		'bool'      => CastAsBoolean::class,
+		'boolean'   => CastAsBoolean::class,
+		'csv'       => CastAsCommaSeparatedValues::class,
+		'datetime'  => CastAsDatetime::class,
+		'double'    => CastAsDouble::class,
+		'float'     => CastAsFloat::class,
+		'int'       => CastAsInteger::class,
+		'integer'   => CastAsInteger::class,
+		'json'      => CastAsJson::class,
+		'object'    => CastAsObject::class,
+		'string'    => CastAsString::class,
+		'timestamp' => CastAsTimestamp::class,
+	];
 
 	/**
 	 * Holds the current values of all class vars.
@@ -280,45 +318,26 @@ class Entity implements JsonSerializable
 	 *      $p = $this->my_property
 	 *      $p = $this->getMyProperty()
 	 *
-	 * @param string $key
+	 * @param string $attribute
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function __get(string $key)
+	public function __get(string $attribute)
 	{
-		$key    = $this->mapProperty($key);
-		$result = null;
+		$attribute = $this->mapProperty($attribute);
 
 		// Convert to CamelCase for the method
-		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $attribute)));
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
 		if (method_exists($this, $method))
 		{
-			$result = $this->$method();
+			return $this->$method();
 		}
 
-		// Otherwise return the protected property
-		// if it exists.
-		elseif (array_key_exists($key, $this->attributes))
-		{
-			$result = $this->attributes[$key];
-		}
-
-		// Do we need to mutate this into a date?
-		if (in_array($key, $this->dates, true))
-		{
-			$result = $this->mutateDate($result);
-		}
-		// Or cast it as something?
-		elseif ($this->_cast && ! empty($this->casts[$key]))
-		{
-			$result = $this->castAs($result, $this->casts[$key]);
-		}
-
-		return $result;
+		return $this->castAs($this->attributes[$attribute] ?? null, $attribute, 'get');
 	}
 
 	//--------------------------------------------------------------------
@@ -332,79 +351,27 @@ class Entity implements JsonSerializable
 	 *      $this->my_property = $p;
 	 *      $this->setMyProperty() = $p;
 	 *
-	 * @param string     $key
+	 * @param string     $attribute
 	 * @param mixed|null $value
 	 *
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function __set(string $key, $value = null)
+	public function __set(string $attribute, $value = null)
 	{
-		$key = $this->mapProperty($key);
-
-		// Check if the field should be mutated into a date
-		if (in_array($key, $this->dates, true))
-		{
-			$value = $this->mutateDate($value);
-		}
-
-		$isNullable = false;
-		$castTo     = false;
-
-		if (array_key_exists($key, $this->casts))
-		{
-			$isNullable = strpos($this->casts[$key], '?') === 0;
-			$castTo     = $isNullable ? substr($this->casts[$key], 1) : $this->casts[$key];
-		}
-
-		if (! $isNullable || ! is_null($value))
-		{
-			// CSV casts need to be imploded.
-			if ($castTo === 'csv')
-			{
-				$value = implode(',', $value);
-			}
-
-			// Array casting requires that we serialize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if ($castTo === 'array')
-			{
-				$value = serialize($value);
-			}
-
-			// JSON casting requires that we JSONize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
-			{
-				$value = json_encode($value, JSON_UNESCAPED_UNICODE);
-
-				if (json_last_error() !== JSON_ERROR_NONE)
-				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
-				}
-			}
-		}
+		$attribute = $this->mapProperty($attribute);
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
 		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $attribute)));
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
-
 			return $this;
 		}
 
-		// Otherwise, just the value.
-		// This allows for creation of new class
-		// properties that are undefined, though
-		// they cannot be saved. Useful for
-		// grabbing values through joins,
-		// assigning relationships, etc.
-		$this->attributes[$key] = $value;
+		$this->attributes[$attribute] = $this->castAs($value ?? null, $attribute, 'set');
 
 		return $this;
 	}
@@ -498,27 +465,7 @@ class Entity implements JsonSerializable
 	 */
 	protected function mutateDate($value)
 	{
-		if ($value instanceof Time)
-		{
-			return $value;
-		}
-
-		if ($value instanceof DateTime)
-		{
-			return Time::instance($value);
-		}
-
-		if (is_numeric($value))
-		{
-			return Time::createFromTimestamp($value);
-		}
-
-		if (is_string($value))
-		{
-			return Time::parse($value);
-		}
-
-		return $value;
+		return CastAsDatetime::get($value);
 	}
 
 	//--------------------------------------------------------------------
@@ -527,69 +474,74 @@ class Entity implements JsonSerializable
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
-	 * @param mixed  $value
-	 * @param string $type
+	 * @param mixed  $value     Attribute value
+	 * @param string $attribute Attribute name
+	 * @param string $method    Allowed to "get" and "set"
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	protected function castAs($value, string $type)
+	protected function castAs($value, string $attribute, string $method)
 	{
+		// Do we need to mutate this into a date?
+		// I don't understand what the dates property is for if it is processed by the same method as datetime!
+		if (in_array($attribute, $this->dates, true))
+		{
+			return $this->mutateDate($value);
+		}
+
+		if (empty($this->casts[$attribute]) || ($method === 'get' && ! $this->_cast))
+		{
+			return $value;
+		}
+
+		$type = $this->casts[$attribute];
+
 		if (strpos($type, '?') === 0)
 		{
 			if ($value === null)
 			{
 				return null;
 			}
+
 			$type = substr($type, 1);
 		}
 
-		switch($type)
-		{
-			case 'int':
-			case 'integer': // alias for 'integer'
-				$value = (int) $value;
-				break;
-			case 'float':
-				$value = (float) $value;
-				break;
-			case 'double':
-				$value = (double) $value;
-				break;
-			case 'string':
-				$value = (string) $value;
-				break;
-			case 'bool':
-			case 'boolean': // alias for 'boolean'
-				$value = (bool) $value;
-				break;
-			case 'csv':
-				$value = explode(',', $value);
-				break;
-			case 'object':
-				$value = (object) $value;
-				break;
-			case 'array':
-				if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
-				{
-					$value = unserialize($value);
-				}
+		//In order not to create a separate handler for the json-array type, we transform the required one.
+		$type = $type === 'json-array' ? 'json[array]' : $type;
 
-				$value = (array) $value;
-				break;
-			case 'json':
-				$value = $this->castAsJson($value);
-				break;
-			case 'json-array':
-				$value = $this->castAsJson($value, true);
-				break;
-			case 'datetime':
-				return $this->mutateDate($value);
-			case 'timestamp':
-				return strtotime($value);
+		if (! in_array($method, ['get', 'set']))
+		{
+			throw CastException::invalidCastMethod();
 		}
 
-		return $value;
+		$params = [];
+
+		//Attempt to retrieve additional parameters if specified
+		// type[param, param2,param3]
+		if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches))
+		{
+			$type   = $matches[1];
+			$params = array_map(function ($param) {
+				return trim($param);
+			}, explode(',', $matches[2]));
+		}
+
+		$type = trim($type, '[]');
+
+		$handlers = array_merge($this->castHandlers, $this->defaultCastHandlers);
+
+		if (empty($handlers[$type]))
+		{
+			return $value;
+		}
+
+		if (! is_subclass_of($handlers[$type], CastInterface::class))
+		{
+			throw CastException::missingInterface($handlers[$type]);
+		}
+
+		return $handlers[$type]::$method($value, $params);
 	}
 
 	//--------------------------------------------------------------------
@@ -605,16 +557,7 @@ class Entity implements JsonSerializable
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
-		$tmp = ! is_null($value) ? ($asArray ? [] : new stdClass) : null;
-		if (function_exists('json_decode') && ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value)))
-		{
-			$tmp = json_decode($value, $asArray);
-			if (json_last_error() !== JSON_ERROR_NONE)
-				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
-			}
-		}
-		return $tmp;
+		return CastAsJson::get($value, $asArray ? ['array'] : []);
 	}
 
 	/**

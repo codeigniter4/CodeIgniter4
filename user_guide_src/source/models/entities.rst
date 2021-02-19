@@ -291,6 +291,9 @@ to the database. However, ``unset`` and ``isset`` only work on the mapped proper
 Mutators
 ========
 
+.. note:: Setter method has priority over the mutation. If a setter is specified, the mutation is not triggered.
+
+
 Date Mutators
 -------------
 
@@ -418,8 +421,108 @@ Stored in the database as "red,yellow,green"::
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
+Custom casting
+--------------
+
+You can define your own conversion types for getting and setting data.
+
+At first you need to create a handler class for your type.
+Let's say the class will be located in the 'app/Entity/Cast' directory::
+
+    <?php
+
+    namespace App\Entity\Cast
+
+    //The class must inherit the CodeIgniter\EntityCast\AbstractCast class
+    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    {
+        public static function get($value, array $params = [])
+        {
+            return base64_decode($value);
+        }
+
+        public static function set($value, array $params = [])
+        {
+            return base64_encode($value);
+        }
+    }
+
+Now you need to register it::
+
+    <?php
+
+    namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class MyEntity extends Entity
+    {
+        // Specifying the type for the field
+        protected $casts = [
+            'key' => 'base64',
+        ];
+
+        //Bind the type to the handler
+        protected $castHandlers = [
+            'base64' => 'App\Entity\Cast\CastBase64',
+        ];
+    }
+
+    //...
+
+    $entity->key = 'test'; // dGVzdA==
+    echo $entity->key;     // test
+
+
+If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method::
+
+    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    {
+        public static function get($value, array $params = [])
+        {
+            return base64_decode($value);
+        }
+    }
+
+
+**Parameters**
+
+In some cases, one type is not enough. In this situation, you can use additional parameters.
+Additional parameters are indicated in square brackets and listed with a comma.
+
+**type[param1, param2]**
+
+::
+
+    //Defining a type with parameters
+    protected $casts = [
+        'some_attribute' => 'class[App\SomeClass, param2, param3]',
+    ];
+
+    //Bind the type to the handler
+    protected $castHandlers = [
+        'class' => 'SomeHandler',
+    ];
+
+    class SomeHandler extends \CodeIgniter\EntityCast\AbstractCast
+    {
+        public static function get($value, array $params = [])
+        {
+            var_dump($params);
+            // array(3) {
+            //   [0]=>
+            //   string(13) "App\SomeClass"
+            //   [1]=>
+            //   string(6) "param2"
+            //   [2]=>
+            //   string(6) "param3"
+            // }
+        }
+    }
+
+
 Checking for Changed Attributes
--------------------------------
+===============================
 
 You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check::

@@ -43,4 +43,14 @@ class CastException extends CriticalError
 				return new static(lang('Cast.jsonErrorUnknown'));
 		}
 	}
+
+	public static function missingInterface($class) : self
+	{
+		return new static(lang('Cast.abstractCastMissing', [$class]));
+	}
+
+	public static function invalidCastMethod() : self
+	{
+		return new static(lang('Cast.wrongCastMethod'));
+	}
 }

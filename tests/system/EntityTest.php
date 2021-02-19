@@ -5,6 +5,9 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
+use Tests\Support\EntityCast\CastBase64;
+use Tests\Support\EntityCast\CastPassParameters;
+use Tests\Support\EntityCast\NotExtendsAbstractCast;
 use Tests\Support\SomeEntity;
 
 class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -30,6 +33,23 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$entity->bar = 'thanks';
 
 		$this->assertEquals('bar:thanks:bar', $entity->bar);
+	}
+
+	public function testGetterSetterPriority()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = ['foo' => 'bar'];
+
+		$setter = 'Setter method instead of cast';
+
+		$entity->thirteenth = $data;
+
+		$thirteenth = $this->getPrivateProperty($entity, 'attributes')['thirteenth'];
+
+		$this->assertEquals($setter, $thirteenth);
+
+		$this->assertEquals(serialize($setter), $entity->thirteenth);
 	}
 
 	public function testUnsetUnsetsAttribute()
@@ -389,10 +409,10 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$entity = $this->getCastEntity();
 
-		$entity->setSeventh(['foo' => 'bar']);
+		$entity->seventh = ['foo' => 'bar'];
 
 		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-		$this->assertEquals(['foo' => 'bar'], $check);
+		$this->assertEquals(serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
@@ -662,6 +682,40 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$entity = new Entity();
 
 		$this->assertIsBool($entity->cast());
+	}
+
+	public function testCustomCast()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->first = 'base 64';
+
+		$fieldValue = $this->getPrivateProperty($entity, 'attributes')['first'];
+
+		$this->assertEquals(base64_encode('base 64'), $fieldValue);
+
+		$this->assertEquals('base 64', $entity->first);
+	}
+
+	public function testCustomCastException()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage(
+			'The Tests\Support\EntityCast\NotExtendsAbstractCast class '
+			. 'must inherit the CodeIgniter\EntityCast\AbstractCast class'
+		);
+		$entity->second = 'throw Exception';
+	}
+
+	public function testCustomCastParams()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->third = 'value';
+
+		$this->assertEquals('value:["param1","param2","param3"]', $entity->third);
 	}
 
 	//--------------------------------------------------------------------
@@ -996,54 +1050,62 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		return new class($data) extends Entity
 		{
 			protected $attributes = [
-				'first'    => null,
-				'second'   => null,
-				'third'    => null,
-				'fourth'   => null,
-				'fifth'    => null,
-				'sixth'    => null,
-				'seventh'  => null,
-				'eighth'   => null,
-				'ninth'    => null,
-				'tenth'    => null,
-				'eleventh' => null,
-				'twelfth'  => null,
+				'first'      => null,
+				'second'     => null,
+				'third'      => null,
+				'fourth'     => null,
+				'fifth'      => null,
+				'sixth'      => null,
+				'seventh'    => null,
+				'eighth'     => null,
+				'ninth'      => null,
+				'tenth'      => null,
+				'eleventh'   => null,
+				'twelfth'    => null,
+				'thirteenth' => null,
 			];
 
 			protected $_original = [
-				'first'    => null,
-				'second'   => null,
-				'third'    => null,
-				'fourth'   => null,
-				'fifth'    => null,
-				'sixth'    => null,
-				'seventh'  => null,
-				'eighth'   => null,
-				'ninth'    => null,
-				'tenth'    => null,
-				'eleventh' => null,
-				'twelfth'  => null,
+				'first'      => null,
+				'second'     => null,
+				'third'      => null,
+				'fourth'     => null,
+				'fifth'      => null,
+				'sixth'      => null,
+				'seventh'    => null,
+				'eighth'     => null,
+				'ninth'      => null,
+				'tenth'      => null,
+				'eleventh'   => null,
+				'twelfth'    => null,
+				'thirteenth' => null,
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
 			protected $casts = [
-				'first'    => 'integer',
-				'second'   => 'float',
-				'third'    => 'double',
-				'fourth'   => 'string',
-				'fifth'    => 'boolean',
-				'sixth'    => 'object',
-				'seventh'  => 'array',
-				'eighth'   => 'datetime',
-				'ninth'    => 'timestamp',
-				'tenth'    => 'json',
-				'eleventh' => 'json-array',
-				'twelfth'  => 'csv',
+				'first'      => 'integer',
+				'second'     => 'float',
+				'third'      => 'double',
+				'fourth'     => 'string',
+				'fifth'      => 'boolean',
+				'sixth'      => 'object',
+				'seventh'    => 'array',
+				'eighth'     => 'datetime',
+				'ninth'      => 'timestamp',
+				'tenth'      => 'json',
+				'eleventh'   => 'json-array',
+				'twelfth'    => 'csv',
+				'thirteenth' => 'array',
 			];
 
-			public function setSeventh($seventh)
+			public function setThirteenth($value)
 			{
-				$this->attributes['seventh'] = $seventh;
+				$this->attributes['thirteenth'] = 'Setter method instead of cast';
+			}
+
+			public function getThirteenth()
+			{
+				return serialize($this->attributes['thirteenth']);
 			}
 		};
 	}
@@ -1079,4 +1141,36 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
+	protected function getCustomCastEntity() : Entity
+	{
+		return new class extends Entity
+		{
+
+			protected $attributes = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+			];
+
+			protected $_original = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+
+			];
+
+			// 'bar' is db column, 'foo' is internal representation
+			protected $casts = [
+				'first'  => 'base64',
+				'second' => 'someType',
+				'third'  => 'type[param1, param2,param3]',
+			];
+
+			protected $castHandlers = [
+				'base64'   => CastBase64::class,
+				'someType' => NotExtendsAbstractCast::class,
+				'type'     => CastPassParameters::class,
+			];
+		};
+	}
 }
