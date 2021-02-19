@@ -594,11 +594,13 @@ class Router implements RouterInterface
 		// is found or when such a directory doesn't exist
 		while ($c-- > 0)
 		{
-			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
+			$segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
+			$test           = APPPATH . 'Controllers/' . $this->directory . $segmentConvert;
 
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directoryOverride === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
+			if (! is_file($test . '.php') && $directoryOverride === false && is_dir($test))
 			{
-				$this->setDirectory(array_shift($segments), true);
+				$this->setDirectory($segmentConvert, true);
+				array_shift($segments);
 				continue;
 			}
 
