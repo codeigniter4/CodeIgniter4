@@ -14,6 +14,7 @@ Changes:
 - ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
 - ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
 - To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
+- `Model::errors()` and `BaseModel::errors()` now always returns `array`; there was no definition change but the docblock has been updated.
 
 Deprecations:
 
