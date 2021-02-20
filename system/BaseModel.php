@@ -1087,27 +1087,25 @@ abstract class BaseModel
 	 * Grabs the last error(s) that occurred. If data was validated,
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
+	 * The return array should be in the following format:
+	 *  ['source' => 'message']
 	 *
 	 * @param boolean $forceDB Always grab the db error, not validation
 	 *
-	 * @return array|null
+	 * @return array<string,string>
 	 */
 	public function errors(bool $forceDB = false)
 	{
 		// Do we have validation errors?
 		if (! $forceDB && ! $this->skipValidation)
 		{
-			$errors = $this->validation->getErrors();
-
-			if (! empty($errors))
+			if ($errors = $this->validation->getErrors())
 			{
 				return $errors;
 			}
 		}
 
-		$error = $this->doErrors();
-
-		return $error['message'] ?? null;
+		return $this->doErrors();
 	}
 
 	// endregion

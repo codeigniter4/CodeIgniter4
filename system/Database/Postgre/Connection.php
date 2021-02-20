@@ -439,15 +439,15 @@ class Connection extends BaseConnection
 	 *
 	 * Must return an array with keys 'code' and 'message':
 	 *
-	 *  return ['code' => null, 'message' => null);
+	 *  ['code' => string|int, 'message' => string);
 	 *
-	 * @return array
+	 * @return array<string,string|int>
 	 */
 	public function error(): array
 	{
 		return [
 			'code'    => '',
-			'message' => pg_last_error($this->connID),
+			'message' => pg_last_error($this->connID) ?: '',
 		];
 	}
 
