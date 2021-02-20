@@ -1097,12 +1097,9 @@ abstract class BaseModel
 	public function errors(bool $forceDB = false)
 	{
 		// Do we have validation errors?
-		if (! $forceDB && ! $this->skipValidation)
+		if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors()))
 		{
-			if ($errors = $this->validation->getErrors())
-			{
-				return $errors;
-			}
+			return $errors;
 		}
 
 		return $this->doErrors();
