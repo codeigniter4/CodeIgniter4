@@ -326,7 +326,7 @@ abstract class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$path = __DIR__ . '/../bootstrap.php';
+		$path = __DIR__ . '/create_app.php';
 		$path = realpath($path) ?: $path;
 		return require $path;
 	}
