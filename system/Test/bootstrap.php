@@ -83,10 +83,8 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-// Launch the autoloader to gather namespaces (includes composer.json's "autoload-dev")
-$loader = Services::autoloader();
-$loader->initialize(new Autoload(), new Modules());
-$loader->register(); // Register the loader with the SPL autoloader stack.
+// Initialize and register the loader with the SPL autoloader stack.
+Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 require_once APPPATH . 'Config/Routes.php';
 
