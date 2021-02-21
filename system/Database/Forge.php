@@ -773,6 +773,7 @@ class Forge
 	 */
 	public function addColumn(string $table, $field): bool
 	{
+		// Work-around for literal column definitions
 		if (! is_array($field))
 		{
 			$field = [$field];
@@ -846,6 +847,7 @@ class Forge
 	 */
 	public function modifyColumn(string $table, $field): bool
 	{
+		// Work-around for literal column definitions
 		if (! is_array($field))
 		{
 			$field = [$field];

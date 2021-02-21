@@ -1442,6 +1442,8 @@ class Email
 				. $attachment['content'] . $this->newline;
 		}
 
+		// $name won't be set if no attachments were appended,
+		// and therefore a boundary wouldn't be necessary
 		if (! empty($name))
 		{
 			$body .= '--' . $boundary . '--';
@@ -1670,6 +1672,7 @@ class Email
 			}
 		}
 
+		// We might already have this set for UTF-8
 		if (! isset($chars))
 		{
 			$chars = static::strlen($str);

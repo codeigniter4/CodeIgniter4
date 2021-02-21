@@ -287,6 +287,7 @@ abstract class BaseResult implements ResultInterface
 	{
 		if (! is_numeric($n))
 		{
+			// We cache the row data for subsequent uses
 			if (! is_array($this->rowData))
 			{
 				$this->rowData = $this->getRowArray();

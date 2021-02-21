@@ -532,6 +532,8 @@ class Connection extends BaseConnection
 		{
 			$this->DSN .= "user={$this->username} ";
 
+			// An empty password is valid!
+			// password must be set to null to ignore it.
 			if ($this->password !== null)
 			{
 				$this->DSN .= "password='{$this->password}' ";

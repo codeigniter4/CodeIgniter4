@@ -371,6 +371,7 @@ class BaseBuilder
 			$select = explode(',', $select);
 		}
 
+		// If the escape value was not set, we will base it on the global setting
 		if (! is_bool($escape))
 		{
 			$escape = $this->db->protectIdentifiers;
@@ -780,6 +781,7 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
+		// If the escape value was not set will base it on the global setting
 		if (! is_bool($escape))
 		{
 			$escape = $this->db->protectIdentifiers;
