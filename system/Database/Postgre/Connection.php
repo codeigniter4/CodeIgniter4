@@ -507,7 +507,10 @@ class Connection extends BaseConnection
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' || $this->DSN = ''; // @phpstan-ignore-line
+		if ($this->DSN !== '')
+		{
+			$this->DSN = '';
+		}
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)
@@ -515,7 +518,10 @@ class Connection extends BaseConnection
 			$this->port = '';
 		}
 
-		$this->hostname === '' || $this->DSN = "host={$this->hostname} ";
+		if ($this->hostname !== '')
+		{
+			$this->DSN = "host={$this->hostname} ";
+		}
 
 		if (! empty($this->port) && ctype_digit($this->port))
 		{
@@ -526,13 +532,16 @@ class Connection extends BaseConnection
 		{
 			$this->DSN .= "user={$this->username} ";
 
-			// An empty password is valid!
-			// password must be set to null to ignore it.
-
-			$this->password === null || $this->DSN .= "password='{$this->password}' ";
+			if ($this->password !== null)
+			{
+				$this->DSN .= "password='{$this->password}' ";
+			}
 		}
 
-		$this->database === '' || $this->DSN .= "dbname={$this->database} ";
+		if ($this->database !== '')
+		{
+			$this->DSN .= "dbname={$this->database} ";
+		}
 
 		// We don't have these options as elements in our standard configuration
 		// array, but they might be set by parse_url() if the configuration was

@@ -121,11 +121,26 @@ class Connection extends BaseConnection
 		{
 			$ssl = [];
 
-			empty($this->encrypt['ssl_key'])    || $ssl['key']    = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert'])   || $ssl['cert']   = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca'])     || $ssl['ca']     = $this->encrypt['ssl_ca'];
-			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
-			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			if (! empty($this->encrypt['ssl_key']))
+			{
+				$ssl['key'] = $this->encrypt['ssl_key'];
+			}
+			if (! empty($this->encrypt['ssl_cert']))
+			{
+				$ssl['cert'] = $this->encrypt['ssl_cert'];
+			}
+			if (! empty($this->encrypt['ssl_ca']))
+			{
+				$ssl['ca'] = $this->encrypt['ssl_ca'];
+			}
+			if (! empty($this->encrypt['ssl_capath']))
+			{
+				$ssl['capath'] = $this->encrypt['ssl_capath'];
+			}
+			if (! empty($this->encrypt['ssl_cipher']))
+			{
+				$ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			}
 
 			if (! empty($ssl))
 			{

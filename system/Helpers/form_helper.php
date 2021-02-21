@@ -217,8 +217,11 @@ if (! function_exists('form_password'))
 	 */
 	function form_password($data = '', string $value = '', $extra = ''): string
 	{
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
-		$data['type']            = 'password';
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
+		$data['type'] = 'password';
 
 		return form_input($data, $value, $extra);
 	}
@@ -246,7 +249,10 @@ if (! function_exists('form_upload'))
 			'name' => '',
 		];
 
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
 
 		$data['type'] = 'file';
 
@@ -363,9 +369,14 @@ if (! function_exists('form_dropdown'))
 			$defaults = ['name' => $data];
 		}
 
-		is_array($selected) || $selected = [$selected]; // @phpstan-ignore-line
-
-		is_array($options) || $options = [$options]; // @phpstan-ignore-line
+		if (! is_array($selected))
+		{
+			$selected = [$selected];
+		}
+		if (! is_array($options))
+		{
+			$options = [$options];
+		}
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -483,8 +494,11 @@ if (! function_exists('form_radio'))
 	 */
 	function form_radio($data = '', string $value = '', bool $checked = false, $extra = ''): string
 	{
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
-		$data['type']            = 'radio';
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
+		$data['type'] = 'radio';
 
 		return form_checkbox($data, $value, $checked, $extra);
 	}

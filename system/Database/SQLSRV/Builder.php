@@ -130,7 +130,10 @@ class Builder extends BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (! $this->hasOperator($cond))
 		{
@@ -675,8 +678,10 @@ class Builder extends BaseBuilder
 			$key = [$key => $value];
 		}
 
-		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{

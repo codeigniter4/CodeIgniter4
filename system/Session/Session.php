@@ -687,7 +687,10 @@ class Session implements SessionInterface
 		{
 			foreach ($_SESSION['__ci_vars'] as $key => &$value)
 			{
-				is_int($value) || $flashdata[$key] = $_SESSION[$key];
+				if (! is_int($value))
+				{
+					$flashdata[$key] = $_SESSION[$key];
+				}
 			}
 		}
 
@@ -786,7 +789,10 @@ class Session implements SessionInterface
 		$keys = [];
 		foreach (array_keys($_SESSION['__ci_vars']) as $key)
 		{
-			is_int($_SESSION['__ci_vars'][$key]) || $keys[] = $key;
+			if (! is_int($_SESSION['__ci_vars'][$key]))
+			{
+				$keys[] = $key;
+			}
 		}
 
 		return $keys;
@@ -922,7 +928,10 @@ class Session implements SessionInterface
 			return;
 		}
 
-		is_array($key) || $key = [$key]; // @phpstan-ignore-line
+		if (! is_array($key))
+		{
+			$key = [$key];
+		}
 
 		foreach ($key as $k)
 		{

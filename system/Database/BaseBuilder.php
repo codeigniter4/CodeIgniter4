@@ -371,8 +371,10 @@ class BaseBuilder
 			$select = explode(',', $select);
 		}
 
-		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($select as $val)
 		{
@@ -656,7 +658,10 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (! $this->hasOperator($cond))
 		{
@@ -775,8 +780,10 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
-		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{
@@ -1036,7 +1043,10 @@ class BaseBuilder
 			// @codeCoverageIgnoreEnd
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		$ok = $key;
 
@@ -1546,7 +1556,10 @@ class BaseBuilder
 	 */
 	public function groupBy($by, bool $escape = null)
 	{
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (is_string($by))
 		{
@@ -1638,7 +1651,10 @@ class BaseBuilder
 			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if ($escape === false)
 		{
@@ -2686,7 +2702,10 @@ class BaseBuilder
 			return null;
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $v)
 		{

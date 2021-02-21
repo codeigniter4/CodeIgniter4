@@ -78,8 +78,10 @@ class RedisHandler extends BaseHandler
 
 		if (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
-			// @phpstan-ignore-next-line
-			isset($matches[3]) || $matches[3] = ''; // Just to avoid undefined index notices below
+			if (! isset($matches[3]))
+			{
+				$matches[3] = '';
+			} // Just to avoid undefined index notices below
 
 			$this->savePath = [
 				'host'     => $matches[1],
