@@ -247,7 +247,10 @@ class Table
 
 		foreach ($args as $key => $val)
 		{
-			is_array($val) || $args[$key] = ['data' => $val]; // @phpstan-ignore-line
+			if (! is_array($val))
+			{
+				$args[$key] = ['data' => $val];
+			}
 		}
 
 		return $args;

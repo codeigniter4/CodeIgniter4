@@ -388,7 +388,10 @@ class Email
 	public function __construct($config = null)
 	{
 		$this->initialize($config);
-		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		if (! isset(static::$func_overload))
+		{
+			static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		}
 	}
 
 	/**
@@ -506,7 +509,10 @@ class Email
 		}
 
 		$this->setHeader('From', $name . ' <' . $from . '>');
-		isset($returnPath) || $returnPath = $from;
+		if (! isset($returnPath))
+		{
+			$returnPath = $from;
+		}
 		$this->setHeader('Return-Path', '<' . $returnPath . '>');
 		$this->tmpArchive['returnPath'] = $returnPath;
 
@@ -912,7 +918,10 @@ class Email
 	{
 		$this->protocol = strtolower($this->protocol);
 
-		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail'; // @phpstan-ignore-line
+		if (! in_array($this->protocol, $this->protocols, true))
+		{
+			$this->protocol = 'mail';
+		}
 
 		return $this->protocol;
 	}
@@ -924,7 +933,10 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths, true) || $this->encoding = '8bit'; // @phpstan-ignore-line
+		if (! in_array($this->encoding, $this->bitDepths, true))
+		{
+			$this->encoding = '8bit';
+		}
 
 		foreach ($this->baseCharsets as $charset)
 		{
@@ -1432,7 +1444,10 @@ class Email
 
 		// $name won't be set if no attachments were appended,
 		// and therefore a boundary wouldn't be necessary
-		empty($name) || $body .= '--' . $boundary . '--';
+		if (! empty($name))
+		{
+			$body .= '--' . $boundary . '--';
+		}
 	}
 
 	/**
@@ -1658,11 +1673,14 @@ class Email
 		}
 
 		// We might already have this set for UTF-8
-		isset($chars) || $chars = static::strlen($str);
+		if (! isset($chars))
+		{
+			$chars = static::strlen($str);
+		}
 
 		$output = '=?' . $this->charset . '?Q?';
 
-		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++) // @phpstan-ignore-line
+		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
 		{
 			$chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 
@@ -2365,14 +2383,23 @@ class Email
 		// Determine which parts of our raw data needs to be printed
 		$rawData = '';
 
-		is_array($include) || $include = [$include]; // @phpstan-ignore-line
+		if (! is_array($include))
+		{
+			$include = [$include];
+		}
 
 		if (in_array('headers', $include, true))
 		{
 			$rawData = htmlspecialchars($this->headerStr) . "\n";
 		}
-		in_array('subject', $include, true) && $rawData .= htmlspecialchars($this->subject) . "\n";
-		in_array('body', $include, true) && $rawData    .= htmlspecialchars($this->finalBody);
+		if (in_array('subject', $include, true))
+		{
+			$rawData .= htmlspecialchars($this->subject) . "\n";
+		}
+		if (in_array('body', $include, true))
+		{
+			$rawData .= htmlspecialchars($this->finalBody);
+		}
 
 		return $msg . ($rawData === '' ? '' : '<pre>' . $rawData . '</pre>');
 	}
