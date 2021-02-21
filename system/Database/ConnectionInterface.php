@@ -91,7 +91,11 @@ interface ConnectionInterface
 	/**
 	 * Returns the last error encountered by this connection.
 	 *
-	 * @return array
+	 * Must return an array with keys 'code' and 'message':
+	 *
+	 *  ['code' => string|int, 'message' => string);
+	 *
+	 * @return array<string,string|int>
 	 */
 	public function error(): array;
 

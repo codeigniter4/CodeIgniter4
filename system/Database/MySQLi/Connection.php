@@ -648,9 +648,9 @@ class Connection extends BaseConnection
 	 *
 	 * Must return an array with keys 'code' and 'message':
 	 *
-	 *  return ['code' => null, 'message' => null);
+	 *  ['code' => string|int, 'message' => string);
 	 *
-	 * @return array
+	 * @return array<string,string|int>
 	 */
 	public function error(): array
 	{

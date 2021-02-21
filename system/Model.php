@@ -463,13 +463,17 @@ class Model extends BaseModel
 
 	/**
 	 * Grabs the last error(s) that occurred from the Database connection.
+	 * The return array should be in the following format:
+	 *  ['source' => 'message']
 	 * This methods works only with dbCalls
 	 *
-	 * @return array|null
+	 * @return array<string,string>
 	 */
 	protected function doErrors()
 	{
-		return $this->db->error();
+		$error = $this->db->error();
+
+		return [get_class($this->db) => $error['message']];
 	}
 
 	/**
