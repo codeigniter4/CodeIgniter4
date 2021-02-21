@@ -11,3 +11,10 @@ Recommendations
 
 * Modules that handle login and logout operations should trigger the ``login`` and ``logout`` Events when successful
 * Modules that define a "current user" should define the function ``user_id()`` to return the user's unique identifier, or ``null`` for "no current user"
+
+Modules that meet these requirements may indicate compatibility with these framework expectations by adding
+the following provision to **composer.json**::
+
+    "provide": {
+        "codeigniter4/authentication-implementation": "1.0",
+    },
