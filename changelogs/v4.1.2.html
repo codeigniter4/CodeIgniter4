@@ -360,6 +360,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookie</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance instead of an array of cookie attributes.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookies</span></code> now returns an array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances instead of array of array of attributes.</p></li>
 <li><p>To eliminate warnings from modern browsers’ consoles, empty samesite values will be defaulted to <code class="docutils literal notranslate"><span class="pre">Lax</span></code> on cookie dispatch.</p></li>
+<li><p><cite>Model::errors()</cite> and <cite>BaseModel::errors()</cite> now always returns <cite>array</cite>; there was no definition change but the docblock has been updated.</p></li>
 </ul>
 <p>Deprecations:</p>
 <ul class="simple">
@@ -387,7 +388,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 18, 2021.
+        Last updated on Feb 21, 2021.
       </span>
 
     </p>
