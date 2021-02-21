@@ -9,8 +9,14 @@
  * file that was distributed with this source code.
  */
 
+use Config\Services;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Autoload;
+use Config\Modules;
+
+// Initialize the autoloader.
+Services::autoloader()->initialize(new Autoload(), new Modules());
 
 /*
  * ---------------------------------------------------------------
