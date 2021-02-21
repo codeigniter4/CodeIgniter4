@@ -16,8 +16,12 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockCache;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
+use Config\App;
+use Config\Autoload;
+use Config\Modules;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -326,9 +330,13 @@ abstract class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$path = __DIR__ . '/create_app.php';
-		$path = realpath($path) ?: $path;
-		return require $path;
+		// Initialize the autoloader.
+		Services::autoloader()->initialize(new Autoload(), new Modules());
+
+		$app = new MockCodeIgniter(new App());
+		$app->initialize();
+
+		return $app;
 	}
 
 	/**
