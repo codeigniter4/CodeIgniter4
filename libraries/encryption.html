@@ -474,11 +474,11 @@ For AES-256, that’s 256 bits or 32 bytes (characters) long.</p>
 nor the output of a hashing function, etc. To create a proper key,
 you can use the Encryption library’s <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// $key will be assigned a 32-byte (256-bit) random key</span>
-<span class="nv">$key</span> <span class="o">=</span> <span class="nx">Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">();</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">();</span>
 
 <span class="c1">// for the SodiumHandler, you can use either:</span>
 <span class="nv">$key</span> <span class="o">=</span> <span class="nx">sodium_crypto_secretbox_keygen</span><span class="p">();</span>
-<span class="nv">$key</span> <span class="o">=</span> <span class="nx">Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="nx">SODIUM_CRYPTO_SECRETBOX_KEYBYTES</span><span class="p">);</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="nx">SODIUM_CRYPTO_SECRETBOX_KEYBYTES</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The key can be stored in <code class="docutils literal notranslate"><span class="pre">app/Config/Encryption.php</span></code>, or you can design
@@ -495,7 +495,7 @@ is hard to deal with (i.e., a copy-paste may damage it), so you may use
 <code class="docutils literal notranslate"><span class="pre">bin2hex()</span></code>, or <code class="docutils literal notranslate"><span class="pre">base64_encode</span></code> to work with the key in
 a more friendly manner. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get a hex-encoded representation of the key:</span>
-<span class="nv">$encoded</span> <span class="o">=</span> <span class="nb">bin2hex</span><span class="p">(</span><span class="nx">Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+<span class="nv">$encoded</span> <span class="o">=</span> <span class="nb">bin2hex</span><span class="p">(</span><span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
 
 <span class="c1">// Put the same value with hex2bin(),</span>
 <span class="c1">// so that it is still passed as binary to the library:</span>
@@ -594,7 +594,7 @@ Cookies, for example, can only hold 4K of information.</p>
 <p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>,
 you can create an “Encrypter” directly, or change the settings of an existing instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// create an Encryption instance</span>
-<span class="nv">$encryption</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CodeIgniter\Encryption\Encryption</span><span class="p">();</span>
+<span class="nv">$encryption</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="p">();</span>
 
 <span class="c1">// reconfigure an instance with different settings</span>
 <span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
