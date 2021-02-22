@@ -5,6 +5,8 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
 
 class RouterTest extends CIUnitTestCase
 {
@@ -81,9 +83,9 @@ class RouterTest extends CIUnitTestCase
 	{
 		$router = new Router($this->collection, $this->request);
 
-		$router->handle('0');
+		$this->expectException(PageNotFoundException::class);
 
-		$this->assertEquals('0', $router->controllerName());
+		$router->handle('0');
 	}
 
 	//--------------------------------------------------------------------
