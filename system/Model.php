@@ -474,7 +474,7 @@ class Model extends BaseModel
 		// $error is always ['code' => string|int, 'message' => string]
 		$error = $this->db->error();
 
-		if (intval($error['code']) === 0)
+		if ((int) $error['code'] === 0)
 		{
 			return [];
 		}
