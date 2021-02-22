@@ -512,10 +512,10 @@ class Router implements RouterInterface
 			$this->controller = ucfirst(array_shift($segments));
 		}
 
-		$controllerName   = $this->controllerName();
-		if (!$this->isValidSegment($controllerName))
+		$controllerName = $this->controllerName();
+		if (! $this->isValidSegment($controllerName))
 		{
-			throw new PageNotFoundException($this->controller . " is not a valid controller name");
+			throw new PageNotFoundException($this->controller . ' is not a valid controller name');
 		}
 
 		// Use the method name if it exists.
@@ -592,26 +592,25 @@ class Router implements RouterInterface
 		// numerically reindex the array, removing gaps
 		$segments = array_values($segments);
 
-
 		// if a prior directory value has been set, just return segments and get out of here
 		if (isset($this->directory))
 		{
 			return $segments;
 		}
 
-
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
-		$c                 = count($segments);
+		$c = count($segments);
 		while ($c-- > 0)
 		{
 			$segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
 			// as soon as we encounter any segment that is not PSR-4 compliant, stop searching
-			if (!$this->isValidSegment($segmentConvert)) {
+			if (! $this->isValidSegment($segmentConvert))
+			{
 				return $segments;
 			}
 
-			$test           = APPPATH . 'Controllers/' . $this->directory . $segmentConvert;
+			$test = APPPATH . 'Controllers/' . $this->directory . $segmentConvert;
 
 			// as long as each segment is *not* a controller file but does match a directory, add it to $this->directory
 			if (! is_file($test . '.php') && is_dir($test))
@@ -633,9 +632,9 @@ class Router implements RouterInterface
 	/**
 	 * Sets the sub-directory that the controller is in.
 	 *
-	 * @param string|null   $dir
-	 * @param boolean $append
-	 * @param boolean $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
+	 * @param string|null $dir
+	 * @param boolean     $append
+	 * @param boolean     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
 	 */
 	public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
 	{
@@ -647,10 +646,10 @@ class Router implements RouterInterface
 
 		if ($validate)
 		{
-			$segments = explode("/", trim($dir, "/"));
-			foreach($segments as $segment)
+			$segments = explode('/', trim($dir, '/'));
+			foreach ($segments as $segment)
 			{
-				if (!$this->isValidSegment($segment))
+				if (! $this->isValidSegment($segment))
 				{
 					return;
 				}
@@ -659,13 +658,12 @@ class Router implements RouterInterface
 
 		if ($append !== true || empty($this->directory))
 		{
-			$this->directory = trim($dir, "/") . "/";
+			$this->directory = trim($dir, '/') . '/';
 		}
 		else
 		{
-			$this->directory .= trim($dir, "/") . "/";
+			$this->directory .= trim($dir, '/') . '/';
 		}
-
 	}
 
 	/**
@@ -673,10 +671,11 @@ class Router implements RouterInterface
 	 *
 	 * regex comes from https://www.php.net/manual/en/language.variables.basics.php
 	 *
-	 * @param string $segment
-	 * @return bool
+	 * @param  string $segment
+	 * @return boolean
 	 */
-	private function isValidSegment(string $segment): bool {
+	private function isValidSegment(string $segment): bool
+	{
 		return (boolean)preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
 	}
 
