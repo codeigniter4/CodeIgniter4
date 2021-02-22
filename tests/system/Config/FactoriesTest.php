@@ -217,6 +217,14 @@ class FactoriesTest extends CIUnitTestCase
 		$this->assertNull($result);
 	}
 
+	public function testSharedRespectsInstanceOf()
+	{
+		Factories::injectMock('widgets', 'SomeWidget', new OtherWidget());
+
+		$result = Factories::widgets('SomeWidget', ['instanceOf' => stdClass::class]);
+		$this->assertInstanceOf(SomeWidget::class, $result);
+	}
+
 	public function testPrioritizesParameterOptions()
 	{
 		Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
