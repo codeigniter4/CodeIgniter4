@@ -471,7 +471,13 @@ class Model extends BaseModel
 	 */
 	protected function doErrors()
 	{
+		// $error is always ['code' => string|int, 'message' => string]
 		$error = $this->db->error();
+
+		if (intval($error['code']) === 0)
+		{
+			return [];
+		}
 
 		return [get_class($this->db) => $error['message']];
 	}
