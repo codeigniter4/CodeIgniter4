@@ -1341,14 +1341,12 @@ class BaseBuilder
 	 */
 	protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
 	{
-		$likeStatement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
-
 		if ($insensitiveSearch === true)
 		{
-			$likeStatement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
+			return "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
 		}
 
-		return $likeStatement;
+		return "{$prefix} {$column} {$not} LIKE :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------
@@ -3063,16 +3061,14 @@ class BaseBuilder
 	 */
 	protected function compileIgnore(string $statement)
 	{
-		$sql = '';
-
 		if ($this->QBIgnore &&
 			isset($this->supportedIgnoreStatements[$statement])
 		)
 		{
-			$sql = trim($this->supportedIgnoreStatements[$statement]) . ' ';
+			return trim($this->supportedIgnoreStatements[$statement]) . ' ';
 		}
 
-		return $sql;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
