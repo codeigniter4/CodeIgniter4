@@ -1754,14 +1754,12 @@ abstract class BaseModel
 	 */
 	public function __call(string $name, array $params)
 	{
-		$result = null;
-
 		if (method_exists($this->db, $name))
 		{
-			$result = $this->db->{$name}(...$params);
+			return $this->db->{$name}(...$params);
 		}
 
-		return $result;
+		return null;
 	}
 
 	// endregion
