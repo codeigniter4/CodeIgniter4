@@ -69,7 +69,7 @@ the following::
 If for any reason you would like to change the prefix programmatically
 without needing to create a new connection you can use this method::
 
-    $db->setPrefix('newprefix');
+    $db->setPrefix('newprefix_');
     $db->prefixTable('tablename'); // outputs newprefix_tablename
 
 You can get the current prefix any time with this method::
