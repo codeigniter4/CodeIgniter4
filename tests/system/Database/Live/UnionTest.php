@@ -27,7 +27,7 @@ class UnionTest extends CIDatabaseTestCase
 					->where('id >', 1)
 					->limit(2);
 			})
-			->unionOrderBy('name')
+			->orderBy('name')
 			->get()
 			->getResult();
 
