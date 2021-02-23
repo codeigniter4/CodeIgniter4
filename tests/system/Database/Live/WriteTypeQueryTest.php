@@ -152,7 +152,14 @@ class WriteTypeQueryTest extends CIDatabaseTestCase
 
 	public function testRename()
 	{
-		$sql = 'EXEC sp_rename table1 , table2 ;';
+		if ($this->db->DBDriver === 'SQLSRV')
+		{
+			$sql = 'EXEC sp_rename table1 , table2 ;';
+
+			$this->assertTrue($this->db->isWriteType($sql));
+		}
+
+		$sql = 'RENAME ...';
 
 		$this->assertTrue($this->db->isWriteType($sql));
 	}

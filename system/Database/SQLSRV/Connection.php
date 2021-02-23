@@ -568,4 +568,27 @@ class Connection extends BaseConnection
 
 		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Determines if a query is a "write" type.
+	 *
+	 * Overrides BaseConnection::isWriteType, adding additional read query types.
+	 *
+	 * @param  string $sql An SQL query string
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool
+	{
+		if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql))
+		{
+			return true;
+		}
+
+		return parent::isWriteType($sql);
+	}
+
+	// --------------------------------------------------------------------
+
 }
