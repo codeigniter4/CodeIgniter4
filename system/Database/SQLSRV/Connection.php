@@ -398,10 +398,8 @@ class Connection extends BaseConnection
 
 	/**
 	 * Returns the last error code and message.
-	 *
-	 * Must return an array with keys 'code' and 'message':
-	 *
-	 *  ['code' => string|int, 'message' => string);
+	 * Must return this format: ['code' => string|int, 'message' => string]
+	 * intval(code) === 0 means "no error".
 	 *
 	 * @return array<string,string|int>
 	 */
