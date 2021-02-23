@@ -154,6 +154,20 @@ class BaseBuilder
 	protected $QBUnionOrderBy = [];
 
 	/**
+	 * QB UNION LIMIT data
+	 *
+	 * @var integer|boolean
+	 */
+	protected $QBUnionLimit = false;
+
+	/**
+	 * QB UNION OFFSET data
+	 *
+	 * @var integer|boolean
+	 */
+	protected $QBUnionOffset = false;
+
+	/**
 	 * Ignore data that cause certain
 	 * exceptions, for example in case of
 	 * duplicate keys.
@@ -1634,6 +1648,11 @@ class BaseBuilder
 	 */
 	public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
 	{
+		if (count($this->QBUnion))
+		{
+			return $this->unionOrderBy($orderBy, $direction, $escape);
+		}
+
 		$direction = strtoupper(trim($direction));
 
 		if ($direction === 'RANDOM')
@@ -1700,6 +1719,11 @@ class BaseBuilder
 	 */
 	public function limit(?int $value = null, ?int $offset = 0)
 	{
+		if (count($this->QBUnion))
+		{
+			return $this->unionLimit($value, $offset);
+		}
+
 		if (! is_null($value))
 		{
 			$this->QBLimit = $value;
@@ -3039,14 +3063,14 @@ class BaseBuilder
 			$sql = $this->_limit($sql . "\n");
 		}
 
-		if ($this->QBUnion)
+		if (count($this->QBUnion))
 		{
 			if ($this->QBOrderBy || $this->QBLimit)
 			{
 				$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
 			}
 
-			$sql .= $this->compileUnion() . $this->compileUnionOrderBy();
+			$sql .= $this->compileUnion() . $this->compileUnionFilter();
 		}
 
 		return $sql;
@@ -3394,6 +3418,8 @@ class BaseBuilder
 			'QBDistinct'     => false,
 			'QBLimit'        => false,
 			'QBOffset'       => false,
+			'QBUnionLimit'   => false,
+			'QBUnionOffset'  => false,
 		]);
 
 		if (! empty($this->db))
@@ -3565,7 +3591,7 @@ class BaseBuilder
 
 		$all = $all ? 'ALL ' : '';
 
-		if (($builder->QBOrderBy || $builder->QBLimit || $builder->QBUnionOrderBy)
+		if (($builder->QBOrderBy || $builder->QBLimit || $builder->QBUnionOrderBy || $builder->QBUnionLimit)
 			&& strpos($sql, 'wrapper_alias UNION') === false)
 		{
 			$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
@@ -3589,15 +3615,15 @@ class BaseBuilder
 	}
 
 	/**
-	 * ORDER BY
+	 * UNION ORDER BY global
 	 *
 	 * @param string  $orderBy   Field
 	 * @param string  $direction ASC, DESC or RANDOM
 	 * @param boolean $escape    Escape
 	 *
-	 * @return static
+	 * @return $this
 	 */
-	public function unionOrderBy(string $orderBy, string $direction = '', bool $escape = null)
+	protected function unionOrderBy(string $orderBy, string $direction = '', bool $escape = null)
 	{
 		$this->QBUnionOrderBy[] = [
 			$orderBy,
@@ -3609,19 +3635,64 @@ class BaseBuilder
 	}
 
 	/**
-	 * Compile UNION ORDER BY data
+	 * UNION LIMIT global
+	 *
+	 * @param integer|null $value  LIMIT value
+	 * @param integer|null $offset OFFSET value
+	 *
+	 * @return $this
+	 */
+	protected function unionLimit(?int $value = null, ?int $offset = 0)
+	{
+		if (! is_null($value))
+		{
+			$this->QBUnionLimit = $value;
+		}
+
+		return $this->unionOffset($offset);
+	}
+
+	/**
+	 * Sets the UNION OFFSET value
+	 *
+	 * @param integer $offset OFFSET value
+	 *
+	 * @return $this
+	 */
+	protected function unionOffset(int $offset)
+	{
+		if (! empty($offset))
+		{
+			$this->QBUnionOffset = (int) $offset;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Compile UNION Filter as ORDER BY and LIMIT
 	 *
 	 * @return string
 	 */
-	protected function compileUnionOrderBy() : string
+	protected function compileUnionFilter() : string
 	{
 		$builder = $this->cleanClone();
+
 		foreach ($this->QBUnionOrderBy as $order)
 		{
 			$builder->orderBy(...$order);
 		}
 
-		return $builder->compileOrderBy();
+		$filter = $builder->compileOrderBy();
+
+		$builder->limit($this->QBUnionLimit, $this->QBUnionOffset);
+
+		if ($this->QBUnionLimit)
+		{
+			$filter = $builder->_limit($filter . "\n");
+		}
+
+		return $filter;
 	}
 
 	//--------------------------------------------------------------------

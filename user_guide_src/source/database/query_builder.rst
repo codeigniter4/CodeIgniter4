@@ -727,6 +727,9 @@ be ignored, unless you specify a numeric seed value.
 .. note:: Random ordering is not currently supported in Oracle and
     will default to ASC instead.
 
+.. note:: The orderBy() method called after the union()/unionAll() method will be applied to the final result
+
+
 ****************************
 Limiting or Counting Results
 ****************************
@@ -745,6 +748,7 @@ The second parameter lets you set a result offset.
     $builder->limit(10, 20);
     // Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)
 
+.. note:: The limit() method called after the union()/unionAll() method will be applied to the final result
 
 **$builder->countAllResults()**
 
@@ -890,24 +894,6 @@ The method adds ALL to UNION::
     // UNION ALL SELECT title, year FROM top_movies
 
 
-**$builder->unionOrderBy()**
-
-The method adds a sort for the final query result after combining queries using UNION [ALL].
-The principle is the same as for ``orderBy()``::
-
-    //Add the following line after the namespace keyword
-    use CodeIgniter\Database\BaseBuilder;
-
-    $builder = $db->table('movies');
-
-    $builder->select('title, year')
-        ->unionAll(function (BaseBuilder $builder) {
-            return $builder->select('title, year')->from('top_movies');
-        })
-        ->unionOrderBy('title', 'DESC')
-        ->get();
-
-    // SELECT title, year FROM movies UNION ALL SELECT title, year FROM top_movies ORDER BY title DESC
 
 **************
 Inserting Data

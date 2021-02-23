@@ -661,7 +661,7 @@ class Builder extends BaseBuilder
 				$sql = 'SELECT * FROM (' . $sql . ') as wrapper_alias';
 			}
 
-			$sql .= $this->compileUnion() . $this->compileUnionOrderBy();
+			$sql .= $this->compileUnion() . $this->compileUnionFilter();
 		}
 
 		return $sql;
