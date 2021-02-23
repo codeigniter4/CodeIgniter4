@@ -158,15 +158,14 @@ interface ResponseInterface
 	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the date header
 	 *
-	 * @param DateTime $date
+	 * @param DateTime $dateTime
 	 *
 	 * @return ResponseInterface
 	 */
-	public function setDate(DateTime $date);
+	public function setDate(DateTime $dateTime);
 
 	/**
 	 * Sets the Last-Modified date header.

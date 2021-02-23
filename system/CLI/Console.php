@@ -30,15 +30,14 @@ class Console
 	protected $app;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Console constructor.
 	 *
-	 * @param CodeIgniter $app
+	 * @param CodeIgniter $codeIgniter
 	 */
-	public function __construct(CodeIgniter $app)
+	public function __construct(CodeIgniter $codeIgniter)
 	{
-		$this->app = $app;
+		$this->app = $codeIgniter;
 	}
 
 	//--------------------------------------------------------------------

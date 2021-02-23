@@ -49,19 +49,18 @@ class PredisHandler extends BaseHandler
 	protected $redis;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 */
-	public function __construct(Cache $config)
+	public function __construct(Cache $cache)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = (string) $cache->prefix;
 
-		if (isset($config->redis))
+		if (isset($cache->redis))
 		{
-			$this->config = array_merge($this->config, $config->redis);
+			$this->config = array_merge($this->config, $cache->redis);
 		}
 	}
 

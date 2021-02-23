@@ -247,23 +247,22 @@ class BaseBuilder
 	];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
 	 * @param  string|array        $tableName
-	 * @param  ConnectionInterface $db
+	 * @param  ConnectionInterface $connection
 	 * @param  array               $options
 	 * @throws DatabaseException
 	 */
-	public function __construct($tableName, ConnectionInterface &$db, array $options = null)
+	public function __construct($tableName, ConnectionInterface &$connection, array $options = null)
 	{
 		if (empty($tableName))
 		{
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
-		$this->db = $db;
+		$this->db = $connection;
 
 		$this->tableName = $tableName;
 		$this->from($tableName);

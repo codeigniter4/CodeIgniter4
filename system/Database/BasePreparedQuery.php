@@ -56,15 +56,14 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	protected $db;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param BaseConnection $db
+	 * @param BaseConnection $baseConnection
 	 */
-	public function __construct(BaseConnection $db)
+	public function __construct(BaseConnection $baseConnection)
 	{
-		$this->db = &$db;
+		$this->db = &$baseConnection;
 	}
 
 	//--------------------------------------------------------------------

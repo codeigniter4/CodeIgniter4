@@ -78,19 +78,19 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param EncryptionConfig $config Configuration parameters
+	 * @param EncryptionConfig $encryptionConfig Configuration parameters
 	 *
 	 * @throws EncryptionException
 	 *
 	 * @return void
 	 */
-	public function __construct(EncryptionConfig $config = null)
+	public function __construct(EncryptionConfig $encryptionConfig = null)
 	{
-		$config = $config ?? new EncryptionConfig();
+		$encryptionConfig = $encryptionConfig ?? new EncryptionConfig();
 
-		$this->key    = $config->key;
-		$this->driver = $config->driver;
-		$this->digest = $config->digest ?? 'SHA512';
+		$this->key    = $encryptionConfig->key;
+		$this->driver = $encryptionConfig->driver;
+		$this->digest = $encryptionConfig->digest ?? 'SHA512';
 
 		// Map what we have installed
 		$this->handlers = [
@@ -110,20 +110,20 @@ class Encryption
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param EncryptionConfig $config Configuration parameters
+	 * @param EncryptionConfig $encryptionConfig Configuration parameters
 	 *
 	 * @throws EncryptionException
 	 *
 	 * @return EncrypterInterface
 	 */
-	public function initialize(EncryptionConfig $config = null)
+	public function initialize(EncryptionConfig $encryptionConfig = null)
 	{
 		// override config?
-		if ($config)
+		if ($encryptionConfig)
 		{
-			$this->key    = $config->key;
-			$this->driver = $config->driver;
-			$this->digest = $config->digest ?? 'SHA512';
+			$this->key    = $encryptionConfig->key;
+			$this->driver = $encryptionConfig->driver;
+			$this->digest = $encryptionConfig->digest ?? 'SHA512';
 		}
 
 		// Insist on a driver
@@ -147,7 +147,7 @@ class Encryption
 		$this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
 
 		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
-		$this->encrypter = new $handlerName($config);
+		$this->encrypter = new $handlerName($encryptionConfig);
 
 		return $this->encrypter;
 	}

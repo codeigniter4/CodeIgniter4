@@ -101,22 +101,21 @@ abstract class BaseHandler implements SessionHandlerInterface
 	protected $ipAddress;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
+	 * @param AppConfig $appConfig
 	 * @param string    $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(AppConfig $appConfig, string $ipAddress)
 	{
-		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath   = $config->cookiePath;
-		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieName   = $config->sessionCookieName;
-		$this->matchIP      = $config->sessionMatchIP;
-		$this->savePath     = $config->sessionSavePath;
+		$this->cookiePrefix = $appConfig->cookiePrefix;
+		$this->cookieDomain = $appConfig->cookieDomain;
+		$this->cookiePath   = $appConfig->cookiePath;
+		$this->cookieSecure = $appConfig->cookieSecure;
+		$this->cookieName   = $appConfig->sessionCookieName;
+		$this->matchIP      = $appConfig->sessionMatchIP;
+		$this->savePath     = $appConfig->sessionSavePath;
 		$this->ipAddress    = $ipAddress;
 	}
 

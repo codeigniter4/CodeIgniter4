@@ -63,17 +63,16 @@ class Pager implements PagerInterface
 	protected $only = [];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param PagerConfig       $config
-	 * @param RendererInterface $view
+	 * @param PagerConfig       $pagerConfig
+	 * @param RendererInterface $renderer
 	 */
-	public function __construct(PagerConfig $config, RendererInterface $view)
+	public function __construct(PagerConfig $pagerConfig, RendererInterface $renderer)
 	{
-		$this->config = $config;
-		$this->view   = $view;
+		$this->config = $pagerConfig;
+		$this->view   = $renderer;
 	}
 
 	//--------------------------------------------------------------------

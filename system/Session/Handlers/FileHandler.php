@@ -63,21 +63,20 @@ class FileHandler extends BaseHandler
 	protected $sessionIDRegex = '';
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
+	 * @param AppConfig $appConfig
 	 * @param string    $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(AppConfig $appConfig, string $ipAddress)
 	{
-		parent::__construct($config, $ipAddress);
+		parent::__construct($appConfig, $ipAddress);
 
-		if (! empty($config->sessionSavePath))
+		if (! empty($appConfig->sessionSavePath))
 		{
-			$this->savePath = rtrim($config->sessionSavePath, '/\\');
-			ini_set('session.save_path', $config->sessionSavePath);
+			$this->savePath = rtrim($appConfig->sessionSavePath, '/\\');
+			ini_set('session.save_path', $appConfig->sessionSavePath);
 		}
 		else
 		{
@@ -91,7 +90,7 @@ class FileHandler extends BaseHandler
 			$this->savePath = $sessionPath;
 		}
 
-		$this->matchIP = $config->sessionMatchIP;
+		$this->matchIP = $appConfig->sessionMatchIP;
 
 		$this->configureSessionIDRegex();
 	}

@@ -85,15 +85,14 @@ class Query implements QueryInterface
 	public $db;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * BaseQuery constructor.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface $connection
 	 */
-	public function __construct(ConnectionInterface &$db)
+	public function __construct(ConnectionInterface &$connection)
 	{
-		$this->db = $db;
+		$this->db = $connection;
 	}
 
 	//--------------------------------------------------------------------

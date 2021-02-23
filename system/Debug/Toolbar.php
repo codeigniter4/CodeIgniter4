@@ -47,17 +47,16 @@ class Toolbar
 	protected $collectors = [];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param ToolbarConfig $config
+	 * @param ToolbarConfig $toolbarConfig
 	 */
-	public function __construct(ToolbarConfig $config)
+	public function __construct(ToolbarConfig $toolbarConfig)
 	{
-		$this->config = $config;
+		$this->config = $toolbarConfig;
 
-		foreach ($config->collectors as $collector)
+		foreach ($toolbarConfig->collectors as $collector)
 		{
 			if (! class_exists($collector))
 			{

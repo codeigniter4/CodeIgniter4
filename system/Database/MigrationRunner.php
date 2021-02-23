@@ -127,23 +127,23 @@ class MigrationRunner
 	 * - existing connection instance
 	 * - array of database configuration values
 	 *
-	 * @param MigrationsConfig                      $config
+	 * @param MigrationsConfig                      $migrationsConfig
 	 * @param ConnectionInterface|array|string|null $db
 	 *
 	 * @throws ConfigException
 	 */
-	public function __construct(MigrationsConfig $config, $db = null)
+	public function __construct(MigrationsConfig $migrationsConfig, $db = null)
 	{
-		$this->enabled = $config->enabled ?? false;
-		$this->table   = $config->table ?? 'migrations';
+		$this->enabled = $migrationsConfig->enabled ?? false;
+		$this->table   = $migrationsConfig->table ?? 'migrations';
 
 		// Default name space is the app namespace
 		$this->namespace = APP_NAMESPACE;
 
 		// get default database group
-		$config      = config('Database');
-		$this->group = $config->defaultGroup;
-		unset($config);
+		$migrationsConfig = config('Database');
+		$this->group      = $migrationsConfig->defaultGroup;
+		unset($migrationsConfig);
 
 		// If no db connection passed in, use
 		// default database group.

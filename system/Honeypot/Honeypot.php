@@ -29,16 +29,15 @@ class Honeypot
 	protected $config;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param  HoneypotConfig $config
+	 * @param  HoneypotConfig $honeypotConfig
 	 * @throws HoneypotException
 	 */
-	public function __construct(HoneypotConfig $config)
+	public function __construct(HoneypotConfig $honeypotConfig)
 	{
-		$this->config = $config;
+		$this->config = $honeypotConfig;
 
 		if (! $this->config->hidden)
 		{

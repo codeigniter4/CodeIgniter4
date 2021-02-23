@@ -163,37 +163,37 @@ class Session implements SessionInterface
 	 *
 	 * Extract configuration settings and save them here.
 	 *
-	 * @param SessionHandlerInterface $driver
-	 * @param App                     $config
+	 * @param SessionHandlerInterface $sessionHandler
+	 * @param App                     $app
 	 */
-	public function __construct(SessionHandlerInterface $driver, App $config)
+	public function __construct(SessionHandlerInterface $sessionHandler, App $app)
 	{
-		$this->driver = $driver;
+		$this->driver = $sessionHandler;
 
-		$this->sessionDriverName        = $config->sessionDriver;
-		$this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
-		$this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;
-		$this->sessionSavePath          = $config->sessionSavePath;
-		$this->sessionMatchIP           = $config->sessionMatchIP ?? $this->sessionMatchIP;
-		$this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
-		$this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
+		$this->sessionDriverName        = $app->sessionDriver;
+		$this->sessionCookieName        = $app->sessionCookieName ?? $this->sessionCookieName;
+		$this->sessionExpiration        = $app->sessionExpiration ?? $this->sessionExpiration;
+		$this->sessionSavePath          = $app->sessionSavePath;
+		$this->sessionMatchIP           = $app->sessionMatchIP ?? $this->sessionMatchIP;
+		$this->sessionTimeToUpdate      = $app->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
+		$this->sessionRegenerateDestroy = $app->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
 
 		//---------------------------------------------------------------------
 		// DEPRECATED COOKIE MANAGEMENT
 		//---------------------------------------------------------------------
-		$this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
-		$this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
-		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
-		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+		$this->cookieDomain   = $app->cookieDomain ?? $this->cookieDomain;
+		$this->cookiePath     = $app->cookiePath ?? $this->cookiePath;
+		$this->cookieSecure   = $app->cookieSecure ?? $this->cookieSecure;
+		$this->cookieSameSite = $app->cookieSameSite ?? $this->cookieSameSite;
 
 		$this->cookie = Cookie::create($this->sessionCookieName, '', [
 			'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
-			'raw'      => $config->cookieRaw ?? false,
-			'domain'   => $config->cookieDomain ?? '',
-			'path'     => $config->cookiePath ?? '/',
-			'secure'   => $config->cookieSecure ?? false,
+			'raw'      => $app->cookieRaw ?? false,
+			'domain'   => $app->cookieDomain ?? '',
+			'path'     => $app->cookiePath ?? '/',
+			'secure'   => $app->cookieSecure ?? false,
 			'httponly' => true, // for security
-			'samesite' => $config->cookieSameSite ?? Cookie::SAMESITE_LAX,
+			'samesite' => $app->cookieSameSite ?? Cookie::SAMESITE_LAX,
 		]);
 
 		helper('array');

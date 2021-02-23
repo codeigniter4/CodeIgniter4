@@ -198,17 +198,16 @@ class RouteCollection implements RouteCollectionInterface
 	protected $moduleConfig;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param FileLocator $locator
-	 * @param Modules     $moduleConfig
+	 * @param FileLocator $fileLocator
+	 * @param Modules     $modules
 	 */
-	public function __construct(FileLocator $locator, Modules $moduleConfig)
+	public function __construct(FileLocator $fileLocator, Modules $modules)
 	{
-		$this->fileLocator  = $locator;
-		$this->moduleConfig = $moduleConfig;
+		$this->fileLocator  = $fileLocator;
+		$this->moduleConfig = $modules;
 	}
 
 	//--------------------------------------------------------------------

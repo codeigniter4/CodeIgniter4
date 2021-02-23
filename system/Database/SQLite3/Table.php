@@ -76,12 +76,12 @@ class Table
 	/**
 	 * Table constructor.
 	 *
-	 * @param Connection $db
+	 * @param Connection $connection
 	 * @param Forge      $forge
 	 */
-	public function __construct(Connection $db, Forge $forge)
+	public function __construct(Connection $connection, Forge $forge)
 	{
-		$this->db    = $db;
+		$this->db    = $connection;
 		$this->forge = $forge;
 	}
 

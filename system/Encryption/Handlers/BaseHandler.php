@@ -30,14 +30,14 @@ abstract class BaseHandler implements EncrypterInterface
 	/**
 	 * Constructor
 	 *
-	 * @param Encryption|null $config
+	 * @param Encryption|null $encryption
 	 */
-	public function __construct(Encryption $config = null)
+	public function __construct(Encryption $encryption = null)
 	{
-		$config = $config ?? config('Encryption');
+		$encryption = $encryption ?? config('Encryption');
 
 		// make the parameters conveniently accessible
-		foreach (get_object_vars($config) as $key => $value)
+		foreach (get_object_vars($encryption) as $key => $value)
 		{
 			if (property_exists($this, $key))
 			{

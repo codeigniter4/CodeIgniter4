@@ -91,44 +91,43 @@ class Services extends BaseService
 	 * The cache class provides a simple way to store and retrieve
 	 * complex data for later.
 	 *
-	 * @param Cache|null $config
+	 * @param Cache|null $cache
 	 * @param boolean    $getShared
 	 *
 	 * @return CacheInterface
 	 */
-	public static function cache(Cache $config = null, bool $getShared = true)
+	public static function cache(Cache $cache = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('cache', $config);
+			return static::getSharedInstance('cache', $cache);
 		}
 
-		$config = $config ?? new Cache();
+		$cache = $cache ?? new Cache();
 
-		return CacheFactory::getHandler($config);
+		return CacheFactory::getHandler($cache);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return CLIRequest
 	 */
-	public static function clirequest(App $config = null, bool $getShared = true)
+	public static function clirequest(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('clirequest', $config);
+			return static::getSharedInstance('clirequest', $app);
 		}
 
-		$config = $config ?? config('App');
+		$app = $app ?? config('App');
 
-		return new CLIRequest($config);
+		return new CLIRequest($app);
 	}
 
 	//--------------------------------------------------------------------
@@ -156,23 +155,23 @@ class Services extends BaseService
 	 *
 	 * @param array                  $options
 	 * @param ResponseInterface|null $response
-	 * @param App|null               $config
+	 * @param App|null               $app
 	 * @param boolean                $getShared
 	 *
 	 * @return CURLRequest
 	 */
-	public static function curlrequest(array $options = [], ResponseInterface $response = null, App $config = null, bool $getShared = true)
+	public static function curlrequest(array $options = [], ResponseInterface $response = null, App $app = null, bool $getShared = true)
 	{
 		if ($getShared === true)
 		{
-			return static::getSharedInstance('curlrequest', $options, $response, $config);
+			return static::getSharedInstance('curlrequest', $options, $response, $app);
 		}
 
-		$config   = $config ?? config('App');
-		$response = $response ?? new Response($config);
+		$app      = $app ?? config('App');
+		$response = $response ?? new Response($app);
 
 		return new CURLRequest(
-			$config,
+			$app,
 			new URI($options['base_uri'] ?? null),
 			$response,
 			$options
@@ -207,26 +206,25 @@ class Services extends BaseService
 	/**
 	 * The Encryption class provides two-way encryption.
 	 *
-	 * @param EncryptionConfig|null $config
+	 * @param EncryptionConfig|null $encryptionConfig
 	 * @param boolean               $getShared
 	 *
 	 * @return EncrypterInterface Encryption handler
 	 */
-	public static function encrypter(EncryptionConfig $config = null, $getShared = false)
+	public static function encrypter(EncryptionConfig $encryptionConfig = null, $getShared = false)
 	{
 		if ($getShared === true)
 		{
-			return static::getSharedInstance('encrypter', $config);
+			return static::getSharedInstance('encrypter', $encryptionConfig);
 		}
 
-		$config     = $config ?? config('Encryption');
-		$encryption = new Encryption($config);
+		$encryptionConfig = $encryptionConfig ?? config('Encryption');
+		$encryption       = new Encryption($encryptionConfig);
 
-		return $encryption->initialize($config);
+		return $encryption->initialize($encryptionConfig);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Exceptions class holds the methods that handle:
 	 *
@@ -234,126 +232,122 @@ class Services extends BaseService
 	 *  - set_error_handler
 	 *  - register_shutdown_function
 	 *
-	 * @param ExceptionsConfig|null $config
-	 * @param IncomingRequest|null  $request
+	 * @param ExceptionsConfig|null $exceptionsConfig
+	 * @param IncomingRequest|null  $incomingRequest
 	 * @param Response|null         $response
 	 * @param boolean               $getShared
 	 *
 	 * @return Exceptions
 	 */
 	public static function exceptions(
-		ExceptionsConfig $config = null,
-		IncomingRequest $request = null,
+		ExceptionsConfig $exceptionsConfig = null,
+		IncomingRequest $incomingRequest = null,
 		Response $response = null,
 		bool $getShared = true
 	)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('exceptions', $config, $request, $response);
+			return static::getSharedInstance('exceptions', $exceptionsConfig, $incomingRequest, $response);
 		}
 
-		$config   = $config ?? config('Exceptions');
-		$request  = $request ?? static::request();
-		$response = $response ?? static::response();
+		$exceptionsConfig = $exceptionsConfig ?? config('Exceptions');
+		$incomingRequest  = $incomingRequest ?? static::request();
+		$response         = $response ?? static::response();
 
-		return new Exceptions($config, $request, $response);
+		return new Exceptions($exceptionsConfig, $incomingRequest, $response);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Filters allow you to run tasks before and/or after a controller
 	 * is executed. During before filters, the request can be modified,
 	 * and actions taken based on the request, while after filters can
 	 * act on or modify the response itself before it is sent to the client.
 	 *
-	 * @param FiltersConfig|null $config
+	 * @param FiltersConfig|null $filtersConfig
 	 * @param boolean            $getShared
 	 *
 	 * @return Filters
 	 */
-	public static function filters(FiltersConfig $config = null, bool $getShared = true)
+	public static function filters(FiltersConfig $filtersConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('filters', $config);
+			return static::getSharedInstance('filters', $filtersConfig);
 		}
 
-		$config = $config ?? config('Filters');
+		$filtersConfig = $filtersConfig ?? config('Filters');
 
-		return new Filters($config, static::request(), static::response());
+		return new Filters($filtersConfig, static::request(), static::response());
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Format class is a convenient place to create Formatters.
 	 *
-	 * @param FormatConfig|null $config
+	 * @param FormatConfig|null $formatConfig
 	 * @param boolean           $getShared
 	 *
 	 * @return Format
 	 */
-	public static function format(FormatConfig $config = null, bool $getShared = true)
+	public static function format(FormatConfig $formatConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('format', $config);
+			return static::getSharedInstance('format', $formatConfig);
 		}
 
-		$config = $config ?? config('Format');
+		$formatConfig = $formatConfig ?? config('Format');
 
-		return new Format($config);
+		return new Format($formatConfig);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Honeypot provides a secret input on forms that bots should NOT
 	 * fill in, providing an additional safeguard when accepting user input.
 	 *
-	 * @param HoneypotConfig|null $config
+	 * @param HoneypotConfig|null $honeypotConfig
 	 * @param boolean             $getShared
 	 *
 	 * @return Honeypot
 	 */
-	public static function honeypot(HoneypotConfig $config = null, bool $getShared = true)
+	public static function honeypot(HoneypotConfig $honeypotConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('honeypot', $config);
+			return static::getSharedInstance('honeypot', $honeypotConfig);
 		}
 
-		$config = $config ?? config('Honeypot');
+		$honeypotConfig = $honeypotConfig ?? config('Honeypot');
 
-		return new Honeypot($config);
+		return new Honeypot($honeypotConfig);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Acts as a factory for ImageHandler classes and returns an instance
 	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
 	 *
 	 * @param string|null $handler
-	 * @param Images|null $config
+	 * @param Images|null $images
 	 * @param boolean     $getShared
 	 *
 	 * @return BaseHandler
 	 */
-	public static function image(string $handler = null, Images $config = null, bool $getShared = true)
+	public static function image(string $handler = null, Images $images = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('image', $handler, $config);
+			return static::getSharedInstance('image', $handler, $images);
 		}
 
-		$config  = $config ?? config('Images');
-		$handler = $handler ?: $config->defaultHandler;
-		$class   = $config->handlers[$handler];
+		$images  = $images ?? config('Images');
+		$handler = $handler ?: $images->defaultHandler;
+		$class   = $images->handlers[$handler];
 
-		return new $class($config);
+		return new $class($images);
 	}
 
 	//--------------------------------------------------------------------
@@ -421,26 +415,25 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Return the appropriate Migration runner.
 	 *
-	 * @param Migrations|null          $config
-	 * @param ConnectionInterface|null $db
+	 * @param Migrations|null          $migrations
+	 * @param ConnectionInterface|null $connection
 	 * @param boolean                  $getShared
 	 *
 	 * @return MigrationRunner
 	 */
-	public static function migrations(Migrations $config = null, ConnectionInterface $db = null, bool $getShared = true)
+	public static function migrations(Migrations $migrations = null, ConnectionInterface $connection = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('migrations', $config, $db);
+			return static::getSharedInstance('migrations', $migrations, $connection);
 		}
 
-		$config = $config ?? config('Migrations');
+		$migrations = $migrations ?? config('Migrations');
 
-		return new MigrationRunner($config, $db);
+		return new MigrationRunner($migrations, $connection);
 	}
 
 	//--------------------------------------------------------------------
@@ -468,100 +461,96 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Return the appropriate pagination handler.
 	 *
-	 * @param PagerConfig|null       $config
-	 * @param RendererInterface|null $view
+	 * @param PagerConfig|null       $pagerConfig
+	 * @param RendererInterface|null $renderer
 	 * @param boolean                $getShared
 	 *
 	 * @return Pager
 	 */
-	public static function pager(PagerConfig $config = null, RendererInterface $view = null, bool $getShared = true)
+	public static function pager(PagerConfig $pagerConfig = null, RendererInterface $renderer = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('pager', $config, $view);
+			return static::getSharedInstance('pager', $pagerConfig, $renderer);
 		}
 
-		$config = $config ?? config('Pager');
-		$view   = $view ?? static::renderer();
+		$pagerConfig = $pagerConfig ?? config('Pager');
+		$renderer    = $renderer ?? static::renderer();
 
-		return new Pager($config, $view);
+		return new Pager($pagerConfig, $renderer);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Parser is a simple template parser.
 	 *
 	 * @param string|null     $viewPath
-	 * @param ViewConfig|null $config
+	 * @param ViewConfig|null $viewConfig
 	 * @param boolean         $getShared
 	 *
 	 * @return Parser
 	 */
-	public static function parser(string $viewPath = null, ViewConfig $config = null, bool $getShared = true)
+	public static function parser(string $viewPath = null, ViewConfig $viewConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('parser', $viewPath, $config);
+			return static::getSharedInstance('parser', $viewPath, $viewConfig);
 		}
 
-		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
-		$config   = $config ?? config('View');
+		$viewPath   = $viewPath ?: config('Paths')->viewDirectory;
+		$viewConfig = $viewConfig ?? config('View');
 
-		return new Parser($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
+		return new Parser($viewConfig, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Renderer class is the class that actually displays a file to the user.
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 *
 	 * @param string|null     $viewPath
-	 * @param ViewConfig|null $config
+	 * @param ViewConfig|null $viewConfig
 	 * @param boolean         $getShared
 	 *
 	 * @return View
 	 */
-	public static function renderer(string $viewPath = null, ViewConfig $config = null, bool $getShared = true)
+	public static function renderer(string $viewPath = null, ViewConfig $viewConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('renderer', $viewPath, $config);
+			return static::getSharedInstance('renderer', $viewPath, $viewConfig);
 		}
 
-		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
-		$config   = $config ?? config('View');
+		$viewPath   = $viewPath ?: config('Paths')->viewDirectory;
+		$viewConfig = $viewConfig ?? config('View');
 
-		return new View($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
+		return new View($viewConfig, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Request class models an HTTP request.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return IncomingRequest
 	 */
-	public static function request(App $config = null, bool $getShared = true)
+	public static function request(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('request', $config);
+			return static::getSharedInstance('request', $app);
 		}
 
-		$config = $config ?? config('App');
+		$app = $app ?? config('App');
 
 		return new IncomingRequest(
-			$config,
+			$app,
 			static::uri(),
 			'php://input',
 			new UserAgent()
@@ -569,46 +558,44 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Response class models an HTTP response.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return Response
 	 */
-	public static function response(App $config = null, bool $getShared = true)
+	public static function response(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('response', $config);
+			return static::getSharedInstance('response', $app);
 		}
 
-		$config = $config ?? config('App');
+		$app = $app ?? config('App');
 
-		return new Response($config);
+		return new Response($app);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Redirect class provides nice way of working with redirects.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return RedirectResponse
 	 */
-	public static function redirectresponse(App $config = null, bool $getShared = true)
+	public static function redirectresponse(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('redirectresponse', $config);
+			return static::getSharedInstance('redirectresponse', $app);
 		}
 
-		$config   = $config ?? config('App');
-		$response = new RedirectResponse($config);
+		$app      = $app ?? config('App');
+		$response = new RedirectResponse($app);
 		$response->setProtocolVersion(static::request()->getProtocolVersion());
 
 		return $response;
@@ -635,78 +622,75 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Router class uses a RouteCollection's array of routes, and determines
 	 * the correct Controller and Method to execute.
 	 *
-	 * @param RouteCollectionInterface|null $routes
+	 * @param RouteCollectionInterface|null $routeCollection
 	 * @param Request|null                  $request
 	 * @param boolean                       $getShared
 	 *
 	 * @return Router
 	 */
-	public static function router(RouteCollectionInterface $routes = null, Request $request = null, bool $getShared = true)
+	public static function router(RouteCollectionInterface $routeCollection = null, Request $request = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('router', $routes, $request);
+			return static::getSharedInstance('router', $routeCollection, $request);
 		}
 
-		$routes  = $routes ?? static::routes();
-		$request = $request ?? static::request();
+		$routeCollection = $routeCollection ?? static::routes();
+		$request         = $request ?? static::request();
 
-		return new Router($routes, $request);
+		return new Router($routeCollection, $request);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return Security
 	 */
-	public static function security(App $config = null, bool $getShared = true)
+	public static function security(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('security', $config);
+			return static::getSharedInstance('security', $app);
 		}
 
-		$config = $config ?? config('App');
+		$app = $app ?? config('App');
 
-		return new Security($config);
+		return new Security($app);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Return the session manager.
 	 *
-	 * @param App|null $config
+	 * @param App|null $app
 	 * @param boolean  $getShared
 	 *
 	 * @return Session
 	 */
-	public static function session(App $config = null, bool $getShared = true)
+	public static function session(App $app = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('session', $config);
+			return static::getSharedInstance('session', $app);
 		}
 
-		$config = $config ?? config('App');
+		$app    = $app ?? config('App');
 		$logger = static::logger();
 
-		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config, static::request()->getIPAddress());
+		$driverName = $app->sessionDriver;
+		$driver     = new $driverName($app, static::request()->getIPAddress());
 		$driver->setLogger($logger);
 
-		$session = new Session($driver, $config);
+		$session = new Session($driver, $app);
 		$session->setLogger($logger);
 
 		if (session_status() === PHP_SESSION_NONE)
@@ -758,25 +742,24 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Return the debug toolbar.
 	 *
-	 * @param ToolbarConfig|null $config
+	 * @param ToolbarConfig|null $toolbarConfig
 	 * @param boolean            $getShared
 	 *
 	 * @return Toolbar
 	 */
-	public static function toolbar(ToolbarConfig $config = null, bool $getShared = true)
+	public static function toolbar(ToolbarConfig $toolbarConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('toolbar', $config);
+			return static::getSharedInstance('toolbar', $toolbarConfig);
 		}
 
-		$config = $config ?? config('Toolbar');
+		$toolbarConfig = $toolbarConfig ?? config('Toolbar');
 
-		return new Toolbar($config);
+		return new Toolbar($toolbarConfig);
 	}
 
 	//--------------------------------------------------------------------
@@ -800,25 +783,24 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * The Validation class provides tools for validating input data.
 	 *
-	 * @param ValidationConfig|null $config
+	 * @param ValidationConfig|null $validationConfig
 	 * @param boolean               $getShared
 	 *
 	 * @return Validation
 	 */
-	public static function validation(ValidationConfig $config = null, bool $getShared = true)
+	public static function validation(ValidationConfig $validationConfig = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('validation', $config);
+			return static::getSharedInstance('validation', $validationConfig);
 		}
 
-		$config = $config ?? config('Validation');
+		$validationConfig = $validationConfig ?? config('Validation');
 
-		return new Validation($config, static::renderer());
+		return new Validation($validationConfig, static::renderer());
 	}
 
 	//--------------------------------------------------------------------

@@ -84,20 +84,19 @@ class Validation implements ValidationInterface
 	protected $view;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Validation constructor.
 	 *
 	 * @param ValidationConfig  $config
-	 * @param RendererInterface $view
+	 * @param RendererInterface $renderer
 	 */
-	public function __construct($config, RendererInterface $view)
+	public function __construct($config, RendererInterface $renderer)
 	{
 		$this->ruleSetFiles = $config->ruleSets;
 
 		$this->config = $config;
 
-		$this->view = $view;
+		$this->view = $renderer;
 	}
 
 	//--------------------------------------------------------------------

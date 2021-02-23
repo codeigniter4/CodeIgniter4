@@ -29,11 +29,11 @@ class Format
 	/**
 	 * Constructor.
 	 *
-	 * @param FormatConfig $config
+	 * @param FormatConfig $formatConfig
 	 */
-	public function __construct(FormatConfig $config)
+	public function __construct(FormatConfig $formatConfig)
 	{
-		$this->config = $config;
+		$this->config = $formatConfig;
 	}
 
 	/**

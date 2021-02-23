@@ -49,19 +49,18 @@ class MemcachedHandler extends BaseHandler
 	];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 */
-	public function __construct(Cache $config)
+	public function __construct(Cache $cache)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = (string) $cache->prefix;
 
-		if (! empty($config))
+		if (! empty($cache))
 		{
-			$this->config = array_merge($this->config, $config->memcached);
+			$this->config = array_merge($this->config, $cache->memcached);
 		}
 	}
 

@@ -326,21 +326,21 @@ trait FeatureTestTrait
 	/**
 	 * Setup the custom request's headers
 	 *
-	 * @param IncomingRequest $request
+	 * @param IncomingRequest $incomingRequest
 	 *
 	 * @return IncomingRequest
 	 */
-	protected function setupHeaders(IncomingRequest $request)
+	protected function setupHeaders(IncomingRequest $incomingRequest)
 	{
 		if (! empty($this->headers))
 		{
 			foreach ($this->headers as $name => $value)
 			{
-				$request->setHeader($name, $value);
+				$incomingRequest->setHeader($name, $value);
 			}
 		}
 
-		return $request;
+		return $incomingRequest;
 	}
 
 	/**

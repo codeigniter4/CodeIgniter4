@@ -139,16 +139,15 @@ class CodeIgniter
 	protected $useSafeOutput = false;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param App $config
+	 * @param App $app
 	 */
-	public function __construct(App $config)
+	public function __construct(App $app)
 	{
 		$this->startTime = microtime(true);
-		$this->config    = $config;
+		$this->config    = $app;
 	}
 
 	//--------------------------------------------------------------------
@@ -284,7 +283,6 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Launch the application!
 	 *
@@ -293,14 +291,14 @@ class CodeIgniter
 	 * tries to route the response, loads the controller and generally
 	 * makes all of the pieces work together.
 	 *
-	 * @param RouteCollectionInterface|null $routes
+	 * @param RouteCollectionInterface|null $routeCollection
 	 * @param boolean                       $returnResponse
 	 *
 	 * @return boolean|RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
-	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
+	public function run(RouteCollectionInterface $routeCollection = null, bool $returnResponse = false)
 	{
 		$this->startBenchmark();
 
@@ -330,7 +328,7 @@ class CodeIgniter
 
 		try
 		{
-			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
+			return $this->handleRequest($routeCollection, $cacheConfig, $returnResponse);
 		}
 		catch (RedirectException $e)
 		{
@@ -369,20 +367,19 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Handles the main request logic and fires the controller.
 	 *
-	 * @param RouteCollectionInterface|null $routes
-	 * @param Cache                         $cacheConfig
+	 * @param RouteCollectionInterface|null $routeCollection
+	 * @param Cache                         $cache
 	 * @param boolean                       $returnResponse
 	 *
 	 * @return RequestInterface|ResponseInterface|mixed
 	 * @throws RedirectException
 	 */
-	protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(?RouteCollectionInterface $routeCollection, Cache $cache, bool $returnResponse = false)
 	{
-		$routeFilter = $this->tryToRouteIt($routes);
+		$routeFilter = $this->tryToRouteIt($routeCollection);
 
 		// Run "before" filters
 		$filters = Services::filters();
@@ -440,7 +437,7 @@ class CodeIgniter
 		// If $returned is a string, then the controller output something,
 		// probably a view, instead of echoing it directly. Send it along
 		// so it can be used with the output.
-		$this->gatherOutput($cacheConfig, $returned);
+		$this->gatherOutput($cache, $returned);
 
 		// Never run filters when running through Spark cli
 		if (! defined('SPARKED'))
@@ -643,19 +640,18 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if a response has been cached for the given URI.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 *
 	 * @throws Exception
 	 *
 	 * @return boolean|ResponseInterface
 	 */
-	public function displayCache(Cache $config)
+	public function displayCache(Cache $cache)
 	{
-		if ($cachedResponse = cache()->get($this->generateCacheName($config)))
+		if ($cachedResponse = cache()->get($this->generateCacheName($cache)))
 		{
 			$cachedResponse = unserialize($cachedResponse);
 			if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
@@ -702,16 +698,15 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Caches the full response from the current request. Used for
 	 * full-page caching for very high performance.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 *
 	 * @return mixed
 	 */
-	public function cachePage(Cache $config)
+	public function cachePage(Cache $cache)
 	{
 		$headers = [];
 		foreach ($this->response->headers() as $header)
@@ -719,7 +714,7 @@ class CodeIgniter
 			$headers[$header->getName()] = $header->getValueLine();
 		}
 
-		return cache()->save($this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL);
+		return cache()->save($this->generateCacheName($cache), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL);
 	}
 
 	//--------------------------------------------------------------------
@@ -738,15 +733,14 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Generates the cache name to use for our full-page caching.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 *
 	 * @return string
 	 */
-	protected function generateCacheName(Cache $config): string
+	protected function generateCacheName(Cache $cache): string
 	{
 		if ($this->request instanceof CLIRequest)
 		{
@@ -755,7 +749,7 @@ class CodeIgniter
 
 		$uri = $this->request->getUri();
 
-		if ($config->cacheQueryString)
+		if ($cache->cacheQueryString)
 		{
 			$name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
 		}
@@ -784,27 +778,26 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Try to Route It - As it sounds like, works with the router to
 	 * match a route against the current URI. If the route is a
 	 * "redirect route", will also handle the redirect.
 	 *
-	 * @param RouteCollectionInterface|null $routes An collection interface to use in place
+	 * @param RouteCollectionInterface|null $routeCollection An collection interface to use in place
 	 *                                         of the config file.
 	 *
 	 * @return string|null
 	 * @throws RedirectException
 	 */
-	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
+	protected function tryToRouteIt(RouteCollectionInterface $routeCollection = null)
 	{
-		if ($routes === null)
+		if ($routeCollection === null)
 		{
 			require APPPATH . 'Config/Routes.php';
 		}
 
 		// $routes is defined in Config/Routes.php
-		$this->router = Services::router($routes, $this->request);
+		$this->router = Services::router($routeCollection, $this->request);
 
 		$path = $this->determinePath();
 
@@ -942,21 +935,20 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Displays a 404 Page Not Found error. If set, will try to
 	 * call the 404Override controller/method that was set in routing config.
 	 *
-	 * @param PageNotFoundException $e
+	 * @param PageNotFoundException $pageNotFoundException
 	 */
-	protected function display404errors(PageNotFoundException $e)
+	protected function display404errors(PageNotFoundException $pageNotFoundException)
 	{
 		// Is there a 404 Override available?
 		if ($override = $this->router->get404Override())
 		{
 			if ($override instanceof Closure)
 			{
-				echo $override($e->getMessage());
+				echo $override($pageNotFoundException->getMessage());
 			}
 			elseif (is_array($override))
 			{
@@ -980,7 +972,7 @@ class CodeIgniter
 		}
 
 		// Display 404 Errors
-		$this->response->setStatusCode($e->getCode());
+		$this->response->setStatusCode($pageNotFoundException->getCode());
 
 		if (ENVIRONMENT !== 'testing')
 		{
@@ -1000,19 +992,18 @@ class CodeIgniter
 			}
 		}
 
-		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
+		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $pageNotFoundException->getMessage() : '');
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 *
-	 * @param Cache|null $cacheConfig
+	 * @param Cache|null $cache
 	 * @param mixed|null $returned
 	 */
-	protected function gatherOutput(Cache $cacheConfig = null, $returned = null)
+	protected function gatherOutput(Cache $cache = null, $returned = null)
 	{
 		$this->output = ob_get_contents();
 		// If buffering is not null.
@@ -1048,7 +1039,7 @@ class CodeIgniter
 		// so that we can have live speed updates along the way.
 		if (static::$cacheTTL > 0)
 		{
-			$this->cachePage($cacheConfig);
+			$this->cachePage($cache);
 		}
 
 		$this->output = $this->displayPerformanceMetrics($this->output);

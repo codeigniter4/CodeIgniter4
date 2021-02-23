@@ -173,19 +173,18 @@ trait ResponseTrait
 	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the date header
 	 *
-	 * @param DateTime $date
+	 * @param DateTime $dateTime
 	 *
 	 * @return Response
 	 */
-	public function setDate(DateTime $date)
+	public function setDate(DateTime $dateTime)
 	{
-		$date->setTimezone(new DateTimeZone('UTC'));
+		$dateTime->setTimezone(new DateTimeZone('UTC'));
 
-		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
+		$this->setHeader('Date', $dateTime->format('D, d M Y H:i:s') . ' GMT');
 
 		return $this;
 	}

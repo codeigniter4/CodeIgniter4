@@ -103,16 +103,15 @@ class Router implements RouterInterface
 	protected $filterInfo;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
-	 * @param RouteCollectionInterface $routes
+	 * @param RouteCollectionInterface $routeCollection
 	 * @param Request                  $request
 	 */
-	public function __construct(RouteCollectionInterface $routes, Request $request = null)
+	public function __construct(RouteCollectionInterface $routeCollection, Request $request = null)
 	{
-		$this->collection = $routes;
+		$this->collection = $routeCollection;
 
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();

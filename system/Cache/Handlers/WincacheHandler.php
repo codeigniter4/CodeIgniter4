@@ -28,15 +28,14 @@ class WincacheHandler extends BaseHandler
 	protected $prefix;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param Cache $config
+	 * @param Cache $cache
 	 */
-	public function __construct(Cache $config)
+	public function __construct(Cache $cache)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = (string) $cache->prefix;
 	}
 
 	//--------------------------------------------------------------------

@@ -190,11 +190,11 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the Config file.
 	 *
-	 * @param ContentSecurityPolicyConfig $config
+	 * @param ContentSecurityPolicyConfig $contentSecurityPolicyConfig
 	 */
-	public function __construct(ContentSecurityPolicyConfig $config)
+	public function __construct(ContentSecurityPolicyConfig $contentSecurityPolicyConfig)
 	{
-		foreach (get_object_vars($config) as $setting => $value)
+		foreach (get_object_vars($contentSecurityPolicyConfig) as $setting => $value)
 		{
 			if (property_exists($this, $setting))
 			{

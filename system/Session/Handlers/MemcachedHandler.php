@@ -49,17 +49,16 @@ class MemcachedHandler extends BaseHandler
 	protected $sessionExpiration = 7200;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param  AppConfig $config
+	 * @param  AppConfig $appConfig
 	 * @param  string    $ipAddress
 	 * @throws SessionException
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(AppConfig $appConfig, string $ipAddress)
 	{
-		parent::__construct($config, $ipAddress);
+		parent::__construct($appConfig, $ipAddress);
 
 		if (empty($this->savePath))
 		{
@@ -76,7 +75,7 @@ class MemcachedHandler extends BaseHandler
 			ini_set('memcached.sess_prefix', $this->keyPrefix);
 		}
 
-		$this->sessionExpiration = $config->sessionExpiration;
+		$this->sessionExpiration = $appConfig->sessionExpiration;
 	}
 
 	//--------------------------------------------------------------------

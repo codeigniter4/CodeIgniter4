@@ -65,23 +65,22 @@ class Exceptions
 	protected $response;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param ExceptionsConfig $config
-	 * @param IncomingRequest  $request
+	 * @param ExceptionsConfig $exceptionsConfig
+	 * @param IncomingRequest  $incomingRequest
 	 * @param Response         $response
 	 */
-	public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
+	public function __construct(ExceptionsConfig $exceptionsConfig, IncomingRequest $incomingRequest, Response $response)
 	{
 		$this->ob_level = ob_get_level();
 
-		$this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+		$this->viewPath = rtrim($exceptionsConfig->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
 
-		$this->config = $config;
+		$this->config = $exceptionsConfig;
 
-		$this->request  = $request;
+		$this->request  = $incomingRequest;
 		$this->response = $response;
 	}
 
@@ -105,28 +104,27 @@ class Exceptions
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Catches any uncaught errors and exceptions, including most Fatal errors
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
-	 * @param Throwable $exception
+	 * @param Throwable $throwable
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function exceptionHandler(Throwable $exception)
+	public function exceptionHandler(Throwable $throwable)
 	{
 		[
 			$statusCode,
 			$exitCode,
-		] = $this->determineCodes($exception);
+		] = $this->determineCodes($throwable);
 
 		// Log it
 		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
 		{
-			log_message('critical', $exception->getMessage() . "\n{trace}", [
-							'trace' => $exception->getTraceAsString(),
+			log_message('critical', $throwable->getMessage() . "\n{trace}", [
+							'trace' => $throwable->getTraceAsString(),
 						]);
 		}
 
@@ -138,13 +136,13 @@ class Exceptions
 
 			if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false)
 			{
-				$this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
+				$this->respond(ENVIRONMENT === 'development' ? $this->collectVars($throwable, $statusCode) : '', $statusCode)->send();
 
 				exit($exitCode);
 			}
 		}
 
-		$this->render($exception, $statusCode);
+		$this->render($throwable, $statusCode);
 
 		exit($exitCode);
 	}
@@ -197,17 +195,16 @@ class Exceptions
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Determines the view to display based on the exception thrown,
 	 * whether an HTTP or CLI request, etc.
 	 *
-	 * @param Throwable $exception
+	 * @param Throwable $throwable
 	 * @param string    $templatePath
 	 *
 	 * @return string       The path and filename of the view file to use
 	 */
-	protected function determineView(Throwable $exception, string $templatePath): string
+	protected function determineView(Throwable $throwable, string $templatePath): string
 	{
 		// Production environments should have a custom exception file.
 		$view         = 'production.php';
@@ -219,29 +216,28 @@ class Exceptions
 		}
 
 		// 404 Errors
-		if ($exception instanceof PageNotFoundException)
+		if ($throwable instanceof PageNotFoundException)
 		{
 			return 'error_404.php';
 		}
 
 		// Allow for custom views based upon the status code
-		if (is_file($templatePath . 'error_' . $exception->getCode() . '.php'))
+		if (is_file($templatePath . 'error_' . $throwable->getCode() . '.php'))
 		{
-			return 'error_' . $exception->getCode() . '.php';
+			return 'error_' . $throwable->getCode() . '.php';
 		}
 
 		return $view;
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Given an exception and status code will display the error to the client.
 	 *
-	 * @param Throwable $exception
+	 * @param Throwable $throwable
 	 * @param integer   $statusCode
 	 */
-	protected function render(Throwable $exception, int $statusCode)
+	protected function render(Throwable $throwable, int $statusCode)
 	{
 		// Determine possible directories of error views
 		$path    = $this->viewPath;
@@ -251,8 +247,8 @@ class Exceptions
 		$altPath .= (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
 
 		// Determine the views
-		$view    = $this->determineView($exception, $path);
-		$altView = $this->determineView($exception, $altPath);
+		$view    = $this->determineView($throwable, $path);
+		$altView = $this->determineView($throwable, $altPath);
 
 		// Check if the view exists
 		if (is_file($path . $view))
@@ -265,7 +261,7 @@ class Exceptions
 		}
 
 		// Prepare the vars
-		$vars = $this->collectVars($exception, $statusCode);
+		$vars = $this->collectVars($throwable, $statusCode);
 		extract($vars);
 
 		// Render it
@@ -282,38 +278,37 @@ class Exceptions
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Gathers the variables that will be made available to the view.
 	 *
-	 * @param Throwable $exception
+	 * @param Throwable $throwable
 	 * @param integer   $statusCode
 	 *
 	 * @return array
 	 */
-	protected function collectVars(Throwable $exception, int $statusCode): array
+	protected function collectVars(Throwable $throwable, int $statusCode): array
 	{
 		return [
-			'title'   => get_class($exception),
-			'type'    => get_class($exception),
+			'title'   => get_class($throwable),
+			'type'    => get_class($throwable),
 			'code'    => $statusCode,
-			'message' => $exception->getMessage() ?? '(null)',
-			'file'    => $exception->getFile(),
-			'line'    => $exception->getLine(),
-			'trace'   => $exception->getTrace(),
+			'message' => $throwable->getMessage() ?? '(null)',
+			'file'    => $throwable->getFile(),
+			'line'    => $throwable->getLine(),
+			'trace'   => $throwable->getTrace(),
 		];
 	}
 
 	/**
 	 * Determines the HTTP status code and the exit status code for this request.
 	 *
-	 * @param Throwable $exception
+	 * @param Throwable $throwable
 	 *
 	 * @return array
 	 */
-	protected function determineCodes(Throwable $exception): array
+	protected function determineCodes(Throwable $throwable): array
 	{
-		$statusCode = abs($exception->getCode());
+		$statusCode = abs($throwable->getCode());
 
 		if ($statusCode < 100 || $statusCode > 599)
 		{

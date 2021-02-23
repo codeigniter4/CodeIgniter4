@@ -35,15 +35,14 @@ class Forge extends BaseForge
 	protected $_null = 'NULL';
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param BaseConnection $db
+	 * @param BaseConnection $baseConnection
 	 */
-	public function __construct(BaseConnection $db)
+	public function __construct(BaseConnection $baseConnection)
 	{
-		parent::__construct($db);
+		parent::__construct($baseConnection);
 
 		if (version_compare($this->db->getVersion(), '3.3', '<'))
 		{

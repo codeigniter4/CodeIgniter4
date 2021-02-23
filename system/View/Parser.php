@@ -58,22 +58,21 @@ class Parser extends View
 	protected $dataContexts = [];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param ViewConfig      $config
+	 * @param ViewConfig      $viewConfig
 	 * @param string          $viewPath
 	 * @param mixed           $loader
 	 * @param boolean         $debug
 	 * @param LoggerInterface $logger
 	 */
-	public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $viewConfig, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		// Ensure user plugins override core plugins.
-		$this->plugins = $config->plugins ?? [];
+		$this->plugins = $viewConfig->plugins ?? [];
 
-		parent::__construct($config, $viewPath, $loader, $debug, $logger);
+		parent::__construct($viewConfig, $viewPath, $loader, $debug, $logger);
 	}
 
 	//--------------------------------------------------------------------

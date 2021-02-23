@@ -122,9 +122,9 @@ class Security implements SecurityInterface
 	 * Stores our configuration and fires off the init() method to setup
 	 * initial state.
 	 *
-	 * @param App $config
+	 * @param App $app
 	 */
-	public function __construct(App $config)
+	public function __construct(App $app)
 	{
 		/**
 		 * @var SecurityConfig
@@ -132,14 +132,14 @@ class Security implements SecurityInterface
 		$security = config('Security');
 
 		// Store CSRF-related configurations
-		$this->tokenName  = $security->tokenName ?? $config->CSRFTokenName ?? $this->tokenName;
-		$this->headerName = $security->headerName ?? $config->CSRFHeaderName ?? $this->headerName;
-		$this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
-		$this->cookieName = $config->cookiePrefix . ($security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName);
+		$this->tokenName  = $security->tokenName ?? $app->CSRFTokenName ?? $this->tokenName;
+		$this->headerName = $security->headerName ?? $app->CSRFHeaderName ?? $this->headerName;
+		$this->regenerate = $security->regenerate ?? $app->CSRFRegenerate ?? $this->regenerate;
+		$this->cookieName = $app->cookiePrefix . ($security->cookieName ?? $app->CSRFCookieName ?? $this->cookieName);
 
-		$expires = $security->expires ?? $config->CSRFExpire ?? 7200;
+		$expires = $security->expires ?? $app->CSRFExpire ?? 7200;
 
-		Cookie::setDefaults($config);
+		Cookie::setDefaults($app);
 		$this->cookie = Cookie::create($this->cookieName, $this->generateHash(), [
 			'expires' => $expires === 0 ? 0 : time() + $expires,
 		]);

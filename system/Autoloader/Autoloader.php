@@ -68,33 +68,32 @@ class Autoloader
 	protected $classmap = [];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param Autoload $config
+	 * @param Autoload $autoload
 	 * @param Modules  $modules
 	 *
 	 * @return $this
 	 */
-	public function initialize(Autoload $config, Modules $modules)
+	public function initialize(Autoload $autoload, Modules $modules)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
-		if (empty($config->psr4) && empty($config->classmap))
+		if (empty($autoload->psr4) && empty($autoload->classmap))
 		{
 			throw new InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
 		}
 
-		if (isset($config->psr4))
+		if (isset($autoload->psr4))
 		{
-			$this->addNamespace($config->psr4);
+			$this->addNamespace($autoload->psr4);
 		}
 
-		if (isset($config->classmap))
+		if (isset($autoload->classmap))
 		{
-			$this->classmap = $config->classmap;
+			$this->classmap = $autoload->classmap;
 		}
 
 		// Should we load through Composer's namespaces, also?

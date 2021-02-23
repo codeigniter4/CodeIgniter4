@@ -53,16 +53,16 @@ class CLIRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param App $config
+	 * @param App $app
 	 */
-	public function __construct(App $config)
+	public function __construct(App $app)
 	{
 		if (! is_cli())
 		{
 			throw new RuntimeException(static::class . ' needs to run from the command line.'); // @codeCoverageIgnore
 		}
 
-		parent::__construct($config);
+		parent::__construct($app);
 
 		// Don't terminate the script when the cli's tty goes away
 		ignore_user_abort(true);

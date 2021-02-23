@@ -23,7 +23,7 @@ class Database
 	/**
 	 * Maintains an array of the instances of all connections that have
 	 * been created.
-	 * 
+	 *
 	 * Helps to keep track of all open connections for performance
 	 * monitoring, logging, etc.
 	 *
@@ -41,9 +41,9 @@ class Database
 	 * @param string $alias
 	 *
 	 * @return mixed
-	 * 
+	 *
 	 * @throws InvalidArgumentException
-	 * 
+	 *
 	 * @internal param bool $useBuilder
 	 */
 	public function load(array $params = [], string $alias = '')
@@ -72,43 +72,41 @@ class Database
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a Forge instance for the current database type.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface $connection
 	 *
 	 * @return object
 	 */
-	public function loadForge(ConnectionInterface $db): object
+	public function loadForge(ConnectionInterface $connection): object
 	{
 		// Initialize database connection if not exists.
-		if (! $db->connID)
+		if (! $connection->connID)
 		{
-			$db->initialize();
+			$connection->initialize();
 		}
 
-		return $this->initDriver($db->DBDriver, 'Forge', $db);
+		return $this->initDriver($connection->DBDriver, 'Forge', $connection);
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a Utils instance for the current database type.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface $connection
 	 *
 	 * @return object
 	 */
-	public function loadUtils(ConnectionInterface $db): object
+	public function loadUtils(ConnectionInterface $connection): object
 	{
 		// Initialize database connection if not exists.
-		if (! $db->connID)
+		if (! $connection->connID)
 		{
-			$db->initialize();
+			$connection->initialize();
 		}
 
-		return $this->initDriver($db->DBDriver, 'Utils', $db);
+		return $this->initDriver($connection->DBDriver, 'Utils', $connection);
 	}
 
 	//--------------------------------------------------------------------
@@ -119,7 +117,7 @@ class Database
 	 * @param array $params
 	 *
 	 * @return array
-	 * 
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	protected function parseDSN(array $params): array

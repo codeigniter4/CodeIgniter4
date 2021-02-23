@@ -73,7 +73,6 @@ class CURLRequest extends Request
 	protected $delay = 0.0;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes an array of options to set the following possible class properties:
 	 *
@@ -81,12 +80,12 @@ class CURLRequest extends Request
 	 *  - timeout
 	 *  - any other request options to use as defaults.
 	 *
-	 * @param App               $config
+	 * @param App               $app
 	 * @param URI               $uri
 	 * @param ResponseInterface $response
 	 * @param array             $options
 	 */
-	public function __construct(App $config, URI $uri, ResponseInterface $response = null, array $options = [])
+	public function __construct(App $app, URI $uri, ResponseInterface $response = null, array $options = [])
 	{
 		if (! function_exists('curl_version'))
 		{
@@ -96,7 +95,7 @@ class CURLRequest extends Request
 			// @codeCoverageIgnoreEnd
 		}
 
-		parent::__construct($config);
+		parent::__construct($app);
 
 		$this->response = $response;
 		$this->baseURI  = $uri->useRawQueryString();

@@ -49,15 +49,14 @@ abstract class BaseUtils
 	protected $repairTable = false;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface $connection
 	 */
-	public function __construct(ConnectionInterface &$db)
+	public function __construct(ConnectionInterface &$connection)
 	{
-		$this->db = & $db;
+		$this->db = & $connection;
 	}
 
 	//--------------------------------------------------------------------
@@ -226,22 +225,21 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Generate CSV from a query result object
 	 *
-	 * @param ResultInterface $query     Query result object
+	 * @param ResultInterface $result    Query result object
 	 * @param string          $delim     Delimiter (default: ,)
 	 * @param string          $newline   Newline character (default: \n)
 	 * @param string          $enclosure Enclosure (default: ")
 	 *
 	 * @return string
 	 */
-	public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
+	public function getCSVFromResult(ResultInterface $result, string $delim = ',', string $newline = "\n", string $enclosure = '"')
 	{
 		$out = '';
 		// First generate the headings from the table column names
-		foreach ($query->getFieldNames() as $name)
+		foreach ($result->getFieldNames() as $name)
 		{
 			$out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
 		}
@@ -249,7 +247,7 @@ abstract class BaseUtils
 		$out = substr($out, 0, -strlen($delim)) . $newline;
 
 		// Next blast through the result array and build out the rows
-		while ($row = $query->getUnbufferedRow('array'))
+		while ($row = $result->getUnbufferedRow('array'))
 		{
 			$line = [];
 			foreach ($row as $item)
@@ -263,16 +261,15 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Generate XML data from a query result object
 	 *
-	 * @param ResultInterface $query  Query result object
+	 * @param ResultInterface $result Query result object
 	 * @param array           $params Any preferences
 	 *
 	 * @return string
 	 */
-	public function getXMLFromResult(ResultInterface $query, array $params = []): string
+	public function getXMLFromResult(ResultInterface $result, array $params = []): string
 	{
 		// Set our default values
 		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
@@ -293,7 +290,7 @@ abstract class BaseUtils
 		helper('xml');
 		// Generate the result
 		$xml = '<' . $root . '>' . $newline;
-		while ($row = $query->getUnbufferedRow())
+		while ($row = $result->getUnbufferedRow())
 		{
 			$xml .= $tab . '<' . $element . '>' . $newline;
 

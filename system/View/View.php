@@ -127,20 +127,20 @@ class View implements RendererInterface
 	/**
 	 * Constructor
 	 *
-	 * @param ViewConfig       $config
+	 * @param ViewConfig       $viewConfig
 	 * @param string|null      $viewPath
-	 * @param FileLocator|null $loader
+	 * @param FileLocator|null $fileLocator
 	 * @param boolean|null     $debug
 	 * @param LoggerInterface  $logger
 	 */
-	public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
+	public function __construct(ViewConfig $viewConfig, string $viewPath = null, FileLocator $fileLocator = null, bool $debug = null, LoggerInterface $logger = null)
 	{
-		$this->config   = $config;
+		$this->config   = $viewConfig;
 		$this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-		$this->loader   = $loader ?? Services::locator();
+		$this->loader   = $fileLocator ?? Services::locator();
 		$this->logger   = $logger ?? Services::logger();
 		$this->debug    = $debug ?? CI_DEBUG;
-		$this->saveData = (bool) $config->saveData;
+		$this->saveData = (bool) $viewConfig->saveData;
 	}
 
 	/**

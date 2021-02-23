@@ -58,19 +58,18 @@ class DatabaseHandler extends BaseHandler
 	protected $rowExists = false;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
+	 * @param AppConfig $appConfig
 	 * @param string    $ipAddress
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(AppConfig $appConfig, string $ipAddress)
 	{
-		parent::__construct($config, $ipAddress);
+		parent::__construct($appConfig, $ipAddress);
 
 		// Determine Table
-		$this->table = $config->sessionSavePath;
+		$this->table = $appConfig->sessionSavePath;
 
 		if (empty($this->table))
 		{
@@ -79,7 +78,7 @@ class DatabaseHandler extends BaseHandler
 
 		// Get DB Connection
 		// @phpstan-ignore-next-line
-		$this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+		$this->DBGroup = $appConfig->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
 		$this->db = Database::connect($this->DBGroup);
 

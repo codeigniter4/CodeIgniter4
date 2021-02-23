@@ -74,12 +74,12 @@ class Seeder
 	/**
 	 * Seeder constructor.
 	 *
-	 * @param Database            $config
-	 * @param BaseConnection|null $db
+	 * @param Database            $database
+	 * @param BaseConnection|null $baseConnection
 	 */
-	public function __construct(Database $config, BaseConnection $db = null)
+	public function __construct(Database $database, BaseConnection $baseConnection = null)
 	{
-		$this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
+		$this->seedPath = $database->filesPath ?? APPPATH . 'Database/';
 
 		if (empty($this->seedPath))
 		{
@@ -93,11 +93,11 @@ class Seeder
 			throw new InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
 		}
 
-		$this->config = &$config;
+		$this->config = &$database;
 
-		$db = $db ?? Database::connect($this->DBGroup);
+		$baseConnection = $baseConnection ?? Database::connect($this->DBGroup);
 
-		$this->db    = &$db;
+		$this->db    = &$baseConnection;
 		$this->forge = Database::forge($this->DBGroup);
 	}
 

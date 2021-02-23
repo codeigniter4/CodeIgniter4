@@ -1267,22 +1267,22 @@ abstract class BaseModel
 	 *  - 'datetime' - Stores the data in the SQL datetime format
 	 *  - 'date'     - Stores the date (only) in the SQL date format.
 	 *
-	 * @param Time $value value
+	 * @param Time $time value
 	 *
 	 * @return string|integer
 	 */
-	protected function timeToDate(Time $value)
+	protected function timeToDate(Time $time)
 	{
 		switch ($this->dateFormat)
 		{
 			case 'datetime':
-				return $value->format('Y-m-d H:i:s');
+				return $time->format('Y-m-d H:i:s');
 			case 'date':
-				return $value->format('Y-m-d');
+				return $time->format('Y-m-d');
 			case 'int':
-				return $value->getTimestamp();
+				return $time->getTimestamp();
 			default:
-				return (string) $value;
+				return (string) $time;
 		}
 	}
 

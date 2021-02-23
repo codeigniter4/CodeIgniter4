@@ -119,16 +119,15 @@ abstract class BaseCommand
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * A simple method to display an error with line/file, in child commands.
 	 *
-	 * @param Throwable $e
+	 * @param Throwable $throwable
 	 */
-	protected function showError(Throwable $e)
+	protected function showError(Throwable $throwable)
 	{
-		$exception = $e;
-		$message   = $e->getMessage();
+		$exception = $throwable;
+		$message   = $throwable->getMessage();
 
 		require APPPATH . 'Views/errors/cli/error_exception.php';
 	}

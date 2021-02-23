@@ -96,17 +96,16 @@ class UserAgent
 	protected $referrer;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
 	 * Sets the User Agent and runs the compilation routine
 	 *
-	 * @param null|UserAgents $config
+	 * @param null|UserAgents $userAgents
 	 */
-	public function __construct(UserAgents $config = null)
+	public function __construct(UserAgents $userAgents = null)
 	{
-		$this->config = $config ?? new UserAgents();
+		$this->config = $userAgents ?? new UserAgents();
 
 		if (isset($_SERVER['HTTP_USER_AGENT']))
 		{

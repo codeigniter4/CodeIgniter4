@@ -12,6 +12,7 @@ use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
+use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Performance\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
 use Rector\SOLID\Rector\If_\RemoveAlwaysElseRector;
@@ -59,4 +60,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(RemoveDuplicatedCaseInSwitchRector::class);
 	$services->set(InlineIfToExplicitIfRector::class);
 	$services->set(PreparedValueToEarlyReturnRector::class);
+	$services->set(RenameParamToMatchTypeRector::class);
 };

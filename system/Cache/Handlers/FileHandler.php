@@ -44,24 +44,23 @@ class FileHandler extends BaseHandler
 	protected $mode;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
-	 * @param  Cache $config
+	 * @param  Cache $cache
 	 * @throws CacheException
 	 */
-	public function __construct(Cache $config)
+	public function __construct(Cache $cache)
 	{
-		if (! property_exists($config, 'file'))
+		if (! property_exists($cache, 'file'))
 		{
-			$config->file = [
-				'storePath' => $config->storePath ?? WRITEPATH . 'cache',
+			$cache->file = [
+				'storePath' => $cache->storePath ?? WRITEPATH . 'cache',
 				'mode'      => 0640,
 			];
 		}
 
-		$this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
+		$this->path = ! empty($cache->file['storePath']) ? $cache->file['storePath'] : WRITEPATH . 'cache';
 		$this->path = rtrim($this->path, '/') . '/';
 
 		if (! is_really_writable($this->path))
@@ -69,8 +68,8 @@ class FileHandler extends BaseHandler
 			throw CacheException::forUnableToWrite($this->path);
 		}
 
-		$this->mode   = $config->file['mode'] ?? 0640;
-		$this->prefix = (string) $config->prefix;
+		$this->mode   = $cache->file['mode'] ?? 0640;
+		$this->prefix = (string) $cache->prefix;
 	}
 
 	//--------------------------------------------------------------------

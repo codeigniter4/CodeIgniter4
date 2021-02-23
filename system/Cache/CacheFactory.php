@@ -25,44 +25,44 @@ class CacheFactory
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
-	 * @param Cache       $config
+	 * @param Cache       $cache
 	 * @param string|null $handler
 	 * @param string|null $backup
 	 *
 	 * @return CacheInterface
 	 */
-	public static function getHandler(Cache $config, string $handler = null, string $backup = null)
+	public static function getHandler(Cache $cache, string $handler = null, string $backup = null)
 	{
-		if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
+		if (! isset($cache->validHandlers) || ! is_array($cache->validHandlers))
 		{
 			throw CacheException::forInvalidHandlers();
 		}
 
-		if (! isset($config->handler) || ! isset($config->backupHandler))
+		if (! isset($cache->handler) || ! isset($cache->backupHandler))
 		{
 			throw CacheException::forNoBackup();
 		}
 
-		$handler = ! empty($handler) ? $handler : $config->handler;
-		$backup  = ! empty($backup) ? $backup : $config->backupHandler;
+		$handler = ! empty($handler) ? $handler : $cache->handler;
+		$backup  = ! empty($backup) ? $backup : $cache->backupHandler;
 
-		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
+		if (! array_key_exists($handler, $cache->validHandlers) || ! array_key_exists($backup, $cache->validHandlers))
 		{
 			throw CacheException::forHandlerNotFound();
 		}
 
 		// Get an instance of our handler.
-		$adapter = new $config->validHandlers[$handler]($config);
+		$adapter = new $cache->validHandlers[$handler]($cache);
 
 		if (! $adapter->isSupported())
 		{
-			$adapter = new $config->validHandlers[$backup]($config);
+			$adapter = new $cache->validHandlers[$backup]($cache);
 
 			if (! $adapter->isSupported())
 			{
 				// Log stuff here, don't throw exception. No need to raise a fuss.
 				// Fall back to the dummy adapter.
-				$adapter = new $config->validHandlers['dummy']();
+				$adapter = new $cache->validHandlers['dummy']();
 			}
 		}
 
@@ -78,7 +78,7 @@ class CacheFactory
 			log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
 
 			// get the next best cache handler (or dummy if the $backup also fails)
-			$adapter = self::getHandler($config, $backup, 'dummy');
+			$adapter = self::getHandler($cache, $backup, 'dummy');
 		}
 
 		return $adapter;

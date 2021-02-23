@@ -93,26 +93,24 @@ class Model extends BaseModel
 	protected $escape = [];
 
 	// endregion
-
 	// region Constructor
-
 	/**
 	 * Model constructor.
 	 *
-	 * @param ConnectionInterface|null $db         DB Connection
+	 * @param ConnectionInterface|null $connection DB Connection
 	 * @param ValidationInterface|null $validation Validation
 	 */
-	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
+	public function __construct(ConnectionInterface &$connection = null, ValidationInterface $validation = null)
 	{
 		parent::__construct($validation);
 
-		if (is_null($db))
+		if (is_null($connection))
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
 		else
 		{
-			$this->db = &$db;
+			$this->db = &$connection;
 		}
 	}
 

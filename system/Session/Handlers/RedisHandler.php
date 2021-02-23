@@ -58,18 +58,17 @@ class RedisHandler extends BaseHandler
 	protected $sessionExpiration = 7200;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param AppConfig $config
+	 * @param AppConfig $appConfig
 	 * @param string    $ipAddress
 	 *
 	 * @throws Exception
 	 */
-	public function __construct(AppConfig $config, string $ipAddress)
+	public function __construct(AppConfig $appConfig, string $ipAddress)
 	{
-		parent::__construct($config, $ipAddress);
+		parent::__construct($appConfig, $ipAddress);
 
 		if (empty($this->savePath))
 		{
@@ -103,9 +102,9 @@ class RedisHandler extends BaseHandler
 			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
-		$this->sessionExpiration = empty($config->sessionExpiration)
+		$this->sessionExpiration = empty($appConfig->sessionExpiration)
 			? (int) ini_get('session.gc_maxlifetime')
-			: (int) $config->sessionExpiration;
+			: (int) $appConfig->sessionExpiration;
 	}
 
 	//--------------------------------------------------------------------
