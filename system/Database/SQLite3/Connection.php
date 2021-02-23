@@ -490,18 +490,6 @@ class Connection extends BaseConnection
 	//--------------------------------------------------------------------
 
 	/**
-	 * Determines if the statement is a write-type query or not.
-	 *
-	 * @return boolean
-	 */
-	public function isWriteType($sql): bool
-	{
-		return Query::sqlIsWriteType($sql);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Checks to see if the current install supports Foreign Keys
 	 * and has them enabled.
 	 *

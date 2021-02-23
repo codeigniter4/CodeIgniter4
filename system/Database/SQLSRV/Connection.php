@@ -503,17 +503,6 @@ class Connection extends BaseConnection
 	}
 
 	/**
-	 * Determines if a query is a "write" type.
-	 *
-	 * @param  string $sql An SQL query string
-	 * @return boolean
-	 */
-	public function isWriteType($sql)
-	{
-		return Query::sqlIsWriteType($sql);
-	}
-
-	/**
 	 * Returns the last error encountered by this connection.
 	 *
 	 * @return mixed

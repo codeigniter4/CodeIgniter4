@@ -300,24 +300,11 @@ class Query implements QueryInterface
 	/**
 	 * Determines if the statement is a write-type query or not.
 	 *
-	 * @param string $sql
-	 * @return boolean
-	 */
-	public static function sqlIsWriteType($sql): bool
-	{
-		return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|OPTIMIZE|MERGE)\s/i', $sql);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines if the statement is a write-type query or not.
-	 *
 	 * @return boolean
 	 */
 	public function isWriteType(): bool
 	{
-		return self::sqlIsWriteType($this->originalQueryString);
+		return $this->db->isWriteType($this->originalQueryString);
 	}
 
 	//--------------------------------------------------------------------

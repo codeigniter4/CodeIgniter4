@@ -192,4 +192,12 @@ interface ConnectionInterface
 	public function callFunction(string $functionName, ...$params);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param  string $sql
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool;
 }

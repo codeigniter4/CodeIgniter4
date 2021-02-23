@@ -609,4 +609,24 @@ class Connection extends BaseConnection
 	}
 
 	// --------------------------------------------------------------------
+
+	/**
+	 * Determines if a query is a "write" type.
+	 *
+	 * Overrides BaseConnection::isWriteType, adding additional read query types.
+	 *
+	 * @param  string $sql An SQL query string
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool
+	{
+		if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is', $sql))
+		{
+			return false;
+		}
+
+		return parent::isWriteType($sql);
+	}
+
+	// --------------------------------------------------------------------
 }
