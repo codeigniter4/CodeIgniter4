@@ -1,16 +1,12 @@
 <?php
+
 namespace CodeIgniter\Log\Handlers;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 
-class ErrorlogHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+final class ErrorlogHandlerTest extends CIUnitTestCase
 {
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-	}
-
 	public function testHandle()
 	{
 		$config = new LoggerConfig();
@@ -20,5 +16,4 @@ class ErrorlogHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logger = new ErrorlogHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
-
 }
