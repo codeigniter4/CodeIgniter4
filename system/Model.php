@@ -693,10 +693,11 @@ class Model extends BaseModel
 				$data = $this->transformDataToArray($data, 'insert');
 				$data = array_merge($this->tempData['data'], $data);
 			}
+
+			$this->escape   = $this->tempData['escape'] ?? [];
+			$this->tempData = [];
 		}
 
-		$this->escape   = $this->tempData['escape'] ?? [];
-		$this->tempData = [];
 
 		return parent::insert($data, $returnID);
 	}
@@ -725,10 +726,11 @@ class Model extends BaseModel
 				$data = $this->transformDataToArray($data, 'update');
 				$data = array_merge($this->tempData['data'], $data);
 			}
+
+			$this->escape   = $this->tempData['escape'] ?? [];
+			$this->tempData = [];
 		}
 
-		$this->escape   = $this->tempData['escape'] ?? [];
-		$this->tempData = [];
 
 		return parent::update($id, $data);
 	}
