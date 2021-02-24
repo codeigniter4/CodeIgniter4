@@ -21,7 +21,7 @@
 		<div class="container">
 			<h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
 			<p>
-				<?= esc($exception->getMessage()) ?>
+				<?= esc(nl2br($exception->getMessage())) ?>
 				<a href="https://www.duckduckgo.com/?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
 				   rel="noreferrer" target="_blank">search &rarr;</a>
 			</p>
