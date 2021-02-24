@@ -11,12 +11,7 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\Database\Seeder;
-use CodeIgniter\Exceptions\ConfigException;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -26,36 +21,17 @@ use Config\Services;
  *
  * Provides functionality for refreshing/seeding
  * the database during testing.
+ *
+ * @mixin CIUnitTestCase
  */
 trait DatabaseTestTrait
 {
-	/**
-	 * Should run db migration?
-	 *
-	 * @var boolean
-	 */
-	protected $migrate = true;
-
-	/**
-	 * Should run db migration only once?
-	 *
-	 * @var boolean
-	 */
-	protected $migrateOnce = false;
-
 	/**
 	 * Is db migration done once or more than once?
 	 *
 	 * @var boolean
 	 */
 	private static $doneMigration = false;
-
-	/**
-	 * Should run seeding only once?
-	 *
-	 * @var boolean
-	 */
-	protected $seedOnce = false;
 
 	/**
 	 * Is seeding done once or more than once?
@@ -65,74 +41,28 @@ trait DatabaseTestTrait
 	private static $doneSeed = false;
 
 	/**
-	 * Should the db be refreshed before test?
+	 * Methods to run during database setUp.
 	 *
-	 * @var boolean
+	 * @var string[]
+	 *
+	 * @internal
 	 */
-	protected $refresh = true;
+	protected $setUpMethodsDatabase = [
+		'loadDependencies',
+		'setUpMigrate',
+		'setUpSeed',
+	];
 
 	/**
-	 * The seed file(s) used for all tests within this test case.
-	 * Should be fully-namespaced or relative to $basePath
+	 * Methods to run during database tearDown.
 	 *
-	 * @var string|array
-	 */
-	protected $seed = '';
-
-	/**
-	 * The path to the seeds directory.
-	 * Allows overriding the default application directories.
+	 * @var string[]
 	 *
-	 * @var string
+	 * @internal
 	 */
-	protected $basePath = SUPPORTPATH . 'Database';
-
-	/**
-	 * The namespace(s) to help us find the migration classes.
-	 * Empty is equivalent to running `spark migrate -all`.
-	 * Note that running "all" runs migrations in date order,
-	 * but specifying namespaces runs them in namespace order (then date)
-	 *
-	 * @var string|array|null
-	 */
-	protected $namespace = 'Tests\Support';
-
-	/**
-	 * The name of the database group to connect to.
-	 * If not present, will use the defaultGroup.
-	 *
-	 * @var string
-	 */
-	protected $DBGroup = 'tests';
-
-	/**
-	 * Our database connection.
-	 *
-	 * @var BaseConnection
-	 */
-	protected $db;
-
-	/**
-	 * Migration Runner instance.
-	 *
-	 * @var MigrationRunner|mixed
-	 */
-	protected $migrations;
-
-	/**
-	 * Seeder instance
-	 *
-	 * @var Seeder
-	 */
-	protected $seeder;
-
-	/**
-	 * Stores information needed to remove any
-	 * rows inserted via $this->hasInDatabase();
-	 *
-	 * @var array
-	 */
-	protected $insertCache = [];
+	protected $tearDownMethodsDatabase = [
+		'clearInsertCache',
+	];
 
 	/**
 	 * Load any database test dependencies.
@@ -204,122 +134,6 @@ trait DatabaseTestTrait
 	//--------------------------------------------------------------------
 
 	/**
-	 * Asserts that records that match the conditions in $where do
-	 * not exist in the database.
-	 *
-	 * @param string $table
-	 * @param array  $where
-	 *
-	 * @return void
-	 */
-	public function dontSeeInDatabase(string $table, array $where)
-	{
-		$count = $this->db->table($table)
-						  ->where($where)
-						  ->countAllResults();
-
-		$this->assertTrue($count === 0, 'Row was found in database');
-	}
-
-	/**
-	 * Asserts that records that match the conditions in $where DO
-	 * exist in the database.
-	 *
-	 * @param string $table
-	 * @param array  $where
-	 *
-	 * @return void
-	 * @throws DatabaseException
-	 */
-	public function seeInDatabase(string $table, array $where)
-	{
-		$count = $this->db->table($table)
-						  ->where($where)
-						  ->countAllResults();
-
-		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
-	}
-
-	/**
-	 * Fetches a single column from a database row with criteria
-	 * matching $where.
-	 *
-	 * @param string $table
-	 * @param string $column
-	 * @param array  $where
-	 *
-	 * @return boolean
-	 * @throws DatabaseException
-	 */
-	public function grabFromDatabase(string $table, string $column, array $where)
-	{
-		$query = $this->db->table($table)
-						  ->select($column)
-						  ->where($where)
-						  ->get();
-
-		$query = $query->getRow();
-
-		return $query->$column ?? false;
-	}
-
-	/**
-	 * Inserts a row into to the database. This row will be removed
-	 * after the test has run.
-	 *
-	 * @param string $table
-	 * @param array  $data
-	 *
-	 * @return boolean
-	 */
-	public function hasInDatabase(string $table, array $data)
-	{
-		$this->insertCache[] = [
-			$table,
-			$data,
-		];
-
-		return $this->db->table($table)
-						->insert($data);
-	}
-
-	/**
-	 * Asserts that the number of rows in the database that match $where
-	 * is equal to $expected.
-	 *
-	 * @param integer $expected
-	 * @param string  $table
-	 * @param array   $where
-	 *
-	 * @return void
-	 * @throws DatabaseException
-	 */
-	public function seeNumRecords(int $expected, string $table, array $where)
-	{
-		$count = $this->db->table($table)
-						  ->where($where)
-						  ->countAllResults();
-
-		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
-	}
-
-	/**
-	 * Ensures that the database is cleaned up to a known state
-	 * before each test runs.
-	 *
-	 * @throws ConfigException
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
-
-		$this->loadDependencies();
-
-		$this->setUpMigrate();
-		$this->setUpSeed();
-	}
-
-	/**
 	 * Migrate on setUp
 	 */
 	protected function setUpMigrate()
@@ -350,13 +164,10 @@ trait DatabaseTestTrait
 	}
 
 	/**
-	 * Takes care of any required cleanup after the test, like
-	 * removing any rows inserted via $this->hasInDatabase()
+	 * Removes any rows inserted via $this->hasInDatabase()
 	 */
-	protected function tearDown(): void
+	protected function clearInsertCache()
 	{
-		parent::tearDown();
-
 		if (! empty($this->insertCache))
 		{
 			foreach ($this->insertCache as $row)

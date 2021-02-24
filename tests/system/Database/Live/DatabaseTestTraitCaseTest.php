@@ -1,12 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class CIDbTestCaseTest extends CIDatabaseTestCase
+class DatabaseTestTraitCaseTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
