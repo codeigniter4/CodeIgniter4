@@ -136,5 +136,16 @@ class Logger extends BaseConfig
 		//          'handles' => ['critical', 'alert', 'emergency', 'debug',
 		//                        'error', 'info', 'notice', 'warning'],
 		//      ]
+
+		/**
+		 * Error Log Handler. Uncomment this block to use it.
+		 */
+		//      'CodeIgniter\Log\Handlers\ErrorlogHandler' => [
+		//          /*
+		//           * The log levels that this handler will handle.
+		//           */
+		//          'handles' => ['critical', 'alert', 'emergency', 'debug',
+		//                        'error', 'info', 'notice', 'warning'],
+		//      ]
 	];
 }
