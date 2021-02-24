@@ -519,6 +519,26 @@ to determine the time until a new token should be available and the action can b
 tried again. In this case, the minimum enforced wait time is one second.</p>
 </dd></dl>
 
+<dl class="method">
+<dt>
+<code class="sig-name descname">remove(string $key) : self</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – The name of the bucket</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$this</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+<p>Removes &amp; resets the bucket.
+Won’t fail if the bucket doesn’t exist.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -538,7 +558,7 @@ tried again. In this case, the minimum enforced wait time is one second.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 23, 2021.
+        Last updated on Feb 24, 2021.
       </span>
 
     </p>
