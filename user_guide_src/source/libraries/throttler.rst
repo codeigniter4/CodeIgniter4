@@ -154,3 +154,12 @@ Class Reference
     After ``check()`` has been run and returned FALSE, this method can be used
     to determine the time until a new token should be available and the action can be
     tried again. In this case, the minimum enforced wait time is one second.
+
+.. php:method:: remove(string $key) : self
+
+    :param string $key: The name of the bucket
+    :returns: $this
+    :rtype: self
+
+    Removes & resets the bucket.
+    Won't fail if the bucket doesn't exist.
