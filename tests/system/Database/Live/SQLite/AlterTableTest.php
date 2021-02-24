@@ -9,7 +9,12 @@ use Config\Database;
  */
 class AlterTableTest extends CIDatabaseTestCase
 {
-	protected $refresh = true;
+	/**
+	 * In setUp() db connection is changed. So migration doesn't work
+	 *
+	 * @var boolean
+	 */
+	protected $migrate = false;
 
 	/**
 	 * @var Table
@@ -38,12 +43,16 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->db    = db_connect($config);
 		$this->forge = Database::forge($config);
 		$this->table = new Table($this->db, $this->forge);
+
+		$this->dropTables();
 	}
 
-	public function tearDown(): void
+	private function dropTables()
 	{
-		parent::tearDown();
-
+		$this->forge->dropTable('aliens', true);
+		$this->forge->dropTable('aliens_fk', true);
+		$this->forge->dropTable('janky', true);
+		$this->forge->dropTable('janky_fk', true);
 		$this->forge->dropTable('foo', true);
 		$this->forge->dropTable('foo_fk', true);
 	}
