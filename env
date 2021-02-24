@@ -80,6 +80,7 @@
 # contentsecuritypolicy.fontSrc = null
 # contentsecuritypolicy.formAction = null
 # contentsecuritypolicy.frameAncestors = null
+# contentsecuritypolicy.frameSrc = null
 # contentsecuritypolicy.mediaSrc = null
 # contentsecuritypolicy.objectSrc = null
 # contentsecuritypolicy.pluginTypes = null

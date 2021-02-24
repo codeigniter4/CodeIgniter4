@@ -102,18 +102,22 @@ class Factories
 		if (isset(self::$basenames[$options['component']][$basename]))
 		{
 			$class = self::$basenames[$options['component']][$basename];
-		}
-		else
-		{
-			// Try to locate the class
-			if (! $class = self::locateClass($options, $name))
-			{
-				return null;
-			}
 
-			self::$instances[$options['component']][$class]    = new $class(...$arguments);
-			self::$basenames[$options['component']][$basename] = $class;
+			// Need to verify if the shared instance matches the request
+			if (self::verifyInstanceOf($options, $class))
+			{
+				return self::$instances[$options['component']][$class];
+			}
 		}
+
+		// Try to locate the class
+		if (! $class = self::locateClass($options, $name))
+		{
+			return null;
+		}
+
+		self::$instances[$options['component']][$class]    = new $class(...$arguments);
+		self::$basenames[$options['component']][$basename] = $class;
 
 		return self::$instances[$options['component']][$class];
 	}
