@@ -95,7 +95,7 @@ class SeeInDatabase extends Constraint
 				->get()
 				->getResultArray();
 
-			if (count($results) === 0)
+			if ($results !== [])
 			{
 				return 'The table is empty.';
 			}
