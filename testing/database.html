@@ -363,15 +363,18 @@
 <div class="section" id="the-test-class">
 <h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h2>
 <p>In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
-tests must extend <code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase</span></code>:</p>
+tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> and use the <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIDatabaseTestCase</span>
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -383,10 +386,13 @@ of the functionality described here:</p>
 
 <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIDatabaseTestCase</span>
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
@@ -428,10 +434,13 @@ by adding a couple of class properties to your test.</p>
 
 <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+
     <span class="k">protected</span> <span class="nv">$refresh</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">&#39;TestSeeder&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$basePath</span> <span class="o">=</span> <span class="s1">&#39;path/to/database/files&#39;</span><span class="p">;</span>
