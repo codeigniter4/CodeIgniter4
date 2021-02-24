@@ -179,6 +179,23 @@ class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
+	public function testFrameSrc()
+	{
+		$this->prepare();
+		$this->csp->addFrameSrc('self');
+		$this->csp->addFrameSrc('them.com', true);
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+		$this->assertStringContainsString('frame-src them.com;', $result);
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertStringContainsString("frame-src 'self';", $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testImageSrc()
 	{
 		$this->prepare();
