@@ -14,12 +14,5 @@ and any DBMS-specific override ``isWriteType()`` in the relevant Connection clas
 **ConnectionInterface::isWriteType() declaration added**
 
 If you have written any classes that implement ConnectionInterface, these must now implement the
-``isWriteType()`` method:
-```php
-public function isWriteType($sql): bool
-{
-  // return true if the $sql param represents a write-type query, false for read-type queries
-}
-```
-If your class extends BaseConnection, then that class will provide a basic ``isWriteType()``
+``isWriteType()`` method, declared as ``public function isWriteType($sql): bool``. If your class extends BaseConnection, then that class will provide a basic ``isWriteType()``
 method which you might want to override.
