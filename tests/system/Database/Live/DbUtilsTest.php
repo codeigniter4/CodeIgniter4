@@ -14,6 +14,19 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected static $origDebug;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * This test must run first to store the inital debug value before we tinker with it below
+	 */
+	public function testFirst()
+	{
+		$this::$origDebug = $this->getPrivateProperty($this->db, 'DBDebug');
+
+		$this->assertIsBool($this::$origDebug);
+	}
 
 	//--------------------------------------------------------------------
 
@@ -109,22 +122,36 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testUtilsOptimizeTableFalseOptimizeDatabase()
+	public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue()
 	{
 		$util = (new Database())->loadUtils($this->db);
-
 		$this->setPrivateProperty($util, 'optimizeTable', false);
 
-		if ($this->db->DBDebug) {
-			$this->expectException(DatabaseException::class);
-			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
-			$util->optimizeDatabase();
-		} else {
-			$result = $util->optimizeDatabase();
-			$this->assertFalse($result);
-		}
+		// set debug to true -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', true);
 
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 		$util->optimizeDatabase();
+
+		// this point in code execution will never be reached
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse()
+	{
+		$util = (new Database())->loadUtils($this->db);
+		$this->setPrivateProperty($util, 'optimizeTable', false);
+
+		// set debug to false -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$result = $util->optimizeDatabase();
+		$this->assertFalse($result);
+
+		// restore original value grabbed from testFirst -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
 	}
 
 	//--------------------------------------------------------------------
@@ -134,7 +161,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 		$util = (new Database())->loadUtils($this->db);
 
 		$d = $util->optimizeTable('db_job');
-		
+
 		$this->assertTrue((bool) $d);
 	}
 
