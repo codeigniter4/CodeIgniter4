@@ -10,7 +10,7 @@ Documentations
 ============================================================
 
 - `Config Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/config.html>`_
-- `Configuration Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/general/configuration.html>`_
+- `Configuration Documentation Codeigniter 4.X </general/configuration.html>`_
 
 
 What has been changed
