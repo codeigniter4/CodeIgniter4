@@ -110,7 +110,7 @@ if (! function_exists('form_open_multipart'))
 	{
 		if (is_string($attributes))
 		{
-			$attributes .= ' enctype="' . esc('multipart/form-data', 'attr') . '"';
+			$attributes .= ' enctype="' . esc('multipart/form-data') . '"';
 		}
 		else
 		{
@@ -955,7 +955,7 @@ if (! function_exists('parse_form_attributes'))
 				{
 					continue;
 				}
-				$att .= $key . '="' . $val . '"' . ($val === end($default) ? '' : ' ');
+				$att .= $key . '="' . $val . '"' . ($key === array_key_last($default) ? '' : ' ');
 			}
 			else
 			{

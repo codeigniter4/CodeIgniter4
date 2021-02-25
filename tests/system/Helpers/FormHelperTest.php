@@ -213,7 +213,7 @@ EOH;
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
@@ -221,7 +221,7 @@ EOH;
 		else
 		{
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 
 EOH;
 		}
@@ -290,6 +290,22 @@ EOH;
 			'style'     => 'width:50%',
 		];
 		$this->assertEquals($expected, form_input($data));
+	}
+
+	public function testFormInputWithExtra()
+	{
+		$expected = <<<EOH
+<input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
+EOH;
+		$data = [
+			'id'   => 'identity',
+			'name' => 'identity',
+			'type' => 'email',
+		];
+		$extra = [
+			'class' => 'form-control form-control-lg',
+		];
+		$this->assertEquals($expected, form_input($data, '', $extra));
 	}
 
 	// ------------------------------------------------------------------------
