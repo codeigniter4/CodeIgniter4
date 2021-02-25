@@ -110,7 +110,7 @@ if (! function_exists('form_open_multipart'))
 	{
 		if (is_string($attributes))
 		{
-			$attributes .= ' enctype="' . esc('multipart/form-data', 'attr') . '"';
+			$attributes .= ' enctype="' . esc('multipart/form-data') . '"';
 		}
 		else
 		{
