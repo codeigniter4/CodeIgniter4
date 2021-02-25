@@ -29,8 +29,8 @@ Upgrade Guide
 If you use sub-directories in your controller structure you have to change the namespace according to that.
 Example: You have a version 3 controller located in ``application/models/users/user_contact.php`` the namespace has to be ``namespace App\Models\Users;`` and the controller path in the version 4 should look like this: ``app/Models/Users/UserContact.php``
 
-The new Models in CI4 have a lot of build in methods. For exmaple the ``find($id)`` method. With this you can find data where the primary key is equals ``$id``.
-Inserting data is also easier than before. In CI4 there is a ``insert($data)`` method. You can optionally make use of all those build in methods and migrate your code to the new methods.
+The new Model in CI4 has a lot of built-in methods. For example, the ``find($id)`` method. With this you can find data where the primary key is equal to ``$id``.
+Inserting data is also easier than before. In CI4 there is an ``insert($data)`` method. You can optionally make use of all those built-in methods and migrate your code to the new methods.
 
 You can find more information to those methods `here <http://codeigniter.com/user_guide/models/model.html>`_.
 
