@@ -219,7 +219,22 @@ class Builder extends BaseBuilder
 	{
 		return trim(sprintf('INSERT INTO %s (%s) VALUES (%s) %s', $table, implode(', ', $keys), implode(', ', $unescapedKeys), $this->compileIgnore('insert')));
 	}
-	//--------------------------------------------------------------------
+	
+	/**
+	 * Insert batch statement
+	 *
+	 * Generates a platform-specific insert string from the supplied data.
+	 *
+	 * @param string $table  Table name
+	 * @param array  $keys   INSERT keys
+	 * @param array  $values INSERT values
+	 *
+	 * @return string
+	 */
+	protected function _insertBatch(string $table, array $keys, array $values): string
+	{
+		return trim(sprintf('INSERT INTO %s (%s) VALUES %s %s', $table, implode(', ', $keys), implode(', ', $values), $this->compileIgnore('insert')));
+	}
 
 	/**
 	 * Delete
