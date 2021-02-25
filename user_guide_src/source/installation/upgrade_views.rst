@@ -15,9 +15,9 @@ Documentations
 
 What has been changed
 ============================================================
-- Your views look much like before, but they are invoked differently … instead of CI3’s $this->load->view(x); you can use echo view(x);
-- CI4 supports view “cells”, to build your response in pieces
-- The template parser is still there, but substantially enhanced
+- Your views look much like before, but they are invoked differently … instead of CI3’s ``$this->load->view(x);``, you can use ``echo view(x);``.
+- CI4 supports view “cells”, to build your response in pieces.
+- The template parser is still there, and substantially enhanced.
 
 
 Upgrade Guide
