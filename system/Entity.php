@@ -359,31 +359,49 @@ class Entity implements JsonSerializable
 
 		if (! $isNullable || ! is_null($value))
 		{
-			// CSV casts need to be imploded.
-			if ($castTo === 'csv')
+			switch ($castTo)
 			{
-				$value = implode(',', $value);
-			}
-
-			// Array casting requires that we serialize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if ($castTo === 'array')
-			{
-				$value = serialize($value);
-			}
-
-			// JSON casting requires that we JSONize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
-			{
-				$value = json_encode($value, JSON_UNESCAPED_UNICODE);
-
-				if (json_last_error() !== JSON_ERROR_NONE)
-				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
-				}
+				case 'bool':
+				case 'boolean':
+					$value = filter_var($value, FILTER_VALIDATE_BOOLEAN, $isNullable ? FILTER_NULL_ON_FAILURE : 0);
+					break;
+				case 'int':
+				case 'integer':
+					$value = (int) $value;
+					break;
+				case 'float':
+					$value = (float)$value;
+					break;
+				case 'double':
+					$value = (double)$value;
+					break;
+				case 'string':
+					$value = (string)$value;
+					break;
+				// CSV casts need to be imploded.
+				case 'csv':
+					$value = implode(',', $value);
+					break;
+				// Array casting requires that we serialize the value
+				// when setting it so that it can easily be stored
+				// back to the database.
+				case 'array' :
+					$value = serialize($value);
+					break;
+				// JSON casting requires that we JSONize the value
+				// when setting it so that it can easily be stored
+				// back to the database.
+				case 'json':
+				case 'json-array':
+					if (function_exists('json_encode'))
+					{
+						$value = json_encode($value, JSON_UNESCAPED_UNICODE);
+						if (json_last_error() !== JSON_ERROR_NONE)
+						{
+							throw CastException::forInvalidJsonFormatException(json_last_error());
+						}
+					}
+					break;
 			}
 		}
 
