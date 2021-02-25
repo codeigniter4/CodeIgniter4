@@ -107,20 +107,17 @@ class BaseConfig
 				$this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
 			}
 		}
-		else
+		elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
 		{
-			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
+			if ($value === 'false')
 			{
-				if ($value === 'false')
-					{
-						$value = false;
-				}
-				elseif ($value === 'true')
-					{
-					$value = true;
-				}
-				$property = is_bool($value) ? $value : trim($value, '\'"');
+				$value = false;
 			}
+			elseif ($value === 'true')
+			{
+				$value = true;
+			}
+			$property = is_bool($value) ? $value : trim($value, '\'"');
 		}
 		return $property;
 	}

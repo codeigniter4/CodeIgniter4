@@ -991,13 +991,10 @@ class CodeIgniter
 			}
 			// @codeCoverageIgnoreEnd
 		}
-		else
+		// When testing, one is for phpunit, another is for test case.
+		elseif (ob_get_level() > 2)
 		{
-			// When testing, one is for phpunit, another is for test case.
-			if (ob_get_level() > 2)
-			{
-				ob_end_flush();
-			}
+			ob_end_flush();
 		}
 
 		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');

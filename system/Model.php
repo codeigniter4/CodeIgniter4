@@ -229,12 +229,9 @@ class Model extends BaseModel
 		{
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
-		else
+		elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
 		{
-			if ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
-			{
-				$builder->groupBy($this->table . '.' . $this->primaryKey);
-			}
+			$builder->groupBy($this->table . '.' . $this->primaryKey);
 		}
 
 		// Some databases, like PostgreSQL, need order

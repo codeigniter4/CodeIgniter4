@@ -466,12 +466,9 @@ if (! function_exists('form_checkbox'))
 		{
 			$defaults['checked'] = 'checked';
 		}
-		else
+		elseif (isset($defaults['checked']))
 		{
-			if (isset($defaults['checked']))
-			{
-				unset($defaults['checked']);
-			}
+			unset($defaults['checked']);
 		}
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
