@@ -417,7 +417,6 @@ class CLI
 		if ($countdown === true)
 		{
 			$time = $seconds;
-
 			while ($time > 0)
 			{
 				static::fwrite(STDOUT, $time . '... ');
@@ -426,20 +425,17 @@ class CLI
 			}
 			static::write();
 		}
-		else
+		elseif ($seconds > 0)
 		{
-			if ($seconds > 0)
-			{
-				sleep($seconds);
-			}
-			else
+			sleep($seconds);
+		}
+		else
 			{
 				// this chunk cannot be tested because of keyboard input
 				// @codeCoverageIgnoreStart
 				static::write(static::$wait_msg);
 				static::input();
 				// @codeCoverageIgnoreEnd
-			}
 		}
 	}
 
@@ -740,20 +736,17 @@ class CLI
 				}
 				// @codeCoverageIgnoreEnd
 			}
-			else
+			elseif (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
 			{
-				if (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
-				{
-					static::$height = (int) $matches[1];
-					static::$width  = (int) $matches[2];
-				}
-				else
+				static::$height = (int) $matches[1];
+				static::$width  = (int) $matches[2];
+			}
+			else
 				{
 					// @codeCoverageIgnoreStart
 					static::$height = (int) exec('tput lines');
 					static::$width  = (int) exec('tput cols');
 					// @codeCoverageIgnoreEnd
-				}
 			}
 		}
 		// @codeCoverageIgnoreStart

@@ -4,6 +4,7 @@ use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\Core\Configuration\Option;
@@ -59,4 +60,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(RemoveDuplicatedCaseInSwitchRector::class);
 	$services->set(InlineIfToExplicitIfRector::class);
 	$services->set(PreparedValueToEarlyReturnRector::class);
+	$services->set(ShortenElseIfRector::class);
 };

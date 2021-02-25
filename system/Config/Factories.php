@@ -166,17 +166,11 @@ class Factories
 			{
 				return null;
 			}
-
 			$files = [$file];
 		}
-		// No namespace? Search for it
-		else
+		elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
 		{
-			// Check all namespaces, prioritizing App and modules
-			if (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
-			{
-				return null;
-			}
+			return null;
 		}
 
 		// Check all files for a valid class

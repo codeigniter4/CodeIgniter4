@@ -222,16 +222,13 @@ class FileLocator
 				{
 					$foundPaths[] = $fullPath;
 				}
-				else
+				elseif (strpos($fullPath, APPPATH) === 0)
 				{
-					if (strpos($fullPath, APPPATH) === 0)
-					{
-						$appPaths[] = $fullPath;
-					}
-					else
+					$appPaths[] = $fullPath;
+				}
+				else
 					{
 						$foundPaths[] = $fullPath;
-					}
 				}
 			}
 		}

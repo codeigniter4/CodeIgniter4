@@ -787,16 +787,13 @@ class ContentSecurityPolicy
 			{
 				$reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 			}
-			else
+			elseif (strpos($value, 'nonce-') === 0)
 			{
-				if (strpos($value, 'nonce-') === 0)
-				{
-					$sources[] = "'{$value}'";
-				}
-				else
+				$sources[] = "'{$value}'";
+			}
+			else
 				{
 					$sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
-				}
 			}
 		}
 
