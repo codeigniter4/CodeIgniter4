@@ -359,10 +359,7 @@ class IncomingRequest extends Request
 		}
 		elseif (! is_array($data))
 		{
-			if (is_null($filter))
-			{
-				$filter = FILTER_DEFAULT;
-			}
+			$filter = $filter ?? FILTER_DEFAULT;
 			return filter_var($data, $filter, $flags);
 		}
 
