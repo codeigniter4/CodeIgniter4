@@ -62,7 +62,7 @@ Path: ``app/Views``::
             <title><?= esc($title) ?></title>
     </head>
     <body>
-            <h1><?= $heading ?></h1>
+            <h1><?= esc($heading) ?></h1>
 
             <h3>My Todo List</h3>
 
