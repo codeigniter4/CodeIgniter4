@@ -10,7 +10,7 @@ Documentations
 ============================================================
 
 - `Database Migrations Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html?highlight=migration>`_
-- `Database Migrations Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/dbmgmt/migration.html?highlight=migration>`_
+- `Database Migrations Documentation Codeigniter 4.X </dbmgmt/migration.html?highlight=migration>`_
 
 
 What has been changed
@@ -118,4 +118,3 @@ Path: ``app/Database/Migrations``::
                     $this->forge->dropTable('blog');
             }
     }
-
