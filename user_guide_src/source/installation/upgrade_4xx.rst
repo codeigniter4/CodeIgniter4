@@ -17,10 +17,10 @@ and then convert and integrate your app components.
 We'll try to point out the most important considerations here.
 
 To upgrade your project, we figured out two major tasks you have to work on.
-First of all there are some general adjustment, which are significant to every
-project and have to be handled. The second one are the Libraries, on which
+First of all, there are some general adjustments which are significant to every
+project and have to be handled. The second one are the libraries in which
 CodeIgniter is built up and contain some of the most important functions.
-These Libraries operate seperate from each other, so you have to look at
+These libraries operate separately from each other, so you have to look at
 them one by one.
 
 **Do read the user guide** before embarking on a project conversion!
