@@ -62,14 +62,15 @@ Using Multiple Log Handlers
 ---------------------------
 
 The logging system can support multiple methods of handling logging running at the same time. Each handler can
-be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
+be set to handle specific levels and ignore the rest. Currently, three handlers come with a default install:
 
 - **File Handler** is the default handler and will create a single file for every day locally. This is the
   recommended method of logging.
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
   installed in the Chrome web browser, you can use this handler to display the log information in
   Chrome's console window.
-- **Errorlog Handler** this handler will log with php error_log
+- **Errorlog Handler** This handler will take advantage of PHP's native ``error_log()`` function and write
+  the logs there. Currently, only the ``0`` and ``4`` message types of ``error_log()`` are supported.
 
 The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
 an array of handlers and their configuration. Each handler is specified with the key being the fully

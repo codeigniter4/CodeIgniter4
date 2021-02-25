@@ -8,6 +8,7 @@ Release Date: Not released
 Enhancements:
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
+- New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
 
 Changes:
 
