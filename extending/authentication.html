@@ -359,13 +359,13 @@ modules, projects, and the framework itself.</p>
 <li><p>Modules that handle login and logout operations should trigger the <code class="docutils literal notranslate"><span class="pre">login</span></code> and <code class="docutils literal notranslate"><span class="pre">logout</span></code> Events when successful</p></li>
 <li><p>Modules that define a “current user” should define the function <code class="docutils literal notranslate"><span class="pre">user_id()</span></code> to return the user’s unique identifier, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “no current user”</p></li>
 </ul>
-<p>Modules that meet these requirements may indicate compatibility with these framework expectations by adding
-the following provision to <strong>composer.json</strong>:</p>
+<p>Modules that fulfill these recommendations may indicate compatibility by adding the following provision to <strong>composer.json</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;provide&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;codeigniter4/authentication-implementation&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;codeigniter4/authentication-implementation&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span>
 <span class="p">},</span>
 </pre></div>
 </div>
+<p>You may view a list of modules that provide this implementation on <a class="reference external" href="https://packagist.org/providers/codeigniter4/authentication-implementation">Packagist</a>.</p>
 </div>
 </div>
 
