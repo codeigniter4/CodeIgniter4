@@ -59,7 +59,7 @@ Path: ``app/Views``::
 
     <html>
     <head>
-            <title><?= $title ?></title>
+            <title><?= esc($title) ?></title>
     </head>
     <body>
             <h1><?= $heading ?></h1>
