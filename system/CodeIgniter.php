@@ -991,6 +991,7 @@ class CodeIgniter
 			}
 			// @codeCoverageIgnoreEnd
 		}
+		// When testing, one is for phpunit, another is for test case.
 		elseif (ob_get_level() > 2)
 		{
 			ob_end_flush();
