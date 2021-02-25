@@ -168,6 +168,8 @@ class Factories
 			}
 			$files = [$file];
 		}
+		// No namespace? Search for it
+		// Check all namespaces, prioritizing App and modules
 		elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
 		{
 			return null;
