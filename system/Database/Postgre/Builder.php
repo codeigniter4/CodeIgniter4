@@ -219,7 +219,7 @@ class Builder extends BaseBuilder
 	{
 		return trim(sprintf('INSERT INTO %s (%s) VALUES (%s) %s', $table, implode(', ', $keys), implode(', ', $unescapedKeys), $this->compileIgnore('insert')));
 	}
-	
+
 	/**
 	 * Insert batch statement
 	 *
