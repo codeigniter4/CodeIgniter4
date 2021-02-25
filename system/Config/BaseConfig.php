@@ -110,11 +110,11 @@ class BaseConfig
 		elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
 		{
 			if ($value === 'false')
-					{
-						$value = false;
+			{
+				$value = false;
 			}
 			elseif ($value === 'true')
-					{
+			{
 				$value = true;
 			}
 			$property = is_bool($value) ? $value : trim($value, '\'"');

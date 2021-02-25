@@ -430,12 +430,12 @@ class CLI
 			sleep($seconds);
 		}
 		else
-			{
-				// this chunk cannot be tested because of keyboard input
-				// @codeCoverageIgnoreStart
-				static::write(static::$wait_msg);
-				static::input();
-				// @codeCoverageIgnoreEnd
+		{
+			// this chunk cannot be tested because of keyboard input
+			// @codeCoverageIgnoreStart
+			static::write(static::$wait_msg);
+			static::input();
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
@@ -742,11 +742,11 @@ class CLI
 				static::$width  = (int) $matches[2];
 			}
 			else
-				{
-					// @codeCoverageIgnoreStart
-					static::$height = (int) exec('tput lines');
-					static::$width  = (int) exec('tput cols');
-					// @codeCoverageIgnoreEnd
+			{
+				// @codeCoverageIgnoreStart
+				static::$height = (int) exec('tput lines');
+				static::$width  = (int) exec('tput cols');
+				// @codeCoverageIgnoreEnd
 			}
 		}
 		// @codeCoverageIgnoreStart

@@ -227,8 +227,8 @@ class FileLocator
 					$appPaths[] = $fullPath;
 				}
 				else
-					{
-						$foundPaths[] = $fullPath;
+				{
+					$foundPaths[] = $fullPath;
 				}
 			}
 		}
