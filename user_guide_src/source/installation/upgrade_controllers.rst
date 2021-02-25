@@ -10,7 +10,7 @@ Documentations
 ============================================================
 
 - `Controller Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/controllers.html>`_
-- `Controller Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/incoming/controllers.html>`_
+- `Controller Documentation Codeigniter 4.X </incoming/controllers.html>`_
 
 
 What has been changed
@@ -62,4 +62,3 @@ Path: ``app/Controllers``::
         }
 
     }
-
