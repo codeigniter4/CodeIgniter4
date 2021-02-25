@@ -10,7 +10,7 @@ Documentations
 ============================================================
 
 - `View Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
-- `View Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/outgoing/views.html>`_
+- `View Documentation Codeigniter 4.X </outgoing/views.html>`_
 
 
 What has been changed
