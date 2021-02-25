@@ -126,10 +126,10 @@ Upgrading Libraries
 - Instead of CI3’s ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
   following namespaced conventions for your component
 
-- Some Libraries from CodeIgniter 3 no longer exists in Version 4. For all this
-  Libraries, you have to find a new way to implement your functions. These
-  Libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_, `FTP <http://codeigniter.com/userguide3/libraries/ftp.html>`_, `Javascript <http://codeigniter.com/userguide3/libraries/javascript.html>`_, `Shopping Cart <http://codeigniter.com/userguide3/libraries/cart.html>`_, `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
-  `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_ and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
+- Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
+  libraries, you have to find a new way to implement your functions. These
+  libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_, `FTP <http://codeigniter.com/userguide3/libraries/ftp.html>`_, `Javascript <http://codeigniter.com/userguide3/libraries/javascript.html>`_, `Shopping Cart <http://codeigniter.com/userguide3/libraries/cart.html>`_, `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
+  `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_, and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
 
 - All the other libraries, which exist in both CodeIgniter versions, can be
   upgraded with some adjustments. The most important and mostly used
