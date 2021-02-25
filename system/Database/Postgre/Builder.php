@@ -217,7 +217,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _insert(string $table, array $keys, array $unescapedKeys): string
 	{
-		return trim(sprintf('INSERT INTO %s (\'%s\') VALUES (\'%s\') %s', $table, implode(', ', $keys), implode(', ', $unescapedKeys), $this->compileIgnore('insert')));
+		return trim(sprintf('INSERT INTO %s (%s) VALUES (%s) %s', $table, implode(', ', $keys), implode(', ', $unescapedKeys), $this->compileIgnore('insert')));
 	}
 	//--------------------------------------------------------------------
 
