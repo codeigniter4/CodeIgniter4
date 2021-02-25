@@ -58,7 +58,7 @@ Path: ``app/Controllers``::
     class Helloworld extends BaseController {
 
         public function index($name) {
-            echo "Hello $name! ";
+            echo 'Hello ' . esc($name) . '!';
         }
 
     }
