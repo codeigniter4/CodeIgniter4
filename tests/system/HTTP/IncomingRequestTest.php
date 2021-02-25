@@ -341,6 +341,18 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('bar', $jsonVar['foo']);
 	}
 
+	public function testGetJsonVarCanFilter()
+	{
+		$json = json_encode(['foo' => 'bar']);
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+		$this->assertFalse($request->getJsonVar('foo', false, FILTER_VALIDATE_INT));
+	}
+
 	public function testGetVarWorksWithJson()
 	{
 		$jsonObj = [
