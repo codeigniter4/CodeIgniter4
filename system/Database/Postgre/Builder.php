@@ -174,19 +174,11 @@ class Builder extends BaseBuilder
 
 		$table = $this->QBFrom[0];
 
-		$set = $this->binds;
-
-		// We need to grab out the actual values from
-		// the way binds are stored with escape flag.
-		array_walk($set, function (&$item) {
-			$item = $item[0];
-		});
-
-		$keys   = array_keys($set);
-		$values = array_values($set);
+		$key   = array_key_first($set);
+		$value = $set[$key];
 
 		$builder = $this->db->table($table);
-		$exists  = $builder->where("$keys[0] = $values[0]", null, false)->get()->getFirstRow();
+		$exists  = $builder->where("$key = $value", null, false)->get()->getFirstRow();
 
 		if (empty($exists))
 		{
@@ -195,7 +187,7 @@ class Builder extends BaseBuilder
 		else
 		{
 			array_pop($set);
-			$result = $builder->update($set, "$keys[0] = $values[0]");
+			$result = $builder->update($set, "$key = $value");
 		}
 
 		unset($builder);

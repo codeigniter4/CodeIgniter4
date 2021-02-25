@@ -8,16 +8,12 @@ class LikeTest extends CIUnitTestCase
 {
 	protected $db;
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleLike()
 	{
@@ -33,11 +29,9 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeNoSide()
 	{
@@ -53,11 +47,9 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeBeforeOnly()
 	{
@@ -73,11 +65,9 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeAfterOnly()
 	{
@@ -93,11 +83,9 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrLike()
 	{
@@ -111,17 +99,15 @@ class LikeTest extends CIUnitTestCase
 				'%veloper%',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'%ian%',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotLike()
 	{
@@ -137,11 +123,9 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrNotLike()
 	{
@@ -155,17 +139,15 @@ class LikeTest extends CIUnitTestCase
 				'%veloper%',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'%ian%',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group single
@@ -184,9 +166,7 @@ class LikeTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 }

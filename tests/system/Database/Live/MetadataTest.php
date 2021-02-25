@@ -39,6 +39,7 @@ class MetadataTest extends CIUnitTestCase
 			$prefix . 'secondary',
 			$prefix . 'stringifypkey',
 			$prefix . 'without_auto_increment',
+			$prefix . 'ip_table',
 		];
 	}
 
