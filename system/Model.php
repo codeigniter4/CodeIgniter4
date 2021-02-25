@@ -39,14 +39,10 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @property ConnectionInterface $db
- *
  * @mixin BaseBuilder
  */
 class Model extends BaseModel
 {
-	// region Properties
-
 	/**
 	 * Name of database table
 	 *
@@ -92,10 +88,6 @@ class Model extends BaseModel
 	 */
 	protected $escape = [];
 
-	// endregion
-
-	// region Constructor
-
 	/**
 	 * Model constructor.
 	 *
@@ -106,19 +98,11 @@ class Model extends BaseModel
 	{
 		parent::__construct($validation);
 
-		if (is_null($db))
-		{
-			$this->db = Database::connect($this->DBGroup);
-		}
-		else
-		{
-			$this->db = &$db;
-		}
+		/** @var BaseConnection $db */
+		$db = $db ?? Database::connect($this->DBGroup);
+
+		$this->db = &$db;
 	}
-
-	// endregion
-
-	// region Setters
 
 	/**
 	 * Specify the table associated with a model
@@ -133,10 +117,6 @@ class Model extends BaseModel
 
 		return $this;
 	}
-
-	// endregion
-
-	// region Database Methods
 
 	/**
 	 * Fetches the row of database from $this->table with a primary key
@@ -283,7 +263,6 @@ class Model extends BaseModel
 			}
 			else
 			{
-				// @phpstan-ignore-next-line
 				$this->insertID = $this->db->insertID();
 			}
 		}
@@ -400,9 +379,7 @@ class Model extends BaseModel
 					);
 				}
 
-				// @codeCoverageIgnoreStart
-				return false;
-				// @codeCoverageIgnoreEnd
+				return false; // @codeCoverageIgnore
 			}
 
 			$set[$this->deletedField] = $this->setDate();
@@ -573,10 +550,6 @@ class Model extends BaseModel
 		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
 
-	// endregion
-
-	// region Builder
-
 	/**
 	 * Provides a shared instance of the Query Builder.
 	 *
@@ -650,12 +623,6 @@ class Model extends BaseModel
 
 		return $this;
 	}
-
-	// endregion
-
-	// region Overrides
-
-	// region CRUD & Finders
 
 	/**
 	 * This method is called on save to determine if entry have to be updated
@@ -740,10 +707,6 @@ class Model extends BaseModel
 		return parent::update($id, $data);
 	}
 
-	// endregion
-
-	// region Utility
-
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array with raw values.
@@ -769,10 +732,6 @@ class Model extends BaseModel
 
 		return $properties;
 	}
-
-	// endregion
-
-	// region Magic
 
 	/**
 	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
@@ -850,12 +809,6 @@ class Model extends BaseModel
 		return $result;
 	}
 
-	// endregion
-
-	// endregion
-
-	// region Deprecated
-
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
@@ -931,7 +884,4 @@ class Model extends BaseModel
 
 		return $properties;
 	}
-
-	// endregion
-
 }
