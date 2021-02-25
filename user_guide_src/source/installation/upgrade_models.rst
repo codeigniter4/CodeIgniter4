@@ -63,10 +63,11 @@ Path: ``app/Models``::
 
     namespace App\Models;
 
-    class UserContact extends Model {
+    use CodeIgniter\Model;
 
+    class UserContact extends Model
+    {
         // insert method already implemented in parent
-
     }
 
 To insert data you can just directly call the $model->insert() method because this method is build in since CI 4.
