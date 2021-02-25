@@ -10,7 +10,7 @@ Documentations
 ============================================================
 
 - `Model Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
-- `Model Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/models/model.html>`_
+- `Model Documentation Codeigniter 4.X </models/model.html>`_
 
 
 What has been changed
