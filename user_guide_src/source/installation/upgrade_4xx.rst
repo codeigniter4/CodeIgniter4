@@ -131,9 +131,9 @@ Upgrading Libraries
   Libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_, `FTP <http://codeigniter.com/userguide3/libraries/ftp.html>`_, `Javascript <http://codeigniter.com/userguide3/libraries/javascript.html>`_, `Shopping Cart <http://codeigniter.com/userguide3/libraries/cart.html>`_, `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
   `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_ and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
 
-- All the other Libraries, which exists in both CodeIgniter Versions, can be
-  upgraded with some adjustments. The most important and most used
-  Libraries received an Upgrade Guide, which will help you with simple steps
+- All the other libraries, which exist in both CodeIgniter versions, can be
+  upgraded with some adjustments. The most important and mostly used
+  libraries received an Upgrade Guide, which will help you with simple steps
   and examples to adjust your code.
 
 .. toctree::
