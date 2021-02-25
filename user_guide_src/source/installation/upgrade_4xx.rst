@@ -55,19 +55,19 @@ General Adjustments
 
 **Model, View and Controller**
 
-- CodeIgniter is based on the MVC-Concept and so the changes on the Model, View and Controller
-  are one of the most important you have to handle.
-- In CodeIgniter 4 models are now located in ``app/Models`` and you have to add the lines
+- CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
+  are one of the most important things you have to handle.
+- In CodeIgniter 4, models are now located in ``app/Models`` and you have to add the lines
   ``namespace App\Models;`` along with ``use CodeIgniter\Model;`` right after the opening php tag.
   The last step is to replace ``extends CI_Model`` with ``extends Model``.
 - The views of CodeIgniter 4 have been moved ``to app/Views``. Furthermore, you have to change
   the syntax of loading views from ``$this->load->view('directory_name/file_name')`` to
   ``echo view('directory_name/file_name');``.
-- Controllers of CodeIgniter 4 have to be moved to ``app\Controllers;``. After that,
+- Controllers of CodeIgniter 4 have to be moved to ``app/Controllers;``. After that,
   add ``namespace App\Controllers;`` after the opening php tag.
   Lastly, replace ``extends CI_Controller`` with ``extends BaseController``.
 - For more information we recommend you the following upgrade guides, which will give
-  you some step by step instructions to convert the MVC-Classes in CodeIgniter4:
+  you some step-by-step instructions to convert the MVC classes in CodeIgniter4:
 
 .. toctree::
     :titlesonly:
