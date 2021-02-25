@@ -122,7 +122,7 @@ Upgrading Libraries
 ============================================================
 
 
-- Your app classes can still go inside app/Libraries, but they don’t have to
+- Your app classes can still go inside ``app/Libraries``, but they don’t have to.
 - Instead of CI3’s ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
   following namespaced conventions for your component
 
