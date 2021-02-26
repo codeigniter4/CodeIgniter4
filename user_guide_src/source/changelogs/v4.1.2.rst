@@ -25,3 +25,7 @@ Deprecations:
 - Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
 - Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
 - Deprecated ``CIDatabaseTestCase`` to use the ``DatabaseTestTrait`` instead.
+
+Bugs Fixed:
+
+- ``BaseConnection::query()`` now returns ``false`` for failed queries (unless ``DBDebug==true``, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.

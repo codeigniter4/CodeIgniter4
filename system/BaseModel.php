@@ -357,7 +357,7 @@ abstract class BaseModel
 	 *
 	 * @param array $data Data
 	 *
-	 * @return object|integer|string|false
+	 * @return integer|string|boolean
 	 */
 	abstract protected function doInsert(array $data);
 
@@ -407,7 +407,7 @@ abstract class BaseModel
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return object|boolean
+	 * @return string|boolean
 	 *
 	 * @throws DatabaseException
 	 */
@@ -666,11 +666,7 @@ abstract class BaseModel
 		{
 			$response = $this->insert($data, false);
 
-			if ($response instanceof BaseResult)
-			{
-				$response = $response->resultID !== false;
-			}
-			elseif ($response !== false)
+			if ($response !== false)
 			{
 				$response = true;
 			}
@@ -708,7 +704,7 @@ abstract class BaseModel
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return BaseResult|object|integer|string|false
+	 * @return integer|string|boolean
 	 *
 	 * @throws ReflectionException
 	 */

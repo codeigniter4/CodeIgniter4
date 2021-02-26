@@ -16,7 +16,7 @@ final class DeleteModelTest extends LiveModelTestCase
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
 		$result = $this->model->delete(1);
-		$this->assertTrue($result->resultID !== false);
+		$this->assertTrue($result);
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
 
@@ -27,7 +27,7 @@ final class DeleteModelTest extends LiveModelTestCase
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
 		$result = $this->model->where('name123', 'Developer')->delete();
-		$this->assertFalse($result->resultID);
+		$this->assertFalse($result);
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 	}
 

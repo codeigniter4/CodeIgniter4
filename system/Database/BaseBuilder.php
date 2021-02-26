@@ -2252,7 +2252,7 @@ class BaseBuilder
 	 *
 	 * @throws DatabaseException
 	 *
-	 * @return BaseResult|Query|false
+	 * @return Query|boolean
 	 */
 	public function insert(array $set = null, bool $escape = null)
 	{
@@ -2483,7 +2483,7 @@ class BaseBuilder
 
 			$result = $this->db->query($sql, $this->binds, false);
 
-			if ($result->resultID !== false)
+			if ($result !== false)
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
@@ -2835,7 +2835,7 @@ class BaseBuilder
 	 * @param integer $limit     The limit clause
 	 * @param boolean $resetData
 	 *
-	 * @return mixed
+	 * @return string|boolean
 	 * @throws DatabaseException
 	 */
 	public function delete($where = '', int $limit = null, bool $resetData = true)

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
@@ -502,17 +503,6 @@ class Connection extends BaseConnection
 	}
 
 	/**
-	 * Determines if a query is a "write" type.
-	 *
-	 * @param  string $sql An SQL query string
-	 * @return boolean
-	 */
-	public function isWriteType($sql)
-	{
-		return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
-	}
-
-	/**
 	 * Returns the last error encountered by this connection.
 	 *
 	 * @return mixed
@@ -578,4 +568,27 @@ class Connection extends BaseConnection
 
 		return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
 	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Determines if a query is a "write" type.
+	 *
+	 * Overrides BaseConnection::isWriteType, adding additional read query types.
+	 *
+	 * @param  string $sql An SQL query string
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool
+	{
+		if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql))
+		{
+			return true;
+		}
+
+		return parent::isWriteType($sql);
+	}
+
+	// --------------------------------------------------------------------
+
 }

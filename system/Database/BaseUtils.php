@@ -120,7 +120,7 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param  string $tableName
-	 * @return mixed
+	 * @return boolean
 	 * @throws DatabaseException
 	 */
 	public function optimizeTable(string $tableName)
@@ -135,13 +135,8 @@ abstract class BaseUtils
 		}
 
 		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
-		if ($query !== false)
-		{
-			$query = $query->getResultArray();
-			return current($query);
-		}
 
-		return false;
+		return ($query !== false) ? true : false;
 	}
 
 	//--------------------------------------------------------------------

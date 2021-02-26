@@ -280,10 +280,7 @@ class Query implements QueryInterface
 	 */
 	public function isWriteType(): bool
 	{
-		return (bool) preg_match(
-			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
-			$this->originalQueryString
-		);
+		return $this->db->isWriteType($this->originalQueryString);
 	}
 
 	/**

@@ -612,7 +612,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param boolean $setEscapeFlags
 	 * @param string  $queryClass
 	 *
-	 * @return BaseResult|Query|false
+	 * @return BaseResult|Query|boolean
 	 *
 	 * @todo BC set $queryClass default as null in 4.1
 	 */
@@ -625,7 +625,6 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
 		/**
 		 * @var Query $query
 		 */
@@ -682,7 +681,7 @@ abstract class BaseConnection implements ConnectionInterface
 				Events::trigger('DBQuery', $query);
 			}
 
-			return new $resultClass($this->connID, $this->resultID);
+			return false;
 		}
 
 		$query->setDuration($startTime);
@@ -696,7 +695,20 @@ abstract class BaseConnection implements ConnectionInterface
 		// If $pretend is true, then we just want to return
 		// the actual query object here. There won't be
 		// any results to return.
-		return $this->pretend ? $query : new $resultClass($this->connID, $this->resultID);
+		if ($this->pretend)
+		{
+			return $query;
+		}
+
+		// resultID is not false, so it must be successful
+		if ($this->isWriteType($sql))
+		{
+			return true;
+		}
+
+		// query is not write-type, so it must be read-type query; return QueryResult
+		$resultClass = str_replace('Connection', 'Result', get_class($this));
+		return new $resultClass($this->connID, $this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -1751,6 +1763,19 @@ abstract class BaseConnection implements ConnectionInterface
 		$this->dataCache = [];
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param  string $sql
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool
+	{
+		return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
 	}
 
 	//--------------------------------------------------------------------

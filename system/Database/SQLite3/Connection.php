@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use ErrorException;
@@ -484,20 +485,6 @@ class Connection extends BaseConnection
 	protected function _transRollback(): bool
 	{
 		return $this->connID->exec('ROLLBACK');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines if the statement is a write-type query or not.
-	 *
-	 * @return boolean
-	 */
-	public function isWriteType($sql): bool
-	{
-		return (bool) preg_match(
-			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
-			$sql);
 	}
 
 	//--------------------------------------------------------------------

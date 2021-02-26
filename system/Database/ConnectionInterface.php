@@ -116,7 +116,6 @@ interface ConnectionInterface
 	public function getVersion(): string;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
@@ -128,7 +127,7 @@ interface ConnectionInterface
 	 * @param string $sql
 	 * @param mixed  ...$binds
 	 *
-	 * @return mixed
+	 * @return BaseResult|Query|boolean
 	 */
 	public function query(string $sql, $binds = null);
 
@@ -193,4 +192,12 @@ interface ConnectionInterface
 	public function callFunction(string $functionName, ...$params);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param  string $sql
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool;
 }
