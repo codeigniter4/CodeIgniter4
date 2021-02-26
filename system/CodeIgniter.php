@@ -326,6 +326,7 @@ class CodeIgniter
 
 			$this->response->pretend($this->useSafeOutput)->send();
 			$this->callExit(EXIT_SUCCESS);
+			return;
 		}
 
 		try
@@ -343,6 +344,7 @@ class CodeIgniter
 			$this->sendResponse();
 
 			$this->callExit(EXIT_SUCCESS);
+			return;
 		}
 		catch (PageNotFoundException $e)
 		{
