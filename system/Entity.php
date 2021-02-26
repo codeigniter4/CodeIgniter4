@@ -318,26 +318,45 @@ class Entity implements JsonSerializable
 	 *      $p = $this->my_property
 	 *      $p = $this->getMyProperty()
 	 *
-	 * @param string $attribute
+	 * @param string $key
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function __get(string $attribute)
+	public function __get(string $key)
 	{
-		$attribute = $this->mapProperty($attribute);
+		$key    = $this->mapProperty($key);
+		$result = null;
 
 		// Convert to CamelCase for the method
-		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $attribute)));
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
 		if (method_exists($this, $method))
 		{
-			return $this->$method();
+			$result = $this->$method();
 		}
 
-		return $this->castAs($this->attributes[$attribute] ?? null, $attribute, 'get');
+		// Otherwise return the protected property
+		// if it exists.
+		elseif (array_key_exists($key, $this->attributes))
+		{
+			$result = $this->attributes[$key];
+		}
+
+		// Do we need to mutate this into a date?
+		if (in_array($key, $this->dates, true))
+		{
+			$result = $this->mutateDate($result);
+		}
+		// Or cast it as something?
+		elseif ($this->_cast)
+		{
+			$result = $this->castAs($result, $key, 'get');
+		}
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -351,27 +370,42 @@ class Entity implements JsonSerializable
 	 *      $this->my_property = $p;
 	 *      $this->setMyProperty() = $p;
 	 *
-	 * @param string     $attribute
+	 * @param string     $key
 	 * @param mixed|null $value
 	 *
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function __set(string $attribute, $value = null)
+	public function __set(string $key, $value = null)
 	{
-		$attribute = $this->mapProperty($attribute);
+		$key = $this->mapProperty($key);
+
+		// Check if the field should be mutated into a date
+		if (in_array($key, $this->dates, true))
+		{
+			$value = $this->mutateDate($value);
+		}
+
+		$value = $this->castAs($value, $key, 'set');
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
 		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $attribute)));
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
+
 			return $this;
 		}
 
-		$this->attributes[$attribute] = $this->castAs($value ?? null, $attribute, 'set');
+		// Otherwise, just the value.
+		// This allows for creation of new class
+		// properties that are undefined, though
+		// they cannot be saved. Useful for
+		// grabbing values through joins,
+		// assigning relationships, etc.
+		$this->attributes[$key] = $value;
 
 		return $this;
 	}
@@ -483,14 +517,7 @@ class Entity implements JsonSerializable
 	 */
 	protected function castAs($value, string $attribute, string $method)
 	{
-		// Do we need to mutate this into a date?
-		// I don't understand what the dates property is for if it is processed by the same method as datetime!
-		if (in_array($attribute, $this->dates, true))
-		{
-			return $this->mutateDate($value);
-		}
-
-		if (empty($this->casts[$attribute]) || ($method === 'get' && ! $this->_cast))
+		if (empty($this->casts[$attribute]))
 		{
 			return $value;
 		}
@@ -529,7 +556,7 @@ class Entity implements JsonSerializable
 
 		$type = trim($type, '[]');
 
-		$handlers = array_merge($this->castHandlers, $this->defaultCastHandlers);
+		$handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
 
 		if (empty($handlers[$type]))
 		{

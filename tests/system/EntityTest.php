@@ -35,23 +35,6 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('bar:thanks:bar', $entity->bar);
 	}
 
-	public function testGetterSetterPriority()
-	{
-		$entity = $this->getCastEntity();
-
-		$data = ['foo' => 'bar'];
-
-		$setter = 'Setter method instead of cast';
-
-		$entity->thirteenth = $data;
-
-		$thirteenth = $this->getPrivateProperty($entity, 'attributes')['thirteenth'];
-
-		$this->assertEquals($setter, $thirteenth);
-
-		$this->assertEquals(serialize($setter), $entity->thirteenth);
-	}
-
 	public function testUnsetUnsetsAttribute()
 	{
 		$entity = $this->getEntity();
@@ -1050,62 +1033,54 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		return new class($data) extends Entity
 		{
 			protected $attributes = [
-				'first'      => null,
-				'second'     => null,
-				'third'      => null,
-				'fourth'     => null,
-				'fifth'      => null,
-				'sixth'      => null,
-				'seventh'    => null,
-				'eighth'     => null,
-				'ninth'      => null,
-				'tenth'      => null,
-				'eleventh'   => null,
-				'twelfth'    => null,
-				'thirteenth' => null,
+				'first'    => null,
+				'second'   => null,
+				'third'    => null,
+				'fourth'   => null,
+				'fifth'    => null,
+				'sixth'    => null,
+				'seventh'  => null,
+				'eighth'   => null,
+				'ninth'    => null,
+				'tenth'    => null,
+				'eleventh' => null,
+				'twelfth'  => null,
 			];
 
 			protected $_original = [
-				'first'      => null,
-				'second'     => null,
-				'third'      => null,
-				'fourth'     => null,
-				'fifth'      => null,
-				'sixth'      => null,
-				'seventh'    => null,
-				'eighth'     => null,
-				'ninth'      => null,
-				'tenth'      => null,
-				'eleventh'   => null,
-				'twelfth'    => null,
-				'thirteenth' => null,
+				'first'    => null,
+				'second'   => null,
+				'third'    => null,
+				'fourth'   => null,
+				'fifth'    => null,
+				'sixth'    => null,
+				'seventh'  => null,
+				'eighth'   => null,
+				'ninth'    => null,
+				'tenth'    => null,
+				'eleventh' => null,
+				'twelfth'  => null,
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
 			protected $casts = [
-				'first'      => 'integer',
-				'second'     => 'float',
-				'third'      => 'double',
-				'fourth'     => 'string',
-				'fifth'      => 'boolean',
-				'sixth'      => 'object',
-				'seventh'    => 'array',
-				'eighth'     => 'datetime',
-				'ninth'      => 'timestamp',
-				'tenth'      => 'json',
-				'eleventh'   => 'json-array',
-				'twelfth'    => 'csv',
-				'thirteenth' => 'array',
+				'first'    => 'integer',
+				'second'   => 'float',
+				'third'    => 'double',
+				'fourth'   => 'string',
+				'fifth'    => 'boolean',
+				'sixth'    => 'object',
+				'seventh'  => 'array',
+				'eighth'   => 'datetime',
+				'ninth'    => 'timestamp',
+				'tenth'    => 'json',
+				'eleventh' => 'json-array',
+				'twelfth'  => 'csv',
 			];
 
-			public function setThirteenth($value)
+			public function setSeventh($seventh)
 			{
-				$this->attributes['thirteenth'] = 'Setter method instead of cast';
-			}
-
-			public function getThirteenth()
-			{
-				return serialize($this->attributes['thirteenth']);
+				$this->attributes['seventh'] = $seventh;
 			}
 		};
 	}

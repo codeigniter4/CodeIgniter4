@@ -41,7 +41,7 @@ Entity itself at **app/Entities/User.php**.
 ::
 
     <?php
-    
+
     namespace App\Entities;
 
     use CodeIgniter\Entity;
@@ -59,7 +59,7 @@ Create the Model
 Create the model first at **app/Models/UserModel.php** so that we can interact with it::
 
     <?php
-    
+
     namespace App\Models;
 
     use CodeIgniter\Model;
@@ -290,9 +290,6 @@ to the database. However, ``unset`` and ``isset`` only work on the mapped proper
 
 Mutators
 ========
-
-.. note:: Setter method has priority over the mutation. If a setter is specified, the mutation is not triggered.
-
 
 Date Mutators
 -------------
