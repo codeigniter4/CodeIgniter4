@@ -12,12 +12,14 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
+use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use InvalidArgumentException;
@@ -44,8 +46,6 @@ use stdClass;
  */
 abstract class BaseModel
 {
-	// region Properties
-
 	/**
 	 * Pager instance.
 	 * Populated after calling $this->paginate()
@@ -160,7 +160,7 @@ abstract class BaseModel
 	/**
 	 * Database Connection
 	 *
-	 * @var object
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -200,7 +200,7 @@ abstract class BaseModel
 	/**
 	 * Our validator instance.
 	 *
-	 * @var ValidationInterface
+	 * @var Validation
 	 */
 	protected $validation;
 
@@ -288,10 +288,6 @@ abstract class BaseModel
 	 */
 	protected $afterDelete = [];
 
-	// endregion
-
-	// region Constructor
-
 	/**
 	 * BaseModel constructor.
 	 *
@@ -302,12 +298,12 @@ abstract class BaseModel
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 		$this->tempAllowCallbacks = $this->allowCallbacks;
-		$this->validation         = $validation ?? Services::validation(null, false);
+
+		/** @var Validation $validation */
+		$validation = $validation ?? Services::validation(null, false);
+
+		$this->validation = $validation;
 	}
-
-	// endregion
-
-	// region Abstract Methods
 
 	/**
 	 * Fetches the row of database
@@ -482,10 +478,6 @@ abstract class BaseModel
 	 * @throws DataException
 	 */
 	abstract public function chunk(int $size, Closure $userFunc);
-
-	// endregion
-
-	// region CRUD & Finders
 
 	/**
 	 * Fetches the row of database
@@ -1101,10 +1093,6 @@ abstract class BaseModel
 		return $this->doErrors();
 	}
 
-	// endregion
-
-	// region Pager
-
 	/**
 	 * Works with Pager to get the size and offset parameters.
 	 * Expects a GET variable (?page=2) that specifies the page of results
@@ -1134,10 +1122,6 @@ abstract class BaseModel
 
 		return $this->findAll($perPage, $offset);
 	}
-
-	// endregion
-
-	// region Allowed Fields
 
 	/**
 	 * It could be used when you have to change default or override current allowed fields.
@@ -1203,10 +1187,6 @@ abstract class BaseModel
 
 		return $data;
 	}
-
-	// endregion
-
-	// region Timestamps
 
 	/**
 	 * Sets the date or current date if null value is passed
@@ -1281,10 +1261,6 @@ abstract class BaseModel
 				return (string) $value;
 		}
 	}
-
-	// endregion
-
-	// region Validation
 
 	/**
 	 * Set the value of the skipValidation flag.
@@ -1428,7 +1404,6 @@ abstract class BaseModel
 		// or an array of rules.
 		if (is_string($rules))
 		{
-			// @phpstan-ignore-next-line
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
@@ -1482,10 +1457,6 @@ abstract class BaseModel
 
 		return $rules;
 	}
-
-	// endregion
-
-	// region Callbacks
 
 	/**
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
@@ -1544,10 +1515,6 @@ abstract class BaseModel
 
 		return $eventData;
 	}
-
-	// endregion
-
-	// region Utility
 
 	/**
 	 * Sets the return type of the results to be as an associative array.
@@ -1698,10 +1665,6 @@ abstract class BaseModel
 		return $data;
 	}
 
-	// endregion
-
-	// region Magic
-
 	/**
 	 * Provides the db connection and model's properties.
 	 *
@@ -1757,10 +1720,6 @@ abstract class BaseModel
 
 		return null;
 	}
-
-	// endregion
-
-	// region Deprecated
 
 	/**
 	 * Replace any placeholders within the rules with the values that
@@ -1822,6 +1781,4 @@ abstract class BaseModel
 
 		return $rules;
 	}
-
-	// endregion
 }
