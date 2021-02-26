@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>AJAX Requests &mdash; CodeIgniter 4.1.1 documentation</title>
+  <title>Upgrading from 4.1.1 to 4.1.2 &mdash; CodeIgniter 4.1.1 documentation</title>
   
 
   
@@ -42,9 +42,7 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Code Modules" href="modules.html" />
-    <link rel="prev" title="Web Page Caching" href="caching.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,13 +97,13 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -130,19 +128,19 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">AJAX Requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
 </ul>
 </li>
 </ul>
@@ -328,9 +326,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">General Topics</a> &raquo;</li>
-        
-      <li>AJAX Requests</li>
+      <li>Upgrading from 4.1.1 to 4.1.2</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -347,46 +343,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ajax-requests">
-<h1>AJAX Requests<a class="headerlink" href="#ajax-requests" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isAJAX()</span></code> method uses the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header to define whether the request is XHR or normal. However, the most recent JavaScript implementations (i.e., fetch) no longer send this header along with the request, thus the use of <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isAJAX()</span></code> becomes less reliable, because without this header it is not possible to define whether the request is or not XHR.</p>
-<p>To get around this problem, the most efficient solution (so far) is to manually define the request header, forcing the information to be sent to the server, which will then be able to identify that the request is XHR.</p>
-<p>Here’s how to force the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header to be sent in the Fetch API and other JavaScript libraries.</p>
-<div class="section" id="fetch-api">
-<h2>Fetch API<a class="headerlink" href="#fetch-api" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span>
-    <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;get&quot;</span><span class="p">,</span>
-    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;X-Requested-With&quot;</span><span class="o">:</span> <span class="s2">&quot;XMLHttpRequest&quot;</span>
-    <span class="p">}</span>
-<span class="p">});</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="jquery">
-<h2>jQuery<a class="headerlink" href="#jquery" title="Permalink to this headline">¶</a></h2>
-<p>For libraries like jQuery for example, it is not necessary to make explicit the sending of this header, because according to the <a class="reference external" href="https://api.jquery.com/jquery.ajax/">official documentation</a> it is a standard header for all requests <code class="docutils literal notranslate"><span class="pre">$.ajax()</span></code>. But if you still want to force the shipment to not take risks, just do it as follows:</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;your url&quot;</span><span class="p">,</span>
-    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span><span class="s1">&#39;X-Requested-With&#39;</span><span class="o">:</span> <span class="s1">&#39;XMLHttpRequest&#39;</span><span class="p">}</span>
-<span class="p">});</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="vuejs">
-<h2>VueJS<a class="headerlink" href="#vuejs" title="Permalink to this headline">¶</a></h2>
-<p>In VueJS you just need to add the following code to the <code class="docutils literal notranslate"><span class="pre">created</span></code> function, as long as you are using Axios for this type of request.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">common</span><span class="p">[</span><span class="s1">&#39;X-Requested-With&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;XMLHttpRequest&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="react">
-<h2>React<a class="headerlink" href="#react" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;your url&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">headers</span><span class="o">:</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}})</span>
-</pre></div>
-</div>
-</div>
+  <div class="section" id="upgrading-from-4-1-1-to-4-1-2">
+<h1>Upgrading from 4.1.1 to 4.1.2<a class="headerlink" href="#upgrading-from-4-1-1-to-4-1-2" title="Permalink to this headline">¶</a></h1>
+<p><strong>BaseConnection::query() return values</strong></p>
+<p><cite>BaseConnection::query()</cite> method in prior versions was incorrectly returning BaseResult objects
+even if the query failed. This method will now return <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (or throw an
+Exception if <code class="docutils literal notranslate"><span class="pre">DBDebug==true</span></code>) and will return booleans for write-type queries. Review any use
+of <code class="docutils literal notranslate"><span class="pre">query()</span></code> method and be assess whether the value might be boolean instead of Result object.
+For a better idea of what queries are write-type queries, check <code class="docutils literal notranslate"><span class="pre">BaseConnection::isWriteType()</span></code>
+and any DBMS-specific override <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code> in the relevant Connection class.</p>
+<p><strong>ConnectionInterface::isWriteType() declaration added</strong></p>
+<p>If you have written any classes that implement ConnectionInterface, these must now implement the
+<code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code> method, declared as <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">isWriteType($sql):</span> <span class="pre">bool</span></code>. If your class extends BaseConnection, then that class will provide a basic <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code>
+method which you might want to override.</p>
 </div>
 
 
@@ -394,10 +363,6 @@
            
           </div>
           <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="modules.html" class="btn btn-neutral float-right" title="Code Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="caching.html" class="btn btn-neutral float-left" title="Web Page Caching" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
 
   <hr/>
 

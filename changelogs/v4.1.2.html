@@ -372,6 +372,10 @@
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Security::isExpired()</span></code> to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s internal expires status.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase</span></code> to use the <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code> instead.</p></li>
 </ul>
+<p>Bugs Fixed:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (unless <code class="docutils literal notranslate"><span class="pre">DBDebug==true</span></code>, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.</p></li>
+</ul>
 </div>
 
 
@@ -390,7 +394,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 25, 2021.
+        Last updated on Feb 26, 2021.
       </span>
 
     </p>
