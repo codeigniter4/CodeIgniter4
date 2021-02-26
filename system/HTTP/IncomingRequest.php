@@ -353,14 +353,16 @@ class IncomingRequest extends Request
 		helper('array');
 
 		$data = dot_array_search($index, $this->getJSON(true));
-		if (is_array($data) && ! $assoc)
-		{
-			return json_decode(json_encode($data));
-		}
-		elseif (! is_array($data))
+
+		if (! is_array($data))
 		{
 			$filter = $filter ?? FILTER_DEFAULT;
 			return filter_var($data, $filter, $flags);
+		}
+
+		if (! $assoc)
+		{
+			return json_decode(json_encode($data));
 		}
 
 		return $data;
