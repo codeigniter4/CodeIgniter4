@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Config\Modules;
 use \CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled

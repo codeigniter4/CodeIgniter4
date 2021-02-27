@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Config\Config;
+use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
 

@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Pager;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Test\CIUnitTestCase;
 
 class PagerRendererTest extends CIUnitTestCase
 {

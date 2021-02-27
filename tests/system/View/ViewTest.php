@@ -1,11 +1,11 @@
 <?php
 namespace CodeIgniter\View;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use RuntimeException;
 use CodeIgniter\View\View;
+use RuntimeException;
 
 class ViewTest extends CIUnitTestCase
 {

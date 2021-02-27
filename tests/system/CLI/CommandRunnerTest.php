@@ -1,12 +1,12 @@
 <?php
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use Config\Services;

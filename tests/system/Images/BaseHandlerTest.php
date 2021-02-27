@@ -1,10 +1,10 @@
 <?php namespace CodeIgniter\Images;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Images\Exceptions\ImageException;
-use CodeIgniter\Config\Services;
+use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**

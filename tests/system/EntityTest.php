@@ -2,12 +2,12 @@
 
 namespace CodeIgniter;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use ReflectionException;
-use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use DateTime;
+use ReflectionException;
 use Tests\Support\SomeEntity;
 
 class EntityTest extends CIUnitTestCase

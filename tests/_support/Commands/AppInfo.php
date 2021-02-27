@@ -1,10 +1,10 @@
 <?php
 namespace Tests\Support\Commands;
 
-use RuntimeException;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
+use RuntimeException;
 
 class AppInfo extends BaseCommand
 {

@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\Router;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Config\Modules;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled

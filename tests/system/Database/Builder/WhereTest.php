@@ -1,10 +1,10 @@
 <?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
 use InvalidArgumentException;
 use stdClass;
-use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Test\Mock\MockConnection;
 
 class WhereTest extends CIUnitTestCase
 {

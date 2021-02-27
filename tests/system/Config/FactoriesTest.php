@@ -4,10 +4,10 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Widgets\OtherWidget;
-use Tests\Support\Widgets\SomeWidget;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Widgets\OtherWidget;
+use Tests\Support\Widgets\SomeWidget;
 
 class FactoriesTest extends CIUnitTestCase
 {

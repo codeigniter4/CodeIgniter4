@@ -2,8 +2,8 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use stdClass;
 use Config\DocTypes;
+use stdClass;
 
 class ConfigTest extends CIUnitTestCase
 {

@@ -1,10 +1,10 @@
 <?php
 namespace Tests\Support\Commands;
 
-use ReflectionException;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
+use ReflectionException;
 
 class InvalidCommand extends BaseCommand
 {

@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 class URITest extends CIUnitTestCase

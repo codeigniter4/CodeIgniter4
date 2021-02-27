@@ -1,9 +1,9 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**

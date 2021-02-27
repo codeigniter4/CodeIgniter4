@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Parser;
 
 class ParserFilterTest extends CIUnitTestCase

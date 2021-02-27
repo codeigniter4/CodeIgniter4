@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Config\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Honeypot;
 
 /**
  * @backupGlobals enabled

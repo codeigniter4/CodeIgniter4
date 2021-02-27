@@ -2,12 +2,12 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
-use CURLFile;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use CURLFile;
 
 class CURLRequestTest extends CIUnitTestCase
 {

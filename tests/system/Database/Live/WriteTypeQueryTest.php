@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive

@@ -1,15 +1,15 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
-use Psr\Log\LoggerInterface;
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Psr\Log\LoggerInterface;
 
 /**
  * Exercise our core Controller class.

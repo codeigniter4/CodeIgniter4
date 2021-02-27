@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\CLI;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use ReflectionProperty;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use ReflectionProperty;
 
 class CLITest extends CIUnitTestCase
 {

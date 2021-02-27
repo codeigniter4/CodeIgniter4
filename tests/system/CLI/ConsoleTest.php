@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Config\DotEnv;
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;

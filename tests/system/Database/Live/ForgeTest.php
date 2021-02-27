@@ -2,12 +2,12 @@
 
 namespace CodeIgniter\Database\Live;
 
-use Config\Database;
-use InvalidArgumentException;
-use RuntimeException;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Database;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * @group DatabaseLive

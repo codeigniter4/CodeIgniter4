@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\FeatureResponse;
 use CodeIgniter\Test\FeatureTestCase;
 

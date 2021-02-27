@@ -1,11 +1,11 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**

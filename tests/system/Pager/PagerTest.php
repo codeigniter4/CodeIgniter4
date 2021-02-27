@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Pager;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Pager;
 use Config\Services;

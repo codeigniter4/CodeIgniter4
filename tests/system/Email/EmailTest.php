@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Email;
 
+use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
-use CodeIgniter\Events\Events;
 
 class EmailTest extends CIUnitTestCase
 {

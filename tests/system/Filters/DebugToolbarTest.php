@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 
 /**

@@ -3,8 +3,8 @@
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Validation\TestRules;
 use Config\Services;
+use Tests\Support\Validation\TestRules;
 
 class FormatRulesTest extends CIUnitTestCase
 {

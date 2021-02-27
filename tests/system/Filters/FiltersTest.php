@@ -2,10 +2,10 @@
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Test\CIUnitTestCase;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';

@@ -1,9 +1,9 @@
 <?php
 namespace Tests\Support\Controllers;
 
-use RuntimeException;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use RuntimeException;
 
 /**
  * This is a testing only controller, intended to blow up in multiple

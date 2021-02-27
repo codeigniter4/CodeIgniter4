@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\Router;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\HTTP\IncomingRequest;
-use Config\Modules;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
 class RouterTest extends CIUnitTestCase
 {

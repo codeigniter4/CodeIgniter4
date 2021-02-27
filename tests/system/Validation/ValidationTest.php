@@ -1,13 +1,13 @@
 <?php namespace CodeIgniter\Validation;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Validation\TestRules;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Tests\Support\Validation\TestRules;
 
 class ValidationTest extends CIUnitTestCase
 {

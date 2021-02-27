@@ -1,9 +1,9 @@
 <?php
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
-use CodeIgniter\Cache\Handlers\DummyHandler;
 
 class CacheFactoryTest extends CIUnitTestCase
 {

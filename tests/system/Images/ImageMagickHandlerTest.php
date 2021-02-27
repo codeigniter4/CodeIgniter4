@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Images;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Config\Images;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Images;
 
 /**
  * Unit testing for the ImageMagick image handler.

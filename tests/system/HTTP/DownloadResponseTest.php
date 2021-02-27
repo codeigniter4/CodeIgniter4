@@ -1,9 +1,9 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 

@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Database\Live;
 
-use Config\Database;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Database;
 
 /**
  * @group DatabaseLive

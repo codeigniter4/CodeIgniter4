@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use Exception;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Exception;
 
 /**
  * @group DatabaseLive

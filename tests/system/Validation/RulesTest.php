@@ -2,12 +2,12 @@
 
 namespace CodeIgniter\Validation;
 
-use Tests\Support\Validation\TestRules;
+use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Validation\Rules;
+use Config\Database;
 use Config\Services;
 use stdClass;
-use CodeIgniter\Test\CIDatabaseTestCase;
-use Config\Database;
-use CodeIgniter\Validation\Rules;
+use Tests\Support\Validation\TestRules;
 
 class RulesTest extends CIDatabaseTestCase
 {

@@ -2,14 +2,14 @@
 
 namespace CodeIgniter\HTTP;
 
-use Config\Modules;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
+use Config\Modules;
 use Config\Services;
 
 class RedirectResponseTest extends CIUnitTestCase

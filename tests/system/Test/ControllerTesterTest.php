@@ -1,13 +1,13 @@
 <?php
 namespace CodeIgniter\Test;
 
-use InvalidArgumentException;
 use App\Controllers\Home;
-use Tests\Support\Controllers\Popcorn;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
+use InvalidArgumentException;
+use Tests\Support\Controllers\Popcorn;
 
 /**
  * Exercise our Controller class.

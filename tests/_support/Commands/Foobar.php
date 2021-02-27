@@ -1,7 +1,7 @@
 <?php
 
-use Config\App;
 use CodeIgniter\CLI\CLI;
+use Config\App;
 
 return [
    'foo' => 'The command will use this as foo.',

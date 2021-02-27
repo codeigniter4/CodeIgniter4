@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\View;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use stdClass;
 use CodeIgniter\Database\MySQLi\Result;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
+use stdClass;
 
 class TableTest extends CIUnitTestCase
 {

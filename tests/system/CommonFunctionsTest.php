@@ -2,9 +2,7 @@
 
 namespace CodeIgniter;
 
-use Config\Modules;
 use CodeIgniter\Config\BaseService;
-use RuntimeException;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -18,6 +16,8 @@ use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Logger;
+use Config\Modules;
+use RuntimeException;
 use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
 

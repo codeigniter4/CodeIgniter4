@@ -1,20 +1,20 @@
 <?php
 namespace CodeIgniter\RESTful;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\CodeIgniter;
-use CodeIgniter\Test\Mock\MockResourceController;
-use Tests\Support\Models\UserModel;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
-use Psr\Log\NullLogger;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
+use Psr\Log\NullLogger;
+use Tests\Support\Models\UserModel;
 
 /**
  * Exercise our ResourceController class.

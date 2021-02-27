@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 class NegotiateTest extends CIUnitTestCase

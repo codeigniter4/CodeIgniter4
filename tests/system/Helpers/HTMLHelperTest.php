@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Test\CIUnitTestCase;
 
 final class HTMLHelperTest extends CIUnitTestCase
 {

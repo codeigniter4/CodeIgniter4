@@ -1,12 +1,12 @@
 <?php
 namespace CodeIgniter\I18n;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Locale;
 use CodeIgniter\I18n\Exceptions\I18nException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
 class TimeTest extends CIUnitTestCase
 {

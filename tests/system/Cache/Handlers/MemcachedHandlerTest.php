@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
-use CodeIgniter\CLI\CLI;
 
 class MemcachedHandlerTest extends CIUnitTestCase
 {

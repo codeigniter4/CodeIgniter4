@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Database\Builder;
 
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class FromTest extends CIUnitTestCase

@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Commands\AppInfo;
 use CodeIgniter\CLI\CommandRunner;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use Tests\Support\Commands\AppInfo;
 
 class BaseCommandTest extends CIUnitTestCase
 {
