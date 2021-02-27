@@ -252,7 +252,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	 *
 	 * @throws CookieException
 	 */
-	public function __construct(
+	final public function __construct(
 		string $name,
 		string $value = '',
 		$expires = 0,
