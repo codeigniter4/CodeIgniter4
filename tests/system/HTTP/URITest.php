@@ -1,12 +1,13 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 
-class URITest extends \CodeIgniter\Test\CIUnitTestCase
+class URITest extends CIUnitTestCase
 {
 
 	protected function setUp(): void

@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Support\Commands;
 
+use ReflectionException;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
@@ -14,7 +15,7 @@ class InvalidCommand extends BaseCommand
 
 	public function __construct()
 	{
-		throw new \ReflectionException();
+		throw new ReflectionException();
 	}
 
 	public function run(array $params)

@@ -1,5 +1,9 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+use CodeIgniter\CLI\CLI;
+
 /**
  * CodeIgniter
  *
@@ -35,8 +39,7 @@
  * @since      Version 4.0.0
  * @filesource
  */
-
-class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class RedisHandlerTest extends CIUnitTestCase
 {
 	private $redisHandler;
 	private static $key1 = 'key1';
@@ -58,7 +61,7 @@ class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->redisHandler = new RedisHandler($this->config);
 		if (! $this->redisHandler->isSupported())
@@ -97,7 +100,7 @@ class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->redisHandler->get(self::$key1));
 		$this->assertNull($this->redisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 
@@ -110,7 +113,7 @@ class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->redisHandler->get(self::$key1));
 		$this->assertNull($this->redisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 

@@ -2,12 +2,13 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
  * @backupGlobals enabled
  */
-class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
+class DotEnvTest extends CIUnitTestCase
 {
 
 	protected $fixturesFolder;

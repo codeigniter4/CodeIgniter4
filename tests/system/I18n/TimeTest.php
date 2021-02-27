@@ -1,12 +1,14 @@
 <?php
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use Locale;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
 
-class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
+class TimeTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -14,7 +16,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testNewTimeNow()

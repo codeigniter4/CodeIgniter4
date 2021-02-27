@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Honeypot;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
@@ -9,7 +10,7 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
 
 	protected $config;

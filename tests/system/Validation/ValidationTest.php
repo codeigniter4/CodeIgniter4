@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use Tests\Support\Validation\TestRules;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
@@ -7,7 +9,7 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 
-class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
+class ValidationTest extends CIUnitTestCase
 {
 
 	/**
@@ -16,11 +18,11 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $validation;
 	protected $config = [
 		'ruleSets'      => [
-			\CodeIgniter\Validation\Rules::class,
-			\CodeIgniter\Validation\FormatRules::class,
-			\CodeIgniter\Validation\FileRules::class,
-			\CodeIgniter\Validation\CreditCardRules::class,
-			\Tests\Support\Validation\TestRules::class,
+			Rules::class,
+			FormatRules::class,
+			FileRules::class,
+			CreditCardRules::class,
+			TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
@@ -61,7 +63,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		Services::reset(true);
 
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -544,7 +546,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(ValidationException::class);
 
 		$this->config['ruleSets'] = null;
-		$this->validation         = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation         = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$data = [

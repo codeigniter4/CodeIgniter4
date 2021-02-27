@@ -2,9 +2,10 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\HTTP\URI;
 
-class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
+class PagerRendererTest extends CIUnitTestCase
 {
 	/**
 	 * @var URI

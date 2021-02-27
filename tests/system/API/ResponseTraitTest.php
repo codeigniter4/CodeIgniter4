@@ -1,6 +1,8 @@
 <?php
 namespace CodeIgniter\API;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
@@ -8,7 +10,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 
-class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseTraitTest extends CIUnitTestCase
 {
 
 	protected $request;
@@ -157,7 +159,7 @@ EOH;
 	{
 		$this->formatter = null;
 		$controller      = $this->makeController();
-		$payload         = new \stdClass();
+		$payload         = new stdClass();
 		$payload->name   = 'Tom';
 		$payload->id     = 1;
 		$expected        = <<<EOH
@@ -418,9 +420,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $i => $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 
@@ -446,9 +448,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $i => $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 

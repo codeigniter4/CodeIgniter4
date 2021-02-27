@@ -1,5 +1,8 @@
 <?php
 
+namespace CodeIgniter\Test;
+
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\FeatureResponse;
 use CodeIgniter\Test\FeatureTestCase;
@@ -50,7 +53,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response = $this->call('get', 'home');
 
 		$this->assertInstanceOf(FeatureResponse::class, $response);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\Response::class, $response->response);
+		$this->assertInstanceOf(Response::class, $response->response);
 		$this->assertTrue($response->isOK());
 		$this->assertEquals('Hello Earth', $response->response->getBody());
 		$this->assertEquals(200, $response->response->getStatusCode());

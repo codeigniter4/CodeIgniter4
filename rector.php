@@ -24,13 +24,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
 
 	// paths to refactor; solid alternative to CLI arguments
-	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system']);
+	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests']);
 
 	// is there a file you need to skip?
 	$parameters->set(Option::SKIP, [
 		__DIR__ . '/app/Views',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 		__DIR__ . '/system/ThirdParty',
+		__DIR__ . '/tests/system/Config/fixtures',
+		__DIR__ . '/tests/system/Models',
+		__DIR__ . '/tests/_support',
 	]);
 
 	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:

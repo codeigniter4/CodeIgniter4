@@ -2,7 +2,10 @@
 
 namespace CodeIgniter\Config;
 
-class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use RuntimeException;
+
+class BaseConfigTest extends CIUnitTestCase
 {
 
 	protected $fixturesFolder;
@@ -249,7 +252,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
 

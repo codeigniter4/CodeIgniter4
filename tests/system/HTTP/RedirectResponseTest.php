@@ -2,6 +2,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use Config\Modules;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -28,7 +30,7 @@ class RedirectResponseTest extends CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com/';
 
-		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -70,7 +72,7 @@ class RedirectResponseTest extends CIUnitTestCase
 
 	public function testRedirectRouteBad()
 	{
-		$this->expectException(Exceptions\HTTPException::class);
+		$this->expectException(HTTPException::class);
 
 		$response = new RedirectResponse(new App());
 

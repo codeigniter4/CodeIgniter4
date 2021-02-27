@@ -1,9 +1,10 @@
 <?php
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 
-final class HTMLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+final class HTMLHelperTest extends CIUnitTestCase
 {
 	private $tracks;
 

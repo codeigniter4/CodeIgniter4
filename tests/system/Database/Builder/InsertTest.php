@@ -1,9 +1,10 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
+class InsertTest extends CIUnitTestCase
 {
 	protected $db;
 

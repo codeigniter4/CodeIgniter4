@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Helpers;
 
-class SecurityHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class SecurityHelperTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{

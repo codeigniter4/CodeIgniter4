@@ -73,11 +73,11 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertTrue(in_array('test', $databases));
+			$this->assertTrue(in_array('test', $databases, true));
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
@@ -94,7 +94,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
 		{
 			$exist = $util->databaseExists('test');
 

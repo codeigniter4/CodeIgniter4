@@ -1,13 +1,15 @@
 <?php
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
 
 	protected $config;
@@ -19,7 +21,7 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 		$this->config = new \Config\Filters();
-		$this->honey  = new \Config\Honeypot();
+		$this->honey  = new Honeypot();
 
 		unset($_POST[$this->honey->name]);
 		$_SERVER['REQUEST_METHOD'] = 'POST';

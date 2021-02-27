@@ -74,7 +74,7 @@ class WriteTypeQueryTest extends CIDatabaseTestCase
 
 	public function testReplace()
 	{
-		if (in_array($this->db->DBDriver, ['Postgre', 'SQLSRV']))
+		if (in_array($this->db->DBDriver, ['Postgre', 'SQLSRV'], true))
 		{
 			// these two were complaining about the builder stuff so i just cooked up this
 			$sql = 'REPLACE INTO `db_jobs` (`title`, `name`, `date`) VALUES (:title:, :name:, :date:)';

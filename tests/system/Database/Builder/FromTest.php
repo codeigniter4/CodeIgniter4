@@ -1,10 +1,11 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class FromTest extends \CodeIgniter\Test\CIUnitTestCase
+class FromTest extends CIUnitTestCase
 {
 	protected $db;
 

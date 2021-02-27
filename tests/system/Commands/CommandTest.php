@@ -2,11 +2,12 @@
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 use Tests\Support\Commands\ParamsReveal;
 
-class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
+class CommandTest extends CIUnitTestCase
 {
 
 	private $streamFilter;

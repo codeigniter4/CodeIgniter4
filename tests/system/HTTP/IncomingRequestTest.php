@@ -1,17 +1,19 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class IncomingRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -249,7 +251,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-		$this->expectException(Exceptions\HTTPException::class);
+		$this->expectException(HTTPException::class);
 		$this->request->negotiate('something bogus', ['iso-8859-5', 'unicode-1-1']);
 	}
 

@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Support\Commands;
 
+use RuntimeException;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
@@ -24,7 +25,7 @@ class AppInfo extends BaseCommand
 		{
 			CLI::color('test', 'white', 'Background');
 		}
-		catch (\RuntimeException $oops)
+		catch (RuntimeException $oops)
 		{
 			$this->showError($oops);
 		}

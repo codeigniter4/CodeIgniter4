@@ -1,9 +1,12 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
+use stdClass;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
+class WhereTest extends CIUnitTestCase
 {
 	protected $db;
 
@@ -234,7 +237,7 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testWhereInvalidKeyThrowInvalidArgumentException($key)
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$builder = $this->db->table('jobs');
 
 		$builder->whereIn($key, ['Politician', 'Accountant']);
@@ -247,7 +250,7 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		return [
 			'null'                    => [null],
 			'not array'               => ['not array'],
-			'not instanceof \Closure' => [new \stdClass],
+			'not instanceof \Closure' => [new stdClass],
 		];
 	}
 
@@ -256,7 +259,7 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$builder = $this->db->table('jobs');
 
 		$builder->whereIn('name', $values);

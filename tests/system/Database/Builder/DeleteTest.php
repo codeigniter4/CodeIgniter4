@@ -1,8 +1,9 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
+class DeleteTest extends CIUnitTestCase
 {
 	protected $db;
 

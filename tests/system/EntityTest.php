@@ -2,12 +2,15 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionException;
+use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
+class EntityTest extends CIUnitTestCase
 {
 
 	use ReflectionHelper;
@@ -108,7 +111,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('made it', $entity->bar);
 
 		// But it shouldn't actually set a class property for the original name...
-		$this->expectException(\ReflectionException::class);
+		$this->expectException(ReflectionException::class);
 		$this->getPrivateProperty($entity, 'bar');
 	}
 
@@ -191,7 +194,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt         = new \DateTime('now');
+		$dt         = new DateTime('now');
 		$entity     = $this->getEntity();
 		$attributes = [
 			'created_at' => $dt,
@@ -246,7 +249,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt     = new \DateTime('now');
+		$dt     = new DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;

@@ -169,7 +169,7 @@ class SelectTest extends CIDatabaseTestCase
 
 		foreach ($users as $user)
 		{
-			$this->assertTrue(in_array($user['id'], [1, 2, 3]));
+			$this->assertTrue(in_array($user['id'], [1, 2, 3], true));
 		}
 	}
 
@@ -188,7 +188,7 @@ class SelectTest extends CIDatabaseTestCase
 
 		foreach ($users as $user)
 		{
-			$this->assertTrue(in_array($user['id'], [1, 2, 3]));
+			$this->assertTrue(in_array($user['id'], [1, 2, 3], true));
 		}
 	}
 }

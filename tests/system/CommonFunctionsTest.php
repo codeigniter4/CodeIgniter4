@@ -1,5 +1,10 @@
 <?php
 
+namespace CodeIgniter;
+
+use Config\Modules;
+use CodeIgniter\Config\BaseService;
+use RuntimeException;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -92,9 +97,9 @@ class CommonFunctionsTest extends CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection(
-			Services::locator(), new \Config\Modules()
+		$response = $this->createMock(Response::class);
+		$routes   = new RouteCollection(
+			Services::locator(), new Modules()
 		);
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
@@ -104,12 +109,12 @@ class CommonFunctionsTest extends CIUnitTestCase
 		$response->method('redirect')
 				->will($this->returnArgument(0));
 
-		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect('base'));
+		$this->assertInstanceOf(RedirectResponse::class, redirect('base'));
 	}
 
 	public function testRedirectDefault()
 	{
-		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect());
+		$this->assertInstanceOf(RedirectResponse::class, redirect());
 	}
 
 	public function testView()
@@ -270,7 +275,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com/';
 
-		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -306,7 +311,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com/';
 
-		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -367,14 +372,14 @@ class CommonFunctionsTest extends CIUnitTestCase
 
 		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
 		$session->setLogger(new TestLogger(new Logger()));
-		\CodeIgniter\Config\BaseService::injectMock('session', $session);
+		BaseService::injectMock('session', $session);
 	}
 
 	// Make sure cookies are set by RedirectResponse this way
 	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	public function testRedirectResponseCookies1()
 	{
-		$login_time = time();
+		$loginTime = time();
 
 		$response = new Response(new App());
 
@@ -383,7 +388,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 
 		$answer1 = redirect()->route('login')
 				->setCookie('foo', 'onething', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+				->setCookie('login_time', $loginTime, YEAR);
 
 		$this->assertTrue($answer1->hasCookie('foo', 'onething'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
@@ -468,7 +473,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 			helper('baguette');
 			$exception = false;
 		}
-		catch (\RuntimeException $e)
+		catch (RuntimeException $e)
 		{
 			$exception = true;
 		}
@@ -491,7 +496,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 			helper('baguette');
 			$exception = false;
 		}
-		catch (\RuntimeException $e)
+		catch (RuntimeException $e)
 		{
 			$exception = true;
 		}

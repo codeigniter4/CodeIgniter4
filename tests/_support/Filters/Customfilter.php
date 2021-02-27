@@ -1,12 +1,13 @@
 <?php
 namespace Tests\Support\Filters;
 
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 
-class Customfilter implements \CodeIgniter\Filters\FilterInterface
+class Customfilter implements FilterInterface
 {
 
 	public function before(RequestInterface $request, $arguments = null)
@@ -18,8 +19,7 @@ class Customfilter implements \CodeIgniter\Filters\FilterInterface
 
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
-} 
+}

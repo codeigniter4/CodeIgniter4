@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Test;
 
+use InvalidArgumentException;
+use stdClass;
 use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Models\EntityModel;
@@ -48,7 +50,7 @@ class FabricatorTest extends CIUnitTestCase
 
 	public function testConstructorWithInvalid()
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
 		$fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
@@ -314,7 +316,7 @@ class FabricatorTest extends CIUnitTestCase
 
 		$result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
+		$this->assertInstanceOf(stdClass::class, $result);
 	}
 
 	public function testMakeObjectReturnsStdClassForObjectReturnType()
@@ -323,7 +325,7 @@ class FabricatorTest extends CIUnitTestCase
 
 		$result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
+		$this->assertInstanceOf(stdClass::class, $result);
 	}
 
 	public function testMakeObjectUsesOverrides()
