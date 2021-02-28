@@ -3,6 +3,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Database;
 
 /**
  * @group DatabaseLive
@@ -59,7 +60,7 @@ class MetadataTest extends CIDatabaseTestCase
 
 	public function testConstrainPrefixIgnoresOtherTables()
 	{
-		$this->forge = \Config\Database::forge($this->DBGroup);
+		$this->forge = Database::forge($this->DBGroup);
 
 		// Stash the prefix and change it
 		$DBPrefix = $this->db->getPrefix();

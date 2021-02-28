@@ -448,7 +448,7 @@ class Builder extends BaseBuilder
 		$common  = array_intersect($setKeys, $keyFields);
 
 		$bingo = [];
-		foreach ($common as $k => $v)
+		foreach ($common as $v)
 		{
 			$bingo[$v] = $set[$v];
 		}

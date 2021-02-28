@@ -4,12 +4,14 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class URLHelperTest extends CIUnitTestCase
 {
 	/**
 	 * @var App
@@ -1406,7 +1408,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
 	{
-		$this->expectException(\CodeIgniter\Router\Exceptions\RouterException::class);
+		$this->expectException(RouterException::class);
 
 		url_to($route);
 	}

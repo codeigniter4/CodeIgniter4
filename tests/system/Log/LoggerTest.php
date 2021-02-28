@@ -1,12 +1,15 @@
-<?php
+<?php namespace CodeIgniter\Log;
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use CodeIgniter\Test\TestLogger;
+use Exception;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
+class LoggerTest extends CIUnitTestCase
 {
 
 	public function testThrowsExceptionWithBadHandlerSettings()
@@ -226,7 +229,7 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			throw new Exception('These are not the droids you are looking for');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
 		}
@@ -411,7 +414,7 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
-		$logger = new \CodeIgniter\Test\TestLogger($config);
+		$logger = new TestLogger($config);
 
 		$ohoh     = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';

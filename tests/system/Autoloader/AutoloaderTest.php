@@ -10,7 +10,7 @@ use Config\Services;
 class AutoloaderTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $loader;
 

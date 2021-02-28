@@ -2,11 +2,12 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
+class CSRFTest extends CIUnitTestCase
 {
 
 	protected $config;

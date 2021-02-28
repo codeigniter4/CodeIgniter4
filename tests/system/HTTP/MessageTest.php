@@ -3,12 +3,13 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 
-class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
+class MessageTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var CodeIgniter\HTTP\Message
+	 * @var Message
 	 */
 	protected $message;
 
@@ -263,15 +264,15 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testPopulateHeadersWithoutContentType()
 	{
 		// fail path, if the CONTENT_TYPE doesn't exist
-		$original     = $_SERVER;
-		$_SERVER      = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
-		$original_env = getenv('CONTENT_TYPE');
+		$original    = $_SERVER;
+		$_SERVER     = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
+		$originalEnv = getenv('CONTENT_TYPE');
 		putenv('CONTENT_TYPE');
 
 		$this->message->populateHeaders();
 
 		$this->assertNull($this->message->header('content-type'));
-		putenv("CONTENT_TYPE=$original_env");
+		putenv("CONTENT_TYPE=$originalEnv");
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}

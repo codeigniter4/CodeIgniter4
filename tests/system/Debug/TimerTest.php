@@ -1,7 +1,9 @@
 <?php
 namespace CodeIgniter\Debug;
 
-class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class TimerTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void

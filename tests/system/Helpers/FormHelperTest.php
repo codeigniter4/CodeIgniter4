@@ -4,10 +4,11 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
 
-class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class FormHelperTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -29,7 +30,7 @@ class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -90,7 +91,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -127,7 +128,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -164,7 +165,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -208,7 +209,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -297,12 +298,12 @@ EOH;
 		$expected = <<<EOH
 <input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
 EOH;
-		$data = [
+		$data     = [
 			'id'   => 'identity',
 			'name' => 'identity',
 			'type' => 'email',
 		];
-		$extra = [
+		$extra    = [
 			'class' => 'form-control form-control-lg',
 		];
 		$this->assertEquals($expected, form_input($data, '', $extra));
@@ -390,7 +391,7 @@ EOH;
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
-		$expected       = <<<EOH
+		$expected     = <<<EOH
 <select name="shirts" multiple="multiple">
 <option value="small" selected="selected">Small Shirt</option>
 <option value="med">Medium Shirt</option>
@@ -398,11 +399,11 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$shirts_on_sale = [
+		$shirtsOnSale = [
 			'small',
 			'large',
 		];
-		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirts_on_sale));
+		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirtsOnSale));
 		$options  = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',

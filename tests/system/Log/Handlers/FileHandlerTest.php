@@ -1,11 +1,12 @@
 <?php
 namespace CodeIgniter\Log\Handlers;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 
-class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileHandlerTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void

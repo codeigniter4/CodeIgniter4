@@ -2,12 +2,13 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 
 /**
  * @backupGlobals enabled
  */
-class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
+class DebugToolbarTest extends CIUnitTestCase
 {
 
 	protected $request;

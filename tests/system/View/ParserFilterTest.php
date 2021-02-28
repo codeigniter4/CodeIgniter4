@@ -1,8 +1,13 @@
 <?php
 
-use CodeIgniter\View\Parser;
+namespace CodeIgniter\View;
 
-class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\View\Parser;
+use Config\View;
+
+class ParserFilterTest extends CIUnitTestCase
 {
 	protected $loader;
 	protected $viewsDir;
@@ -12,10 +17,10 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->loader = \CodeIgniter\Config\Services::locator();
+		$this->loader = Services::locator();
 		;
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
+		$this->config   = new View();
 	}
 
 	//--------------------------------------------------------------------
@@ -58,12 +63,12 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today_dash      = date('Y-m-d');
-		$today_dot       = date('Y.m.d');
-		$today_space     = date('Y m d');
-		$today_colon     = date('Y:m:d');
-		$today_slash     = date('Y/m/d');
-		$today_backslash = date('Y\\\m\\\d');
+		$todayDash      = date('Y-m-d');
+		$todayDot       = date('Y.m.d');
+		$todaySpace     = date('Y m d');
+		$todayColon     = date('Y:m:d');
+		$todaySlash     = date('Y/m/d');
+		$todayBackslash = date('Y\\\m\\\d');
 
 		$data = [
 			'value1' => time(),
@@ -73,7 +78,7 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) } { value1|date(Y.m.d) } { value1|date(Y m d) } { value1|date(Y:m:d) } { value1|date(Y/m/d) } { value1|date(Y\\\m\\\d) }';
 
 		$parser->setData($data);
-		$this->assertEquals("{$today_dash} {$today_dash} {$today_dot} {$today_space} {$today_colon} {$today_slash} {$today_backslash}", $parser->renderString($template));
+		$this->assertEquals("{$todayDash} {$todayDash} {$todayDot} {$todaySpace} {$todayColon} {$todaySlash} {$todayBackslash}", $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------

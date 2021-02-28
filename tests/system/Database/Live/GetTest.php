@@ -83,8 +83,8 @@ class GetTest extends CIDatabaseTestCase
 						 ->get()
 						 ->getFieldNames();
 
-		$this->assertTrue(in_array('name', $jobs));
-		$this->assertTrue(in_array('description', $jobs));
+		$this->assertTrue(in_array('name', $jobs, true));
+		$this->assertTrue(in_array('description', $jobs, true));
 	}
 
 	//--------------------------------------------------------------------
@@ -98,88 +98,88 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
 
-		$type_test = $this->db->table('type_test')
+		$typeTest = $this->db->table('type_test')
 							  ->get()
 							  ->getFieldData();
 
 		if ($this->db->DBDriver === 'SQLite3')
 		{
-			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
-			$this->assertEquals('text', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('text', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('integer', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('integer', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('float', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('text', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('text', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('text', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('text', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('integer', $type_test[12]->type_name);  //BIGINT
-			$this->assertEquals('float', $type_test[13]->type_name);  //REAL
-			$this->assertEquals('text', $type_test[14]->type_name);  //ENUM
-			$this->assertEquals('text', $type_test[15]->type_name);  //SET
-			$this->assertEquals('text', $type_test[16]->type_name);  //MEDIUMTEXT
-			$this->assertEquals('float', $type_test[17]->type_name);  //DOUBLE
-			$this->assertEquals('float', $type_test[18]->type_name);  //DECIMAL
-			$this->assertEquals('text', $type_test[19]->type_name);  //BLOB
+			$this->assertEquals('integer', $typeTest[0]->type_name); //INTEGER AUTO INC
+			$this->assertEquals('text', $typeTest[1]->type_name);  //VARCHAR
+			$this->assertEquals('text', $typeTest[2]->type_name);  //CHAR
+			$this->assertEquals('text', $typeTest[3]->type_name);  //TEXT
+			$this->assertEquals('integer', $typeTest[4]->type_name);  //SMALLINT
+			$this->assertEquals('integer', $typeTest[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $typeTest[6]->type_name);  //FLOAT
+			$this->assertEquals('float', $typeTest[7]->type_name);  //NUMERIC
+			$this->assertEquals('text', $typeTest[8]->type_name);  //DATE
+			$this->assertEquals('text', $typeTest[9]->type_name);  //TIME
+			$this->assertEquals('text', $typeTest[10]->type_name);  //DATETIME
+			$this->assertEquals('text', $typeTest[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('integer', $typeTest[12]->type_name);  //BIGINT
+			$this->assertEquals('float', $typeTest[13]->type_name);  //REAL
+			$this->assertEquals('text', $typeTest[14]->type_name);  //ENUM
+			$this->assertEquals('text', $typeTest[15]->type_name);  //SET
+			$this->assertEquals('text', $typeTest[16]->type_name);  //MEDIUMTEXT
+			$this->assertEquals('float', $typeTest[17]->type_name);  //DOUBLE
+			$this->assertEquals('float', $typeTest[18]->type_name);  //DECIMAL
+			$this->assertEquals('text', $typeTest[19]->type_name);  //BLOB
 		}
 		if ($this->db->DBDriver === 'MySQLi')
 		{
-			$this->assertEquals('long', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('var_string', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('string', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('blob', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('short', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('long', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('newdecimal', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('datetime', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('longlong', $type_test[12]->type_name); //BIGINT
-			$this->assertEquals('double', $type_test[13]->type_name);  //REAL
-			$this->assertEquals('string', $type_test[14]->type_name);  //ENUM
-			$this->assertEquals('string', $type_test[15]->type_name);  //SET
-			$this->assertEquals('blob', $type_test[16]->type_name);  //MEDIUMTEXT
-			$this->assertEquals('double', $type_test[17]->type_name);  //DOUBLE
-			$this->assertEquals('newdecimal', $type_test[18]->type_name);  //DECIMAL
-			$this->assertEquals('blob', $type_test[19]->type_name);  //BLOB
+			$this->assertEquals('long', $typeTest[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('var_string', $typeTest[1]->type_name);  //VARCHAR
+			$this->assertEquals('string', $typeTest[2]->type_name);  //CHAR
+			$this->assertEquals('blob', $typeTest[3]->type_name);  //TEXT
+			$this->assertEquals('short', $typeTest[4]->type_name);  //SMALLINT
+			$this->assertEquals('long', $typeTest[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $typeTest[6]->type_name);  //FLOAT
+			$this->assertEquals('newdecimal', $typeTest[7]->type_name);  //NUMERIC
+			$this->assertEquals('date', $typeTest[8]->type_name);  //DATE
+			$this->assertEquals('time', $typeTest[9]->type_name);  //TIME
+			$this->assertEquals('datetime', $typeTest[10]->type_name);  //DATETIME
+			$this->assertEquals('timestamp', $typeTest[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('longlong', $typeTest[12]->type_name); //BIGINT
+			$this->assertEquals('double', $typeTest[13]->type_name);  //REAL
+			$this->assertEquals('string', $typeTest[14]->type_name);  //ENUM
+			$this->assertEquals('string', $typeTest[15]->type_name);  //SET
+			$this->assertEquals('blob', $typeTest[16]->type_name);  //MEDIUMTEXT
+			$this->assertEquals('double', $typeTest[17]->type_name);  //DOUBLE
+			$this->assertEquals('newdecimal', $typeTest[18]->type_name);  //DECIMAL
+			$this->assertEquals('blob', $typeTest[19]->type_name);  //BLOB
 		}
 		if ($this->db->DBDriver === 'Postgre')
 		{
-			$this->assertEquals('int4', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('bpchar', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('int2', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('int4', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float8', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('timestamp', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
+			$this->assertEquals('int4', $typeTest[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('varchar', $typeTest[1]->type_name);  //VARCHAR
+			$this->assertEquals('bpchar', $typeTest[2]->type_name);  //CHAR
+			$this->assertEquals('text', $typeTest[3]->type_name);  //TEXT
+			$this->assertEquals('int2', $typeTest[4]->type_name);  //SMALLINT
+			$this->assertEquals('int4', $typeTest[5]->type_name);  //INTEGER
+			$this->assertEquals('float8', $typeTest[6]->type_name);  //FLOAT
+			$this->assertEquals('numeric', $typeTest[7]->type_name);  //NUMERIC
+			$this->assertEquals('date', $typeTest[8]->type_name);  //DATE
+			$this->assertEquals('time', $typeTest[9]->type_name);  //TIME
+			$this->assertEquals('timestamp', $typeTest[10]->type_name);  //DATETIME
+			$this->assertEquals('timestamp', $typeTest[11]->type_name);  //TIMESTAMP
+			$this->assertEquals('int8', $typeTest[12]->type_name); //BIGINT
 		}
 		if ($this->db->DBDriver === 'SQLSRV')
 		{
-			$this->assertEquals('int', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('char', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('smallint', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('int', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals(null, $type_test[8]->type_name);  //DATE
-			$this->assertEquals(null, $type_test[9]->type_name);  //TIME
-			$this->assertEquals(null, $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('bigint', $type_test[11]->type_name); //BIGINT
-			$this->assertEquals('real', $type_test[12]->type_name);  //REAL
-			$this->assertEquals('decimal', $type_test[13]->type_name);  //DECIMAL
+			$this->assertEquals('int', $typeTest[0]->type_name); //INTEGER AUTOINC
+			$this->assertEquals('varchar', $typeTest[1]->type_name);  //VARCHAR
+			$this->assertEquals('char', $typeTest[2]->type_name);  //CHAR
+			$this->assertEquals('text', $typeTest[3]->type_name);  //TEXT
+			$this->assertEquals('smallint', $typeTest[4]->type_name);  //SMALLINT
+			$this->assertEquals('int', $typeTest[5]->type_name);  //INTEGER
+			$this->assertEquals('float', $typeTest[6]->type_name);  //FLOAT
+			$this->assertEquals('numeric', $typeTest[7]->type_name);  //NUMERIC
+			$this->assertEquals(null, $typeTest[8]->type_name);  //DATE
+			$this->assertEquals(null, $typeTest[9]->type_name);  //TIME
+			$this->assertEquals(null, $typeTest[10]->type_name);  //DATETIME
+			$this->assertEquals('bigint', $typeTest[11]->type_name); //BIGINT
+			$this->assertEquals('real', $typeTest[12]->type_name);  //REAL
+			$this->assertEquals('decimal', $typeTest[13]->type_name);  //DECIMAL
 		}
 	}
 

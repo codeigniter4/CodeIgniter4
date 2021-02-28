@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,7 +10,7 @@ use Config\App;
  * See https://apimirror.com/http/headers/content-security-policy
  * See https://cspvalidator.org/
  */
-class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
+class ContentSecurityPolicyTest extends CIUnitTestCase
 {
 
 	// Having this method as setUp() doesn't work - can't find Config\App !?

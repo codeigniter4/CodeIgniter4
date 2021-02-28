@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Exception;
 
 /**
  * @group DatabaseLive
@@ -29,7 +30,7 @@ class BadQueryTest extends CIDatabaseTestCase
 		// WARNING this value will persist! take care to roll it back.
 		$this->setPrivateProperty($this->db, 'DBDebug', true);
 		// expect an exception, class and message varies by DBMS
-		$this->expectException(\Exception::class);
+		$this->expectException(Exception::class);
 		$query = $this->db->query('SELECT * FROM table_does_not_exist');
 
 		// this code is never executed

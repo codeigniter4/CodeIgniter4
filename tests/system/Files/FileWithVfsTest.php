@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter\Files;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileWithVfsTest extends CIUnitTestCase
 {
 
 	// For VFS stuff
@@ -11,7 +12,7 @@ class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $start;
 
 	/**
-	 * @var \CodeIgniter\Files\File
+	 * @var File
 	 */
 	protected $file;
 
