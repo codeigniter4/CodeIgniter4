@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSession;
@@ -17,7 +18,9 @@ use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Logger;
 use Config\Modules;
+use InvalidArgumentException;
 use RuntimeException;
+use stdClass;
 use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
 
@@ -165,7 +168,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 	{
 		$this->injectSessionMock();
 
-		$this->assertInstanceOf(CodeIgniter\Session\Session::class, session());
+		$this->assertInstanceOf(Session::class, session());
 	}
 
 	/**

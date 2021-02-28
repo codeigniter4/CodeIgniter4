@@ -3,6 +3,7 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Mimes;
 
 class MimesTest extends CIUnitTestCase
 {
