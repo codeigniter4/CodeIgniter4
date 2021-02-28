@@ -15,16 +15,16 @@ Documentations
 
 What has been changed
 ============================================================
-- The CI4 model has much more functionality, including automatic database connection, basic CRUD, in-model validation, and automatic pagination
-- Since Namespaces has been added in CodeIgniter 4, the models must be changed to support namespaces.
+- The CI4 model has much more functionality, including automatic database connection, basic CRUD, in-model validation, and automatic pagination.
+- Since namespaces has been added to CodeIgniter 4, the models must be changed to support namespaces.
 
 Upgrade Guide
 ============================================================
-1. First, move all model files to the folder ``app/Models``
-2. Add this line just after the opening php tag: ``namespace App\Models;``
-3. Below the ``namespace App\Models;`` line add this line: ``use CodeIgniter\Model;;``
-4. Replace ``extends CI_Model`` with ``extends Model``
-5. Instead of CI3’s $this->load->model(x);, you would now use $this->x = new X();, following namespaced conventions for your component
+1. First, move all model files to the folder ``app/Models``.
+2. Add this line just after the opening php tag: ``namespace App\Models;``.
+3. Below the ``namespace App\Models;`` line add this line: ``use CodeIgniter\Model;``.
+4. Replace ``extends CI_Model`` with ``extends Model``.
+5. Instead of CI3’s ``$this->load->model(x);``, you would now use ``$this->x = new X();``, following namespaced conventions for your component. Alternatively, you can use the ``model`` function: ``$this->x = model('X');``.
 
 If you use sub-directories in your controller structure you have to change the namespace according to that.
 Example: You have a version 3 controller located in ``application/models/users/user_contact.php`` the namespace has to be ``namespace App\Models\Users;`` and the controller path in the version 4 should look like this: ``app/Models/Users/UserContact.php``

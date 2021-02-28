@@ -15,20 +15,20 @@ Documentations
 
 What has been changed
 ============================================================
-- First of all the sequential naming (``001_create_users``, ``002_create_posts``) of migrations is not longer supported. Version 4 of CodeIgniter only supports the timestamp scheme (``20121031100537_create_users``, ``20121031500638_create_posts``) . If you have used sequential naming you have to rename each migration file.
-- The migration procedure has been also changed. You can now migrate the database with a simple cli command::
+- First of all, the sequential naming (``001_create_users``, ``002_create_posts``) of migrations is not longer supported. Version 4 of CodeIgniter only supports the timestamp scheme (``20121031100537_create_users``, ``20121031500638_create_posts``) . If you have used sequential naming you have to rename each migration file.
+- The migration procedure has been also changed. You can now migrate the database with a simple CLI command::
 
     > php spark migrate
 
 Upgrade Guide
 ============================================================
 1. If your v3 project uses sequential migration names you have to change those to timestamp names.
-2. You have to move all migration files to the new folder ``app/Database/Migrations``
-3. Remove the following line ``defined('BASEPATH') OR exit('No direct script access allowed');``
-4. Add this line just after the opening php tag: ``namespace App\Database\Migrations;``
+2. You have to move all migration files to the new folder ``app/Database/Migrations``.
+3. Remove the following line ``defined('BASEPATH') OR exit('No direct script access allowed');``.
+4. Add this line just after the opening php tag: ``namespace App\Database\Migrations;``.
 5. Below the ``namespace App\Database\Migrations;`` line add this line: ``use CodeIgniter\Database\Migration;``
-6. Replace ``extends CI_Migration`` with ``extends Migration``
-7. The method names within the dbforge class has been changed. For example:
+6. Replace ``extends CI_Migration`` with ``extends Migration``.
+7. The method names within the ``Forge`` class has been changed to use camelCase. For example:
 
 - ``$this->dbforge->add_field`` to ``$this->forge->addField``
 - ``$this->dbforge->add_key`` to ``$this->forge->addKey``
@@ -49,8 +49,8 @@ Path: ``application/migrations``::
 
     defined('BASEPATH') OR exit('No direct script access allowed');
 
-    class Migration_Add_blog extends CI_Migration {
-
+    class Migration_Add_blog extends CI_Migration
+    {
             public function up()
             {
                     $this->dbforge->add_field(array(
@@ -90,7 +90,6 @@ Path: ``app/Database/Migrations``::
 
     class AddBlog extends Migration
     {
-
             public function up()
             {
                     $this->forge->addField([
