@@ -420,7 +420,7 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		foreach ($goodMimes as $i => $goodMime)
+		foreach ($goodMimes as $goodMime)
 		{
 			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
@@ -448,7 +448,7 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		foreach ($goodMimes as $i => $goodMime)
+		foreach ($goodMimes as $goodMime)
 		{
 			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}

@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Images;
 
+use Imagick;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -310,7 +311,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats(), true))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -329,7 +330,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats(), true))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -365,7 +366,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats(), true))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -387,7 +388,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats(), true))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');

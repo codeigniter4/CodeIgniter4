@@ -10,6 +10,7 @@ use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -65,4 +66,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(InlineIfToExplicitIfRector::class);
 	$services->set(PreparedValueToEarlyReturnRector::class);
 	$services->set(ShortenElseIfRector::class);
+	$services->set(RemoveUnusedForeachKeyRector::class);
 };

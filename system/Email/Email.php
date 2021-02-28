@@ -1426,7 +1426,7 @@ class Email
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
-		foreach ($this->attachments as $i => $attachment)
+		foreach ($this->attachments as $attachment)
 		{
 			if (isset($multipart) && $attachment['multipart'] !== $multipart)
 			{

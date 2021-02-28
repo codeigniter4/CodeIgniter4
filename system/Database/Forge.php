@@ -796,7 +796,7 @@ class Forge
 			return false;
 		}
 
-		foreach ($sqls as $i => $sql)
+		foreach ($sqls as $sql)
 		{
 			if ($this->db->query($sql) === false)
 			{
@@ -877,7 +877,7 @@ class Forge
 
 		if ($sqls !== null)
 		{
-			foreach ($sqls as $i => $sql)
+			foreach ($sqls as $sql)
 			{
 				if ($this->db->query($sql) === false)
 				{
