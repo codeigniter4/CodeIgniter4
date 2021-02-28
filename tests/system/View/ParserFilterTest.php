@@ -5,7 +5,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Parser;
-use Config;
+use Config\View;
 
 class ParserFilterTest extends CIUnitTestCase
 {
@@ -20,7 +20,7 @@ class ParserFilterTest extends CIUnitTestCase
 		$this->loader = Services::locator();
 		;
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
+		$this->config   = new View();
 	}
 
 	//--------------------------------------------------------------------
