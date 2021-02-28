@@ -447,6 +447,11 @@ You can solve this problem by lowering the priority of the route using the `` or
 
     // The "admin" route will now be processed before the wildcard router.
 
+
+.. note:: By default, all routes have a priority of 0.
+The higher the number specified in "order", the lower the priority of the route.
+
+
 Routes Configuration Options
 ============================
 
