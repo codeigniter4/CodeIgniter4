@@ -151,9 +151,10 @@ class Entity implements JsonSerializable
 
 			if ($recursive)
 			{
+				//@todo: handle arrays of entities
 				if ($return[$key] instanceof Entity)
 				{
-					$return[$key] = $return[$key]->toArray($onlyChanged, $cast, $recursive);
+					$return[$key] = $return[$key]->toArray(false, $cast, $recursive);
 				}
 				elseif (is_callable([$return[$key], 'toArray']))
 				{
@@ -184,10 +185,11 @@ class Entity implements JsonSerializable
 		{
 			if ($recursive)
 			{
-				return array_map(function ($value) use ($onlyChanged, $recursive) {
+				return array_map(function ($value) use ($recursive) {
+					//@todo: handle arrays of entities
 					if ($value instanceof Entity)
 					{
-						$value = $value->toRawArray($onlyChanged, $recursive);
+						$value = $value->toRawArray(false, $recursive);
 					}
 					elseif (is_callable([$value, 'toRawArray']))
 					{
@@ -209,9 +211,10 @@ class Entity implements JsonSerializable
 
 			if ($recursive)
 			{
+				//@todo: handle arrays of entities
 				if ($value instanceof Entity)
 				{
-					$value = $value->toRawArray($onlyChanged, $recursive);
+					$value = $value->toRawArray(false, $recursive);
 				}
 				elseif (is_callable([$value, 'toRawArray']))
 				{
@@ -252,6 +255,15 @@ class Entity implements JsonSerializable
 		// If no parameter was given then check all attributes
 		if ($key === null)
 		{
+			//We need to check if any inner entities has changed
+			foreach ($this->attributes as $attribute)
+			{
+				//@todo: handle arrays of entities
+				if ($attribute instanceof Entity && $attribute->hasChanged())
+				{
+					return true;
+				}
+			}
 			return     $this->original !== $this->attributes;
 		}
 
@@ -267,6 +279,11 @@ class Entity implements JsonSerializable
 			return true;
 		}
 
+		// If attribute is inner entity we need if it has changed
+		if ($this->attributes[$key] instanceof Entity)
+		{
+			return $this->attributes[$key]->hasChanged();
+		}
 		return $this->original[$key] !== $this->attributes[$key];
 	}
 

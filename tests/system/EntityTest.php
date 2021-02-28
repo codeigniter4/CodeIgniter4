@@ -807,6 +807,43 @@ class EntityTest extends CIUnitTestCase
 		]);
 	}
 
+	public function testToRawArrayRecursiveOnlyChanged()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toRawArray(true, true);
+
+		$this->assertEquals($result, [
+			'entity' => [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			],
+		]);
+	}
+
+	public function testToRawArrayRecursiveOnlyChangedInner()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+		$entity->syncOriginal();
+
+		$entity->entity->foo = 'bar';
+
+		$result = $entity->toRawArray(true, true);
+
+		$this->assertEquals([
+			'entity' => [
+				'foo'        => 'bar',
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			],
+		], $result);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testFilledConstruction()
