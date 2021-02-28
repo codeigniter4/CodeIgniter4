@@ -376,7 +376,7 @@ class Entity implements JsonSerializable
 					$value = (double)$value;
 					break;
 				case 'string':
-					$value = (string)$value;
+					$value = (string) $value;
 					break;
 				// CSV casts need to be imploded.
 				case 'csv':
