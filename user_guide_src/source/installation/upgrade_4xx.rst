@@ -16,11 +16,18 @@ of CodeIgniter 4 in a new project folder,
 and then convert and integrate your app components.
 We'll try to point out the most important considerations here.
 
-Not all of the CI3 libraries have been ported or rewritten for CI4!
-See the threads in the `CodeIgniter 4 Roadmap <https://forum.codeigniter.com/forum-33.html>`_
-subforum for an up-to-date list!
+To upgrade your project, we figured out two major tasks you have to work on.
+First of all, there are some general adjustments which are significant to every
+project and have to be handled. The second one are the libraries in which
+CodeIgniter is built up and contain some of the most important functions.
+These libraries operate separately from each other, so you have to look at
+them one by one.
 
 **Do read the user guide** before embarking on a project conversion!
+
+General Adjustments
+============================================================
+
 
 **Downloads**
 
@@ -46,6 +53,29 @@ subforum for an up-to-date list!
 - There is no longer a nested ``application/core`` folder, as we have
   a different mechanism for extending framework components (see below)
 
+**Model, View and Controller**
+
+- CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
+  are one of the most important things you have to handle.
+- In CodeIgniter 4, models are now located in ``app/Models`` and you have to add the lines
+  ``namespace App\Models;`` along with ``use CodeIgniter\Model;`` right after the opening php tag.
+  The last step is to replace ``extends CI_Model`` with ``extends Model``.
+- The views of CodeIgniter 4 have been moved ``to app/Views``. Furthermore, you have to change
+  the syntax of loading views from ``$this->load->view('directory_name/file_name')`` to
+  ``echo view('directory_name/file_name');``.
+- Controllers of CodeIgniter 4 have to be moved to ``app/Controllers;``. After that,
+  add ``namespace App\Controllers;`` after the opening php tag.
+  Lastly, replace ``extends CI_Controller`` with ``extends BaseController``.
+- For more information we recommend you the following upgrade guides, which will give
+  you some step-by-step instructions to convert the MVC classes in CodeIgniter4:
+
+.. toctree::
+    :titlesonly:
+
+    upgrade_models
+    upgrade_views
+    upgrade_controllers
+
 **Class loading**
 
 - There is no longer a CodeIgniter "superobject", with framework component
@@ -59,36 +89,6 @@ subforum for an up-to-date list!
   folder even though not namespaced
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style
-
-**Controllers**
-
-- Controllers extend \\CodeIgniter\\Controller instead of CI_Controller
-- They don't use a constructor any more (to invoke CI "magic") unless
-  that is part of a base controller you make
-- CI provides ``Request`` and ``Response`` objects for you to work with -
-  more powerful than the CI3-way
-- If you want a base controller (MY_Controller in CI3), make it
-  where you like, e.g., BaseController extends Controller, and then
-  have your controllers extend it
-
-**Models**
-
-- Models extend \\CodeIgniter\\Model instead of CI_Model
-- The CI4 model has much more functionality, including automatic
-  database connection, basic CRUD, in-model validation, and
-  automatic pagination
-- CI4 also has the ``Entity`` class you can build on, for
-  richer data mapping to your database tables
-- Instead of CI3's ``$this->load->model(x);``, you would now use
-  ``$this->x = new X();``, following namespaced conventions for your component
-
-**Views**
-
-- Your views look much like before, but they are invoked differently ...
-  instead of CI3's ``$this->load->view(x);`` you can use ``echo view(x);``
-- CI4 supports view "cells", to build your response in pieces
-- The template parser is still there, but substantially
-  enhanced
 
 **Libraries**
 
@@ -117,3 +117,30 @@ subforum for an up-to-date list!
 - Make any such classes where you like, and add appropriate
   service methods in ``app/Config/Services.php`` to load
   your components instead of the default ones
+
+Upgrading Libraries
+============================================================
+
+
+- Your app classes can still go inside ``app/Libraries``, but they don’t have to.
+- Instead of CI3’s ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
+  following namespaced conventions for your component
+
+- Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
+  libraries, you have to find a new way to implement your functions. These
+  libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_, `FTP <http://codeigniter.com/userguide3/libraries/ftp.html>`_, `Javascript <http://codeigniter.com/userguide3/libraries/javascript.html>`_, `Shopping Cart <http://codeigniter.com/userguide3/libraries/cart.html>`_, `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
+  `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_, and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
+
+- All the other libraries, which exist in both CodeIgniter versions, can be
+  upgraded with some adjustments. The most important and mostly used
+  libraries received an Upgrade Guide, which will help you with simple steps
+  and examples to adjust your code.
+
+.. toctree::
+    :titlesonly:
+
+    upgrade_migrations
+    upgrade_configuration
+
+.. note::
+    More upgrade guides coming soon
