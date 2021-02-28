@@ -382,6 +382,21 @@ class Router implements RouterInterface
 			? $uri
 			: ltrim($uri, '/ ');
 
+		// sorting routes by priority
+		if ($this->collection->isPrioritySortingEnabled())
+		{
+			$order = [];
+
+			foreach ($routes as $key => $value)
+			{
+				$key                    = $key === '/' ? $key : ltrim($key, '/ ');
+				$priority               = $this->collection->getRoutesOptions($key)['order'] ?? 0;
+				$order[$priority][$key] = $value;
+			}
+			ksort($order);
+			$routes = array_merge(...$order);
+		}
+
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{

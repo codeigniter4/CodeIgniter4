@@ -427,6 +427,31 @@ be used when the first parameter is a language string::
     // Creates:
     $routes['users/(:num)'] = 'users/show/$2';
 
+.. _priority:
+
+Routes priority
+---------------
+
+When working with modules, it can be a problem if the routes in the application contain windcards.
+Then the module routes will not be processed correctly.
+You can solve this problem by lowering the priority of the route using the `` order`` option::
+
+    // First you need to enable sorting.
+    $routes->enablePrioritySorting();
+
+    // App\Config\Routes
+    $routes->add('(.*)', 'Posts::index', ['order' => 1]);
+
+    // Modules\Acme\Config\Routes
+    $routes->add('admin', 'Admin::index');
+
+    // The "admin" route will now be processed before the wildcard router.
+
+
+.. note:: By default, all routes have a priority of 0.
+The higher the number specified in "order", the lower the priority of the route.
+
+
 Routes Configuration Options
 ============================
 
@@ -518,3 +543,15 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     {
         echo view('my_errors/not_found.html');
     });
+
+
+Enabled router priority
+-----------------------
+
+Enabling the priority of applying routes. For more information see :ref:`priority`
+
+::
+
+    $routes->enablePrioritySorting();
+
+

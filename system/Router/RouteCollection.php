@@ -197,6 +197,13 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected $moduleConfig;
 
+	/**
+	 * Flag for sorting routes by priority.
+	 *
+	 * @var boolean
+	 */
+	protected $enablePrioritySorting = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1592,4 +1599,27 @@ class RouteCollection implements RouteCollectionInterface
 
 		return $options;
 	}
+
+	/**
+	 * Enables sorting routes by priority
+	 *
+	 * @return $this
+	 */
+	public function enablePrioritySorting(): RouteCollectionInterface
+	{
+		$this->enablePrioritySorting = true;
+
+		return $this;
+	}
+
+	/**
+	 * Returns the sorting status of routes by priority. Enabled or not.
+	 *
+	 * @return boolean
+	 */
+	public function isPrioritySortingEnabled(): bool
+	{
+		return  $this->enablePrioritySorting;
+	}
+
 }

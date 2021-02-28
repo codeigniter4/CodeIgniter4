@@ -603,6 +603,27 @@ class RouterTest extends CIUnitTestCase
 		$this->assertEquals('auth_post', $router->methodName());
 	}
 
+	public function testRoutePriorityOrder()
+	{
+		$this->collection->add('main', 'Main::index');
+		$this->collection->add('(.*)', 'Main::wildcard', ['order' => 1]);
+		$this->collection->add('module', 'Module::index');
+
+		$router = new Router($this->collection, $this->request);
+
+		$this->collection->setHTTPVerb('get');
+
+		$router->handle('module');
+		$this->assertEquals('\Main', $router->controllerName());
+		$this->assertEquals('wildcard', $router->methodName());
+
+		$this->collection->enablePrioritySorting();
+
+		$router->handle('module');
+		$this->assertEquals('\Module', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
 	 */
