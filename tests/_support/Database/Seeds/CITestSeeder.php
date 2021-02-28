@@ -135,13 +135,13 @@ class CITestSeeder extends Seeder
 			unset($data['type_test'][0]['type_blob']);
 		}
 
-		foreach ($data as $table => $dummyData)
+		foreach ($data as $table => $dummy_data)
 		{
 			$this->db->table($table)->truncate();
 
-			foreach ($dummyData as $singleDummyData)
+			foreach ($dummy_data as $single_dummy_data)
 			{
-				$this->db->table($table)->insert($singleDummyData);
+				$this->db->table($table)->insert($single_dummy_data);
 			}
 		}
 	}

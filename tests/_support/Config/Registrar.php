@@ -105,9 +105,12 @@ class Registrar
 
 		// Under Github Actions, we can set an ENV var named 'DB'
 		// so that we can test against multiple databases.
-		if (($group = getenv('DB')) && ! empty(self::$dbConfig[$group]))
+		if ($group = getenv('DB'))
 		{
-			$config['tests'] = self::$dbConfig[$group];
+			if (! empty(self::$dbConfig[$group]))
+			{
+				$config['tests'] = self::$dbConfig[$group];
+			}
 		}
 
 		return $config;
