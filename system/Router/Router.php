@@ -389,9 +389,9 @@ class Router implements RouterInterface
 
 			foreach ($routes as $key => $value)
 			{
-				$key                    = $key === '/' ? $key : ltrim($key, '/ ');
-				$priority               = $this->collection->getRoutesOptions($key)['order'] ?? 0;
-				$order[$priority][$key] = $value;
+				$key                              = $key === '/' ? $key : ltrim($key, '/ ');
+				$priority                         = $this->collection->getRoutesOptions($key)['order'] ?? 0;
+				$order[abs((int)$priority)][$key] = $value;
 			}
 			ksort($order);
 			$routes = array_merge(...$order);
