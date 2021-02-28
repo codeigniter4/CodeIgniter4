@@ -1,25 +1,25 @@
 Upgrade Models
-###############################################################################
+##############
 
 .. contents::
     :local:
     :depth: 1
 
-
 Documentations
-============================================================
+==============
 
 - `Model Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
 - `Model Documentation Codeigniter 4.X </models/model.html>`_
 
-
 What has been changed
-============================================================
+=====================
+
 - The CI4 model has much more functionality, including automatic database connection, basic CRUD, in-model validation, and automatic pagination.
 - Since namespaces has been added to CodeIgniter 4, the models must be changed to support namespaces.
 
 Upgrade Guide
-============================================================
+=============
+
 1. First, move all model files to the folder ``app/Models``.
 2. Add this line just after the opening php tag: ``namespace App\Models;``.
 3. Below the ``namespace App\Models;`` line add this line: ``use CodeIgniter\Model;``.
@@ -35,14 +35,15 @@ Inserting data is also easier than before. In CI4 there is an ``insert($data)`` 
 You can find more information to those methods `here </models/model.html>`_.
 
 Code Example
-============================================================
+============
 
 Codeigniter Version 3.11
--------------------------------------------------------
+------------------------
+
 Path: ``application/models``::
 
     <?php
-    
+
     class User_contact extends CI_Model
     {
         public function insert($name, $address, $email)
@@ -50,13 +51,14 @@ Path: ``application/models``::
             $this->db->insert('user_contacts', array(
                 "name" => $name,
                 "address" => $address,
-                "email" => $email
+                "email" => $email,
             ));
         }
     }
 
 Codeigniter Version 4.x
--------------------------------------------------------
+-----------------------
+
 Path: ``app/Models``::
 
     <?php
@@ -67,7 +69,7 @@ Path: ``app/Models``::
 
     class UserContact extends Model
     {
-        // insert method already implemented in parent
+        // insert() method already implemented in parent
     }
 
-To insert data you can just directly call the $model->insert() method because this method is build in since CI 4.
+To insert data you can just directly call the ``$model->insert()`` method because this method is built-in since CI 4.
