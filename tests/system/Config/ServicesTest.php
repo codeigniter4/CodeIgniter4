@@ -31,6 +31,8 @@ use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
+use Config\App;
+use Config\Exceptions;
 
 class ServicesTest extends CIUnitTestCase
 {
