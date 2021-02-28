@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Version 4.0.0-beta.1 &mdash; CodeIgniter 4.1.1 documentation</title>
+  <title>Upgrade Models &mdash; CodeIgniter 4.1.1 documentation</title>
   
 
   
@@ -43,8 +43,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Version 4.0.0-alpha.5" href="v4.0.0-alpha.5.html" />
-    <link rel="prev" title="Version 4.0.0-beta.2" href="v4.0.0-beta.2.html" /> 
+    <link rel="next" title="Upgrade Views" href="upgrade_views.html" />
+    <link rel="prev" title="Upgrading from 3.x to 4.x" href="upgrade_4xx.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,14 +98,14 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -328,9 +328,13 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">Change Logs</a> &raquo;</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Version 4.0.0-beta.1</li>
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+          <li><a href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a> &raquo;</li>
+        
+      <li>Upgrade Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -347,370 +351,83 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="version-4-0-0-beta-1">
-<h1>Version 4.0.0-beta.1<a class="headerlink" href="#version-4-0-0-beta-1" title="Permalink to this headline">¶</a></h1>
-<p>Release Date: Not released</p>
-<p>Highlights:</p>
+  <div class="section" id="upgrade-models">
+<h1>Upgrade Models<a class="headerlink" href="#upgrade-models" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p>New View Layouts provide simple way to create site site view templates.</p></li>
-<li><p>Fixed user guide CSS for proper wide table display</p></li>
-<li><p>Converted UploadedFile to use system messages</p></li>
-<li><p>Numerous database, migration &amp; model bugs fixed</p></li>
-<li><p>Refactored unit testing for appstarter &amp; framework distributions</p></li>
+<li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
+<li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
+<li><p><a class="reference internal" href="#upgrade-guide" id="id3">Upgrade Guide</a></p></li>
+<li><p><a class="reference internal" href="#code-example" id="id4">Code Example</a></p></li>
 </ul>
-<p>New messages:</p>
+</div>
+<div class="section" id="documentations">
+<h2><a class="toc-backref" href="#id1">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Database.tableNotFound</p></li>
-<li><p>HTTP.uploadErr…</p></li>
+<li><p><a class="reference external" href="http://codeigniter.com/userguide3/general/models.html">Model Documentation Codeigniter 3.X</a></p></li>
+<li><p><a class="reference external" href="/models/model.html">Model Documentation Codeigniter 4.X</a></p></li>
 </ul>
-<p>App changes:</p>
+</div>
+<div class="section" id="what-has-been-changed">
+<h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>app/Config/Cache has new setting: database</p></li>
-<li><p>app/Views/welcome_message has logo tinted</p></li>
-<li><p>composer.json has a case correction</p></li>
-<li><p>env adds CI_ENVIRONMENT suggestion</p></li>
+<li><p>The CI4 model has much more functionality, including automatic database connection, basic CRUD, in-model validation, and automatic pagination.</p></li>
+<li><p>Since namespaces has been added to CodeIgniter 4, the models must be changed to support namespaces.</p></li>
 </ul>
-<p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Cache #1719</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Views/</dt><dd><ul>
-<li><p>welome_message #1774</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Cache/Handlers/</dt><dd><ul>
-<li><p>RedisHandler #1719, #1723</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Config #37dbc1</p></li>
-<li><p>Services #1704, #37dbc1</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>Exceptions/DatabaseException #1739</p></li>
-<li><dl class="simple">
-<dt>Postgre/</dt><dd><ul>
-<li><p>Builder #1733</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>SQLite3/</dt><dd><ul>
-<li><p>Connection #1739</p></li>
-<li><p>Forge #1739</p></li>
-<li><p>Table #1739</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>BaseBuilder #36fbb8, #549d7d</p></li>
-<li><p>BaseConnection #549d7d, #1739</p></li>
-<li><p>Forge #1739</p></li>
-<li><p>MigrationRunner #1743</p></li>
-<li><p>Query #36fbb8</p></li>
-<li><p>Seeder #1722</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Exceptions #1704</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files/</dt><dd><ul>
-<li><p>UploadedFile #1708</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>date_helper #1768</p></li>
-<li><p>number_helper #1768</p></li>
-<li><p>security_helper #1768</p></li>
-<li><p>text_helper #1768</p></li>
-<li><p>url_helper #1768</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>Request #1725</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Database #1739</p></li>
-<li><p>HTTP #1708</p></li>
-<li><p>View #1757</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollection #1709, #1732</p></li>
-<li><p>Router #1764</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>ControllerResponse #1740</p></li>
-<li><p>ControllerTester #1740</p></li>
-<li><p>DOMParser #1740</p></li>
-<li><p>FeatureResponse #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>Rules #1738, #1743</p></li>
-<li><p>Validation #37dbc1, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>View #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Common #1741</p></li>
-<li><p>Entity #6e549a, #1739</p></li>
-<li><p>Model #4f4a37, #6e549a, #37dbc1, #1712, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>BaseQueryTest #36fbb8</p></li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>SQLite3/AlterTableTest #1739, #1740</p></li>
-<li><p>ForgeTest #1739, #1745</p></li>
-<li><p>ModelTest #37dbc1, #4ff1f5, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Migrations/MigrationRunnerTest #1743</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>FilesystemHelperTest #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n/</dt><dd><ul>
-<li><p>TimeTest # 1736</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>DOMParserTest #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>ValidationTest #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>ViewTest #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>EntityTest #6e549a, #1736</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>_themes/…/</dt><dd><ul>
-<li><p>citheme.css #1696</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>changelogs/</dt><dd><ul>
-<li><p>v4.0.0-alpha.5 #1699</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>database/</dt><dd><ul>
-<li><p>migrate #1696</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>forge #1751</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>installation/</dt><dd><ul>
-<li><p>install_manual #1699</p></li>
-<li><p>running #1750</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>intro/</dt><dd><ul>
-<li><p>psr #1752</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>caching #1719</p></li>
-<li><p>validation #1742</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>models/</dt><dd><ul>
-<li><p>entities #1744</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>index #1729</p></li>
-<li><p>view_layouts #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>controllers #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tutorial/</dt><dd><ul>
-<li><p>static_pages #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>composer.json #1755</p></li>
-<li><p>.env #1749</p></li>
-</ul>
-<div class="section" id="prs-merged">
-<h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>#1774 Housekeeping for beta.1</p></li>
-<li><p>#1768 Helper changes - signatures &amp; typos</p></li>
-<li><p>#1764 Fix routing when no default route has been specified. Fixes #1758</p></li>
-<li><p>#1763 Ensure validation works in Model with errors as part of rules. Fixes #1574</p></li>
-<li><p>#1757 Correct the unneeded double-quote (typo)</p></li>
-<li><p>#1755 lowercase ‘vfsStream’ in composer files</p></li>
-<li><p>#1752 Fixed typo preventing link format</p></li>
-<li><p>#1751 Guide: Moving misplaced text under correct heading</p></li>
-<li><p>#1750 Remove reference to Encryption Key in User Guide</p></li>
-<li><p>#1749 Adding environment to .env</p></li>
-<li><p>#1745 Updated composite key tests for SQLite3 support. Fixes #1478</p></li>
-<li><p>#1744 Update entity docs for current framework state. Fixes #1727</p></li>
-<li><p>#1743 Manually sort migrations found instead of relying on the OS. Fixes #1666</p></li>
-<li><p>#1742 Fix required_without rule bug.</p></li>
-<li><p>#1741 Helpers with a specific namespace can be loaded now. Fixes #1726</p></li>
-<li><p>#1740 Refactor test support for app starter</p></li>
-<li><p>#1739 Fix typo</p></li>
-<li><p>#1738 Fix required_with rule bug. Fixes #1728</p></li>
-<li><p>#1737 Added support for dropTable and modifyTable with SQLite driver</p></li>
-<li><p>#1736 Accommodate long travis execution times</p></li>
-<li><p>#1733 Fix increment and decrement errors with Postgres</p></li>
-<li><p>#1732 Don’t check from CLI in Routes. Fixes #1724</p></li>
-<li><p>#1729 New View Layout functionality for simple template</p></li>
-<li><p>#1725 Update Request.php</p></li>
-<li><p>#1723 Log an error if redis authentication is failed</p></li>
-<li><p>#1722 Seeder adds default namespace to seeds</p></li>
-<li><p>#1719 Update Cache RedisHandler to support select database</p></li>
-<li><p>#4ff1f5 Additional tests for inserts and required validation failing (#1717)</p></li>
-<li><p>#549d7d Another try at getting escaping working correctly both when in and out of models</p></li>
-<li><p>#1712 Minor readability changes</p></li>
-<li><p>#37dbc1 Ensure Model validation rules can be a group name</p></li>
-<li><p>#1709 Fix resource routing websafe method order checking</p></li>
-<li><p>#1708 Language for UploadedFile</p></li>
-<li><p>#36fbb8 BaseBuilder should only turn off Connection’s setEscapeFlags when running a query…</p></li>
-<li><p>#6e549a Provide default baseURL that works with the development server for easier first time setup (Fixes #1646)</p></li>
-<li><p>#1704 Fix viewsDirectory bug (#1701)</p></li>
-<li><p>#4f4a37 remove debugging from Model.</p></li>
-<li><p>#1699 Fix install link in user guide</p></li>
-<li><p>#1696 Fix page structure etc</p></li>
-<li><p>#1695 Tidy up code blocks in the user guide</p></li>
-</ul>
+</div>
+<div class="section" id="upgrade-guide">
+<h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>First, move all model files to the folder <code class="docutils literal notranslate"><span class="pre">app/Models</span></code>.</p></li>
+<li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code>.</p></li>
+<li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code>.</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">model</span></code> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
+</ol>
+<p>If you use sub-directories in your controller structure you have to change the namespace according to that.
+Example: You have a version 3 controller located in <code class="docutils literal notranslate"><span class="pre">application/models/users/user_contact.php</span></code> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the controller path in the version 4 should look like this: <code class="docutils literal notranslate"><span class="pre">app/Models/Users/UserContact.php</span></code></p>
+<p>The new Model in CI4 has a lot of built-in methods. For example, the <code class="docutils literal notranslate"><span class="pre">find($id)</span></code> method. With this you can find data where the primary key is equal to <code class="docutils literal notranslate"><span class="pre">$id</span></code>.
+Inserting data is also easier than before. In CI4 there is an <code class="docutils literal notranslate"><span class="pre">insert($data)</span></code> method. You can optionally make use of all those built-in methods and migrate your code to the new methods.</p>
+<p>You can find more information to those methods <a class="reference external" href="/models/model.html">here</a>.</p>
+</div>
+<div class="section" id="code-example">
+<h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="codeigniter-version-3-11">
+<h3>Codeigniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline">¶</a></h3>
+<p>Path: <code class="docutils literal notranslate"><span class="pre">application/models</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">User_contact</span> <span class="k">extends</span> <span class="nx">CI_Model</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">insert</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$address</span><span class="p">,</span> <span class="nv">$email</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;user_contacts&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s2">&quot;name&quot;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+            <span class="s2">&quot;address&quot;</span> <span class="o">=&gt;</span> <span class="nv">$address</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span> <span class="o">=&gt;</span> <span class="nv">$email</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="codeigniter-version-4-x">
+<h3>Codeigniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline">¶</a></h3>
+<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Models</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserContact</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// insert method already implemented in parent</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To insert data you can just directly call the $model-&gt;insert() method because this method is build in since CI 4.</p>
+</div>
 </div>
 </div>
 
@@ -720,8 +437,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="v4.0.0-alpha.5.html" class="btn btn-neutral float-right" title="Version 4.0.0-alpha.5" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="v4.0.0-beta.2.html" class="btn btn-neutral float-left" title="Version 4.0.0-beta.2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_views.html" class="btn btn-neutral float-right" title="Upgrade Views" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrade_4xx.html" class="btn btn-neutral float-left" title="Upgrading from 3.x to 4.x" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
