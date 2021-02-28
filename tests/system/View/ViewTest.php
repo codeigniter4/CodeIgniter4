@@ -5,6 +5,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use CodeIgniter\View\View;
+use Config;
 use RuntimeException;
 
 class ViewTest extends CIUnitTestCase
