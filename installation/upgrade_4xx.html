@@ -373,9 +373,8 @@ them one by one.</p>
 <h2>General Adjustments<a class="headerlink" href="#general-adjustments" title="Permalink to this headline">¶</a></h2>
 <p><strong>Downloads</strong></p>
 <ul class="simple">
-<li><p>CI4 is still available as a ready-to-run zip or tarball, which
-includes the user guide (though in the <cite>docs</cite> subfolder)</p></li>
-<li><p>It can also be installed using Composer</p></li>
+<li><p>CI4 is still available as a ready-to-run zip or tarball, which includes the user guide (though in the <cite>docs</cite> subfolder).</p></li>
+<li><p>It can also be installed using Composer.</p></li>
 </ul>
 <p><strong>Namespaces</strong></p>
 <ul class="simple">
@@ -383,17 +382,14 @@ includes the user guide (though in the <cite>docs</cite> subfolder)</p></li>
 </ul>
 <p><strong>Application Structure</strong></p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">application</span></code> folder is renamed as <code class="docutils literal notranslate"><span class="pre">app</span></code> and
-the framework still has <code class="docutils literal notranslate"><span class="pre">system</span></code> folders, with the same
-interpretation as before</p></li>
-<li><p>The framework now provides for a <code class="docutils literal notranslate"><span class="pre">public</span></code> folder, intended as the document
-root for your app</p></li>
-<li><p>There is also a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">application</span></code> folder is renamed as <code class="docutils literal notranslate"><span class="pre">app</span></code> and the framework still has <code class="docutils literal notranslate"><span class="pre">system</span></code> folders,
+with the same interpretation as before.</p></li>
+<li><p>The framework now provides for a <code class="docutils literal notranslate"><span class="pre">public</span></code> folder, intended as the document root for your app.</p></li>
+<li><p>There is also a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">app</span></code> folder looks very similar to <code class="docutils literal notranslate"><span class="pre">application</span></code> for CI3, with some
-name changes, and some subfolders
-moved to the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder</p></li>
+name changes, and some subfolders moved to the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder.</p></li>
 <li><p>There is no longer a nested <code class="docutils literal notranslate"><span class="pre">application/core</span></code> folder, as we have
-a different mechanism for extending framework components (see below)</p></li>
+a different mechanism for extending framework components (see below).</p></li>
 </ul>
 <p><strong>Model, View and Controller</strong></p>
 <ul class="simple">
@@ -421,44 +417,42 @@ you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</
 <p><strong>Class loading</strong></p>
 <ul class="simple">
 <li><p>There is no longer a CodeIgniter “superobject”, with framework component
-references magically injected as properties of your controller</p></li>
+references magically injected as properties of your controller.</p></li>
 <li><p>Classes are instantiated where needed, and components are managed
-by <code class="docutils literal notranslate"><span class="pre">Services</span></code></p></li>
+by <code class="docutils literal notranslate"><span class="pre">Services</span></code>.</p></li>
 <li><p>The class loader automatically handles PSR4 style class locating,
 within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (application) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., system) top level
 namespaces; with composer autoloading support, and even using educated
 guessing to find your models and libraries if they are in the right
-folder even though not namespaced</p></li>
+folder even though not namespaced.</p></li>
 <li><p>You can configure the class loading to support whatever application structure
-you are most comfortable with, including the “HMVC” style</p></li>
+you are most comfortable with, including the “HMVC” style.</p></li>
 </ul>
 <p><strong>Libraries</strong></p>
 <ul class="simple">
-<li><p>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they
-don’t have to</p></li>
+<li><p>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
-component</p></li>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component.</p></li>
 </ul>
 <p><strong>Helpers</strong></p>
 <ul class="simple">
-<li><p>Helpers are pretty much the same as before, though some have been simplified</p></li>
+<li><p>Helpers are pretty much the same as before, though some have been simplified.</p></li>
 </ul>
 <p><strong>Events</strong></p>
 <ul class="simple">
-<li><p>Hooks have been replaced by Events</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use <code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code></p></li>
-<li><p>Events are always enabled, and are available globally</p></li>
+<li><p>Hooks have been replaced by Events.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use <code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
+<li><p>Events are always enabled, and are available globally.</p></li>
 </ul>
 <p><strong>Extending the framework</strong></p>
 <ul class="simple">
 <li><p>You don’t need a <code class="docutils literal notranslate"><span class="pre">core</span></code> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
-component extensions or replacements</p></li>
+component extensions or replacements.</p></li>
 <li><p>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_x</span></code> classes inside your libraries folder
-to extend or replace CI4 pieces</p></li>
+to extend or replace CI4 pieces.</p></li>
 <li><p>Make any such classes where you like, and add appropriate
 service methods in <code class="docutils literal notranslate"><span class="pre">app/Config/Services.php</span></code> to load
-your components instead of the default ones</p></li>
+your components instead of the default ones.</p></li>
 </ul>
 </div>
 <div class="section" id="upgrading-libraries">
@@ -466,15 +460,14 @@ your components instead of the default ones</p></li>
 <ul class="simple">
 <li><p>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
-following namespaced conventions for your component</p></li>
+following namespaced conventions for your component.</p></li>
 <li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
 libraries, you have to find a new way to implement your functions. These
 libraries are <a class="reference external" href="http://codeigniter.com/userguide3/libraries/calendar.html">Calendaring</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/ftp.html">FTP</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/javascript.html">Javascript</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/cart.html">Shopping Cart</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/trackback.html">Trackback</a>,
 <a class="reference external" href="http://codeigniter.com/userguide3/libraries/xmlrpc.html">XML-RPC /-Server</a>, and <a class="reference external" href="http://codeigniter.com/userguide3/libraries/zip.html">Zip Encoding</a>.</p></li>
-<li><p>All the other libraries, which exist in both CodeIgniter versions, can be
-upgraded with some adjustments. The most important and mostly used
-libraries received an Upgrade Guide, which will help you with simple steps
-and examples to adjust your code.</p></li>
+<li><p>All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
+The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
+steps and examples to adjust your code.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 <ul>
