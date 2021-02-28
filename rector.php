@@ -34,6 +34,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . '/tests/system/Config/fixtures',
 		__DIR__ . '/tests/system/Models',
 		__DIR__ . '/tests/_support',
+		PassStrictParameterToFunctionParameterRector::class => [
+														  __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+													  ],
 	]);
 
 	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
