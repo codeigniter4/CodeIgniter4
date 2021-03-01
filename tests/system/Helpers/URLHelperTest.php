@@ -4,12 +4,14 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class URLHelperTest extends CIUnitTestCase
 {
 	/**
 	 * @var App
@@ -722,6 +724,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'<a href="http://example.com">http://example.com</a>',
 				'/',
 			],
+			'noindex08' => [
+				'<a href="http://example.com" class="btn btn-primary">http://example.com</a>',
+				'',
+				'',
+				['class' => 'btn btn-primary'],
+			],
 		];
 	}
 
@@ -800,7 +808,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'title="News title"',
 			],
 			'egpage02' => [
-				'<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>',
+				'<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>',
 				'news/local/123',
 				'My News',
 				['title' => 'The best news!'],
@@ -897,7 +905,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'Click Here to Contact Me',
 			],
 			'page02' => [
-				'<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>',
+				'<a href="mailto:me@my-site.com" title="Mail me">Contact Me</a>',
 				'me@my-site.com',
 				'Contact Me',
 				['title' => 'Mail me'],
@@ -1400,7 +1408,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
 	{
-		$this->expectException(\CodeIgniter\Router\Exceptions\RouterException::class);
+		$this->expectException(RouterException::class);
 
 		url_to($route);
 	}

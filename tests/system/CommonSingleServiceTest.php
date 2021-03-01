@@ -1,7 +1,11 @@
 <?php
 
+namespace CodeIgniter;
+
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionClass;
+use ReflectionMethod;
 
 final class CommonSingleServiceTest extends CIUnitTestCase
 {

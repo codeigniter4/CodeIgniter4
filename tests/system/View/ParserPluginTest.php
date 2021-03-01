@@ -1,13 +1,19 @@
 <?php
 
-class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\View;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Validation\Validation;
+use Config\Services;
+
+class ParserPluginTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\View\Parser
+	 * @var Parser
 	 */
 	protected $parser;
 	/**
-	 * @var \CodeIgniter\Validation\Validation
+	 * @var Validation
 	 */
 	protected $validator;
 
@@ -15,10 +21,10 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		\Config\Services::reset(true);
+		Services::reset(true);
 
-		$this->parser    = \Config\Services::parser();
-		$this->validator = \Config\Services::validation();
+		$this->parser    = Services::parser();
+		$this->validator = Services::validation();
 	}
 
 	public function testCurrentURL()

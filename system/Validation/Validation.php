@@ -734,7 +734,7 @@ class Validation implements ValidationInterface
 	 *        'field2' => 'error message',
 	 *    ]
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 *
 	 * Excluded from code coverage because that it always run as cli
 	 *

@@ -1,8 +1,10 @@
 <?php namespace CodeIgniter\CLI;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use ReflectionProperty;
 
-class CLITest extends \CodeIgniter\Test\CIUnitTestCase
+class CLITest extends CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -347,12 +349,12 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testWindow()
 	{
-		$height = new \ReflectionProperty(CLI::class, 'height');
+		$height = new ReflectionProperty(CLI::class, 'height');
 		$height->setAccessible(true);
 		$height->setValue(null);
 		$this->assertTrue(is_int(CLI::getHeight()));
 
-		$width = new \ReflectionProperty(CLI::class, 'width');
+		$width = new ReflectionProperty(CLI::class, 'width');
 		$width->setAccessible(true);
 		$width->setValue(null);
 		$this->assertTrue(is_int(CLI::getWidth()));
@@ -373,17 +375,17 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tableProvider()
 	{
-		$head      = [
+		$head     = [
 			'ID',
 			'Title',
 		];
-		$one_row   = [
+		$oneRow   = [
 			[
 				'id'  => 1,
 				'foo' => 'bar',
 			],
 		];
-		$many_rows = [
+		$manyRows = [
 			[
 				'id'  => 1,
 				'foo' => 'bar',
@@ -400,14 +402,14 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		return [
 			[
-				$one_row,
+				$oneRow,
 				[],
 				'+---+-----+' . PHP_EOL .
 				'| 1 | bar |' . PHP_EOL .
 				'+---+-----+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$one_row,
+				$oneRow,
 				$head,
 				'+----+-------+' . PHP_EOL .
 				'| ID | Title |' . PHP_EOL .
@@ -416,7 +418,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'+----+-------+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$many_rows,
+				$manyRows,
 				[],
 				'+---+-----------------+' . PHP_EOL .
 				'| 1 | bar             |' . PHP_EOL .
@@ -425,7 +427,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'+---+-----------------+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$many_rows,
+				$manyRows,
 				$head,
 				'+----+-----------------+' . PHP_EOL .
 				'| ID | Title           |' . PHP_EOL .

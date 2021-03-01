@@ -2,16 +2,18 @@
 
 use \CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled
  */
-class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
+class CodeIgniterTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $codeigniter;
 
@@ -118,7 +120,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		// Inject mock router.
-		$routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$routes = new RouteCollection(Services::locator(), new Modules());
 		$routes->setAutoRoute(false);
 		$routes->set404Override(function () {
 			echo '404 Override by Closure.';
@@ -197,7 +199,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$_SERVER['argc'] = 2;
 
-		$response = Config\Services::response(null, false);
+		$response = Services::response(null, false);
 
 		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
 	}

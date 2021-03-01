@@ -1,4 +1,4 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 

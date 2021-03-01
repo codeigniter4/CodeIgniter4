@@ -2,6 +2,7 @@
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Pager;
 use Config\Services;
@@ -9,7 +10,7 @@ use Config\Services;
 /**
  * @backupGlobals enabled
  */
-class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
+class PagerTest extends CIUnitTestCase
 {
 
 	/**
@@ -386,23 +387,23 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testHeadLinks()
 	{
-		$first_page = $this->pager->makeLinks(1, 10, 50, 'default_head');
+		$firstPage = $this->pager->makeLinks(1, 10, 50, 'default_head');
 
-		$this->assertStringNotContainsString('<link rel="prev"', $first_page);
-		$this->assertStringContainsString('<link rel="canonical"', $first_page);
-		$this->assertStringContainsString('<link rel="next"', $first_page);
+		$this->assertStringNotContainsString('<link rel="prev"', $firstPage);
+		$this->assertStringContainsString('<link rel="canonical"', $firstPage);
+		$this->assertStringContainsString('<link rel="next"', $firstPage);
 
-		$second_page = $this->pager->makeLinks(2, 10, 50, 'default_head');
+		$secondPage = $this->pager->makeLinks(2, 10, 50, 'default_head');
 
-		$this->assertStringContainsString('<link rel="prev"', $second_page);
-		$this->assertStringContainsString('<link rel="canonical"', $second_page);
-		$this->assertStringContainsString('<link rel="next"', $second_page);
+		$this->assertStringContainsString('<link rel="prev"', $secondPage);
+		$this->assertStringContainsString('<link rel="canonical"', $secondPage);
+		$this->assertStringContainsString('<link rel="next"', $secondPage);
 
-		$last_page = $this->pager->makeLinks(5, 10, 50, 'default_head');
+		$lastPage = $this->pager->makeLinks(5, 10, 50, 'default_head');
 
-		$this->assertStringContainsString('<link rel="prev"', $last_page);
-		$this->assertStringContainsString('<link rel="canonical"', $last_page);
-		$this->assertStringNotContainsString('<link rel="next"', $last_page);
+		$this->assertStringContainsString('<link rel="prev"', $lastPage);
+		$this->assertStringContainsString('<link rel="canonical"', $lastPage);
+		$this->assertStringNotContainsString('<link rel="next"', $lastPage);
 	}
 
 	public function testBasedURI()

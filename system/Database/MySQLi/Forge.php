@@ -235,8 +235,10 @@ class Forge extends BaseForge
 				continue;
 			}
 
-			// @phpstan-ignore-next-line
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
+			if (! is_array($this->keys[$i]))
+			{
+				$this->keys[$i] = [$this->keys[$i]];
+			}
 
 			$unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 

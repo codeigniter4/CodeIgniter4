@@ -11,7 +11,7 @@ class UserAgentTest extends CIUnitTestCase
 	protected $_mobile_ua  = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8B117 Safari/6531.22.7';
 
 	/**
-	 * @var \CodeIgniter\HTTP\UserAgent
+	 * @var UserAgent
 	 */
 	protected $agent;
 
@@ -83,15 +83,15 @@ class UserAgentTest extends CIUnitTestCase
 
 	public function testParse()
 	{
-		$new_agent = 'Mozilla/5.0 (Android; Mobile; rv:13.0) Gecko/13.0 Firefox/13.0';
-		$this->agent->parse($new_agent);
+		$newAgent = 'Mozilla/5.0 (Android; Mobile; rv:13.0) Gecko/13.0 Firefox/13.0';
+		$this->agent->parse($newAgent);
 
 		$this->assertEquals('Android', $this->agent->getPlatform());
 		$this->assertEquals('Firefox', $this->agent->getBrowser());
 		$this->assertEquals('13.0', $this->agent->getVersion());
 		$this->assertEquals('', $this->agent->getRobot());
 		$this->assertEquals('Android', $this->agent->getMobile());
-		$this->assertEquals($new_agent, $this->agent->getAgentString());
+		$this->assertEquals($newAgent, $this->agent->getAgentString());
 		$this->assertTrue($this->agent->isBrowser());
 		$this->assertFalse($this->agent->isRobot());
 		$this->assertTrue($this->agent->isMobile());
@@ -100,8 +100,8 @@ class UserAgentTest extends CIUnitTestCase
 
 	public function testParseBot()
 	{
-		$new_agent = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
-		$this->agent->parse($new_agent);
+		$newAgent = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+		$this->agent->parse($newAgent);
 
 		$this->assertFalse($this->agent->isBrowser());
 		$this->assertTrue($this->agent->isRobot());

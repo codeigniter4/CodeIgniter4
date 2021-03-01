@@ -4,8 +4,8 @@ namespace CodeIgniter\Session;
 
 use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
-use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
 use Config\Logger;

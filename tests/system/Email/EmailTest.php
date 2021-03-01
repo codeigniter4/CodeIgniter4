@@ -1,14 +1,16 @@
-<?php namespace system\Email;
+<?php namespace CodeIgniter\Email;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockEmail;
 
-class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
+class EmailTest extends CIUnitTestCase
 {
 	public function testEmailValidation()
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Email\Email($config);
+		$email            = new Email($config);
 		$email->setTo('invalid');
 		$this->assertStringContainsString('Invalid email address: invalid', $email->printDebugger());
 	}
@@ -28,7 +30,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email            = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 
 		$this->assertTrue($email->send($autoClear));
@@ -43,7 +45,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email            = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 		$email->setFrom('bar@foo.com');
 		$email->setSubject('Archive Test');
@@ -60,7 +62,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email            = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 
 		$this->assertTrue($email->send(true));
@@ -71,7 +73,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testEmailSendRepeatUpdatesArchive()
 	{
 		$config = config('Email');
-		$email  = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email  = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 		$email->setFrom('bar@foo.com');
 
@@ -89,7 +91,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email            = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 
 		$result = null;
@@ -108,7 +110,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config           = config('Email');
 		$config->validate = true;
-		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email            = new MockEmail($config);
 		$email->setTo('foo@foo.com');
 		$email->returnValue = false;
 

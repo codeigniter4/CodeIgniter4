@@ -1,6 +1,10 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
-class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class PredisHandlerTest extends CIUnitTestCase
 {
 	private $PredisHandler;
 	private static $key1 = 'key1';
@@ -22,7 +26,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->PredisHandler = new PredisHandler($this->config);
 		if (! $this->PredisHandler->isSupported())
@@ -61,7 +65,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
 		$this->assertNull($this->PredisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 
@@ -74,7 +78,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
 		$this->assertNull($this->PredisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 

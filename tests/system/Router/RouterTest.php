@@ -2,12 +2,15 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
-class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
+class RouterTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\Router\RouteCollection $collection
+	 * @var RouteCollection $collection
 	 */
 	protected $collection;
 
@@ -19,7 +22,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $root;
 
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -27,7 +30,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$moduleConfig          = new \Config\Modules;
+		$moduleConfig          = new Modules;
 		$moduleConfig->enabled = false;
 		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 

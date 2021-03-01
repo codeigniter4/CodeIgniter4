@@ -155,7 +155,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$app = new CodeIgniter(new App());
+$app = Services::codeigniter(new App());
 $app->initialize();
 
 return $app;

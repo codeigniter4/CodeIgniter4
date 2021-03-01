@@ -42,10 +42,9 @@ class DeleteTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * @group  single
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function testDeleteWithLimit()
 	{

@@ -1173,7 +1173,7 @@ if (! function_exists('stringify_attributes'))
 
 		foreach ($attributes as $key => $val)
 		{
-			$atts .= ($js) ? $key . '=' . esc($val, 'js') . ',' : ' ' . $key . '="' . esc($val, 'attr') . '"';
+			$atts .= ($js) ? $key . '=' . esc($val, 'js') . ',' : ' ' . $key . '="' . esc($val) . '"';
 		}
 
 		return rtrim($atts, ',');

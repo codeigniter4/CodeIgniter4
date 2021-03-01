@@ -372,7 +372,10 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($select as $val)
 		{
@@ -656,7 +659,10 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (! $this->hasOperator($cond))
 		{
@@ -776,7 +782,10 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{
@@ -1036,7 +1045,10 @@ class BaseBuilder
 			// @codeCoverageIgnoreEnd
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		$ok = $key;
 
@@ -1329,14 +1341,12 @@ class BaseBuilder
 	 */
 	protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
 	{
-		$likeStatement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
-
 		if ($insensitiveSearch === true)
 		{
-			$likeStatement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
+			return "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
 		}
 
-		return $likeStatement;
+		return "{$prefix} {$column} {$not} LIKE :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------
@@ -1546,7 +1556,10 @@ class BaseBuilder
 	 */
 	public function groupBy($by, bool $escape = null)
 	{
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (is_string($by))
 		{
@@ -1638,7 +1651,10 @@ class BaseBuilder
 			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if ($escape === false)
 		{
@@ -2236,7 +2252,7 @@ class BaseBuilder
 	 *
 	 * @throws DatabaseException
 	 *
-	 * @return BaseResult|Query|false
+	 * @return Query|boolean
 	 */
 	public function insert(array $set = null, bool $escape = null)
 	{
@@ -2467,7 +2483,7 @@ class BaseBuilder
 
 			$result = $this->db->query($sql, $this->binds, false);
 
-			if ($result->resultID !== false)
+			if ($result !== false)
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
@@ -2686,7 +2702,10 @@ class BaseBuilder
 			return null;
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $v)
 		{
@@ -2816,7 +2835,7 @@ class BaseBuilder
 	 * @param integer $limit     The limit clause
 	 * @param boolean $resetData
 	 *
-	 * @return mixed
+	 * @return string|boolean
 	 * @throws DatabaseException
 	 */
 	public function delete($where = '', int $limit = null, bool $resetData = true)
@@ -3042,16 +3061,14 @@ class BaseBuilder
 	 */
 	protected function compileIgnore(string $statement)
 	{
-		$sql = '';
-
 		if ($this->QBIgnore &&
 			isset($this->supportedIgnoreStatements[$statement])
 		)
 		{
-			$sql = trim($this->supportedIgnoreStatements[$statement]) . ' ';
+			return trim($this->supportedIgnoreStatements[$statement]) . ' ';
 		}
 
-		return $sql;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
