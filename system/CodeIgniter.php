@@ -907,8 +907,9 @@ class CodeIgniter
 	 */
 	protected function createController()
 	{
-		$class = new $this->controller();
-		$class->initController($this->request, $this->response, Services::logger());
+		$controllerFactory = Services::controllerfactory($this->request, $this->response, Services::logger());
+
+		$class = $controllerFactory->create($this->controller);
 
 		$this->benchmark->stop('controller_constructor');
 
