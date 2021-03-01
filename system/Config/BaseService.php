@@ -150,7 +150,7 @@ class BaseService
 	 * $key must be a name matching a service.
 	 *
 	 * @param string $key
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return mixed
 	 */
