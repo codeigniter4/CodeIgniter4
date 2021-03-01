@@ -2,6 +2,9 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionException;
+use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
@@ -10,7 +13,7 @@ use Tests\Support\EntityCast\CastPassParameters;
 use Tests\Support\EntityCast\NotExtendsAbstractCast;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
+class EntityTest extends CIUnitTestCase
 {
 
 	use ReflectionHelper;
@@ -111,7 +114,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('made it', $entity->bar);
 
 		// But it shouldn't actually set a class property for the original name...
-		$this->expectException(\ReflectionException::class);
+		$this->expectException(ReflectionException::class);
 		$this->getPrivateProperty($entity, 'bar');
 	}
 
@@ -194,7 +197,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt         = new \DateTime('now');
+		$dt         = new DateTime('now');
 		$entity     = $this->getEntity();
 		$attributes = [
 			'created_at' => $dt,
@@ -249,7 +252,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt     = new \DateTime('now');
+		$dt     = new DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -699,6 +702,9 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$entity->third = 'value';
 
 		$this->assertEquals('value:["param1","param2","param3"]', $entity->third);
+
+		$entity->fourth = 'test_nullable_type';
+		$this->assertEquals('test_nullable_type:["nullable"]', $entity->fourth);
 	}
 
 	//--------------------------------------------------------------------
@@ -1125,13 +1131,14 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'first'  => null,
 				'second' => null,
 				'third'  => null,
+				'fourth' => null,
 			];
 
 			protected $_original = [
 				'first'  => null,
 				'second' => null,
 				'third'  => null,
-
+				'fourth' => null,
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
@@ -1139,6 +1146,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'first'  => 'base64',
 				'second' => 'someType',
 				'third'  => 'type[param1, param2,param3]',
+				'fourth' => '?type',
 			];
 
 			protected $castHandlers = [

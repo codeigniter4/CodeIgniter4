@@ -517,6 +517,10 @@ Additional parameters are indicated in square brackets and listed with a comma.
         }
     }
 
+.. note:: If the casting type is marked as nullable ``?bool`` and the passed value is not null, then the parameter with
+the value ``nullable`` will be passed to the casting type handler.
+If casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
+
 
 Checking for Changed Attributes
 ===============================

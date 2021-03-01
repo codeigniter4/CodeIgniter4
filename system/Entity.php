@@ -524,8 +524,12 @@ class Entity implements JsonSerializable
 
 		$type = $this->casts[$attribute];
 
+		$isNullable = false;
+
 		if (strpos($type, '?') === 0)
 		{
+			$isNullable = true;
+
 			if ($value === null)
 			{
 				return null;
@@ -552,6 +556,11 @@ class Entity implements JsonSerializable
 			$params = array_map(function ($param) {
 				return trim($param);
 			}, explode(',', $matches[2]));
+		}
+
+		if ($isNullable)
+		{
+			$params[] = 'nullable';
 		}
 
 		$type = trim($type, '[]');
