@@ -384,8 +384,8 @@
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">model</span></code> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
 </ol>
-<p>If you use sub-directories in your controller structure you have to change the namespace according to that.
-Example: You have a version 3 controller located in <code class="docutils literal notranslate"><span class="pre">application/models/users/user_contact.php</span></code> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the controller path in the version 4 should look like this: <code class="docutils literal notranslate"><span class="pre">app/Models/Users/UserContact.php</span></code></p>
+<p>If you use sub-directories in your model structure you have to change the namespace according to that.
+Example: You have a version 3 model located in <code class="docutils literal notranslate"><span class="pre">application/models/users/user_contact.php</span></code> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the model path in the version 4 should look like this: <code class="docutils literal notranslate"><span class="pre">app/Models/Users/UserContact.php</span></code></p>
 <p>The new Model in CI4 has a lot of built-in methods. For example, the <code class="docutils literal notranslate"><span class="pre">find($id)</span></code> method. With this you can find data where the primary key is equal to <code class="docutils literal notranslate"><span class="pre">$id</span></code>.
 Inserting data is also easier than before. In CI4 there is an <code class="docutils literal notranslate"><span class="pre">insert($data)</span></code> method. You can optionally make use of all those built-in methods and migrate your code to the new methods.</p>
 <p>You can find more information to those methods <a class="reference external" href="/models/model.html">here</a>.</p>
@@ -447,7 +447,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Feb 28, 2021.
+        Last updated on Mar 01, 2021.
       </span>
 
     </p>
