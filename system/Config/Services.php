@@ -159,12 +159,16 @@ class Services extends BaseService
 	 *
 	 * @return ControllerFactory
 	 */
-	public static function controllerfactory(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger, bool $getShared = true)
+	public static function controllerfactory(RequestInterface $request = null, ResponseInterface $response = null, LoggerInterface $logger = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
 			return static::getSharedInstance('controllerfactory', $request, $response, $logger);
 		}
+
+		$request  = $request ?? static::request();
+		$response = $response ?? static::response();
+		$logger   = $logger ?? static::logger();
 
 		return new ControllerFactory($request, $response, $logger);
 	}
