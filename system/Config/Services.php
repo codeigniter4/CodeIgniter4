@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\ControllerFactory;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -67,6 +68,7 @@ use Config\Pager as PagerConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
+use Psr\Log\LoggerInterface;
 
 /**
  * Services Configuration file.
@@ -148,6 +150,23 @@ class Services extends BaseService
 		}
 
 		return new Commands();
+	}
+
+	/**
+	 * The ControllerFactory creates controller instances.
+	 *
+	 * @param boolean $getShared
+	 *
+	 * @return ControllerFactory
+	 */
+	public static function controllerfactory(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('controllerfactory', $request, $response, $logger);
+		}
+
+		return new ControllerFactory($request, $response, $logger);
 	}
 
 	/**

@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\ControllerFactory;
 use Config\Autoload;
 use Config\Modules;
 use CodeIgniter\Cache\CacheInterface;
@@ -53,6 +54,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
+use Psr\Log\LoggerInterface;
 
 /**
  * Services Configuration file.
@@ -74,6 +76,7 @@ use CodeIgniter\View\View;
  * @method static CacheInterface cache(\Config\Cache $config = null, $getShared = true)
  * @method static CLIRequest clirequest(\Config\App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
+ * @method static ControllerFactory controllerfactory(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger, bool $getShared = true)
  * @method static CURLRequest curlrequest($options = [], \CodeIgniter\HTTP\ResponseInterface $response = null, \Config\App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
  * @method static EncrypterInterface encrypter(\Config\Encryption $config = null, $getShared = false)
