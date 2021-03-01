@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Config\Config;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Config\Factories;
 use Config\Database;
 
 /**
@@ -74,7 +74,7 @@ class ConnectTest extends CIUnitTestCase
 
 		$config                      = config('Database');
 		$config->default['DBDriver'] = 'MySQLi';
-		Config::injectMock('Database', $config);
+		Factories::injectMock('config','Database', $config);
 
 		$db1 = Database::connect('default');
 		$this->assertNotInstanceOf(Connection::class, $db1);
