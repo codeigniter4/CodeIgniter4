@@ -7,7 +7,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-
 class RouterTest extends CIUnitTestCase
 {
 
@@ -732,9 +731,9 @@ class RouterTest extends CIUnitTestCase
 		$router->setDirectory('foo/bar/baz', false, true);
 		$router->handle('Some_controller/some_method/param1/param2/param3');
 
-		$this->assertEquals('', $router->directory());
-		$this->assertEquals('', $router->controllerName());
-		$this->assertEquals('', $router->methodName());
+		$this->assertEquals('foo/bar/baz/', $router->directory());
+		$this->assertEquals('Some_controller', $router->controllerName());
+		$this->assertEquals('some_method', $router->methodName());
 	}
 
 	public function testSetDirectoryValid()
