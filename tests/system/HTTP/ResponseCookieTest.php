@@ -257,6 +257,22 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$this->assertSame('', $allCookies['bar;;/']->getSameSite());
 	}
 
+	public function testCookieWithoutSameSite()
+	{
+		$config = new App();
+		unset($config->cookieSameSite);
+		$response = new Response($config);
+		$response->setCookie([
+			'name'  => 'bar',
+			'value' => 'foo',
+		]);
+
+		$allCookies = $response->getCookies();
+		$this->assertCount(1, $allCookies);
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
+		$this->assertSame('Lax', $allCookies['bar;;/']->getSameSite());
+	}
+
 	public function testCookieStrictSameSite()
 	{
 		$config   = new App();
