@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -132,6 +133,26 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * CodeIgniter, the core of the framework.
+	 *
+	 * @param App|null $config
+	 * @param boolean  $getShared
+	 *
+	 * @return CodeIgniter
+	 */
+	public static function codeigniter(App $config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('codeigniter', $config);
+		}
+
+		$config = $config ?? config('App');
+
+		return new CodeIgniter($config);
+	}
 
 	/**
 	 * The commands utility for running and working with CLI commands.
