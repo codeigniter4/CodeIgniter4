@@ -7,7 +7,6 @@ use ReflectionException;
 use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\EntityCast\CastBase64;
 use Tests\Support\EntityCast\CastPassParameters;
