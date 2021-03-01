@@ -583,6 +583,22 @@ class Router implements RouterInterface
 	 * @param array $segments URI segments
 	 *
 	 * @return array returns an array of remaining uri segments that don't map onto a directory
+	 *
+	 * @deprecated this function name does not properly describe its behavior so it has been deprecated
+	 */
+	protected function validateRequest(array $segments): array
+	{
+		return $this->scanControllers($segments);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
+	 *
+	 * @param array $segments URI segments
+	 *
+	 * @return array returns an array of remaining uri segments that don't map onto a directory
 	 */
 	protected function scanControllers(array $segments): array
 	{
@@ -641,7 +657,7 @@ class Router implements RouterInterface
 		if (empty($dir))
 		{
 			$this->directory = null;
-			return true;
+			return;
 		}
 
 		if ($validate)
@@ -676,7 +692,7 @@ class Router implements RouterInterface
 	 */
 	private function isValidSegment(string $segment): bool
 	{
-		return (boolean)preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
+		return (bool)preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
 	}
 
 	//--------------------------------------------------------------------

@@ -724,4 +724,35 @@ class RouterTest extends CIUnitTestCase
 		];
 		$this->assertEquals($expected, $router->params());
 	}
+
+	public function testRouterPriorDirectory()
+	{
+		$router = new Router($this->collection, $this->request);
+
+		$router->setDirectory('foo/bar/baz', false, true);
+		$router->handle('Some_controller/some_method/param1/param2/param3');
+
+		$this->assertEquals('', $router->directory());
+		$this->assertEquals('', $router->controllerName());
+		$this->assertEquals('', $router->methodName());
+	}
+
+	public function testSetDirectoryValid()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setDirectory('foo/bar/baz', false, true);
+
+		$this->assertEquals('foo/bar/baz/', $router->directory());
+	}
+
+	public function testSetDirectoryInvalid()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setDirectory('foo/bad-segment/bar', false, true);
+
+		$internal = $this->getPrivateProperty($router, 'directory');
+
+		$this->assertNull($internal);
+		$this->assertEquals('', $router->directory());
+	}
 }
