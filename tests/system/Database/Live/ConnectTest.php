@@ -2,14 +2,17 @@
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\SQLite3\Connection;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class ConnectTest extends CIDatabaseTestCase
+class ConnectTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $group1;
 
 	protected $group2;

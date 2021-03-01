@@ -1,12 +1,14 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class DEBugTest extends CIDatabaseTestCase
+class DEBugTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 
 	protected $refresh = true;
 

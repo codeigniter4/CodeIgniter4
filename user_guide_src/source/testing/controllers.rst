@@ -21,9 +21,12 @@ within your tests::
     namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class TestControllerA extends \CIDatabaseTestCase
+    class TestControllerA extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
         use ControllerTester;
     }
 
@@ -37,9 +40,12 @@ to run as the parameter::
     namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class TestControllerA extends \CIDatabaseTestCase
+    class TestControllerA extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
         use ControllerTester;
 
         public function testShowCategories()

@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class WriteTypeQueryTest extends CIDatabaseTestCase
+class WriteTypeQueryTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';

@@ -4,7 +4,8 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use InvalidArgumentException;
 use RuntimeException;
@@ -12,8 +13,9 @@ use RuntimeException;
 /**
  * @group DatabaseLive
  */
-class ForgeTest extends CIDatabaseTestCase
+class ForgeTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
