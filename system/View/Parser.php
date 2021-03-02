@@ -574,8 +574,8 @@ class Parser extends View
 		$pattern = addcslashes($pattern, '$');
 
 		// Flesh out the main pattern from the delimiters and escape the hash
-		// See https://regex101.com/r/1GIHTa/1
-		if (preg_match('/^(#)(.*)(#(m?s)?)$/', $pattern, $parts))
+		// See https://regex101.com/r/IKdUlk/1
+		if (preg_match('/^(#)(.+)(#(m?s)?)$/s', $pattern, $parts))
 		{
 			$pattern = $parts[1] . addcslashes($parts[2], '#') . $parts[3];
 		}
