@@ -202,7 +202,14 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var boolean
 	 */
-	protected $enablePrioritySorting = false;
+	protected $prioritize = false;
+
+	/**
+	 * Route priority detection flag.
+	 *
+	 * @var boolean
+	 */
+	protected $prioritizeDetected = false;
 
 	//--------------------------------------------------------------------
 
@@ -525,6 +532,22 @@ class RouteCollection implements RouteCollectionInterface
 				$key          = key($r['route']);
 				$routes[$key] = $r['route'][$key];
 			}
+		}
+
+		// sorting routes by priority
+		if ($this->prioritizeDetected && $this->prioritize)
+		{
+			$order = [];
+
+			foreach ($routes as $key => $value)
+			{
+				$key                    = $key === '/' ? $key : ltrim($key, '/ ');
+				$priority               = $this->getRoutesOptions($key, $verb)['priority'] ?? 0;
+				$order[$priority][$key] = $value;
+			}
+
+			ksort($order);
+			$routes = array_merge(...$order);
 		}
 
 		return $routes;
@@ -1374,6 +1397,17 @@ class RouteCollection implements RouteCollectionInterface
 
 		$options = array_merge($this->currentOptions ?? [], $options ?? []);
 
+		// Route priority detect
+		if (isset($options['priority']))
+		{
+			$options['priority'] = abs((int) $options['priority']);
+
+			if ($options['priority'] > 0)
+			{
+				$this->prioritizeDetected = true;
+			}
+		}
+
 		// Hostname limiting?
 		if (! empty($options['hostname']))
 		{
@@ -1564,6 +1598,8 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->routes[$verb] = [];
 		}
+
+		$this->prioritizeDetected = false;
 	}
 
 	//--------------------------------------------------------------------
@@ -1601,25 +1637,16 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	/**
-	 * Enables sorting routes by priority
+	 * Enable or Disable sorting routes by priority
+	 *
+	 * @param boolean $enabled The value status
 	 *
 	 * @return $this
 	 */
-	public function enablePrioritySorting(): RouteCollectionInterface
+	public function setPrioritize(bool $enabled = true)
 	{
-		$this->enablePrioritySorting = true;
+		$this->prioritize = $enabled;
 
 		return $this;
 	}
-
-	/**
-	 * Returns the sorting status of routes by priority. Enabled or not.
-	 *
-	 * @return boolean
-	 */
-	public function isPrioritySortingEnabled(): bool
-	{
-		return  $this->enablePrioritySorting;
-	}
-
 }

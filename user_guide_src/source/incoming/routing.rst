@@ -432,15 +432,15 @@ be used when the first parameter is a language string::
 Routes priority
 ---------------
 
-When working with modules, it can be a problem if the routes in the application contain windcards.
+When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
-You can solve this problem by lowering the priority of the route using the `` order`` option::
+You can solve this problem by lowering the priority of the route using the ``priority`` option::
 
     // First you need to enable sorting.
-    $routes->enablePrioritySorting();
+    $routes->setPrioritize();
 
     // App\Config\Routes
-    $routes->add('(.*)', 'Posts::index', ['order' => 1]);
+    $routes->add('(.*)', 'Posts::index', ['priority' => 1]);
 
     // Modules\Acme\Config\Routes
     $routes->add('admin', 'Admin::index');
@@ -449,7 +449,7 @@ You can solve this problem by lowering the priority of the route using the `` or
 
 
 .. note:: By default, all routes have a priority of 0.
-The higher the number specified in "order", the lower the priority of the route.
+    The higher the number specified in "order", the lower the priority of the route.
 
 
 Routes Configuration Options
@@ -548,10 +548,12 @@ a valid class/method pair, just like you would show in any route, or a Closure::
 Enabled router priority
 -----------------------
 
-Enabling the priority of applying routes. For more information see :ref:`priority`
+Enabling the priority of applying routes.
+Disabled by default.
+For more information see :ref:`priority`
 
 ::
 
-    $routes->enablePrioritySorting();
+    $routes->setPrioritize();
 
 

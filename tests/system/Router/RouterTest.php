@@ -606,7 +606,7 @@ class RouterTest extends CIUnitTestCase
 	public function testRoutePriorityOrder()
 	{
 		$this->collection->add('main', 'Main::index');
-		$this->collection->add('(.*)', 'Main::wildcard', ['order' => 1]);
+		$this->collection->add('(.*)', 'Main::wildcard', ['priority' => 1]);
 		$this->collection->add('module', 'Module::index');
 
 		$router = new Router($this->collection, $this->request);
@@ -617,7 +617,7 @@ class RouterTest extends CIUnitTestCase
 		$this->assertEquals('\Main', $router->controllerName());
 		$this->assertEquals('wildcard', $router->methodName());
 
-		$this->collection->enablePrioritySorting();
+		$this->collection->setPrioritize();
 
 		$router->handle('module');
 		$this->assertEquals('\Module', $router->controllerName());

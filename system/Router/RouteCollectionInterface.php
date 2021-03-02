@@ -244,18 +244,4 @@ interface RouteCollectionInterface
 	public function getRedirectCode(string $from): int;
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Enables sorting routes by priority
-	 *
-	 * @return $this
-	 */
-	public function enablePrioritySorting() : self;
-
-	/**
-	 * Returns the sorting status of routes by priority. Enabled or not.
-	 *
-	 * @return boolean
-	 */
-	public function isPrioritySortingEnabled() : bool;
 }
