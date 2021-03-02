@@ -164,9 +164,11 @@ trait ControllerTester
 		}
 		catch (Throwable $e)
 		{
-			if ($code >= 100 || $code < 600)
+			$code = $e->getCode();
+
+			if ($code >= 100 && $code < 600)
 			{
-				$result->response()->setStatusCode($e->getCode());
+				$result->response()->setStatusCode($code);
 			}
 		}
 		finally
