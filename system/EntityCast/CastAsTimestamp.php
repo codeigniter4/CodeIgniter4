@@ -28,7 +28,7 @@ class CastAsTimestamp extends AbstractCast
 
 		if ($value === false)
 		{
-			throw CastException::invalidTimestamp();
+			throw CastException::forInvalidTimestamp();
 		}
 
 		return $value;
