@@ -542,7 +542,7 @@ class Entity implements JsonSerializable
 
 		if (! in_array($method, ['get', 'set'], true))
 		{
-			throw CastException::invalidCastMethod();
+			throw CastException::forInvalidCastMethod();
 		}
 
 		$params = [];
@@ -571,7 +571,7 @@ class Entity implements JsonSerializable
 
 		if (! is_subclass_of($handlers[$type], CastInterface::class))
 		{
-			throw CastException::missingInterface($handlers[$type]);
+			throw CastException::forMissingInterface($handlers[$type]);
 		}
 
 		return $handlers[$type]::$method($value, $params);

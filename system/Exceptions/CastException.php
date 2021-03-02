@@ -44,12 +44,12 @@ class CastException extends CriticalError
 		}
 	}
 
-	public static function missingInterface($class) : self
+	public static function forMissingInterface($class) : self
 	{
 		return new static(lang('Cast.abstractCastMissing', [$class]));
 	}
 
-	public static function invalidCastMethod() : self
+	public static function forInvalidCastMethod() : self
 	{
 		return new static(lang('Cast.wrongCastMethod'));
 	}
