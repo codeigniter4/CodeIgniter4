@@ -19,4 +19,5 @@ return [
    'jsonErrorUnknown'       => 'Unknown error',
    'abstractCastMissing'    => 'The {0} class must inherit the CodeIgniter\EntityCast\AbstractCast class',
    'wrongCastMethod'        => 'Allowed methods for cast is "get" and "set"',
+   'invalidTimestamp'       => 'Type casting "timestamp" expects a correct timestamp.',
 ];

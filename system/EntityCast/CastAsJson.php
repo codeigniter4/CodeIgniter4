@@ -1,15 +1,22 @@
 <?php
 
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace CodeIgniter\EntityCast;
 
-use stdClass;
+use JsonException;
 use CodeIgniter\Exceptions\CastException;
+use stdClass;
 
 /**
  * Class CastAsJson
- *
- * @package CodeIgniter\Entity\Cast
  */
 class CastAsJson extends AbstractCast
 {
@@ -19,7 +26,9 @@ class CastAsJson extends AbstractCast
 	 */
 	public static function get($value, array $params = [])
 	{
-		$tmp = ! is_null($value) ? (in_array('array', $params, true) ? [] : new stdClass) : null;
+		$associative = in_array('array', $params, true);
+		$tmp         = ! is_null($value) ? ($associative ? [] : new stdClass) : null;
+
 		if (function_exists('json_decode')
 			&& ((is_string($value)
 					&& strlen($value) > 1
@@ -28,10 +37,13 @@ class CastAsJson extends AbstractCast
 			)
 		)
 		{
-			$tmp = json_decode($value, (bool) $params);
-			if (json_last_error() !== JSON_ERROR_NONE)
+			try
 			{
-				throw CastException::forInvalidJsonFormatException(json_last_error());
+				$tmp = json_decode($value, $associative, 512, JSON_THROW_ON_ERROR);
+			}
+			catch (JsonException $e)
+			{
+				throw CastException::forInvalidJsonFormatException($e->getCode());
 			}
 		}
 
@@ -41,15 +53,17 @@ class CastAsJson extends AbstractCast
 	/**
 	 * @inheritDoc
 	 */
-	public static function set($value, array $params = []) : string
+	public static function set($value, array $params = []): string
 	{
 		if (function_exists('json_encode'))
 		{
-			$value = json_encode($value, JSON_UNESCAPED_UNICODE);
-
-			if (json_last_error() !== JSON_ERROR_NONE)
+			try
 			{
-				throw CastException::forInvalidJsonFormatException(json_last_error());
+				$value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+			}
+			catch (JsonException $e)
+			{
+				throw CastException::forInvalidJsonFormatException($e->getCode());
 			}
 		}
 

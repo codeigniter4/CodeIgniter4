@@ -389,6 +389,18 @@ class EntityTest extends CIUnitTestCase
 		$this->assertEquals(strtotime($date), $entity->ninth);
 	}
 
+	public function testCastTimestampException()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->ninth = 'some string';
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage('Type casting "timestamp" expects a correct timestamp.');
+
+		$entity->ninth;
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCastArray()

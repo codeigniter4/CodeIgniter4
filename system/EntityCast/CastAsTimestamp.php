@@ -1,14 +1,21 @@
 <?php
 
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace CodeIgniter\EntityCast;
 
+use CodeIgniter\Exceptions\CastException;
+
 /**
  * Class CastAsTimestamp
- *
- * @package CodeIgniter\Entity\Cast
  */
-
 class CastAsTimestamp extends AbstractCast
 {
 
@@ -17,6 +24,13 @@ class CastAsTimestamp extends AbstractCast
 	 */
 	public static function get($value, array $params = [])
 	{
-		return strtotime($value);
+		$value = strtotime($value);
+
+		if ($value === false)
+		{
+			throw CastException::invalidTimestamp();
+		}
+
+		return $value;
 	}
 }

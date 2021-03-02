@@ -53,4 +53,10 @@ class CastException extends CriticalError
 	{
 		return new static(lang('Cast.wrongCastMethod'));
 	}
+
+	public static function invalidTimestamp() : self
+	{
+		return new static(lang('Cast.invalidTimestamp'));
+	}
+
 }

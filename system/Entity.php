@@ -15,7 +15,6 @@ use CodeIgniter\EntityCast\CastAsArray;
 use CodeIgniter\EntityCast\CastAsBoolean;
 use CodeIgniter\EntityCast\CastAsCommaSeparatedValues;
 use CodeIgniter\EntityCast\CastAsDatetime;
-use CodeIgniter\EntityCast\CastAsDouble;
 use CodeIgniter\EntityCast\CastAsFloat;
 use CodeIgniter\EntityCast\CastAsInteger;
 use CodeIgniter\EntityCast\CastInterface;
@@ -76,7 +75,7 @@ class Entity implements JsonSerializable
 		'boolean'   => CastAsBoolean::class,
 		'csv'       => CastAsCommaSeparatedValues::class,
 		'datetime'  => CastAsDatetime::class,
-		'double'    => CastAsDouble::class,
+		'double'    => CastAsFloat::class,
 		'float'     => CastAsFloat::class,
 		'int'       => CastAsInteger::class,
 		'integer'   => CastAsInteger::class,
@@ -515,7 +514,7 @@ class Entity implements JsonSerializable
 	 * @return mixed
 	 * @throws Exception
 	 */
-	protected function castAs($value, string $attribute, string $method)
+	protected function castAs($value, string $attribute, string $method = 'get')
 	{
 		if (empty($this->casts[$attribute]))
 		{
@@ -553,9 +552,7 @@ class Entity implements JsonSerializable
 		if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches))
 		{
 			$type   = $matches[1];
-			$params = array_map(function ($param) {
-				return trim($param);
-			}, explode(',', $matches[2]));
+			$params = array_map('trim', explode(',', $matches[2]));
 		}
 
 		if ($isNullable)
