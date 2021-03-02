@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
@@ -175,7 +176,7 @@ class FileHandlerTest extends CIUnitTestCase
 
 		$actual = $this->fileHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 
