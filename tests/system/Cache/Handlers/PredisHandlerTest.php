@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
+
+namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -119,7 +121,7 @@ class PredisHandlerTest extends CIUnitTestCase
 
 		$actual = $this->PredisHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 
