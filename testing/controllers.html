@@ -367,9 +367,12 @@ within your tests:</p>
 <span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTester</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+<span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
     <span class="k">use</span> <span class="nx">ControllerTester</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -383,9 +386,12 @@ to run as the parameter:</p>
 <span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTester</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+<span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
     <span class="k">use</span> <span class="nx">ControllerTester</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testShowCategories</span><span class="p">()</span>
@@ -614,7 +620,7 @@ values of the elements. Instead, they simply check that the elements exist on th
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 01, 2021.
+        Last updated on Mar 04, 2021.
       </span>
 
     </p>
