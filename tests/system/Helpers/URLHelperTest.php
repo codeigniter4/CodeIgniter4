@@ -1278,8 +1278,6 @@ class URLHelperTest extends CIUnitTestCase
 
 	public function testMbUrlTitle()
 	{
-		helper('text');
-
 		$words = [
 			'foo bar /'       => 'foo-bar',
 			'\  testing 12'   => 'testing-12',
@@ -1295,8 +1293,6 @@ class URLHelperTest extends CIUnitTestCase
 
 	public function testMbUrlTitleExtraDashes()
 	{
-		helper('text');
-
 		$words = [
 			'_foo bar_'                 => 'foo_bar',
 			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
