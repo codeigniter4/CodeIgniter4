@@ -141,7 +141,7 @@ To run migrations from all available namespaces set this property to ``null``.
 Helper Methods
 ==============
 
-The **CIDatabaseTestCase** class provides several helper methods to aid in testing your database.
+The **DatabaseTestTrait** class provides several helper methods to aid in testing your database.
 
 **regressDatabase()**
 

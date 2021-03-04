@@ -3,14 +3,17 @@
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class AlterTableTest extends CIDatabaseTestCase
+class AlterTableTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	/**
 	 * In setUp() db connection is changed. So migration doesn't work
 	 *

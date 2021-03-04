@@ -4,13 +4,15 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class DbUtilsTest extends CIDatabaseTestCase
+class DbUtilsTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';

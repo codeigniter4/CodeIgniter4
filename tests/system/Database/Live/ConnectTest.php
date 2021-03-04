@@ -1,15 +1,18 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Config\Config;
 use CodeIgniter\Database\SQLite3\Connection;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Config\Factories;
 use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class ConnectTest extends CIDatabaseTestCase
+class ConnectTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $group1;
 
 	protected $group2;
@@ -71,7 +74,7 @@ class ConnectTest extends CIDatabaseTestCase
 
 		$config                      = config('Database');
 		$config->default['DBDriver'] = 'MySQLi';
-		Config::injectMock('Database', $config);
+		Factories::injectMock('config','Database', $config);
 
 		$db1 = Database::connect('default');
 		$this->assertNotInstanceOf(Connection::class, $db1);

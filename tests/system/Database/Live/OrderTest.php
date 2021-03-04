@@ -2,13 +2,16 @@
 
 namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class OrderTest extends CIDatabaseTestCase
+class OrderTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';

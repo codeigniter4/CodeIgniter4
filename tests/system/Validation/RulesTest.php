@@ -2,15 +2,17 @@
 
 namespace CodeIgniter\Validation;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
-use CodeIgniter\Validation\Rules;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Config\Services;
 use stdClass;
 use Tests\Support\Validation\TestRules;
 
-class RulesTest extends CIDatabaseTestCase
+class RulesTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	/**

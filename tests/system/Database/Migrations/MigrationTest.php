@@ -3,10 +3,13 @@
 namespace CodeIgniter\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
-class MigrationTest extends CIDatabaseTestCase
+class MigrationTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	public function setUp(): void
 	{
 		parent::setUp();
