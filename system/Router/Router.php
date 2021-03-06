@@ -692,7 +692,7 @@ class Router implements RouterInterface
 	 */
 	private function isValidSegment(string $segment): bool
 	{
-		return (bool)preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
+		return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
 	}
 
 	//--------------------------------------------------------------------
