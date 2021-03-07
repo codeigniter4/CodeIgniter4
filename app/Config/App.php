@@ -22,9 +22,12 @@ class App extends BaseConfig
 	 * explicitly and never rely on auto-guessing, especially in production
 	 * environments.
 	 *
+	 * if placement Your Codeigniter file is different or you are using a port
+	 * other than 8080 you can change 'DYNAMIC_BASE_URL' to 'http://localhost:8080/'
+	 * 
 	 * @var string
 	 */
-	public $baseURL = 'http://localhost:8080/';
+	public $baseURL = 'DYNAMIC_BASE_URL';
 
 	/**
 	 * --------------------------------------------------------------------------
