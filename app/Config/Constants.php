@@ -86,6 +86,6 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
  | Used for dynamic urls
  |
  */
-$DYNAMIC_BASE_URL = isset($_SERVER['HTTPS']) ? "https://" : "http://" . $_SERVER['HTTP_HOST'] . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']); // defined DYNAMIC_BASE_URL
+$base = isset($_SERVER['HTTPS']) ? "https://" : "http://" . $_SERVER['HTTP_HOST'] . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']); // defined DYNAMIC_BASE_URL
 
-defined('DYNAMIC_BASE_URL') || define('DYNAMIC_BASE_URL', $DYNAMIC_BASE_URL); // dynamic url public $baseURL
+defined('DYNAMIC_BASE_URL') || define('DYNAMIC_BASE_URL', $base); // dynamic url public $baseURL
