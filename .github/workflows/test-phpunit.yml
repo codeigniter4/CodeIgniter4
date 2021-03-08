@@ -33,7 +33,7 @@ on:
 jobs:
 
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
@@ -74,6 +74,10 @@ jobs:
         ports:
           - 6379:6379
         options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
 
     steps:
       - name: Create database for MSSQL Server
@@ -88,13 +92,16 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv-beta
+          extensions: imagick, sqlsrv-beta, gd, sqlite3, redis, memcached, pgsql
           coverage: xdebug
         env:
           update: true
 
-      - name: Install Memcached
-        uses: niden/actions-memcached@v7
+      - name: Install latest ImageMagick
+        run: |
+          sudo apt-get remove ghostscript
+          sudo apt-get update
+          sudo apt-get install -y imagemagick ghostscript-x gsfonts
 
       - name: Get composer cache directory
         id: composercache
