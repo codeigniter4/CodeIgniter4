@@ -1,7 +1,8 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -24,7 +25,7 @@ class URLHelperTest extends CIUnitTestCase
 
 		helper('url');
 		Services::reset(true);
-		Config::reset();
+		Factories::reset('config');
 
 		// Set a common base configuration (overriden by individual tests)
 		$this->config            = new App();
@@ -329,7 +330,7 @@ class URLHelperTest extends CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/subfolder/';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config, false);
 		Services::injectMock('request', $request);
@@ -346,7 +347,7 @@ class URLHelperTest extends CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/subfolder';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config, false);
 		Services::injectMock('request', $request);
@@ -392,7 +393,7 @@ class URLHelperTest extends CIUnitTestCase
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
@@ -408,7 +409,7 @@ class URLHelperTest extends CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/foo/public';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
@@ -432,7 +433,7 @@ class URLHelperTest extends CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com:8080/foo/public';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
