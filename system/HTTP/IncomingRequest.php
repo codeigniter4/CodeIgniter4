@@ -356,7 +356,7 @@ class IncomingRequest extends Request
 
 		if (! is_array($data))
 		{
-			$filter = is_numeric($filter) ? (int) $filter : FILTER_DEFAULT;
+			$filter = $filter ?? FILTER_DEFAULT;
 			$flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
 			return filter_var($data, $filter, $flags);
