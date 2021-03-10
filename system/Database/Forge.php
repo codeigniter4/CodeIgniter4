@@ -524,7 +524,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			if (! isset($this->db->dataCache['table_names'][$table]))
+			if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true))
 			{
 				$this->db->dataCache['table_names'][] = $table;
 			}
