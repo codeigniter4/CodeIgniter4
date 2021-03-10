@@ -490,7 +490,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param string $key
 	 *
-	 * @return mixed|null
+	 * @return mixed
 	 */
 	public function getOldInput(string $key)
 	{
