@@ -500,7 +500,7 @@ class IncomingRequest extends Request
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
 		{
-			return;
+			return null;
 		}
 
 		// Check for the value in the POST array first.
@@ -537,8 +537,8 @@ class IncomingRequest extends Request
 			}
 		}
 
-		//      // return null if requested session key not found
-		//      return null;
+		// requested session key not found
+		return null;
 	}
 
 	/**
