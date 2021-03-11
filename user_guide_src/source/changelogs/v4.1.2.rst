@@ -9,6 +9,7 @@ Enhancements:
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
 - New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
+- Entity. Added custom type casting functionality.
 
 Changes:
 
@@ -16,6 +17,10 @@ Changes:
 - ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
 - To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
 - `Model::errors()` and `BaseModel::errors()` now always returns `array`; there was no definition change but the docblock has been updated.
+- ``Entity::castAs`` has changed behavior. Added new parameter ``$method``. Type casting has been moved to separate handlers.
+- Entity. Timestamp casting now throws an exception when an invalid value is passed
+- ``Entity::castAsJson`` uses external cast handler ``CastAsJson::get``.
+- ``Entity::mutateDate`` uses external cast handler ``CastAsDatetime::get``.
 
 Deprecations:
 
