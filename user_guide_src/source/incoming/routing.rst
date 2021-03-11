@@ -429,12 +429,14 @@ be used when the first parameter is a language string::
 
 .. _priority:
 
-Routes priority
----------------
+Route processing queue
+----------------------
 
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
-You can solve this problem by lowering the priority of the route using the ``priority`` option::
+You can solve this problem by lowering the priority of route processing using the ``priority`` option. The parameter
+accepts positive integers and zero. The higher the number specified in the "priority", the lower
+route priority in the processing queue::
 
     // First you need to enable sorting.
     $routes->setPrioritize();
@@ -448,8 +450,12 @@ You can solve this problem by lowering the priority of the route using the ``pri
     // The "admin" route will now be processed before the wildcard router.
 
 
+To disable this functionality, you must call the method with the parameter ``false``::
+
+    $routes->setPrioritize(false);
+
 .. note:: By default, all routes have a priority of 0.
-    The higher the number specified in "order", the lower the priority of the route.
+    Negative integers will be cast to the absolute value.
 
 
 Routes Configuration Options
@@ -545,15 +551,16 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     });
 
 
-Enabled router priority
------------------------
+Route processing by priority
+----------------------------
 
-Enabling the priority of applying routes.
-Disabled by default.
-For more information see :ref:`priority`
+Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
+Disabled by default. This functionality affects all routes.
+For an example of use lowering the priority see :ref:`priority`::
 
-::
-
+    // to enable
     $routes->setPrioritize();
 
+    // to disable
+    $routes->setPrioritize(false);
 

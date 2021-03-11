@@ -535,7 +535,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// sorting routes by priority
-		if ($this->prioritizeDetected && $this->prioritize)
+		if ($this->prioritizeDetected && $this->prioritize && $routes !== [])
 		{
 			$order = [];
 
