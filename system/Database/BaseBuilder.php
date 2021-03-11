@@ -151,7 +151,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -263,6 +263,7 @@ class BaseBuilder
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
+		/** @var BaseConnection $db */
 		$this->db = $db;
 
 		$this->tableName = $tableName;
@@ -285,7 +286,7 @@ class BaseBuilder
 	/**
 	 * Returns the current database connection
 	 *
-	 * @return ConnectionInterface
+	 * @return ConnectionInterface|BaseConnection
 	 */
 	public function db(): ConnectionInterface
 	{
@@ -2098,9 +2099,8 @@ class BaseBuilder
 				{
 					throw new DatabaseException('insertBatch() called with no data');
 				}
-				// @codeCoverageIgnoreStart
-				return false;
-				// @codeCoverageIgnoreEnd
+
+				return false; // @codeCoverageIgnore
 			}
 
 			$this->setInsertBatch($set, '', $escape);
@@ -2116,7 +2116,7 @@ class BaseBuilder
 
 			if ($this->testMode)
 			{
-				++ $affectedRows;
+				++$affectedRows;
 			}
 			else
 			{
@@ -2190,6 +2190,7 @@ class BaseBuilder
 			ksort($row); // puts $row in the same order as our keys
 
 			$clean = [];
+
 			foreach ($row as $k => $value)
 			{
 				$clean[] = ':' . $this->setBind($k, $value, $escape) . ':';
@@ -3291,7 +3292,7 @@ class BaseBuilder
 				$i = 0;
 				foreach ($out[$val] as $data)
 				{
-					$array[$i ++][$val] = $data;
+					$array[$i++][$val] = $data;
 				}
 			}
 		}
@@ -3497,16 +3498,17 @@ class BaseBuilder
 
 		if (! array_key_exists($key, $this->bindsKeyCount))
 		{
-			$this->bindsKeyCount[$key] = 0;
+			$this->bindsKeyCount[$key] = 1;
 		}
+
 		$count = $this->bindsKeyCount[$key]++;
 
-		$this->binds[$key . $count] = [
+		$this->binds[$key . '.' . $count] = [
 			$value,
 			$escape,
 		];
 
-		return $key . $count;
+		return $key . '.' . $count;
 	}
 
 	//--------------------------------------------------------------------

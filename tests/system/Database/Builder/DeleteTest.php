@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -7,16 +9,12 @@ class DeleteTest extends CIUnitTestCase
 {
 	protected $db;
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testDelete()
 	{
@@ -32,8 +30,8 @@ class DeleteTest extends CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
 	public function testGetCompiledDelete()
@@ -44,10 +42,10 @@ class DeleteTest extends CIUnitTestCase
 		$sql = $builder->getCompiledDelete();
 
 		$expectedSQL = <<<'EOL'
-DELETE FROM "jobs"
-WHERE "id" = 1
-EOL;
-		$this->assertEquals($expectedSQL, $sql);
+		DELETE FROM "jobs"
+		WHERE "id" = 1
+		EOL;
+		$this->assertSame($expectedSQL, $sql);
 	}
 
 	public function testGetCompiledDeleteWithLimit()
@@ -57,9 +55,9 @@ EOL;
 		$sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
 
 		$expectedSQL = <<<'EOL'
-DELETE FROM "jobs"
-WHERE "id" = 1 LIMIT 10
-EOL;
-		$this->assertEquals($expectedSQL, $sql);
+		DELETE FROM "jobs"
+		WHERE "id" = 1 LIMIT 10
+		EOL;
+		$this->assertSame($expectedSQL, $sql);
 	}
 }

@@ -7,16 +7,12 @@ class ReplaceTest extends CIUnitTestCase
 {
 	protected $db;
 
-	//--------------------------------------------------------------------
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleReplace()
 	{
@@ -33,8 +29,6 @@ class ReplaceTest extends CIUnitTestCase
 		$this->assertSame($expected, $builder->testMode()->replace($data));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testReplaceThrowsExceptionWithNoData()
 	{
 		$builder = $this->db->table('jobs');
@@ -44,7 +38,4 @@ class ReplaceTest extends CIUnitTestCase
 
 		$builder->replace();
 	}
-
-	//--------------------------------------------------------------------
-
 }
