@@ -330,7 +330,8 @@ class Connection extends BaseConnection
 		}
 		catch (mysqli_sql_exception $e)
 		{
-			log_message('error', $e);
+			log_message('error', $e->getMessage());
+
 			if ($this->DBDebug)
 			{
 				throw $e;
