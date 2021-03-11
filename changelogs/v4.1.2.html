@@ -355,6 +355,7 @@
 <ul class="simple">
 <li><p>New HTTP classes, <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> and <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>, for abstracting web cookies.</p></li>
 <li><p>New logger handler, <code class="docutils literal notranslate"><span class="pre">ErrorlogHandler</span></code>, that writes to <code class="docutils literal notranslate"><span class="pre">error_log()</span></code>.</p></li>
+<li><p>Entity. Added custom type casting functionality.</p></li>
 </ul>
 <p>Changes:</p>
 <ul class="simple">
@@ -362,6 +363,10 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookies</span></code> now returns an array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances instead of array of array of attributes.</p></li>
 <li><p>To eliminate warnings from modern browsers’ consoles, empty samesite values will be defaulted to <code class="docutils literal notranslate"><span class="pre">Lax</span></code> on cookie dispatch.</p></li>
 <li><p><cite>Model::errors()</cite> and <cite>BaseModel::errors()</cite> now always returns <cite>array</cite>; there was no definition change but the docblock has been updated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAs</span></code> has changed behavior. Added new parameter <code class="docutils literal notranslate"><span class="pre">$method</span></code>. Type casting has been moved to separate handlers.</p></li>
+<li><p>Entity. Timestamp casting now throws an exception when an invalid value is passed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAsJson</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">CastAsJson::get</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Entity::mutateDate</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">CastAsDatetime::get</span></code>.</p></li>
 </ul>
 <p>Deprecations:</p>
 <ul class="simple">
