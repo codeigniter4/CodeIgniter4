@@ -10,6 +10,10 @@ case you need it.
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller
     this way.
 
+.. contents::
+    :local:
+    :depth: 2
+
 The Helper Trait
 ================
 

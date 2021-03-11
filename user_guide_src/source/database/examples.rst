@@ -6,6 +6,10 @@ The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
 describing each function.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Initializing the Database Class
 ===============================
 
