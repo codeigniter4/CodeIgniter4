@@ -99,7 +99,9 @@ class Model extends BaseModel
 	{
 		parent::__construct($validation);
 
-		/** @var BaseConnection $db */
+		/**
+		 * @var BaseConnection $db
+		 */
 		$db = $db ?? Database::connect($this->DBGroup);
 
 		$this->db = &$db;
@@ -258,14 +260,7 @@ class Model extends BaseModel
 		// If insertion succeeded then save the insert ID
 		if ($result)
 		{
-			if (! $this->useAutoIncrement)
-			{
-				$this->insertID = $data[$this->primaryKey];
-			}
-			else
-			{
-				$this->insertID = $this->db->insertID();
-			}
+			$this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
 		}
 
 		return $result;

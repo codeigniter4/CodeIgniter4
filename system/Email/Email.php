@@ -1947,14 +1947,7 @@ class Email
 		// so this needs to be assigned to a variable
 		$from = $this->cleanEmail($this->headers['From']);
 
-		if ($this->validateEmailForShell($from))
-		{
-			$from = '-f ' . $from;
-		}
-		else
-		{
-			$from = '';
-		}
+		$from = $this->validateEmailForShell($from) ? '-f ' . $from : '';
 
 		// is popen() enabled?
 		if (! function_usable('popen') || false === ($fp = @popen($this->mailPath . ' -oi ' . $from . ' -t', 'w')))

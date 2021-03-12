@@ -545,14 +545,7 @@ class Connection extends BaseConnection
 				}
 				elseif ($index['Non_unique'])
 				{
-					if ($index['Index_type'] === 'SPATIAL')
-					{
-						$type = 'SPATIAL';
-					}
-					else
-					{
-						$type = 'INDEX';
-					}
+					$type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
 				}
 				else
 				{

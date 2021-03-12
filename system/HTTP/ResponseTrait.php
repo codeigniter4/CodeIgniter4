@@ -158,14 +158,7 @@ trait ResponseTrait
 
 		$this->statusCode = $code;
 
-		if (! empty($reason))
-		{
-			$this->reason = $reason;
-		}
-		else
-		{
-			$this->reason = static::$statusCodes[$code];
-		}
+		$this->reason = ! empty($reason) ? $reason : static::$statusCodes[$code];
 
 		return $this;
 	}

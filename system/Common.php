@@ -476,14 +476,7 @@ if (! function_exists('esc'))
 				throw new InvalidArgumentException('Invalid escape context provided.');
 			}
 
-			if ($context === 'attr')
-			{
-				$method = 'escapeHtmlAttr';
-			}
-			else
-			{
-				$method = 'escape' . ucfirst($context);
-			}
+			$method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
 			static $escaper;
 			if (! $escaper)

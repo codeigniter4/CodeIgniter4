@@ -606,15 +606,8 @@ class Builder extends BaseBuilder
 			if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy))
 			{
 				foreach ($this->QBGroupBy as $field)
-					{
-					if (is_array($field))
-						{
-						$this->QBSelect[] = $field['field'];
-					}
-					else
-						{
-						$this->QBSelect[] = $field;
-					}
+				{
+					$this->QBSelect[] = is_array($field) ? $field['field'] : $field;
 				}
 			}
 

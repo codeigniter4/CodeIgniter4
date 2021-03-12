@@ -352,14 +352,7 @@ class Query implements QueryInterface
 		// We'll need marker length later
 		$ml = strlen($this->bindMarker);
 
-		if ($hasNamedBinds)
-		{
-			$sql = $this->matchNamedBinds($sql, $binds);
-		}
-		else
-		{
-			$sql = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
-		}
+		$sql = $hasNamedBinds ? $this->matchNamedBinds($sql, $binds) : $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
 
 		$this->finalQueryString = $sql;
 	}
