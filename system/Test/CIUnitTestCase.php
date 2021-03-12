@@ -187,7 +187,7 @@ abstract class CIUnitTestCase extends TestCase
 		// Check for trait methods
 		foreach (class_uses_recursive($this) as $trait)
 		{
-			$method = 'setUp' . $trait;
+			$method = 'setUp' . class_basename($trait);
 
 			if (method_exists($this, $method))
 			{
@@ -208,7 +208,7 @@ abstract class CIUnitTestCase extends TestCase
 		// Check for trait methods
 		foreach (class_uses_recursive($this) as $trait)
 		{
-			$method = 'tearDown' . $trait;
+			$method = 'tearDown' . class_basename($trait);
 
 			if (method_exists($this, $method))
 			{
