@@ -557,6 +557,33 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testFormMultiselectArrayData()
+	{
+		$expected = <<<EOH
+<select name="shirts[]"  multiple="multiple">
+<option value="small">Small Shirt</option>
+<option value="med" selected="selected">Medium Shirt</option>
+<option value="large" selected="selected">Large Shirt</option>
+<option value="xlarge">Extra Large Shirt</option>
+</select>\n
+EOH;
+		$options  = [
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
+			'xlarge' => 'Extra Large Shirt',
+		];
+
+		$data  = [
+			'name' 	 	=> 'shirts[]',
+			'options'	=> $options,
+			'selected'  => ['med', 'large'],
+		];
+
+		$this->assertEquals($expected, form_multiselect($data));
+	}
+
+	// ------------------------------------------------------------------------
 	public function testFormFieldset()
 	{
 		$expected = <<<EOH
