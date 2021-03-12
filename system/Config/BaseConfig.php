@@ -102,7 +102,7 @@ class BaseConfig
 	{
 		if (is_array($property))
 		{
-			foreach ($property as $key => $val)
+			foreach (array_keys($property) as $key)
 			{
 				$this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
 			}

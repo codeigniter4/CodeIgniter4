@@ -299,7 +299,9 @@ abstract class BaseModel
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 		$this->tempAllowCallbacks = $this->allowCallbacks;
 
-		/** @var Validation $validation */
+		/**
+		 * @var Validation $validation
+		 */
 		$validation = $validation ?? Services::validation(null, false);
 
 		$this->validation = $validation;
@@ -1177,7 +1179,7 @@ abstract class BaseModel
 			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
-		foreach ($data as $key => $val)
+		foreach (array_keys($data) as $key)
 		{
 			if (! in_array($key, $this->allowedFields, true))
 			{
@@ -1447,7 +1449,7 @@ abstract class BaseModel
 			return [];
 		}
 
-		foreach ($rules as $field => $rule)
+		foreach (array_keys($rules) as $field)
 		{
 			if (! array_key_exists($field, $data))
 			{

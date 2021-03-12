@@ -313,10 +313,10 @@ if (! function_exists('form_multiselect'))
 	/**
 	 * Multi-select menu
 	 *
-	 * @param mixed  $name
-	 * @param array  $options
-	 * @param array  $selected
-	 * @param mixed  $extra
+	 * @param mixed $name
+	 * @param array $options
+	 * @param array $selected
+	 * @param mixed $extra
 	 *
 	 * @return string
 	 */
@@ -932,7 +932,7 @@ if (! function_exists('parse_form_attributes'))
 	{
 		if (is_array($attributes))
 		{
-			foreach ($default as $key => $val)
+			foreach (array_keys($default) as $key)
 			{
 				if (isset($attributes[$key]))
 				{

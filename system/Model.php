@@ -610,7 +610,7 @@ class Model extends BaseModel
 	{
 		$data = is_array($key) ? $key : [$key => $value];
 
-		foreach ($data as $k => $v)
+		foreach (array_keys($data) as $k)
 		{
 			$this->tempData['escape'][$k] = $escape;
 		}

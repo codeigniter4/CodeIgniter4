@@ -482,7 +482,7 @@ class CURLRequest extends Request
 
 		$set = [];
 
-		foreach ($headers as $name => $value)
+		foreach (array_keys($headers) as $name)
 		{
 			$set[] = $name . ': ' . $this->getHeaderLine($name);
 		}
