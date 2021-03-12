@@ -184,10 +184,12 @@ abstract class CIUnitTestCase extends TestCase
 			$this->$method();
 		}
 
-		// Check for methods added by DatabaseTestTrait
-		if (isset($this->setUpMethodsDatabase) && is_array($this->setUpMethodsDatabase))
+		// Check for trait methods
+		foreach (class_uses_recursive($this) as $trait)
 		{
-			foreach ($this->setUpMethodsDatabase as $method)
+			$method = 'setUp' . class_basename($trait);
+
+			if (method_exists($this, $method))
 			{
 				$this->$method();
 			}
@@ -203,10 +205,12 @@ abstract class CIUnitTestCase extends TestCase
 			$this->$method();
 		}
 
-		// Check for methods added by DatabaseTestTrait
-		if (isset($this->tearDownMethodsDatabase) && is_array($this->tearDownMethodsDatabase))
+		// Check for trait methods
+		foreach (class_uses_recursive($this) as $trait)
 		{
-			foreach ($this->tearDownMethodsDatabase as $method)
+			$method = 'tearDown' . class_basename($trait);
+
+			if (method_exists($this, $method))
 			{
 				$this->$method();
 			}

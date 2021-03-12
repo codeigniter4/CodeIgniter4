@@ -40,29 +40,31 @@ trait DatabaseTestTrait
 	 */
 	private static $doneSeed = false;
 
-	/**
-	 * Methods to run during database setUp.
-	 *
-	 * @var string[]
-	 *
-	 * @internal
-	 */
-	protected $setUpMethodsDatabase = [
-		'loadDependencies',
-		'setUpMigrate',
-		'setUpSeed',
-	];
+	//--------------------------------------------------------------------
+	// Staging
+	//--------------------------------------------------------------------
 
 	/**
-	 * Methods to run during database tearDown.
-	 *
-	 * @var string[]
-	 *
-	 * @internal
+	 * Runs the trait set up methods.
 	 */
-	protected $tearDownMethodsDatabase = [
-		'clearInsertCache',
-	];
+	protected function setUpDatabaseTestTrait()
+	{
+		$this->loadDependencies();
+		$this->setUpMigrate();
+		$this->setUpSeed();
+	}
+
+	/**
+	 * Runs the trait set up methods.
+	 */
+	protected function tearDownDatabaseTestTrait()
+	{
+		$this->clearInsertCache();
+	}
+
+	//--------------------------------------------------------------------
+	// Support
+	//--------------------------------------------------------------------
 
 	/**
 	 * Load any database test dependencies.
