@@ -103,7 +103,7 @@ have the correct namespace relative to ``App``.
 
 .. note:: Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.
 
-When testing database results, you must use the `CIDatabaseTestClass <database.html>`_ class.
+When testing database results, you must use the `DatabaseTestTrait <database.html>`_ in your class.
 
 Staging
 -------
@@ -149,6 +149,32 @@ that or provide their own::
         {
             $this->model->purgeDeleted()
         }
+
+Traits
+------
+
+A common way to enhance your tests is by using traits to consolidate staging across different
+test cases. ``CIUintTestCase`` will detect any class traits and look for staging methods to
+to run named for the trait itself. The framework's own ``DatabaseTestTrait`` implements this
+with methods ``setUpDatabaseTestTrait()`` and ``tearDownDatabaseTestTrait()``.
+
+For example, if you needed to add authentication to some of your test cases you could create
+an authentication trait with a set up method to fake a logged in user::
+
+	trait AuthTrait
+	{
+		protected setUpAuthTrait()
+		{
+			$user = $this->createFakeUser();
+			$this->logInUser($user);
+		}
+	...
+
+	class AuthenticationFeatureTest
+	{
+		use AuthTrait;
+	...
+
 
 Additional Assertions
 ---------------------
