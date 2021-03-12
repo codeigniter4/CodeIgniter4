@@ -313,14 +313,14 @@ if (! function_exists('form_multiselect'))
 	/**
 	 * Multi-select menu
 	 *
-	 * @param string $name
+	 * @param mixed  $name
 	 * @param array  $options
 	 * @param array  $selected
 	 * @param mixed  $extra
 	 *
 	 * @return string
 	 */
-	function form_multiselect(string $name = '', array $options = [], array $selected = [], $extra = ''): string
+	function form_multiselect($name = '', array $options = [], array $selected = [], $extra = ''): string
 	{
 		$extra = stringify_attributes($extra);
 
