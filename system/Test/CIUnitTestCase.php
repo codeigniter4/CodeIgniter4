@@ -161,6 +161,13 @@ abstract class CIUnitTestCase extends TestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * Store of identified and sorted traits.
+	 *
+	 * @var string[]|null
+	 */
+	protected $traits;
+
+	/**
 	 * Load the helpers.
 	 */
 	public static function setUpBeforeClass(): void
@@ -215,6 +222,60 @@ abstract class CIUnitTestCase extends TestCase
 				$this->$method();
 			}
 		}
+	}
+
+	/**
+	 * Identifies class traits and orders them with the following priority:
+	 *  - DatabaseTestTrait
+	 *  - other framework traits (alphabetical)
+	 *  - Tests\Support namespace
+	 *  - all others (alphabetical)
+	 *
+	 * @return string[]
+	 */
+	private function getClassTraits(): array
+	{
+		if (isset($this->traits))
+		{
+			return $this->traits;
+		}
+
+		// Organize traits by their priority
+		$database  = [];
+		$framework = [];
+		$support   = [];
+		$other     = [];
+
+		foreach (class_uses_recursive($this) as $trait)
+		{
+			switch (true)
+			{
+				case $trait === 'CodeIgniter\Test\DatabaseTestTrait':
+					$database[] = $trait;
+					break;
+
+				case strpos($trait, 'CodeIgniter') === 0:
+					$framework[] = $trait;
+					break;
+
+				case strpos($trait, 'Tests\Support') === 0:
+					$support[] = $trait;
+					break;
+
+				default:
+					$other[] = $trait;
+			}
+		}
+
+		// Sort them
+		sort($database, SORT_STRING);
+		sort($framework, SORT_STRING);
+		sort($support, SORT_STRING);
+		sort($other, SORT_STRING);
+
+		// Store and return
+		$this->traits = array_merge($database, $framework, $support, $other);
+		return $this->traits;
 	}
 
 	//--------------------------------------------------------------------
