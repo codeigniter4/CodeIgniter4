@@ -254,16 +254,11 @@ class Factories
 			return self::$options[$component];
 		}
 
-		// Handle Config as a special case to prevent logic loops
-		if ($component === 'config')
-		{
-			$values = self::$configOptions;
-		}
-		// Load values from the best Factory configuration (will include Registrars)
-		else
-		{
-			$values = config('Factory')->$component ?? [];
-		}
+		$values = $component === 'config'
+			// Handle Config as a special case to prevent logic loops
+			? self::$configOptions
+			// Load values from the best Factory configuration (will include Registrars)
+			: config('Factory')->$component ?? [];
 
 		return self::setOptions($component, $values);
 	}

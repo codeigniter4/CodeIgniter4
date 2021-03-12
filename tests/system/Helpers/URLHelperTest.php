@@ -1412,14 +1412,7 @@ class URLHelperTest extends CIUnitTestCase
 
 	public function urlToProvider()
 	{
-		if (config('App')->indexPage !== '')
-		{
-			$page = config('App')->indexPage . '/';
-		}
-		else
-		{
-			$page = '';
-		}
+		$page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
 
 		return [
 			[

@@ -47,14 +47,7 @@ class OpenSSLHandler extends BaseHandler
 		// Allow key override
 		if ($params)
 		{
-			if (is_array($params) && isset($params['key']))
-			{
-				$this->key = $params['key'];
-			}
-			else
-			{
-				$this->key = $params;
-			}
+			$this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
 		}
 
 		if (empty($this->key))
@@ -90,14 +83,7 @@ class OpenSSLHandler extends BaseHandler
 		// Allow key override
 		if ($params)
 		{
-			if (is_array($params) && isset($params['key']))
-			{
-				$this->key = $params['key'];
-			}
-			else
-			{
-				$this->key = $params;
-			}
+			$this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
 		}
 
 		if (empty($this->key))

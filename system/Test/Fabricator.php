@@ -434,16 +434,11 @@ class Fabricator
 		{
 			$result = $this->model->fake($this->faker);
 
-			// This should cover entities
-			if (is_object($result) && method_exists($result, 'toArray'))
-			{
-				$result = $result->toArray();
-			}
-			// Try to cast it
-			else
-			{
-				$result = (array) $result;
-			}
+			$result = is_object($result) && method_exists($result, 'toArray')
+				// This should cover entities
+				? $result->toArray()
+				// Try to cast it
+				: (array) $result;
 		}
 		// Nothing left to do but give up
 		else

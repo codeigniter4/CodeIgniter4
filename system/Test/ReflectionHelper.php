@@ -55,14 +55,7 @@ trait ReflectionHelper
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
-		if (is_object($obj))
-		{
-			$refClass = new ReflectionObject($obj);
-		}
-		else
-		{
-			$refClass = new ReflectionClass($obj);
-		}
+		$refClass = is_object($obj) ? new ReflectionObject($obj) : new ReflectionClass($obj);
 
 		$refProperty = $refClass->getProperty($property);
 		$refProperty->setAccessible(true);

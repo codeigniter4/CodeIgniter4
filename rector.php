@@ -5,6 +5,7 @@ use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
+use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
@@ -48,7 +49,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
 	$parameters->set(Option::ENABLE_CACHE, true);
 	$parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
-   	$parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, __DIR__ . '/phpstan.neon.dist');
+	$parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, __DIR__ . '/phpstan.neon.dist');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
@@ -68,4 +69,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(PreparedValueToEarlyReturnRector::class);
 	$services->set(ShortenElseIfRector::class);
 	$services->set(RemoveUnusedForeachKeyRector::class);
+	$services->set(SimplifyIfElseToTernaryRector::class);
 };
