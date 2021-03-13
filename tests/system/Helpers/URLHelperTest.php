@@ -248,6 +248,11 @@ class URLHelperTest extends CIUnitTestCase
 		$this->assertEquals('https://example.com/foo', base_url('foo', 'https'));
 	}
 
+	public function testBaseURLPathZero()
+	{
+		$this->assertEquals('http://example.com/0', base_url('0'));
+	}
+
 	public function testBaseURLHeedsBaseURL()
 	{
 		// Since we're on a CLI, we must provide our own URI

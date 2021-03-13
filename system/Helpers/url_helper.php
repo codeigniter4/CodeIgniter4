@@ -99,7 +99,7 @@ if (! function_exists('base_url'))
 		unset($config);
 
 		// Merge in the path set by the user, if any
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$url = $url->resolveRelativeURI($uri);
 		}
