@@ -145,6 +145,13 @@ class URLHelperTest extends CIUnitTestCase
 				'http://example.com/index.php/foo',
 			],
 			[
+				'http://example.com/',
+				'index.php',
+				'0',
+				null,
+				'http://example.com/index.php/0',
+			],
+			[
 				'http://example.com/public',
 				'index.php',
 				'foo',
@@ -246,6 +253,11 @@ class URLHelperTest extends CIUnitTestCase
 	public function testBaseURLAttachesScheme()
 	{
 		$this->assertEquals('https://example.com/foo', base_url('foo', 'https'));
+	}
+
+	public function testBaseURLPathZero()
+	{
+		$this->assertEquals('http://example.com/0', base_url('0'));
 	}
 
 	public function testBaseURLHeedsBaseURL()
