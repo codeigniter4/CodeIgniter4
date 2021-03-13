@@ -669,7 +669,7 @@ class CodeIgniter
 			$output  = $cachedResponse['output'];
 
 			// Clear all default headers
-			foreach ($this->response->headers() as $key => $val)
+			foreach (array_keys($this->response->headers()) as $key)
 			{
 				$this->response->removeHeader($key);
 			}

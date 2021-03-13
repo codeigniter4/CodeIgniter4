@@ -268,7 +268,7 @@ class RedirectResponseTest extends CIUnitTestCase
 		$_SESSION = [];
 
 		$baseResponse = service('response');
-		foreach ($baseResponse->headers() as $key => $val)
+		foreach (array_keys($baseResponse->headers()) as $key)
 		{
 			$baseResponse->removeHeader($key);
 		}

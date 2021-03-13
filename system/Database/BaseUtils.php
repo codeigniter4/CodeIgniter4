@@ -339,7 +339,7 @@ abstract class BaseUtils
 		// Did the user submit any preferences? If so set them....
 		if (! empty($params))
 		{
-			foreach ($prefs as $key => $val)
+			foreach (array_keys($prefs) as $key)
 			{
 				if (isset($params[$key]))
 				{

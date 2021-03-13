@@ -141,7 +141,7 @@ class Cell
 				}
 			}
 
-			foreach ($paramArray as $key => $val)
+			foreach (array_keys($paramArray) as $key)
 			{
 				if (! isset($methodParams[$key]))
 				{
