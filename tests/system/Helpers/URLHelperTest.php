@@ -145,6 +145,13 @@ class URLHelperTest extends CIUnitTestCase
 				'http://example.com/index.php/foo',
 			],
 			[
+				'http://example.com/',
+				'index.php',
+				'0',
+				null,
+				'http://example.com/index.php/0',
+			],
+			[
 				'http://example.com/public',
 				'index.php',
 				'foo',

@@ -47,7 +47,7 @@ if (! function_exists('site_url'))
 		{
 			$fullPath .= rtrim($config->indexPage, '/');
 		}
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$fullPath .= '/' . $uri;
 		}
