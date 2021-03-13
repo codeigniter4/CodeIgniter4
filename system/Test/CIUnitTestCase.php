@@ -19,6 +19,7 @@ use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Test\Constraints\SeeInDatabase;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockEmail;
@@ -473,11 +474,8 @@ abstract class CIUnitTestCase extends TestCase
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
-		$count = $this->db->table($table)
-						  ->where($where)
-						  ->countAllResults();
-
-		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
+		$constraint = new SeeInDatabase($this->db, $where);
+		static::assertThat($table, $constraint);
 	}
 
 	/**

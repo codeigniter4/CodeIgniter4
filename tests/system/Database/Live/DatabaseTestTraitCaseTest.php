@@ -21,21 +21,15 @@ class DatabaseTestTraitCaseTest extends CIUnitTestCase
 		$this->seeInDatabase('user', ['name' => 'Ricky', 'email' => 'sofine@example.com', 'country' => 'US']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testDontSeeInDatabase()
 	{
 		$this->dontSeeInDatabase('user', ['name' => 'Ricardo']);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSeeNumRecords()
 	{
 		$this->seeNumRecords(2, 'user', ['country' => 'US']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGrabFromDatabase()
 	{
@@ -44,6 +38,14 @@ class DatabaseTestTraitCaseTest extends CIUnitTestCase
 		$this->assertEquals('derek@world.com', $email);
 	}
 
-	//--------------------------------------------------------------------
+	public function testSeeInDatabase()
+	{
+		$this->hasInDatabase('user', [
+			'name'    => 'Ricardo',
+			'email'   => 'ricardo@example.com',
+			'country' => 'The Moon',
+		]);
 
+		$this->seeInDatabase('user', ['name' => 'Ricardo']);
+	}
 }
