@@ -168,8 +168,7 @@ class CodeIgniter
 	 */
 	public function initialize()
 	{
-		// Define environment variables
-		$this->detectEnvironment();
+		// Load boot file
 		$this->bootstrapEnvironment();
 
 		// Setup Exception Handling
@@ -494,36 +493,6 @@ class CodeIgniter
 		Events::trigger('post_system');
 
 		return $this->response;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * You can load different configurations depending on your
-	 * current environment. Setting the environment also influences
-	 * things like logging and error reporting.
-	 *
-	 * This can be set to anything, but default usage is:
-	 *
-	 *     development
-	 *     testing
-	 *     production
-	 */
-	protected function detectEnvironment()
-	{
-		// Make sure ENVIRONMENT isn't already set by other means.
-		if (! defined('ENVIRONMENT'))
-		{
-			// running under Continuous Integration server?
-			if (getenv('CI') !== false)
-			{
-				define('ENVIRONMENT', 'testing');
-			}
-			else
-			{
-				define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
-			}
-		}
 	}
 
 	//--------------------------------------------------------------------
