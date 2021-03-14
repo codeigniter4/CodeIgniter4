@@ -532,7 +532,7 @@ abstract class CIUnitTestCase extends TestCase
 		// Initialize the autoloader.
 		Services::autoloader()->initialize(new Autoload(), new Modules());
 
-		$app = new MockCodeIgniter(new App());
+		$app = Services::codeigniter(new App());
 		$app->initialize();
 
 		return $app;

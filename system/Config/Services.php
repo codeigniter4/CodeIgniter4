@@ -47,6 +47,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Security\Security;
 use CodeIgniter\Session\Session;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
@@ -150,6 +151,11 @@ class Services extends BaseService
 		}
 
 		$config = $config ?? config('App');
+
+		if (ENVIRONMENT === 'testing')
+		{
+			return new MockCodeIgniter($config);
+		}
 
 		return new CodeIgniter($config);
 	}
