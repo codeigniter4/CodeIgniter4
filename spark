@@ -43,7 +43,6 @@ chdir(FCPATH);
 
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $app       = require realpath($bootstrap) ?: $bootstrap;
-CodeIgniter\PhpRequirement::validatePHPVersion();
 
 // Grab our Console
 $console = new CodeIgniter\CLI\Console($app);
