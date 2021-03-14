@@ -11,6 +11,20 @@
 
 namespace CodeIgniter\Config;
 
+use Config\Cache;
+use Config\App;
+use Config\Encryption;
+use Config\Exceptions as ConfigExceptions;
+use Config\Filters as ConfigFilters;
+use Config\Format as ConfigFormat;
+use Config\Honeypot as ConfigHoneyPot;
+use Config\Images;
+use Config\Migrations;
+use Config\Pager as ConfigPager;
+use Config\View as ConfigView;
+use CodeIgniter\HTTP\Request;
+use Config\Toolbar as ConfigToolbar;
+use Config\Validation as ConfigValidation;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\CodeIgniter;
@@ -72,38 +86,38 @@ use CodeIgniter\View\View;
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
  *
- * @method static CacheInterface cache(\Config\Cache $config = null, $getShared = true)
- * @method static CLIRequest clirequest(\Config\App $config = null, $getShared = true)
- * @method static CodeIgniter codeigniter(\Config\App $config = null, $getShared = true)
+ * @method static CacheInterface cache(Cache $config = null, $getShared = true)
+ * @method static CLIRequest clirequest(App $config = null, $getShared = true)
+ * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
- * @method static CURLRequest curlrequest($options = [], \CodeIgniter\HTTP\ResponseInterface $response = null, \Config\App $config = null, $getShared = true)
+ * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
- * @method static EncrypterInterface encrypter(\Config\Encryption $config = null, $getShared = false)
- * @method static Exceptions exceptions(\Config\Exceptions $config = null, \CodeIgniter\HTTP\IncomingRequest $request = null, \CodeIgniter\HTTP\Response $response = null, $getShared = true)
- * @method static Filters filters(\Config\Filters $config = null, $getShared = true)
- * @method static Format format(\Config\Format $config = null, $getShared = true)
- * @method static Honeypot honeypot(\Config\Honeypot $config = null, $getShared = true)
- * @method static BaseHandler image($handler = null, \Config\Images $config = null, $getShared = true)
+ * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)
+ * @method static Exceptions exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
+ * @method static Filters filters(ConfigFilters $config = null, $getShared = true)
+ * @method static Format format(ConfigFormat $config = null, $getShared = true)
+ * @method static Honeypot honeypot(ConfigHoneyPot $config = null, $getShared = true)
+ * @method static BaseHandler image($handler = null, Images $config = null, $getShared = true)
  * @method static Iterator iterator($getShared = true)
  * @method static Language language($locale = null, $getShared = true)
  * @method static Logger logger($getShared = true)
- * @method static MigrationRunner migrations(\Config\Migrations $config = null, \CodeIgniter\Database\ConnectionInterface $db = null, $getShared = true)
- * @method static Negotiate negotiator(\CodeIgniter\HTTP\RequestInterface $request = null, $getShared = true)
- * @method static Pager pager(\Config\Pager $config = null, \CodeIgniter\View\RendererInterface $view = null, $getShared = true)
- * @method static Parser parser($viewPath = null, \Config\View $config = null, $getShared = true)
- * @method static View renderer($viewPath = null, \Config\View $config = null, $getShared = true)
- * @method static IncomingRequest request(\Config\App $config = null, $getShared = true)
- * @method static Response response(\Config\App $config = null, $getShared = true)
- * @method static RedirectResponse redirectresponse(\Config\App $config = null, $getShared = true)
+ * @method static MigrationRunner migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
+ * @method static Negotiate negotiator(RequestInterface $request = null, $getShared = true)
+ * @method static Pager pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
+ * @method static Parser parser($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static View renderer($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static IncomingRequest request(App $config = null, $getShared = true)
+ * @method static Response response(App $config = null, $getShared = true)
+ * @method static RedirectResponse redirectresponse(App $config = null, $getShared = true)
  * @method static RouteCollection routes($getShared = true)
- * @method static Router router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, \CodeIgniter\HTTP\Request $request = null, $getShared = true)
- * @method static Security security(\Config\App $config = null, $getShared = true)
- * @method static Session session(\Config\App $config = null, $getShared = true)
+ * @method static Router router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
+ * @method static Security security(App $config = null, $getShared = true)
+ * @method static Session session(App $config = null, $getShared = true)
  * @method static Throttler throttler($getShared = true)
  * @method static Timer timer($getShared = true)
- * @method static Toolbar toolbar(\Config\Toolbar $config = null, $getShared = true)
+ * @method static Toolbar toolbar(ConfigToolbar $config = null, $getShared = true)
  * @method static URI uri($uri = null, $getShared = true)
- * @method static Validation validation(\Config\Validation $config = null, $getShared = true)
+ * @method static Validation validation(ConfigValidation $config = null, $getShared = true)
  * @method static Cell viewcell($getShared = true)
  * @method static Typography typography($getShared = true)
  */

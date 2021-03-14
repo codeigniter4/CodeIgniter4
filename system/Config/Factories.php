@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Model;
 use Config\Services;
 
 /**
@@ -21,7 +22,7 @@ use Config\Services;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
- * @method static \CodeIgniter\Model models(...$arguments)
+ * @method static Model models(...$arguments)
  * @method static \Config\BaseConfig config(...$arguments)
  */
 class Factories
