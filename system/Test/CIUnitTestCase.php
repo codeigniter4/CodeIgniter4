@@ -16,6 +16,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -58,6 +59,13 @@ abstract class CIUnitTestCase extends TestCase
 	 * @var array of methods
 	 */
 	protected $tearDownMethods = [];
+
+	/**
+	 * Store of identified traits.
+	 *
+	 * @var string[]|null
+	 */
+	private $traits;
 
 	//--------------------------------------------------------------------
 	// Database Properties
@@ -155,15 +163,58 @@ abstract class CIUnitTestCase extends TestCase
 	protected $insertCache = [];
 
 	//--------------------------------------------------------------------
-	// Staging
+	// Feature Properties
 	//--------------------------------------------------------------------
 
 	/**
-	 * Store of identified traits.
+	 * If present, will override application
+	 * routes when using call().
 	 *
-	 * @var string[]|null
+	 * @var RouteCollection|null
 	 */
-	private $traits;
+	protected $routes;
+
+	/**
+	 * Values to be set in the SESSION global
+	 * before running the test.
+	 *
+	 * @var array
+	 */
+	protected $session = [];
+
+	/**
+	 * Enabled auto clean op buffer after request call
+	 *
+	 * @var boolean
+	 */
+	protected $clean = true;
+
+	/**
+	 * Custom request's headers
+	 *
+	 * @var array
+	 */
+	protected $headers = [];
+
+	/**
+	 * Allows for formatting the request body to what
+	 * the controller is going to expect
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = '';
+
+	/**
+	 * Allows for directly setting the body to what
+	 * it needs to be.
+	 *
+	 * @var mixed
+	 */
+	protected $requestBody = '';
+
+	//--------------------------------------------------------------------
+	// Staging
+	//--------------------------------------------------------------------
 
 	/**
 	 * Load the helpers.
