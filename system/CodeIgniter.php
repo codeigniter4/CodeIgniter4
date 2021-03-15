@@ -154,13 +154,7 @@ class CodeIgniter
 	{
 		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
 		{
-			die(
-				sprintf(
-					'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
-					self::MIN_PHP_VERSION,
-					PHP_VERSION
-				)
-			);
+			die(lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION]));
 		}
 
 		$this->startTime = microtime(true);
