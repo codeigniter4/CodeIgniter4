@@ -47,6 +47,11 @@ class CodeIgniter
 	const CI_VERSION = '4.1.1';
 
 	/**
+	 * @var string
+	 */
+	private const MIN_PHP_VERSION = '7.3';
+
+	/**
 	 * App startup time.
 	 *
 	 * @var mixed
@@ -147,6 +152,17 @@ class CodeIgniter
 	 */
 	public function __construct(App $config)
 	{
+		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
+		{
+			die(
+				sprintf(
+					'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
+					self::MIN_PHP_VERSION,
+					PHP_VERSION
+				)
+			);
+		}
+
 		$this->startTime = microtime(true);
 		$this->config    = $config;
 	}
