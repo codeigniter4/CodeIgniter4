@@ -16,6 +16,8 @@ namespace CodeIgniter\Test;
  *
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
+ *
+ * @deprecated Include the traits directly in the test case
  */
 class FeatureTestCase extends CIUnitTestCase
 {

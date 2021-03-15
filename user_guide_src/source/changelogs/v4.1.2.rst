@@ -30,6 +30,7 @@ Deprecations:
 - Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
 - Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
 - Deprecated ``CIDatabaseTestCase`` to use the ``DatabaseTestTrait`` instead.
+- Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
 
 Bugs Fixed:
 
