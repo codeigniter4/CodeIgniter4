@@ -11,27 +11,11 @@
 
 namespace CodeIgniter\Config;
 
-use Config\Cache;
-use Config\App;
-use Config\Encryption;
-use Config\Exceptions as ConfigExceptions;
-use Config\Filters as ConfigFilters;
-use Config\Format as ConfigFormat;
-use Config\Honeypot as ConfigHoneyPot;
-use Config\Images;
-use Config\Migrations;
-use Config\Pager as ConfigPager;
-use Config\View as ConfigView;
-use CodeIgniter\HTTP\Request;
-use Config\Toolbar as ConfigToolbar;
-use Config\Validation as ConfigValidation;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\CodeIgniter;
-use Config\Autoload;
-use Config\Modules;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -48,6 +32,7 @@ use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -68,6 +53,21 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
+use Config\App;
+use Config\Autoload;
+use Config\Cache;
+use Config\Encryption;
+use Config\Exceptions as ConfigExceptions;
+use Config\Filters as ConfigFilters;
+use Config\Format as ConfigFormat;
+use Config\Honeypot as ConfigHoneyPot;
+use Config\Images;
+use Config\Migrations;
+use Config\Modules;
+use Config\Pager as ConfigPager;
+use Config\Toolbar as ConfigToolbar;
+use Config\Validation as ConfigValidation;
+use Config\View as ConfigView;
 
 /**
  * Services Configuration file.
