@@ -240,14 +240,14 @@ trait RequestTrait
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param string            $method Input filter constant
-	 * @param string|array|null $index
-	 * @param integer|null      $filter Filter constant
-	 * @param mixed             $flags
+	 * @param string             $method Input filter constant
+	 * @param string|array|null  $index
+	 * @param integer|null       $filter Filter constant
+	 * @param array|integer|null $flags  Options
 	 *
 	 * @return mixed
 	 */
-	public function fetchGlobal($method, $index = null, $filter = null, $flags = null)
+	public function fetchGlobal(string $method, $index = null, ?int $filter = null, $flags = null)
 	{
 		$method = strtolower($method);
 
@@ -257,10 +257,8 @@ trait RequestTrait
 		}
 
 		// Null filters cause null values to return.
-		if (is_null($filter))
-		{
-			$filter = FILTER_DEFAULT;
-		}
+		$filter = $filter ?? FILTER_DEFAULT;
+		$flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
 		// Return all values when $index is null
 		if (is_null($index))
@@ -319,7 +317,13 @@ trait RequestTrait
 		}
 
 		// @phpstan-ignore-next-line
-		if (is_array($value) && ($filter !== null || $flags !== null))
+		if (is_array($value)
+			&& ($filter !== FILTER_DEFAULT
+				|| ((is_numeric($flags) && $flags !== 0)
+					|| is_array($flags) && count($flags) > 0
+				)
+			)
+		)
 		{
 			// Iterate over array and append filter and flags
 			array_walk_recursive($value, function (&$val) use ($filter, $flags) {

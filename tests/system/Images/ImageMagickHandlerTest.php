@@ -1,7 +1,10 @@
 <?php namespace CodeIgniter\Images;
 
+use Imagick;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Images;
 
 /**
  * Unit testing for the ImageMagick image handler.
@@ -12,7 +15,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
  *
  * Was unable to test fontPath & related logic.
  */
-class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class ImageMagickHandlerTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -34,7 +37,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->path = $this->origin . 'ci-logo.png';
 
-		$handlerConfig              = new \Config\Images;
+		$handlerConfig              = new Images;
 		$handlerConfig->libraryPath = '/usr/bin/convert';
 		$this->handler              = Services::image('imagick', $handlerConfig, false);
 	}
@@ -308,7 +311,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -327,7 +330,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -363,7 +366,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
@@ -385,7 +388,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
-			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
 			{
 				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');

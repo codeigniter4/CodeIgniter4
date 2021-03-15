@@ -130,7 +130,10 @@ class Builder extends BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (! $this->hasOperator($cond))
 		{
@@ -432,49 +435,51 @@ class Builder extends BaseBuilder
 		}
 
 		// Get the unique field names
-		$keyFields = array_values(array_flip(array_flip($keyFields)));
+		$escKeyFields = array_map(function (string $field): string {
+			return $this->db->protectIdentifiers($field);
+		}, array_values(array_unique($keyFields)));
 
-		// Get the fields out of binds
-		$set = $this->binds;
-		array_walk($set, function (&$item, $key) {
+		// Get the binds
+		$binds = $this->binds;
+		array_walk($binds, function (&$item) {
 			$item = $item[0];
 		});
 
-		// Get the common field and values from the bind data and index fields
-		$setKeys = array_keys($set);
-		$common  = array_intersect($setKeys, $keyFields);
+		// Get the common field and values from the keys data and index fields
+		$common = array_intersect($keys, $escKeyFields);
+		$bingo  = [];
 
-		$bingo = [];
-		foreach ($common as $k => $v)
+		foreach ($common as $v)
 		{
-			$bingo[$v] = $set[$v];
+			$k = array_search($v, $escKeyFields, true);
+
+			$bingo[$keyFields[$k]] = $binds[trim($values[$k], ':')];
 		}
 
 		// Querying existing data
 		$builder = $this->db->table($table);
+
 		foreach ($bingo as $k => $v)
 		{
 			$builder->where($k, $v);
 		}
+
 		$q = $builder->get()->getResult();
 
 		// Delete entries if we find them
 		if ($q !== [])
 		{
 			$delete = $this->db->table($table);
+
 			foreach ($bingo as $k => $v)
 			{
 				$delete->where($k, $v);
 			}
+
 			$delete->delete();
 		}
 
-		// Key field names are not escaped, so escape them
-		$escapedKeyFields = array_map(function ($item) {
-			return $this->db->escapeIdentifiers($item);
-		}, $keyFields);
-
-		return 'INSERT INTO ' . $this->getFullName($table) . ' (' . implode(',', $keys) . ') VALUES (' . implode(',', $values) . ');';
+		return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table), implode(',', $keys), implode(',', $values));
 	}
 
 	/**
@@ -601,15 +606,8 @@ class Builder extends BaseBuilder
 			if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy))
 			{
 				foreach ($this->QBGroupBy as $field)
-					{
-					if (is_array($field))
-						{
-						$this->QBSelect[] = $field['field'];
-					}
-					else
-						{
-						$this->QBSelect[] = $field;
-					}
+				{
+					$this->QBSelect[] = is_array($field) ? $field['field'] : $field;
 				}
 			}
 
@@ -676,7 +674,10 @@ class Builder extends BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{

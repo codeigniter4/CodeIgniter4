@@ -524,7 +524,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			if (! isset($this->db->dataCache['table_names'][$table]))
+			if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true))
 			{
 				$this->db->dataCache['table_names'][] = $table;
 			}
@@ -774,7 +774,10 @@ class Forge
 	public function addColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field]; // @phpstan-ignore-line
+		if (! is_array($field))
+		{
+			$field = [$field];
+		}
 
 		foreach (array_keys($field) as $k)
 		{
@@ -793,7 +796,7 @@ class Forge
 			return false;
 		}
 
-		foreach ($sqls as $i => $sql)
+		foreach ($sqls as $sql)
 		{
 			if ($this->db->query($sql) === false)
 			{
@@ -845,7 +848,10 @@ class Forge
 	public function modifyColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field]; // @phpstan-ignore-line
+		if (! is_array($field))
+		{
+			$field = [$field];
+		}
 
 		foreach (array_keys($field) as $k)
 		{
@@ -871,7 +877,7 @@ class Forge
 
 		if ($sqls !== null)
 		{
-			foreach ($sqls as $i => $sql)
+			foreach ($sqls as $sql)
 			{
 				if ($this->db->query($sql) === false)
 				{

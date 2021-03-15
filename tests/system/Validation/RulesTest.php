@@ -2,12 +2,17 @@
 
 namespace CodeIgniter\Validation;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use CodeIgniter\Validation\Rules;
+use Config\Services;
+use stdClass;
+use Tests\Support\Validation\TestRules;
 
-class RulesTest extends CIDatabaseTestCase
+class RulesTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	/**
@@ -16,11 +21,11 @@ class RulesTest extends CIDatabaseTestCase
 	protected $validation;
 	protected $config = [
 		'ruleSets'      => [
-			\CodeIgniter\Validation\Rules::class,
-			\CodeIgniter\Validation\FormatRules::class,
-			\CodeIgniter\Validation\FileRules::class,
-			\CodeIgniter\Validation\CreditCardRules::class,
-			\Tests\Support\Validation\TestRules::class,
+			Rules::class,
+			FormatRules::class,
+			FileRules::class,
+			CreditCardRules::class,
+			TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
@@ -38,7 +43,7 @@ class RulesTest extends CIDatabaseTestCase
 	{
 		parent::setUp();
 
-		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object)$this->config, Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -127,7 +132,7 @@ class RulesTest extends CIDatabaseTestCase
 	public function testRequiredObject()
 	{
 		$data = [
-			'foo' => new \stdClass(),
+			'foo' => new stdClass(),
 		];
 
 		$this->validation->setRules([

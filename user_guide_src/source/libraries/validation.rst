@@ -645,10 +645,16 @@ Rules are stored within simple, namespaced classes. They can be stored any locat
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
 add the new file to the ``$ruleSets`` array::
 
+    use CodeIgniter\Validation\CreditCardRules;
+    use CodeIgniter\Validation\FileRules;
+    use CodeIgniter\Validation\FormatRules;
+    use CodeIgniter\Validation\Rules;
+
     public $ruleSets = [
-        \CodeIgniter\Validation\Rules::class,
-        \CodeIgniter\Validation\FileRules::class,
-        \CodeIgniter\Validation\CreditCardRules::class,
+        Rules::class,
+        FormatRules::class,
+        FileRules::class,
+        CreditCardRules::class,
     ];
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
@@ -750,68 +756,123 @@ The following is a list of all the native rules that are available to use:
         'name' => "is_unique[supplier.name,uuid,{uuid}]",  // is ok - see "Validation Placeholders"
     ]);
 
-
-======================= =========== =============================================================================================== ===================================================
-Rule                    Parameter   Description                                                                                     Example
-======================= =========== =============================================================================================== ===================================================
-alpha                   No          Fails if field has anything other than alphabetic characters.
-alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
-alpha_dash              No          Fails if field contains anything other than alphanumeric characters, underscores or dashes.
-alpha_numeric           No          Fails if field contains anything other than alphanumeric characters.
-alpha_numeric_space     No          Fails if field contains anything other than alphanumeric or space characters.
-alpha_numeric_punct     No          Fails if field contains anything other than alphanumeric, space, or this limited set of
-                                    punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent),
-                                    & (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals),
-                                    | (vertical bar), : (colon), . (period).
-decimal                 No          Fails if field contains anything other than a decimal number.
-                                    Also accepts a + or  - sign for the number.
-differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
-exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
-greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
-greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
-hex                     No          Fails if field contains anything other than hexadecimal characters.
-if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
-                                    regardless of its value.
-in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
-integer                 No          Fails if field contains anything other than an integer.
-is_natural              No          Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.
-is_natural_no_zero      No          Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.
-is_not_unique           Yes         Checks the database to see if the given value exist. Can ignore records by field/value to            is_not_unique[table.field,where_field,where_value]
-                                    filter (currently accept only one filter).
-is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
-                                    column and value to ignore, useful when updating records to ignore itself.
-less_than               Yes         Fails if field is greater than or equal to the parameter value or not numeric.                  less_than[8]
-less_than_equal_to      Yes         Fails if field is greater than the parameter value or not numeric.                              less_than_equal_to[8]
-matches                 Yes         The value must match the value of the field in the parameter.                                   matches[field]
-max_length              Yes         Fails if field is longer than the parameter value.                                              max_length[8]
-min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
-not_in_list             Yes         Fails if field is within a predetermined list.                                                  not_in_list[red,blue,green]
-numeric                 No          Fails if field contains anything other than numeric characters.
-regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
-permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
-required                No          Fails if the field is an empty array, empty string, null or false.
-required_with           Yes         The field is required when any of the other required fields are present in the data.            required_with[field1,field2]
-required_without        Yes         The field is required when all of the other fields are present in the data but not required.    required_without[field1,field2]
-string                  No          A generic alternative to the alpha* rules that confirms the element is a string
-timezone                No          Fails if field does match a timezone per ``timezone_identifiers_list``
-valid_base64            No          Fails if field contains anything other than valid Base64 characters.
-valid_json              No          Fails if field does not contain a valid JSON string.
-valid_email             No          Fails if field does not contain a valid email address.
-valid_emails            No          Fails if any value provided in a comma separated list is not a valid email.
-valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or                valid_ip[ipv6]
-                                    ‘ipv6’ to specify an IP format.
-valid_url               No          Fails if field does not contain a valid URL.
-valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                      valid_date[d/m/Y]
-                                    to matches a date format.
-valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.          valid_cc_number[amex]
-                                    Current supported providers are: American Express (amex), China Unionpay (unionpay),
-                                    Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
-                                    Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
-                                    Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
-                                    CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
-                                    TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
-                                    HSBC Canada Card (hsbc)
-======================= =========== =============================================================================================== ===================================================
+======================= ========== ============================================= ===================================================
+Rule                    Parameter  Description                                   Example
+======================= ========== ============================================= ===================================================
+alpha                   No         Fails if field has anything other than
+                                   alphabetic characters.
+alpha_space             No         Fails if field contains anything other than
+                                   alphabetic characters or spaces.
+alpha_dash              No         Fails if field contains anything other than
+                                   alphanumeric characters, underscores or
+                                   dashes.
+alpha_numeric           No         Fails if field contains anything other than
+                                   alphanumeric characters.
+alpha_numeric_space     No         Fails if field contains anything other than
+                                   alphanumeric or space characters.
+alpha_numeric_punct     No         Fails if field contains anything other than
+                                   alphanumeric, space, or this limited set of
+                                   punctuation characters: ~ (tilde),
+                                   ! (exclamation), # (number), $ (dollar),
+                                   % (percent), & (ampersand), * (asterisk),
+                                   - (dash), _ (underscore), + (plus),
+                                   = (equals), | (vertical bar), : (colon),
+                                   . (period).
+decimal                 No         Fails if field contains anything other than
+                                   a decimal number.
+                                   Also accepts a + or  - sign for the number.
+differs                 Yes        Fails if field does not differ from the one   differs[field_name]
+                                   in the parameter.
+exact_length            Yes        Fails if field is not exactly the parameter   exact_length[5] or exact_length[5,8,12]
+                                   value. One or more comma-separated values.
+greater_than            Yes        Fails if field is less than or equal to       greater_than[8]
+                                   the parameter value or not numeric.
+greater_than_equal_to   Yes        Fails if field is less than the parameter     greater_than_equal_to[5]
+                                   value, or not numeric.
+hex                     No         Fails if field contains anything other than
+                                   hexadecimal characters.
+if_exist                No         If this rule is present, validation will
+                                   only return possible errors if the field key
+                                   exists, regardless of its value.
+in_list                 Yes        Fails if field is not within a predetermined  in_list[red,blue,green]
+                                   list.
+integer                 No         Fails if field contains anything other than
+                                   an integer.
+is_natural              No         Fails if field contains anything other than
+                                   a natural number: 0, 1, 2, 3, etc.
+is_natural_no_zero      No         Fails if field contains anything other than
+                                   a natural number, except zero: 1, 2, 3, etc.
+is_not_unique           Yes        Checks the database to see if the given value is_not_unique[table.field,where_field,where_value]
+                                   exist. Can ignore records by field/value to
+                                   filter (currently accept only one filter).
+is_unique               Yes        Checks if this field value exists in the      is_unique[table.field,ignore_field,ignore_value]
+                                   database. Optionally set a column and value
+                                   value to ignore, useful when updating records
+                                   to ignore itself.
+less_than               Yes        Fails if field is greater than or equal to    less_than[8]
+                                   the parameter value or not numeric.
+less_than_equal_to      Yes        Fails if field is greater than the parameter  less_than_equal_to[8]
+                                   value or not numeric.
+matches                 Yes        The value must match the value of the field
+                                   in the parameter.                             matches[field]
+max_length              Yes        Fails if field is longer than the parameter   max_length[8]
+                                   value.
+min_length              Yes        Fails if field is shorter than the parameter  min_length[3]
+                                   value.
+not_in_list             Yes        Fails if field is within a predetermined      not_in_list[red,blue,green]
+                                   list.
+numeric                 No         Fails if field contains anything other than
+                                   numeric characters.
+regex_match             Yes        Fails if field does not match the regular     regex_match[/regex/]
+                                   expression.
+permit_empty            No         Allows the field to receive an empty array,
+                                   empty string, null or false.
+required                No         Fails if the field is an empty array, empty
+                                   string, null or false.
+required_with           Yes        The field is required when any of the other   required_with[field1,field2]
+                                   required fields are present in the data.
+required_without        Yes        The field is required when all of the other   required_without[field1,field2]
+                                   fields are present in the data but not
+                                   required.
+string                  No         A generic alternative to the alpha* rules
+                                   that confirms the element is a string
+timezone                No         Fails if field does match a timezone per
+                                   ``timezone_identifiers_list``
+valid_base64            No         Fails if field contains anything other than
+                                   valid Base64 characters.
+valid_json              No         Fails if field does not contain a valid JSON
+                                   string.
+valid_email             No         Fails if field does not contain a valid
+                                   email address.
+valid_emails            No         Fails if any value provided in a comma
+                                   separated list is not a valid email.
+valid_ip                No         Fails if the supplied IP is not valid.        valid_ip[ipv6]
+                                   Accepts an optional parameter of ‘ipv4’ or
+                                   ‘ipv6’ to specify an IP format.
+valid_url               No         Fails if field does not contain a valid URL.
+valid_date              No         Fails if field does not contain a valid date. valid_date[d/m/Y]
+                                   Accepts an optional parameter to matches
+                                   a date format.
+valid_cc_number         Yes        Verifies that the credit card number matches  valid_cc_number[amex]
+                                   the format used by the specified provider.
+                                   Current supported providers are:
+                                   American Express (amex),
+                                   China Unionpay (unionpay),
+                                   Diners Club CarteBlance (carteblanche),
+                                   Diners Club (dinersclub),
+                                   Discover Card (discover),
+                                   Interpayment (interpayment), JCB (jcb),
+                                   Maestro (maestro), Dankort (dankort),
+                                   NSPK MIR (mir),
+                                   Troy (troy), MasterCard (mastercard),
+                                   Visa (visa), UATP (uatp), Verve (verve),
+                                   CIBC Convenience Card (cibc),
+                                   Royal Bank of Canada Client Card (rbc),
+                                   TD Canada Trust Access Card (tdtrust),
+                                   Scotiabank Scotia Card (scotia),
+                                   BMO ABM Card (bmoabm),
+                                   HSBC Canada Card (hsbc)
+======================= ========== ============================================= ===================================================
 
 Rules for File Uploads
 ======================
@@ -829,20 +890,30 @@ file upload related rules::
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]'
     ]);
 
-======================= =========== =============================================================================================== ========================================
-Rule                    Parameter   Description                                                                                     Example
-======================= =========== =============================================================================================== ========================================
-uploaded                Yes         Fails if the name of the parameter does not match the name of any uploaded files.               uploaded[field_name]
-max_size                Yes         Fails if the uploaded file named in the parameter is larger than the second parameter in        max_size[field_name,2048]
-                                    kilobytes (kb). Or if the file is larger than allowed maximum size declared in
-                                    php.ini config file - ``upload_max_filesize`` directive.
-max_dims                Yes         Fails if the maximum width and height of an uploaded image exceed values. The first parameter   max_dims[field_name,300,150]
-                                    is the field name. The second is the width, and the third is the height. Will also fail if
-                                    the file cannot be determined to be an image.
-mime_in                 Yes         Fails if the file's mime type is not one listed in the parameters.                              mime_in[field_name,image/png,image/jpg]
-ext_in                  Yes         Fails if the file's extension is not one listed in the parameters.                              ext_in[field_name,png,jpg,gif]
-is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
-======================= =========== =============================================================================================== ========================================
+======================= ========== ============================================= ===================================================
+Rule                    Parameter  Description                                   Example
+======================= ========== ============================================= ===================================================
+uploaded                Yes         Fails if the name of the parameter does not  uploaded[field_name]
+                                    match the name of any uploaded files.
+max_size                Yes         Fails if the uploaded file named in the      max_size[field_name,2048]
+                                    parameter is larger than the second
+                                    parameter in kilobytes (kb). Or if the file
+                                    is larger than allowed maximum size declared
+                                    in php.ini config file -
+                                    ``upload_max_filesize`` directive.
+max_dims                Yes         Fails if the maximum width and height of an  max_dims[field_name,300,150]
+                                    uploaded image exceed values. The first
+                                    parameter is the field name. The second is
+                                    the width, and the third is the height. Will
+                                    also fail if the file cannot be determined
+                                    to be an image.
+mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpg]
+                                    listed in the parameters.
+ext_in                  Yes         Fails if the file's extension is not one     ext_in[field_name,png,jpg,gif]
+                                    listed in the parameters.
+is_image                Yes         Fails if the file cannot be determined to be is_image[field_name]
+                                    an image based on the mime type.
+======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
 

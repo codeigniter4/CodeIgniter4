@@ -4,10 +4,10 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
-use Tests\Support\Widgets\OtherWidget;
-use Tests\Support\Widgets\SomeWidget;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Widgets\OtherWidget;
+use Tests\Support\Widgets\SomeWidget;
 
 class FactoriesTest extends CIUnitTestCase
 {
@@ -215,6 +215,14 @@ class FactoriesTest extends CIUnitTestCase
 
 		$result = Factories::widgets('OtherWidget');
 		$this->assertNull($result);
+	}
+
+	public function testSharedRespectsInstanceOf()
+	{
+		Factories::injectMock('widgets', 'SomeWidget', new OtherWidget());
+
+		$result = Factories::widgets('SomeWidget', ['instanceOf' => stdClass::class]);
+		$this->assertInstanceOf(SomeWidget::class, $result);
 	}
 
 	public function testPrioritizesParameterOptions()

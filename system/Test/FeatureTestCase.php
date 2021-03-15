@@ -19,9 +19,10 @@ use CodeIgniter\Router\RouteCollection;
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
  */
-class FeatureTestCase extends CIDatabaseTestCase
+class FeatureTestCase extends CIUnitTestCase
 {
 	use FeatureTestTrait;
+	use DatabaseTestTrait;
 
 	/**
 	 * If present, will override application

@@ -1,13 +1,12 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
+class LikeTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +14,6 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleLike()
 	{
@@ -32,11 +29,9 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeNoSide()
 	{
@@ -52,11 +47,9 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeBeforeOnly()
 	{
@@ -72,11 +65,9 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testLikeAfterOnly()
 	{
@@ -92,11 +83,9 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrLike()
 	{
@@ -110,17 +99,15 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 				'%veloper%',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'%ian%',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNotLike()
 	{
@@ -136,11 +123,9 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrNotLike()
 	{
@@ -154,17 +139,15 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 				'%veloper%',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'%ian%',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @group single
@@ -183,9 +166,7 @@ class LikeTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -861,12 +861,12 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	 */
 	protected function validatePrefix(string $prefix, bool $secure, string $domain, string $path): void
 	{
-		if (stripos($prefix, '__Secure-') === 0 && ! $secure)
+		if (strpos($prefix, '__Secure-') === 0 && ! $secure)
 		{
 			throw CookieException::forInvalidSecurePrefix();
 		}
 
-		if (stripos($prefix, '__Host-') === 0 && (! $secure || $domain !== '' || $path !== '/'))
+		if (strpos($prefix, '__Host-') === 0 && (! $secure || $domain !== '' || $path !== '/'))
 		{
 			throw CookieException::forInvalidHostPrefix();
 		}

@@ -1,11 +1,12 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
+class JoinTest extends CIUnitTestCase
 {
 	protected $db;
 

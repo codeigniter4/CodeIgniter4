@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\DatabaseTestCase;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
 
 /**
@@ -9,8 +10,10 @@ use Config\Services;
  *
  * @group DatabaseLive
  */
-class DatabaseTestCaseMigrationOnce2Test extends CIDatabaseTestCase
+class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	/**
 	 * Should run db migration only once?
 	 *

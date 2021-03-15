@@ -7,6 +7,10 @@ order to learn more about what is happening during the database execution. These
 be used to collect data for analysis and reporting. The :doc:`Debug Toolbar </testing/debugging>`
 uses this to collect the queries to display in the Toolbar.
 
+.. contents::
+    :local:
+    :depth: 2
+
 ==========
 The Events
 ==========

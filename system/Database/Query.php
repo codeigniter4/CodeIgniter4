@@ -84,8 +84,6 @@ class Query implements QueryInterface
 	 */
 	public $db;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * BaseQuery constructor.
 	 *
@@ -95,8 +93,6 @@ class Query implements QueryInterface
 	{
 		$this->db = $db;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the raw query string to use for this statement.
@@ -133,8 +129,6 @@ class Query implements QueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will store the variables to bind into the query later.
 	 *
@@ -160,8 +154,6 @@ class Query implements QueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the final, processed query string after binding, etal
 	 * has been performed.
@@ -179,8 +171,6 @@ class Query implements QueryInterface
 
 		return $this->finalQueryString;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Records the execution time of the statement using microtime(true)
@@ -206,8 +196,6 @@ class Query implements QueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the start time in seconds with microseconds.
 	 *
@@ -226,8 +214,6 @@ class Query implements QueryInterface
 		return number_format($this->startTime, $decimals);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
@@ -240,8 +226,6 @@ class Query implements QueryInterface
 	{
 		return number_format(($this->endTime - $this->startTime), $decimals);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Stores the error description that happened for this query.
@@ -259,8 +243,6 @@ class Query implements QueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Reports whether this statement created an error not.
 	 *
@@ -270,8 +252,6 @@ class Query implements QueryInterface
 	{
 		return ! empty($this->errorString);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error code created while executing this statement.
@@ -283,8 +263,6 @@ class Query implements QueryInterface
 		return $this->errorCode;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the error message created while executing this statement.
 	 *
@@ -295,8 +273,6 @@ class Query implements QueryInterface
 		return $this->errorString;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the statement is a write-type query or not.
 	 *
@@ -304,11 +280,8 @@ class Query implements QueryInterface
 	 */
 	public function isWriteType(): bool
 	{
-		return (bool) preg_match(
-						'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i', $this->originalQueryString);
+		return $this->db->isWriteType($this->originalQueryString);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Swaps out one table prefix for a new one.
@@ -327,8 +300,6 @@ class Query implements QueryInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the original SQL that was passed into the system.
 	 *
@@ -339,23 +310,22 @@ class Query implements QueryInterface
 		return $this->originalQueryString;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Escapes and inserts any binds into the finalQueryString object.
 	 *
-	 * @return null|void
+	 * @return void
+	 *
+	 * @see https://regex101.com/r/jgAWNQ/1
 	 */
 	protected function compileBinds()
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = strpos($sql, ':') !== false && strpos($sql, ':=') === false;
+		$hasNamedBinds = preg_match('/\:(?:[\w\.]+)\:/', $sql) === 1;
 
 		if (empty($this->binds)
 			|| empty($this->bindMarker)
-			|| (strpos($sql, $this->bindMarker) === false
-			&& $hasNamedBinds === false)
+			|| (strpos($sql, $this->bindMarker) === false && $hasNamedBinds === false)
 		)
 		{
 			return;
@@ -382,19 +352,10 @@ class Query implements QueryInterface
 		// We'll need marker length later
 		$ml = strlen($this->bindMarker);
 
-		if ($hasNamedBinds)
-		{
-			$sql = $this->matchNamedBinds($sql, $binds);
-		}
-		else
-		{
-			$sql = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
-		}
+		$sql = $hasNamedBinds ? $this->matchNamedBinds($sql, $binds) : $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
 
 		$this->finalQueryString = $sql;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Match bindings
@@ -425,8 +386,6 @@ class Query implements QueryInterface
 
 		return strtr($sql, $replacers);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Match bindings
@@ -470,8 +429,6 @@ class Query implements QueryInterface
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns string to display in debug toolbar
@@ -534,6 +491,4 @@ class Query implements QueryInterface
 	{
 		return $this->getQuery();
 	}
-
-	//--------------------------------------------------------------------
 }

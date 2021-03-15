@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\CodeIgniter;
 use Config\Autoload;
 use Config\Modules;
 use CodeIgniter\Cache\CacheInterface;
@@ -73,6 +74,7 @@ use CodeIgniter\View\View;
  *
  * @method static CacheInterface cache(\Config\Cache $config = null, $getShared = true)
  * @method static CLIRequest clirequest(\Config\App $config = null, $getShared = true)
+ * @method static CodeIgniter codeigniter(\Config\App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
  * @method static CURLRequest curlrequest($options = [], \CodeIgniter\HTTP\ResponseInterface $response = null, \Config\App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
@@ -150,7 +152,7 @@ class BaseService
 	 * $key must be a name matching a service.
 	 *
 	 * @param string $key
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return mixed
 	 */

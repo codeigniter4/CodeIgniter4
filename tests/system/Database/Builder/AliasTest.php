@@ -1,8 +1,9 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class AliasTest extends \CodeIgniter\Test\CIUnitTestCase
+class AliasTest extends CIUnitTestCase
 {
 	protected $db;
 

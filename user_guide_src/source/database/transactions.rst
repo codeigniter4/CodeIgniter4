@@ -12,6 +12,10 @@ online resource to learn about them for your particular database. The
 information below assumes you have a basic understanding of
 transactions.
 
+.. contents::
+    :local:
+    :depth: 2
+
 CodeIgniter's Approach to Transactions
 ======================================
 

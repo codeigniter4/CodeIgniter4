@@ -556,14 +556,7 @@ if (! function_exists('source'))
 	{
 		if (! _has_protocol($src))
 		{
-			if ($indexPage === true)
-			{
-				$src = site_url($src);
-			}
-			else
-			{
-				$src = slash_item('baseURL') . $src;
-			}
+			$src = $indexPage === true ? site_url($src) : slash_item('baseURL') . $src;
 		}
 
 		$source = '<source src="' . $src
@@ -628,14 +621,7 @@ if (! function_exists('object'))
 	{
 		if (! _has_protocol($data))
 		{
-			if ($indexPage === true)
-			{
-				$data = site_url($data);
-			}
-			else
-			{
-				$data = slash_item('baseURL') . $data;
-			}
+			$data = $indexPage === true ? site_url($data) : slash_item('baseURL') . $data;
 		}
 
 		$object = '<object data="' . $data . '" '
@@ -701,14 +687,7 @@ if (! function_exists('embed'))
 	{
 		if (! _has_protocol($src))
 		{
-			if ($indexPage === true)
-			{
-				$src = site_url($src);
-			}
-			else
-			{
-				$src = slash_item('baseURL') . $src;
-			}
+			$src = $indexPage === true ? site_url($src) : slash_item('baseURL') . $src;
 		}
 
 		return '<embed src="' . $src

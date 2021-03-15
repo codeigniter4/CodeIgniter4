@@ -165,6 +165,8 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 		$this->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
 
+		$config->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
+
 		if (! in_array(strtolower($config->cookieSameSite ?: Cookie::SAMESITE_LAX), Cookie::ALLOWED_SAMESITE_VALUES, true))
 		{
 			throw CookieException::forInvalidSameSite($config->cookieSameSite);

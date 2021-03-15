@@ -1,9 +1,20 @@
 <?php
 namespace CodeIgniter\RESTful;
 
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Format\JSONFormatter;
+use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
+use Psr\Log\NullLogger;
+use Tests\Support\Models\UserModel;
 
 /**
  * Exercise our ResourceController class.
@@ -14,11 +25,11 @@ use Config\App;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResourceControllerTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $codeigniter;
 
@@ -205,14 +216,14 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testModel()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 		$this->assertEmpty($resource->getModel());
 		$this->assertEmpty($resource->getModelName());
 	}
 
 	public function testModelBogus()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 
 		$resource->setModel('Something');
 		$this->assertEmpty($resource->getModel());
@@ -221,7 +232,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testModelByName()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
@@ -229,8 +240,8 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testModelByObject()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
-		$model    = new \Tests\Support\Models\UserModel();
+		$resource = new MockResourceController();
+		$model    = new UserModel();
 		$resource->setModel($model);
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 
@@ -241,7 +252,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testFormat()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 		$this->assertEquals('json', $resource->getFormat());
 
 		$resource->setFormat('Nonsense');
@@ -254,15 +265,15 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testJSONFormatOutput()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 
-		$config = new \Config\App;
-		$uri    = new \CodeIgniter\HTTP\URI;
-		$agent  = new \CodeIgniter\HTTP\UserAgent;
+		$config = new App;
+		$uri    = new URI;
+		$agent  = new UserAgent;
 
-		$request  = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
-		$response = new \CodeIgniter\HTTP\Response($config);
-		$logger   = new \Psr\Log\NullLogger;
+		$request  = new IncomingRequest($config, $uri, '', $agent);
+		$response = new Response($config);
+		$logger   = new NullLogger;
 
 		$resource->initController($request, $response, $logger);
 		$resource->setFormat('json');
@@ -271,10 +282,10 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 			'foo' => 'bar',
 		];
 
-		$the_response = $resource->respond($data);
-		$result       = $the_response->getBody();
+		$theResponse = $resource->respond($data);
+		$result      = $theResponse->getBody();
 
-		$JSONFormatter = new \CodeIgniter\Format\JSONFormatter;
+		$JSONFormatter = new JSONFormatter;
 		$expected      = $JSONFormatter->format($data);
 
 		$this->assertEquals($expected, $result);
@@ -283,15 +294,15 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testXMLFormatOutput()
 	{
-		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		$resource = new MockResourceController();
 
-		$config = new \Config\App;
-		$uri    = new \CodeIgniter\HTTP\URI;
-		$agent  = new \CodeIgniter\HTTP\UserAgent;
+		$config = new App;
+		$uri    = new URI;
+		$agent  = new UserAgent;
 
-		$request  = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
-		$response = new \CodeIgniter\HTTP\Response($config);
-		$logger   = new \Psr\Log\NullLogger;
+		$request  = new IncomingRequest($config, $uri, '', $agent);
+		$response = new Response($config);
+		$logger   = new NullLogger;
 
 		$resource->initController($request, $response, $logger);
 		$resource->setFormat('xml');
@@ -300,10 +311,10 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 			'foo' => 'bar',
 		];
 
-		$the_response = $resource->respond($data);
-		$result       = $the_response->getBody();
+		$theResponse = $resource->respond($data);
+		$result      = $theResponse->getBody();
 
-		$XMLFormatter = new \CodeIgniter\Format\XMLFormatter;
+		$XMLFormatter = new XMLFormatter;
 		$expected     = $XMLFormatter->format($data);
 
 		$this->assertEquals($expected, $result);

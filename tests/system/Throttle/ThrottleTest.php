@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter\Throttle;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 
-class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
+class ThrottleTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -37,6 +38,19 @@ class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertTrue($throttler->check('127.0.0.1', 60, MINUTE));
 		$this->assertEquals(59, $this->cache->get('throttler_127.0.0.1'));
+	}
+
+	public function testRemove()
+	{
+		$throttler = new Throttler($this->cache);
+
+		$this->assertTrue($throttler->check('127.0.0.1', 1, MINUTE));
+		$this->assertFalse($throttler->check('127.0.0.1', 1, MINUTE));
+
+		$throttler->remove('127.0.0.1');
+
+		$this->assertNull($this->cache->get('throttler_127.0.0.1'));
+		$this->assertTrue($throttler->check('127.0.0.1', 1, MINUTE));
 	}
 
 	/**
@@ -120,5 +134,4 @@ class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE, 0));
 		$this->assertEquals(10, round($this->cache->get('throttler_127.0.0.1')));
 	}
-
 }

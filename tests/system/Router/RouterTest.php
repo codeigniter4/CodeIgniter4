@@ -2,12 +2,16 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
-class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
+class RouterTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\Router\RouteCollection $collection
+	 * @var RouteCollection $collection
 	 */
 	protected $collection;
 
@@ -19,7 +23,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $root;
 
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -27,7 +31,7 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$moduleConfig          = new \Config\Modules;
+		$moduleConfig          = new Modules;
 		$moduleConfig->enabled = false;
 		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
@@ -78,9 +82,9 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$router = new Router($this->collection, $this->request);
 
-		$router->handle('0');
+		$this->expectException(PageNotFoundException::class);
 
-		$this->assertEquals('0', $router->controllerName());
+		$router->handle('0');
 	}
 
 	//--------------------------------------------------------------------
@@ -224,6 +228,153 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('someMethod', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsDashedSubfolder()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		mkdir(APPPATH . 'Controllers/Dash_folder');
+
+		$router->autoRoute('dash-folder/mycontroller/somemethod');
+
+		rmdir(APPPATH . 'Controllers/Dash_folder');
+
+		$this->assertEquals('Dash_folder/', $router->directory());
+		$this->assertEquals('Mycontroller', $router->controllerName());
+		$this->assertEquals('somemethod', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsDashedController()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		mkdir(APPPATH . 'Controllers/Dash_folder');
+		file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+
+		$router->autoRoute('dash-folder/dash-controller/somemethod');
+
+		unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+		rmdir(APPPATH . 'Controllers/Dash_folder');
+
+		$this->assertEquals('Dash_folder/', $router->directory());
+		$this->assertEquals('Dash_controller', $router->controllerName());
+		$this->assertEquals('somemethod', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsDashedMethod()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		mkdir(APPPATH . 'Controllers/Dash_folder');
+		file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+
+		$router->autoRoute('dash-folder/dash-controller/dash-method');
+
+		unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+		rmdir(APPPATH . 'Controllers/Dash_folder');
+
+		$this->assertEquals('Dash_folder/', $router->directory());
+		$this->assertEquals('Dash_controller', $router->controllerName());
+		$this->assertEquals('dash_method', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsDefaultDashFolder()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		mkdir(APPPATH . 'Controllers/Dash_folder');
+
+		$router->autoRoute('dash-folder');
+
+		rmdir(APPPATH . 'Controllers/Dash_folder');
+
+		$this->assertEquals('Dash_folder/', $router->directory());
+		$this->assertEquals('Home', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsMByteDir()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		mkdir(APPPATH . 'Controllers/Φ');
+
+		$router->autoRoute('Φ');
+
+		rmdir(APPPATH . 'Controllers/Φ');
+
+		$this->assertEquals('Φ/', $router->directory());
+		$this->assertEquals('Home', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsMByteController()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		file_put_contents(APPPATH . 'Controllers/Φ', '');
+
+		$router->autoRoute('Φ');
+
+		unlink(APPPATH . 'Controllers/Φ');
+
+		$this->assertEquals('Φ', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteRejectsSingleDot()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		$this->expectException(PageNotFoundException::class);
+
+		$router->autoRoute('.');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteRejectsDoubleDot()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		$this->expectException(PageNotFoundException::class);
+
+		$router->autoRoute('..');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteRejectsMidDot()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setTranslateURIDashes(true);
+
+		$this->expectException(PageNotFoundException::class);
+
+		$router->autoRoute('Foo.bar');
 	}
 
 	//--------------------------------------------------------------------
@@ -571,5 +722,36 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 			'a0ঀ৿-',
 		];
 		$this->assertEquals($expected, $router->params());
+	}
+
+	public function testRouterPriorDirectory()
+	{
+		$router = new Router($this->collection, $this->request);
+
+		$router->setDirectory('foo/bar/baz', false, true);
+		$router->handle('Some_controller/some_method/param1/param2/param3');
+
+		$this->assertEquals('foo/bar/baz/', $router->directory());
+		$this->assertEquals('Some_controller', $router->controllerName());
+		$this->assertEquals('some_method', $router->methodName());
+	}
+
+	public function testSetDirectoryValid()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setDirectory('foo/bar/baz', false, true);
+
+		$this->assertEquals('foo/bar/baz/', $router->directory());
+	}
+
+	public function testSetDirectoryInvalid()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->setDirectory('foo/bad-segment/bar', false, true);
+
+		$internal = $this->getPrivateProperty($router, 'directory');
+
+		$this->assertNull($internal);
+		$this->assertEquals('', $router->directory());
 	}
 }
