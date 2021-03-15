@@ -67,10 +67,6 @@ trait DatabaseTestTrait
 		$this->clearInsertCache();
 	}
 
-	//--------------------------------------------------------------------
-	// Support
-	//--------------------------------------------------------------------
-
 	/**
 	 * Load any database test dependencies.
 	 */
@@ -99,45 +95,8 @@ trait DatabaseTestTrait
 		}
 	}
 
-	/**
-	 * Loads the Builder class appropriate for the current database.
-	 *
-	 * @param string $tableName
-	 *
-	 * @return BaseBuilder
-	 */
-	public function loadBuilder(string $tableName)
-	{
-		$builderClass = str_replace('Connection', 'Builder', get_class($this->db));
-
-		return new $builderClass($tableName, $this->db);
-	}
-
-	/**
-	 * Seeds that database with a specific seeder.
-	 *
-	 * @param string $name
-	 *
-	 * @return void
-	 */
-	public function seed(string $name)
-	{
-		$this->seeder->call($name);
-	}
-
-	/**
-	 * Reset $doneMigration and $doneSeed
-	 *
-	 * @afterClass
-	 */
-	public static function resetMigrationSeedCount()
-	{
-		self::$doneMigration = false;
-		self::$doneSeed      = false;
-	}
-
 	//--------------------------------------------------------------------
-	// Database
+	// Migrations
 	//--------------------------------------------------------------------
 
 	/**
@@ -157,55 +116,6 @@ trait DatabaseTestTrait
 
 			$this->migrateDatabase();
 		}
-	}
-
-	/**
-	 * Seed on setUp
-	 */
-	protected function setUpSeed()
-	{
-		if ($this->seedOnce === false || self::$doneSeed === false)
-		{
-			$this->runSeeds();
-		}
-	}
-
-	/**
-	 * Removes any rows inserted via $this->hasInDatabase()
-	 */
-	protected function clearInsertCache()
-	{
-		if (! empty($this->insertCache))
-		{
-			foreach ($this->insertCache as $row)
-			{
-				$this->db->table($row[0])
-						->where($row[1])
-						->delete();
-			}
-		}
-	}
-
-	/**
-	 * Run seeds as defined by the class
-	 */
-	protected function runSeeds()
-	{
-		if (! empty($this->seed))
-		{
-			if (! empty($this->basePath))
-			{
-				$this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
-			}
-
-			$seeds = is_array($this->seed) ? $this->seed : [$this->seed];
-			foreach ($seeds as $seed)
-			{
-				$this->seed($seed);
-			}
-		}
-
-		self::$doneSeed = true;
 	}
 
 	/**
@@ -270,41 +180,97 @@ trait DatabaseTestTrait
 	}
 
 	//--------------------------------------------------------------------
-	// Assertions
+	// Seeds
 	//--------------------------------------------------------------------
 
 	/**
-	 * Asserts that records that match the conditions in $where do
-	 * not exist in the database.
-	 *
-	 * @param string $table
-	 * @param array  $where
-	 *
-	 * @return void
+	 * Seed on setUp
 	 */
-	public function dontSeeInDatabase(string $table, array $where)
+	protected function setUpSeed()
 	{
-		$count = $this->db->table($table)
-						  ->where($where)
-						  ->countAllResults();
-
-		$this->assertTrue($count === 0, 'Row was found in database');
+		if ($this->seedOnce === false || self::$doneSeed === false)
+		{
+			$this->runSeeds();
+		}
 	}
 
 	/**
-	 * Asserts that records that match the conditions in $where DO
-	 * exist in the database.
+	 * Run seeds as defined by the class
+	 */
+	protected function runSeeds()
+	{
+		if (! empty($this->seed))
+		{
+			if (! empty($this->basePath))
+			{
+				$this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
+			}
+
+			$seeds = is_array($this->seed) ? $this->seed : [$this->seed];
+			foreach ($seeds as $seed)
+			{
+				$this->seed($seed);
+			}
+		}
+
+		self::$doneSeed = true;
+	}
+
+	/**
+	 * Seeds that database with a specific seeder.
 	 *
-	 * @param string $table
-	 * @param array  $where
+	 * @param string $name
 	 *
 	 * @return void
-	 * @throws DatabaseException
 	 */
-	public function seeInDatabase(string $table, array $where)
+	public function seed(string $name)
 	{
-		$constraint = new SeeInDatabase($this->db, $where);
-		static::assertThat($table, $constraint);
+		$this->seeder->call($name);
+	}
+
+	//--------------------------------------------------------------------
+	// Utility
+	//--------------------------------------------------------------------
+
+	/**
+	 * Reset $doneMigration and $doneSeed
+	 *
+	 * @afterClass
+	 */
+	public static function resetMigrationSeedCount()
+	{
+		self::$doneMigration = false;
+		self::$doneSeed      = false;
+	}
+
+	/**
+	 * Removes any rows inserted via $this->hasInDatabase()
+	 */
+	protected function clearInsertCache()
+	{
+		if (! empty($this->insertCache))
+		{
+			foreach ($this->insertCache as $row)
+			{
+				$this->db->table($row[0])
+						->where($row[1])
+						->delete();
+			}
+		}
+	}
+
+	/**
+	 * Loads the Builder class appropriate for the current database.
+	 *
+	 * @param string $tableName
+	 *
+	 * @return BaseBuilder
+	 */
+	public function loadBuilder(string $tableName)
+	{
+		$builderClass = str_replace('Connection', 'Builder', get_class($this->db));
+
+		return new $builderClass($tableName, $this->db);
 	}
 
 	/**
@@ -328,6 +294,44 @@ trait DatabaseTestTrait
 		$query = $query->getRow();
 
 		return $query->$column ?? false;
+	}
+
+	//--------------------------------------------------------------------
+	// Assertions
+	//--------------------------------------------------------------------
+
+	/**
+	 * Asserts that records that match the conditions in $where DO
+	 * exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	public function seeInDatabase(string $table, array $where)
+	{
+		$constraint = new SeeInDatabase($this->db, $where);
+		static::assertThat($table, $constraint);
+	}
+
+	/**
+	 * Asserts that records that match the conditions in $where do
+	 * not exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 */
+	public function dontSeeInDatabase(string $table, array $where)
+	{
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
+
+		$this->assertTrue($count === 0, 'Row was found in database');
 	}
 
 	/**
