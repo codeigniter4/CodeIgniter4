@@ -162,6 +162,13 @@ abstract class CIUnitTestCase extends TestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * Store of identified traits.
+	 *
+	 * @var string[]|null
+	 */
+	private $traits;
+
+	/**
 	 * Load the helpers.
 	 */
 	public static function setUpBeforeClass(): void
@@ -185,16 +192,14 @@ abstract class CIUnitTestCase extends TestCase
 			$this->$method();
 		}
 
-		// Check for trait methods
-		foreach (class_uses_recursive($this) as $trait)
+		// Check for the database trait
+		if (method_exists($this, 'setUpDatabase'))
 		{
-			$method = 'setUp' . class_basename($trait);
-
-			if (method_exists($this, $method))
-			{
-				$this->$method();
-			}
+			$this->setUpDatabase();
 		}
+
+		// Check for other trait methods
+		$this->callTraitMethods('setUp');
 	}
 
 	protected function tearDown(): void
@@ -206,10 +211,34 @@ abstract class CIUnitTestCase extends TestCase
 			$this->$method();
 		}
 
-		// Check for trait methods
-		foreach (class_uses_recursive($this) as $trait)
+		// Check for the database trait
+		if (method_exists($this, 'tearDownDatabase'))
 		{
-			$method = 'tearDown' . class_basename($trait);
+			$this->tearDownDatabase();
+		}
+
+		// Check for other trait methods
+		$this->callTraitMethods('tearDown');
+	}
+
+	/**
+	 * Checks for traits with corresponding
+	 * methods for setUp or tearDown.
+	 *
+	 * @param string $stage 'setUp' or 'tearDown'
+	 *
+	 * @return void
+	 */
+	private function callTraitMethods(string $stage): void
+	{
+		if (is_null($this->traits))
+		{
+			$this->traits = class_uses_recursive($this);
+		}
+
+		foreach ($this->traits as $trait)
+		{
+			$method = $stage . class_basename($trait);
 
 			if (method_exists($this, $method))
 			{

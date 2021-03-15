@@ -154,12 +154,10 @@ Traits
 ------
 
 A common way to enhance your tests is by using traits to consolidate staging across different
-test cases. ``CIUintTestCase`` will detect any class traits and look for staging methods to
-to run named for the trait itself. The framework's own ``DatabaseTestTrait`` implements this
-with methods ``setUpDatabaseTestTrait()`` and ``tearDownDatabaseTestTrait()``.
-
-For example, if you needed to add authentication to some of your test cases you could create
-an authentication trait with a set up method to fake a logged in user::
+test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
+to run named for the trait itself. For example, if you needed to add authentication to some
+of your test cases you could create an authentication trait with a set up method to fake a
+logged in user::
 
 	trait AuthTrait
 	{

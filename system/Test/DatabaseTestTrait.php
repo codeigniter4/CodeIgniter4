@@ -47,7 +47,7 @@ trait DatabaseTestTrait
 	/**
 	 * Runs the trait set up methods.
 	 */
-	protected function setUpDatabaseTestTrait()
+	protected function setUpDatabase()
 	{
 		$this->loadDependencies();
 		$this->setUpMigrate();
@@ -57,7 +57,7 @@ trait DatabaseTestTrait
 	/**
 	 * Runs the trait set up methods.
 	 */
-	protected function tearDownDatabaseTestTrait()
+	protected function tearDownDatabase()
 	{
 		$this->clearInsertCache();
 	}
