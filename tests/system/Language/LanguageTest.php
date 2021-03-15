@@ -162,7 +162,7 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new Language('en');
 		$this->assertEquals('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
 		$this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
-		$this->assertEquals('Could not move file {0} to {1} ({2})', $this->lang->getLine('Files.cannotMove', []));
+		$this->assertEquals('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
 		$this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
 	}
 
