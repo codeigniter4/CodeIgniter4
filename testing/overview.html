@@ -501,11 +501,10 @@ that or provide their own:</p>
 <div class="section" id="traits">
 <h4>Traits<a class="headerlink" href="#traits" title="Permalink to this headline">¶</a></h4>
 <p>A common way to enhance your tests is by using traits to consolidate staging across different
-test cases. <code class="docutils literal notranslate"><span class="pre">CIUintTestCase</span></code> will detect any class traits and look for staging methods to
-to run named for the trait itself. The framework’s own <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code> implements this
-with methods <code class="docutils literal notranslate"><span class="pre">setUpDatabaseTestTrait()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownDatabaseTestTrait()</span></code>.</p>
-<p>For example, if you needed to add authentication to some of your test cases you could create
-an authentication trait with a set up method to fake a logged in user:</p>
+test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
+to run named for the trait itself. For example, if you needed to add authentication to some
+of your test cases you could create an authentication trait with a set up method to fake a
+logged in user:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">trait</span> <span class="nx">AuthTrait</span>
 <span class="p">{</span>
         <span class="k">protected</span> <span class="nx">setUpAuthTrait</span><span class="p">()</span>
@@ -727,7 +726,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 12, 2021.
+        Last updated on Mar 15, 2021.
       </span>
 
     </p>
