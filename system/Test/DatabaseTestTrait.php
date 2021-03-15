@@ -12,6 +12,11 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Database\Seeder;
+use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -262,5 +267,106 @@ trait DatabaseTestTrait
 				self::$doneMigration = true;
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+	// Assertions
+	//--------------------------------------------------------------------
+
+	/**
+	 * Asserts that records that match the conditions in $where do
+	 * not exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 */
+	public function dontSeeInDatabase(string $table, array $where)
+	{
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
+
+		$this->assertTrue($count === 0, 'Row was found in database');
+	}
+
+	/**
+	 * Asserts that records that match the conditions in $where DO
+	 * exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	public function seeInDatabase(string $table, array $where)
+	{
+		$constraint = new SeeInDatabase($this->db, $where);
+		static::assertThat($table, $constraint);
+	}
+
+	/**
+	 * Fetches a single column from a database row with criteria
+	 * matching $where.
+	 *
+	 * @param string $table
+	 * @param string $column
+	 * @param array  $where
+	 *
+	 * @return boolean
+	 * @throws DatabaseException
+	 */
+	public function grabFromDatabase(string $table, string $column, array $where)
+	{
+		$query = $this->db->table($table)
+						  ->select($column)
+						  ->where($where)
+						  ->get();
+
+		$query = $query->getRow();
+
+		return $query->$column ?? false;
+	}
+
+	/**
+	 * Inserts a row into to the database. This row will be removed
+	 * after the test has run.
+	 *
+	 * @param string $table
+	 * @param array  $data
+	 *
+	 * @return boolean
+	 */
+	public function hasInDatabase(string $table, array $data)
+	{
+		$this->insertCache[] = [
+			$table,
+			$data,
+		];
+
+		return $this->db->table($table)
+						->insert($data);
+	}
+
+	/**
+	 * Asserts that the number of rows in the database that match $where
+	 * is equal to $expected.
+	 *
+	 * @param integer $expected
+	 * @param string  $table
+	 * @param array   $where
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	public function seeNumRecords(int $expected, string $table, array $where)
+	{
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
+
+		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
 }
