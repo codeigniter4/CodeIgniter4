@@ -99,6 +99,16 @@ class FeatureResponse extends TestCase
 	}
 
 	/**
+	 * Assert that the given response was not a redirect.
+	 *
+	 * @throws Exception
+	 */
+	public function assertNotRedirect()
+	{
+		$this->assertFalse($this->isRedirect(), 'Response is an unexpected redirect or RedirectResponse.');
+	}
+
+	/**
 	 * Returns the URL set for redirection.
 	 *
 	 * @return string|null
@@ -143,6 +153,16 @@ class FeatureResponse extends TestCase
 	public function assertOK()
 	{
 		$this->assertTrue($this->isOK(), "{$this->response->getStatusCode()} is not a successful status code, or the Response has an empty body.");
+	}
+
+	/**
+	 * Asserts that the Response is considered OK.
+	 *
+	 * @throws Exception
+	 */
+	public function assertNotOK()
+	{
+		$this->assertFalse($this->isOK(), "{$this->response->getStatusCode()} is an unexpected successful status code, or the Response has body content.");
 	}
 
 	//--------------------------------------------------------------------

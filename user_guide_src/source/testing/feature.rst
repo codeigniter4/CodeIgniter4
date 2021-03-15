@@ -176,7 +176,7 @@ a response status code in the 200 or 300's.
 
 **assertOK()**
 
-This assertion simply uses the **isOK()** method to test a response.
+This assertion simply uses the **isOK()** method to test a response. **assertNotOK** is the inverse of this assertion.
 ::
 
     $result->assertOK();
@@ -193,7 +193,7 @@ Returns a boolean true/false based on whether the response is a redirected respo
 
 **assertRedirect()**
 
-Asserts that the Response is an instance of RedirectResponse.
+Asserts that the Response is an instance of RedirectResponse. **assertNotRedirect** is the inverse of this assertion.
 ::
 
     $result->assertRedirect();
