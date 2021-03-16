@@ -158,6 +158,33 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->assertNull($this->feature->getRedirectUrl());
 	}
 
+	public function testRedirectToSuccess()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('foo/bar');
+
+		$this->feature->assertRedirectTo('foo/bar');
+	}
+
+	public function testRedirectToSuccessFullURL()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('http://foo.com/bar');
+
+		$this->feature->assertRedirectTo('http://foo.com/bar');
+	}
+
+	public function testRedirectToSuccessMixedURL()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('bar');
+
+		$this->feature->assertRedirectTo('http://example.com/index.php/bar');
+	}
+
 	public function testAssertStatus()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 201]);

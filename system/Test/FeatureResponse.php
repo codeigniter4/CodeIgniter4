@@ -15,6 +15,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -57,7 +58,7 @@ class FeatureResponse extends TestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * Boils down the possible responses into a bolean valid/not-valid
+	 * Boils down the possible responses into a boolean valid/not-valid
 	 * response type.
 	 *
 	 * @return boolean
@@ -99,6 +100,28 @@ class FeatureResponse extends TestCase
 	}
 
 	/**
+	 * Assert that a given response was a redirect
+	 * and it was redirect to a specific URI.
+	 *
+	 * @param string $uri
+	 *
+	 * @throws Exception
+	 */
+	public function assertRedirectTo(string $uri)
+	{
+		$this->assertRedirect();
+
+		$uri         = trim(strtolower($uri));
+		$redirectUri = strtolower($this->getRedirectUrl());
+
+		$matches = $uri === $redirectUri
+				   || strtolower(site_url($uri)) === $redirectUri
+				   || $uri === site_url($redirectUri);
+
+		$this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
+	}
+
+	/*
 	 * Assert that the given response was not a redirect.
 	 *
 	 * @throws Exception

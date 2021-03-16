@@ -107,11 +107,11 @@ that the current values of ``$_SESSION`` should be used. This is handy for testi
 
     $result = $this->withSession($values)
         ->get('admin');
-    
+
     // Or...
-    
+
     $_SESSION['logged_in'] = 123;
-    
+
     $result = $this->withSession()->get('admin');
 
 Setting Headers
@@ -204,6 +204,14 @@ Asserts that the Response is an instance of RedirectResponse. **assertNotRedirec
 ::
 
     $result->assertRedirect();
+
+**assertRedirectTo()**
+
+Asserts that the Response is an instance of RedirectResponse and the destination
+matches the uri given.
+::
+
+    $result->assertRedirectTo('foo/bar');
 
 **getRedirectUrl()**
 
