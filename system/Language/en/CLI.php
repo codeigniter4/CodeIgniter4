@@ -24,7 +24,7 @@ return [
 			'entity'     => 'Entity class name',
 			'filter'     => 'Filter class name',
 			'migration'  => 'Migration class name',
-			'model'      => 'Model class namel',
+			'model'      => 'Model class name',
 			'seeder'     => 'Seeder class name',
 			'validation' => 'Validation class name',
 		],

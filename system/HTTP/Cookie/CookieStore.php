@@ -66,7 +66,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @throws CookieException
 	 */
-	public function __construct(array $cookies)
+	final public function __construct(array $cookies)
 	{
 		$this->validateCookies($cookies);
 

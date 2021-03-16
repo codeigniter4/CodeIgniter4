@@ -16,6 +16,8 @@ namespace CodeIgniter\Cache\Exceptions;
  * of all framework-related exceptions.
  *
  * catch (\CodeIgniter\Cache\Exceptions\ExceptionInterface) { ... }
+ *
+ * @deprecated 4.1.2
  */
 interface ExceptionInterface
 {
