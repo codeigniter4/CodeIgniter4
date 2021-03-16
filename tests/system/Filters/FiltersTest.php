@@ -1069,4 +1069,26 @@ class FiltersTest extends CIUnitTestCase
 		];
 		$this->assertEquals($expected, $filters->getFiltersClass());
 	}
+
+	public function testReset()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => [
+				'foo' => '',
+			],
+			'filters' => [
+				'foo' => [
+					'before' => ['admin*'],
+				],
+			],
+		];
+
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin';
+
+		$this->assertEquals(['foo'], $filters->initialize($uri)->getFilters()['before']);
+		$this->assertEquals([], $filters->reset()->getFilters()['before']);
+	}
 }
