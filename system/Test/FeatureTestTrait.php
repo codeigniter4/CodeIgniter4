@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -166,8 +167,17 @@ trait FeatureTestTrait
 		$request = $this->populateGlobals($method, $request, $params);
 		$request = $this->setRequestBody($request);
 
-		// Make sure the RouteCollection knows what method we're using...
-		$routes = $this->routes ?? Services::routes();
+		// Initialize the RouteCollection
+		if (! $routes = $this->routes)
+		{
+			require APPPATH . 'Config/Routes.php';
+
+			/**
+			 * @var RouteCollection $routes
+			 */
+			$routes->getRoutes('*');
+		}
+
 		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
