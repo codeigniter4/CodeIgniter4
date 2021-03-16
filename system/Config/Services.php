@@ -152,11 +152,6 @@ class Services extends BaseService
 
 		$config = $config ?? config('App');
 
-		if (ENVIRONMENT === 'testing')
-		{
-			return new MockCodeIgniter($config);
-		}
-
 		return new CodeIgniter($config);
 	}
 
