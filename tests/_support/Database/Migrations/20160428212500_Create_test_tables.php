@@ -115,6 +115,12 @@ class Migration_Create_test_tables extends Migration
 			'key'   => ['type' => 'VARCHAR', 'constraint' => 40, 'unique' => true],
 			'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
 		])->addKey('key', true)->createTable('without_auto_increment', true);
+
+		// IP Table
+		$this->forge->addField([
+			'ip' => ['type' => 'VARCHAR', 'constraint' => 100],
+			'ip2' => ['type' => 'VARCHAR', 'constraint' => 100],
+		])->createTable('ip_table', true);
 	}
 
 	//--------------------------------------------------------------------
@@ -129,5 +135,6 @@ class Migration_Create_test_tables extends Migration
 		$this->forge->dropTable('secondary', true);
 		$this->forge->dropTable('stringifypkey', true);
 		$this->forge->dropTable('without_auto_increment', true);
+		$this->forge->dropTable('ip_table', true);
 	}
 }

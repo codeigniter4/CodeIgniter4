@@ -1,5 +1,7 @@
 <?php
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;

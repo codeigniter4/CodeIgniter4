@@ -175,7 +175,7 @@ class CookieStore implements Countable, IteratorAggregate
 
 		$store = clone $this;
 
-		foreach ($store->cookies as $index => $cookie)
+		foreach (array_keys($store->cookies) as $index)
 		{
 			if ($index === $id)
 			{

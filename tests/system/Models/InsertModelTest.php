@@ -119,7 +119,7 @@ final class InsertModelTest extends LiveModelTestCase
 		$this->createModel(JobModel::class);
 
 		$result = $this->model->protect(false)->insert($data, false);
-		$this->assertTrue($result->resultID !== false);
+		$this->assertTrue($result);
 
 		$lastInsertId = $this->model->getInsertID();
 		$this->seeInDatabase('job', ['id' => $lastInsertId]);
@@ -136,7 +136,7 @@ final class InsertModelTest extends LiveModelTestCase
 
 		$this->createModel(JobModel::class);
 		$result = $this->model->protect(false)->insert($data, false);
-		$this->assertFalse($result->resultID);
+		$this->assertFalse($result);
 
 		$lastInsertId = $this->model->getInsertID();
 		$this->assertSame(0, $lastInsertId);

@@ -32,14 +32,11 @@ class Role implements FilterInterface
 		{
 			return join(';', $arguments);
 		}
-		elseif (is_null($arguments))
+		if (is_null($arguments))
 		{
 			return 'Is null';
 		}
-		else
-		{
-			return 'Something else';
-		}
+		return 'Something else';
 	}
 
 }

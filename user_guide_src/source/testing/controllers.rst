@@ -10,6 +10,10 @@ case you need it.
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller
     this way.
 
+.. contents::
+    :local:
+    :depth: 2
+
 The Helper Trait
 ================
 
@@ -21,9 +25,12 @@ within your tests::
     namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class TestControllerA extends \CIDatabaseTestCase
+    class TestControllerA extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
         use ControllerTester;
     }
 
@@ -37,9 +44,12 @@ to run as the parameter::
     namespace CodeIgniter;
 
     use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class TestControllerA extends \CIDatabaseTestCase
+    class TestControllerA extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
         use ControllerTester;
 
         public function testShowCategories()

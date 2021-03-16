@@ -10,16 +10,19 @@ The Test Class
 ==============
 
 In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
-tests must extend ``CIDatabaseTestCase``::
+tests must extend ``CIUnitTestCase`` and use the ``DatabaseTestTrait``::
 
     <?php
 
     namespace App\Database;
 
-    use CodeIgniter\Test\CIDatabaseTestCase;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class MyTests extends CIDatabaseTestCase
+    class MyTests extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
+
         // ...
     }
 
@@ -31,10 +34,13 @@ of the functionality described here::
 
     namespace App\Database;
 
-    use CodeIgniter\Test\CIDatabaseTestCase;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class MyTests extends CIDatabaseTestCase
+    class MyTests extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
+
         public function setUp()
         {
             parent::setUp();
@@ -79,10 +85,13 @@ by adding a couple of class properties to your test.
 
     namespace App\Database;
 
-    use CodeIgniter\Test\CIDatabaseTestCase;
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\DatabaseTestTrait;
 
-    class MyTests extends \CIDatabaseTestCase
+    class MyTests extends CIUnitTestCase
     {
+        use DatabaseTestTrait;
+
         protected $refresh  = true;
         protected $seed     = 'TestSeeder';
         protected $basePath = 'path/to/database/files';
@@ -132,7 +141,7 @@ To run migrations from all available namespaces set this property to ``null``.
 Helper Methods
 ==============
 
-The **CIDatabaseTestCase** class provides several helper methods to aid in testing your database.
+The **DatabaseTestTrait** class provides several helper methods to aid in testing your database.
 
 **regressDatabase()**
 

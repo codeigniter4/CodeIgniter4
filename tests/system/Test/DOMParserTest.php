@@ -1,7 +1,9 @@
 <?php
 namespace CodeIgniter\Test;
 
-class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
+use InvalidArgumentException;
+
+class DOMParserTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -379,7 +381,7 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filename = APPPATH . 'bogus.html';
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$dom->withFile($filename);
 	}
 

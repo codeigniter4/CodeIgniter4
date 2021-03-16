@@ -306,12 +306,12 @@ class IncomingRequest extends Request
 				$output = [];
 				foreach ($index as $key)
 				{
-					$output[$key] = $this->getJsonVar($key);
+					$output[$key] = $this->getJsonVar($key, false, $filter, $flags);
 				}
 				return $output;
 			}
 
-			return $this->getJsonVar($index);
+			return $this->getJsonVar($index, false, $filter, $flags);
 		}
 
 		return $this->fetchGlobal('request', $index, $filter, $flags);
@@ -342,20 +342,31 @@ class IncomingRequest extends Request
 	/**
 	 * Get a specific variable from a JSON input stream
 	 *
-	 * @param string  $index The variable that you want which can use dot syntax for getting specific values.
-	 * @param boolean $assoc If true, return the result as an associative array.
-	 *
+	 * @param  string             $index  The variable that you want which can use dot syntax for getting specific values.
+	 * @param  boolean            $assoc  If true, return the result as an associative array.
+	 * @param  integer|null       $filter Filter Constant
+	 * @param  array|integer|null $flags  Option
 	 * @return mixed
 	 */
-	public function getJsonVar(string $index, bool $assoc = false)
+	public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
 	{
 		helper('array');
 
 		$data = dot_array_search($index, $this->getJSON(true));
-		if (is_array($data) && ! $assoc)
+
+		if (! is_array($data))
+		{
+			$filter = $filter ?? FILTER_DEFAULT;
+			$flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+
+			return filter_var($data, $filter, $flags);
+		}
+
+		if (! $assoc)
 		{
 			return json_decode(json_encode($data));
 		}
+
 		return $data;
 	}
 
@@ -489,7 +500,7 @@ class IncomingRequest extends Request
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
 		{
-			return;
+			return null;
 		}
 
 		// Check for the value in the POST array first.
@@ -526,8 +537,8 @@ class IncomingRequest extends Request
 			}
 		}
 
-		//      // return null if requested session key not found
-		//      return null;
+		// requested session key not found
+		return null;
 	}
 
 	/**

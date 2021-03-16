@@ -476,14 +476,7 @@ if (! function_exists('esc'))
 				throw new InvalidArgumentException('Invalid escape context provided.');
 			}
 
-			if ($context === 'attr')
-			{
-				$method = 'escapeHtmlAttr';
-			}
-			else
-			{
-				$method = 'escape' . ucfirst($context);
-			}
+			$method = $context === 'attr' ? 'escapeHtmlAttr' : 'escape' . ucfirst($context);
 
 			static $escaper;
 			if (! $escaper)
@@ -1173,7 +1166,7 @@ if (! function_exists('stringify_attributes'))
 
 		foreach ($attributes as $key => $val)
 		{
-			$atts .= ($js) ? $key . '=' . esc($val, 'js') . ',' : ' ' . $key . '="' . esc($val, 'attr') . '"';
+			$atts .= ($js) ? $key . '=' . esc($val, 'js') . ',' : ' ' . $key . '="' . esc($val) . '"';
 		}
 
 		return rtrim($atts, ',');
@@ -1278,3 +1271,75 @@ if (! function_exists('view_cell'))
 			->render($library, $params, $ttl, $cacheName);
 	}
 }
+
+/**
+ * These helpers come from Laravel so will not be
+ * re-tested and can be ignored safely.
+ *
+ * @see https://github.com/laravel/framework/blob/8.x/src/Illuminate/Support/helpers.php
+ */
+// @codeCoverageIgnoreStart
+if (! function_exists('class_basename'))
+{
+	/**
+	 * Get the class "basename" of the given object / class.
+	 *
+	 * @param  string|object $class
+	 * @return string
+	 */
+	function class_basename($class)
+	{
+		$class = is_object($class) ? get_class($class) : $class;
+
+		return basename(str_replace('\\', '/', $class));
+	}
+}
+
+if (! function_exists('class_uses_recursive'))
+{
+	/**
+	 * Returns all traits used by a class, its parent classes and trait of their traits.
+	 *
+	 * @param  object|string $class
+	 * @return array
+	 */
+	function class_uses_recursive($class)
+	{
+		if (is_object($class))
+		{
+			$class = get_class($class);
+		}
+
+		$results = [];
+
+		// @phpstan-ignore-next-line
+		foreach (array_reverse(class_parents($class)) + [$class => $class] as $class)
+		{
+			$results += trait_uses_recursive($class);
+		}
+
+		return array_unique($results);
+	}
+}
+
+if (! function_exists('trait_uses_recursive'))
+{
+	/**
+	 * Returns all traits used by a trait and its traits.
+	 *
+	 * @param  string $trait
+	 * @return array
+	 */
+	function trait_uses_recursive($trait)
+	{
+		$traits = class_uses($trait) ?: [];
+
+		foreach ($traits as $trait)
+		{
+			$traits += trait_uses_recursive($trait);
+		}
+
+		return $traits;
+	}
+}
+// @codeCoverageIgnoreEnd

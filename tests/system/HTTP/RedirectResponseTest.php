@@ -3,11 +3,13 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
+use Config\Modules;
 use Config\Services;
 
 class RedirectResponseTest extends CIUnitTestCase
@@ -28,7 +30,7 @@ class RedirectResponseTest extends CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com/';
 
-		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -70,7 +72,7 @@ class RedirectResponseTest extends CIUnitTestCase
 
 	public function testRedirectRouteBad()
 	{
-		$this->expectException(Exceptions\HTTPException::class);
+		$this->expectException(HTTPException::class);
 
 		$response = new RedirectResponse(new App());
 
@@ -266,7 +268,7 @@ class RedirectResponseTest extends CIUnitTestCase
 		$_SESSION = [];
 
 		$baseResponse = service('response');
-		foreach ($baseResponse->headers() as $key => $val)
+		foreach (array_keys($baseResponse->headers()) as $key)
 		{
 			$baseResponse->removeHeader($key);
 		}

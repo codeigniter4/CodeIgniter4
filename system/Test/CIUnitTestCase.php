@@ -13,24 +13,33 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Test\Constraints\SeeInDatabase;
 use CodeIgniter\Test\Mock\MockCache;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
+use Config\App;
+use Config\Autoload;
+use Config\Modules;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
- * PHPunit test case.
+ * Framework test case for PHPUnit.
  */
 abstract class CIUnitTestCase extends TestCase
 {
 	use ReflectionHelper;
 
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $app;
 
@@ -52,6 +61,101 @@ abstract class CIUnitTestCase extends TestCase
 	 * @var array of methods
 	 */
 	protected $tearDownMethods = [];
+
+	//--------------------------------------------------------------------
+	// Database Properties
+	//--------------------------------------------------------------------
+
+	/**
+	 * Should run db migration?
+	 *
+	 * @var boolean
+	 */
+	protected $migrate = true;
+
+	/**
+	 * Should run db migration only once?
+	 *
+	 * @var boolean
+	 */
+	protected $migrateOnce = false;
+
+	/**
+	 * Should run seeding only once?
+	 *
+	 * @var boolean
+	 */
+	protected $seedOnce = false;
+
+	/**
+	 * Should the db be refreshed before test?
+	 *
+	 * @var boolean
+	 */
+	protected $refresh = true;
+
+	/**
+	 * The seed file(s) used for all tests within this test case.
+	 * Should be fully-namespaced or relative to $basePath
+	 *
+	 * @var string|array
+	 */
+	protected $seed = '';
+
+	/**
+	 * The path to the seeds directory.
+	 * Allows overriding the default application directories.
+	 *
+	 * @var string
+	 */
+	protected $basePath = SUPPORTPATH . 'Database';
+
+	/**
+	 * The namespace(s) to help us find the migration classes.
+	 * Empty is equivalent to running `spark migrate -all`.
+	 * Note that running "all" runs migrations in date order,
+	 * but specifying namespaces runs them in namespace order (then date)
+	 *
+	 * @var string|array|null
+	 */
+	protected $namespace = 'Tests\Support';
+
+	/**
+	 * The name of the database group to connect to.
+	 * If not present, will use the defaultGroup.
+	 *
+	 * @var string
+	 */
+	protected $DBGroup = 'tests';
+
+	/**
+	 * Our database connection.
+	 *
+	 * @var BaseConnection
+	 */
+	protected $db;
+
+	/**
+	 * Migration Runner instance.
+	 *
+	 * @var MigrationRunner|mixed
+	 */
+	protected $migrations;
+
+	/**
+	 * Seeder instance
+	 *
+	 * @var Seeder
+	 */
+	protected $seeder;
+
+	/**
+	 * Stores information needed to remove any
+	 * rows inserted via $this->hasInDatabase();
+	 *
+	 * @var array
+	 */
+	protected $insertCache = [];
 
 	//--------------------------------------------------------------------
 	// Staging
@@ -80,6 +184,17 @@ abstract class CIUnitTestCase extends TestCase
 		{
 			$this->$method();
 		}
+
+		// Check for trait methods
+		foreach (class_uses_recursive($this) as $trait)
+		{
+			$method = 'setUp' . class_basename($trait);
+
+			if (method_exists($this, $method))
+			{
+				$this->$method();
+			}
+		}
 	}
 
 	protected function tearDown(): void
@@ -89,6 +204,17 @@ abstract class CIUnitTestCase extends TestCase
 		foreach ($this->tearDownMethods as $method)
 		{
 			$this->$method();
+		}
+
+		// Check for trait methods
+		foreach (class_uses_recursive($this) as $trait)
+		{
+			$method = 'tearDown' . class_basename($trait);
+
+			if (method_exists($this, $method))
+			{
+				$this->$method();
+			}
 		}
 	}
 
@@ -315,6 +441,107 @@ abstract class CIUnitTestCase extends TestCase
 	}
 
 	//--------------------------------------------------------------------
+	// Database
+	//--------------------------------------------------------------------
+
+	/**
+	 * Asserts that records that match the conditions in $where do
+	 * not exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 */
+	public function dontSeeInDatabase(string $table, array $where)
+	{
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
+
+		$this->assertTrue($count === 0, 'Row was found in database');
+	}
+
+	/**
+	 * Asserts that records that match the conditions in $where DO
+	 * exist in the database.
+	 *
+	 * @param string $table
+	 * @param array  $where
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	public function seeInDatabase(string $table, array $where)
+	{
+		$constraint = new SeeInDatabase($this->db, $where);
+		static::assertThat($table, $constraint);
+	}
+
+	/**
+	 * Fetches a single column from a database row with criteria
+	 * matching $where.
+	 *
+	 * @param string $table
+	 * @param string $column
+	 * @param array  $where
+	 *
+	 * @return boolean
+	 * @throws DatabaseException
+	 */
+	public function grabFromDatabase(string $table, string $column, array $where)
+	{
+		$query = $this->db->table($table)
+						  ->select($column)
+						  ->where($where)
+						  ->get();
+
+		$query = $query->getRow();
+
+		return $query->$column ?? false;
+	}
+
+	/**
+	 * Inserts a row into to the database. This row will be removed
+	 * after the test has run.
+	 *
+	 * @param string $table
+	 * @param array  $data
+	 *
+	 * @return boolean
+	 */
+	public function hasInDatabase(string $table, array $data)
+	{
+		$this->insertCache[] = [
+			$table,
+			$data,
+		];
+
+		return $this->db->table($table)
+						->insert($data);
+	}
+
+	/**
+	 * Asserts that the number of rows in the database that match $where
+	 * is equal to $expected.
+	 *
+	 * @param integer $expected
+	 * @param string  $table
+	 * @param array   $where
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	public function seeNumRecords(int $expected, string $table, array $where)
+	{
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
+
+		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
+	}
+
+	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
 
@@ -326,9 +553,13 @@ abstract class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$path = __DIR__ . '/../bootstrap.php';
-		$path = realpath($path) ?: $path;
-		return require $path;
+		// Initialize the autoloader.
+		Services::autoloader()->initialize(new Autoload(), new Modules());
+
+		$app = new MockCodeIgniter(new App());
+		$app->initialize();
+
+		return $app;
 	}
 
 	/**

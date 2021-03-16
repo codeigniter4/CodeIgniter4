@@ -1,9 +1,10 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DistinctTest extends \CodeIgniter\Test\CIUnitTestCase
+class DistinctTest extends CIUnitTestCase
 {
 	protected $db;
 

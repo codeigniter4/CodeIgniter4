@@ -3,9 +3,10 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Config;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
-class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
+class ConfigTest extends CIUnitTestCase
 {
 	use ReflectionHelper;
 

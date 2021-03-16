@@ -1,15 +1,18 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class URLHelperTest extends CIUnitTestCase
 {
 	/**
 	 * @var App
@@ -22,7 +25,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		helper('url');
 		Services::reset(true);
-		Config::reset();
+		Factories::reset('config');
 
 		// Set a common base configuration (overriden by individual tests)
 		$this->config            = new App();
@@ -142,6 +145,13 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'http://example.com/index.php/foo',
 			],
 			[
+				'http://example.com/',
+				'index.php',
+				'0',
+				null,
+				'http://example.com/index.php/0',
+			],
+			[
 				'http://example.com/public',
 				'index.php',
 				'foo',
@@ -245,6 +255,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('https://example.com/foo', base_url('foo', 'https'));
 	}
 
+	public function testBaseURLPathZero()
+	{
+		$this->assertEquals('http://example.com/0', base_url('0'));
+	}
+
 	public function testBaseURLHeedsBaseURL()
 	{
 		// Since we're on a CLI, we must provide our own URI
@@ -327,7 +342,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/subfolder/';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config, false);
 		Services::injectMock('request', $request);
@@ -344,7 +359,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/subfolder';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config, false);
 		Services::injectMock('request', $request);
@@ -390,7 +405,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
@@ -406,7 +421,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/foo/public';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
@@ -430,7 +445,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com:8080/foo/public';
-		Config::injectMock('App', $this->config);
+		Factories::injectMock('config', 'App', $this->config);
 
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
@@ -722,6 +737,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'<a href="http://example.com">http://example.com</a>',
 				'/',
 			],
+			'noindex08' => [
+				'<a href="http://example.com" class="btn btn-primary">http://example.com</a>',
+				'',
+				'',
+				['class' => 'btn btn-primary'],
+			],
 		];
 	}
 
@@ -800,7 +821,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'title="News title"',
 			],
 			'egpage02' => [
-				'<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>',
+				'<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>',
 				'news/local/123',
 				'My News',
 				['title' => 'The best news!'],
@@ -897,7 +918,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'Click Here to Contact Me',
 			],
 			'page02' => [
-				'<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>',
+				'<a href="mailto:me@my-site.com" title="Mail me">Contact Me</a>',
 				'me@my-site.com',
 				'Contact Me',
 				['title' => 'Mail me'],
@@ -1270,8 +1291,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testMbUrlTitle()
 	{
-		helper('text');
-
 		$words = [
 			'foo bar /'       => 'foo-bar',
 			'\  testing 12'   => 'testing-12',
@@ -1287,8 +1306,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testMbUrlTitleExtraDashes()
 	{
-		helper('text');
-
 		$words = [
 			'_foo bar_'                 => 'foo_bar',
 			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
@@ -1400,21 +1417,14 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
 	{
-		$this->expectException(\CodeIgniter\Router\Exceptions\RouterException::class);
+		$this->expectException(RouterException::class);
 
 		url_to($route);
 	}
 
 	public function urlToProvider()
 	{
-		if (config('App')->indexPage !== '')
-		{
-			$page = config('App')->indexPage . '/';
-		}
-		else
-		{
-			$page = '';
-		}
+		$page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
 
 		return [
 			[

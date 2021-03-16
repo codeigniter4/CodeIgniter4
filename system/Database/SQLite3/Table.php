@@ -301,15 +301,10 @@ class Table
 
 		foreach ($this->fields as $name => $details)
 		{
-			// Are we modifying the column?
-			if (isset($details['new_name']))
-			{
-				$newFields[] = $details['new_name'];
-			}
-			else
-			{
-				$newFields[] = $name;
-			}
+			$newFields[] = isset($details['new_name'])
+				// Are we modifying the column?
+				? $details['new_name']
+				: $name;
 
 			$exFields[] = $name;
 		}

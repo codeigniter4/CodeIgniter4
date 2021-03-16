@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class DeleteTest extends CIDatabaseTestCase
+class DeleteTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
@@ -42,10 +45,9 @@ class DeleteTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * @group  single
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function testDeleteWithLimit()
 	{

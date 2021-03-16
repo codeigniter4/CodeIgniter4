@@ -1,6 +1,9 @@
 <?php namespace CodeIgniter\Format;
 
-class XMLFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use DOMDocument;
+
+class XMLFormatterTest extends CIUnitTestCase
 {
 	protected $xmlFormatter;
 
@@ -204,7 +207,7 @@ EOH;
 
 EOF;
 
-		$dom                     = new \DOMDocument('1.0');
+		$dom                     = new DOMDocument('1.0');
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput       = true;
 		$dom->loadXML($this->xmlFormatter->format($data));

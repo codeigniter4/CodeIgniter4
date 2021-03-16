@@ -125,6 +125,14 @@ class ContentSecurityPolicy extends BaseConfig
 	public $frameAncestors = null;
 
 	/**
+	 * The frame-src directive restricts the URLs which may
+	 * be loaded into nested browsing contexts.
+	 *
+	 * @var array|string|null
+	 */
+	public $frameSrc = null;
+
+	/**
 	 * Restricts the origins allowed to deliver video and audio.
 	 *
 	 * @var string|string[]|null

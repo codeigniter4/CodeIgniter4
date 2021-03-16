@@ -1,6 +1,10 @@
 <?php namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -11,7 +15,7 @@ use org\bovigo\vfs\vfsStream;
  * most work, and the virtual file system will be used for
  * testing saving only.
  */
-class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseHandlerTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -46,7 +50,7 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testNew()
 	{
 		$handler = Services::image('gd', null, false);
-		$this->assertTrue($handler instanceof Handlers\BaseHandler);
+		$this->assertTrue($handler instanceof BaseHandler);
 	}
 
 	public function testWithFile()
@@ -63,14 +67,14 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testMissingFile()
 	{
-		$this->expectException(\CodeIgniter\Files\Exceptions\FileNotFoundException::class);
+		$this->expectException(FileNotFoundException::class);
 		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->start . 'No_such_file.jpg');
 	}
 
 	public function testNonImageFile()
 	{
-		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$this->expectException(ImageException::class);
 		$handler = Services::image('gd', null, false);
 		$handler->withFile(SUPPORTPATH . 'Files/baker/banana.php');
 
@@ -80,7 +84,7 @@ class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testForgotWithFile()
 	{
-		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$this->expectException(ImageException::class);
 		$handler = Services::image('gd', null, false);
 
 		// Make any call that accesses the image

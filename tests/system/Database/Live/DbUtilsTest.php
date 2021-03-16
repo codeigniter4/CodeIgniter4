@@ -4,16 +4,31 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class DbUtilsTest extends CIDatabaseTestCase
+class DbUtilsTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected static $origDebug;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * This test must run first to store the inital debug value before we tinker with it below
+	 */
+	public function testFirst()
+	{
+		$this::$origDebug = $this->getPrivateProperty($this->db, 'DBDebug');
+
+		$this->assertIsBool($this::$origDebug);
+	}
 
 	//--------------------------------------------------------------------
 
@@ -60,11 +75,11 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertTrue(in_array('test', $databases));
+			$this->assertTrue(in_array('test', $databases, true));
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
@@ -81,7 +96,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV']))
+		if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
 		{
 			$exist = $util->databaseExists('test');
 
@@ -109,16 +124,36 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testUtilsOptimizeTableFalseOptimizeDatabase()
+	public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue()
 	{
 		$util = (new Database())->loadUtils($this->db);
-
 		$this->setPrivateProperty($util, 'optimizeTable', false);
+
+		// set debug to true -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', true);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
-
 		$util->optimizeDatabase();
+
+		// this point in code execution will never be reached
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse()
+	{
+		$util = (new Database())->loadUtils($this->db);
+		$this->setPrivateProperty($util, 'optimizeTable', false);
+
+		// set debug to false -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$result = $util->optimizeDatabase();
+		$this->assertFalse($result);
+
+		// restore original value grabbed from testFirst -- WARNING this change will persist!
+		$this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
 	}
 
 	//--------------------------------------------------------------------
@@ -129,14 +164,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$d = $util->optimizeTable('db_job');
 
-		if (in_array($this->db->DBDriver, ['SQLite3', 'Postgre', 'SQLSRV']))
-		{
-			$this->assertFalse((bool) $d);
-		}
-		else
-		{
-			$this->assertTrue((bool) $d);
-		}
+		$this->assertTrue((bool) $d);
 	}
 
 	//--------------------------------------------------------------------

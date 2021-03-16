@@ -1,13 +1,15 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use InvalidArgumentException;
+use stdClass;
 
-class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
+class WhereTest extends CIUnitTestCase
 {
+	/** @var MockConnection */
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +17,6 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleWhere()
 	{
@@ -31,11 +31,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$builder->where('id', 3);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereNoEscape()
 	{
@@ -50,11 +48,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$builder->where('id', 3, false);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereCustomKeyOperator()
 	{
@@ -69,11 +65,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$builder->where('id !=', 3);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereAssociateArray()
 	{
@@ -97,11 +91,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$builder->where($where);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereCustomString()
 	{
@@ -113,11 +105,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expectedBinds = [];
 
 		$builder->where($where);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereValueClosure()
 	{
@@ -128,17 +118,14 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 		});
 		$expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhere()
 	{
 		$builder = $this->db->table('jobs');
 
-		$builder->where('name !=', 'Accountant')
-				->orWhere('id >', 3);
+		$builder->where('name !=', 'Accountant')->orWhere('id >', 3);
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" != \'Accountant\' OR "id" > 3';
 		$expectedBinds = [
@@ -152,11 +139,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhereSameColumn()
 	{
@@ -171,17 +156,15 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 				'Accountant',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'foobar',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereIn()
 	{
@@ -200,11 +183,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereInClosure()
 	{
@@ -216,10 +197,8 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function provideInvalidKeys()
 	{
@@ -234,20 +213,18 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testWhereInvalidKeyThrowInvalidArgumentException($key)
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$builder = $this->db->table('jobs');
 
 		$builder->whereIn($key, ['Politician', 'Accountant']);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function provideInvalidValues()
 	{
 		return [
 			'null'                    => [null],
 			'not array'               => ['not array'],
-			'not instanceof \Closure' => [new \stdClass],
+			'not instanceof \Closure' => [new stdClass],
 		];
 	}
 
@@ -256,13 +233,11 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
 	{
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$builder = $this->db->table('jobs');
 
 		$builder->whereIn('name', $values);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereNotIn()
 	{
@@ -281,11 +256,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testWhereNotInClosure()
 	{
@@ -297,10 +270,8 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhereIn()
 	{
@@ -323,11 +294,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhereInClosure()
 	{
@@ -339,10 +308,8 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhereNotIn()
 	{
@@ -365,11 +332,9 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testOrWhereNotInClosure()
 	{
@@ -381,8 +346,6 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
-
-	//--------------------------------------------------------------------
 }

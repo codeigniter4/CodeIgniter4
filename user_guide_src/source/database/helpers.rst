@@ -2,6 +2,10 @@
 Query Helper Methods
 ####################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Information From Executing a Query
 ==================================
 

@@ -1,15 +1,25 @@
 <?php namespace CodeIgniter\Database\Live\SQLite;
 
+use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class AlterTableTest extends CIDatabaseTestCase
+class AlterTableTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+	use DatabaseTestTrait;
+
+	/**
+	 * In setUp() db connection is changed. So migration doesn't work
+	 *
+	 * @var boolean
+	 */
+	protected $migrate = false;
 
 	/**
 	 * @var Table
@@ -17,12 +27,12 @@ class AlterTableTest extends CIDatabaseTestCase
 	protected $table;
 
 	/**
-	 * @var \CodeIgniter\Database\SQLite3\Connection
+	 * @var Connection
 	 */
 	protected $db;
 
 	/**
-	 * @var \CodeIgniter\Database\SQLite3\Forge
+	 * @var Forge
 	 */
 	protected $forge;
 
@@ -38,12 +48,16 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->db    = db_connect($config);
 		$this->forge = Database::forge($config);
 		$this->table = new Table($this->db, $this->forge);
+
+		$this->dropTables();
 	}
 
-	public function tearDown(): void
+	private function dropTables()
 	{
-		parent::tearDown();
-
+		$this->forge->dropTable('aliens', true);
+		$this->forge->dropTable('aliens_fk', true);
+		$this->forge->dropTable('janky', true);
+		$this->forge->dropTable('janky_fk', true);
 		$this->forge->dropTable('foo', true);
 		$this->forge->dropTable('foo_fk', true);
 	}
@@ -106,9 +120,9 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$columns = $this->db->getFieldNames('foo');
 
-		$this->assertFalse(in_array('name', $columns));
-		$this->assertTrue(in_array('id', $columns));
-		$this->assertTrue(in_array('email', $columns));
+		$this->assertFalse(in_array('name', $columns, true));
+		$this->assertTrue(in_array('id', $columns, true));
+		$this->assertTrue(in_array('email', $columns, true));
 	}
 
 	public function testDropColumnMaintainsKeys()
