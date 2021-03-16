@@ -559,6 +559,12 @@ a response status code in the 200 or 300’s.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
 </pre></div>
 </div>
+<p><strong>assertRedirectTo()</strong></p>
+<p>Asserts that the Response is an instance of RedirectResponse and the destination
+matches the uri given.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirectTo</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 <p><strong>getRedirectUrl()</strong></p>
 <p>Returns the URL set for a RedirectResponse, or null for failure.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getRedirectUrl</span><span class="p">();</span>
