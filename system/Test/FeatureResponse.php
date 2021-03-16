@@ -105,7 +105,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param string $uri
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function assertRedirectTo(string $uri)
 	{
