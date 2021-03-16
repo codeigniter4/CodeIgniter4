@@ -15,6 +15,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -103,13 +104,12 @@ class FeatureResponse extends TestCase
 	 * and it was redirect to a specific URI.
 	 *
 	 * @param string $uri
+	 *
+	 * @throws \Exception
 	 */
 	public function assertRedirectTo(string $uri)
 	{
-		if (! $this->isRedirect())
-		{
-			return false;
-		}
+		$this->assertRedirect();
 
 		$uri         = trim(strtolower($uri));
 		$redirectUri = strtolower($this->getRedirectUrl());
