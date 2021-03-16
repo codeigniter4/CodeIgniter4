@@ -119,8 +119,9 @@ class FeatureResponse extends TestCase
 				   || $uri === site_url($redirectUri);
 
 		$this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
+	}
 
-  /*
+	/*
 	 * Assert that the given response was not a redirect.
 	 *
 	 * @throws Exception
