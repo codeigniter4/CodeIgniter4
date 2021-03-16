@@ -3040,7 +3040,7 @@ class BaseBuilder
 				. $this->compileWhereHaving('QBHaving')
 				. $this->compileOrderBy(); // ORDER BY
 		// LIMIT
-		if ($this->QBLimit)
+		if ($this->QBLimit !== false)
 		{
 			return $this->_limit($sql . "\n");
 		}
