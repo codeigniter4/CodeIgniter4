@@ -372,16 +372,18 @@
 <li><p><a class="reference internal" href="#limit-to-hostname" id="id18">Limit to Hostname</a></p></li>
 <li><p><a class="reference internal" href="#limit-to-subdomains" id="id19">Limit to Subdomains</a></p></li>
 <li><p><a class="reference internal" href="#offsetting-the-matched-parameters" id="id20">Offsetting the Matched Parameters</a></p></li>
+<li><p><a class="reference internal" href="#route-processing-queue" id="id21">Route processing queue</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#routes-configuration-options" id="id21">Routes Configuration Options</a></p>
+<li><p><a class="reference internal" href="#routes-configuration-options" id="id22">Routes Configuration Options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default-namespace" id="id22">Default Namespace</a></p></li>
-<li><p><a class="reference internal" href="#default-controller" id="id23">Default Controller</a></p></li>
-<li><p><a class="reference internal" href="#default-method" id="id24">Default Method</a></p></li>
-<li><p><a class="reference internal" href="#translate-uri-dashes" id="id25">Translate URI Dashes</a></p></li>
-<li><p><a class="reference internal" href="#use-defined-routes-only" id="id26">Use Defined Routes Only</a></p></li>
-<li><p><a class="reference internal" href="#override" id="id27">404 Override</a></p></li>
+<li><p><a class="reference internal" href="#default-namespace" id="id23">Default Namespace</a></p></li>
+<li><p><a class="reference internal" href="#default-controller" id="id24">Default Controller</a></p></li>
+<li><p><a class="reference internal" href="#default-method" id="id25">Default Method</a></p></li>
+<li><p><a class="reference internal" href="#translate-uri-dashes" id="id26">Translate URI Dashes</a></p></li>
+<li><p><a class="reference internal" href="#use-defined-routes-only" id="id27">Use Defined Routes Only</a></p></li>
+<li><p><a class="reference internal" href="#override" id="id28">404 Override</a></p></li>
+<li><p><a class="reference internal" href="#route-processing-by-priority" id="id29">Route processing by priority</a></p></li>
 </ul>
 </li>
 </ul>
@@ -812,13 +814,42 @@ be used when the first parameter is a language string:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="route-processing-queue">
+<span id="priority"></span><h3><a class="toc-backref" href="#id21">Route processing queue</a><a class="headerlink" href="#route-processing-queue" title="Permalink to this headline">¶</a></h3>
+<p>When working with modules, it can be a problem if the routes in the application contain wildcards.
+Then the module routes will not be processed correctly.
+You can solve this problem by lowering the priority of route processing using the <code class="docutils literal notranslate"><span class="pre">priority</span></code> option. The parameter
+accepts positive integers and zero. The higher the number specified in the “priority”, the lower
+route priority in the processing queue:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// First you need to enable sorting.</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
+
+<span class="c1">// App\Config\Routes</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;(.*)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;priority&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">]);</span>
+
+<span class="c1">// Modules\Acme\Config\Routes</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin::index&#39;</span><span class="p">);</span>
+
+<span class="c1">// The &quot;admin&quot; route will now be processed before the wildcard router.</span>
+</pre></div>
+</div>
+<p>To disable this functionality, you must call the method with the parameter <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, all routes have a priority of 0.
+Negative integers will be cast to the absolute value.</p>
+</div>
+</div>
 </div>
 <div class="section" id="routes-configuration-options">
-<h2><a class="toc-backref" href="#id21">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline">¶</a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application’s needs. These options are available at the top of <cite>/app/Config/Routes.php</cite>.</p>
 <div class="section" id="default-namespace">
-<h3><a class="toc-backref" href="#id22">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline">¶</a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
 specified by the route. By default, this value is empty, which leaves each route to specify the fully namespaced
 controller:</p>
@@ -844,7 +875,7 @@ then you can change this value to save typing:</p>
 </div>
 </div>
 <div class="section" id="default-controller">
-<h3><a class="toc-backref" href="#id23">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline">¶</a></h3>
 <p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
 which matches the controller at <code class="docutils literal notranslate"><span class="pre">/app/Controllers/Home.php</span></code>:</p>
@@ -857,7 +888,7 @@ in the controllers directory. For example, if the user visits <code class="docut
 <code class="docutils literal notranslate"><span class="pre">/app/Controllers/admin/Home.php</span></code> it would be used.</p>
 </div>
 <div class="section" id="default-method">
-<h3><a class="toc-backref" href="#id24">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline">¶</a></h3>
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
@@ -868,7 +899,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 </div>
 </div>
 <div class="section" id="translate-uri-dashes">
-<h3><a class="toc-backref" href="#id25">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline">¶</a></h3>
 <p>This option enables you to automatically replace dashes (‘-‘) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
@@ -877,7 +908,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 </div>
 </div>
 <div class="section" id="use-defined-routes-only">
-<h3><a class="toc-backref" href="#id26">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline">¶</a></h3>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
@@ -886,7 +917,7 @@ to only those defined by you, by setting the <code class="docutils literal notra
 </div>
 </div>
 <div class="section" id="override">
-<h3><a class="toc-backref" href="#id27">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h3>
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> option. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
@@ -898,6 +929,19 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;my_errors/not_found.html&#39;</span><span class="p">);</span>
 <span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="route-processing-by-priority">
+<h3><a class="toc-backref" href="#id29">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline">¶</a></h3>
+<p>Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
+Disabled by default. This functionality affects all routes.
+For an example of use lowering the priority see <a class="reference internal" href="#priority"><span class="std std-ref">Route processing queue</span></a>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// to enable</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
+
+<span class="c1">// to disable</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -920,7 +964,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 15, 2021.
+        Last updated on Mar 16, 2021.
       </span>
 
     </p>
