@@ -134,7 +134,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var string
 	 */
-	protected $HTTPVerb;
+	protected $HTTPVerb = '*';
 
 	/**
 	 * The default list of HTTP methods (and CLI for command line usage)
