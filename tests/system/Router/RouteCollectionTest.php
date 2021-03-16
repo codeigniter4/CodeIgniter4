@@ -1704,4 +1704,32 @@ class RouteCollectionTest extends CIUnitTestCase
 		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
 
+	public function testRoutePriorityDetected()
+	{
+		$collection = $this->getCollector();
+
+		$this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+
+		$collection->add('/', 'Controller::method', ['priority' => 0]);
+
+		$this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+
+		$collection->add('priority', 'Controller::method', ['priority' => 1]);
+
+		$this->assertEquals(true, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+	}
+
+	public function testRoutePriorityValue()
+	{
+		$collection = $this->getCollector();
+
+		$collection->add('string', 'Controller::method', ['priority' => 'string']);
+		$this->assertEquals(0, $collection->getRoutesOptions('string')['priority']);
+
+		$collection->add('negative-integer', 'Controller::method', ['priority' => -1]);
+		$this->assertEquals(1, $collection->getRoutesOptions('negative-integer')['priority']);
+
+		$collection->add('string-negative-integer', 'Controller::method', ['priority' => '-1']);
+		$this->assertEquals(1, $collection->getRoutesOptions('string-negative-integer')['priority']);
+	}
 }

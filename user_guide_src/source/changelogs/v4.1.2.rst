@@ -11,6 +11,7 @@ Enhancements:
 - New `assertRedirectTo()` assertion available for HTTP tests.
 - New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
 - Entity. Added custom type casting functionality.
+- New option in routing. The ``priority`` option lower the priority of specific route processing.
 
 Changes:
 
@@ -31,6 +32,7 @@ Deprecations:
 - Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
 - Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
 - Deprecated ``CIDatabaseTestCase`` to use the ``DatabaseTestTrait`` instead.
+- Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
 
 Bugs Fixed:
 

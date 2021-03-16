@@ -119,6 +119,15 @@ class FeatureResponse extends TestCase
 				   || $uri === site_url($redirectUri);
 
 		$this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
+
+  /*
+	 * Assert that the given response was not a redirect.
+	 *
+	 * @throws Exception
+	 */
+	public function assertNotRedirect()
+	{
+		$this->assertFalse($this->isRedirect(), 'Response is an unexpected redirect or RedirectResponse.');
 	}
 
 	/**
@@ -166,6 +175,16 @@ class FeatureResponse extends TestCase
 	public function assertOK()
 	{
 		$this->assertTrue($this->isOK(), "{$this->response->getStatusCode()} is not a successful status code, or the Response has an empty body.");
+	}
+
+	/**
+	 * Asserts that the Response is considered OK.
+	 *
+	 * @throws Exception
+	 */
+	public function assertNotOK()
+	{
+		$this->assertFalse($this->isOK(), "{$this->response->getStatusCode()} is an unexpected successful status code, or the Response has body content.");
 	}
 
 	//--------------------------------------------------------------------

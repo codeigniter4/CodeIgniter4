@@ -26,28 +26,32 @@ class FeatureResponseTest extends CIUnitTestCase
 		parent::setUp();
 	}
 
-	public function testIsOKFailsSmall()
+	/**
+	 * @dataProvider statusCodeProvider
+	 */
+	public function testIsOK(int $code, bool $isOk)
 	{
 		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(100);
+		$this->response->setStatusCode($code);
 
-		$this->assertFalse($this->feature->isOK());
+		$this->assertEquals($isOk, $this->feature->isOK());
 	}
 
-	public function testIsOKFailsLarge()
+	/**
+	 * Provides status codes and their expected "OK"
+	 */
+	public function statusCodeProvider(): array
 	{
-		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(400);
-
-		$this->assertFalse($this->feature->isOK());
-	}
-
-	public function testIsOKSuccess()
-	{
-		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(200);
-
-		$this->assertTrue($this->feature->isOK());
+		return [
+			[100, false],
+			[200, true],
+			[201, true],
+			[300, true], // Redirects are acceptable if the body is empty
+			[301, true],
+			[400, false],
+			[401, false],
+			[599, false],
+		];
 	}
 
 	public function testIsOKEmpty()
@@ -114,6 +118,7 @@ class FeatureResponseTest extends CIUnitTestCase
 
 		$this->assertFalse($this->feature->response instanceof RedirectResponse);
 		$this->assertFalse($this->feature->isRedirect());
+		$this->feature->assertNotRedirect();
 	}
 
 	public function testAssertRedirectSuccess()
@@ -187,16 +192,21 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertStatus(201);
 	}
 
-	public function testAssertIsOK()
+	/**
+	 * @dataProvider statusCodeProvider
+	 */
+	public function testAssertIsOK(int $code, bool $isOk)
 	{
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 201]);
-		$this->feature->assertOK();
+		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => $code]);
 
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 301]);
-		$this->feature->assertOK();
-
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 401]);
-		$this->assertFalse($this->feature->isOK());
+		if ($isOk)
+		{
+			$this->feature->assertOK();
+		}
+		else
+		{
+			$this->feature->assertNotOK();
+		}
 	}
 
 	public function testAssertSessionHas()
