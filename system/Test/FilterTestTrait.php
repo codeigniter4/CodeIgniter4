@@ -126,8 +126,6 @@ trait FilterTestTrait
 	 * @param string                 $position "before" or "after"
 	 *
 	 * @return callable
-	 *
-	 * @noRector \Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector
 	 */
 	protected function getFilterCaller($filter, string $position): callable
 	{
@@ -162,21 +160,17 @@ trait FilterTestTrait
 		{
 			$request = clone $this->request;
 
-			$fn = function (array $params = null) use ($filter, $request) {
+			return function (array $params = null) use ($filter, $request) {
 				return $filter->before($request, $params);
 			};
 		}
-		else
-		{
-			$request  = clone $this->request;
-			$response = clone $this->response;
 
-			$fn = function (array $params = null) use ($filter, $request, $response) {
-				return $filter->after($request, $response, $params);
-			};
-		}
+		$request  = clone $this->request;
+		$response = clone $this->response;
 
-		return $fn;
+		return function (array $params = null) use ($filter, $request, $response) {
+			return $filter->after($request, $response, $params);
+		};
 	}
 
 	/**
