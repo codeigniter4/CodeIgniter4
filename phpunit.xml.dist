@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		bootstrap="system/Test/bootstrap.php"
-		backupGlobals="false"
-		colors="true"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
-		stopOnError="false"
-		stopOnFailure="false"
-		stopOnIncomplete="false"
-		stopOnSkipped="false"
-		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+		 xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+		 bootstrap="system/Test/bootstrap.php"
+		 backupGlobals="false"
+		 beStrictAboutOutputDuringTests="true"
+		 beStrictAboutTodoAnnotatedTests="true"
+		 cacheResultFile="build/.phpunit.cache/test-results"
+		 colors="true"
+		 failOnRisky="true"
+		 failOnWarning="true"
+		 verbose="true">
+
 	<coverage processUncoveredFiles="true">
 		<include>
 			<directory suffix=".php">./system</directory>
 		</include>
+
 		<exclude>
 			<directory>./system/Commands/Generators/Views</directory>
 			<directory>./system/Debug/Toolbar/Views</directory>
@@ -26,10 +27,12 @@
 			<file>./system/Config/Routes.php</file>
 			<file>./system/Test/bootstrap.php</file>
 		</exclude>
+
 		<report>
 			<clover outputFile="build/logs/clover.xml"/>
 		</report>
 	</coverage>
+
 	<testsuites>
 		<testsuite name="System">
 			<directory>./tests/system</directory>
@@ -39,7 +42,28 @@
 			<directory>./tests/system/Database</directory>
 		</testsuite>
 	</testsuites>
-	<logging/>
+
+	<listeners>
+		<listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+			<arguments>
+				<array>
+					<!-- Number of milliseconds when a test is considered "slow" (Default: 500ms) -->
+					<element key="slowThreshold">
+						<integer>500</integer>
+					</element>
+					<!-- Number of slow tests included in the report (Default: 10 tests) -->
+					<element key="reportLength">
+						<integer>30</integer>
+					</element>
+					<!-- Stop execution upon first slow test (Default: false) -->
+					<element key="stopOnSlow">
+						<boolean>false</boolean>
+					</element>
+				</array>
+			</arguments>
+		</listener>
+	</listeners>
+
 	<php>
 		<env name="XDEBUG_MODE" value="coverage"/>
 		<server name="app.baseURL" value="http://example.com/"/>

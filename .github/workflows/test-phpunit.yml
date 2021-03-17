@@ -123,7 +123,7 @@ jobs:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit -v"
+        run: script -e -c "vendor/bin/phpunit --color=always"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
@@ -140,7 +140,7 @@ jobs:
 
   coveralls-finish:
     needs: [tests]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master
