@@ -16,6 +16,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
