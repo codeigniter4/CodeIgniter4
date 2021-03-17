@@ -216,6 +216,21 @@ class WhereTest extends CIUnitTestCase
 		$this->assertCount(4, $jobs);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4443
+	 */
+	public function testWhereWithLower()
+	{
+		$builder = $this->db->table('job');
+		$builder->insert([
+			'name'        => 'Brewmaster',
+			'description' => null,
+		]);
 
+		$job = $builder
+			->where(sprintf('LOWER(%s.name)', $this->db->prefixTable('job')), 'brewmaster')
+			->get()
+			->getResult();
+		$this->assertCount(1, $job);
+	}
 }

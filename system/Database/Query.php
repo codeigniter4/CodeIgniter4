@@ -315,13 +315,13 @@ class Query implements QueryInterface
 	 *
 	 * @return void
 	 *
-	 * @see https://regex101.com/r/jgAWNQ/1
+	 * @see https://regex101.com/r/jgAWNQ/2
 	 */
 	protected function compileBinds()
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = preg_match('/\:(?:[\w\.]+)\:/', $sql) === 1;
+		$hasNamedBinds = preg_match('/\:(?:[\w\.\(\)]+)\:/', $sql) === 1;
 
 		if (empty($this->binds)
 			|| empty($this->bindMarker)

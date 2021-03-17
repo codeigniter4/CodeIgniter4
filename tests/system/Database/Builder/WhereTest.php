@@ -348,4 +348,16 @@ class WhereTest extends CIUnitTestCase
 
 		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4443
+	 */
+	public function testWhereWithLower()
+	{
+		$builder = $this->db->table('jobs');
+		$builder->where('LOWER(jobs.name)', 'accountant');
+
+		$expectedSQL = 'SELECT * FROM "jobs" WHERE LOWER(jobs.name) = \'accountant\'';
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
 }
