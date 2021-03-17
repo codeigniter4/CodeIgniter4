@@ -156,16 +156,15 @@ trait FilterTestTrait
 			throw FilterException::forIncorrectInterface(get_class($filter));
 		}
 
+		$request = clone $this->request;
+
 		if ($position === 'before')
 		{
-			$request = clone $this->request;
-
 			return function (array $params = null) use ($filter, $request) {
 				return $filter->before($request, $params);
 			};
 		}
 
-		$request  = clone $this->request;
 		$response = clone $this->response;
 
 		return function (array $params = null) use ($filter, $request, $response) {
@@ -184,6 +183,11 @@ trait FilterTestTrait
 	 */
 	protected function getFiltersForRoute(string $route, string $position): array
 	{
+		if (! in_array($position, ['before', 'after'], true))
+		{
+			throw new InvalidArgumentException('Invalid filter position passed:' . $position);
+		}
+
 		$this->filters->reset();
 
 		if ($routeFilter = $this->collection->getFilterForRoute($route))
@@ -213,11 +217,6 @@ trait FilterTestTrait
 	 */
 	protected function assertFilter(string $route, string $position, string $alias): void
 	{
-		if (! in_array($position, ['before', 'after'], true))
-		{
-			throw new InvalidArgumentException('Invalid filter position passed:' . $position);
-		}
-
 		$filters = $this->getFiltersForRoute($route, $position);
 
 		$this->assertContains(
