@@ -17,8 +17,7 @@ case you need it.
 The Helper Trait
 ================
 
-You can use either of the base test classes, but you do need to use the ``ControllerTester`` trait
-within your tests::
+To enable Controller Testing you need to use the ``ControllerTester`` trait within your tests::
 
     <?php
 
@@ -30,8 +29,7 @@ within your tests::
 
     class TestControllerA extends CIUnitTestCase
     {
-        use DatabaseTestTrait;
-        use ControllerTester;
+        use ControllerTester, DatabaseTestTrait;
     }
 
 Once the trait has been included, you can start setting up the environment, including the request and response classes,
@@ -49,8 +47,7 @@ to run as the parameter::
 
     class TestControllerA extends CIUnitTestCase
     {
-        use DatabaseTestTrait;
-        use ControllerTester;
+        use ControllerTester, DatabaseTestTrait;
 
         public function testShowCategories()
         {
@@ -278,3 +275,129 @@ Finally, you can check if a checkbox exists and is checked with the **seeCheckbo
     $results->seeCheckboxIsChecked('.foo');
     // Check if checkbox with id of 'bar' is checked
     $results->seeCheckboxIsChecked('#bar');
+
+Filter Testing
+==============
+
+Similar to Controller Testing, the framework provides tools to help with creating tests for
+custom :doc:`Filters </incoming/filters>` and your projects use of them in routing.
+
+The Helper Trait
+----------------
+
+Just like with the Controller Tester you need to include the ``FilterTestTrait`` in your test
+cases to enable these features::
+
+    <?php
+
+    namespace CodeIgniter;
+
+    use CodeIgniter\Test\CIUnitTestCase;
+    use CodeIgniter\Test\FilterTestTrait;
+
+    class FilterTestCase extends CIUnitTestCase
+    {
+        use FilterTestTrait;
+    }
+
+Configuration
+-------------
+
+Because of the logical overlap with Controller Testing ``FilterTestTrait`` is designed to
+work together with ``ControllerTester`` should you need both on the same class.
+Once the trait has been included ``CIUnitTestCase`` will detect its ``setUp`` method and
+prepare all the components needed for your tests. Should you need a special configuration
+you can alter any of the properties before calling the support methods:
+
+* ``$request`` A prepared version of the default ``IncomingRequest`` service
+* ``$response`` A prepared version of the default ``ResponseInterface`` service
+* ``$filtersConfig`` The default ``Config\Filters`` configuration (note: discovery is handle by ``Filters`` so this will not include module aliases)
+* ``$filters`` An instance of ``CodeIgniter\Filters\Filters`` using the three components above
+* ``$collection`` A prepared version of ``RouteCollection`` which includes the discovery of ``Config\Routes``
+
+The default configuration will usually be best for your testing since it most closely emulates
+a "live" project, but (for example) if you wanted to simulate a filter triggering accidentally
+on an unfiltered route you could add it to the Config::
+
+    class FilterTestCase extends CIUnitTestCase
+    {
+        use FilterTestTrait;
+
+		protected function testFilterFailsOnAdminRoute()
+		{
+			$this->filtersConfig->globals['before'] = ['admin-only-filter'];
+
+			$this->assertHasFilters('unfiltered/route', 'before');
+		}
+	...
+
+Checking Routes
+---------------
+
+The first helper method is ``getFiltersForRoute()`` which will simulate the provided route
+and return a list of all Filters (by their alias) that would have run for the given position
+("before" or "after"), without actually executing any controller or routing code. This has
+a large performance advantage over Controller and HTTP Testing.
+
+.. php:function:: getFiltersForRoute($route, $position)
+
+    :param	string	$route: The URI to check
+    :param	string	$position: The filter method to check, "before" or "after"
+	:returns:	Aliases for each filter that would have run
+	:rtype:	string[]
+
+    Usage example::
+
+		$result = $this->getFiltersForRoute('/', 'after'); // ['toolbar']
+
+Calling Filter Methods
+----------------------
+
+The properties describe in Configuration are all set up to ensure maximum performance without
+interfering or interference from other tests. The next helper method will return a callable
+method using these properties to test your Filter code safely and check the results.
+
+.. php:function:: getFilterCaller($filter, $position)
+
+    :param	FilterInterface|string	$filter: The filter instance, class, or alias
+    :param	string	$position: The filter method to run, "before" or "after"
+	:returns:	A callable method to run the simulated Filter event
+	:rtype:	callable
+
+    Usage example::
+
+		protected function testUnauthorizedAccessRedirects()
+		{
+			$caller = $this->getFilterCaller('permission', 'before');
+			$result = $caller('MayEditWidgets');
+
+			$this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
+		}
+	
+	Notice how the ``callable`` can take input parameters which are passed to your filter method.
+
+Assertions
+----------
+
+In addition to the helper methods above ``FilterTestTrait`` also comes with some assertions
+to streamline your test methods.
+
+The **assertFilter()** method checks that the given route at position uses the filter (by its alias)::
+
+    // Make sure users are logged in before checking their account
+    $this->assertFilter('users/account', 'before', 'login');
+
+The **assertNotFilter()** method checks that the given route at position does not use the filter (by its alias)::
+
+    // Make sure API calls do not try to use the Debug Toolbar
+    $this->assertNotFilter('api/v1/widgets', 'after', 'toolbar');
+
+The **assertHasFilters()** method checks that the given route at position has at least one filter set::
+
+    // Make sure that filters are enabled
+    $this->assertHasFilters('filtered/route', 'after');
+
+The **assertNotHasFilters()** method checks that the given route at position has no filters set::
+
+    // Make sure no filters run for our static pages
+    $this->assertNotHasFilters('about/contact', 'before');
