@@ -1338,13 +1338,12 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * DB Prefix
-	 *
 	 * Prepends a database prefix if one exists in configuration
 	 *
 	 * @param string $table the table
 	 *
 	 * @return string
+	 *
 	 * @throws DatabaseException
 	 */
 	public function prefixTable(string $table = ''): string
