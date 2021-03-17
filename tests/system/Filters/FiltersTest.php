@@ -1089,6 +1089,6 @@ class FiltersTest extends CIUnitTestCase
 		$uri     = 'admin';
 
 		$this->assertEquals(['foo'], $filters->initialize($uri)->getFilters()['before']);
-		$this->assertEquals([], $filters->reset()->getFilters()['before']);
+		$this->assertSame([], $filters->reset()->getFilters()['before']);
 	}
 }
