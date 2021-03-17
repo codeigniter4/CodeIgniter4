@@ -321,11 +321,11 @@ class Query implements QueryInterface
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = preg_match('/\:(?:[\w\.\(\)]+)\:/', $sql) === 1;
+		$hasNamedBinds = preg_match('/\:(?:[a-z\d.)_(]+)\:/i', $sql) === 1;
 
 		if (empty($this->binds)
 			|| empty($this->bindMarker)
-			|| (strpos($sql, $this->bindMarker) === false && $hasNamedBinds === false)
+			|| (! $hasNamedBinds && strpos($sql, $this->bindMarker) === false)
 		)
 		{
 			return;
@@ -399,7 +399,7 @@ class Query implements QueryInterface
 	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
 	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
-		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
+		if ($c = preg_match_all("/'[^']*'/", $sql, $matches))
 		{
 			$c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
 
