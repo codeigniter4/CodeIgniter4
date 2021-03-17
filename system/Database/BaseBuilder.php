@@ -2042,7 +2042,7 @@ class BaseBuilder
 			$this->where($where);
 		}
 
-		if (! empty($limit))
+		if (! is_null($limit))
 		{
 			$this->limit($limit, $offset);
 		}
@@ -2466,7 +2466,7 @@ class BaseBuilder
 			$this->where($where);
 		}
 
-		if (! empty($limit))
+		if (! is_null($limit))
 		{
 			if (! $this->canLimitWhereUpdates)
 			{
@@ -2522,7 +2522,7 @@ class BaseBuilder
 		return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
 				. $this->compileWhereHaving('QBWhere')
 				. $this->compileOrderBy()
-				. ($this->QBLimit ? $this->_limit(' ', true) : '');
+				. ($this->QBLimit !== false ? $this->_limit(' ', true) : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -2861,12 +2861,12 @@ class BaseBuilder
 
 		$sql = $this->_delete($table);
 
-		if (! empty($limit))
+		if (! is_null($limit))
 		{
 			$this->QBLimit = $limit;
 		}
 
-		if (! empty($this->QBLimit))
+		if ($this->QBLimit !== false)
 		{
 			if (! $this->canLimitDeletes)
 			{

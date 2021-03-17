@@ -234,7 +234,7 @@ class Builder extends BaseBuilder
 
 		$fullTableName = $this->getFullName($table);
 
-		$statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
+		$statement = 'UPDATE ' . ($this->QBLimit !== false ? 'TOP(' . $this->QBLimit . ') ' : '') . $fullTableName . ' SET '
 				. implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
 
 		return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
@@ -533,7 +533,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _delete(string $table): string
 	{
-		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
+		return 'DELETE' . ($this->QBLimit !== false ? ' TOP (' . $this->QBLimit . ') ' : '') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
 	}
 
 	/**
@@ -567,7 +567,7 @@ class Builder extends BaseBuilder
 			return false; // @codeCoverageIgnore
 		}
 
-		if (! empty($limit))
+		if (! is_null($limit))
 		{
 			$this->QBLimit = $limit;
 		}
@@ -647,7 +647,7 @@ class Builder extends BaseBuilder
 				. $this->compileWhereHaving('QBHaving')
 				. $this->compileOrderBy(); // ORDER BY
 		// LIMIT
-		if ($this->QBLimit)
+		if ($this->QBLimit !== false)
 		{
 			return $sql = $this->_limit($sql . "\n");
 		}
