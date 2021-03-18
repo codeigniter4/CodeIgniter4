@@ -712,10 +712,9 @@ class Builder extends BaseBuilder
 					$k .= " $op";
 				}
 
-				if ($v instanceof Closure)
+				if ($builder = $this->getInstanceForSubquery($v))
 				{
-					$builder = $this->cleanClone();
-					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+					$v = '(' . str_replace("\n", ' ', $builder->getCompiledSelect()) . ')';
 				}
 				else
 				{

@@ -79,7 +79,7 @@ class GroupTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testHavingInClosure()
+	public function testHavingInSubquery()
 	{
 		$builder = new BaseBuilder('user', $this->db);
 
@@ -93,6 +93,12 @@ class GroupTest extends CIUnitTestCase
 		$expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+		$builder->select('name')->groupBy('name')->havingIn('id', $subquery);
+
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -113,7 +119,7 @@ class GroupTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testOrHavingInClosure()
+	public function testOrHavingInSubquery()
 	{
 		$builder = new BaseBuilder('user', $this->db);
 
@@ -128,6 +134,16 @@ class GroupTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery1 = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+		$subquery2 = $this->db->table('groups')->select('group_id')->where('group_id', 6);
+
+		$builder->select('name')
+			->groupBy('name')
+			->havingIn('id', $subquery1)
+			->orHavingIn('group_id', $subquery2);
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -149,7 +165,7 @@ class GroupTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testHavingNotInClosure()
+	public function testHavingNotInSubquery()
 	{
 		$builder = new BaseBuilder('user', $this->db);
 
@@ -161,6 +177,12 @@ class GroupTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+		$builder->select('name')->groupBy('name')->havingNotIn('id', $subquery);
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -183,7 +205,7 @@ class GroupTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testOrHavingNotInClosure()
+	public function testOrHavingNotInSubquery()
 	{
 		$builder = new BaseBuilder('user', $this->db);
 
@@ -198,6 +220,16 @@ class GroupTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" NOT IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery1 = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+		$subquery2 = $this->db->table('groups')->select('group_id')->where('group_id', 6);
+
+		$builder->select('name')
+			->groupBy('name')
+			->havingNotIn('id', $subquery1)
+			->orHavingNotIn('group_id', $subquery2);
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

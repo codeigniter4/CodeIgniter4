@@ -305,14 +305,25 @@ methods:
         $builder->where('MATCH (field) AGAINST ("value")', null, false);
 
 #. **Subqueries:**
-    You can use an anonymous function to create a subquery.
+    With anonymous function::
 
-    ::
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
 
-        $builder->where('advance_amount <', function(BaseBuilder $builder) {
+        //...
+
+        $builder->where('advance_amount <', function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
         });
         // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
+
+    With Builder::
+
+        $subquery = $this->db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2);
+
+        $builder->where('advance_amount <', $subquery);
+        // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
+
 
 **$builder->orWhere()**
 
@@ -338,12 +349,25 @@ appropriate
 
 You can use subqueries instead of an array of values.
 
-    ::
+    With anonymous function::
 
-        $builder->whereIn('id', function(BaseBuilder $builder) {
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
+
+        //...
+
+        $builder->whereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
         // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3)
+
+        $builder->whereIn('id', $subquery);
+        // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
 
 **$builder->orWhereIn()**
 
@@ -358,11 +382,24 @@ appropriate
 
 You can use subqueries instead of an array of values.
 
-    ::
+    With anonymous function::
 
-        $builder->orWhereIn('id', function(BaseBuilder $builder) {
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
+
+        //...
+
+        $builder->orWhereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
+
+        // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3)
+
+        $builder->orWhereIn('id', $subquery);
 
         // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
@@ -379,11 +416,25 @@ AND if appropriate
 
 You can use subqueries instead of an array of values.
 
-    ::
+    With anonymous function::
 
-        $builder->whereNotIn('id', function(BaseBuilder $builder) {
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
+
+        //...
+
+        $builder->whereNotIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
+
+        // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3);
+
+        $builder->whereNotIn('id', $subquery);
 
         // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
@@ -401,11 +452,24 @@ if appropriate
 
 You can use subqueries instead of an array of values.
 
-    ::
+    With anonymous function::
 
-        $builder->orWhereNotIn('id', function(BaseBuilder $builder) {
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
+
+        //...
+
+        $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
+
+        // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3);
+
+        $builder->orWhereNotIn('id', $subquery);
 
         // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
@@ -542,12 +606,25 @@ appropriate
 
 You can use subqueries instead of an array of values.
 
-::
+    With anonymous function::
 
-    $builder->havingIn('id', function(BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
-    // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
+
+        //...
+
+        $builder->havingIn('id', function (BaseBuilder $builder) {
+            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+        });
+        // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+        $builder->havingIn('id', $subquery);
+        // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->orHavingIn()**
 
@@ -562,13 +639,25 @@ appropriate
 
 You can use subqueries instead of an array of values.
 
-::
+    With anonymous function::
 
-    $builder->orHavingIn('id', function(BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
 
-    // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+        //...
+
+        $builder->orHavingIn('id', function (BaseBuilder $builder) {
+            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+        });
+        // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+        $builder->orHavingIn('id', $subquery);
+        // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingNotIn()**
 
@@ -583,14 +672,24 @@ AND if appropriate
 
 You can use subqueries instead of an array of values.
 
-::
+    With anonymous function::
 
-    $builder->havingNotIn('id', function(BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
 
-    // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+        //...
 
+        $builder->havingNotIn('id', function (BaseBuilder $builder) {
+            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+        });
+        // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+        $builder->havingNotIn('id', $subquery);
+        // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->orHavingNotIn()**
 
@@ -605,13 +704,25 @@ if appropriate
 
 You can use subqueries instead of an array of values.
 
-::
+    With anonymous function::
 
-    $builder->orHavingNotIn('id', function(BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
+        //importing the class at the top of the file
+        use CodeIgniter\Database\BaseBuilder;
 
-    // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+        //...
+
+        $builder->orHavingNotIn('id', function (BaseBuilder $builder) {
+            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
+        });
+        // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+
+    With Builder::
+
+        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
+
+        $builder->orHavingNotIn('id', $subquery);
+        // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingLike()**
 

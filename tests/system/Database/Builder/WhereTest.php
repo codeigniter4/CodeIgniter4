@@ -8,7 +8,9 @@ use stdClass;
 
 class WhereTest extends CIUnitTestCase
 {
-	/** @var MockConnection */
+	/**
+	 * @var MockConnection
+	 */
 	protected $db;
 
 	protected function setUp(): void
@@ -109,7 +111,7 @@ class WhereTest extends CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	public function testWhereValueClosure()
+	public function testWhereValueSubquery()
 	{
 		$builder = $this->db->table('neworder');
 
@@ -117,6 +119,14 @@ class WhereTest extends CIUnitTestCase
 			return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
 		});
 		$expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
+
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('orders')
+			->select('MAX(advance_amount)', false)
+			->where('id >', 2);
+
+		$builder->where('advance_amount <', $subquery);
 
 		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -152,7 +162,7 @@ class WhereTest extends CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = \'Accountant\' OR "name" = \'foobar\'';
 		$expectedBinds = [
-			'name'  => [
+			'name'   => [
 				'Accountant',
 				true,
 			],
@@ -187,7 +197,7 @@ class WhereTest extends CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	public function testWhereInClosure()
+	public function testWhereInSubquery()
 	{
 		$builder = $this->db->table('jobs');
 
@@ -196,6 +206,14 @@ class WhereTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('users_jobs')
+						->select('job_id')
+						->where('user_id', 3);
+
+		$builder->whereIn('id', $subquery);
 
 		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -260,7 +278,7 @@ class WhereTest extends CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	public function testWhereNotInClosure()
+	public function testWhereNotInSubquery()
 	{
 		$builder = $this->db->table('jobs');
 
@@ -269,6 +287,14 @@ class WhereTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('users_jobs')
+			->select('job_id')
+			->where('user_id', 3);
+
+		$builder->whereNotIn('id', $subquery);
 
 		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -298,7 +324,7 @@ class WhereTest extends CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	public function testOrWhereInClosure()
+	public function testOrWhereInSubquery()
 	{
 		$builder = $this->db->table('jobs');
 
@@ -336,7 +362,7 @@ class WhereTest extends CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	public function testOrWhereNotInClosure()
+	public function testOrWhereNotInSubquery()
 	{
 		$builder = $this->db->table('jobs');
 
@@ -345,6 +371,14 @@ class WhereTest extends CIUnitTestCase
 		});
 
 		$expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$subquery = $this->db->table('users_jobs')
+			->select('job_id')
+			->where('user_id', 3);
+
+		$builder->where('deleted_at', null)->orWhereNotIn('id', $subquery);
 
 		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

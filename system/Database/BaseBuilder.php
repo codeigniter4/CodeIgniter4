@@ -263,7 +263,9 @@ class BaseBuilder
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
-		/** @var BaseConnection $db */
+		/**
+ * @var BaseConnection $db
+*/
 		$this->db = $db;
 
 		$this->tableName = $tableName;
@@ -821,10 +823,9 @@ class BaseBuilder
 					$k .= " $op";
 				}
 
-				if ($v instanceof Closure)
+				if ($builder = $this->getInstanceForSubquery($v))
 				{
-					$builder = $this->cleanClone();
-					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+					$v = '(' . str_replace("\n", ' ', $builder->getCompiledSelect()) . ')';
 				}
 				else
 				{
@@ -858,9 +859,9 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -877,9 +878,9 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -896,9 +897,9 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -915,9 +916,9 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -934,9 +935,9 @@ class BaseBuilder
 	 * Generates a HAVING field IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -953,9 +954,9 @@ class BaseBuilder
 	 * Generates a HAVING field IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -972,9 +973,9 @@ class BaseBuilder
 	 * Generates a HAVING field NOT IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -991,9 +992,9 @@ class BaseBuilder
 	 * Generates a HAVING field NOT IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string                           $key    The field to search
+	 * @param array|string|Closure|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param boolean                          $escape
 	 *
 	 * @return $this
 	 */
@@ -1012,12 +1013,12 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param  string             $key    The field to search
-	 * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
-	 * @param  boolean            $not    If the statement would be IN or NOT IN
-	 * @param  string             $type
-	 * @param  boolean            $escape
-	 * @param  string             $clause (Internal use only)
+	 * @param  string                         $key    The field to search
+	 * @param  array|Closure|null|BaseBuilder $values The values searched on, or anonymous function with subquery
+	 * @param  boolean                        $not    If the statement would be IN or NOT IN
+	 * @param  string                         $type
+	 * @param  boolean                        $escape
+	 * @param  string                         $clause (Internal use only)
 	 * @throws InvalidArgumentException
 	 *
 	 * @return $this
@@ -1035,7 +1036,7 @@ class BaseBuilder
 			// @codeCoverageIgnoreEnd
 		}
 
-		if ($values === null || (! is_array($values) && ! ($values instanceof Closure)))
+		if ($values === null || (! is_array($values) && $this->getInstanceForSubquery($values) === null))
 		{
 			if (CI_DEBUG)
 			{
@@ -1060,10 +1061,9 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		if ($values instanceof Closure)
+		if ($builder = $this->getInstanceForSubquery($values))
 		{
-			$builder = $this->cleanClone();
-			$ok      = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
+			$ok = str_replace("\n", ' ', $builder->getCompiledSelect());
 		}
 		else
 		{
@@ -1074,7 +1074,8 @@ class BaseBuilder
 		$prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$whereIn = [
-			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
+			'condition' => $prefix . $key . $not
+							. ($this->getInstanceForSubquery($values) ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
@@ -3516,12 +3517,64 @@ class BaseBuilder
 	/**
 	 * Returns a clone of a Base Builder with reset query builder values.
 	 *
-	 * @return $this
+	 * @return static
 	 */
-	protected function cleanClone()
+	protected function getBuilderClone(): self
 	{
 		return (clone $this)->from([], true)->resetQuery();
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Trying to get BaseBuilder instance of the class for subqueries
+	 *
+	 * @param mixed   $builder        Value for subquery recognition
+	 * @param boolean $throwException Throw an exception on error
+	 *
+	 * @return BaseBuilder|null
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	protected function getInstanceForSubquery($builder, bool $throwException = false)
+	{
+		$isClosure = false;
+
+		if ($builder instanceof Closure)
+		{
+			$isClosure = true;
+			$builder   = $builder($this->getBuilderClone());
+		}
+
+		if ($builder instanceof BaseBuilder)
+		{
+			if (spl_object_hash($builder) === spl_object_hash($this))
+			{
+				throw new InvalidArgumentException(
+					'A subquery builder instance cannot be equal to an instance of the parent builder class'
+				);
+			}
+
+			return $builder;
+		}
+
+		if ($isClosure)
+		{
+			throw new InvalidArgumentException('The closure must return an instance of the BaseBuilder class');
+		}
+
+		if ($throwException)
+		{
+			$data = debug_backtrace(0, 2)[1];
+
+			throw new InvalidArgumentException(
+				sprintf(
+					'The argument passed to the %s::%s() method must be
+					a Closure or an instance of the BaseBuilder class',
+					$data['class'],
+					$data['function']
+				)
+			);
+		}
+
+		return null;
+	}
 }
