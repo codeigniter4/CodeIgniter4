@@ -263,9 +263,7 @@ class BaseBuilder
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
-		/**
- * @var BaseConnection $db
-*/
+		/** @var BaseConnection $db */
 		$this->db = $db;
 
 		$this->tableName = $tableName;
@@ -1074,8 +1072,7 @@ class BaseBuilder
 		$prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$whereIn = [
-			'condition' => $prefix . $key . $not
-							. ($this->getInstanceForSubquery($values) ? " IN ($ok)" : " IN :{$ok}:"),
+			'condition' => $prefix . $key . $not . ($this->getInstanceForSubquery($values) ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
@@ -3518,6 +3515,18 @@ class BaseBuilder
 	 * Returns a clone of a Base Builder with reset query builder values.
 	 *
 	 * @return static
+	 *
+	 * @deprecated Use $this->getBuilderClone() instead
+	 */
+	protected function cleanClone()
+	{
+		return $this->getBuilderClone();
+	}
+
+	/**
+	 * Returns a clone of a Base Builder with reset query builder values.
+	 *
+	 * @return static
 	 */
 	protected function getBuilderClone(): self
 	{
@@ -3565,14 +3574,11 @@ class BaseBuilder
 		{
 			$data = debug_backtrace(0, 2)[1];
 
-			throw new InvalidArgumentException(
-				sprintf(
-					'The argument passed to the %s::%s() method must be
-					a Closure or an instance of the BaseBuilder class',
-					$data['class'],
-					$data['function']
-				)
-			);
+			throw new InvalidArgumentException(sprintf(
+				'The argument passed to the %s::%s() method must be a Closure or an instance of the BaseBuilder class.',
+				$data['class'],
+				$data['function']
+			));
 		}
 
 		return null;
