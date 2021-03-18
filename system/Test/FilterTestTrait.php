@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use Config\Filters as FiltersConfig;
 use Config\Services;
+use Closure;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -127,9 +128,9 @@ trait FilterTestTrait
 	 * @param FilterInterface|string $filter   The filter instance, class, or alias
 	 * @param string                 $position "before" or "after"
 	 *
-	 * @return callable
+	 * @return Closure
 	 */
-	protected function getFilterCaller($filter, string $position): callable
+	protected function getFilterCaller($filter, string $position): Closure
 	{
 		if (! in_array($position, ['before', 'after'], true))
 		{
