@@ -88,30 +88,32 @@ trait FilterTestTrait
 	 */
 	protected function setUpFilterTestTrait(): void
 	{
-		if ($this->doneFilterSetUp === false)
+		if ($this->doneFilterSetUp === true)
 		{
-			// Create our own Request and Response so we can
-			// use the same ones for Filters and FilterInterface
-			// yet isolate them from outside influence
-			$this->request  = $this->request ?? clone Services::request();
-			$this->response = $this->response ?? clone Services::response();
-
-			// Create our config and Filters instance to reuse for performance
-			$this->filtersConfig = $this->filtersConfig ?? config('Filters');
-			$this->filters       = $this->filters ?? new Filters($this->filtersConfig, $this->request, $this->response);
-
-			if (is_null($this->collection))
-			{
-				// Load the RouteCollection from Config to gather App route info
-				// (creates $routes using the Service as a starting point)
-				require APPPATH . 'Config/Routes.php';
-
-				$routes->getRoutes('*'); // Triggers discovery
-				$this->collection = $routes;
-			}
-
-			$this->doneFilterSetUp = true;
+			return;
 		}
+
+		// Create our own Request and Response so we can
+		// use the same ones for Filters and FilterInterface
+		// yet isolate them from outside influence
+		$this->request  = $this->request ?? clone Services::request();
+		$this->response = $this->response ?? clone Services::response();
+
+		// Create our config and Filters instance to reuse for performance
+		$this->filtersConfig = $this->filtersConfig ?? config('Filters');
+		$this->filters       = $this->filters ?? new Filters($this->filtersConfig, $this->request, $this->response);
+
+		if (is_null($this->collection))
+		{
+			// Load the RouteCollection from Config to gather App route info
+			// (creates $routes using the Service as a starting point)
+			require APPPATH . 'Config/Routes.php';
+
+			$routes->getRoutes('*'); // Triggers discovery
+			$this->collection = $routes;
+		}
+
+		$this->doneFilterSetUp = true;
 	}
 
 	//--------------------------------------------------------------------
