@@ -105,6 +105,8 @@ class Model extends BaseModel
 		$db = $db ?? Database::connect($this->DBGroup);
 
 		$this->db = &$db;
+
+		$this->escape = 'foobar';
 	}
 
 	/**
