@@ -17,18 +17,7 @@ use Tests\Support\Controllers\Popcorn;
  */
 class ControllerTesterTest extends CIUnitTestCase
 {
-
 	use ControllerTester;
-
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
-
-	public function tearDown(): void
-	{
-		parent::tearDown();
-	}
 
 	public function testBadController()
 	{
