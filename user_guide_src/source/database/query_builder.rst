@@ -246,6 +246,8 @@ methods:
 .. note:: All values passed to this function are escaped automatically,
     producing safer queries.
 
+All ``where`` methods support :ref:`subqueries`
+
 #. **Simple key/value method:**
 
     ::
@@ -304,26 +306,6 @@ methods:
 
         $builder->where('MATCH (field) AGAINST ("value")', null, false);
 
-#. **Subqueries:**
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->where('advance_amount <', function (BaseBuilder $builder) {
-            return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
-        });
-        // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
-
-    With Builder::
-
-        $subquery = $this->db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2);
-
-        $builder->where('advance_amount <', $subquery);
-        // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
-
 
 **$builder->orWhere()**
 
@@ -347,27 +329,6 @@ appropriate
         $builder->whereIn('username', $names);
         // Produces: WHERE username IN ('Frank', 'Todd', 'James')
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->whereIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-        // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3)
-
-        $builder->whereIn('id', $subquery);
-        // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
 
 **$builder->orWhereIn()**
 
@@ -380,28 +341,6 @@ appropriate
         $builder->orWhereIn('username', $names);
         // Produces: OR username IN ('Frank', 'Todd', 'James')
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->orWhereIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3)
-
-        $builder->orWhereIn('id', $subquery);
-
-        // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->whereNotIn()**
 
@@ -413,30 +352,6 @@ AND if appropriate
         $names = ['Frank', 'Todd', 'James'];
         $builder->whereNotIn('username', $names);
         // Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
-
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->whereNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
-        $builder->whereNotIn('id', $subquery);
-
-        // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 
 **$builder->orWhereNotIn()**
@@ -450,28 +365,6 @@ if appropriate
         $builder->orWhereNotIn('username', $names);
         // Produces: OR username NOT IN ('Frank', 'Todd', 'James')
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
-        $builder->orWhereNotIn('id', $subquery);
-
-        // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 ************************
 Looking for Similar Data
@@ -604,28 +497,6 @@ appropriate
     $builder->havingIn('group_id', $groups);
     // Produces: HAVING group_id IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->havingIn('id', function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
-        $builder->havingIn('id', $subquery);
-        // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
 **$builder->orHavingIn()**
 
 Generates a ``HAVING field IN ('item', 'item')`` SQL query joined with OR if
@@ -637,27 +508,6 @@ appropriate
     $builder->orHavingIn('group_id', $groups);
     // Produces: OR group_id IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->orHavingIn('id', function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
-        $builder->orHavingIn('id', $subquery);
-        // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingNotIn()**
 
@@ -670,26 +520,6 @@ AND if appropriate
     $builder->havingNotIn('group_id', $groups);
     // Produces: HAVING group_id NOT IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->havingNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
-        $builder->havingNotIn('id', $subquery);
-        // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->orHavingNotIn()**
 
@@ -699,30 +529,8 @@ if appropriate
 ::
 
     $groups = [1, 2, 3];
-    $builder->havingNotIn('group_id', $groups);
+    $builder->orHavingNotIn('group_id', $groups);
     // Produces: OR group_id NOT IN (1, 2, 3)
-
-You can use subqueries instead of an array of values.
-
-    With anonymous function::
-
-        //importing the class at the top of the file
-        use CodeIgniter\Database\BaseBuilder;
-
-        //...
-
-        $builder->orHavingNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-
-    With Builder::
-
-        $subquery = $this->db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
-        $builder->orHavingNotIn('id', $subquery);
-        // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 **$builder->havingLike()**
 
@@ -886,6 +694,39 @@ Example::
 As is in countAllResult method, this method resets any field values that you may have passed
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
+
+.. _subqueries:
+
+**********
+Subqueries
+**********
+
+Several query builder methods support the use of subqueries. Subqueries are passed as a closure or an instance of the
+BaseBuilder class as the second argument to the method.
+
+Subquery as closure::
+
+    //importing the class at the top of the file
+    use CodeIgniter\Database\BaseBuilder;
+
+    //...
+
+    $builder->where('advance_amount <', function (BaseBuilder $builder) {
+        return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
+    });
+
+    // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
+
+Subquery as instance of the BaseBuilder class::
+
+    $subquery = $this->db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2);
+
+    $builder->where('advance_amount <', $subquery);
+
+    // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
+
+**List of methods that support subqueries**: where(), orWhere(), whereIn(), orWhereIn(), whereNotIn(), orWhereNotIn(),
+havingIn(), orHavingIn(), havingNotIn(), orHavingNotIn().
 
 **************
 Query grouping
@@ -1530,7 +1371,7 @@ Class Reference
     .. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1540,7 +1381,7 @@ Class Reference
     .. php:method:: orWhereNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1550,7 +1391,7 @@ Class Reference
     .. php:method:: whereIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1560,7 +1401,7 @@ Class Reference
     .. php:method:: whereNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool	$escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1653,7 +1494,7 @@ Class Reference
     .. php:method:: having($key[, $value = null[, $escape = null]])
 
         :param mixed $key: Identifier (string) or associative array of field/value pairs
-        :param string $value: Value sought if $key is an identifier
+        :param string|Closure|BaseBuilder $value: Value sought if $key is an identifier
         :param string $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1663,7 +1504,7 @@ Class Reference
     .. php:method:: orHaving($key[, $value = null[, $escape = null]])
 
         :param mixed $key: Identifier (string) or associative array of field/value pairs
-        :param string $value: Value sought if $key is an identifier
+        :param string|Closure|BaseBuilder $value: Value sought if $key is an identifier
         :param string $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1673,7 +1514,7 @@ Class Reference
     .. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool	$escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1683,7 +1524,7 @@ Class Reference
     .. php:method:: orHavingNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool	$escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1693,7 +1534,7 @@ Class Reference
     .. php:method:: havingIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
@@ -1703,7 +1544,7 @@ Class Reference
     .. php:method:: havingNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|Closure|BaseBuilder $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :param bool $insensitiveSearch: Whether to force a case-insensitive search
         :returns: ``BaseBuilder`` instance (method chaining)
