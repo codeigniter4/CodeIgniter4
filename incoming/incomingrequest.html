@@ -433,7 +433,9 @@ be checked with the <code class="docutils literal notranslate"><span class="pre"
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header,
+which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
+See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
 </div>
 <p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">method()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;post&#39;</span>
@@ -745,8 +747,10 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -771,7 +775,8 @@ filters. Pass in the desired filter type as the second parameter:</p>
 <p>To return all POST items and pass them through the filter, set the
 first parameter to null while setting the second parameter to the filter
 you want to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_STRING</span><span class="p">);</span> <span class="c1">// returns all POST items with string sanitation</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_STRING</span><span class="p">);</span>
+<span class="c1">// returns all POST items with string sanitation</span>
 </pre></div>
 </div>
 <p>To return an array of multiple POST parameters, pass all the required keys as an array:</p>
@@ -792,8 +797,10 @@ the filter type to apply:</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -813,8 +820,10 @@ the filter type to apply:</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -835,8 +844,10 @@ the filter type to apply:</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -861,8 +872,10 @@ then in GET:</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>string</em>) – The name of the variable/key to look for.</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -881,23 +894,23 @@ then in POST:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="getCookie">
-<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Noindex</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>mixed</em>) – COOKIE name</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>mixed</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mixed</p>
 </dd>
 </dl>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only it fetches cookie data:</p>
@@ -924,8 +937,10 @@ your configured <code class="docutils literal notranslate"><span class="pre">$co
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<em>mixed</em>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found
+<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -953,7 +968,8 @@ as an array.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be
+found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -991,7 +1007,7 @@ as an array.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 18, 2021.
+        Last updated on Mar 19, 2021.
       </span>
 
     </p>

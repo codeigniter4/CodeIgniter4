@@ -431,13 +431,13 @@ context as the second parameter. Valid contexts are ‘html’, ‘js’, ‘css
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;&lt;?= esc(</span><span class="si">$url</span><span class="s2">, &#39;url&#39;) ?&gt;&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">foo</span><span class="o">=</span><span class="s2">&quot;&lt;?= esc(</span><span class="si">$bar</span><span class="s2">, &#39;attr&#39;) ?&gt;&quot;</span><span class="o">&gt;</span><span class="nx">Some</span> <span class="nx">Link</span><span class="o">&lt;/</span><span class="nx">a</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-        <span class="k">var</span> <span class="nx">siteName</span> <span class="o">=</span> <span class="s1">&#39;&lt;?= esc($siteName, &#39;</span><span class="nx">js</span><span class="s1">&#39;) ?&gt;&#39;</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nx">siteName</span> <span class="o">=</span> <span class="s1">&#39;&lt;?= esc($siteName, &#39;</span><span class="nx">js</span><span class="s1">&#39;) ?&gt;&#39;</span><span class="p">;</span>
 <span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
-        <span class="nx">body</span> <span class="p">{</span>
-                <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span> <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="s1">&#39;bgColor&#39;</span><span class="p">,</span> <span class="s1">&#39;css&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
-        }
+    <span class="nx">body</span> <span class="p">{</span>
+        <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span> <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="s1">&#39;bgColor&#39;</span><span class="p">,</span> <span class="s1">&#39;css&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+    }
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -595,7 +595,7 @@ for this object, the new value will replace the existing one.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 18, 2021.
+        Last updated on Mar 19, 2021.
       </span>
 
     </p>
