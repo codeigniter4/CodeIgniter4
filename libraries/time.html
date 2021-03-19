@@ -815,7 +815,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </div>
 <div class="section" id="viewing-differences">
 <h4>Viewing Differences<a class="headerlink" href="#viewing-differences" title="Permalink to this headline">¶</a></h4>
-<p>To compare two Times directly, you would use the <strong>difference()</strong> method, which returns a <strong>CodeIgniterI18nTimeDifference</strong>
+<p>To compare two Times directly, you would use the <strong>difference()</strong> method, which returns a <strong>CodeIgniter\I18n\TimeDifference</strong>
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
