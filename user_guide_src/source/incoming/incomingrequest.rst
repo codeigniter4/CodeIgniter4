@@ -10,7 +10,7 @@ classes, in addition to the methods listed below.
     :depth: 2
 
 Accessing the Request
-----------------------------------------------------------------------------
+---------------------
 
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
@@ -57,7 +57,7 @@ the controller, where you can save it as a class property::
     $someClass = new SomeClass(\Config\Services::request());
 
 Determining Request Type
-----------------------------------------------------------------------------
+------------------------
 
 A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the ``isAJAX()`` and ``isCLI()`` methods::
@@ -97,7 +97,7 @@ You can also check if the request was made through and HTTPS connection with the
     }
 
 Retrieving Input
-----------------------------------------------------------------------------
+----------------
 
 You can retrieve input from $_SERVER, $_GET, $_POST, and $_ENV through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request. The main
@@ -212,7 +212,7 @@ All of the methods mentioned above support the filter type passed in as the seco
 exception of ``getJSON()``.
 
 Retrieving Headers
-----------------------------------------------------------------------------
+------------------
 
 You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
@@ -251,7 +251,7 @@ If you need the entire header, with the name and values in a single string, simp
     echo (string)$header;
 
 The Request URL
-----------------------------------------------------------------------------
+---------------
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
@@ -274,7 +274,7 @@ The object gives you full abilities to grab any part of the request on it's own:
     echo $uri->getTotalSegments();  // 3
 
 Uploaded Files
-----------------------------------------------------------------------------
+--------------
 
 Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns a
 :doc:`FileCollection </libraries/uploaded_files>` instance. This helps to ease the pain of working with uploaded files,
@@ -309,7 +309,7 @@ multi-file upload, based on the filename given in the HTML file input::
     $files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
-----------------------------------------------------------------------------
+-------------------
 
 You can easily negotiate content types with the request through the ``negotiate()`` method::
 
@@ -322,7 +322,7 @@ You can easily negotiate content types with the request through the ``negotiate(
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
 Class Reference
-===========================================================================
+===============
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
     :doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.

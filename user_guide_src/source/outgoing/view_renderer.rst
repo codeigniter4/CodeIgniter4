@@ -7,7 +7,7 @@ View Renderer
     :depth: 2
 
 Using the View Renderer
-***************************
+***********************
 
 The ``view()`` function is a convenience function that grabs an instance of the
 ``renderer`` service, sets the data, and renders the view. While this is often
