@@ -202,12 +202,25 @@ class TimeDifferenceTest extends CIUnitTestCase
 		$this->assertEquals('Just now', $diff->humanize('en'));
 	}
 
-	public function testGetter()
+	public function testGetterUTC()
+	{
+		$current = Time::parse('March 10, 2017', 'UTC');
+		$diff    = $current->difference('March 18, 2017', 'UTC');
+
+		$this->assertEquals(8, $diff->getDays());
+		$this->assertEquals(8, $diff->days);
+		$this->assertEquals(-8, (int) round($diff->getDays(true)));
+		$this->assertNull($diff->nonsense);
+	}
+
+	public function testGetterChicagoTime()
 	{
 		$current = Time::parse('March 10, 2017', 'America/Chicago');
 		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-		$this->assertEquals(-8, (int) round($diff->days));
+		$this->assertEquals(7, $diff->getDays());
+		$this->assertEquals(7, $diff->days);
+		$this->assertEquals(-8, (int) round($diff->getDays(true)));
 		$this->assertNull($diff->nonsense);
 	}
 
