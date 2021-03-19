@@ -107,9 +107,8 @@ class TimeDifference
 	{
 		$this->difference = $currentTime->getTimestamp() - $testTime->getTimestamp();
 
-		$current = IntlCalendar::fromDateTime($currentTime->format('Y-m-d H:i:s'));
-		$time    = IntlCalendar::fromDateTime($testTime->format('Y-m-d H:i:s'))
-						->getTime();
+		$current = IntlCalendar::fromDateTime($currentTime);
+		$time    = IntlCalendar::fromDateTime($testTime)->getTime();
 
 		$this->currentTime = $current;
 		$this->testTime    = $time;
