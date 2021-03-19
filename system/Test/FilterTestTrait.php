@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use Closure;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Filters\FilterInterface;
@@ -19,7 +20,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use Config\Filters as FiltersConfig;
 use Config\Services;
-use Closure;
 use InvalidArgumentException;
 use RuntimeException;
 
