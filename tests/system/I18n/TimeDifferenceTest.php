@@ -218,8 +218,11 @@ class TimeDifferenceTest extends CIUnitTestCase
 		$current = Time::parse('March 10, 2017', 'America/Chicago');
 		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
+		// Daylight Saving Time had begun since Sun, 12 Mar, 02:00.
 		$this->assertEquals(7, $diff->getDays());
 		$this->assertEquals(7, $diff->days);
+
+		// The raw value does not take Daylight Saving Time into account.
 		$this->assertEquals(-8, (int) round($diff->getDays(true)));
 		$this->assertNull($diff->nonsense);
 	}
