@@ -317,7 +317,7 @@ class TimeDifference
 
 		if (method_exists($this, $method))
 		{
-			return $this->{$method}($name);
+			return $this->{$method}();
 		}
 
 		return null;
