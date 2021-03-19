@@ -362,7 +362,7 @@ method using these properties to test your Filter code safely and check the resu
     :param	FilterInterface|string	$filter: The filter instance, class, or alias
     :param	string	$position: The filter method to run, "before" or "after"
 	:returns:	A callable method to run the simulated Filter event
-	:rtype:	callable
+	:rtype:	Closure
 
     Usage example::
 
@@ -374,7 +374,7 @@ method using these properties to test your Filter code safely and check the resu
 			$this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
 		}
 	
-	Notice how the ``callable`` can take input parameters which are passed to your filter method.
+	Notice how the ``Closure`` can take input parameters which are passed to your filter method.
 
 Assertions
 ----------

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use Closure;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Filters\FilterInterface;
@@ -127,9 +128,9 @@ trait FilterTestTrait
 	 * @param FilterInterface|string $filter   The filter instance, class, or alias
 	 * @param string                 $position "before" or "after"
 	 *
-	 * @return callable
+	 * @return Closure
 	 */
-	protected function getFilterCaller($filter, string $position): callable
+	protected function getFilterCaller($filter, string $position): Closure
 	{
 		if (! in_array($position, ['before', 'after'], true))
 		{

@@ -41,11 +41,12 @@ class FilterTestTraitTest extends CIUnitTestCase
 		$this->assertInstanceOf(RequestInterface::class, $this->request);
 	}
 
-	public function testGetCallerReturnsCallable()
+	public function testGetCallerReturnsClosure()
 	{
 		$caller = $this->getFilterCaller('test-customfilter', 'before');
 
 		$this->assertIsCallable($caller);
+		$this->assertInstanceOf('Closure', $caller);
 	}
 
 	public function testGetCallerInvalidPosition()
