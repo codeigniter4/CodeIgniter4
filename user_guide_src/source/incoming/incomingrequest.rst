@@ -453,8 +453,8 @@ The methods provided by the parent classes that are available are:
 			$request->getGetPost('field1');
 
 	.. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
+        :noindex:
 
-                :noindex:
 		:param	mixed	$index: COOKIE name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
 		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
