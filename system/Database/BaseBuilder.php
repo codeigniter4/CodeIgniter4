@@ -3530,7 +3530,9 @@ class BaseBuilder
 	 */
 	protected function getBuilderClone(): self
 	{
-		return (clone $this)->from([], true)->resetQuery();
+		$builder         = (clone $this)->resetQuery()->from([], true);
+		$builder->QBFrom = [];
+		return $builder;
 	}
 
 	/**
