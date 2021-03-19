@@ -12,6 +12,7 @@ use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -38,6 +39,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . '/tests/system/Models',
 		__DIR__ . '/tests/_support',
 		PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
+		RemoveUnusedPrivateMethodRector::class => [__DIR__ . '/tests/system/Test/ReflectionHelperTest.php'],
 	]);
 
 	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
@@ -72,4 +74,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(RemoveUnusedForeachKeyRector::class);
 	$services->set(SimplifyIfElseToTernaryRector::class);
 	$services->set(UnusedForeachValueToArrayKeysRector::class);
+	$services->set(RemoveUnusedPrivateMethodRector::class);
 };
