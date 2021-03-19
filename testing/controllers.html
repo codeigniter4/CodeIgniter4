@@ -712,7 +712,7 @@ method using these properties to test your Filter code safely and check the resu
 <li><p><strong>$filter</strong> (<em>FilterInterface|string</em>) – The filter instance, class, or alias</p></li>
 <li><p><strong>$position</strong> (<em>string</em>) – The filter method to run, “before” or “after”
 :returns:       A callable method to run the simulated Filter event
-:rtype: callable</p></li>
+:rtype: Closure</p></li>
 </ul>
 </dd>
 </dl>
@@ -725,7 +725,7 @@ method using these properties to test your Filter code safely and check the resu
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
         <span class="p">}</span>
 
-<span class="nx">Notice</span> <span class="nx">how</span> <span class="nx">the</span> <span class="sb">``</span><span class="nx">callable</span><span class="sb">``</span> <span class="nx">can</span> <span class="nx">take</span> <span class="nx">input</span> <span class="nx">parameters</span> <span class="nx">which</span> <span class="nx">are</span> <span class="nx">passed</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">filter</span> <span class="nx">method</span><span class="o">.</span>
+<span class="nx">Notice</span> <span class="nx">how</span> <span class="nx">the</span> <span class="sb">``</span><span class="nx">Closure</span><span class="sb">``</span> <span class="nx">can</span> <span class="nx">take</span> <span class="nx">input</span> <span class="nx">parameters</span> <span class="nx">which</span> <span class="nx">are</span> <span class="nx">passed</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">filter</span> <span class="nx">method</span><span class="o">.</span>
 </pre></div>
 </div>
 </dd></dl>
