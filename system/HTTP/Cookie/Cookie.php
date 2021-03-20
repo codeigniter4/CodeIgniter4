@@ -734,7 +734,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 			if ($this->getExpiresTimestamp() !== 0)
 			{
 				$cookieHeader[] = 'Expires=' . $this->getExpiresString();
-				$cookieHeader[] = 'Max-Age=' . (string) $this->getMaxAge();
+				$cookieHeader[] = 'Max-Age=' . $this->getMaxAge();
 			}
 		}
 
