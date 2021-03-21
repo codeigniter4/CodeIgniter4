@@ -122,6 +122,10 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
+      - name: Profile slow tests in PHP 7.4 MySQLi for now
+        if: matrix.php-versions == '7.4' && matrix.db-platforms == 'MySQLi'
+        run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
+
       - name: Test with PHPUnit
         run: script -e -c "vendor/bin/phpunit --color=always"
         env:

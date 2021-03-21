@@ -17,8 +17,8 @@
 	"require-dev": {
 		"codeigniter4/codeigniter4-standard": "^1.0",
 		"fakerphp/faker": "^1.9",
-		"johnkary/phpunit-speedtrap": "^3.3",
 		"mikey179/vfsstream": "^1.6",
+		"nexusphp/tachycardia": "^1.0",
 		"phpstan/phpstan": "0.12.82",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
