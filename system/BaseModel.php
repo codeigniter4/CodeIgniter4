@@ -295,6 +295,11 @@ abstract class BaseModel
 	 */
 	public function __construct(ValidationInterface $validation = null)
 	{
+		if (method_exists($this, 'initModel'))
+		{
+			$this->initModel();
+		}
+
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 		$this->tempAllowCallbacks = $this->allowCallbacks;

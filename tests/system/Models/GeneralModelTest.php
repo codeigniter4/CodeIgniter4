@@ -139,4 +139,27 @@ final class GeneralModelTest extends CIUnitTestCase
 		$this->assertSame('jobs', $builder2->getTable());
 		$this->assertSame('user', $builder3->getTable());
 	}
+
+	public function testInitModel(): void
+	{
+		$model = new class extends Model {
+
+			/**
+			 * @var boolean
+			 */
+			public $didInit = false;
+
+			/**
+			 * Marks the model as initialized.
+			 *
+			 * @return void
+			 */
+			protected function initModel(): void
+			{
+				$this->didInit = true;
+			}
+		};
+
+		$this->assertTrue($model->didInit);
+	}
 }
