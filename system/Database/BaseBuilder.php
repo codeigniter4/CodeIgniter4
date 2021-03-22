@@ -266,7 +266,11 @@ class BaseBuilder
 		/** @var BaseConnection $db */
 		$this->db = $db;
 
-		$this->tableName = $tableName;
+		if (is_string($tableName))
+		{
+			$this->tableName = $tableName;
+		}
+
 		$this->from($tableName);
 
 		if (! empty($options))
@@ -3377,6 +3381,7 @@ class BaseBuilder
 	{
 		$this->resetRun([
 			'QBSelect'   => [],
+			'QBFrom'     => [],
 			'QBJoin'     => [],
 			'QBWhere'    => [],
 			'QBGroupBy'  => [],
@@ -3394,9 +3399,9 @@ class BaseBuilder
 		}
 
 		// Reset QBFrom part
-		if (! empty($this->QBFrom))
+		if (is_string($this->tableName))
 		{
-			$this->from(array_shift($this->QBFrom), true);
+			$this->from($this->tableName, true);
 		}
 	}
 

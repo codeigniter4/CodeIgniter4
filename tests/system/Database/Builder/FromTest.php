@@ -99,6 +99,43 @@ class FromTest extends CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
+	public function testFromSelectSubQuery()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->from('(SELECT id, name FROM test_1) t', true);
+
+		$expectedSQL = 'SELECT * FROM (SELECT id, name FROM test_1) t';
+
+		$this->assertEquals(
+			$expectedSQL,
+			str_replace(
+				"\n",
+				' ',
+				$builder->getCompiledSelect()
+			)
+		);
+
+		return $builder;
+	}
+
+	/**
+	 * @depends testFromSelectSubQuery
+	 */
+	public function testFromAfterSubQuery($builder)
+	{
+		$expectedSQL = 'SELECT * FROM "user"';
+
+		$this->assertEquals(
+			$expectedSQL,
+			str_replace(
+				"\n",
+				' ',
+				$builder->getCompiledSelect()
+			)
+		);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testFromWithMultipleTablesAsStringWithSQLSRV()
