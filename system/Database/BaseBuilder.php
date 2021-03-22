@@ -590,8 +590,8 @@ class BaseBuilder
 	 *
 	 * Generates the FROM portion of the query
 	 *
-	 * @param mixed   $from      can be a string or array
-	 * @param boolean $overwrite Should we remove the first table existing?
+	 * @param string|array|null $from
+	 * @param boolean           $overwrite Should we remove the first table existing?
 	 *
 	 * @return $this
 	 */
