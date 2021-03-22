@@ -201,10 +201,11 @@ the resulting field.
 
 Permits you to write the FROM portion of your query::
 
+    $builder = $db->table('users');
     $builder->select('title, content, date');
     $builder->from('mytable');
     $query = $builder->get();
-    // Produces: SELECT title, content, date FROM mytable
+    // Produces: SELECT title, content, date FROM users, mytable
 
 .. note:: As shown earlier, the FROM portion of your query can is specified
     in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
@@ -214,7 +215,7 @@ Permits you to write the FROM portion of your query::
 
 Permits you to write the JOIN portion of your query::
 
-    $builder->db->table('blogs');
+    $builder = $db->table('blogs');
     $builder->select('*');
     $builder->join('comments', 'comments.id = blogs.id');
     $query = $builder->get();
