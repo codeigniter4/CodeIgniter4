@@ -3381,7 +3381,6 @@ class BaseBuilder
 	{
 		$this->resetRun([
 			'QBSelect'   => [],
-			'QBFrom'     => [],
 			'QBJoin'     => [],
 			'QBWhere'    => [],
 			'QBGroupBy'  => [],
@@ -3399,7 +3398,7 @@ class BaseBuilder
 		}
 
 		// Reset QBFrom part
-		if (is_string($this->tableName))
+		if (! empty($this->QBFrom) && is_string($this->tableName))
 		{
 			$this->from($this->tableName, true);
 		}
