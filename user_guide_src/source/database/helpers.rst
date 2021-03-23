@@ -44,7 +44,7 @@ Example::
 
     // Produces an integer, like 25
 
-    **$db->countAllResults()**
+**$db->countAllResults()**
 
 Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
