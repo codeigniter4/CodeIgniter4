@@ -24,6 +24,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
+require_once __DIR__ . '/system/Test/bootstrap.php';
+
 return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
 
@@ -39,12 +41,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . '/tests/system/Models',
 		__DIR__ . '/tests/_support',
 		PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
-	]);
-
-	// Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
-	$parameters->set(Option::AUTOLOAD_PATHS, [
-		// autoload specific file
-		__DIR__ . '/system/Test/bootstrap.php',
 	]);
 
 	// auto import fully qualified class names

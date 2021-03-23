@@ -243,7 +243,6 @@ class DownloadResponse extends Response
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Content Type header for this response with the mime type
 	 * and, optionally, the charset.

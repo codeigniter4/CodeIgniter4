@@ -335,7 +335,6 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
@@ -402,7 +401,6 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores the rules that should be used to validate the items.
 	 * Rules should be an array formatted like:
@@ -754,7 +752,6 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the error for a specific field. Used by custom validation methods.
 	 *
@@ -833,7 +830,6 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 	// Misc
 	//--------------------------------------------------------------------
-
 	/**
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.

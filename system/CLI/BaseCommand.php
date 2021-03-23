@@ -79,7 +79,6 @@ abstract class BaseCommand
 	protected $commands;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * BaseCommand constructor.
 	 *

@@ -22,12 +22,11 @@ class FileLocator
 	/**
 	 * The Autoloader to use.
 	 *
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $autoloader;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *

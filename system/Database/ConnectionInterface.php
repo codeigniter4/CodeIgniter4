@@ -145,7 +145,6 @@ interface ConnectionInterface
 	public function simpleQuery(string $sql);
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *

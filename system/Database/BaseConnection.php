@@ -950,7 +950,6 @@ abstract class BaseConnection implements ConnectionInterface
 	abstract protected function _transRollback(): bool;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
@@ -972,7 +971,6 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a prepared statement with the database that can then
 	 * be used to execute multiple statements against. Within the

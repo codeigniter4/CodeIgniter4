@@ -26,7 +26,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * The response.
 	 *
-	 * @var \CodeIgniter\HTTP\ResponseInterface
+	 * @var ResponseInterface
 	 */
 	public $response;
 

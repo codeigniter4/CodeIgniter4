@@ -247,7 +247,6 @@ class BaseBuilder
 	];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -263,7 +262,9 @@ class BaseBuilder
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
-		/** @var BaseConnection $db */
+		/**
+		 * @var BaseConnection $db
+		 */
 		$this->db = $db;
 
 		$this->tableName = $tableName;
@@ -282,7 +283,6 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current database connection
 	 *
@@ -2022,7 +2022,6 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Get_Where
 	 *
