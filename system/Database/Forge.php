@@ -161,7 +161,6 @@ class Forge
 	protected $default = ' DEFAULT ';
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -173,7 +172,6 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Provides access to the forge's current database connection.
 	 *

@@ -103,7 +103,6 @@ class Router implements RouterInterface
 	protected $filterInfo;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *

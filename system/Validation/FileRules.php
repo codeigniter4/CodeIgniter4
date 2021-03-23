@@ -23,7 +23,7 @@ class FileRules
 	/**
 	 * Request instance. So we can get access to the files.
 	 *
-	 * @var \CodeIgniter\HTTP\RequestInterface
+	 * @var RequestInterface
 	 */
 	protected $request;
 

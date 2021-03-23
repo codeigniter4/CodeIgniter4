@@ -52,7 +52,9 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 */
 	public function __construct($config = null)
 	{
-		/** @deprecated $this->proxyIps property will be removed in the future */
+		/**
+ * @deprecated $this->proxyIps property will be removed in the future
+*/
 		$this->proxyIPs = $config->proxyIPs;
 
 		if (empty($this->method))
@@ -127,12 +129,12 @@ class Request extends Message implements MessageInterface, RequestInterface
 		return $request;
 	}
 
-    /**
-     * Retrieves the URI instance.
-     *
-     * @return URI
-     */
-    public function getUri()
+	/**
+	 * Retrieves the URI instance.
+	 *
+	 * @return URI
+	 */
+	public function getUri()
 	{
 		return $this->uri;
 	}
