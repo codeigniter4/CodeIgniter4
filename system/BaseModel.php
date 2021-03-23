@@ -295,10 +295,7 @@ abstract class BaseModel
 	 */
 	public function __construct(ValidationInterface $validation = null)
 	{
-		if (method_exists($this, 'initModel'))
-		{
-			$this->initModel();
-		}
+		$this->initModel();
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -310,6 +307,14 @@ abstract class BaseModel
 		$validation = $validation ?? Services::validation(null, false);
 
 		$this->validation = $validation;
+	}
+
+	/**
+	 * Initializes the instance with any additional steps.
+	 * Optionally provided by child classes.
+	 */
+	protected function initModel()
+	{
 	}
 
 	/**
