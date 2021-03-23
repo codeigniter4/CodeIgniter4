@@ -135,12 +135,13 @@ class Security implements SecurityInterface
 		$this->tokenName  = $security->tokenName ?? $config->CSRFTokenName ?? $this->tokenName;
 		$this->headerName = $security->headerName ?? $config->CSRFHeaderName ?? $this->headerName;
 		$this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
-		$this->cookieName = $config->cookiePrefix . ($security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName);
+		$rawCookieName    = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
+		$this->cookieName = $config->cookiePrefix . $rawCookieName;
 
 		$expires = $security->expires ?? $config->CSRFExpire ?? 7200;
 
 		Cookie::setDefaults($config);
-		$this->cookie = Cookie::create($this->cookieName, $this->generateHash(), [
+		$this->cookie = Cookie::create($rawCookieName, $this->generateHash(), [
 			'expires' => $expires === 0 ? 0 : time() + $expires,
 		]);
 	}
