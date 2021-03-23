@@ -263,8 +263,8 @@ class BaseBuilder
 		}
 
 		/**
- * @var BaseConnection $db
-*/
+		 * @var BaseConnection $db
+		 */
 		$this->db = $db;
 
 		$this->tableName = $tableName;
