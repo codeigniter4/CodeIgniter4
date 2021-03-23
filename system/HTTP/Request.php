@@ -53,8 +53,8 @@ class Request extends Message implements MessageInterface, RequestInterface
 	public function __construct($config = null)
 	{
 		/**
- * @deprecated $this->proxyIps property will be removed in the future
-*/
+		 * @deprecated $this->proxyIps property will be removed in the future
+		 */
 		$this->proxyIPs = $config->proxyIPs;
 
 		if (empty($this->method))
