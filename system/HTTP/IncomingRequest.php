@@ -221,7 +221,7 @@ class IncomingRequest extends Request
 	{
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if (! in_array($locale, $this->validLocales, true))
+		if (! in_array($locale, $this->config->supportedLocales, true))
 		{
 			$locale = $this->defaultLocale;
 		}
