@@ -90,6 +90,11 @@ class Model extends BaseModel
 	protected $escape = [];
 
 	/**
+	 * @var BaseConnection
+	 */
+	protected $db;
+
+	/**
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface|null $db         DB Connection
