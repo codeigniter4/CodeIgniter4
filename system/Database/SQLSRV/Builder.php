@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -300,6 +299,12 @@ class Builder extends BaseBuilder
 	private function getFullName(string $table): string
 	{
 		$alias = '';
+
+		// subquery filter
+		if (strpos($table, '(') !== false)
+		{
+			return $table;
+		}
 
 		if (strpos($table, ' ') !== false)
 		{
@@ -712,10 +717,10 @@ class Builder extends BaseBuilder
 					$k .= " $op";
 				}
 
-				if ($v instanceof Closure)
+				if ($this->isSubquery($v))
 				{
-					$builder = $this->cleanClone();
-					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+					$query = $this->subqueryProcessing($v);
+					$v     = $this->parenthesesWrapper(str_replace("\n", ' ', $query));
 				}
 				else
 				{

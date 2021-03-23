@@ -954,21 +954,28 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string|array $tableName
+	 * @param Closure|BaseBuilder|SqlExpression|array|string|null $tableName Table
 	 *
 	 * @return BaseBuilder
 	 * @throws DatabaseException
 	 */
 	public function table($tableName)
 	{
-		if (empty($tableName))
-		{
-			throw new DatabaseException('You must set the database table to be used with your query.');
-		}
-
 		$className = str_replace('Connection', 'Builder', get_class($this));
 
 		return new $className($tableName, $this);
+	}
+
+	/**
+	 * Returns a wrapper for a raw SQL subquery
+	 *
+	 * @param string $statement SQL statement
+	 *
+	 * @return SqlExpression
+	 */
+	public function raw(string $statement): SqlExpression
+	{
+		return new SqlExpression($statement);
 	}
 
 	//--------------------------------------------------------------------

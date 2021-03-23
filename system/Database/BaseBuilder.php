@@ -251,14 +251,14 @@ class BaseBuilder
 	/**
 	 * Constructor
 	 *
-	 * @param  string|array        $tableName
-	 * @param  ConnectionInterface $db
-	 * @param  array               $options
+	 * @param  Closure|BaseBuilder|SqlExpression|array|string|null $tableName
+	 * @param  ConnectionInterface 							       $db
+	 * @param  array               							       $options
 	 * @throws DatabaseException
 	 */
 	public function __construct($tableName, ConnectionInterface &$db, array $options = null)
 	{
-		if (empty($tableName))
+		if (empty($tableName) && (is_array($tableName) || is_string($tableName)))
 		{
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
@@ -266,7 +266,11 @@ class BaseBuilder
 		/** @var BaseConnection $db */
 		$this->db = $db;
 
-		$this->tableName = $tableName;
+		if (is_string($tableName))
+		{
+			$this->tableName = $tableName;
+		}
+
 		$this->from($tableName);
 
 		if (! empty($options))
@@ -586,8 +590,8 @@ class BaseBuilder
 	 *
 	 * Generates the FROM portion of the query
 	 *
-	 * @param mixed   $from      can be a string or array
-	 * @param boolean $overwrite Should we remove the first table existing?
+	 * @param Closure|BaseBuilder|SqlExpression|array|string|null $from      Table
+	 * @param boolean 											 $overwrite Should we remove the first table existing?
 	 *
 	 * @return $this
 	 */
@@ -597,6 +601,11 @@ class BaseBuilder
 		{
 			$this->QBFrom = [];
 			$this->db->setAliasedTables([]);
+		}
+
+		if ($this->isSubquery($from))
+		{
+			return $this->fromSub($from);
 		}
 
 		foreach ((array) $from as $val)
@@ -622,6 +631,26 @@ class BaseBuilder
 				$this->QBFrom[] = $this->db->protectIdentifiers($val, true, null, false);
 			}
 		}
+
+		return $this;
+	}
+
+	/**
+	 * Adding subquery to FROM section
+	 *
+	 * @param Closure|BaseBuilder|SqlExpression $from Table
+	 *
+	 * @return $this
+	 */
+	protected function fromSub($from): self
+	{
+		$from = $this->subqueryProcessing($from);
+
+		$from = $this->parenthesesWrapper($from);
+
+		$this->trackAliases($from);
+
+		$this->QBFrom[] = $from;
 
 		return $this;
 	}
@@ -821,10 +850,10 @@ class BaseBuilder
 					$k .= " $op";
 				}
 
-				if ($v instanceof Closure)
+				if ($this->isSubquery($v))
 				{
-					$builder = $this->cleanClone();
-					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+					$query = $this->subqueryProcessing($v);
+					$v 	   = $this->parenthesesWrapper(str_replace("\n", ' ', $query));
 				}
 				else
 				{
@@ -934,9 +963,9 @@ class BaseBuilder
 	 * Generates a HAVING field IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string               $key    The field to search
-	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean              $escape
+	 * @param string               								 $key    The field to search
+	 * @param Closure|BaseBuilder|SqlExpression|array|string|null $values The values searched on, or anonymous function with subquery
+	 * @param boolean              								 $escape
 	 *
 	 * @return $this
 	 */
@@ -1012,15 +1041,15 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param  string             $key    The field to search
-	 * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
-	 * @param  boolean            $not    If the statement would be IN or NOT IN
-	 * @param  string             $type
-	 * @param  boolean            $escape
-	 * @param  string             $clause (Internal use only)
-	 * @throws InvalidArgumentException
-	 *
+	 * @param  string             						   $key    The field to search
+	 * @param  Closure|BaseBuilder|SqlExpression|array|null $values The values searched on, or anonymous function with subquery
+	 * @param  boolean            						   $not    If the statement would be IN or NOT IN
+	 * @param  string             						   $type
+	 * @param  boolean            						   $escape
+	 * @param  string             						   $clause (Internal use only)
 	 * @return $this
+	 *@throws InvalidArgumentException
+	 *
 	 */
 	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
 	{
@@ -1035,7 +1064,7 @@ class BaseBuilder
 			// @codeCoverageIgnoreEnd
 		}
 
-		if ($values === null || (! is_array($values) && ! ($values instanceof Closure)))
+		if ($values === null || (! is_array($values) && ! $this->isSubquery($values)))
 		{
 			if (CI_DEBUG)
 			{
@@ -1060,10 +1089,10 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		if ($values instanceof Closure)
+		if ($this->isSubquery($values))
 		{
-			$builder = $this->cleanClone();
-			$ok      = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
+			$query = $this->subqueryProcessing($values);
+			$ok    = $this->parenthesesWrapper(str_replace("\n", ' ', $query));
 		}
 		else
 		{
@@ -1074,7 +1103,7 @@ class BaseBuilder
 		$prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$whereIn = [
-			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
+			'condition' => $prefix . $key . $not . ($this->isSubquery($values) ? " IN $ok" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
@@ -3394,9 +3423,9 @@ class BaseBuilder
 		}
 
 		// Reset QBFrom part
-		if (! empty($this->QBFrom))
+		if (! empty($this->QBFrom) && is_string($this->tableName))
 		{
-			$this->from(array_shift($this->QBFrom), true);
+			$this->from($this->tableName, true);
 		}
 	}
 
@@ -3517,6 +3546,8 @@ class BaseBuilder
 	 * Returns a clone of a Base Builder with reset query builder values.
 	 *
 	 * @return $this
+	 *
+	 * @deprecated Use instead $this->db->table(null) or new static(null, $this->db)
 	 */
 	protected function cleanClone()
 	{
@@ -3524,4 +3555,86 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Checks a variable for a subquery
+	 *
+	 * @param mixed $value Expect subquery
+	 *
+	 * @return boolean
+	 */
+	protected function isSubquery($value): bool
+	{
+		return $value instanceof Closure
+			|| $value instanceof BaseBuilder
+			|| $value instanceof SqlExpression;
+	}
+
+	/**
+	 * Subquery closure processing
+	 *
+	 * @param Closure|BaseBuilder $subquery Subquery closure
+	 *
+	 * @return string
+	 * @throws DatabaseException
+	 */
+	protected function subqueryProcessing($subquery): string
+	{
+		if (! $this->isSubquery($subquery))
+		{
+			throw new DatabaseException('Expected subquery');
+		}
+
+		return  $subquery instanceof SqlExpression
+			? $subquery->getValue()
+			: $this->getSubqueryBuilder($subquery)->getCompiledSelect();
+	}
+
+	/**
+	 * Subquery builder
+	 *
+	 * @param Closure|BaseBuilder $subquery Subquery
+	 *
+	 * @return BaseBuilder
+	 * @throws DatabaseException
+	 */
+	protected function getSubqueryBuilder($subquery): self
+	{
+		if (! ($subquery instanceof Closure) && ! ($subquery instanceof BaseBuilder))
+		{
+			throw new DatabaseException(
+				'Closure or instance of BaseBuilder class expected, ' . gettype($subquery) . ' is given.'
+			);
+		}
+
+		if ($subquery instanceof Closure)
+		{
+			$subquery($builder = $this->db->table(null));
+
+			$subquery = $builder;
+		}
+
+		if (spl_object_hash($subquery) === spl_object_hash($this))
+		{
+			throw new DatabaseException(
+				'The subquery does not have to be an instance of the parent Base Builder class.'
+			);
+		}
+
+		return $subquery;
+	}
+
+	/**
+	 * Wraps an expression in parentheses
+	 *
+	 * @param string $expression Expression
+	 *
+	 * @return string
+	 */
+	protected function parenthesesWrapper(string $expression): string
+	{
+		$expression = trim($expression);
+		return strpos($expression, '(') === 0 ? $expression : '(' . $expression . ')';
+	}
+
 }
