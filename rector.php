@@ -24,13 +24,16 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
-require_once __DIR__ . '/system/Test/bootstrap.php';
-
 return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
 
 	// paths to refactor; solid alternative to CLI arguments
 	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests']);
+
+	// do you need to include constants, class aliases or custom autoloader? files listed will be executed
+	$parameters->set(Option::BOOTSTRAP_FILES, [
+		__DIR__ . '/system/Test/bootstrap.php',
+	]);
 
 	// is there a file you need to skip?
 	$parameters->set(Option::SKIP, [
