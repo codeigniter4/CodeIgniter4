@@ -170,7 +170,7 @@ class Model extends BaseModel
 	 */
 	protected function doFindColumn(string $columnName)
 	{
-		return $this->select($columnName)->asArray()->find();
+		return $this->select($columnName)->asArray()->find(); // @phpstan-ignore-line
 	}
 
 	/**
