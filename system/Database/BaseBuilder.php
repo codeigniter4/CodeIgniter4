@@ -22,8 +22,6 @@ use InvalidArgumentException;
  * Provides the core Query Builder methods.
  * Database-specific Builders might need to override
  * certain methods to make them work.
- *
- * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
