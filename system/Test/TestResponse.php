@@ -118,7 +118,7 @@ class TestResponse extends TestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Simple Response Checks
+	// Status Checks
 	//--------------------------------------------------------------------
 
 	/**
@@ -152,6 +152,42 @@ class TestResponse extends TestCase
 			|| $this->response->hasHeader('Location')
 			|| $this->response->hasHeader('Refresh');
 	}
+
+	/**
+	 * Asserts that the status is a specific value.
+	 *
+	 * @param integer $code
+	 *
+	 * @throws Exception
+	 */
+	public function assertStatus(int $code)
+	{
+		$this->assertEquals($code, $this->response->getStatusCode());
+	}
+
+	/**
+	 * Asserts that the Response is considered OK.
+	 *
+	 * @throws Exception
+	 */
+	public function assertOK()
+	{
+		$this->assertTrue($this->isOK(), "{$this->response->getStatusCode()} is not a successful status code, or the Response has an empty body.");
+	}
+
+	/**
+	 * Asserts that the Response is considered OK.
+	 *
+	 * @throws Exception
+	 */
+	public function assertNotOK()
+	{
+		$this->assertFalse($this->isOK(), "{$this->response->getStatusCode()} is an unexpected successful status code, or the Response has body content.");
+	}
+
+	//--------------------------------------------------------------------
+	// Redirection
+	//--------------------------------------------------------------------
 
 	/**
 	 * Assert that the given response was a redirect.
@@ -220,40 +256,8 @@ class TestResponse extends TestCase
 		return null;
 	}
 
-	/**
-	 * Asserts that the status is a specific value.
-	 *
-	 * @param integer $code
-	 *
-	 * @throws Exception
-	 */
-	public function assertStatus(int $code)
-	{
-		$this->assertEquals($code, $this->response->getStatusCode());
-	}
-
-	/**
-	 * Asserts that the Response is considered OK.
-	 *
-	 * @throws Exception
-	 */
-	public function assertOK()
-	{
-		$this->assertTrue($this->isOK(), "{$this->response->getStatusCode()} is not a successful status code, or the Response has an empty body.");
-	}
-
-	/**
-	 * Asserts that the Response is considered OK.
-	 *
-	 * @throws Exception
-	 */
-	public function assertNotOK()
-	{
-		$this->assertFalse($this->isOK(), "{$this->response->getStatusCode()} is an unexpected successful status code, or the Response has body content.");
-	}
-
 	//--------------------------------------------------------------------
-	// Session Assertions
+	// Session
 	//--------------------------------------------------------------------
 
 	/**
@@ -287,7 +291,7 @@ class TestResponse extends TestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Header Assertions
+	// Headers
 	//--------------------------------------------------------------------
 
 	/**
@@ -321,7 +325,7 @@ class TestResponse extends TestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Cookie Assertions
+	// Cookies
 	//--------------------------------------------------------------------
 
 	/**
@@ -363,87 +367,7 @@ class TestResponse extends TestCase
 	}
 
 	//--------------------------------------------------------------------
-	// DomParser Assertions
-	//--------------------------------------------------------------------
-
-	/**
-	 * Assert that the desired text can be found in the result body.
-	 *
-	 * @param string|null $search
-	 * @param string|null $element
-	 *
-	 * @throws Exception
-	 */
-	public function assertSee(string $search = null, string $element = null)
-	{
-		$this->assertTrue($this->domParser->see($search, $element), "Do not see '{$search}' in response.");
-	}
-
-	/**
-	 * Asserts that we do not see the specified text.
-	 *
-	 * @param string|null $search
-	 * @param string|null $element
-	 *
-	 * @throws Exception
-	 */
-	public function assertDontSee(string $search = null, string $element = null)
-	{
-		$this->assertTrue($this->domParser->dontSee($search, $element), "I should not see '{$search}' in response.");
-	}
-
-	/**
-	 * Assert that we see an element selected via a CSS selector.
-	 *
-	 * @param string $search
-	 *
-	 * @throws Exception
-	 */
-	public function assertSeeElement(string $search)
-	{
-		$this->assertTrue($this->domParser->seeElement($search), "Do not see element with selector '{$search} in response.'");
-	}
-
-	/**
-	 * Assert that we do not see an element selected via a CSS selector.
-	 *
-	 * @param string $search
-	 *
-	 * @throws Exception
-	 */
-	public function assertDontSeeElement(string $search)
-	{
-		$this->assertTrue($this->domParser->dontSeeElement($search), "I should not see an element with selector '{$search}' in response.'");
-	}
-
-	/**
-	 * Assert that we see a link with the matching text and/or class.
-	 *
-	 * @param string      $text
-	 * @param string|null $details
-	 *
-	 * @throws Exception
-	 */
-	public function assertSeeLink(string $text, string $details = null)
-	{
-		$this->assertTrue($this->domParser->seeLink($text, $details), "Do no see anchor tag with the text {$text} in response.");
-	}
-
-	/**
-	 * Assert that we see an input with name/value.
-	 *
-	 * @param string      $field
-	 * @param string|null $value
-	 *
-	 * @throws Exception
-	 */
-	public function assertSeeInField(string $field, string $value = null)
-	{
-		$this->assertTrue($this->domParser->seeInField($field, $value), "Do no see input named {$field} with value {$value} in response.");
-	}
-
-	//--------------------------------------------------------------------
-	// JSON Methods
+	// JSON
 	//--------------------------------------------------------------------
 
 	/**
@@ -521,8 +445,84 @@ class TestResponse extends TestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Magic
+	// DomParser
 	//--------------------------------------------------------------------
+
+	/**
+	 * Assert that the desired text can be found in the result body.
+	 *
+	 * @param string|null $search
+	 * @param string|null $element
+	 *
+	 * @throws Exception
+	 */
+	public function assertSee(string $search = null, string $element = null)
+	{
+		$this->assertTrue($this->domParser->see($search, $element), "Do not see '{$search}' in response.");
+	}
+
+	/**
+	 * Asserts that we do not see the specified text.
+	 *
+	 * @param string|null $search
+	 * @param string|null $element
+	 *
+	 * @throws Exception
+	 */
+	public function assertDontSee(string $search = null, string $element = null)
+	{
+		$this->assertTrue($this->domParser->dontSee($search, $element), "I should not see '{$search}' in response.");
+	}
+
+	/**
+	 * Assert that we see an element selected via a CSS selector.
+	 *
+	 * @param string $search
+	 *
+	 * @throws Exception
+	 */
+	public function assertSeeElement(string $search)
+	{
+		$this->assertTrue($this->domParser->seeElement($search), "Do not see element with selector '{$search} in response.'");
+	}
+
+	/**
+	 * Assert that we do not see an element selected via a CSS selector.
+	 *
+	 * @param string $search
+	 *
+	 * @throws Exception
+	 */
+	public function assertDontSeeElement(string $search)
+	{
+		$this->assertTrue($this->domParser->dontSeeElement($search), "I should not see an element with selector '{$search}' in response.'");
+	}
+
+	/**
+	 * Assert that we see a link with the matching text and/or class.
+	 *
+	 * @param string      $text
+	 * @param string|null $details
+	 *
+	 * @throws Exception
+	 */
+	public function assertSeeLink(string $text, string $details = null)
+	{
+		$this->assertTrue($this->domParser->seeLink($text, $details), "Do no see anchor tag with the text {$text} in response.");
+	}
+
+	/**
+	 * Assert that we see an input with name/value.
+	 *
+	 * @param string      $field
+	 * @param string|null $value
+	 *
+	 * @throws Exception
+	 */
+	public function assertSeeInField(string $field, string $value = null)
+	{
+		$this->assertTrue($this->domParser->seeInField($field, $value), "Do no see input named {$field} with value {$value} in response.");
+	}
 
 	/**
 	 * Forward any unrecognized method calls to our DOMParser instance.
