@@ -30,7 +30,7 @@ class TestResponse extends TestCase
 	/**
 	 * The request.
 	 *
-	 * @var RequestInterface
+	 * @var RequestInterface|null
 	 */
 	protected $request;
 
@@ -100,7 +100,7 @@ class TestResponse extends TestCase
 	/**
 	 * Request accessor.
 	 *
-	 * @return RequestInterface
+	 * @return RequestInterface|null
 	 */
 	public function request()
 	{
