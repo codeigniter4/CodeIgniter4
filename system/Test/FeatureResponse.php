@@ -11,9 +11,6 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
-
 /**
  * Assertions for a response
  *
@@ -22,10 +19,6 @@ use Config\Services;
 class FeatureResponse extends TestResponse
 {
 	/**
-	 * The response.
-	 *
-	 * @var ResponseInterface
-	 *
 	 * @deprecated Will be protected in a future release, use response() instead
 	 */
 	public $response;
