@@ -14,7 +14,6 @@ namespace CodeIgniter\Test;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -32,14 +31,14 @@ use Throwable;
  *       ->withURI($uri)
  *       ->withBody($body)
  *       ->controller('App\Controllers\Home')
- *       ->run('methodName');
+ *       ->execute('methodName');
  */
 trait ControllerTester
 {
 	/**
 	 * Controller configuration.
 	 *
-	 * @var BaseConfig
+	 * @var App
 	 */
 	protected $appConfig;
 
@@ -81,9 +80,47 @@ trait ControllerTester
 	/**
 	 * Request or response body.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $body;
+
+	/**
+	 * Initializes required components.
+	 */
+	protected function setUpControllerTester(): void
+	{
+		if (empty($this->appConfig))
+		{
+			$this->appConfig = config('App');
+		}
+
+		if (! $this->uri instanceof URI)
+		{
+			$this->uri = Services::uri($this->appConfig->baseURL ?? 'http://example.com/', false);
+		}
+
+		if (empty($this->request))
+		{
+			// Do some acrobatics so we can use the Request service with our own URI
+			$tempUri = Services::uri();
+			Services::injectMock('uri', $this->uri);
+
+			$this->withRequest(Services::request($this->appConfig, false)->setBody($this->body));
+
+			// Restore the URI service
+			Services::injectMock('uri', $tempUri);
+		}
+
+		if (empty($this->response))
+		{
+			$this->response = Services::response($this->appConfig, false);
+		}
+
+		if (empty($this->logger))
+		{
+			$this->logger = Services::logger();
+		}
+	}
 
 	/**
 	 * Loads the specified controller, and generates any needed dependencies.
@@ -97,31 +134,6 @@ trait ControllerTester
 		if (! class_exists($name))
 		{
 			throw new InvalidArgumentException('Invalid Controller: ' . $name);
-		}
-
-		if (empty($this->appConfig))
-		{
-			$this->appConfig = new App();
-		}
-
-		if (! $this->uri instanceof URI)
-		{
-			$this->uri = new URI($this->appConfig->baseURL ?? 'http://example.com/');
-		}
-
-		if (empty($this->request))
-		{
-			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body, new UserAgent());
-		}
-
-		if (empty($this->response))
-		{
-			$this->response = new Response($this->appConfig);
-		}
-
-		if (empty($this->logger))
-		{
-			$this->logger = Services::logger();
 		}
 
 		$this->controller = new $name();
@@ -283,7 +295,7 @@ trait ControllerTester
 	/**
 	 * Set the method's body, with method chaining.
 	 *
-	 * @param mixed $body
+	 * @param string|null $body
 	 *
 	 * @return mixed
 	 */
