@@ -42,11 +42,11 @@ class FeatureResponse extends TestCase
 	 *
 	 * @param ResponseInterface $response
 	 */
-	public function __construct(ResponseInterface $response = null)
+	public function __construct(ResponseInterface $response)
 	{
 		$this->response = $response;
 
-		$body = $response->getBody();
+		$body = $this->response->getBody();
 		if (! empty($body) && is_string($body))
 		{
 			$this->domParser = (new DOMParser())->withString($body);
