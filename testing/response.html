@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Testing Responses &mdash; CodeIgniter 4.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Benchmarking" href="benchmark.html" />
+    <link rel="prev" title="HTTP Feature Testing" href="feature.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #DD4814" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli.html">Running via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Custom CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Testing</a> &raquo;</li>
+        
+      <li>Testing Responses</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing-responses">
+<h1>Testing Responses<a class="headerlink" href="#testing-responses" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> class provides a number of helpful functions for parsing and testing responses
+from your test cases. Usually a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> will be provided for you as a result of your
+<a class="reference external" href="controllers.html">Controller Tests</a> or <a class="reference external" href="feature.html">HTTP Feature Tests</a>, but you can always
+create your own directly using any <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Test\TestResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">);</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="section" id="testing-the-response">
+<h2>Testing the Response<a class="headerlink" href="#testing-the-response" title="Permalink to this headline">¶</a></h2>
+<p>Whether you have received a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> as a result of your tests or created one yourself,
+there are a number of new assertions that you can use in your tests.</p>
+<div class="section" id="accessing-request-response">
+<h3>Accessing Request/Response<a class="headerlink" href="#accessing-request-response" title="Permalink to this headline">¶</a></h3>
+<p><strong>request()</strong></p>
+<p>You can access directly the Request object, if it was set during testing:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span> <span class="o">=</span> <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>response()</strong></p>
+<p>This allows you direct access to the response object:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">response</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-response-status">
+<h3>Checking Response Status<a class="headerlink" href="#checking-response-status" title="Permalink to this headline">¶</a></h3>
+<p><strong>isOK()</strong></p>
+<p>Returns a boolean true/false based on whether the response is perceived to be “ok”. This is primarily determined by
+a response status code in the 200 or 300’s.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>assertOK()</strong></p>
+<p>This assertion simply uses the <strong>isOK()</strong> method to test a response. <strong>assertNotOK</strong> is the inverse of this assertion.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>isRedirect()</strong></p>
+<p>Returns a boolean true/false based on whether the response is a redirected response.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isRedirect</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>assertRedirect()</strong></p>
+<p>Asserts that the Response is an instance of RedirectResponse. <strong>assertNotRedirect</strong> is the inverse of this assertion.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>assertRedirectTo()</strong></p>
+<p>Asserts that the Response is an instance of RedirectResponse and the destination
+matches the uri given.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirectTo</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>getRedirectUrl()</strong></p>
+<p>Returns the URL set for a RedirectResponse, or null for failure.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getRedirectUrl</span><span class="p">();</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">),</span> <span class="nv">$url</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertStatus(int $code)</strong></p>
+<p>Asserts that the HTTP status code returned matches $code.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertStatus</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="session-assertions">
+<h3>Session Assertions<a class="headerlink" href="#session-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertSessionHas(string $key, $value = null)</strong></p>
+<p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable’s value
+matches what was specified.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSessionMissing(string $key)</strong></p>
+<p>Asserts that the resulting session does not include the specified $key.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionMissin</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-assertions">
+<h3>Header Assertions<a class="headerlink" href="#header-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertHeader(string $key, $value = null)</strong></p>
+<p>Asserts that a header named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+the values match.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertHeaderMissing(string $key)</strong></p>
+<p>Asserts that a header name <strong>$key</strong> does not exist in the response.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cookie-assertions">
+<h3>Cookie Assertions<a class="headerlink" href="#cookie-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertCookie(string $key, $value = null, string $prefix = ‘’)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertCookieMissing(string $key)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> does not exist in the response.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertCookieExpired(string $key, string $prefix = ‘’)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> exists, but has expired. You can set the cookie prefix, if needed, by passing it
+in as the second parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dom-helpers">
+<h3>DOM Helpers<a class="headerlink" href="#dom-helpers" title="Permalink to this headline">¶</a></h3>
+<p>The response you get back contains a number of helper methods to inspect the HTML output within the response. These
+are useful for using within assertions in your tests.</p>
+<p>The <strong>see()</strong> method checks the text on the page to see if it exists either by itself, or more specifically within
+a tag, as specified by type, class, or id:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that &quot;Hello World&quot; is on the page</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an h1 tag</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <strong>dontSee()</strong> method is the exact opposite:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Checks that &quot;Hellow World&quot; does NOT exist within any h1 tag</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <strong>seeElement()</strong> and <strong>dontSeeElement()</strong> are very similar to the previous methods, but do not look at the
+values of the elements. Instead, they simply check that the elements exist on the page:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an element with class &#39;notice&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that an element with id &#39;title&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">)</span>
+<span class="c1">// Verify that an element with id &#39;title&#39; does NOT exist</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can use <strong>seeLink()</strong> to ensure that a link appears on the page with the specified text:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">);</span>
+<span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text, AND a class of &#39;upsell&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <strong>seeInField()</strong> method checks for any input tags exist with the name and value:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="c1">// Check a multi-dimensional input</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, you can check if a checkbox exists and is checked with the <strong>seeCheckboxIsChecked()</strong> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check if checkbox is checked with class of &#39;foo&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">&#39;.foo&#39;</span><span class="p">);</span>
+<span class="c1">// Check if checkbox with id of &#39;bar&#39; is checked</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">&#39;#bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dom-assertions">
+<h3>DOM Assertions<a class="headerlink" href="#dom-assertions" title="Permalink to this headline">¶</a></h3>
+<p>You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
+assertions.</p>
+<p><strong>assertSee(string $search = null, string $element = null)</strong></p>
+<p>Asserts that text/HTML is on the page, either by itself or - more specifically - within
+a tag, as specified by type, class, or id:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that &quot;Hello World&quot; is on the page</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an h1 tag</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertDontSee(string $search = null, string $element = null)</strong></p>
+<p>Asserts the exact opposite of the <strong>assertSee()</strong> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Checks that &quot;Hello World&quot; does NOT exist within any h1 tag</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeElement(string $search)</strong></p>
+<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element. It does not check for specific text:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an element with class &#39;notice&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that an element with id &#39;title&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>assertDontSeeElement(string $search)</strong></p>
+<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element that is missing. It does not check for
+specific text:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with id &#39;title&#39; does NOT exist</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeLink(string $text, string $details=null)</strong></p>
+<p>Asserts that an anchor tag is found with matching <strong>$text</strong> as the body of the tag:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">);</span>
+<span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text, AND a class of &#39;upsell&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeInField(string $field, string $value=null)</strong></p>
+<p>Asserts that an input tag exists with the name and value:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="c1">// Check a multi-dimensional input</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-json">
+<h3>Working With JSON<a class="headerlink" href="#working-with-json" title="Permalink to this headline">¶</a></h3>
+<p>Responses will frequently contain JSON responses, especially when working with API methods. The following methods
+can help to test the responses.</p>
+<p><strong>getJSON()</strong></p>
+<p>This method will return the body of the response as a JSON string:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Response body is this:</span>
+<span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]</span>
+
+<span class="nv">$json</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
+
+<span class="c1">// $json is this:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can use this method to determine if <code class="docutils literal notranslate"><span class="pre">$response</span></code> actually holds JSON content:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verify the response is JSON</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">()</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be aware that the JSON string will be pretty-printed in the result.</p>
+</div>
+<p><strong>assertJSONFragment(array $fragment)</strong></p>
+<p>Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Response body is this:</span>
+<span class="p">[</span>
+    <span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">,</span> <span class="s1">&#39;key-b&#39;</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="c1">// Is true</span>
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+<p><strong>assertJSONExact($test)</strong></p>
+<p>Similar to <strong>assertJSONFragment()</strong>, but checks the entire JSON response to ensure exact matches.</p>
+</div>
+<div class="section" id="working-with-xml">
+<h3>Working With XML<a class="headerlink" href="#working-with-xml" title="Permalink to this headline">¶</a></h3>
+<p><strong>getXML()</strong></p>
+<p>If your application returns XML, you can retrieve it through this method.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="benchmark.html" class="btn btn-neutral float-right" title="Benchmarking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="feature.html" class="btn btn-neutral float-left" title="HTTP Feature Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">
+        Last updated on Mar 25, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
