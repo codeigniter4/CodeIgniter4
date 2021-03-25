@@ -73,8 +73,8 @@ that extends ``CodeIgniter\Model``::
 This empty class provides convenient access to the database connection, the Query Builder,
 and a number of additional convenience methods.
 
-Should you need additional setup in your model you may define an ``initModel()`` function
-which will be run at the very beginning of the Model's constructor. This allows you to perform
+Should you need additional setup in your model you may extend the ``inititialize()`` function
+which will be run immediately after the Model's constructor. This allows you to perform
 extra steps without repeating the constructor parameters, for example extending other models::
 
     <?php
@@ -89,7 +89,7 @@ extra steps without repeating the constructor parameters, for example extending 
     	 * Called during initialization. Appends
     	 * our custom field to the module's model.
     	 */
-        protected function initModel()
+        protected function inititialize()
         {
         	$this->allowedFields[] = 'middlename';
         }
