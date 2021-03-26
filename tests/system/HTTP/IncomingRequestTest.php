@@ -383,6 +383,33 @@ class IncomingRequestTest extends CIUnitTestCase
 		$this->assertEquals('buzz', $all->fizz);
 	}
 
+	public function testGetVarWorksWithJsonAndGetParams()
+	{
+		$config = new App();
+		$config->baseURL = 'http://example.com/';
+		// get method
+		$uri = new URI('http://example.com/path?foo=bar&fizz=buzz');
+		$_REQUEST['foo'] = 'bar';
+		$_REQUEST['fizz'] = 'buzz';
+		$request = new IncomingRequest($config, $uri, 'php://input', new UserAgent());
+		$request = $request->withMethod('GET');
+		// json type
+		$request->setHeader('Content-Type', 'application/json');
+
+		$this->assertEquals('bar', $request->getVar('foo'));
+		$this->assertEquals('buzz', $request->getVar('fizz'));
+
+		$multiple = $request->getVar(['foo', 'fizz']);
+		$this->assertIsArray($multiple);
+		$this->assertEquals('bar', $multiple['foo']);
+		$this->assertEquals('buzz', $multiple['fizz']);
+
+		$all = $request->getVar();
+		$this->assertIsObject($all);
+		$this->assertEquals('bar', $all->foo);
+		$this->assertEquals('buzz', $all->fizz);
+	}
+
 	public function testCanGrabGetRawInput()
 	{
 		$rawstring = 'username=admin001&role=administrator&usepass=0';

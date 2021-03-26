@@ -293,7 +293,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false)
+		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && !is_null($this->body))
 		{
 			if (is_null($index))
 			{
@@ -312,8 +312,8 @@ class IncomingRequest extends Request
 
 			return $this->getJsonVar($index, false, $filter, $flags);
 		}
-
-		return $this->fetchGlobal('request', $index, $filter, $flags);
+		$output = $this->fetchGlobal('request', $index, $filter, $flags);
+		return is_null($index) ? (object)$output : $output;
 	}
 
 	//--------------------------------------------------------------------
