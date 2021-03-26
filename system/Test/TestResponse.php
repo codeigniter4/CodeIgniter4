@@ -142,18 +142,6 @@ class TestResponse extends TestCase
 	}
 
 	/**
-	 * Returns whether or not the Response was a redirect or RedirectResponse
-	 *
-	 * @return boolean
-	 */
-	public function isRedirect(): bool
-	{
-		return $this->response instanceof RedirectResponse
-			|| $this->response->hasHeader('Location')
-			|| $this->response->hasHeader('Refresh');
-	}
-
-	/**
 	 * Asserts that the status is a specific value.
 	 *
 	 * @param integer $code
@@ -188,6 +176,18 @@ class TestResponse extends TestCase
 	//--------------------------------------------------------------------
 	// Redirection
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns whether or not the Response was a redirect or RedirectResponse
+	 *
+	 * @return boolean
+	 */
+	public function isRedirect(): bool
+	{
+		return $this->response instanceof RedirectResponse
+			|| $this->response->hasHeader('Location')
+			|| $this->response->hasHeader('Refresh');
+	}
 
 	/**
 	 * Assert that the given response was a redirect.
@@ -272,9 +272,18 @@ class TestResponse extends TestCase
 	{
 		$this->assertTrue(array_key_exists($key, $_SESSION), "'{$key}' is not in the current \$_SESSION");
 
-		if ($value !== null)
+		if (is_null($value))
+		{
+			return;
+		}
+
+		if (is_string($value))
 		{
 			$this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
+		}
+		else
+		{
+			$this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' does not match expected value.");
 		}
 	}
 
