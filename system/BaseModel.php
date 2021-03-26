@@ -302,9 +302,18 @@ abstract class BaseModel
 		/**
 		 * @var Validation $validation
 		 */
-		$validation = $validation ?? Services::validation(null, false);
-
+		$validation       = $validation ?? Services::validation(null, false);
 		$this->validation = $validation;
+
+		$this->initialize();
+	}
+
+	/**
+	 * Initializes the instance with any additional steps.
+	 * Optionally implemented by child classes.
+	 */
+	protected function initialize()
+	{
 	}
 
 	/**
