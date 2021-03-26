@@ -445,6 +445,28 @@ that extends <code class="docutils literal notranslate"><span class="pre">CodeIg
 </div>
 <p>This empty class provides convenient access to the database connection, the Query Builder,
 and a number of additional convenience methods.</p>
+<p>Should you need additional setup in your model you may extend the <code class="docutils literal notranslate"><span class="pre">initialize()</span></code> function
+which will be run immediately after the Model’s constructor. This allows you to perform
+extra steps without repeating the constructor parameters, for example extending other models:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Modules\Authentication\Models\UserAuthModel</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">UserAuthModel</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Called during initialization. Appends</span>
+<span class="sd">     * our custom field to the module&#39;s model.</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">initialize</span><span class="p">()</span>
+    <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">allowedFields</span><span class="p">[]</span> <span class="o">=</span> <span class="s1">&#39;middlename&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <div class="section" id="connecting-to-the-database">
 <h3><a class="toc-backref" href="#id5">Connecting to the Database</a><a class="headerlink" href="#connecting-to-the-database" title="Permalink to this headline">¶</a></h3>
 <p>When the class is first instantiated, if no database connection instance is passed to the constructor,
@@ -1271,7 +1293,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 25, 2021.
+        Last updated on Mar 26, 2021.
       </span>
 
     </p>
