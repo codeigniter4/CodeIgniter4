@@ -405,9 +405,9 @@ class IncomingRequestTest extends CIUnitTestCase
 		$this->assertEquals('buzz', $multiple['fizz']);
 
 		$all = $request->getVar();
-		$this->assertIsObject($all);
-		$this->assertEquals('bar', $all->foo);
-		$this->assertEquals('buzz', $all->fizz);
+		$this->assertIsArray($all);
+		$this->assertEquals('bar', $all['foo']);
+		$this->assertEquals('buzz', $all['fizz']);
 	}
 
 	public function testCanGrabGetRawInput()
