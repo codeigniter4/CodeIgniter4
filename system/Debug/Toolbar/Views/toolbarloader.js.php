@@ -71,7 +71,7 @@ function newXHR() {
 	var realXHR = new oldXHR();
 	realXHR.addEventListener("readystatechange", function() {
 		// Only success responses and URLs that do not contains "debugbar_time" are tracked
-		if (realXHR.readyState === 4 && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1 && ) {
+		if (realXHR.readyState === 4 && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1 ) {
 			if (realXHR.getAllResponseHeaders().indexOf("Debugbar-Time") >= 0) {
 
     				var debugbarTime = realXHR.getResponseHeader('Debugbar-Time');
