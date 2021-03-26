@@ -431,6 +431,11 @@ class TestResponse extends TestCase
 	{
 		$json = $this->getJSON();
 
+		if (is_object($test))
+		{
+			$test = method_exists($test, 'toArray') ? $test->toArray() : (array) $test;
+		}
+
 		if (is_array($test))
 		{
 			$test = Services::format()->getFormatter('application/json')->format($test);
