@@ -277,7 +277,7 @@ class TestResponse extends TestCase
 			return;
 		}
 
-		if (is_string($value))
+		if (is_scalar($value))
 		{
 			$this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
 		}
