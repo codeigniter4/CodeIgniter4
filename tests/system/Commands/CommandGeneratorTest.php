@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class CommandGeneratorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CommandGeneratorTest extends CIUnitTestCase
 {
 	protected $streamFilter;
 
@@ -24,8 +27,9 @@ class CommandGeneratorTest extends CIUnitTestCase
 		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
 		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
 		$dir    = dirname($file);
+
 		is_file($file) && unlink($file);
-		is_dir($dir) && rmdir($dir);
+		is_dir($dir) && strpos($dir, 'Commands') !== false && rmdir($dir);
 	}
 
 	protected function getFileContents(string $filepath): string
@@ -95,5 +99,25 @@ class CommandGeneratorTest extends CIUnitTestCase
 		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
 		$file = APPPATH . 'Commands/PublishCommand.php';
 		$this->assertFileExists($file);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4495
+	 */
+	public function testGeneratorPreservesCase(): void
+	{
+		command('make:model TestModule');
+		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+		$this->assertFileExists(APPPATH . 'Models/TestModule.php');
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4495
+	 */
+	public function testGeneratorPreservesCaseButChangesComponentName(): void
+	{
+		command('make:controller TestModulecontroller');
+		$this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+		$this->assertFileExists(APPPATH . 'Controllers/TestModuleController.php');
 	}
 }
