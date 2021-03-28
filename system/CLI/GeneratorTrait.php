@@ -212,17 +212,24 @@ trait GeneratorTrait
 		{
 			// @codeCoverageIgnoreStart
 			$nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
-
-			$class = CLI::prompt(lang($nameLang), null, 'required');
+			$class    = CLI::prompt(lang($nameLang), null, 'required');
 			CLI::newLine();
 			// @codeCoverageIgnoreEnd
 		}
 
 		helper('inflector');
 
-		$component = strtolower(singular($this->component));
-		$class     = strtolower($class);
-		$class     = strpos($class, $component) !== false ? str_replace($component, ucfirst($component), $class) : $class;
+		$component = singular($this->component);
+
+		/**
+		 * @see https://regex101.com/r/a5KNCR/1
+		 */
+		$pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)/i', $component);
+
+		if (preg_match($pattern, $class, $matches) === 1)
+		{
+			$class = $matches[1] . ucfirst($matches[2]);
+		}
 
 		if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component))
 		{
