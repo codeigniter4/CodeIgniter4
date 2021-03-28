@@ -2,6 +2,7 @@
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Test\Mock\MockBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class SelectTest extends \CodeIgniter\Test\CIUnitTestCase

@@ -204,6 +204,7 @@ class Builder extends BaseBuilder
 		{
 			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $tableName) . '"';
 		}
+
 		return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $tableName) . ']';
 	}
 
