@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Security;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App;

@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use DateTime;

@@ -15,7 +15,7 @@ Cookies are mainly used for three purposes:
 - **Tracking**: Recording and analyzing user behavior
 
 To help you efficiently use cookies across browsers with your request and response,
-CodeIgniter provides the ``CodeIgniter\HTTP\Cookie\Cookie`` class to abstract the
+CodeIgniter provides the ``CodeIgniter\Cookie\Cookie`` class to abstract the
 cookie interaction.
 
 .. contents::
@@ -30,7 +30,7 @@ There are currently five (5) ways to create a new ``Cookie`` value object.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
     use DateTime;
 
     // Providing all arguments in the constructor
@@ -90,7 +90,7 @@ instance or an array of defaults to the static ``Cookie::setDefaults()`` method.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
     use Config\App;
 
     // pass in an App instance before constructing a Cookie class
@@ -112,7 +112,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
     use Config\App;
 
     $oldDefaults = Cookie::setDefaults(new App());
@@ -129,7 +129,7 @@ Once instantiated, you can easily access a ``Cookie``'s attribute by using one o
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
     use DateTime;
     use DateTimeZone;
 
@@ -180,7 +180,7 @@ returns a new instance. You need to retain this new instance in order to use it.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
 
     $cookie = Cookie::create('login_token', 'admin');
     $cookie->getName(); // 'login_token'
@@ -248,7 +248,7 @@ also take advantage of the class's constants to make it not a hassle.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
+    use CodeIgniter\Cookie\Cookie;
 
     Cookie::SAMESITE_LAX; // 'lax'
     Cookie::SAMESITE_STRICT; // 'strict'
@@ -271,8 +271,8 @@ CodeIgniter provides three (3) other ways to create a new instance of the ``Cook
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
-    use CodeIgniter\HTTP\Cookie\CookieStore;
+    use CodeIgniter\Cookie\Cookie;
+    use CodeIgniter\Cookie\CookieStore;
 
     // Passing an array of `Cookie` objects in the constructor
     $store = new CookieStore([
@@ -300,8 +300,8 @@ Checking Cookies in Store
 
 To check whether a ``Cookie`` object exists in the ``CookieStore`` instance, you can use several ways::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
-    use CodeIgniter\HTTP\Cookie\CookieStore;
+    use CodeIgniter\Cookie\Cookie;
+    use CodeIgniter\Cookie\CookieStore;
     use Config\Services;
 
     // check if cookie is in the current cookie collection
@@ -325,8 +325,8 @@ Getting Cookies in Store
 
 Retrieving a ``Cookie`` instance in a cookie collection is very easy::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
-    use CodeIgniter\HTTP\Cookie\CookieStore;
+    use CodeIgniter\Cookie\Cookie;
+    use CodeIgniter\Cookie\CookieStore;
     use Config\Services;
 
     // getting cookie in the current cookie collection
@@ -384,8 +384,8 @@ in order to work on it. The original instance is left unchanged.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
-    use CodeIgniter\HTTP\Cookie\CookieStore;
+    use CodeIgniter\Cookie\Cookie;
+    use CodeIgniter\Cookie\CookieStore;
     use Config\Services;
 
     $store = new CookieStore([
@@ -429,8 +429,8 @@ of ``headers_sent()``.
 
 ::
 
-    use CodeIgniter\HTTP\Cookie\Cookie;
-    use CodeIgniter\HTTP\Cookie\CookieStore;
+    use CodeIgniter\Cookie\Cookie;
+    use CodeIgniter\Cookie\CookieStore;
 
     $store = new CookieStore([
         Cookie::create('login_token'),

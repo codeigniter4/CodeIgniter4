@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Cookie\CookieStore;
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 

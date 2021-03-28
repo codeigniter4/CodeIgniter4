@@ -1,8 +1,8 @@
 <?php
 
-namespace CodeIgniter\HTTP\Cookie;
+namespace CodeIgniter\Cookie;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -14,7 +14,7 @@ use LogicException;
 /**
  * @internal
  */
-final class CookieClassTest extends CIUnitTestCase
+final class CookieTest extends CIUnitTestCase
 {
 	/**
 	 * @var array

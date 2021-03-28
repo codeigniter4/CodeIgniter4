@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP\Cookie;
+namespace CodeIgniter\Cookie;
 
 /**
  * Interface for a value object representation of an HTTP cookie.
