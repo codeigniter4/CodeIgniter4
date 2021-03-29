@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Controller;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
@@ -45,7 +46,7 @@ trait ControllerTester
 	/**
 	 * Request.
 	 *
-	 * @var Request
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
