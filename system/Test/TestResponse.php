@@ -263,8 +263,8 @@ class TestResponse extends TestCase
 	/**
 	 * Asserts that an SESSION key has been set and, optionally, test it's value.
 	 *
-	 * @param string      $key
-	 * @param string|null $value
+	 * @param string $key
+	 * @param mixed  $value
 	 *
 	 * @throws Exception
 	 */
