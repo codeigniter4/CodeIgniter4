@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * --------------------------------------------------------------------
+ * CodeIgniter command-line tools
+ * --------------------------------------------------------------------
+ * The main entry point into the CLI system and allows you to run
+ * commands and perform maintenance on your application.
+ *
+ * Because CodeIgniter can handle CLI requests as just another web request
+ * this class mainly acts as a passthru to the framework itself.
+ */
+
+define('SPARKED', true);
+
+/*
+ *---------------------------------------------------------------
+ * BOOTSTRAP THE APPLICATION
+ *---------------------------------------------------------------
+ * This process sets up the path constants, loads and registers
+ * our autoloader, along with Composer's, loads our constants
+ * and fires up an environment-specific bootstrapping.
+ */
+
+// Refuse to run when called from php-cgi
+if (strpos(PHP_SAPI, 'cgi') === 0)
+{
+	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+}
+
+// Path to the front controller
+// CHANGED THIS PER https://forum.codeigniter.com/thread-75774.html
+define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public_html'. DIRECTORY_SEPARATOR . 'momsrecipes.net' . DIRECTORY_SEPARATOR);
+
+// Load our paths config file
+// CHANGED THIS TO POINT TO RIGHT FILE
+require realpath('ci4_code/app/Config/Paths.php') ?: 'ci4_code/app/Config/Paths.php';
+// ^^^ Change this line if you move your application folder
+
+$paths = new Config\Paths();
+
+// Ensure the current directory is pointing to the front controller's directory
+chdir(FCPATH);
+
+$bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+$app       = require realpath($bootstrap) ?: $bootstrap;
+
+// Grab our Console
+$console = new CodeIgniter\CLI\Console($app);
+
+// We want errors to be shown when using it from the CLI.
+error_reporting(-1);
+ini_set('display_errors', '1');
+
+// Show basic information before we do anything else.
+$console->showHeader();
+
+// fire off the command in the main framework.
+$response = $console->run();
+if ($response->getStatusCode() >= 300)
+{
+	exit($response->getStatusCode());
+}

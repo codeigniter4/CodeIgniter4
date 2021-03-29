@@ -1,0 +1,6 @@
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(sideMenu.php): failed to open stream: No such file or directory in /home/parkersmith1987/public_html/Graphics/index.php on line 32
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(): Failed opening 'sideMenu.php' for inclusion (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/parkersmith1987/public_html/Graphics/index.php on line 32
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(About.html): failed to open stream: No such file or directory in /home/parkersmith1987/public_html/Graphics/index.php on line 37
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(): Failed opening 'About.html' for inclusion (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/parkersmith1987/public_html/Graphics/index.php on line 37
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(underConstruction.html): failed to open stream: No such file or directory in /home/parkersmith1987/public_html/Graphics/index.php on line 37
+[27-Nov-2016 00:20:20 UTC] PHP Warning:  include(): Failed opening 'underConstruction.html' for inclusion (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/parkersmith1987/public_html/Graphics/index.php on line 37

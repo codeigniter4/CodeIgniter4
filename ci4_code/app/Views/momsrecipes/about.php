@@ -1,0 +1,1 @@
+<p>Mom's recipes is inspired by our mother, Lela Smith, who created a learned to type when she was in her 70s and used her new skill to create a cookbook for each of her kids to use to keep the old recipes.</p>

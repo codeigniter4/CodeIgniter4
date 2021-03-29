@@ -1,0 +1,17 @@
+@charset "utf-8"; 
+
+
+//import google font
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+// Set your brand colors
+$body-background-color: #FFF9D4;
+$link-hover: #FF6347;
+$link-focus: #FF6347;
+$text: #583629;
+$primary: #D3A13B;
+
+
+
+//THIS HAS TO GO LAST FOR ANY OF THE BEFORE TO WORK
+@import "../node_modules/bulma/bulma.sass";

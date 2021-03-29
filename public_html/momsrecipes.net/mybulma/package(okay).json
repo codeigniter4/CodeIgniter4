@@ -1,0 +1,20 @@
+{
+  "name": "momsrecipes",
+  "version": "1.0.0",
+  "description": "Styling for momsrecipes.net",
+  "main": "sass/mystyles.scss",
+  "scripts": {
+  "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css",
+  "css-watch": "npm run css-build -- --watch",
+  "start": "npm run css-watch"
+	}
+  "keywords": [
+    "styling"
+  ],
+  "author": "Burt Smith",
+  "license": "MIT",
+  "devDependencies": {
+    "bulma": "^0.9.2",
+    "node-sass": "^5.0.0"
+  }
+}
