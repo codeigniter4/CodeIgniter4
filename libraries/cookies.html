@@ -362,7 +362,7 @@ example. It remembers stateful information for the stateless HTTP protocol.</p>
 <li><p><strong>Tracking</strong>: Recording and analyzing user behavior</p></li>
 </ul>
 <p>To help you efficiently use cookies across browsers with your request and response,
-CodeIgniter provides the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Cookie\Cookie</span></code> class to abstract the
+CodeIgniter provides the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie</span></code> class to abstract the
 cookie interaction.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -391,7 +391,7 @@ cookie interaction.</p>
 <div class="section" id="creating-cookies">
 <h2><a class="toc-backref" href="#id1">Creating Cookies</a><a class="headerlink" href="#creating-cookies" title="Permalink to this headline">¶</a></h2>
 <p>There are currently five (5) ways to create a new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> value object.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">DateTime</span><span class="p">;</span>
 
 <span class="c1">// Providing all arguments in the constructor</span>
@@ -449,7 +449,7 @@ cookie interaction.</p>
 If the optional attributes are not modified, their values will be filled up by the default values saved in
 the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class. To override the defaults currently stored in the class, you can pass a <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>
 instance or an array of defaults to the static <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\App</span><span class="p">;</span>
 
 <span class="c1">// pass in an App instance before constructing a Cookie class</span>
@@ -469,7 +469,7 @@ instance or an array of defaults to the static <code class="docutils literal not
 overwrite your defaults and will persist until new defaults are passed. If you do not want this
 behavior but only want to change defaults for a limited time, you can take advantage of
 <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> return which returns the old defaults array.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\App</span><span class="p">;</span>
 
 <span class="nv">$oldDefaults</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">App</span><span class="p">());</span>
@@ -483,7 +483,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 <div class="section" id="accessing-cookie-s-attributes">
 <h2><a class="toc-backref" href="#id2">Accessing Cookie’s Attributes</a><a class="headerlink" href="#accessing-cookie-s-attributes" title="Permalink to this headline">¶</a></h2>
 <p>Once instantiated, you can easily access a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s attribute by using one of its getter methods.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">DateTime</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">DateTimeZone</span><span class="p">;</span>
 
@@ -531,7 +531,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 <p>A new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance is an immutable value object representation of an HTTP cookie. Being immutable,
 modifying any of the instance’s attributes will not affect the original instance. The modification <strong>always</strong>
 returns a new instance. You need to retain this new instance in order to use it.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">);</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;login_token&#39;</span>
@@ -589,7 +589,7 @@ default SameSite is also an empty string, your cookie will be given the <code cl
 <p>If the SameSite is set to <code class="docutils literal notranslate"><span class="pre">None</span></code> you need to make sure that <code class="docutils literal notranslate"><span class="pre">Secure</span></code> is also set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <p>When writing the SameSite attribute, the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class accepts any of the values case-insensitively. You can
 also take advantage of the class’s constants to make it not a hassle.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 
 <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span> <span class="c1">// &#39;lax&#39;</span>
 <span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span> <span class="c1">// &#39;strict&#39;</span>
@@ -608,8 +608,8 @@ instance can be accessed from the current <code class="docutils literal notransl
 </pre></div>
 </div>
 <p>CodeIgniter provides three (3) other ways to create a new instance of the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
 
 <span class="c1">// Passing an array of `Cookie` objects in the constructor</span>
 <span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
@@ -638,8 +638,8 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 <div class="section" id="checking-cookies-in-store">
 <h3><a class="toc-backref" href="#id9">Checking Cookies in Store</a><a class="headerlink" href="#checking-cookies-in-store" title="Permalink to this headline">¶</a></h3>
 <p>To check whether a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object exists in the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance, you can use several ways:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="c1">// check if cookie is in the current cookie collection</span>
@@ -663,8 +663,8 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 <div class="section" id="getting-cookies-in-store">
 <h3><a class="toc-backref" href="#id10">Getting Cookies in Store</a><a class="headerlink" href="#getting-cookies-in-store" title="Permalink to this headline">¶</a></h3>
 <p>Retrieving a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance in a cookie collection is very easy:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="c1">// getting cookie in the current cookie collection</span>
@@ -716,8 +716,8 @@ right away.</p>
 <h3><a class="toc-backref" href="#id11">Adding/Removing Cookies in Store</a><a class="headerlink" href="#adding-removing-cookies-in-store" title="Permalink to this headline">¶</a></h3>
 <p>As previously mentioned, <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> objects are immutable. You need to save the modified instance
 in order to work on it. The original instance is left unchanged.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
@@ -759,8 +759,8 @@ the instance with the modified instance.</p>
 for you. However, if you really need to manually send cookies, you can use the <code class="docutils literal notranslate"><span class="pre">dispatch</span></code> method. Just like
 in sending other headers, you need to make sure the headers are not yet sent by checking the value
 of <code class="docutils literal notranslate"><span class="pre">headers_sent()</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Cookie\CookieStore</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
 
 <span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
     <span class="nx">Cookie</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
@@ -1462,7 +1462,7 @@ The original collection is left unchanged.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 26, 2021.
+        Last updated on Mar 30, 2021.
       </span>
 
     </p>
