@@ -25,6 +25,7 @@
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
 # app.sessionCookieName = 'ci_session'
+# app.sessionExpiration = 7200
 # app.sessionSavePath = NULL
 # app.sessionMatchIP = false
 # app.sessionTimeToUpdate = 300
@@ -39,13 +40,13 @@
 # app.cookieRaw = false
 # app.cookieExpires = 0
 
-# app.CSRFProtection  = false
-# app.CSRFTokenName   = 'csrf_test_name'
-# app.CSRFCookieName  = 'csrf_cookie_name'
-# app.CSRFExpire      = 7200
-# app.CSRFRegenerate  = true
+# app.CSRFProtection = false
+# app.CSRFTokenName = 'csrf_test_name'
+# app.CSRFCookieName = 'csrf_cookie_name'
+# app.CSRFExpire = 7200
+# app.CSRFRegenerate = true
 # app.CSRFExcludeURIs = []
-# app.CSRFSameSite    = 'Lax'
+# app.CSRFSameSite = 'Lax'
 
 # app.CSPEnabled = false
 
@@ -58,12 +59,14 @@
 # database.default.username = root
 # database.default.password = root
 # database.default.DBDriver = MySQLi
+# database.default.DBPrefix =
 
 # database.tests.hostname = localhost
 # database.tests.database = ci4
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
+# database.tests.DBPrefix =
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
@@ -111,13 +114,13 @@
 # SECURITY
 #--------------------------------------------------------------------
 
-# security.tokenName  = 'csrf_token_name'
+# security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'
 # security.cookieName = 'csrf_cookie_name'
-# security.expires    = 7200
+# security.expires = 7200
 # security.regenerate = true
-# security.redirect   = true
-# security.samesite   = 'Lax'
+# security.redirect = true
+# security.samesite = 'Lax'
 
 #--------------------------------------------------------------------
 # LOGGER
