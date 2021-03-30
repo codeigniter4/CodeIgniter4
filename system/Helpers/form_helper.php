@@ -521,13 +521,7 @@ if (! function_exists('form_submit'))
 	 */
 	function form_submit($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults = [
-			'type'  => 'submit',
-			'name'  => is_array($data) ? '' : $data,
-			'value' => $value,
-		];
-
-		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+		return form_input($data, $value, $extra, 'submit');
 	}
 }
 
@@ -546,13 +540,7 @@ if (! function_exists('form_reset'))
 	 */
 	function form_reset($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults = [
-			'type'  => 'reset',
-			'name'  => is_array($data) ? '' : $data,
-			'value' => $value,
-		];
-
-		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+		return form_input($data, $value, $extra, 'reset');
 	}
 }
 
