@@ -11,8 +11,8 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
-use CodeIgniter\HTTP\Cookie\CookieStore;
+use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;

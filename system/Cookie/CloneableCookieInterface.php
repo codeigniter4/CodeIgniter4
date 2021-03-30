@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP\Cookie;
+namespace CodeIgniter\Cookie;
 
 use DateTimeInterface;
 

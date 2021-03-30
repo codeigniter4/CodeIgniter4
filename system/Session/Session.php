@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Session;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\Cookie\Cookie;
 use Config\App;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;

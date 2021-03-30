@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Test\Mock;
 
-use CodeIgniter\HTTP\Cookie\Cookie;
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Session\Session;
 
 /**

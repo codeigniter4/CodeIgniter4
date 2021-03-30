@@ -11,12 +11,12 @@
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
-use CodeIgniter\HTTP\Cookie\Cookie;
-use CodeIgniter\HTTP\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RedirectResponse;
