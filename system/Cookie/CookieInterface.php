@@ -67,18 +67,11 @@ interface CookieInterface
 
 	/**
 	 * Returns a unique identifier for the cookie consisting
-	 * of its name, prefix, domain, and path.
+	 * of its prefixed name, path, and domain.
 	 *
 	 * @return string
 	 */
 	public function getId(): string;
-
-	/**
-	 * Checks if the cookie should be sent with no URL encoding.
-	 *
-	 * @return boolean
-	 */
-	public function isRaw(): bool;
 
 	/**
 	 * Gets the cookie prefix.
@@ -137,18 +130,18 @@ interface CookieInterface
 	public function getMaxAge(): int;
 
 	/**
-	 * Gets the "Domain" cookie attribute.
-	 *
-	 * @return string
-	 */
-	public function getDomain(): string;
-
-	/**
 	 * Gets the "Path" cookie attribute.
 	 *
 	 * @return string
 	 */
 	public function getPath(): string;
+
+	/**
+	 * Gets the "Domain" cookie attribute.
+	 *
+	 * @return string
+	 */
+	public function getDomain(): string;
 
 	/**
 	 * Gets the "Secure" cookie attribute.
@@ -168,7 +161,7 @@ interface CookieInterface
 	 *
 	 * @return boolean
 	 */
-	public function isHttpOnly(): bool;
+	public function isHTTPOnly(): bool;
 
 	/**
 	 * Gets the "SameSite" cookie attribute.
@@ -176,6 +169,13 @@ interface CookieInterface
 	 * @return string
 	 */
 	public function getSameSite(): string;
+
+	/**
+	 * Checks if the cookie should be sent with no URL encoding.
+	 *
+	 * @return boolean
+	 */
+	public function isRaw(): bool;
 
 	/**
 	 * Gets the options that are passable to the `setcookie` variant

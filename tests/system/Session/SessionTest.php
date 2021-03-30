@@ -2,13 +2,15 @@
 
 namespace CodeIgniter\Session;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
-use Config\Logger;
+use Config\Cookie as CookieConfig;
+use Config\Logger as LoggerConfig;
 
 /**
  * @runTestsInSeparateProcesses
@@ -50,7 +52,7 @@ class SessionTest extends CIUnitTestCase
 		}
 
 		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
-		$session->setLogger(new TestLogger(new Logger()));
+		$session->setLogger(new TestLogger(new LoggerConfig()));
 
 		return $session;
 	}
@@ -552,7 +554,11 @@ class SessionTest extends CIUnitTestCase
 
 	public function testLaxSameSite()
 	{
-		$session = $this->getInstance(['cookieSameSite' => 'Lax']);
+		$config           = new CookieConfig();
+		$config->samesite = 'Lax';
+		Factories::injectMock('config', CookieConfig::class, $config);
+
+		$session = $this->getInstance();
 		$session->start();
 		$cookies = $session->cookies;
 		$this->assertCount(1, $cookies);
@@ -561,7 +567,13 @@ class SessionTest extends CIUnitTestCase
 
 	public function testNoneSameSite()
 	{
-		$session = $this->getInstance(['cookieSameSite' => 'None', 'cookieSecure' => true]);
+		$config           = new CookieConfig();
+		$config->secure   = true;
+		$config->samesite = 'None';
+
+		Factories::injectMock('config', CookieConfig::class, $config);
+
+		$session = $this->getInstance();
 		$session->start();
 
 		$cookies = $session->cookies;
@@ -571,7 +583,12 @@ class SessionTest extends CIUnitTestCase
 
 	public function testNoSameSiteReturnsDefault()
 	{
-		$session = $this->getInstance(['cookieSameSite' => '']);
+		$config           = new CookieConfig();
+		$config->samesite = '';
+
+		Factories::injectMock('config', CookieConfig::class, $config);
+
+		$session = $this->getInstance();
 		$session->start();
 
 		$cookies = $session->cookies;
@@ -584,7 +601,12 @@ class SessionTest extends CIUnitTestCase
 		$this->expectException(CookieException::class);
 		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
 
-		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
+		$config           = new CookieConfig();
+		$config->samesite = 'Invalid';
+
+		Factories::injectMock('config', CookieConfig::class, $config);
+
+		$session = $this->getInstance();
 		$session->start();
 	}
 

@@ -13,6 +13,7 @@ namespace CodeIgniter\Session;
 
 use CodeIgniter\Cookie\Cookie;
 use Config\App;
+use Config\Cookie as CookieConfig;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
@@ -181,19 +182,24 @@ class Session implements SessionInterface
 		//---------------------------------------------------------------------
 		// DEPRECATED COOKIE MANAGEMENT
 		//---------------------------------------------------------------------
-		$this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
 		$this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
+		$this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
 		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
 		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
+		/**
+		 * @var CookieConfig
+		 */
+		$config = config('Cookie');
+
 		$this->cookie = Cookie::create($this->sessionCookieName, '', [
 			'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
-			'raw'      => $config->cookieRaw ?? false,
-			'domain'   => $config->cookieDomain ?? '',
-			'path'     => $config->cookiePath ?? '/',
-			'secure'   => $config->cookieSecure ?? false,
+			'path'     => $config->path,
+			'domain'   => $config->domain,
+			'secure'   => $config->secure,
 			'httponly' => true, // for security
-			'samesite' => $config->cookieSameSite ?? Cookie::SAMESITE_LAX,
+			'samesite' => $config->samesite,
+			'raw'      => $config->raw,
 		]);
 
 		helper('array');

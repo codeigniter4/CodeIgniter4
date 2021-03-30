@@ -89,6 +89,19 @@
 # contentsecuritypolicy.upgradeInsecureRequests = false
 
 #--------------------------------------------------------------------
+# COOKIE
+#--------------------------------------------------------------------
+
+# cookie.prefix   = ''
+# cookie.expires  = 0
+# cookie.path     = '/'
+# cookie.domain   = ''
+# cookie.secure   = false
+# cookie.httponly = false
+# cookie.samesite = 'Lax'
+# cookie.raw      = false
+
+#--------------------------------------------------------------------
 # ENCRYPTION
 #--------------------------------------------------------------------
 
