@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
 
 	// paths to refactor; solid alternative to CLI arguments
-	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests']);
+	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
 
 	// do you need to include constants, class aliases or custom autoloader? files listed will be executed
 	$parameters->set(Option::BOOTSTRAP_FILES, [
