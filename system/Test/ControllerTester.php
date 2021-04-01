@@ -179,10 +179,13 @@ trait ControllerTester
 		{
 			$code = $e->getCode();
 
-			if ($code >= 100 && $code < 600)
+			// If code is not a valid HTTP status then assume there is an error
+			if ($code < 100 || $code >= 600)
 			{
-				$result->response()->setStatusCode($code);
+				throw $e;
 			}
+
+			$result->response()->setStatusCode($code);
 		}
 		finally
 		{
