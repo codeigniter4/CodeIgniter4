@@ -46,16 +46,14 @@ class DotEnv
 
 		if ($_SERVER['SERVER_NAME'] === 'localhost'){
 			$domain = 'localhost';
-			$env_path = 'loc-env' . DIRECTORY_SEPARATOR . basename(FCPATH);
 		} else {
 			$domain = basename(FCPATH);
-			$env_path = 'www-env' . DIRECTORY_SEPARATOR . $domain;
 		}
 		// JUST FOR TESTING
 		echo "Serving from domain: " . $domain;
-		echo "$env_path";	
-		//BACK TO ORIGINAL CODE except added '$env-path' folder to hold '.env' file
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_path . DIRECTORY_SEPARATOR . $file;
+				
+		//BACK TO ORIGINAL CODE except added 'domain' folder to hold '.env' file
+		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $domain . DIRECTORY_SEPARATOR . $file;
 		
 	}
 

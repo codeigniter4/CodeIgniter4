@@ -40,22 +40,25 @@ class DotEnv
 	
 	public function __construct(string $path, string $file = '.env')
 	{
-		/* SOURCES 
-		https://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
-		https://expressionengine.com/blog/http-host-and-server-name-security-issues */
+		/* ADDED THIS FROM https://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
+		ALSO ADDED isset() so doesn't throw php error when server is off
+		THIS IS A SECURITY MEASURE WHEN USING $SERVER('$SERVER_NAME')
+		GOT FROM https://expressionengine.com/blog/http-host-and-server-name-security-issues */
 
-		if ($_SERVER['SERVER_NAME'] === 'localhost'){
-			$domain = 'localhost';
-			$env_path = 'loc-env' . DIRECTORY_SEPARATOR . basename(FCPATH);
-		} else {
-			$domain = basename(FCPATH);
-			$env_path = 'www-env' . DIRECTORY_SEPARATOR . $domain;
-		}
-		// JUST FOR TESTING
-		echo "Serving from domain: " . $domain;
-		echo "$env_path";	
-		//BACK TO ORIGINAL CODE except added '$env-path' folder to hold '.env' file
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_path . DIRECTORY_SEPARATOR . $file;
+		$domains = array('momsrecipes.net', 'netmonkeyus.com', 'localhost');
+
+		if (in_array($_SERVER['SERVER_NAME'], $domains)){
+			$domain = $_SERVER['SERVER_NAME'];
+			echo "Serving from verfied domain: " . $domain;
+			$domain = '.' . $domain;
+			} elseif(!isset($domain)) {	
+				//echo 'error -- Potential hack attack';
+				$domain = '';
+			} 
+		
+		/* 'echos' JUST FOR TESTING*/
+		/*BACK TO ORIGINAL CODE except added '.domain'*/
+		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file . $domain;
 		
 	}
 

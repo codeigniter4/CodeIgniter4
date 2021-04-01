@@ -13,10 +13,6 @@ namespace CodeIgniter\Config;
 
 use InvalidArgumentException;
 
-		
-	
-				
-
 /**
  * Environment-specific configuration
  */
@@ -37,25 +33,16 @@ class DotEnv
 	 * @param string $path
 	 * @param string $file
 	 */
-	
 	public function __construct(string $path, string $file = '.env')
 	{
-		/* SOURCES 
-		https://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
-		https://expressionengine.com/blog/http-host-and-server-name-security-issues */
-
-		if ($_SERVER['SERVER_NAME'] === 'localhost'){
-			$domain = 'localhost';
-			$env_path = 'loc-env' . DIRECTORY_SEPARATOR . basename(FCPATH);
-		} else {
-			$domain = basename(FCPATH);
-			$env_path = 'www-env' . DIRECTORY_SEPARATOR . $domain;
-		}
-		// JUST FOR TESTING
-		echo "Serving from domain: " . $domain;
-		echo "$env_path";	
-		//BACK TO ORIGINAL CODE except added '$env-path' folder to hold '.env' file
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_path . DIRECTORY_SEPARATOR . $file;
+		//FCPATH IS 'Front controller path' per https://stackoverflow.com/questions/13992074/codeigniter-path-constants-definitions
+		//GET 'mydomain' from FCPATH
+		$envdir = basename(FCPATH, '.net');
+		//echo $envdir;
+		echo php_uname("n");
+		//echo $path . '<br>';
+		//ADD $envdir (ENVELOPE DIRECTORY) TO PATH
+		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $envdir . DIRECTORY_SEPARATOR . $file;
 		
 	}
 
@@ -264,7 +251,7 @@ class DotEnv
 		if (strpos($value, '$') !== false)
 		{
 			$value = preg_replace_callback(
-				'/\${([a-zA-Z0-9_]+)}/',
+				'/\${([a-zA-Z0-9_\.]+)}/',
 				function ($matchedPatterns) {
 					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 

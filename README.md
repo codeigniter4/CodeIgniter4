@@ -9,12 +9,6 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/codeigniter4/CodeIgniter4/pulls)
 <br>
 
-## Okay, CodeIgniter is great, but...
-
-CodeIgniter was once the go-to website frame work. It has fallen behind Laravel and others in popularity. As a newbie to web frameworks, there are some things that struck me as odd with CodeIgniter. The user guide is intimidating and unfriendly. There are gaping holes in the tutorial which necessitate flipping back and forth between the user guide and the tutorial and between the included documentation and web sources. CodeIgniter 3 and 4 - while similar - are basically non-compatible, and a newbie like me will get a lot of misinformation from searching for CodeIgniter examples.
-
-## Original verbage
-----------------------------
 ## What is CodeIgniter?
 
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.

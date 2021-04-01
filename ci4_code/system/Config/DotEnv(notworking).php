@@ -13,10 +13,6 @@ namespace CodeIgniter\Config;
 
 use InvalidArgumentException;
 
-		
-	
-				
-
 /**
  * Environment-specific configuration
  */
@@ -37,25 +33,54 @@ class DotEnv
 	 * @param string $path
 	 * @param string $file
 	 */
-	
 	public function __construct(string $path, string $file = '.env')
 	{
-		/* SOURCES 
+		/* SOURCES:
 		https://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
-		https://expressionengine.com/blog/http-host-and-server-name-security-issues */
-
-		if ($_SERVER['SERVER_NAME'] === 'localhost'){
-			$domain = 'localhost';
-			$env_path = 'loc-env' . DIRECTORY_SEPARATOR . basename(FCPATH);
-		} else {
-			$domain = basename(FCPATH);
-			$env_path = 'www-env' . DIRECTORY_SEPARATOR . $domain;
+		https://expressionengine.com/blog/http-host-and-server-name-security-issues 
+		https://stackoverflow.com/questions/13234122/index-server-name-not-exist */
+		
+		//$server_name = (isset($_SERVER['SERVER_NAME']))?	// check if SERVER_NAME is set
+		//$_SERVER['SERVER_NAME'] :							// if yes, use HTTP header value
+		//php_uname("n");										// if no, use php_uname()
+		
+		/* NOT THE BEST WAY
+		if(defined($_SERVER['SERVER_NAME'])) //THIS IS JUST NOT TO THROW ERROR IN SPARK STARTUP & TO TEST IF USING LOCALHOST
+		{ 
+			$server_name = $_SERVER['SERVER_NAME'];
+			
+			//THIS TESTS IF DOMAIN NAMES ARE OKAY, THAT IS, IF YOU ARE BEING HIJACKED).
+			$domains = [
+				'mydomain.com',
+				'myotherdomain.org',
+				
+			];
+			
+			if (in_array($domain, $domains))
+			{
+				$env_dir = 'www.' . $server_name;
+			}
+			
+		} else 
+		{	
+			//FCPATH IS 'Front controller path' per https://stackoverflow.com/questions/13992074/codeigniter-path-constants-definitions
+			//GET 'mydomain' from FCPATH for local server
+			$env_dir = 'local.' . basename(FCPATH);
 		}
-		// JUST FOR TESTING
-		echo "Serving from domain: " . $domain;
-		echo "$env_path";	
-		//BACK TO ORIGINAL CODE except added '$env-path' folder to hold '.env' file
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_path . DIRECTORY_SEPARATOR . $file;
+		*/
+		
+		//todo::  okay this works for local. Need to explore 'live'
+		helper('url'); //LOAD THIS BEFORE IT WOULD NORMALLY BE LOADED
+		//FCPATH IS 'Front controller path' per https://stackoverflow.com/questions/13992074/codeigniter-path-constants-definitions
+		$env_dir = basename(base_url()) . '.' . basename(FCPATH);
+		echo basename(base_url());
+		echo basename(FCPATH);
+		// GET RID OF SEMI-COLON AND EVERYTHING AFTER IT per https://stackoverflow.com/questions/34950056/removing-a-port-number-from-a-string 
+		$env_dir = preg_replace('/:[0-9]+/', '', $env_dir);// 'preg_replace' means P-erform a REGular expression search and _REPLACE
+		
+		echo $env_dir;	
+		//ADD $envdir (ENVELOPE DIRECTORY) TO PATH
+		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_dir . DIRECTORY_SEPARATOR . $file;
 		
 	}
 
@@ -264,7 +289,7 @@ class DotEnv
 		if (strpos($value, '$') !== false)
 		{
 			$value = preg_replace_callback(
-				'/\${([a-zA-Z0-9_]+)}/',
+				'/\${([a-zA-Z0-9_\.]+)}/',
 				function ($matchedPatterns) {
 					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 
