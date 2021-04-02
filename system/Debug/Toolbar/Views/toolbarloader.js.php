@@ -71,20 +71,19 @@ function newXHR() {
 	var realXHR = new oldXHR();
 	realXHR.addEventListener("readystatechange", function() {
 		// Only success responses and URLs that do not contains "debugbar_time" are tracked
-		if (realXHR.readyState === 4 && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1 ) {
+		if (realXHR.readyState === 4 && realXHR.status.toString()[0] === '2' && realXHR.responseURL.indexOf('debugbar_time') === -1) {
 			if (realXHR.getAllResponseHeaders().indexOf("Debugbar-Time") >= 0) {
-
     				var debugbarTime = realXHR.getResponseHeader('Debugbar-Time');
 
 				if (debugbarTime) {
 					var h2 = document.querySelector('#ci-history > h2');
-					if(h2) {
+					if (h2) {
 						h2.innerHTML = 'History <small>You have new debug data.</small> <button onclick="loadDoc(' + debugbarTime + ')">Update</button>';
 						var badge = document.querySelector('a[data-tab="ci-history"] > span > .badge');
 						badge.className += ' active';
 					}
 				}
-  			}
+			}
 		}
 	}, false);
 	return realXHR;
