@@ -214,14 +214,20 @@ class IncomingRequest extends Request
 	 * Sets the locale string for this request.
 	 *
 	 * @param string $locale
+	 * @param array $locales
 	 *
 	 * @return IncomingRequest
 	 */
-	public function setLocale(string $locale)
+	public function setLocale(string $locale, array $locales = [])
 	{
+		if (! empty($locales))
+		{
+			$this->validLocales = array_merge($this->validLocales, $locales);
+		}
+
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if (! in_array($locale, $this->config->supportedLocales, true))
+		if (! in_array($locale, $this->validLocales, true))
 		{
 			$locale = $this->defaultLocale;
 		}
