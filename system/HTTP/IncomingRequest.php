@@ -220,7 +220,7 @@ class IncomingRequest extends Request
 	 */
 	public function setLocale(string $locale, array $locales = [])
 	{
-		if (! empty($locales))
+		if ($locales !== [])
 		{
 			$this->validLocales = array_merge($this->validLocales, $locales);
 		}
