@@ -385,15 +385,17 @@ class IncomingRequestTest extends CIUnitTestCase
 
 	public function testGetVarWorksWithJsonAndGetParams()
 	{
-		$config = new App();
+		$config          = new App();
 		$config->baseURL = 'http://example.com/';
-		// get method
-		$uri = new URI('http://example.com/path?foo=bar&fizz=buzz');
-		$_REQUEST['foo'] = 'bar';
+
+		// GET method
+		$_REQUEST['foo']  = 'bar';
 		$_REQUEST['fizz'] = 'buzz';
-		$request = new IncomingRequest($config, $uri, 'php://input', new UserAgent());
+
+		$request = new IncomingRequest($config, new URI('http://example.com/path?foo=bar&fizz=buzz'), 'php://input', new UserAgent());
 		$request = $request->withMethod('GET');
-		// json type
+
+		// JSON type
 		$request->setHeader('Content-Type', 'application/json');
 
 		$this->assertEquals('bar', $request->getVar('foo'));
