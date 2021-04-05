@@ -281,7 +281,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch an item from the $_REQUEST object or a JSON input stream. This is the simplest way
+	 * Fetch an item from JSON input stream with fallback to $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
@@ -293,7 +293,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false)
+		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && ! is_null($this->body))
 		{
 			if (is_null($index))
 			{
@@ -312,7 +312,6 @@ class IncomingRequest extends Request
 
 			return $this->getJsonVar($index, false, $filter, $flags);
 		}
-
 		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
