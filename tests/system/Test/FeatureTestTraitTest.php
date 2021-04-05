@@ -5,15 +5,17 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * @group                       DatabaseLive
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class FeatureTestCaseTest extends FeatureTestCase
+class FeatureTestCaseTest extends CIUnitTestCase
 {
+	use FeatureTestTrait;
 
 	protected function setUp(): void
 	{

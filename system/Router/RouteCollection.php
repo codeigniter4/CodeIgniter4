@@ -1568,7 +1568,7 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Reset the routes, so that a FeatureTestCase can provide the
+	 * Reset the routes, so that a test case can provide the
 	 * explicit ones needed for it.
 	 */
 	public function resetRoutes()
