@@ -238,11 +238,13 @@ class Forge
 		}
 		catch (Throwable $e)
 		{
+			// @phpstan-ignore-next-line
 			if ($this->db->DBDebug)
 			{
 				throw new DatabaseException('Unable to create the specified database.', 0, $e);
 			}
-
+			
+			// @phpstan-ignore-next-line
 			return false; // @codeCoverageIgnore
 		}
 	}
