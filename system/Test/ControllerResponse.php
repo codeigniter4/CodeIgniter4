@@ -16,6 +16,8 @@ use Config\Services;
 
 /**
  * Testable response from a controller
+ *
+ * @deprecated Use TestResponse directly
  */
 class ControllerResponse extends TestResponse
 {
@@ -38,7 +40,7 @@ class ControllerResponse extends TestResponse
 	protected $dom;
 
 	/**
-	 * Maintains the deprecated $domParser property.
+	 * Maintains the deprecated $dom property.
 	 */
 	public function __construct()
 	{

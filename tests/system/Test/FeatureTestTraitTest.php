@@ -13,7 +13,7 @@ use CodeIgniter\Test\FeatureTestTrait;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class FeatureTestCaseTest extends CIUnitTestCase
+class FeatureTestTraitTest extends CIUnitTestCase
 {
 	use FeatureTestTrait;
 

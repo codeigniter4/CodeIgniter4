@@ -33,6 +33,8 @@ Deprecations:
 - Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
 - Deprecated ``CIDatabaseTestCase`` to use the ``DatabaseTestTrait`` instead.
 - Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
+- Deprecated ``ControllerTester`` to use the ``ControllerTestTrait`` instead.
+- Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
 
 Bugs Fixed:
 

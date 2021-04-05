@@ -17,19 +17,19 @@ case you need it.
 The Helper Trait
 ================
 
-To enable Controller Testing you need to use the ``ControllerTester`` trait within your tests::
+To enable Controller Testing you need to use the ``ControllerTestTrait`` trait within your tests::
 
     <?php
 
     namespace CodeIgniter;
 
-    use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\ControllerTestTrait;
     use CodeIgniter\Test\CIUnitTestCase;
     use CodeIgniter\Test\DatabaseTestTrait;
 
     class TestControllerA extends CIUnitTestCase
     {
-        use ControllerTester, DatabaseTestTrait;
+        use ControllerTestTrait, DatabaseTestTrait;
     }
 
 Once the trait has been included, you can start setting up the environment, including the request and response classes,
@@ -41,13 +41,13 @@ to run as the parameter::
 
     namespace CodeIgniter;
 
-    use CodeIgniter\Test\ControllerTester;
+    use CodeIgniter\Test\ControllerTestTrait;
     use CodeIgniter\Test\CIUnitTestCase;
     use CodeIgniter\Test\DatabaseTestTrait;
 
     class TestControllerA extends CIUnitTestCase
     {
-        use ControllerTester, DatabaseTestTrait;
+        use ControllerTestTrait, DatabaseTestTrait;
 
         public function testShowCategories()
         {
@@ -159,7 +159,7 @@ you need to set a JSON value as the body. The only parameter is a string that re
 Checking the Response
 =====================
 
-``ControllerTester::execute()`` returns an instance of a ``TestResponse``. See `Testing Responses <response.html>`_ on
+``ControllerTestTrait::execute()`` returns an instance of a ``TestResponse``. See `Testing Responses <response.html>`_ on
 how to use this class to perform additional assertions and verification in your test cases.
 
 Filter Testing
@@ -190,7 +190,7 @@ Configuration
 -------------
 
 Because of the logical overlap with Controller Testing ``FilterTestTrait`` is designed to
-work together with ``ControllerTester`` should you need both on the same class.
+work together with ``ControllerTestTrait`` should you need both on the same class.
 Once the trait has been included ``CIUnitTestCase`` will detect its ``setUp`` method and
 prepare all the components needed for your tests. Should you need a special configuration
 you can alter any of the properties before calling the support methods:

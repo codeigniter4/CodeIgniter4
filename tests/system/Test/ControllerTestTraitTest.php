@@ -15,9 +15,9 @@ use Tests\Support\Controllers\Popcorn;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ControllerTesterTest extends CIUnitTestCase
+class ControllerTestTraitTest extends CIUnitTestCase
 {
-	use ControllerTester;
+	use ControllerTestTrait;
 
 	public function testBadController()
 	{

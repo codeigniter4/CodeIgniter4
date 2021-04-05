@@ -26,6 +26,7 @@
 			<file>./system/ComposerScripts.php</file>
 			<file>./system/Config/Routes.php</file>
 			<file>./system/Test/bootstrap.php</file>
+			<file>./system/Test/ControllerTester.php</file>
 			<file>./system/Test/FeatureTestCase.php</file>
 		</exclude>
 

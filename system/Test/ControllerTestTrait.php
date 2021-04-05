@@ -21,7 +21,7 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * ControllerTester Trait
+ * Controller Test Trait
  *
  * Provides features that make testing controllers simple and fluent.
  *
@@ -33,10 +33,8 @@ use Throwable;
  *       ->withBody($body)
  *       ->controller('App\Controllers\Home')
  *       ->execute('methodName');
- *
- * @deprecated Use ControllerTestTrait instead
  */
-trait ControllerTester
+trait ControllerTestTrait
 {
 	/**
 	 * Controller configuration.
@@ -153,7 +151,7 @@ trait ControllerTester
 	 *
 	 * @throws InvalidArgumentException
 	 *
-	 * @return ControllerResponse
+	 * @return TestResponse
 	 */
 	public function execute(string $method, ...$params)
 	{
@@ -166,7 +164,7 @@ trait ControllerTester
 		// so ensure it's available.
 		helper('url');
 
-		$result = (new ControllerResponse())
+		$result = (new TestResponse())
 				->setRequest($this->request)
 				->setResponse($this->response);
 
