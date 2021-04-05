@@ -20,7 +20,7 @@ class HomeTest extends CIUnitTestCase
 		]);
 
 		$response = $this->get('home');
-		$this->assertInstanceOf('CodeIgniter\Test\FeatureResponse', $response);
+		$this->assertInstanceOf('CodeIgniter\Test\TestResponse', $response);
 		$this->assertTrue($response->isOK());
 	}
 }

@@ -55,10 +55,10 @@ class FeatureTestTraitTest extends CIUnitTestCase
 		$response = $this->call('get', 'home');
 
 		$this->assertInstanceOf(TestResponse::class, $response);
-		$this->assertInstanceOf(Response::class, $response->response);
+		$this->assertInstanceOf(Response::class, $response->response());
 		$this->assertTrue($response->isOK());
-		$this->assertEquals('Hello Earth', $response->response->getBody());
-		$this->assertEquals(200, $response->response->getStatusCode());
+		$this->assertEquals('Hello Earth', $response->response()->getBody());
+		$this->assertEquals(200, $response->response()->getStatusCode());
 	}
 
 	public function testCallPost()
