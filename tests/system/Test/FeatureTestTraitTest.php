@@ -4,9 +4,9 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\FeatureResponse;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\Test\TestResponse;
 
 /**
  * @group                       DatabaseLive
@@ -54,7 +54,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
 		]);
 		$response = $this->call('get', 'home');
 
-		$this->assertInstanceOf(FeatureResponse::class, $response);
+		$this->assertInstanceOf(TestResponse::class, $response);
 		$this->assertInstanceOf(Response::class, $response->response);
 		$this->assertTrue($response->isOK());
 		$this->assertEquals('Hello Earth', $response->response->getBody());
@@ -220,7 +220,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
 			],
 		]);
 		$response = $this->get('home');
-		$response->assertEmpty($response->response->getBody());
+		$response->assertEmpty($response->response()->getBody());
 	}
 
 	public function testEchoesWithParams()
