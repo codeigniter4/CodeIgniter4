@@ -43,19 +43,25 @@ class DotEnv
 		/* SOURCES 
 		https://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
 		https://expressionengine.com/blog/http-host-and-server-name-security-issues */
-
-		if ($_SERVER['SERVER_NAME'] === 'localhost'){
-			$domain = 'localhost';
-			$env_path = 'loc-env' . DIRECTORY_SEPARATOR . basename(FCPATH);
-		} else {
-			$domain = basename(FCPATH);
-			$env_path = 'www-env' . DIRECTORY_SEPARATOR . $domain;
+		
+		//HAVE TO DEFINE VARIABLES IN CASE 'IF' NOT RELEVANT
+		$domain = '';
+		$env_dir = '';
+		
+		if (isset($_SERVER['SERVER_NAME'])){
+			$domain = $_SERVER['SERVER_NAME'];
+			
+			if ($domain === 'localhost'){
+				$env_dir = basename(FCPATH) . '-local';
+			} else {
+				$env_dir = basename(FCPATH) . '-www';
+			}
 		}
 		// JUST FOR TESTING
-		echo "Serving from domain: " . $domain;
-		echo "$env_path";	
+		//echo "Serving from domain: " . $domain;
+		echo "$env_dir";	
 		//BACK TO ORIGINAL CODE except added '$env-path' folder to hold '.env' file
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_path . DIRECTORY_SEPARATOR . $file;
+		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $env_dir . DIRECTORY_SEPARATOR . $file;
 		
 	}
 
