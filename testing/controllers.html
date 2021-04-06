@@ -377,18 +377,18 @@ this way.</p>
 </div>
 <div class="section" id="the-helper-trait">
 <h2><a class="toc-backref" href="#id2">The Helper Trait</a><a class="headerlink" href="#the-helper-trait" title="Permalink to this headline">¶</a></h2>
-<p>To enable Controller Testing you need to use the <code class="docutils literal notranslate"><span class="pre">ControllerTester</span></code> trait within your tests:</p>
+<p>To enable Controller Testing you need to use the <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> trait within your tests:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTester</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTestTrait</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-    <span class="k">use</span> <span class="nx">ControllerTester</span><span class="p">,</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">ControllerTestTrait</span><span class="p">,</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -400,13 +400,13 @@ to run as the parameter:</p>
 
 <span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTester</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\ControllerTestTrait</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">TestControllerA</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-    <span class="k">use</span> <span class="nx">ControllerTester</span><span class="p">,</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">ControllerTestTrait</span><span class="p">,</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testShowCategories</span><span class="p">()</span>
     <span class="p">{</span>
@@ -505,7 +505,7 @@ you need to set a JSON value as the body. The only parameter is a string that re
 </div>
 <div class="section" id="checking-the-response">
 <h2><a class="toc-backref" href="#id4">Checking the Response</a><a class="headerlink" href="#checking-the-response" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ControllerTester::execute()</span></code> returns an instance of a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>. See <a class="reference external" href="response.html">Testing Responses</a> on
+<p><code class="docutils literal notranslate"><span class="pre">ControllerTestTrait::execute()</span></code> returns an instance of a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>. See <a class="reference external" href="response.html">Testing Responses</a> on
 how to use this class to perform additional assertions and verification in your test cases.</p>
 </div>
 <div class="section" id="filter-testing">
@@ -533,7 +533,7 @@ cases to enable these features:</p>
 <div class="section" id="configuration">
 <h3><a class="toc-backref" href="#id7">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
 <p>Because of the logical overlap with Controller Testing <code class="docutils literal notranslate"><span class="pre">FilterTestTrait</span></code> is designed to
-work together with <code class="docutils literal notranslate"><span class="pre">ControllerTester</span></code> should you need both on the same class.
+work together with <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> should you need both on the same class.
 Once the trait has been included <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect its <code class="docutils literal notranslate"><span class="pre">setUp</span></code> method and
 prepare all the components needed for your tests. Should you need a special configuration
 you can alter any of the properties before calling the support methods:</p>
@@ -664,7 +664,7 @@ to streamline your test methods.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 30, 2021.
+        Last updated on Apr 06, 2021.
       </span>
 
     </p>

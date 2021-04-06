@@ -353,7 +353,7 @@
   <div class="section" id="upgrading-from-4-1-1-to-4-1-2">
 <h1>Upgrading from 4.1.1 to 4.1.2<a class="headerlink" href="#upgrading-from-4-1-1-to-4-1-2" title="Permalink to this headline">¶</a></h1>
 <p><strong>BaseConnection::query() return values</strong></p>
-<p><cite>BaseConnection::query()</cite> method in prior versions was incorrectly returning BaseResult objects
+<p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (or throw an
 Exception if <code class="docutils literal notranslate"><span class="pre">DBDebug==true</span></code>) and will return booleans for write-type queries. Review any use
 of <code class="docutils literal notranslate"><span class="pre">query()</span></code> method and be assess whether the value might be boolean instead of Result object.
@@ -363,6 +363,43 @@ and any DBMS-specific override <code class="docutils literal notranslate"><span 
 <p>If you have written any classes that implement ConnectionInterface, these must now implement the
 <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code> method, declared as <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">isWriteType($sql):</span> <span class="pre">bool</span></code>. If your class extends BaseConnection, then that class will provide a basic <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code>
 method which you might want to override.</p>
+<p><strong>Test Traits</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test</span></code> namespace has had significant improvements to help developers with their
+own test cases. Most notably test extensions have moved to Traits to make them easier to
+pick-and-choose across various test case needs. The <code class="docutils literal notranslate"><span class="pre">DatabaseTestCase</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureTestCase</span></code>
+classes have been deprecated and their methods moved to <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code> and
+<code class="docutils literal notranslate"><span class="pre">FeatureTestTrait</span></code> respectively. Update your test cases to extend the main test case
+and use any traits you need. For example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestCase</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">DatabaseTestCase</span>
+<span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
+        <span class="p">{</span>
+</pre></div>
+</div>
+<p>… becomes:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+        <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
+        <span class="p">{</span>
+</pre></div>
+</div>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">ControllerTester</span></code> has been superseded by <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> to standardize
+approach and take advantage of the updated response testing (below).</p>
+<p><strong>Test Responses</strong></p>
+<p>The tools for testing responses have been consolidated and improved. A new
+<code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> replaces <code class="docutils literal notranslate"><span class="pre">ControllerResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureResponse</span></code> with a complete
+set of methods and properties expected from both those classes. In most cases these changes
+will be “behind the scenes” by <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureTestCase</span></code>, but two
+changes to be aware of:
+* <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>’s <code class="docutils literal notranslate"><span class="pre">$request</span></code> and <code class="docutils literal notranslate"><span class="pre">$response</span></code> properties are protected and should only be access through their getter methods, <code class="docutils literal notranslate"><span class="pre">request()</span></code> and <code class="docutils literal notranslate"><span class="pre">response()</span></code>
+* <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> does not have <code class="docutils literal notranslate"><span class="pre">getBody()</span></code> and <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> methods, but rather uses the Response methods directly, e.g.: <code class="docutils literal notranslate"><span class="pre">$body</span> <span class="pre">=</span> <span class="pre">$result-&gt;response()-&gt;getBody();</span></code></p>
 </div>
 
 
@@ -381,7 +418,7 @@ method which you might want to override.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Mar 30, 2021.
+        Last updated on Apr 06, 2021.
       </span>
 
     </p>
