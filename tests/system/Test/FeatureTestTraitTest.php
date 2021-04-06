@@ -4,16 +4,18 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\Test\TestResponse;
 
 /**
  * @group                       DatabaseLive
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class FeatureTestCaseTest extends FeatureTestCase
+class FeatureTestTraitTest extends CIUnitTestCase
 {
+	use FeatureTestTrait;
 
 	protected function setUp(): void
 	{
@@ -52,11 +54,11 @@ class FeatureTestCaseTest extends FeatureTestCase
 		]);
 		$response = $this->call('get', 'home');
 
-		$this->assertInstanceOf(FeatureResponse::class, $response);
-		$this->assertInstanceOf(Response::class, $response->response);
+		$this->assertInstanceOf(TestResponse::class, $response);
+		$this->assertInstanceOf(Response::class, $response->response());
 		$this->assertTrue($response->isOK());
-		$this->assertEquals('Hello Earth', $response->response->getBody());
-		$this->assertEquals(200, $response->response->getStatusCode());
+		$this->assertEquals('Hello Earth', $response->response()->getBody());
+		$this->assertEquals(200, $response->response()->getStatusCode());
 	}
 
 	public function testCallPost()
@@ -218,7 +220,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			],
 		]);
 		$response = $this->get('home');
-		$response->assertEmpty($response->response->getBody());
+		$response->assertEmpty($response->response()->getBody());
 	}
 
 	public function testEchoesWithParams()

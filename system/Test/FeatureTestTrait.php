@@ -134,14 +134,14 @@ trait FeatureTestTrait
 	}
 
 	/**
-	 * Calls a single URI, executes it, and returns a FeatureResponse
+	 * Calls a single URI, executes it, and returns a TestResponse
 	 * instance that can be used to run many assertions against.
 	 *
 	 * @param string     $method
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -212,7 +212,7 @@ trait FeatureTestTrait
 		}
 		// @codeCoverageIgnoreEnd
 
-		return new FeatureResponse($response);
+		return new TestResponse($response);
 	}
 
 	/**
@@ -221,7 +221,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -236,7 +236,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -251,7 +251,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -266,7 +266,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -281,7 +281,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -296,7 +296,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */

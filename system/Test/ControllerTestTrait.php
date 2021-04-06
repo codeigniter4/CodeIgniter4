@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
@@ -21,7 +22,7 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * ControllerTester Trait
+ * Controller Test Trait
  *
  * Provides features that make testing controllers simple and fluent.
  *
@@ -33,10 +34,8 @@ use Throwable;
  *       ->withBody($body)
  *       ->controller('App\Controllers\Home')
  *       ->execute('methodName');
- *
- * @deprecated Use ControllerTestTrait instead
  */
-trait ControllerTester
+trait ControllerTestTrait
 {
 	/**
 	 * Controller configuration.
@@ -81,7 +80,7 @@ trait ControllerTester
 	protected $uri = 'http://example.com';
 
 	/**
-	 * Request or response body.
+	 * Request body.
 	 *
 	 * @var string|null
 	 */
@@ -90,8 +89,11 @@ trait ControllerTester
 	/**
 	 * Initializes required components.
 	 */
-	protected function setUpControllerTester(): void
+	protected function setUpControllerTestTrait(): void
 	{
+		// The URL helper is always loaded by the system so ensure it is available.
+		helper('url');
+
 		if (empty($this->appConfig))
 		{
 			$this->appConfig = config('App');
@@ -153,7 +155,7 @@ trait ControllerTester
 	 *
 	 * @throws InvalidArgumentException
 	 *
-	 * @return ControllerResponse
+	 * @return TestResponse
 	 */
 	public function execute(string $method, ...$params)
 	{
@@ -162,19 +164,11 @@ trait ControllerTester
 			throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
 		}
 
-		// The URL helper is always loaded by the system
-		// so ensure it's available.
-		helper('url');
-
-		$result = (new ControllerResponse())
-				->setRequest($this->request)
-				->setResponse($this->response);
-
 		$response = null;
+
 		try
 		{
 			ob_start();
-
 			$response = $this->controller->{$method}(...$params);
 		}
 		catch (Throwable $e)
@@ -186,43 +180,60 @@ trait ControllerTester
 			{
 				throw $e;
 			}
-
-			$result->response()->setStatusCode($code);
 		}
 		finally
 		{
 			$output = ob_get_clean();
+		}
 
-			// If the controller returned a response, use it
-			if (isset($response) && $response instanceof Response)
-			{
-				$result->setResponse($response);
-			}
+		// If the controller returned a view then add it to the output
+		if (is_string($response))
+		{
+			$output = is_string($output) ? $output . $response : $response;
+		}
 
-			// check if controller returned a view rather than echoing it
-			if (is_string($response))
+		// If the controller did not return a response then start one
+		if (! $response instanceof Response)
+		{
+			$response = $this->response;
+		}
+
+		// Check for output to set or prepend
+		// @see \CodeIgniter\CodeIgniter::gatherOutput()
+		if (is_string($output))
+		{
+			if (is_string($response->getBody()))
 			{
-				$output = $response;
-				$result->response()->setBody($output);
-				$result->setBody($output);
-			}
-			elseif (! empty($response) && ! empty($response->getBody()))
-			{
-				$result->setBody($response->getBody());
+				$response->setBody($output . $response->getBody());
 			}
 			else
 			{
-				$result->setBody('');
+				$response->setBody($output);
 			}
 		}
 
-		// If not response code has been sent, assume a success
-		if (empty($result->response()->getStatusCode()))
+		// Check for an overriding code from exceptions
+		if (isset($code))
 		{
-			$result->response()->setStatusCode(200);
+			$response->setStatusCode($code);
+		}
+		// Otherwise ensure there is a status code
+		else
+		{
+			// getStatusCode() throws for empty codes
+			try
+			{
+				$response->getStatusCode();
+			}
+			catch (HTTPException $e)
+			{
+				// If no code has been set then assume success
+				$response->setStatusCode(200);
+			}
 		}
 
-		return $result;
+		// Create the result and add the Request for reference
+		return (new TestResponse($response))->setRequest($this->request);
 	}
 
 	/**
