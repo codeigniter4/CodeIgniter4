@@ -40,7 +40,8 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @mixin BaseBuilder
+ * @mixin    BaseBuilder
+ * @property BaseConnection $db
  */
 class Model extends BaseModel
 {
