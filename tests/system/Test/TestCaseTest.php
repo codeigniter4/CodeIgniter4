@@ -1,12 +1,13 @@
 <?php
 namespace CodeIgniter\Test;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\App;
 
-class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
+class TestCaseTest extends CIUnitTestCase
 {
 
 	//  protected function tearDown(): void
@@ -52,7 +53,7 @@ class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		\CodeIgniter\CLI\CLI::write('first.');
+		CLI::write('first.');
 		$expected = "first.\n";
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 		stream_filter_remove($this->stream_filter);

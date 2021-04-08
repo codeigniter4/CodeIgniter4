@@ -25,7 +25,7 @@ trait MessageTrait
 	/**
 	 * List of all HTTP request headers.
 	 *
-	 * @var array<string,Header>
+	 * @var array<string, Header>
 	 */
 	protected $headers = [];
 
@@ -86,7 +86,7 @@ trait MessageTrait
 		}
 		unset($contentType);
 
-		foreach ($_SERVER as $key => $val)
+		foreach (array_keys($_SERVER) as $key)
 		{
 			if (sscanf($key, 'HTTP_%s', $header) === 1)
 			{
@@ -105,7 +105,7 @@ trait MessageTrait
 	/**
 	 * Returns an array containing all Headers.
 	 *
-	 * @return array<string,Header> An array of the Header objects
+	 * @return array<string, Header> An array of the Header objects
 	 */
 	public function headers(): array
 	{

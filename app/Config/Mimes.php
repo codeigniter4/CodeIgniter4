@@ -335,6 +335,8 @@ class Mimes
 			'application/msword',
 			'application/x-zip',
 		],
+		'xlsb'  => 'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+		'xlsm'  => 'application/vnd.ms-excel.sheet.macroEnabled.12',
 		'word'  => [
 			'application/msword',
 			'application/octet-stream',
@@ -474,6 +476,11 @@ class Mimes
 			'image/x-ico',
 			'image/vnd.microsoft.icon',
 		],
+		'stl'   => [
+			'application/sla',
+			'application/vnd.ms-pki.stl',
+			'application/x-navistyle',
+		],
 	];
 
 	/**
@@ -511,7 +518,7 @@ class Mimes
 
 		if ($proposedExtension !== '')
 		{
-			if(array_key_exists($proposedExtension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposedExtension]) ? [static::$mimes[$proposedExtension]] : static::$mimes[$proposedExtension], true))
+			if (array_key_exists($proposedExtension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposedExtension]) ? [static::$mimes[$proposedExtension]] : static::$mimes[$proposedExtension], true))
 			{
 				// The detected mime type matches with the proposed extension.
 				return $proposedExtension;

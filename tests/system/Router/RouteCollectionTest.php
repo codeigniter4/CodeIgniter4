@@ -3,11 +3,13 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled
  */
-class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
+class RouteCollectionTest extends CIUnitTestCase
 {
 
 	public function tearDown(): void
@@ -30,7 +32,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		if ($moduleConfig === null)
 		{
-			$moduleConfig          = new \Config\Modules();
+			$moduleConfig          = new Modules();
 			$moduleConfig->enabled = false;
 		}
 
@@ -337,17 +339,17 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			$routes->group(
 				'', function ($routes) {
 					$routes->add('users/list', '\Users::list');
-					
+
 					$routes->group('delegate', function ($routes) {
 						$routes->add('foo', '\Users::foo');
 					});
-			});
+				});
 		});
 
 		$expected = [
 			'verify/begin'       => '\VerifyController::begin',
 			'admin/users/list'   => '\Users::list',
-			'admin/delegate/foo' => '\Users::foo'
+			'admin/delegate/foo' => '\Users::foo',
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -1240,7 +1242,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'SampleSpace' => TESTPATH . '_support',
 		];
 
-		$moduleConfig          = new \Config\Modules();
+		$moduleConfig          = new Modules();
 		$moduleConfig->enabled = true;
 
 		$routes = $this->getCollector($config, [], $moduleConfig);
@@ -1259,7 +1261,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'SampleSpace' => TESTPATH . '_support',
 		];
 
-		$moduleConfig          = new \Config\Modules();
+		$moduleConfig          = new Modules();
 		$moduleConfig->enabled = true;
 
 		$routes = $this->getCollector($config, [], $moduleConfig);
@@ -1702,4 +1704,32 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
 
+	public function testRoutePriorityDetected()
+	{
+		$collection = $this->getCollector();
+
+		$this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+
+		$collection->add('/', 'Controller::method', ['priority' => 0]);
+
+		$this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+
+		$collection->add('priority', 'Controller::method', ['priority' => 1]);
+
+		$this->assertEquals(true, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+	}
+
+	public function testRoutePriorityValue()
+	{
+		$collection = $this->getCollector();
+
+		$collection->add('string', 'Controller::method', ['priority' => 'string']);
+		$this->assertEquals(0, $collection->getRoutesOptions('string')['priority']);
+
+		$collection->add('negative-integer', 'Controller::method', ['priority' => -1]);
+		$this->assertEquals(1, $collection->getRoutesOptions('negative-integer')['priority']);
+
+		$collection->add('string-negative-integer', 'Controller::method', ['priority' => '-1']);
+		$this->assertEquals(1, $collection->getRoutesOptions('string-negative-integer')['priority']);
+	}
 }

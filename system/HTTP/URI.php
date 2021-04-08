@@ -280,14 +280,11 @@ class URI
 			$authority = $this->getUserInfo() . '@' . $authority;
 		}
 
-		if (! empty($this->port) && ! $ignorePort)
+		// Don't add port if it's a standard port for
+		// this scheme
+		if (! empty($this->port) && ! $ignorePort && $this->port !== $this->defaultPorts[$this->scheme])
 		{
-			// Don't add port if it's a standard port for
-			// this scheme
-			if ($this->port !== $this->defaultPorts[$this->scheme])
-			{
-				$authority .= ':' . $this->port;
-			}
+			$authority .= ':' . $this->port;
 		}
 
 		$this->showPassword = false;
@@ -1013,14 +1010,11 @@ class URI
 		}
 
 		// Port
-		if (isset($parts['port']))
+		if (isset($parts['port']) && ! is_null($parts['port']))
 		{
-			if (! is_null($parts['port']))
-			{
-				// Valid port numbers are enforced by earlier parse_url or setPort()
-				$port       = $parts['port'];
-				$this->port = $port;
-			}
+			// Valid port numbers are enforced by earlier parse_url or setPort()
+			$port       = $parts['port'];
+			$this->port = $port;
 		}
 
 		if (isset($parts['pass']))

@@ -47,8 +47,6 @@ class FileCollection
 		return $this->files;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to get a single file from the collection of uploaded files.
 	 *
@@ -101,14 +99,14 @@ class FileCollection
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
-				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+				return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
 					$uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+				return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
 					$uploadedFile : null;
 			}
 		}
@@ -181,8 +179,6 @@ class FileCollection
 			$this->files[$name] = $this->createFileObject($file);
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Given a file array, will create UploadedFile instances. Will

@@ -117,13 +117,14 @@ class Parser extends View
 
 		if (! is_file($file))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
-		}
+			$fileOrig = $file;
+			$file     = $this->loader->locateFile($view, 'Views');
 
-		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
-		{
-			throw ViewException::forInvalidFile($file);
+			// locateFile will return an empty string if the file cannot be found.
+			if (empty($file))
+			{
+				throw ViewException::forInvalidFile($fileOrig);
+			}
 		}
 
 		if (is_null($this->tempData))
@@ -190,7 +191,6 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets several pieces of view data at once.
 	 * In the Parser, we need to store the context here
@@ -328,8 +328,8 @@ class Parser extends View
 		// Find all matches of space-flexible versions of {tag}{/tag} so we
 		// have something to loop over.
 		preg_match_all(
-				'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
-				$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
+			'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
+			$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
 		);
 
 		/*
@@ -539,7 +539,6 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Over-ride the substitution field delimiters.
 	 *
@@ -573,8 +572,8 @@ class Parser extends View
 		$pattern = addcslashes($pattern, '$');
 
 		// Flesh out the main pattern from the delimiters and escape the hash
-		// See https://regex101.com/r/1GIHTa/1
-		if (preg_match('/^(#)(.*)(#(m?s)?)$/', $pattern, $parts))
+		// See https://regex101.com/r/IKdUlk/1
+		if (preg_match('/^(#)(.+)(#(m?s)?)$/s', $pattern, $parts))
 		{
 			$pattern = $parts[1] . addcslashes($parts[2], '#') . $parts[3];
 		}
@@ -612,12 +611,9 @@ class Parser extends View
 		// so we need to break them apart so we can apply them all.
 		$filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
 
-		if ($escape && empty($filters))
+		if ($escape && empty($filters) && ($context = $this->shouldAddEscaping($orig)))
 		{
-			if ($context = $this->shouldAddEscaping($orig))
-			{
-				$filters[] = "esc({$context})";
-			}
+			$filters[] = "esc({$context})";
 		}
 
 		return $this->applyFilters($replace, $filters);

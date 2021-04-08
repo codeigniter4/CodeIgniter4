@@ -2,13 +2,16 @@
 
 namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class MetadataTest extends CIDatabaseTestCase
+class MetadataTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 
 	protected $refresh = true;
 	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
@@ -36,6 +39,7 @@ class MetadataTest extends CIDatabaseTestCase
 			$prefix . 'secondary',
 			$prefix . 'stringifypkey',
 			$prefix . 'without_auto_increment',
+			$prefix . 'ip_table',
 		];
 	}
 
@@ -59,7 +63,7 @@ class MetadataTest extends CIDatabaseTestCase
 
 	public function testConstrainPrefixIgnoresOtherTables()
 	{
-		$this->forge = \Config\Database::forge($this->DBGroup);
+		$this->forge = Database::forge($this->DBGroup);
 
 		// Stash the prefix and change it
 		$DBPrefix = $this->db->getPrefix();

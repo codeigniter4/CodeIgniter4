@@ -36,7 +36,6 @@ class Config extends BaseConfig
 	static protected $factory;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates the default
 	 *
@@ -103,8 +102,6 @@ class Config extends BaseConfig
 		return static::$instances;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Loads and returns an instance of the Forge for the specified
 	 * database group, and loads the group if it hasn't been loaded yet.
@@ -121,7 +118,6 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a new instance of the Database Utilities class.
 	 *
@@ -137,7 +133,6 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a new instance of the Database Seeder.
 	 *

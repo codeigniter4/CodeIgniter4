@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class GenerateKeyTest extends CIUnitTestCase
 {

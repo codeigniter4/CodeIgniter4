@@ -351,7 +351,6 @@ class Fabricator
 			switch ($this->model->dateFormat)
 			{
 				case 'datetime':
-					return 'date';
 				case 'date':
 					return 'date';
 				case 'int':
@@ -430,24 +429,17 @@ class Fabricator
 				$result[$field] = $this->faker->{$formatter};
 			}
 		}
-
 		// If no formatters were defined then look for a model fake() method
 		elseif (method_exists($this->model, 'fake'))
 		{
 			$result = $this->model->fake($this->faker);
 
-			// This should cover entities
-			if (method_exists($result, 'toArray'))
-			{
-				$result = $result->toArray();
-			}
-			// Try to cast it
-			else
-			{
-				$result = (array) $result;
-			}
+			$result = is_object($result) && method_exists($result, 'toArray')
+				// This should cover entities
+				? $result->toArray()
+				// Try to cast it
+				: (array) $result;
 		}
-
 		// Nothing left to do but give up
 		else
 		{

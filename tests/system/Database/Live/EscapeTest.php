@@ -1,12 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class EscapeTest extends CIDatabaseTestCase
+class EscapeTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = false;
 
 	protected $char;

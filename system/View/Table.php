@@ -98,8 +98,6 @@ class Table
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set the template
 	 *
@@ -116,8 +114,6 @@ class Table
 		$this->template = $template;
 		return true;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set the table heading
@@ -144,8 +140,6 @@ class Table
 		$this->footing = $this->_prepArgs(func_get_args());
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Set columns. Takes a one-dimensional array as input and creates
@@ -194,8 +188,6 @@ class Table
 		return $new;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set "empty" cells
 	 *
@@ -210,8 +202,6 @@ class Table
 		return $this;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Add a table row
 	 *
@@ -224,8 +214,6 @@ class Table
 		$this->rows[] = $this->_prepArgs(func_get_args());
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Prep Args
@@ -247,13 +235,14 @@ class Table
 
 		foreach ($args as $key => $val)
 		{
-			is_array($val) || $args[$key] = ['data' => $val]; // @phpstan-ignore-line
+			if (! is_array($val))
+			{
+				$args[$key] = ['data' => $val];
+			}
 		}
 
 		return $args;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Add a table caption
@@ -266,8 +255,6 @@ class Table
 		$this->caption = $caption;
 		return $this;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Generate the table
@@ -422,8 +409,6 @@ class Table
 		return $out;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clears the table arrays.  Useful if multiple tables are being generated
 	 *
@@ -439,8 +424,6 @@ class Table
 		return $this;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set table data from a database result object
 	 *
@@ -450,7 +433,7 @@ class Table
 	protected function _setFromDBResult($object)
 	{
 		// First generate the headings from the table column names
-		if ($this->autoHeading === true && empty($this->heading))
+		if ($this->autoHeading && empty($this->heading))
 		{
 			$this->heading = $this->_prepArgs($object->getFieldNames());
 		}
@@ -461,17 +444,16 @@ class Table
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Set table data from an array
 	 *
-	 * @param  array $data
+	 * @param array $data
+	 *
 	 * @return void
 	 */
 	protected function _setFromArray($data)
 	{
-		if ($this->autoHeading === true && empty($this->heading))
+		if ($this->autoHeading && empty($this->heading))
 		{
 			$this->heading = $this->_prepArgs(array_shift($data));
 		}
@@ -481,8 +463,6 @@ class Table
 			$this->rows[] = $this->_prepArgs($row);
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Compile Template
@@ -497,17 +477,14 @@ class Table
 			return;
 		}
 
-		$temp = $this->_defaultTemplate();
-		foreach (['table_open', 'thead_open', 'thead_close', 'heading_row_start', 'heading_row_end', 'heading_cell_start', 'heading_cell_end', 'tbody_open', 'tbody_close', 'row_start', 'row_end', 'cell_start', 'cell_end', 'row_alt_start', 'row_alt_end', 'cell_alt_start', 'cell_alt_end', 'table_close'] as $val)
+		foreach ($this->_defaultTemplate() as $field => $template)
 		{
-			if (! isset($this->template[$val]))
+			if (! isset($this->template[$field]))
 			{
-				$this->template[$val] = $temp[$val];
+				$this->template[$field] = $template;
 			}
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Default Template
@@ -543,6 +520,4 @@ class Table
 			'table_close'        => '</table>',
 		];
 	}
-
-	// --------------------------------------------------------------------
 }

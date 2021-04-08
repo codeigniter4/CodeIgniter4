@@ -2,9 +2,10 @@
 namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileMovingTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void

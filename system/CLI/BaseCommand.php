@@ -79,7 +79,6 @@ abstract class BaseCommand
 	protected $commands;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * BaseCommand constructor.
 	 *
@@ -226,7 +225,7 @@ abstract class BaseCommand
 	public function getPad(array $array, int $pad): int
 	{
 		$max = 0;
-		foreach ($array as $key => $value)
+		foreach (array_keys($array) as $key)
 		{
 			$max = max($max, strlen($key));
 		}

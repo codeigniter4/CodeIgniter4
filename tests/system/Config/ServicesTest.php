@@ -1,10 +1,39 @@
 <?php
 
-namespace Config;
+namespace CodeIgniter\Config;
 
+use CodeIgniter\Autoloader\Autoloader;
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Debug\Iterator;
+use CodeIgniter\Debug\Timer;
+use CodeIgniter\Debug\Toolbar;
+use CodeIgniter\Email\Email;
+use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
+use CodeIgniter\Honeypot\Honeypot;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\Negotiate;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Images\ImageHandlerInterface;
+use CodeIgniter\Language\Language;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Router\Router;
+use CodeIgniter\Security\Security;
+use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
+use CodeIgniter\Throttle\Throttler;
+use CodeIgniter\Typography\Typography;
+use CodeIgniter\Validation\Validation;
+use CodeIgniter\View\Cell;
+use CodeIgniter\View\Parser;
+use Config\App;
+use Config\Exceptions;
+use Tests\Support\Config\Services as Services;
 
 class ServicesTest extends CIUnitTestCase
 {
@@ -25,52 +54,60 @@ class ServicesTest extends CIUnitTestCase
 		Services::reset();
 	}
 
+	public function testCanReplaceFrameworkServices()
+	{
+		$this->expectException('RuntimeException');
+		$this->expectExceptionMessage('Service originated from Tests\Support\Config\Services');
+
+		Services::uri('testCanReplaceFrameworkServices');
+	}
+
 	public function testNewAutoloader()
 	{
 		$actual = Services::autoloader();
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+		$this->assertInstanceOf(Autoloader::class, $actual);
 	}
 
 	public function testNewUnsharedAutoloader()
 	{
 		$actual = Services::autoloader(false);
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+		$this->assertInstanceOf(Autoloader::class, $actual);
 	}
 
 	public function testNewFileLocator()
 	{
 		$actual = Services::locator();
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+		$this->assertInstanceOf(FileLocator::class, $actual);
 	}
 
 	public function testNewUnsharedFileLocator()
 	{
 		$actual = Services::locator(false);
-		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+		$this->assertInstanceOf(FileLocator::class, $actual);
 	}
 
 	public function testNewCurlRequest()
 	{
 		$actual = Services::curlrequest();
-		$this->assertInstanceOf(\CodeIgniter\HTTP\CURLRequest::class, $actual);
+		$this->assertInstanceOf(CURLRequest::class, $actual);
 	}
 
 	public function testNewEmail()
 	{
 		$actual = Services::email();
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewUnsharedEmailWithEmptyConfig()
 	{
 		$actual = Services::email(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewUnsharedEmailWithNonEmptyConfig()
 	{
 		$actual = Services::email(new \Config\Email(), false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+		$this->assertInstanceOf(Email::class, $actual);
 	}
 
 	public function testNewExceptions()
@@ -88,13 +125,13 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewIterator()
 	{
 		$actual = Services::iterator();
-		$this->assertInstanceOf(\CodeIgniter\Debug\Iterator::class, $actual);
+		$this->assertInstanceOf(Iterator::class, $actual);
 	}
 
 	public function testNewImage()
 	{
 		$actual = Services::image();
-		$this->assertInstanceOf(\CodeIgniter\Images\ImageHandlerInterface::class, $actual);
+		$this->assertInstanceOf(ImageHandlerInterface::class, $actual);
 	}
 
 	//  public function testNewMigrationRunner()
@@ -111,25 +148,25 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewNegotiatorWithNullConfig()
 	{
 		$actual = Services::negotiator(null);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
+		$this->assertInstanceOf(Negotiate::class, $actual);
 	}
 
 	public function testNewClirequest()
 	{
 		$actual = Services::clirequest(null);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
+		$this->assertInstanceOf(CLIRequest::class, $actual);
 	}
 
 	public function testNewUnsharedClirequest()
 	{
 		$actual = Services::clirequest(null, false);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
+		$this->assertInstanceOf(CLIRequest::class, $actual);
 	}
 
 	public function testNewLanguage()
 	{
 		$actual = Services::language();
-		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertInstanceOf(Language::class, $actual);
 		$this->assertEquals('en', $actual->getLocale());
 
 		Services::language('la');
@@ -139,7 +176,7 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewUnsharedLanguage()
 	{
 		$actual = Services::language(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertInstanceOf(Language::class, $actual);
 		$this->assertEquals('en', $actual->getLocale());
 
 		Services::language('la', false);
@@ -149,49 +186,49 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewPager()
 	{
 		$actual = Services::pager(null);
-		$this->assertInstanceOf(\CodeIgniter\Pager\Pager::class, $actual);
+		$this->assertInstanceOf(Pager::class, $actual);
 	}
 
 	public function testNewThrottlerFromShared()
 	{
 		$actual = Services::throttler();
-		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
+		$this->assertInstanceOf(Throttler::class, $actual);
 	}
 
 	public function testNewThrottler()
 	{
 		$actual = Services::throttler(false);
-		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
+		$this->assertInstanceOf(Throttler::class, $actual);
 	}
 
 	public function testNewToolbar()
 	{
 		$actual = Services::toolbar(null);
-		$this->assertInstanceOf(\CodeIgniter\Debug\Toolbar::class, $actual);
+		$this->assertInstanceOf(Toolbar::class, $actual);
 	}
 
 	public function testNewUri()
 	{
 		$actual = Services::uri(null);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\URI::class, $actual);
+		$this->assertInstanceOf(URI::class, $actual);
 	}
 
 	public function testNewValidation()
 	{
 		$actual = Services::validation(null);
-		$this->assertInstanceOf(\CodeIgniter\Validation\Validation::class, $actual);
+		$this->assertInstanceOf(Validation::class, $actual);
 	}
 
 	public function testNewViewcellFromShared()
 	{
 		$actual = Services::viewcell();
-		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
+		$this->assertInstanceOf(Cell::class, $actual);
 	}
 
 	public function testNewViewcell()
 	{
 		$actual = Services::viewcell(false);
-		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
+		$this->assertInstanceOf(Cell::class, $actual);
 	}
 
 	/**
@@ -201,7 +238,7 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewSession()
 	{
 		$actual = Services::session($this->config);
-		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+		$this->assertInstanceOf(Session::class, $actual);
 	}
 
 	/**
@@ -211,7 +248,7 @@ class ServicesTest extends CIUnitTestCase
 	public function testNewSessionWithNullConfig()
 	{
 		$actual = Services::session(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+		$this->assertInstanceOf(Session::class, $actual);
 	}
 
 	/**
@@ -221,11 +258,11 @@ class ServicesTest extends CIUnitTestCase
 	public function testCallStatic()
 	{
 		// __callStatic should kick in for this but fail
-		$actual = \CodeIgniter\Config\Services::SeSsIoNs(null, false);
+		$actual = Services::SeSsIoNs(null, false);
 		$this->assertNull($actual);
 		// __callStatic should kick in for this
-		$actual = \CodeIgniter\Config\Services::SeSsIoN(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+		$actual = Services::SeSsIoN(null, false);
+		$this->assertInstanceOf(Session::class, $actual);
 	}
 
 	/**
@@ -235,8 +272,8 @@ class ServicesTest extends CIUnitTestCase
 	public function testCallStaticDirectly()
 	{
 		//      $actual = \CodeIgniter\Config\Services::SeSsIoN(null, false); // original
-		$actual = \CodeIgniter\Config\Services::__callStatic('SeSsIoN', [null, false]);
-		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+		$actual = Services::__callStatic('SeSsIoN', [null, false]);
+		$this->assertInstanceOf(Session::class, $actual);
 	}
 
 	/**
@@ -278,7 +315,7 @@ class ServicesTest extends CIUnitTestCase
 	public function testFilters()
 	{
 		$result = Services::filters();
-		$this->assertInstanceOf(\CodeIgniter\Filters\Filters::class, $result);
+		$this->assertInstanceOf(Filters::class, $result);
 	}
 
 	public function testFormat()
@@ -294,55 +331,55 @@ class ServicesTest extends CIUnitTestCase
 	public function testHoneypot()
 	{
 		$result = Services::honeypot();
-		$this->assertInstanceOf(\CodeIgniter\Honeypot\Honeypot::class, $result);
+		$this->assertInstanceOf(Honeypot::class, $result);
 	}
 
 	public function testMigrations()
 	{
 		$result = Services::migrations();
-		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $result);
+		$this->assertInstanceOf(MigrationRunner::class, $result);
 	}
 
 	public function testParser()
 	{
 		$result = Services::parser();
-		$this->assertInstanceOf(\CodeIgniter\View\Parser::class, $result);
+		$this->assertInstanceOf(Parser::class, $result);
 	}
 
 	public function testRedirectResponse()
 	{
 		$result = Services::redirectResponse();
-		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, $result);
+		$this->assertInstanceOf(RedirectResponse::class, $result);
 	}
 
 	public function testRoutes()
 	{
 		$result = Services::routes();
-		$this->assertInstanceOf(\CodeIgniter\Router\RouteCollection::class, $result);
+		$this->assertInstanceOf(RouteCollection::class, $result);
 	}
 
 	public function testRouter()
 	{
 		$result = Services::router();
-		$this->assertInstanceOf(\CodeIgniter\Router\Router::class, $result);
+		$this->assertInstanceOf(Router::class, $result);
 	}
 
 	public function testSecurity()
 	{
 		$result = Services::security();
-		$this->assertInstanceOf(\CodeIgniter\Security\Security::class, $result);
+		$this->assertInstanceOf(Security::class, $result);
 	}
 
 	public function testTimer()
 	{
 		$result = Services::timer();
-		$this->assertInstanceOf(\CodeIgniter\Debug\Timer::class, $result);
+		$this->assertInstanceOf(Timer::class, $result);
 	}
 
 	public function testTypography()
 	{
 		$result = Services::typography();
-		$this->assertInstanceOf(\CodeIgniter\Typography\Typography::class, $result);
+		$this->assertInstanceOf(Typography::class, $result);
 	}
 
 	public function testServiceInstance()
@@ -351,5 +388,4 @@ class ServicesTest extends CIUnitTestCase
 		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
 		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
 	}
-
 }

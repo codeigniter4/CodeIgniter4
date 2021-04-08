@@ -73,6 +73,6 @@ return [
 	'uploadErrUnknown'           => 'The file "%s" was not uploaded due to an unknown error.',
 
 	// SameSite setting
-	// @deprecated use `Security.invalidSameSiteSetting`
+	// @deprecated
 	'invalidSameSiteSetting'     => 'The SameSite setting must be None, Lax, Strict, or a blank string. Given: {0}',
 ];

@@ -63,6 +63,25 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * FROM tables
+	 *
+	 * Groups tables in FROM clauses if needed, so there is no confusion
+	 * about operator precedence.
+	 *
+	 * @return string
+	 */
+	protected function _fromTables(): string
+	{
+		$from = [];
+		foreach ($this->QBFrom as $value)
+		{
+			$from[] = $this->getFullName($value);
+		}
+
+		return implode(', ', $from);
+	}
+
+	/**
 	 * Truncate statement
 	 *
 	 * Generates a platform-specific truncate string from the supplied data
@@ -77,6 +96,97 @@ class Builder extends BaseBuilder
 	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE TABLE ' . $this->getFullName($table);
+	}
+
+	/**
+	 * JOIN
+	 *
+	 * Generates the JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param string  $type   The type of join
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return $this
+	 */
+	public function join(string $table, string $cond, string $type = '', bool $escape = null)
+	{
+		if ($type !== '')
+		{
+			$type = strtoupper(trim($type));
+
+			if (! in_array($type, $this->joinTypes, true))
+			{
+				$type = '';
+			}
+			else
+			{
+				$type .= ' ';
+			}
+		}
+
+		// Extract any aliases that might exist. We use this information
+		// in the protectIdentifiers to know whether to add a table prefix
+		$this->trackAliases($table);
+
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
+
+		if (! $this->hasOperator($cond))
+		{
+			$cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
+		}
+		elseif ($escape === false)
+		{
+			$cond = ' ON ' . $cond;
+		}
+		else
+		{
+			// Split multiple conditions
+			if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
+			{
+				$conditions = [];
+				$joints     = $joints[0];
+				array_unshift($joints, ['', 0]);
+
+				for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i --)
+				{
+					$joints[$i][1] += strlen($joints[$i][0]); // offset
+					$conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
+					$pos            = $joints[$i][1] - strlen($joints[$i][0]);
+					$joints[$i]     = $joints[$i][0];
+				}
+				ksort($conditions);
+			}
+			else
+			{
+				$conditions = [$cond];
+				$joints     = [''];
+			}
+
+			$cond = ' ON ';
+			foreach ($conditions as $i => $condition)
+			{
+				$operator = $this->getOperator($condition);
+
+				$cond .= $joints[$i];
+				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+			}
+		}
+
+		// Do we want to escape the table name?
+		if ($escape === true)
+		{
+			$table = $this->db->protectIdentifiers($table, true, null, false);
+		}
+
+		// Assemble the JOIN statement
+		$this->QBJoin[] = $join = $type . 'JOIN ' . $this->getFullName($table) . $cond;
+
+		return $this;
 	}
 
 	/**
@@ -189,11 +299,21 @@ class Builder extends BaseBuilder
 	 */
 	private function getFullName(string $table): string
 	{
+		$alias = '';
+
+		if (strpos($table, ' ') !== false)
+		{
+			$alias = explode(' ', $table);
+			$table = array_shift($alias);
+			$alias = ' ' . implode(' ', $alias);
+		}
+
 		if ($this->db->escapeChar === '"')
 		{
-			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"';
+			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
 		}
-		return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']';
+
+		return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']' . str_replace('"', '', $alias);
 	}
 
 	/**
@@ -315,49 +435,51 @@ class Builder extends BaseBuilder
 		}
 
 		// Get the unique field names
-		$keyFields = array_values(array_flip(array_flip($keyFields)));
+		$escKeyFields = array_map(function (string $field): string {
+			return $this->db->protectIdentifiers($field);
+		}, array_values(array_unique($keyFields)));
 
-		// Get the fields out of binds
-		$set = $this->binds;
-		array_walk($set, function (&$item, $key) {
+		// Get the binds
+		$binds = $this->binds;
+		array_walk($binds, function (&$item) {
 			$item = $item[0];
 		});
 
-		// Get the common field and values from the bind data and index fields
-		$setKeys = array_keys($set);
-		$common  = array_intersect($setKeys, $keyFields);
+		// Get the common field and values from the keys data and index fields
+		$common = array_intersect($keys, $escKeyFields);
+		$bingo  = [];
 
-		$bingo = [];
-		foreach ($common as $k => $v)
+		foreach ($common as $v)
 		{
-			$bingo[$v] = $set[$v];
+			$k = array_search($v, $escKeyFields, true);
+
+			$bingo[$keyFields[$k]] = $binds[trim($values[$k], ':')];
 		}
 
 		// Querying existing data
 		$builder = $this->db->table($table);
+
 		foreach ($bingo as $k => $v)
 		{
 			$builder->where($k, $v);
 		}
+
 		$q = $builder->get()->getResult();
 
 		// Delete entries if we find them
 		if ($q !== [])
 		{
 			$delete = $this->db->table($table);
+
 			foreach ($bingo as $k => $v)
 			{
 				$delete->where($k, $v);
 			}
+
 			$delete->delete();
 		}
 
-		// Key field names are not escaped, so escape them
-		$escapedKeyFields = array_map(function ($item) {
-			return $this->db->escapeIdentifiers($item);
-		}, $keyFields);
-
-		return 'INSERT INTO ' . $this->getFullName($table) . ' (' . implode(',', $keys) . ') VALUES (' . implode(',', $values) . ');';
+		return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table), implode(',', $keys), implode(',', $values));
 	}
 
 	/**
@@ -481,21 +603,11 @@ class Builder extends BaseBuilder
 			$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
 			// SQL Server can't work with select * if group by is specified
-			if (empty($this->QBSelect) && ! empty($this->QBGroupBy))
+			if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy))
 			{
-				if (is_array($this->QBGroupBy))
+				foreach ($this->QBGroupBy as $field)
 				{
-					foreach ($this->QBGroupBy as $field)
-					{
-						if (is_array($field))
-						{
-							$this->QBSelect[] = $field['field'];
-						}
-						else
-						{
-							$this->QBSelect[] = $field;
-						}
-					}
+					$this->QBSelect[] = is_array($field) ? $field['field'] : $field;
 				}
 			}
 
@@ -562,7 +674,10 @@ class Builder extends BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{

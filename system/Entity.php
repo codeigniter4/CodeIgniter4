@@ -11,13 +11,22 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\EntityCast\CastAsArray;
+use CodeIgniter\EntityCast\CastAsBoolean;
+use CodeIgniter\EntityCast\CastAsCommaSeparatedValues;
+use CodeIgniter\EntityCast\CastAsDatetime;
+use CodeIgniter\EntityCast\CastAsFloat;
+use CodeIgniter\EntityCast\CastAsInteger;
+use CodeIgniter\EntityCast\CastInterface;
+use CodeIgniter\EntityCast\CastAsJson;
+use CodeIgniter\EntityCast\CastAsObject;
+use CodeIgniter\EntityCast\CastAsString;
+use CodeIgniter\EntityCast\CastAsTimestamp;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
-use DateTime;
 use Exception;
 use JsonSerializable;
 use ReflectionException;
-use stdClass;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
@@ -47,6 +56,34 @@ class Entity implements JsonSerializable
 	 * when they are accessed.
 	 */
 	protected $casts = [];
+
+	/**
+	 * Custom convert handlers
+	 *
+	 * @var array<string, string>
+	 */
+	protected $castHandlers = [];
+
+	/**
+	 * Default convert handlers
+	 *
+	 * @var array<string, string>
+	 */
+	private $defaultCastHandlers = [
+		'array'     => CastAsArray::class,
+		'bool'      => CastAsBoolean::class,
+		'boolean'   => CastAsBoolean::class,
+		'csv'       => CastAsCommaSeparatedValues::class,
+		'datetime'  => CastAsDatetime::class,
+		'double'    => CastAsFloat::class,
+		'float'     => CastAsFloat::class,
+		'int'       => CastAsInteger::class,
+		'integer'   => CastAsInteger::class,
+		'json'      => CastAsJson::class,
+		'object'    => CastAsObject::class,
+		'string'    => CastAsString::class,
+		'timestamp' => CastAsTimestamp::class,
+	];
 
 	/**
 	 * Holds the current values of all class vars.
@@ -313,9 +350,9 @@ class Entity implements JsonSerializable
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		elseif ($this->_cast && ! empty($this->casts[$key]))
+		elseif ($this->_cast)
 		{
-			$result = $this->castAs($result, $this->casts[$key]);
+			$result = $this->castAs($result, $key, 'get');
 		}
 
 		return $result;
@@ -348,44 +385,7 @@ class Entity implements JsonSerializable
 			$value = $this->mutateDate($value);
 		}
 
-		$isNullable = false;
-		$castTo     = false;
-
-		if (array_key_exists($key, $this->casts))
-		{
-			$isNullable = strpos($this->casts[$key], '?') === 0;
-			$castTo     = $isNullable ? substr($this->casts[$key], 1) : $this->casts[$key];
-		}
-
-		if (! $isNullable || ! is_null($value))
-		{
-			// CSV casts need to be imploded.
-			if ($castTo === 'csv')
-			{
-				$value = implode(',', $value);
-			}
-
-			// Array casting requires that we serialize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if ($castTo === 'array')
-			{
-				$value = serialize($value);
-			}
-
-			// JSON casting requires that we JSONize the value
-			// when setting it so that it can easily be stored
-			// back to the database.
-			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
-			{
-				$value = json_encode($value, JSON_UNESCAPED_UNICODE);
-
-				if (json_last_error() !== JSON_ERROR_NONE)
-				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
-				}
-			}
-		}
+		$value = $this->castAs($value, $key, 'set');
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
@@ -498,27 +498,7 @@ class Entity implements JsonSerializable
 	 */
 	protected function mutateDate($value)
 	{
-		if ($value instanceof Time)
-		{
-			return $value;
-		}
-
-		if ($value instanceof DateTime)
-		{
-			return Time::instance($value);
-		}
-
-		if (is_numeric($value))
-		{
-			return Time::createFromTimestamp($value);
-		}
-
-		if (is_string($value))
-		{
-			return Time::parse($value);
-		}
-
-		return $value;
+		return CastAsDatetime::get($value);
 	}
 
 	//--------------------------------------------------------------------
@@ -527,69 +507,74 @@ class Entity implements JsonSerializable
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
-	 * @param mixed  $value
-	 * @param string $type
+	 * @param mixed  $value     Attribute value
+	 * @param string $attribute Attribute name
+	 * @param string $method    Allowed to "get" and "set"
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	protected function castAs($value, string $type)
+	protected function castAs($value, string $attribute, string $method = 'get')
 	{
+		if (empty($this->casts[$attribute]))
+		{
+			return $value;
+		}
+
+		$type = $this->casts[$attribute];
+
+		$isNullable = false;
+
 		if (strpos($type, '?') === 0)
 		{
+			$isNullable = true;
+
 			if ($value === null)
 			{
 				return null;
 			}
+
 			$type = substr($type, 1);
 		}
 
-		switch($type)
-		{
-			case 'int':
-			case 'integer': // alias for 'integer'
-				$value = (int) $value;
-				break;
-			case 'float':
-				$value = (float) $value;
-				break;
-			case 'double':
-				$value = (double) $value;
-				break;
-			case 'string':
-				$value = (string) $value;
-				break;
-			case 'bool':
-			case 'boolean': // alias for 'boolean'
-				$value = (bool) $value;
-				break;
-			case 'csv':
-				$value = explode(',', $value);
-				break;
-			case 'object':
-				$value = (object) $value;
-				break;
-			case 'array':
-				if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
-				{
-					$value = unserialize($value);
-				}
+		//In order not to create a separate handler for the json-array type, we transform the required one.
+		$type = $type === 'json-array' ? 'json[array]' : $type;
 
-				$value = (array) $value;
-				break;
-			case 'json':
-				$value = $this->castAsJson($value);
-				break;
-			case 'json-array':
-				$value = $this->castAsJson($value, true);
-				break;
-			case 'datetime':
-				return $this->mutateDate($value);
-			case 'timestamp':
-				return strtotime($value);
+		if (! in_array($method, ['get', 'set'], true))
+		{
+			throw CastException::forInvalidCastMethod();
 		}
 
-		return $value;
+		$params = [];
+
+		//Attempt to retrieve additional parameters if specified
+		// type[param, param2,param3]
+		if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches))
+		{
+			$type   = $matches[1];
+			$params = array_map('trim', explode(',', $matches[2]));
+		}
+
+		if ($isNullable)
+		{
+			$params[] = 'nullable';
+		}
+
+		$type = trim($type, '[]');
+
+		$handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
+
+		if (empty($handlers[$type]))
+		{
+			return $value;
+		}
+
+		if (! is_subclass_of($handlers[$type], CastInterface::class))
+		{
+			throw CastException::forMissingInterface($handlers[$type]);
+		}
+
+		return $handlers[$type]::$method($value, $params);
 	}
 
 	//--------------------------------------------------------------------
@@ -605,20 +590,7 @@ class Entity implements JsonSerializable
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
-		$tmp = ! is_null($value) ? ($asArray ? [] : new stdClass) : null;
-		if (function_exists('json_decode'))
-		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true)) || is_numeric($value))
-			{
-				$tmp = json_decode($value, $asArray);
-
-				if (json_last_error() !== JSON_ERROR_NONE)
-				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
-				}
-			}
-		}
-		return $tmp;
+		return CastAsJson::get($value, $asArray ? ['array'] : []);
 	}
 
 	/**

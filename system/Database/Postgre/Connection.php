@@ -436,18 +436,16 @@ class Connection extends BaseConnection
 
 	/**
 	 * Returns the last error code and message.
+	 * Must return this format: ['code' => string|int, 'message' => string]
+	 * intval(code) === 0 means "no error".
 	 *
-	 * Must return an array with keys 'code' and 'message':
-	 *
-	 *  return ['code' => null, 'message' => null);
-	 *
-	 * @return array
+	 * @return array<string,string|int>
 	 */
 	public function error(): array
 	{
 		return [
 			'code'    => '',
-			'message' => pg_last_error($this->connID),
+			'message' => pg_last_error($this->connID) ?: '',
 		];
 	}
 
@@ -507,7 +505,10 @@ class Connection extends BaseConnection
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' || $this->DSN = ''; // @phpstan-ignore-line
+		if ($this->DSN !== '')
+		{
+			$this->DSN = '';
+		}
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)
@@ -515,7 +516,10 @@ class Connection extends BaseConnection
 			$this->port = '';
 		}
 
-		$this->hostname === '' || $this->DSN = "host={$this->hostname} ";
+		if ($this->hostname !== '')
+		{
+			$this->DSN = "host={$this->hostname} ";
+		}
 
 		if (! empty($this->port) && ctype_digit($this->port))
 		{
@@ -528,11 +532,16 @@ class Connection extends BaseConnection
 
 			// An empty password is valid!
 			// password must be set to null to ignore it.
-
-			$this->password === null || $this->DSN .= "password='{$this->password}' ";
+			if ($this->password !== null)
+			{
+				$this->DSN .= "password='{$this->password}' ";
+			}
 		}
 
-		$this->database === '' || $this->DSN .= "dbname={$this->database} ";
+		if ($this->database !== '')
+		{
+			$this->DSN .= "dbname={$this->database} ";
+		}
 
 		// We don't have these options as elements in our standard configuration
 		// array, but they might be set by parse_url() if the configuration was
@@ -597,6 +606,26 @@ class Connection extends BaseConnection
 	protected function _transRollback(): bool
 	{
 		return (bool) pg_query($this->connID, 'ROLLBACK');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Determines if a query is a "write" type.
+	 *
+	 * Overrides BaseConnection::isWriteType, adding additional read query types.
+	 *
+	 * @param  string $sql An SQL query string
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool
+	{
+		if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is', $sql))
+		{
+			return false;
+		}
+
+		return parent::isWriteType($sql);
 	}
 
 	// --------------------------------------------------------------------

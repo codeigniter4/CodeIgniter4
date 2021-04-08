@@ -47,7 +47,7 @@ if (! function_exists('site_url'))
 		{
 			$fullPath .= rtrim($config->indexPage, '/');
 		}
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$fullPath .= '/' . $uri;
 		}
@@ -99,7 +99,7 @@ if (! function_exists('base_url'))
 		unset($config);
 
 		// Merge in the path set by the user, if any
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$url = $url->resolveRelativeURI($uri);
 		}
@@ -132,7 +132,7 @@ if (! function_exists('current_url'))
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
 	 *
-	 * @return string|\CodeIgniter\HTTP\URI
+	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -212,7 +212,7 @@ if (! function_exists('index_page'))
 	 *
 	 * Returns the "index_page" from your config file
 	 *
-	 * @param  \Config\App|null $altConfig Alternate configuration to use
+	 * @param  App|null $altConfig Alternate configuration to use
 	 * @return string
 	 */
 	function index_page(App $altConfig = null): string
@@ -447,9 +447,9 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		foreach ($x as $i => $value)
 		{
-			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
+			$output .= 'l[' . $i . "] = '" . $value . "';";
 		}
 
 		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'

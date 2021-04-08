@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Database;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
 
 /**
  * @group DatabaseLive
  */
-class DatabaseTestCaseTest extends CIDatabaseTestCase
+class DatabaseTestCaseTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected static $loaded = false;
 
 	/**

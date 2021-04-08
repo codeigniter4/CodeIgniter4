@@ -11,14 +11,14 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use Config\Cache;
+use Throwable;
 
 /**
  * File system cache handler
  */
-class FileHandler implements CacheInterface
+class FileHandler extends BaseHandler
 {
 	/**
 	 * Prefixed to all cache names.
@@ -125,7 +125,16 @@ class FileHandler implements CacheInterface
 
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path . $key, $this->mode);
+			try
+			{
+				chmod($this->path . $key, $this->mode);
+			}
+			// @codeCoverageIgnoreStart
+			catch (Throwable $e)
+			{
+				log_message('debug', 'Failed to set mode on cache file: ' . $e->getMessage());
+			}
+			// @codeCoverageIgnoreEnd
 
 			return true;
 		}

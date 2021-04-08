@@ -10,7 +10,7 @@ classes, in addition to the methods listed below.
     :depth: 2
 
 Accessing the Request
-----------------------------------------------------------------------------
+---------------------
 
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
@@ -57,7 +57,7 @@ the controller, where you can save it as a class property::
     $someClass = new SomeClass(\Config\Services::request());
 
 Determining Request Type
-----------------------------------------------------------------------------
+------------------------
 
 A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the ``isAJAX()`` and ``isCLI()`` methods::
@@ -74,7 +74,9 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
         // ...
     }
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, 
+    which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). 
+    See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
@@ -95,9 +97,9 @@ You can also check if the request was made through and HTTPS connection with the
     }
 
 Retrieving Input
-----------------------------------------------------------------------------
+----------------
 
-You can retrieve input from $_SERVER, $_GET, $_POST, $_ENV, and $_SESSION through the Request object.
+You can retrieve input from $_SERVER, $_GET, $_POST, and $_ENV through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request. The main
 advantages to using these methods instead of accessing them directly ($_POST['something']), is that they
 will return null if the item doesn't exist, and you can have the data filtered. This lets you conveniently
@@ -141,6 +143,45 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
+If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
+the JSON stream. Using ``getVar()`` in this way will always return an object.
+
+**Get Specific Data from JSON**
+
+You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
+data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
+
+::
+
+    //With a request body of:
+    {
+        "foo": "bar",
+        "fizz": {
+            "buzz": "baz"
+        }
+    }
+    $data = $request->getVar('foo');
+    //$data = "bar"
+
+    $data = $request->getVar('fizz.buzz');
+    //$data = "baz"
+
+
+If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
+true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
+correct ``CONTENT_TYPE`` header.
+
+::
+
+    //With the same request as above
+    $data = $request->getJsonVar('fizz');
+    //$data->buzz = "baz"
+
+    $data = $request->getJsonVar('fizz', true);
+    //$data = ["buzz" => "baz"]
+
+.. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
+
 **Retrieving Raw data (PUT, PATCH, DELETE)**
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``::
@@ -171,7 +212,7 @@ All of the methods mentioned above support the filter type passed in as the seco
 exception of ``getJSON()``.
 
 Retrieving Headers
-----------------------------------------------------------------------------
+------------------
 
 You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
@@ -210,7 +251,7 @@ If you need the entire header, with the name and values in a single string, simp
     echo (string)$header;
 
 The Request URL
-----------------------------------------------------------------------------
+---------------
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
@@ -233,7 +274,7 @@ The object gives you full abilities to grab any part of the request on it's own:
     echo $uri->getTotalSegments();  // 3
 
 Uploaded Files
-----------------------------------------------------------------------------
+--------------
 
 Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns a
 :doc:`FileCollection </libraries/uploaded_files>` instance. This helps to ease the pain of working with uploaded files,
@@ -268,7 +309,7 @@ multi-file upload, based on the filename given in the HTML file input::
     $files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
-----------------------------------------------------------------------------
+-------------------
 
 You can easily negotiate content types with the request through the ``negotiate()`` method::
 
@@ -281,10 +322,10 @@ You can easily negotiate content types with the request through the ``negotiate(
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
 Class Reference
-===========================================================================
+===============
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
+    :doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
 
 The methods provided by the parent classes that are available are:
 
@@ -313,154 +354,170 @@ The methods provided by the parent classes that are available are:
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 
-	.. php:method:: isCLI()
+    .. php:method:: isCLI()
 
-		:returns: True if the request was initiated from the command line, otherwise false.
-		:rtype: bool
+        :returns: True if the request was initiated from the command line, otherwise false.
+        :rtype: bool
 
-	.. php:method:: isAJAX()
+    .. php:method:: isAJAX()
 
-		:returns: True if the request is an AJAX request, otherwise false.
-		:rtype: bool
+        :returns: True if the request is an AJAX request, otherwise false.
+        :rtype: bool
 
-	.. php:method:: isSecure()
+    .. php:method:: isSecure()
 
-		:returns: True if the request is an HTTPS request, otherwise false.
-		:rtype: bool
+        :returns: True if the request is an HTTPS request, otherwise false.
+        :rtype: bool
 
-	.. php:method:: getVar([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getVar([$index = null[, $filter = null[, $flags = null]]])
 
-		:param  string  $index: The name of the variable/key to look for.
-		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
-		:rtype: mixed|null
+        :param  string  $index: The name of the variable/key to look for.
+        :param  int     $filter: The type of filter to apply. A list of filters can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
+        :rtype: mixed|null
 
-		The first parameter will contain the name of the REQUEST item you are looking for::
+        The first parameter will contain the name of the REQUEST item you are looking for::
 
-			$request->getVar('some_data');
+            $request->getVar('some_data');
 
-		The method returns null if the item you are attempting to retrieve
-		does not exist.
+        The method returns null if the item you are attempting to retrieve
+        does not exist.
 
-		The second optional parameter lets you run the data through the PHP's
-		filters. Pass in the desired filter type as the second parameter::
+        The second optional parameter lets you run the data through the PHP's
+        filters. Pass in the desired filter type as the second parameter::
 
-			$request->getVar('some_data', FILTER_SANITIZE_STRING);
+            $request->getVar('some_data', FILTER_SANITIZE_STRING);
 
-		To return an array of all POST items call without any parameters.
+        To return an array of all POST items call without any parameters.
 
-		To return all POST items and pass them through the filter, set the
-		first parameter to null while setting the second parameter to the filter
-		you want to use::
+        To return all POST items and pass them through the filter, set the
+        first parameter to null while setting the second parameter to the filter
+        you want to use::
 
-			$request->getVar(null, FILTER_SANITIZE_STRING); // returns all POST items with string sanitation
+            $request->getVar(null, FILTER_SANITIZE_STRING); 
+            // returns all POST items with string sanitation
 
-		To return an array of multiple POST parameters, pass all the required keys as an array::
+        To return an array of multiple POST parameters, pass all the required keys as an array::
 
-			$request->getVar(['field1', 'field2']);
+            $request->getVar(['field1', 'field2']);
 
-		Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
-		the filter type to apply::
+        Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
+        the filter type to apply::
 
-			$request->getVar(['field1', 'field2'], FILTER_SANITIZE_STRING);
+            $request->getVar(['field1', 'field2'], FILTER_SANITIZE_STRING);
 
-	.. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
-		:param  string  $index: The name of the variable/key to look for.
-		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:   $_GET if no parameters supplied, otherwise the GET value if found, or null if not
-		:rtype: mixed|null
+        :param  string  $index: The name of the variable/key to look for.
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:       $_GET if no parameters supplied, otherwise the GET value if found, or null if not
+        :rtype: mixed|null
 
-		This method is identical to ``getVar()``, only it fetches GET data.
+        This method is identical to ``getVar()``, only it fetches GET data.
 
-	.. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
-		:param  string  $index: The name of the variable/key to look for.
-		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
-		:rtype: mixed|null
+        :param  string  $index: The name of the variable/key to look for.
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :rtype: mixed|null
 
-			This method is identical to ``getVar()``, only it fetches POST data.
+            This method is identical to ``getVar()``, only it fetches POST data.
 
-	.. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 
-		:param  string  $index: The name of the variable/key to look for.
-		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
-		:rtype: mixed|null
+        :param  string  $index: The name of the variable/key to look for.
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :rtype: mixed|null
 
-		This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
-		It will search through both POST and GET streams for data, looking first in POST, and
-		then in GET::
+        This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
+        It will search through both POST and GET streams for data, looking first in POST, and
+        then in GET::
 
-			$request->getPostGet('field1');
+            $request->getPostGet('field1');
 
-	.. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
 
-		:param  string  $index: The name of the variable/key to look for.
-		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
-		:rtype: mixed|null
+        :param  string  $index: The name of the variable/key to look for.
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :rtype: mixed|null
 
-		This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
-		It will search through both POST and GET streams for data, looking first in GET, and
-		then in POST::
+        This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
+        It will search through both POST and GET streams for data, looking first in GET, and
+        then in POST::
 
-			$request->getGetPost('field1');
+            $request->getGetPost('field1');
 
-	.. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
+    .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
+        :noindex:
 
-                :noindex:
-		:param	mixed	$index: COOKIE name
-		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:	$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
-		:rtype:	mixed
+        :param	mixed	$index: COOKIE name
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:	    $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
+        :rtype:	mixed
 
-		This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
+        This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
 
-			$request->getCookie('some_cookie');
-			$request->getCookie('some_cookie', FILTER_SANITIZE_STRING); // with filter
+            $request->getCookie('some_cookie');
+            $request->getCookie('some_cookie', FILTER_SANITIZE_STRING); // with filter
 
-		To return an array of multiple cookie values, pass all the required keys as an array::
+        To return an array of multiple cookie values, pass all the required keys as an array::
 
-			$request->getCookie(['some_cookie', 'some_cookie2']);
+            $request->getCookie(['some_cookie', 'some_cookie2']);
 
-		.. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
-			function :php:func:`get_cookie()`, this method does NOT prepend
-			your configured ``$config['cookie_prefix']`` value.
+        .. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
+            function :php:func:`get_cookie()`, this method does NOT prepend
+            your configured ``$config['cookie_prefix']`` value.
 
-	.. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
-		:noindex:
+    .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
+        :noindex:
 
-		:param	mixed	$index: Value name
-		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:param  int     $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-		:returns:	$_SERVER item value if found, NULL if not
-		:rtype:	mixed
+        :param	mixed	$index: Value name
+        :param  int     $filter: The type of filter to apply. A list of filters can be 
+                        found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param  int     $flags: Flags to apply. A list of flags can be found 
+                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns:	    $_SERVER item value if found, NULL if not
+        :rtype:	mixed
 
-		This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
-		methods, only it fetches getServer data (``$_SERVER``)::
+        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
+        methods, only it fetches getServer data (``$_SERVER``)::
 
-			$request->getServer('some_data');
+            $request->getServer('some_data');
 
-		To return an array of multiple ``$_SERVER`` values, pass all the required keys
-		as an array.
-		::
+        To return an array of multiple ``$_SERVER`` values, pass all the required keys
+        as an array.
+        ::
 
-			$request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
+            $request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
 
-	.. php:method:: getUserAgent([$filter = null])
+    .. php:method:: getUserAgent([$filter = null])
 
-		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-		:returns:  The User Agent string, as found in the SERVER data, or null if not found.
-		:rtype: mixed
+        :param  int $filter: The type of filter to apply. A list of filters can be 
+                    found `here <https://www.php.net/manual/en/filter.filters.php>`__.
+        :returns:  The User Agent string, as found in the SERVER data, or null if not found.
+        :rtype: mixed
 
-		This method returns the User Agent string from the SERVER data::
+        This method returns the User Agent string from the SERVER data::
 
-			$request->getUserAgent();
+            $request->getUserAgent();

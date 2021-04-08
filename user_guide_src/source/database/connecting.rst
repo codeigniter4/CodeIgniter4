@@ -2,6 +2,10 @@
 Connecting to your Database
 ###########################
 
+.. contents::
+    :local:
+    :depth: 2
+
 You can connect to your database by adding this line of code in any
 function where it is needed, or in your class constructor to make the
 database available globally in that class.

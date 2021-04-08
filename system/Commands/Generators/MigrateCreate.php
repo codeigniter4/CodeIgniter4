@@ -15,10 +15,9 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Deprecated class for the migration
- * creation command.
+ * Deprecated class for the migration creation command.
  *
- * @deprecated Use make:command instead.
+ * @deprecated Use make:migration instead.
  *
  * @codeCoverageIgnore
  */
@@ -68,8 +67,8 @@ class MigrateCreate extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'      => 'Set root namespace. Defaults to APP_NAMESPACE',
-		'--force' => 'Force overwrite existing files.',
+		'--namespace' => 'Set root namespace. Defaults to APP_NAMESPACE',
+		'--force'     => 'Force overwrite existing files.',
 	];
 
 	/**
@@ -80,8 +79,9 @@ class MigrateCreate extends BaseCommand
 	public function run(array $params)
 	{
 		// Resolve arguments before passing to make:migration
-		$params[0]   = $params[0] ?? CLI::getSegment(2);
-		$params['n'] = $params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
+		$params[0] = $params[0] ?? CLI::getSegment(2);
+
+		$params['namespace'] = $params['namespace'] ?? CLI::getOption('namespace') ?? APP_NAMESPACE;
 
 		if (array_key_exists('force', $params) || CLI::getOption('force'))
 		{

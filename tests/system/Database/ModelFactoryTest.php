@@ -1,11 +1,14 @@
 <?php namespace CodeIgniter\Database;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
-class ModelFactoryTest extends CIDatabaseTestCase
+class ModelFactoryTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected function setUp(): void
 	{
 		parent::setUp();

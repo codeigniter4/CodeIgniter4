@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\HTTP;
 
-class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
+
+class HeaderTest extends CIUnitTestCase
 {
 	public function testHeaderStoresBasics()
 	{
 		$name  = 'foo';
 		$value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($value, $header->getValue());
@@ -18,7 +21,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$name  = 'foo';
 		$value = null;
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals('', $header->getValue());
@@ -34,7 +37,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($value, $header->getValue());
@@ -50,7 +53,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-				$header = new \CodeIgniter\HTTP\Header($name);
+				$header = new Header($name);
 				$this->assertEquals($name, $header->getName());
 				$this->assertEquals(null, $header->getValue());
 				$this->assertEquals($name . ': ', (string) $header);
@@ -70,7 +73,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$value    = 'bar';
 		$expected = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->appendValue(null);
 
@@ -88,7 +91,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->appendValue('baz');
 
@@ -104,7 +107,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$value    = 'bar';
 		$expected = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->prependValue(null);
 
@@ -122,7 +125,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->prependValue('baz');
 
@@ -142,7 +145,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = 'bar, baz';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($expected, $header->getValueLine());
@@ -151,11 +154,11 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testHeaderLineValueNotStringOrArray()
 	{
 		$name  = 'foo';
-		$value = new \stdClass;
+		$value = new stdClass;
 
 		$expected = '';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($expected, $header->getValueLine());
@@ -168,7 +171,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$name     = 'foo';
 		$expected = '';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+		$header = new Header($name);
 		$header->setValue('bar')
 			   ->setValue(null);
 
@@ -182,7 +185,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = 'bar, baz=fuzz';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+		$header = new Header($name);
 
 		$header->setValue('bar')
 			   ->appendValue(['baz' => 'fuzz']);
@@ -199,7 +202,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = 'foo: bar, baz=fuzz';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+		$header = new Header($name);
 
 		$header->setValue('bar')
 			   ->appendValue(['baz' => 'fuzz']);

@@ -1,13 +1,13 @@
-<?php namespace Builder;
+<?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\Query;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
+class InsertTest extends CIUnitTestCase
 {
+	/** @var MockConnection */
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -15,8 +15,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSimpleInsert()
 	{
@@ -44,8 +42,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testThrowsExceptionOnNoValuesSet()
 	{
 		$builder = $this->db->table('jobs');
@@ -56,8 +52,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->testMode()->insert(null, true);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testInsertBatch()
 	{
 		$builder = $this->db->table('jobs');
@@ -66,34 +60,54 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'id'          => 2,
 				'name'        => 'Commedian',
-				'description' => 'Theres something in your teeth',
+				'description' => 'There\'s something in your teeth',
 			],
 			[
 				'id'          => 3,
 				'name'        => 'Cab Driver',
-				'description' => 'Iam yellow',
+				'description' => 'I am yellow',
 			],
 		];
 
-		$this->db->shouldReturn('execute', 1)
-				 ->shouldReturn('affectedRows', 1);
-
-		$builder->insertBatch($insertData, true, true);
+		$this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+		$builder->insertBatch($insertData, true);
 
 		$query = $this->db->getLastQuery();
-
 		$this->assertInstanceOf(Query::class, $query);
 
-		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
-
+		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description:,:id:,:name:), (:description.1:,:id.1:,:name.1:)';
 		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 
-		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
-
-		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
+		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
+		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery()));
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4345
+	 */
+	public function testInsertBatchWithFieldsEndingInNumbers()
+	{
+		$builder = $this->db->table('ip_table');
+
+		$data = [
+			[ 'ip' => '1.1.1.0', 'ip2' => '1.1.1.2' ],
+			[ 'ip' => '2.2.2.0', 'ip2' => '2.2.2.2' ],
+			[ 'ip' => '3.3.3.0', 'ip2' => '3.3.3.2' ],
+			[ 'ip' => '4.4.4.0', 'ip2' => '4.4.4.2' ],
+		];
+
+		$this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+		$builder->insertBatch($data, true);
+
+		$query = $this->db->getLastQuery();
+		$this->assertInstanceOf(Query::class, $query);
+
+		$raw = 'INSERT INTO "ip_table" ("ip", "ip2") VALUES (:ip:,:ip2:), (:ip.1:,:ip2.1:), (:ip.2:,:ip2.2:), (:ip.3:,:ip2.3:)';
+		$this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+
+		$expected = "INSERT INTO \"ip_table\" (\"ip\", \"ip2\") VALUES ('1.1.1.0','1.1.1.2'), ('2.2.2.0','2.2.2.2'), ('3.3.3.0','3.3.3.2'), ('4.4.4.0','4.4.4.2')";
+		$this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+	}
 
 	public function testInsertBatchThrowsExceptionOnNoData()
 	{
@@ -104,8 +118,6 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->insertBatch();
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testInsertBatchThrowsExceptionOnEmptyData()
 	{
 		$builder = $this->db->table('jobs');
@@ -114,6 +126,4 @@ class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectExceptionMessage('insertBatch() called with no data');
 		$builder->insertBatch([]);
 	}
-
-	//--------------------------------------------------------------------
 }

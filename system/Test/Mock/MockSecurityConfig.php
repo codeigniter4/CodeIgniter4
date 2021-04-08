@@ -2,9 +2,14 @@
 
 namespace CodeIgniter\Test\Mock;
 
-use Config\Security as SecurityConfig;
+use Config\Security as Security;
 
-class MockSecurityConfig extends SecurityConfig
+/**
+ * @deprecated
+ *
+ * @codeCoverageIgnore
+ */
+class MockSecurityConfig extends Security
 {
 	public $tokenName   = 'csrf_test_name';
 	public $headerName  = 'X-CSRF-TOKEN';

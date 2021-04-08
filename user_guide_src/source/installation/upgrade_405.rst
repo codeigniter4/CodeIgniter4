@@ -57,3 +57,8 @@ updated requirements. These methods are as follows:
 
 To facilitate use of this interface these methods have been moved from the framework's ``Response`` into a ``ResponseTrait``
 which you may use, and ``DownloadResponse`` now extends ``Response`` directly to ensure maximum compatibility.
+
+**Config\Services**
+
+Service discovery has been updated to allow third-party services (when enabled via Modules) to take precedence over core services. Update
+**app/Config/Services.php** so the class extends ``CodeIgniter\Config\BaseService`` to allow proper discovery of third-party services.

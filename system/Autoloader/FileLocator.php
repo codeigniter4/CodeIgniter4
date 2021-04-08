@@ -22,12 +22,11 @@ class FileLocator
 	/**
 	 * The Autoloader to use.
 	 *
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $autoloader;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -222,16 +221,13 @@ class FileLocator
 				{
 					$foundPaths[] = $fullPath;
 				}
+				elseif (strpos($fullPath, APPPATH) === 0)
+				{
+					$appPaths[] = $fullPath;
+				}
 				else
 				{
-					if (strpos($fullPath, APPPATH) === 0)
-					{
-						$appPaths[] = $fullPath;
-					}
-					else
-					{
-						$foundPaths[] = $fullPath;
-					}
+					$foundPaths[] = $fullPath;
 				}
 			}
 		}

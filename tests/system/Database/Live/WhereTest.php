@@ -1,12 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class WhereTest extends CIDatabaseTestCase
+class WhereTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
@@ -213,6 +216,21 @@ class WhereTest extends CIDatabaseTestCase
 		$this->assertCount(4, $jobs);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4443
+	 */
+	public function testWhereWithLower()
+	{
+		$builder = $this->db->table('job');
+		$builder->insert([
+			'name'        => 'Brewmaster',
+			'description' => null,
+		]);
 
+		$job = $builder
+			->where(sprintf('LOWER(%s.name)', $this->db->prefixTable('job')), 'brewmaster')
+			->get()
+			->getResult();
+		$this->assertCount(1, $job);
+	}
 }

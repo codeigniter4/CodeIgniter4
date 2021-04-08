@@ -10,7 +10,7 @@ use Config\Services;
 class AutoloaderTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $loader;
 
@@ -186,18 +186,7 @@ class AutoloaderTest extends CIUnitTestCase
 		$this->assertFalse($this->loader->loadClass('NotFound'));
 	}
 
-	public function testLoadLegacy()
-	{
-		// should not be able to find a folder
-		$this->assertFalse((bool) $this->loader->loadClass(__DIR__));
-		// should be able to find these because we said so in the Autoloader
-		$this->assertTrue((bool) $this->loader->loadClass('Home'));
-		// should not be able to find these - don't exist
-		$this->assertFalse((bool) $this->loader->loadClass('anotherLibrary'));
-		$this->assertFalse((bool) $this->loader->loadClass('\nester\anotherLibrary'));
-		// should not be able to find these legacy classes - namespaced
-		$this->assertFalse($this->loader->loadClass('Controllers\Home'));
-	}
+	//--------------------------------------------------------------------
 
 	public function testSanitizationSimply()
 	{

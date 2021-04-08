@@ -12,8 +12,8 @@ on:
       - 'tests/**'
       - composer.json
       - spark
-      - '**.php'
       - phpunit.xml.dist
+      - '**.php'
       - .github/workflows/test-phpunit.yml
   pull_request:
     branches:
@@ -26,21 +26,21 @@ on:
       - 'tests/**'
       - composer.json
       - spark
-      - '**.php'
       - phpunit.xml.dist
+      - '**.php'
       - .github/workflows/test-phpunit.yml
 
 jobs:
 
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.2', '7.3', '7.4', '8.0']
+        php-versions: ['7.3', '7.4', '8.0']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
 
     services:
@@ -74,6 +74,10 @@ jobs:
         ports:
           - 6379:6379
         options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
 
     steps:
       - name: Create database for MSSQL Server
@@ -88,20 +92,23 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv-beta
+          extensions: imagick, sqlsrv-beta, gd, sqlite3, redis, memcached, pgsql
           coverage: xdebug
         env:
           update: true
 
-      - name: Install Memcached
-        uses: niden/actions-memcached@v7
+      - name: Install latest ImageMagick
+        run: |
+          sudo apt-get remove ghostscript
+          sudo apt-get update
+          sudo apt-get install -y imagemagick ghostscript-x gsfonts
 
       - name: Get composer cache directory
         id: composercache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.composercache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -115,8 +122,12 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
+      - name: Profile slow tests in PHP 7.4 MySQLi for now
+        if: matrix.php-versions == '7.4' && matrix.db-platforms == 'MySQLi'
+        run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
+
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit -v"
+        run: script -e -c "vendor/bin/phpunit --color=always"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
@@ -133,7 +144,7 @@ jobs:
 
   coveralls-finish:
     needs: [tests]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master

@@ -162,7 +162,7 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new Language('en');
 		$this->assertEquals('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
 		$this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
-		$this->assertEquals('Could not move file {0} to {1} ({2})', $this->lang->getLine('Files.cannotMove', []));
+		$this->assertEquals('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
 		$this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
 	}
 
@@ -173,7 +173,7 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new SecondMockLanguage('en');
 
 		$this->lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $this->lang->loaded()));
+		$this->assertTrue(in_array('More', $this->lang->loaded(), true));
 
 		$this->lang->loadem('More', 'en');
 		$this->assertEquals(1, count($this->lang->loaded())); // should only be there once
@@ -186,11 +186,11 @@ class LanguageTest extends CIUnitTestCase
 		$this->lang = new SecondMockLanguage('en');
 
 		$result = $this->lang->loadem('More', 'en', true);
-		$this->assertFalse(in_array('More', $this->lang->loaded()));
+		$this->assertFalse(in_array('More', $this->lang->loaded(), true));
 		$this->assertEquals(3, count($result));
 
 		$result = $this->lang->loadem('More', 'en');
-		$this->assertTrue(in_array('More', $this->lang->loaded()));
+		$this->assertTrue(in_array('More', $this->lang->loaded(), true));
 		$this->assertEquals(1, count($this->lang->loaded()));
 	}
 

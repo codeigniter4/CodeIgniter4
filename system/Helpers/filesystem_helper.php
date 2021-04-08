@@ -48,7 +48,10 @@ if (! function_exists('directory_map'))
 					continue;
 				}
 
-				is_dir($sourceDir . $file) && $file .= DIRECTORY_SEPARATOR;
+				if (is_dir($sourceDir . $file))
+				{
+					$file .= DIRECTORY_SEPARATOR;
+				}
 
 				if (($directoryDepth < 1 || $newDepth > 0) && is_dir($sourceDir . $file))
 				{

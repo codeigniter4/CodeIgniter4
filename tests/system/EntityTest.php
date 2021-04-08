@@ -2,12 +2,18 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionException;
+use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
+use Tests\Support\EntityCast\CastBase64;
+use Tests\Support\EntityCast\CastPassParameters;
+use Tests\Support\EntityCast\NotExtendsAbstractCast;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
+class EntityTest extends CIUnitTestCase
 {
 
 	use ReflectionHelper;
@@ -108,7 +114,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('made it', $entity->bar);
 
 		// But it shouldn't actually set a class property for the original name...
-		$this->expectException(\ReflectionException::class);
+		$this->expectException(ReflectionException::class);
 		$this->getPrivateProperty($entity, 'bar');
 	}
 
@@ -191,7 +197,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt         = new \DateTime('now');
+		$dt         = new DateTime('now');
 		$entity     = $this->getEntity();
 		$attributes = [
 			'created_at' => $dt,
@@ -246,7 +252,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt     = new \DateTime('now');
+		$dt     = new DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -383,16 +389,28 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(strtotime($date), $entity->ninth);
 	}
 
+	public function testCastTimestampException()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->ninth = 'some string';
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage('Type casting "timestamp" expects a correct timestamp.');
+
+		$entity->ninth;
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCastArray()
 	{
 		$entity = $this->getCastEntity();
 
-		$entity->setSeventh(['foo' => 'bar']);
+		$entity->seventh = ['foo' => 'bar'];
 
 		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-		$this->assertEquals(['foo' => 'bar'], $check);
+		$this->assertEquals(serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
@@ -662,6 +680,43 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$entity = new Entity();
 
 		$this->assertIsBool($entity->cast());
+	}
+
+	public function testCustomCast()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->first = 'base 64';
+
+		$fieldValue = $this->getPrivateProperty($entity, 'attributes')['first'];
+
+		$this->assertEquals(base64_encode('base 64'), $fieldValue);
+
+		$this->assertEquals('base 64', $entity->first);
+	}
+
+	public function testCustomCastException()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage(
+			'The Tests\Support\EntityCast\NotExtendsAbstractCast class '
+			. 'must inherit the CodeIgniter\EntityCast\AbstractCast class'
+		);
+		$entity->second = 'throw Exception';
+	}
+
+	public function testCustomCastParams()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->third = 'value';
+
+		$this->assertEquals('value:["param1","param2","param3"]', $entity->third);
+
+		$entity->fourth = 'test_nullable_type';
+		$this->assertEquals('test_nullable_type:["nullable"]', $entity->fourth);
 	}
 
 	//--------------------------------------------------------------------
@@ -1079,4 +1134,38 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
+	protected function getCustomCastEntity() : Entity
+	{
+		return new class extends Entity
+		{
+
+			protected $attributes = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			protected $_original = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			// 'bar' is db column, 'foo' is internal representation
+			protected $casts = [
+				'first'  => 'base64',
+				'second' => 'someType',
+				'third'  => 'type[param1, param2,param3]',
+				'fourth' => '?type',
+			];
+
+			protected $castHandlers = [
+				'base64'   => CastBase64::class,
+				'someType' => NotExtendsAbstractCast::class,
+				'type'     => CastPassParameters::class,
+			];
+		};
+	}
 }

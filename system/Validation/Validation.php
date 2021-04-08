@@ -202,7 +202,7 @@ class Validation implements ValidationInterface
 	 * @param string|null  $label
 	 * @param string|array $value Value to be validated, can be a string or an array
 	 * @param array|null   $rules
-	 * @param array        $data  // All of the fields to check.
+	 * @param array        $data  All of the fields to check.
 	 *
 	 * @return boolean
 	 */
@@ -213,15 +213,16 @@ class Validation implements ValidationInterface
 			throw new InvalidArgumentException('You must supply the parameter: data.');
 		}
 
-		// If the if_exist rule is defined...
 		if (in_array('if_exist', $rules, true))
 		{
-			// and the current field does not exists in the input data
-			// we can return true. Ignoring all other rules to this field.
-			if (!dot_array_search($field, $data))
+			// If the if_exist rule is defined
+			// and the current field does not exist in the input data
+			// we can return true, ignoring all other rules to this field.
+			if (! array_key_exists($field, array_flatten_with_dots($data)))
 			{
 				return true;
 			}
+
 			// Otherwise remove the if_exist rule and continue the process
 			$rules = array_diff($rules, ['if_exist']);
 		}
@@ -334,7 +335,6 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
@@ -345,7 +345,7 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		if ($request->isJSON())
+		if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false)
 		{
 			$this->data = $request->getJSON(true);
 			return $this;
@@ -401,7 +401,6 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores the rules that should be used to validate the items.
 	 * Rules should be an array formatted like:
@@ -429,14 +428,16 @@ class Validation implements ValidationInterface
 
 		foreach ($rules as $field => &$rule)
 		{
-			if (is_array($rule))
+			if (! is_array($rule))
 			{
-				if (array_key_exists('errors', $rule))
-				{
-					$this->customErrors[$field] = $rule['errors'];
-					unset($rule['errors']);
-				}
+				continue;
 			}
+			if (! array_key_exists('errors', $rule))
+			{
+				continue;
+			}
+			$this->customErrors[$field] = $rule['errors'];
+			unset($rule['errors']);
 		}
 
 		$this->rules = $rules;
@@ -714,8 +715,7 @@ class Validation implements ValidationInterface
 	{
 		if ($field === null && count($this->rules) === 1)
 		{
-			reset($this->rules);
-			$field = key($this->rules);
+			$field = array_key_first($this->rules);
 		}
 
 		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
@@ -732,7 +732,7 @@ class Validation implements ValidationInterface
 	 *        'field2' => 'error message',
 	 *    ]
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 *
 	 * Excluded from code coverage because that it always run as cli
 	 *
@@ -743,19 +743,15 @@ class Validation implements ValidationInterface
 		// If we already have errors, we'll use those.
 		// If we don't, check the session to see if any were
 		// passed along from a redirect_with_input request.
-		if (empty($this->errors) && ! is_cli())
+		if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors']))
 		{
-			if (isset($_SESSION, $_SESSION['_ci_validation_errors']))
-			{
-				$this->errors = unserialize($_SESSION['_ci_validation_errors']);
-			}
+			$this->errors = unserialize($_SESSION['_ci_validation_errors']);
 		}
 
 		return $this->errors ?? [];
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the error for a specific field. Used by custom validation methods.
 	 *
@@ -834,7 +830,6 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 	// Misc
 	//--------------------------------------------------------------------
-
 	/**
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.

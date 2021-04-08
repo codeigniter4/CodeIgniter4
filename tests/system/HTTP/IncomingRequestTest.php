@@ -1,17 +1,19 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class IncomingRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -39,7 +41,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_GET['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getGet('TEST'));
-		$this->assertNull($this->request->getGEt('TESTY'));
+		$this->assertNull($this->request->getGet('TESTY'));
 	}
 
 	public function testCanGrabPostVars()
@@ -249,7 +251,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-		$this->expectException(Exceptions\HTTPException::class);
+		$this->expectException(HTTPException::class);
 		$this->request->negotiate('something bogus', ['iso-8859-5', 'unicode-1-1']);
 	}
 
@@ -296,6 +298,118 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
 		$this->assertEquals($expected, $request->getJSON(true));
+	}
+
+	public function testCanGetAVariableFromJson()
+	{
+		$jsonObj = [
+			'foo' => 'bar',
+			'baz' => [
+				'fizz' => 'buzz',
+			],
+		];
+		$json    = json_encode($jsonObj);
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+		$this->assertEquals('bar', $request->getJsonVar('foo'));
+		$jsonVar = $request->getJsonVar('baz');
+		$this->assertIsObject($jsonVar);
+		$this->assertEquals('buzz', $jsonVar->fizz);
+		$this->assertEquals('buzz', $request->getJsonVar('baz.fizz'));
+	}
+
+	public function testGetJsonVarAsArray()
+	{
+		$jsonObj = [
+			'baz' => [
+				'fizz' => 'buzz',
+				'foo'  => 'bar',
+			],
+		];
+		$json    = json_encode($jsonObj);
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+		$jsonVar = $request->getJsonVar('baz', true);
+		$this->assertIsArray($jsonVar);
+		$this->assertEquals('buzz', $jsonVar['fizz']);
+		$this->assertEquals('bar', $jsonVar['foo']);
+	}
+
+	public function testGetJsonVarCanFilter()
+	{
+		$json = json_encode(['foo' => 'bar']);
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+		$this->assertFalse($request->getJsonVar('foo', false, FILTER_VALIDATE_INT));
+	}
+
+	public function testGetVarWorksWithJson()
+	{
+		$jsonObj = [
+			'foo'  => 'bar',
+			'fizz' => 'buzz',
+		];
+		$json    = json_encode($jsonObj);
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+		$request->setHeader('Content-Type', 'application/json');
+
+		$this->assertEquals('bar', $request->getVar('foo'));
+		$this->assertEquals('buzz', $request->getVar('fizz'));
+
+		$multiple = $request->getVar(['foo', 'fizz']);
+		$this->assertIsArray($multiple);
+		$this->assertEquals('bar', $multiple['foo']);
+		$this->assertEquals('buzz', $multiple['fizz']);
+
+		$all = $request->getVar();
+		$this->assertIsObject($all);
+		$this->assertEquals('bar', $all->foo);
+		$this->assertEquals('buzz', $all->fizz);
+	}
+
+	public function testGetVarWorksWithJsonAndGetParams()
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		// GET method
+		$_REQUEST['foo']  = 'bar';
+		$_REQUEST['fizz'] = 'buzz';
+
+		$request = new IncomingRequest($config, new URI('http://example.com/path?foo=bar&fizz=buzz'), 'php://input', new UserAgent());
+		$request = $request->withMethod('GET');
+
+		// JSON type
+		$request->setHeader('Content-Type', 'application/json');
+
+		$this->assertEquals('bar', $request->getVar('foo'));
+		$this->assertEquals('buzz', $request->getVar('fizz'));
+
+		$multiple = $request->getVar(['foo', 'fizz']);
+		$this->assertIsArray($multiple);
+		$this->assertEquals('bar', $multiple['foo']);
+		$this->assertEquals('buzz', $multiple['fizz']);
+
+		$all = $request->getVar();
+		$this->assertIsArray($all);
+		$this->assertEquals('bar', $all['foo']);
+		$this->assertEquals('buzz', $all['fizz']);
 	}
 
 	public function testCanGrabGetRawInput()
@@ -473,5 +587,33 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_GET['TEST']  = 3;
 		$this->assertNull($this->request->getPostGet('gc'));
 		$this->assertNull($this->request->getGetPost('gc'));
+	}
+
+	public function providePathChecks()
+	{
+		return [
+			'not /index.php' => [
+				'/test.php',
+				'test.php',
+			],
+			'/index.php'     => [
+				'/index.php',
+				'/',
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider providePathChecks
+	 */
+	public function testExtensionPHP($path, $detectPath)
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+
+		$_SERVER['REQUEST_URI'] = $path;
+		$_SERVER['SCRIPT_NAME'] = $path;
+		$request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
+		$this->assertEquals($detectPath, $request->detectPath());
 	}
 }

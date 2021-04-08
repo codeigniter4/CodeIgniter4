@@ -388,7 +388,10 @@ class Email
 	public function __construct($config = null)
 	{
 		$this->initialize($config);
-		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		if (! isset(static::$func_overload))
+		{
+			static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		}
 	}
 
 	/**
@@ -407,7 +410,7 @@ class Email
 			$config = get_object_vars($config);
 		}
 
-		foreach (get_class_vars(get_class($this)) as $key => $value)
+		foreach (array_keys(get_class_vars(get_class($this))) as $key)
 		{
 			if (property_exists($this, $key) && isset($config[$key]))
 			{
@@ -506,7 +509,10 @@ class Email
 		}
 
 		$this->setHeader('From', $name . ' <' . $from . '>');
-		isset($returnPath) || $returnPath = $from;
+		if (! isset($returnPath))
+		{
+			$returnPath = $from;
+		}
 		$this->setHeader('Return-Path', '<' . $returnPath . '>');
 		$this->tmpArchive['returnPath'] = $returnPath;
 
@@ -746,15 +752,15 @@ class Email
 	 */
 	public function setAttachmentCID($filename)
 	{
-		for ($i = 0, $c = count($this->attachments); $i < $c; $i ++)
+		foreach ($this->attachments as $i => $attachment)
 		{
-			if ($this->attachments[$i]['name'][0] === $filename)
+			if ($attachment['name'][0] === $filename)
 			{
 				$this->attachments[$i]['multipart'] = 'related';
 
-				$this->attachments[$i]['cid'] = uniqid(basename($this->attachments[$i]['name'][0]) . '@', true);
+				$this->attachments[$i]['cid'] = uniqid(basename($attachment['name'][0]) . '@', true);
 
-				return $this->attachments[$i]['cid'];
+				return $attachment['cid'];
 			}
 		}
 
@@ -912,7 +918,10 @@ class Email
 	{
 		$this->protocol = strtolower($this->protocol);
 
-		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail'; // @phpstan-ignore-line
+		if (! in_array($this->protocol, $this->protocols, true))
+		{
+			$this->protocol = 'mail';
+		}
 
 		return $this->protocol;
 	}
@@ -924,7 +933,10 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths, true) || $this->encoding = '8bit'; // @phpstan-ignore-line
+		if (! in_array($this->encoding, $this->bitDepths, true))
+		{
+			$this->encoding = '8bit';
+		}
 
 		foreach ($this->baseCharsets as $charset)
 		{
@@ -1155,7 +1167,7 @@ class Email
 
 				// Trim the word down
 				$temp .= static::substr($line, 0, $charlim - 1);
-				$line = static::substr($line, $charlim - 1);
+				$line  = static::substr($line, $charlim - 1);
 			}
 			while (static::strlen($line) > $charlim);
 
@@ -1199,13 +1211,10 @@ class Email
 	 */
 	protected function writeHeaders()
 	{
-		if ($this->protocol === 'mail')
+		if ($this->protocol === 'mail' && isset($this->headers['Subject']))
 		{
-			if (isset($this->headers['Subject']))
-			{
-				$this->subject = $this->headers['Subject'];
-				unset($this->headers['Subject']);
-			}
+			$this->subject = $this->headers['Subject'];
+			unset($this->headers['Subject']);
 		}
 
 		reset($this->headers);
@@ -1253,7 +1262,7 @@ class Email
 				if ($this->getProtocol() === 'mail')
 				{
 					$this->headerStr .= $hdr;
-					$this->finalBody = $this->body;
+					$this->finalBody  = $this->body;
 				}
 				else
 				{
@@ -1304,7 +1313,7 @@ class Email
 
 			case 'plain-attach':
 				$boundary = uniqid('B_ATC_', true);
-				$hdr .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
+				$hdr     .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
 
 				if ($this->getProtocol() === 'mail')
 				{
@@ -1328,8 +1337,8 @@ class Email
 
 				if ($this->attachmentsHaveMultipart('mixed'))
 				{
-					$atcBoundary = uniqid('B_ATC_', true);
-					$hdr .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
+					$atcBoundary  = uniqid('B_ATC_', true);
+					$hdr         .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
 					$lastBoundary = $atcBoundary;
 				}
 
@@ -1417,27 +1426,28 @@ class Email
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
-		for ($i = 0, $c = count($this->attachments); $i < $c; $i++)
+		foreach ($this->attachments as $attachment)
 		{
-			if (isset($multipart) && $this->attachments[$i]['multipart'] !== $multipart)
+			if (isset($multipart) && $attachment['multipart'] !== $multipart)
 			{
 				continue;
 			}
-
-			$name = isset($this->attachments[$i]['name'][1]) ? $this->attachments[$i]['name'][1] : basename($this->attachments[$i]['name'][0]);
-
+			$name  = isset($attachment['name'][1]) ? $attachment['name'][1] : basename($attachment['name'][0]);
 			$body .= '--' . $boundary . $this->newline
-				. 'Content-Type: ' . $this->attachments[$i]['type'] . '; name="' . $name . '"' . $this->newline
-				. 'Content-Disposition: ' . $this->attachments[$i]['disposition'] . ';' . $this->newline
+				. 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
+				. 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
 				. 'Content-Transfer-Encoding: base64' . $this->newline
-				. (empty($this->attachments[$i]['cid']) ? '' : 'Content-ID: <' . $this->attachments[$i]['cid'] . '>' . $this->newline)
+				. (empty($attachment['cid']) ? '' : 'Content-ID: <' . $attachment['cid'] . '>' . $this->newline)
 				. $this->newline
-				. $this->attachments[$i]['content'] . $this->newline;
+				. $attachment['content'] . $this->newline;
 		}
 
 		// $name won't be set if no attachments were appended,
 		// and therefore a boundary wouldn't be necessary
-		empty($name) || $body .= '--' . $boundary . '--';
+		if (! empty($name))
+		{
+			$body .= '--' . $boundary . '--';
+		}
 	}
 
 	/**
@@ -1600,7 +1610,7 @@ class Email
 				if ((static::strlen($temp) + static::strlen($char)) >= 76)
 				{
 					$output .= $temp . $escape . $this->CRLF;
-					$temp = '';
+					$temp    = '';
 				}
 
 				// Add the character to our temporary line
@@ -1663,11 +1673,14 @@ class Email
 		}
 
 		// We might already have this set for UTF-8
-		isset($chars) || $chars = static::strlen($str);
+		if (! isset($chars))
+		{
+			$chars = static::strlen($str);
+		}
 
 		$output = '=?' . $this->charset . '?Q?';
 
-		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++) // @phpstan-ignore-line
+		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
 		{
 			$chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 
@@ -1775,8 +1788,8 @@ class Email
 			if ($i === $float)
 			{
 				$chunk[] = static::substr($set, 1);
-				$float += $this->BCCBatchSize;
-				$set = '';
+				$float  += $this->BCCBatchSize;
+				$set     = '';
 			}
 
 			if ($i === $c - 1)
@@ -1815,7 +1828,10 @@ class Email
 	{
 		$this->finalBody = preg_replace_callback(
 			'/\{unwrap\}(.*?)\{\/unwrap\}/si',
-			[$this, 'removeNLCallback'],
+			[
+				$this,
+				'removeNLCallback',
+			],
 			$this->finalBody
 		);
 	}
@@ -1931,14 +1947,7 @@ class Email
 		// so this needs to be assigned to a variable
 		$from = $this->cleanEmail($this->headers['From']);
 
-		if ($this->validateEmailForShell($from))
-		{
-			$from = '-f ' . $from;
-		}
-		else
-		{
-			$from = '';
-		}
+		$from = $this->validateEmailForShell($from) ? '-f ' . $from : '';
 
 		// is popen() enabled?
 		if (! function_usable('popen') || false === ($fp = @popen($this->mailPath . ' -oi ' . $from . ' -t', 'w')))
@@ -2367,11 +2376,23 @@ class Email
 		// Determine which parts of our raw data needs to be printed
 		$rawData = '';
 
-		is_array($include) || $include = [$include]; // @phpstan-ignore-line
+		if (! is_array($include))
+		{
+			$include = [$include];
+		}
 
-		in_array('headers', $include, true) && $rawData = htmlspecialchars($this->headerStr) . "\n";
-		in_array('subject', $include, true) && $rawData .= htmlspecialchars($this->subject) . "\n";
-		in_array('body', $include, true) && $rawData    .= htmlspecialchars($this->finalBody);
+		if (in_array('headers', $include, true))
+		{
+			$rawData = htmlspecialchars($this->headerStr) . "\n";
+		}
+		if (in_array('subject', $include, true))
+		{
+			$rawData .= htmlspecialchars($this->subject) . "\n";
+		}
+		if (in_array('body', $include, true))
+		{
+			$rawData .= htmlspecialchars($this->finalBody);
+		}
 
 		return $msg . ($rawData === '' ? '' : '<pre>' . $rawData . '</pre>');
 	}

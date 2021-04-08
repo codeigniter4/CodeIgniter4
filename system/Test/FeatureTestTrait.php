@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -133,14 +134,14 @@ trait FeatureTestTrait
 	}
 
 	/**
-	 * Calls a single URI, executes it, and returns a FeatureResponse
+	 * Calls a single URI, executes it, and returns a TestResponse
 	 * instance that can be used to run many assertions against.
 	 *
 	 * @param string     $method
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -166,8 +167,17 @@ trait FeatureTestTrait
 		$request = $this->populateGlobals($method, $request, $params);
 		$request = $this->setRequestBody($request);
 
-		// Make sure the RouteCollection knows what method we're using...
-		$routes = $this->routes ?? Services::routes();
+		// Initialize the RouteCollection
+		if (! $routes = $this->routes)
+		{
+			require APPPATH . 'Config/Routes.php';
+
+			/**
+			 * @var RouteCollection $routes
+			 */
+			$routes->getRoutes('*');
+		}
+
 		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
@@ -202,7 +212,7 @@ trait FeatureTestTrait
 		}
 		// @codeCoverageIgnoreEnd
 
-		return new FeatureResponse($response);
+		return new TestResponse($response);
 	}
 
 	/**
@@ -211,7 +221,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -226,7 +236,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -241,7 +251,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -256,7 +266,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -271,7 +281,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */
@@ -286,7 +296,7 @@ trait FeatureTestTrait
 	 * @param string     $path
 	 * @param array|null $params
 	 *
-	 * @return FeatureResponse
+	 * @return TestResponse
 	 * @throws RedirectException
 	 * @throws Exception
 	 */

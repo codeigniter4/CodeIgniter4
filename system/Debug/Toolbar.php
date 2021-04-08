@@ -140,7 +140,7 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->headers() as $name => $header)
+		foreach ($request->headers() as $header)
 		{
 			$data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
 		}

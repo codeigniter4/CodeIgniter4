@@ -2,18 +2,20 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
+class NegotiateTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var CodeIgniter\HTTP\Request
+	 * @var Request
 	 */
 	protected $request;
 
 	/**
-	 * @var \CodeIgniter\HTTP\Negotiate
+	 * @var Negotiate
 	 */
 	protected $negotiate;
 
@@ -151,7 +153,7 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testBestMatchEmpty()
 	{
-		$this->expectException(Exceptions\HTTPException::class);
+		$this->expectException(HTTPException::class);
 		$this->negotiate->media([]);
 	}
 

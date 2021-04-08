@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\HTTP\URI;
+
 /**
  * Class PagerRenderer
  *
@@ -42,14 +44,14 @@ class PagerRenderer
 	protected $current;
 
 	/**
-	 * Total number of pages? unused?
+	 * Total number of items.
 	 *
 	 * @var integer
 	 */
 	protected $total;
 
 	/**
-	 * Page count?
+	 * Total number of pages.
 	 *
 	 * @var integer
 	 */
@@ -58,7 +60,7 @@ class PagerRenderer
 	/**
 	 * URI base for pagination links
 	 *
-	 * @var \CodeIgniter\HTTP\URI
+	 * @var URI
 	 */
 	protected $uri;
 
@@ -400,5 +402,65 @@ class PagerRenderer
 		}
 
 		return (string) $uri;
+	}
+
+	/**
+	 * Returns the page number of the first page.
+	 *
+	 * @return integer
+	 */
+	public function getFirstPageNumber(): int
+	{
+		return $this->first;
+	}
+
+	/**
+	 * Returns the page number of the current page.
+	 *
+	 * @return integer
+	 */
+	public function getCurrentPageNumber(): int
+	{
+		return $this->current;
+	}
+
+	/**
+	 * Returns the page number of the last page.
+	 *
+	 * @return integer
+	 */
+	public function getLastPageNumber(): int
+	{
+		return $this->last;
+	}
+
+	/**
+	 * Returns total number of pages.
+	 *
+	 * @return integer
+	 */
+	public function getPageCount(): int
+	{
+		return $this->pageCount;
+	}
+
+	/**
+	 * Returns the previous page number.
+	 *
+	 * @return integer|null
+	 */
+	public function getPreviousPageNumber(): ?int
+	{
+		return ($this->current === 1) ? null : $this->current - 1;
+	}
+
+	/**
+	 * Returns the next page number.
+	 *
+	 * @return integer|null
+	 */
+	public function getNextPageNumber(): ?int
+	{
+		return ($this->current === $this->pageCount) ? null : $this->current + 1;
 	}
 }

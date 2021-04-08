@@ -1,16 +1,17 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class RequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var Request
 	 */
 	protected $request;
 

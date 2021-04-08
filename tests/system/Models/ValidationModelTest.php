@@ -17,6 +17,19 @@ final class ValidationModelTest extends LiveModelTestCase
 		$this->createModel(ValidModel::class);
 	}
 
+	public function testValid(): void
+	{
+		$data = [
+			'name'        => 'some name',
+			'description' => 'some great marketing stuff',
+		];
+
+		$this->assertIsInt($this->model->insert($data));
+
+		$errors = $this->model->errors();
+		$this->assertEquals([], $errors);
+	}
+
 	public function testValidationBasics(): void
 	{
 		$data = [

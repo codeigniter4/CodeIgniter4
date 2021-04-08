@@ -10,7 +10,6 @@ use CodeIgniter\Controller;
  */
 class Popcorn extends Controller
 {
-
 	use ResponseTrait;
 
 	public function index()

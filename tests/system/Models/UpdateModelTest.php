@@ -275,6 +275,65 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->model->update($id, $data);
 	}
 
+	public function testUpdateArrayWithDataExceptionNoAllowedFields(): void
+	{
+		$this->createModel(EventModel::class);
+
+		$data = [
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
+
+		$id = $this->model->insert($data);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to update.');
+		$this->model->update($id, ['thisKeyIsNotAllowed' => 'Bar']);
+	}
+
+	public function testUpdateWithEntityNoAllowedFields(): void
+	{
+		$this->createModel(UserModel::class);
+
+		$entity = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+
+		$entity->id      = 1;
+		$entity->name    = 'Jones Martin';
+		$entity->country = 'India';
+		$entity->deleted = 0;
+
+		$id = $this->model->insert($entity);
+
+		$entity->syncOriginal();
+
+		$entity->fill(['thisKeyIsNotAllowed' => 'Bar']);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to update.');
+		$this->model->update($id, $entity);
+	}
+
 	public function testUseAutoIncrementSetToFalseUpdate(): void
 	{
 		$key = 'key';
@@ -301,9 +360,9 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->assertTrue($this->model->set('country', '2+2', false)->set('email', '1+1')->update(1, $userData));
 
 		$this->seeInDatabase('user', [
-			'name' => 'Scott',
+			'name'    => 'Scott',
 			'country' => '4',
-			'email' => '1+1',
+			'email'   => '1+1',
 		]);
 	}
 }

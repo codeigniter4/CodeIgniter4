@@ -142,12 +142,9 @@ class Rules
 				  ->where($field, $str)
 				  ->limit(1);
 
-		if (! empty($whereField) && ! empty($whereValue))
+		if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue))
 		{
-			if (! preg_match('/^\{(\w+)\}$/', $whereValue))
-			{
-				$row = $row->where($whereField, $whereValue);
-			}
+			$row = $row->where($whereField, $whereValue);
 		}
 
 		return (bool) ($row->get()->getRow() !== null);
@@ -201,12 +198,9 @@ class Rules
 				  ->where($field, $str)
 				  ->limit(1);
 
-		if (! empty($ignoreField) && ! empty($ignoreValue))
+		if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue))
 		{
-			if (! preg_match('/^\{(\w+)\}$/', $ignoreValue))
-			{
-				$row = $row->where("{$ignoreField} !=", $ignoreValue);
-			}
+			$row = $row->where("{$ignoreField} !=", $ignoreValue);
 		}
 
 		return (bool) ($row->get()->getRow() === null);
@@ -384,10 +378,8 @@ class Rules
 
 		foreach ($fields as $field)
 		{
-			if (
-				(array_key_exists($field, $data) && ! empty($data[$field])) ||
-				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))	
-			)
+			if ((array_key_exists($field, $data) && ! empty($data[$field])) ||
+				(strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))                )
 			{
 				$requiredFields[] = $field;
 			}
@@ -435,8 +427,7 @@ class Rules
 		// any of the fields are not present in $data
 		foreach ($fields as $field)
 		{
-			if (
-				(strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
+			if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
 				(strpos($field, '.') !== false && empty(dot_array_search($field, $data)))
 			)
 			{
