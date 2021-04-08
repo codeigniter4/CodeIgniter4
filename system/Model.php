@@ -55,6 +55,13 @@ class Model extends BaseModel
 	protected $table;
 
 	/**
+	 * The table's alias
+	 *
+	 * @var string
+	 */
+	protected $tableAlias;
+
+	/**
 	 * The table's primary key.
 	 *
 	 * @var string
@@ -114,6 +121,19 @@ class Model extends BaseModel
 		{
 			$this->db = &$db;
 		}
+		if (strpos($this->table, ' ') !== false)
+		{
+			// if the alias is written with the AS keyword, remove it
+			$this->tableAlias = preg_replace('/\s+AS\s+/i', ' ', $this->table);
+
+			// Grab the alias
+			$this->tableAlias = trim(strrchr($this->tableAlias, ' '));
+
+			// Store the alias, if it doesn't already exist
+			$this->db->addTableAlias($this->tableAlias);
+		} else {
+			$this->tableAlias = $this->table;
+		}
 	}
 
 	// endregion
@@ -154,18 +174,18 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
+			$row = $builder->whereIn($this->tableAlias . '.' . $this->primaryKey, $id)
 				->get()
 				->getResult($this->tempReturnType);
 		}
 		elseif ($singleton)
 		{
-			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
+			$row = $builder->where($this->tableAlias . '.' . $this->primaryKey, $id)
 				->get()
 				->getFirstRow($this->tempReturnType);
 		}
@@ -206,7 +226,7 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		return $builder->limit($limit, $offset)
@@ -227,13 +247,13 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 		else
 		{
 			if ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
 			{
-				$builder->groupBy($this->table . '.' . $this->primaryKey);
+				$builder->groupBy($this->tableAlias . '.' . $this->primaryKey);
 			}
 		}
 
@@ -241,7 +261,7 @@ class Model extends BaseModel
 		// information to consistently return correct results.
 		if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey)
 		{
-			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+			$builder->orderBy($this->tableAlias . '.' . $this->primaryKey, 'asc');
 		}
 
 		return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
@@ -341,7 +361,7 @@ class Model extends BaseModel
 
 		if ($id)
 		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			$builder = $builder->whereIn($this->tableAlias . '.' . $this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure to set the correct escape flag
@@ -435,7 +455,7 @@ class Model extends BaseModel
 	protected function doPurgeDeleted()
 	{
 		return $this->builder()
-			->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+			->where($this->tableAlias . '.' . $this->deletedField . ' IS NOT NULL')
 			->delete();
 	}
 
@@ -448,7 +468,7 @@ class Model extends BaseModel
 	 */
 	protected function doOnlyDeleted()
 	{
-		$this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+		$this->builder()->where($this->tableAlias . '.' . $this->deletedField . ' IS NOT NULL');
 	}
 
 	/**
@@ -557,7 +577,7 @@ class Model extends BaseModel
 	{
 		if ($this->tempUseSoftDeletes)
 		{
-			$this->builder()->where($this->table . '.' . $this->deletedField, null);
+			$this->builder()->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		// When $reset === false, the $tempUseSoftDeletes will be
