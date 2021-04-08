@@ -19,7 +19,6 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Database\Query;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -40,17 +39,27 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @mixin    BaseBuilder
- * @property BaseConnection $db
+ * @property ConnectionInterface $db
+ *
+ * @mixin BaseBuilder
  */
 class Model extends BaseModel
 {
+	// region Properties
+
 	/**
 	 * Name of database table
 	 *
 	 * @var string
 	 */
 	protected $table;
+
+	/**
+	 * The table's alias
+	 *
+	 * @var string
+	 */
+	protected $tableAlias;
 
 	/**
 	 * The table's primary key.
@@ -90,6 +99,10 @@ class Model extends BaseModel
 	 */
 	protected $escape = [];
 
+	// endregion
+
+	// region Constructor
+
 	/**
 	 * Model constructor.
 	 *
@@ -98,15 +111,34 @@ class Model extends BaseModel
 	 */
 	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
 	{
-		/**
-		 * @var BaseConnection $db
-		 */
-		$db = $db ?? Database::connect($this->DBGroup);
-
-		$this->db = &$db;
-
 		parent::__construct($validation);
+
+		if (is_null($db))
+		{
+			$this->db = Database::connect($this->DBGroup);
+		}
+		else
+		{
+			$this->db = &$db;
+		}
+		if (strpos($this->table, ' ') !== false)
+		{
+			// if the alias is written with the AS keyword, remove it
+			$this->tableAlias = preg_replace('/\s+AS\s+/i', ' ', $this->table);
+
+			// Grab the alias
+			$this->tableAlias = trim(strrchr($this->tableAlias, ' '));
+
+			// Store the alias, if it doesn't already exist
+			$this->db->addTableAlias($this->tableAlias);
+		} else {
+			$this->tableAlias = $this->table;
+		}
 	}
+
+	// endregion
+
+	// region Setters
 
 	/**
 	 * Specify the table associated with a model
@@ -121,6 +153,10 @@ class Model extends BaseModel
 
 		return $this;
 	}
+
+	// endregion
+
+	// region Database Methods
 
 	/**
 	 * Fetches the row of database from $this->table with a primary key
@@ -138,18 +174,18 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
+			$row = $builder->whereIn($this->tableAlias . '.' . $this->primaryKey, $id)
 				->get()
 				->getResult($this->tempReturnType);
 		}
 		elseif ($singleton)
 		{
-			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
+			$row = $builder->where($this->tableAlias . '.' . $this->primaryKey, $id)
 				->get()
 				->getFirstRow($this->tempReturnType);
 		}
@@ -171,7 +207,7 @@ class Model extends BaseModel
 	 */
 	protected function doFindColumn(string $columnName)
 	{
-		return $this->select($columnName)->asArray()->find(); // @phpstan-ignore-line
+		return $this->select($columnName)->asArray()->find();
 	}
 
 	/**
@@ -190,7 +226,7 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		return $builder->limit($limit, $offset)
@@ -211,18 +247,21 @@ class Model extends BaseModel
 
 		if ($this->tempUseSoftDeletes)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, null);
+			$builder->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
-		elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
+		else
 		{
-			$builder->groupBy($this->table . '.' . $this->primaryKey);
+			if ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
+			{
+				$builder->groupBy($this->tableAlias . '.' . $this->primaryKey);
+			}
 		}
 
 		// Some databases, like PostgreSQL, need order
 		// information to consistently return correct results.
 		if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey)
 		{
-			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+			$builder->orderBy($this->tableAlias . '.' . $this->primaryKey, 'asc');
 		}
 
 		return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
@@ -234,7 +273,7 @@ class Model extends BaseModel
 	 *
 	 * @param array $data Data
 	 *
-	 * @return Query|boolean
+	 * @return BaseResult|integer|string|false
 	 */
 	protected function doInsert(array $data)
 	{
@@ -259,9 +298,17 @@ class Model extends BaseModel
 		$result = $builder->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result)
+		if ($result->resultID)
 		{
-			$this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
+			if (! $this->useAutoIncrement)
+			{
+				$this->insertID = $data[$this->primaryKey];
+			}
+			else
+			{
+				// @phpstan-ignore-next-line
+				$this->insertID = $this->db->insertID();
+			}
 		}
 
 		return $result;
@@ -314,7 +361,7 @@ class Model extends BaseModel
 
 		if ($id)
 		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			$builder = $builder->whereIn($this->tableAlias . '.' . $this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure to set the correct escape flag
@@ -352,7 +399,7 @@ class Model extends BaseModel
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return string|boolean
+	 * @return BaseResult|boolean
 	 *
 	 * @throws DatabaseException
 	 */
@@ -376,7 +423,9 @@ class Model extends BaseModel
 					);
 				}
 
-				return false; // @codeCoverageIgnore
+				// @codeCoverageIgnoreStart
+				return false;
+				// @codeCoverageIgnoreEnd
 			}
 
 			$set[$this->deletedField] = $this->setDate();
@@ -386,10 +435,14 @@ class Model extends BaseModel
 				$set[$this->updatedField] = $this->setDate();
 			}
 
-			return $builder->update($set);
+			$result = $builder->update($set);
+		}
+		else
+		{
+			$result = $builder->delete();
 		}
 
-		return $builder->delete();
+		return $result;
 	}
 
 	/**
@@ -402,7 +455,7 @@ class Model extends BaseModel
 	protected function doPurgeDeleted()
 	{
 		return $this->builder()
-			->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+			->where($this->tableAlias . '.' . $this->deletedField . ' IS NOT NULL')
 			->delete();
 	}
 
@@ -415,7 +468,7 @@ class Model extends BaseModel
 	 */
 	protected function doOnlyDeleted()
 	{
-		$this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+		$this->builder()->where($this->tableAlias . '.' . $this->deletedField . ' IS NOT NULL');
 	}
 
 	/**
@@ -434,23 +487,13 @@ class Model extends BaseModel
 
 	/**
 	 * Grabs the last error(s) that occurred from the Database connection.
-	 * The return array should be in the following format:
-	 *  ['source' => 'message']
 	 * This methods works only with dbCalls
 	 *
-	 * @return array<string,string>
+	 * @return array|null
 	 */
 	protected function doErrors()
 	{
-		// $error is always ['code' => string|int, 'message' => string]
-		$error = $this->db->error();
-
-		if ((int) $error['code'] === 0)
-		{
-			return [];
-		}
-
-		return [get_class($this->db) => $error['message']];
+		return $this->db->error();
 	}
 
 	/**
@@ -534,7 +577,7 @@ class Model extends BaseModel
 	{
 		if ($this->tempUseSoftDeletes)
 		{
-			$this->builder()->where($this->table . '.' . $this->deletedField, null);
+			$this->builder()->where($this->tableAlias . '.' . $this->deletedField, null);
 		}
 
 		// When $reset === false, the $tempUseSoftDeletes will be
@@ -546,6 +589,10 @@ class Model extends BaseModel
 
 		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
+
+	// endregion
+
+	// region Builder
 
 	/**
 	 * Provides a shared instance of the Query Builder.
@@ -611,7 +658,7 @@ class Model extends BaseModel
 	{
 		$data = is_array($key) ? $key : [$key => $value];
 
-		foreach (array_keys($data) as $k)
+		foreach ($data as $k => $v)
 		{
 			$this->tempData['escape'][$k] = $escape;
 		}
@@ -620,6 +667,12 @@ class Model extends BaseModel
 
 		return $this;
 	}
+
+	// endregion
+
+	// region Overrides
+
+	// region CRUD & Finders
 
 	/**
 	 * This method is called on save to determine if entry have to be updated
@@ -704,6 +757,10 @@ class Model extends BaseModel
 		return parent::update($id, $data);
 	}
 
+	// endregion
+
+	// region Utility
+
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array with raw values.
@@ -720,15 +777,22 @@ class Model extends BaseModel
 	{
 		$properties = parent::objectToRawArray($data, $onlyChanged);
 
-		// Always grab the primary key otherwise updates will fail.
-		if (method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-				&& ! empty($data->{$this->primaryKey})))
+		if (method_exists($data, 'toRawArray'))
 		{
-			$properties[$this->primaryKey] = $data->{$this->primaryKey};
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey}))
+			{
+				$properties[$this->primaryKey] = $data->{$this->primaryKey};
+			}
 		}
 
 		return $properties;
 	}
+
+	// endregion
+
+	// region Magic
 
 	/**
 	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
@@ -765,7 +829,13 @@ class Model extends BaseModel
 		{
 			return true;
 		}
-		return isset($this->builder()->$name);
+
+		if (isset($this->builder()->$name))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -805,6 +875,12 @@ class Model extends BaseModel
 
 		return $result;
 	}
+
+	// endregion
+
+	// endregion
+
+	// region Deprecated
 
 	/**
 	 * Takes a class an returns an array of it's public and protected
@@ -881,4 +957,7 @@ class Model extends BaseModel
 
 		return $properties;
 	}
+
+	// endregion
+
 }
