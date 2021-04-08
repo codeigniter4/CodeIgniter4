@@ -472,7 +472,12 @@ class Query implements QueryInterface
 			')',
 		];
 
-		$sql = $this->getQuery();
+		if (empty($this->finalQueryString))
+		{
+			$this->compileBinds(); // @codeCoverageIgnore
+		}
+
+		$sql = $this->finalQueryString;
 
 		foreach ($highlight as $term)
 		{
