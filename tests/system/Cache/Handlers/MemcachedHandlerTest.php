@@ -1,6 +1,12 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class MemcachedHandlerTest extends CIUnitTestCase
 {
 	private $memcachedHandler;
 	private static $key1 = 'key1';
@@ -22,7 +28,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->memcachedHandler = new MemcachedHandler($this->config);
 		if (! $this->memcachedHandler->isSupported())
@@ -53,7 +59,20 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->memcachedHandler->get(self::$key1));
 		$this->assertNull($this->memcachedHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
+		$this->assertNull($this->memcachedHandler->get(self::$key1));
+	}
+
+	public function testRemember()
+	{
+		$this->memcachedHandler->remember(self::$key1, 2, function () {
+			return 'value';
+		});
+
+		$this->assertSame('value', $this->memcachedHandler->get(self::$key1));
+		$this->assertNull($this->memcachedHandler->get(self::$dummy));
+
+		CLI::wait(3);
 		$this->assertNull($this->memcachedHandler->get(self::$key1));
 	}
 
@@ -76,7 +95,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->increment(self::$key1, 10));
 
-		$config                   = new \Config\Cache();
+		$config                   = new Cache();
 		$config->memcached['raw'] = true;
 		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
@@ -95,7 +114,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->decrement(self::$key1, 1));
 
-		$config                   = new \Config\Cache();
+		$config                   = new Cache();
 		$config->memcached['raw'] = true;
 		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
@@ -132,7 +151,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$actual = $this->memcachedHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 

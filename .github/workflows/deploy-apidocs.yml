@@ -1,0 +1,73 @@
+# When changes are pushed to the develop branch,
+# build the current version of the API documentation
+# with phpDocumentor and deploy it to the api branch.
+name: Deploy API Documentation
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'system/**'
+
+jobs:
+
+  build:
+    name: Deploy to api
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup credentials
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          path: source
+
+      - name: Checkout target
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/api
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: api
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: intl
+
+      - name: Install GraphViz for phpDocumentor
+        run: |
+          sudo apt install -yq graphviz
+
+      - name: Download phpDocumentor
+        run: |
+          cd ./source
+          curl \
+            -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar \
+            -o admin/phpDocumentor.phar
+
+      - name: Prepare
+        run: |
+          cd ./api
+          rm -rf ./api/docs*
+          mkdir -p ./api/docs
+          git reset --hard master
+
+      - name: Build
+        run: |
+          cd ./source
+          chmod +x admin/phpDocumentor.phar
+          admin/phpDocumentor.phar
+          cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
+
+      - name: Deploy
+        run: |
+          cd ./api
+          git add .
+          git commit -m "API sync for ${GITHUB_SHA}"
+          git push

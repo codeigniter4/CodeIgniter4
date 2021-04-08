@@ -77,7 +77,7 @@ previous results::
 		->save('/path/to/image/mypic_thumb.jpg');
 
 This example would take the same image and first fix any mobile phone orientation issues,
-rotate the image by 90 degress, and then crop the result into a 100x100 pixel image,
+rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
 starting at the top left corner. The result would be saved as the thumbnail.
 
 .. note:: In order for the image class to be allowed to do any
@@ -319,7 +319,7 @@ that allow you to specify how the text should be displayed::
 
 The possible options that are recognized are as follows:
 
-- color         Text Color (hex number), i.e. #ff0000
+- color         Text Color (hex number), i.e., #ff0000
 - opacity		A number between 0 and 1 that represents the opacity of the text.
 - withShadow	Boolean value whether to display a shadow or not.
 - shadowColor   Color of the shadow (hex number)
@@ -332,4 +332,4 @@ The possible options that are recognized are as follows:
 - fontSize		The font size to use. When using the GD handler with the system font, valid values are between 1-5.
 
 .. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
-		name of one of the installed system fonts that you wish to use, i.e. Calibri.
+		name of one of the installed system fonts that you wish to use, i.e., Calibri.

@@ -1,46 +1,20 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Format\FormatterInterface;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
-use Config\Format;
+use Config\Services;
 
 /**
  * Response trait.
@@ -49,10 +23,8 @@ use Config\Format;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property \CodeIgniter\HTTP\IncomingRequest $request
- * @property \CodeIgniter\HTTP\Response        $response
- *
- * @package CodeIgniter\API
+ * @property IncomingRequest $request
+ * @property Response        $response
  */
 trait ResponseTrait
 {
@@ -102,6 +74,13 @@ trait ResponseTrait
 	 */
 	protected $format = 'json';
 
+	/**
+	 * Current Formatter instance. This is usually set by ResponseTrait::format
+	 *
+	 * @var FormatterInterface
+	 */
+	protected $formatter;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -123,7 +102,8 @@ trait ResponseTrait
 
 			// Create the output var here in case of $this->response([]);
 			$output = null;
-		} // If data is null but status provided, keep the output empty.
+		}
+		// If data is null but status provided, keep the output empty.
 		elseif ($data === null && is_numeric($status))
 		{
 			$output = null;
@@ -134,8 +114,20 @@ trait ResponseTrait
 			$output = $this->format($data);
 		}
 
-		return $this->response->setBody($output)
-						->setStatusCode($status, $message);
+		if (! is_null($output))
+		{
+			if ($this->format === 'json')
+			{
+				return $this->response->setJSON($output)->setStatusCode($status, $message);
+			}
+
+			if ($this->format === 'xml')
+			{
+				return $this->response->setXML($output)->setStatusCode($status, $message);
+			}
+		}
+
+		return $this->response->setBody($output)->setStatusCode($status, $message);
 	}
 
 	//--------------------------------------------------------------------
@@ -144,7 +136,7 @@ trait ResponseTrait
 	 * Used for generic failures that no custom methods exist for.
 	 *
 	 * @param string|array $messages
-	 * @param integer|null $status        HTTP status code
+	 * @param integer      $status        HTTP status code
 	 * @param string|null  $code          Custom, API-specific, error code
 	 * @param string       $customMessage
 	 *
@@ -159,7 +151,7 @@ trait ResponseTrait
 
 		$response = [
 			'status'   => $status,
-			'error'    => $code === null ? $status : $code,
+			'error'    => $code ?? $status,
 			'messages' => $messages,
 		];
 
@@ -382,29 +374,30 @@ trait ResponseTrait
 			$contentType = str_replace('application/json', 'text/html', $contentType);
 			$contentType = str_replace('application/', 'text/', $contentType);
 			$this->response->setContentType($contentType);
+			$this->format = 'html';
 
 			return $data;
 		}
 
-		$config = new Format();
-		$format = "application/$this->format";
+		$format = Services::format();
+		$mime   = "application/{$this->format}";
 
 		// Determine correct response type through content negotiation if not explicitly declared
-		if (empty($this->format) || ! in_array($this->format, ['json', 'xml']))
+		if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
 		{
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+			$mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
 		}
 
-		$this->response->setContentType($format);
+		$this->response->setContentType($mime);
 
 		// if we don't have a formatter, make one
 		if (! isset($this->formatter))
 		{
 			// if no formatter, use the default
-			$this->formatter = $config->getFormatter($format);
+			$this->formatter = $format->getFormatter($mime);
 		}
 
-		if ($format !== 'application/json')
+		if ($mime !== 'application/json')
 		{
 			// Recursively convert objects into associative arrays
 			// Conversion not required for JSONFormatter

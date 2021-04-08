@@ -1,15 +1,29 @@
 <?php
 
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Database\Exceptions;
 
-class DataException extends \RuntimeException implements ExceptionInterface
+use CodeIgniter\Exceptions\DebugTraceableTrait;
+use RuntimeException;
+
+class DataException extends RuntimeException implements ExceptionInterface
 {
+	use DebugTraceableTrait;
+
 	/**
 	 * Used by the Model's trigger() method when the callback cannot be found.
 	 *
 	 * @param string $method
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forInvalidMethodTriggered(string $method)
 	{
@@ -22,11 +36,25 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 *
 	 * @param string $mode
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forEmptyDataset(string $mode)
 	{
 		return new static(lang('Database.emptyDataset', [$mode]));
+	}
+
+	/**
+	 * Used by Model's insert/update methods when there is no
+	 * primary key defined and Model has option `useAutoIncrement`
+	 * set to false.
+	 *
+	 * @param string $mode
+	 *
+	 * @return DataException
+	 */
+	public static function forEmptyPrimaryKey(string $mode)
+	{
+		return new static(lang('Database.emptyPrimaryKey', [$mode]));
 	}
 
 	/**
@@ -36,7 +64,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 *
 	 * @param string $argument
 	 *
-	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 * @return DataException
 	 */
 	public static function forInvalidArgument(string $argument)
 	{

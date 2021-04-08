@@ -1,16 +1,30 @@
 <?php namespace CodeIgniter\HTTP;
 
-class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
+
+class HeaderTest extends CIUnitTestCase
 {
 	public function testHeaderStoresBasics()
 	{
 		$name  = 'foo';
 		$value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($value, $header->getValue());
+	}
+
+	public function testHeaderStoresBasicsWithNull()
+	{
+		$name  = 'foo';
+		$value = null;
+
+		$header = new Header($name, $value);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals('', $header->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -23,7 +37,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($value, $header->getValue());
@@ -39,7 +53,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-				$header = new \CodeIgniter\HTTP\Header($name);
+				$header = new Header($name);
 				$this->assertEquals($name, $header->getName());
 				$this->assertEquals(null, $header->getValue());
 				$this->assertEquals($name . ': ', (string) $header);
@@ -53,6 +67,20 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testHeaderAppendsValueSkippedForNull()
+	{
+		$name     = 'foo';
+		$value    = 'bar';
+		$expected = 'bar';
+
+		$header = new Header($name, $value);
+
+		$header->appendValue(null);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals($expected, $header->getValue());
+	}
+
 	public function testHeaderConvertsSingleToArray()
 	{
 		$name  = 'foo';
@@ -63,7 +91,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'baz',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->appendValue('baz');
 
@@ -72,6 +100,20 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testHeaderPrependsValueSkippedForNull()
+	{
+		$name     = 'foo';
+		$value    = 'bar';
+		$expected = 'bar';
+
+		$header = new Header($name, $value);
+
+		$header->prependValue(null);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals($expected, $header->getValue());
+	}
 
 	public function testHeaderPrependsValue()
 	{
@@ -83,7 +125,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar',
 		];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
 
 		$header->prependValue('baz');
 
@@ -103,7 +145,20 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = 'bar, baz';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new Header($name, $value);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals($expected, $header->getValueLine());
+	}
+
+	public function testHeaderLineValueNotStringOrArray()
+	{
+		$name  = 'foo';
+		$value = new stdClass;
+
+		$expected = '';
+
+		$header = new Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($expected, $header->getValueLine());
@@ -111,13 +166,26 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testHeaderSetValueWithNullWillMarkAsEmptyString()
+	{
+		$name     = 'foo';
+		$expected = '';
+
+		$header = new Header($name);
+		$header->setValue('bar')
+			   ->setValue(null);
+
+		$this->assertEquals($name, $header->getName());
+		$this->assertEquals($expected, $header->getValueLine());
+	}
+
 	public function testHeaderLineWithArrayValues()
 	{
 		$name = 'foo';
 
 		$expected = 'bar, baz=fuzz';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+		$header = new Header($name);
 
 		$header->setValue('bar')
 			   ->appendValue(['baz' => 'fuzz']);
@@ -134,7 +202,7 @@ class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = 'foo: bar, baz=fuzz';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+		$header = new Header($name);
 
 		$header->setValue('bar')
 			   ->appendValue(['baz' => 'fuzz']);

@@ -3,12 +3,13 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 
-class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
+class MessageTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var CodeIgniter\HTTP\Message
+	 * @var Message
 	 */
 	protected $message;
 
@@ -35,7 +36,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('Host', 'daisyduke.com');
 		$this->message->setHeader('Referer', 'RoscoePekoTrain.com');
 
-		$headers = $this->message->getHeaders();
+		$headers = $this->message->headers();
 
 		// Content-Type is likely set...
 		$this->assertGreaterThanOrEqual(2, count($headers));
@@ -50,7 +51,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$header = $this->message->getHeader('Host');
+		$header = $this->message->header('Host');
 
 		$this->assertInstanceOf(Header::class, $header);
 		$this->assertEquals('daisyduke.com', $header->getValue());
@@ -58,12 +59,12 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testCaseInsensitiveGetHeader()
+	public function testCaseInsensitiveheader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('host')->getValue());
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST')->getValue());
+		$this->assertEquals('daisyduke.com', $this->message->header('host')->getValue());
+		$this->assertEquals('daisyduke.com', $this->message->header('HOST')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -73,8 +74,8 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('first', 'kiss');
 		$this->message->setHeader('second', ['black', 'book']);
 
-		$this->assertEquals('kiss', $this->message->getHeader('FIRST')->getValue());
-		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second')->getValue());
+		$this->assertEquals('kiss', $this->message->header('FIRST')->getValue());
+		$this->assertEquals(['black', 'book'], $this->message->header('Second')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -84,7 +85,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('Pragma', 'cache');
 		$this->message->setHeader('Pragma', 'no-cache');
 
-		$this->assertEquals('no-cache', $this->message->getHeader('Pragma')->getValue());
+		$this->assertEquals('no-cache', $this->message->header('Pragma')->getValue());
 	}
 
 	public function testHeaderLineIsReadable()
@@ -92,8 +93,8 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->message->setHeader('Accept', ['json', 'html']);
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('json, html', $this->message->getHeader('Accept')->getValueLine());
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('Host')->getValueLine());
+		$this->assertEquals('json, html', $this->message->header('Accept')->getValueLine());
+		$this->assertEquals('daisyduke.com', $this->message->header('Host')->getValueLine());
 	}
 
 	//--------------------------------------------------------------------
@@ -104,7 +105,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->removeHeader('host');
 
-		$this->assertEquals('', $this->message->getHeader('host'));
+		$this->assertEquals('', $this->message->header('host'));
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +116,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->appendHeader('Accept', 'xml');
 
-		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept')->getValue());
+		$this->assertEquals(['json', 'html', 'xml'], $this->message->header('accept')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -126,7 +127,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->prependHeader('Accept', 'xml');
 
-		$this->assertEquals(['xml', 'json', 'html'], $this->message->getHeader('accept')->getValue());
+		$this->assertEquals(['xml', 'json', 'html'], $this->message->header('accept')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -209,20 +210,69 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
 
+	public function provideArrayHeaderValue()
+	{
+		return [
+			'existing for next not append' => [
+				[
+					'json',
+					'html',
+					'xml',
+				],
+			],
+			'existing for next append'     => [
+				[
+					'json',
+					'html',
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideArrayHeaderValue
+	 */
+	public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue)
+	{
+		$this->message->setHeader('Accept', $arrayHeaderValue);
+		$this->message->setHeader('Accept', 'xml');
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
+	/**
+	 * @dataProvider provideArrayHeaderValue
+	 */
+	public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue)
+	{
+		$this->message->setHeader('Accept', $arrayHeaderValue);
+		$this->message->setHeader('Accept', ['xml']);
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
+	public function testSetHeaderWithExistingArrayValuesAppendNullValue()
+	{
+		$this->message->setHeader('Accept', ['json', 'html', 'xml']);
+		$this->message->setHeader('Accept', null);
+
+		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutContentType()
 	{
 		// fail path, if the CONTENT_TYPE doesn't exist
-		$original     = $_SERVER;
-		$_SERVER      = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
-		$original_env = getenv('CONTENT_TYPE');
+		$original    = $_SERVER;
+		$_SERVER     = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
+		$originalEnv = getenv('CONTENT_TYPE');
 		putenv('CONTENT_TYPE');
 
 		$this->message->populateHeaders();
 
-		$this->assertNull($this->message->getHeader('content-type'));
-		putenv("CONTENT_TYPE=$original_env");
+		$this->assertNull($this->message->header('content-type'));
+		putenv("CONTENT_TYPE=$originalEnv");
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
@@ -240,8 +290,8 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->populateHeaders();
 
-		$this->assertNull($this->message->getHeader('user-agent'));
-		$this->assertNull($this->message->getHeader('request-method'));
+		$this->assertNull($this->message->header('user-agent'));
+		$this->assertNull($this->message->header('request-method'));
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
@@ -258,7 +308,7 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->populateHeaders();
 
-		$this->assertEquals('', $this->message->getHeader('accept-charset')->getValue());
+		$this->assertEquals('', $this->message->header('accept-charset')->getValue());
 		$this->message->removeHeader('accept-charset');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
@@ -276,11 +326,10 @@ class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->message->populateHeaders();
 
-		$this->assertEquals('text/html; charset=utf-8', $this->message->getHeader('content-type')->getValue());
-		$this->assertEquals('en-us,en;q=0.50', $this->message->getHeader('accept-language')->getValue());
+		$this->assertEquals('text/html; charset=utf-8', $this->message->header('content-type')->getValue());
+		$this->assertEquals('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
 		$this->message->removeHeader('content-type');
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
-
 }

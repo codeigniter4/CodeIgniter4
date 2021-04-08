@@ -1,43 +1,18 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP\Files;
+
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Value object representing a single file uploaded through an
@@ -45,12 +20,9 @@ namespace CodeIgniter\HTTP\Files;
  * provide files.
  *
  * Typically, implementors will extend the SplFileInfo class.
- *
- * @package CodeIgniter\HTTP
  */
 interface UploadedFileInterface
 {
-
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *
@@ -89,9 +61,9 @@ interface UploadedFileInterface
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
 	 *
-	 * @throws \InvalidArgumentException if the $path specified is invalid.
-	 * @throws \RuntimeException on any error during the move operation.
-	 * @throws \RuntimeException on the second or subsequent call to the method.
+	 * @throws InvalidArgumentException if the $path specified is invalid.
+	 * @throws RuntimeException on any error during the move operation.
+	 * @throws RuntimeException on the second or subsequent call to the method.
 	 */
 	public function move(string $targetPath, string $name = null);
 
@@ -136,7 +108,7 @@ interface UploadedFileInterface
 	 * Implementations SHOULD return the value stored in the "name" key of
 	 * the file in the $_FILES array.
 	 *
-	 * @return string|null The filename sent by the client or null if none
+	 * @return string The filename sent by the client or null if none
 	 *     was provided.
 	 */
 	public function getName(): string;
@@ -157,7 +129,7 @@ interface UploadedFileInterface
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getClientExtension(): string;
 
@@ -168,7 +140,7 @@ interface UploadedFileInterface
 	 * This is NOT a trusted value.
 	 * For a trusted version, use getMimeType() instead.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getClientMimeType(): string;
 

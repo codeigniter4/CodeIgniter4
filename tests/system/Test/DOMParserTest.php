@@ -1,7 +1,9 @@
 <?php
 namespace CodeIgniter\Test;
 
-class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
+use InvalidArgumentException;
+
+class DOMParserTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -95,6 +97,19 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dom->withString($html);
 
 		$this->assertTrue($dom->see('<h1>'));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3984
+	 */
+	public function testSeeHTMLOutsideBodyTag()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><head><title>My Title</title></head><body><h1>Hello World</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->see('My Title', 'title'));
 	}
 
 	public function testSeeFail()
@@ -366,7 +381,7 @@ class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$filename = APPPATH . 'bogus.html';
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$dom->withFile($filename);
 	}
 

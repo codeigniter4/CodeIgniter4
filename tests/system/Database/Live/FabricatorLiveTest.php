@@ -1,14 +1,19 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Fabricator;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
  */
-class FabricatorLiveTest extends CIDatabaseTestCase
+class FabricatorLiveTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	public function testCreateAddsToDatabase()
@@ -65,5 +70,13 @@ class FabricatorLiveTest extends CIDatabaseTestCase
 		fake(UserModel::class, ['country' => 'Italy']);
 
 		$this->assertEquals($count + 1, Fabricator::getCount('user'));
+	}
+
+	public function testCreateThrowsOnFailure()
+	{
+		$this->expectException(FrameworkException::class);
+		$this->expectExceptionMessage(lang('Fabricator.createFailed', ['job', 'Too short, man!']));
+
+		fake(ValidModel::class, ['name' => 'eh']);
 	}
 }

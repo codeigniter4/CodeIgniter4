@@ -1,11 +1,14 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class URITest extends \CodeIgniter\Test\CIUnitTestCase
+class URITest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -17,6 +20,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tearDown(): void
 	{
+		Factories::reset('config');
 	}
 
 	//--------------------------------------------------------------------
@@ -406,10 +410,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQuery('?key=value');
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQuerySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 
@@ -420,10 +438,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQueryArray(['key' => 'value']);
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQueryArraySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 
@@ -934,6 +966,35 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($uri->getPath(), $request->uri->getPath());
 	}
 
+	public function testForceGlobalSecureRequests()
+	{
+		Services::reset();
+
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+
+		$config                            = new App();
+		$config->baseURL                   = 'http://example.com/ci/v4';
+		$config->indexPage                 = 'index.php';
+		$config->forceGlobalSecureRequests = true;
+
+		Factories::injectMock('config', 'App', $config);
+
+		$request      = Services::request($config);
+		$request->uri = new URI('http://example.com/ci/v4/controller/method');
+
+		Services::injectMock('request', $request);
+
+		// going through request
+		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $request->uri);
+
+		// standalone
+		$uri = new URI('http://example.com/ci/v4/controller/method');
+		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $uri);
+
+		$this->assertEquals($uri->getPath(), $request->uri->getPath());
+	}
+
 	public function testZeroAsURIPath()
 	{
 		$url = 'http://example.com/0';
@@ -977,5 +1038,4 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $uri);
 	}
-
 }

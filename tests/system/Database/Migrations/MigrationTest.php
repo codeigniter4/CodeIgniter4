@@ -1,9 +1,15 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+namespace CodeIgniter\Database\Migrations;
 
-class MigrationTest extends CIDatabaseTestCase
+use CodeIgniter\Database\Migration;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+
+class MigrationTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	public function setUp(): void
 	{
 		parent::setUp();

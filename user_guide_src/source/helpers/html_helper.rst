@@ -26,9 +26,9 @@ The following functions are available:
 
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
-    :param  mixed  $src:        Image source data
+    :param  string|array  $src:  Image source URI, or array of attributes and values
     :param  bool    $indexPage:  Whether to treat $src as a routed URI string
-    :param  mixed   $attributes: HTML attributes
+    :param  mixed   $attributes: Additional HTML attributes
     :returns:   HTML image tag
     :rtype: string
 
@@ -64,6 +64,28 @@ The following functions are available:
 
         img($imageProperties);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="Me, demonstrating how to eat 4 slices of pizza at one time" class="post_images" width="200" height="200" title="That was quite a night" rel="lightbox" />
+
+.. php:function:: img_data([$src = ''[, $indexPage = false[, $attributes = '']]])
+
+    :param string $path: Path to the image file
+    :param string|null $mime: MIME type to use, or null to guess
+    :returns: base64 encoded binary image string
+    :rtype: string
+
+    Generates a src-ready string from an image using the "data:" protocol.
+    Example::
+
+        $src = img_data('public/images/picture.jpg'); // data:image/jpg;base64,R0lGODl...
+        echo img($src);
+
+    There is an optional second parameter to specify the MIME type, otherwise the
+    function will use your Mimes config to guess.
+
+        $src = img_data('path/img_without_extension', 'image/png'); // data:image/png;base64,HT5A822...
+
+    Note that $path must exist and be a readable image format supported by the ``data:`` protocol.
+    This function is not recommended for very large files, but it provides a convenient way
+    of serving images from your app that are not web-accessible (e.g., in **public/**).
 
 .. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false[, $hreflang = '']]]]]]])
 

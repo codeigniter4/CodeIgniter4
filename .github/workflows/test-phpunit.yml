@@ -1,0 +1,153 @@
+name: PHPUnit
+
+on:
+  push:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - composer.json
+      - spark
+      - phpunit.xml.dist
+      - '**.php'
+      - .github/workflows/test-phpunit.yml
+  pull_request:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - 'system/**'
+      - 'tests/**'
+      - composer.json
+      - spark
+      - phpunit.xml.dist
+      - '**.php'
+      - .github/workflows/test-phpunit.yml
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0']
+        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3
+      mssql:
+        image: microsoft/mssql-server-linux:2017-latest
+        env:
+          SA_PASSWORD: 1Secure*Password1
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+        ports:
+          - 1433:1433
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
+
+    steps:
+      - name: Create database for MSSQL Server
+        if: ${{ matrix.db-platforms == 'SQLSRV'}}
+        run: sqlcmd -S localhost -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer, pecl
+          extensions: imagick, sqlsrv-beta, gd, sqlite3, redis, memcached, pgsql
+          coverage: xdebug
+        env:
+          update: true
+
+      - name: Install latest ImageMagick
+        run: |
+          sudo apt-get remove ghostscript
+          sudo apt-get update
+          sudo apt-get install -y imagemagick ghostscript-x gsfonts
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2.1.4
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: |
+          composer update --ansi --no-interaction
+          composer remove --ansi --dev --unused rector/rector phpstan/phpstan codeigniter4/codeigniter4-standard squizlabs/php_codesniffer
+          php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+      - name: Profile slow tests in PHP 7.4 MySQLi for now
+        if: matrix.php-versions == '7.4' && matrix.db-platforms == 'MySQLi'
+        run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
+
+      - name: Test with PHPUnit
+        run: script -e -c "vendor/bin/phpunit --color=always"
+        env:
+          DB: ${{ matrix.db-platforms }}
+          TERM: xterm-256color
+
+      - if: matrix.php-versions == '7.4'
+        name: Run Coveralls
+        run: |
+          composer global require php-coveralls/php-coveralls:^2.4
+          php-coveralls --coverage_clover=build/logs/clover.xml -v
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+
+  coveralls-finish:
+    needs: [tests]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true

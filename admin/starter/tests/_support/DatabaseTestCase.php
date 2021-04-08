@@ -1,7 +1,12 @@
 <?php namespace Tests\Support;
 
-class DatabaseTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+
+class DatabaseTestCase extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	/**
 	 * Should the database be refreshed before each test?
 	 *

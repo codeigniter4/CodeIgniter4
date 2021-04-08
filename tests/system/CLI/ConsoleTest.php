@@ -1,11 +1,16 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
+namespace CodeIgniter\CLI;
+
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 
-class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
+class ConsoleTest extends CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -17,13 +22,13 @@ class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
-		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
+		$this->env = new DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
 		if (! isset($_SERVER['app.baseURL']))
 		{
-			$_SERVER['app.baseURL'] = 'http://example.com';
+			$_SERVER['app.baseURL'] = 'http://example.com/';
 		}
 
 		$_SERVER['argv'] = [
@@ -43,16 +48,16 @@ class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testNew()
 	{
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$this->assertInstanceOf(Console::class, $console);
 	}
 
 	public function testHeader()
 	{
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$console->showHeader();
 		$result = CITestStreamFilter::$buffer;
-		$this->assertTrue(strpos($result, 'CodeIgniter CLI Tool') > 0);
+		$this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)) > 0);
 	}
 
 	public function testRun()
@@ -60,7 +65,7 @@ class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request = new CLIRequest(config('App'));
 		$this->app->setRequest($request);
 
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$console->run(true);
 		$result = CITestStreamFilter::$buffer;
 

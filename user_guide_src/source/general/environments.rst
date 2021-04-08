@@ -16,6 +16,10 @@ By default, CodeIgniter comes with the environment constant set to use
 the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
 'production'. This can be set in several ways depending on your server setup.
 
+.. note:: The environment ``testing`` is the special one for PHPUnit testing.
+    It has special conditions built into the framework at various places to assist with that.
+    You can't use it for your development.
+
 .env
 ----
 
@@ -46,16 +50,16 @@ like:
 
 .. code-block:: nginx
 
-	server {
-	    server_name localhost;
-	    include     conf/defaults.conf;
-	    root        /var/www;
+    server {
+        server_name localhost;
+        include     conf/defaults.conf;
+        root        /var/www;
 
-	    location    ~* \.php$ {
-	        fastcgi_param CI_ENVIRONMENT "production";
-	        include conf/fastcgi-php.conf;
-	    }
-	}
+        location    ~* \.php$ {
+            fastcgi_param CI_ENVIRONMENT "production";
+            include conf/fastcgi-php.conf;
+        }
+    }
 
 Alternative methods are available for nginx and other servers, or you can
 remove this logic entirely and set the constant based on the server's IP address

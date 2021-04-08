@@ -8,10 +8,6 @@ tables from arrays or database result sets.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 *********************
 Using the Table Class
 *********************

@@ -1,10 +1,21 @@
-<?php namespace CodeIgniter\Exceptions;
+<?php
 
 /**
- * Error: Critical conditions, like component unavailble, etc.
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-class CriticalError extends \Error
-{
+namespace CodeIgniter\Exceptions;
 
+use Error;
+
+/**
+ * Error: Critical conditions, like component unavailable, etc.
+ */
+class CriticalError extends Error
+{
 }

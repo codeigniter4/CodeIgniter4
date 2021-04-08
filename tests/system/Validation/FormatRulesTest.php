@@ -2,7 +2,11 @@
 
 namespace CodeIgniter\Validation;
 
-class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
+use Tests\Support\Validation\TestRules;
+
+class FormatRulesTest extends CIUnitTestCase
 {
 
 	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
@@ -14,11 +18,11 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $validation;
 	protected $config = [
 		'ruleSets'      => [
-			\CodeIgniter\Validation\Rules::class,
-			\CodeIgniter\Validation\FormatRules::class,
-			\CodeIgniter\Validation\FileRules::class,
-			\CodeIgniter\Validation\CreditCardRules::class,
-			\Tests\Support\Validation\TestRules::class,
+			Rules::class,
+			FormatRules::class,
+			FileRules::class,
+			CreditCardRules::class,
+			TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
@@ -33,7 +37,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -72,7 +76,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider urlProvider
 	 */
-	public function testValidURL(string $url = null, bool $expected)
+	public function testValidURL(?string $url, bool $expected)
 	{
 		$data = [
 			'foo' => $url,
@@ -425,6 +429,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				true,
 			],
 			[
+				FormatRulesTest::ALPHABET . "\n",
+				false,
+			],
+			[
 				FormatRulesTest::ALPHABET . '1',
 				false,
 			],
@@ -504,6 +512,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 			[
 				FormatRulesTest::ALPHANUMERIC . '`',
+				false,
+			],
+			[
+				FormatRulesTest::ALPHANUMERIC . "\n",
 				false,
 			],
 			[
@@ -600,6 +612,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				false,
 			],
 			[
+				' ' . FormatRulesTest::ALPHANUMERIC . "\n",
+				false,
+			],
+			[
 				null,
 				false,
 			],
@@ -634,6 +650,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 			[
 				FormatRulesTest::ALPHANUMERIC . '-\ ',
+				false,
+			],
+			[
+				FormatRulesTest::ALPHANUMERIC . "-\n",
 				false,
 			],
 			[
@@ -723,6 +743,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				true,
 			],
 			[
+				"+42\n",
+				false,
+			],
+			[
 				'123a',
 				false,
 			],
@@ -770,6 +794,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'-1',
 				true,
+			],
+			[
+				"+42\n",
+				false,
 			],
 			[
 				'123a',
@@ -823,6 +851,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'0',
 				true,
+			],
+			[
+				"0\n",
+				false,
 			],
 			[
 				'1.0a',

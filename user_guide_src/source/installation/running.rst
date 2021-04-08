@@ -17,7 +17,8 @@ Initial Configuration & Set Up
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL. If you need more flexibility, the baseURL may
-   be set within the ``.env`` file as **app.baseURL="http://example.com"**.
+   be set within the ``.env`` file as **app.baseURL="http://example.com/"**.
+   (Always use a trailing slash on your base URL!)
 #. If you intend to use a database, open the
    **app/Config/Database.php** file with a text editor and set your
    database settings. Alternately, these could be set in your ``.env`` file.
@@ -30,7 +31,7 @@ By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "development".
 
-.. note:: If you will be running your site using a web server (e.g. Apache or Nginx),
+.. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside
     your project, so that it is writable by the user or account used by your
     web server.
@@ -57,17 +58,17 @@ The local development server can be customized with three command line options:
 
 - You can use the ``--host`` CLI option to specify a different host to run the application at::
 
-    php spark serve --host=example.dev
+    php spark serve --host example.dev
 
 - By default, the server runs on port 8080 but you might have more than one site running, or already have
   another application using that port. You can use the ``--port`` CLI option to specify a different one::
 
-    php spark serve --port=8081
+    php spark serve --port 8081
 
 - You can also specify a specific version of PHP to use, with the ``--php`` CLI option, with its value
   set to the path of the PHP executable you want to use::
 
-    php spark serve --php=/usr/bin/php7.6.5.4
+    php spark serve --php /usr/bin/php7.6.5.4
 
 Hosting with Apache
 =================================================
@@ -85,14 +86,14 @@ The “mod_rewrite” module enables URLs without “index.php” in them, and i
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, eg. ``apache2/conf/httpd.conf``::
+configuration file, e.g., ``apache2/conf/httpd.conf``::
 
     LoadModule rewrite_module modules/mod_rewrite.so
 
 Also make sure that the default document root's <Directory> element enables this too,
 in the "AllowOverride" setting::
 
-    <Directory "/opt/lamp7.2/apache2/htdocs">
+    <Directory "/opt/lamp/apache2/htdocs">
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
@@ -105,7 +106,7 @@ We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, eg. ``apache2/conf/httpd.conf``::
+configuration file, e.g., ``apache2/conf/httpd.conf``::
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
@@ -116,18 +117,17 @@ Add a line to the file. This could be "myproject.local" or "myproject.test", for
     127.0.0.1 myproject.local
 
 Add a <VirtualHost> element for your webapp inside the virtual hosting configuration,
-eg. ``apache2/conf/extra/httpd-vhost.conf``::
+e.g., ``apache2/conf/extra/httpd-vhost.conf``::
 
     <VirtualHost *:80>
-        DocumentRoot "/opt/lamp7.2/apache2/htdocs/myproject/public"
+        DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
         ServerName myproject.local
         ErrorLog "logs/myproject-error_log"
         CustomLog "logs/myproject-access_log" common
     </VirtualHost>
 
 If your project folder is not a subfolder of the Apache document root, then your
-<VirtualHost> element may need a nested <Directory> element to grant the web s
-erver access to the files.
+<VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
 
 Testing
 -------------------------------------------------------
@@ -208,3 +208,15 @@ Once set up, you can then launch your webapp inside a VM, with the command::
 Your webapp will be accessible at ``http://localhost:8080``, with the code coverage
 report for your build at ``http://localhost:8081`` and the user guide for
 it at ``http://localhost:8082``.
+
+Bootstrapping the App
+=================================================
+
+In some scenarios you will want to load the framework without actually running the whole
+application. This is particularly useful for unit testing your project, but may also be
+handy for using third-party tools to analyze and modify your code. The framework comes
+with a separate bootstrap script specifically for this scenario: ``system/Test/bootstrap.php``.
+
+Most of the paths to your project are defined during the bootstrap process. You may use
+pre-defined constants to override these, but when using the defaults be sure that your
+paths align with the expected directory structure for your installation method.

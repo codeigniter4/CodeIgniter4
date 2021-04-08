@@ -1,12 +1,16 @@
 <?php
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureResponse;
+use Config\App;
+use Config\Services;
 
-class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class FeatureResponseTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var FeatureResponse
 	 */
@@ -22,28 +26,32 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 	}
 
-	public function testIsOKFailsSmall()
+	/**
+	 * @dataProvider statusCodeProvider
+	 */
+	public function testIsOK(int $code, bool $isOk)
 	{
 		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(100);
+		$this->response->setStatusCode($code);
 
-		$this->assertFalse($this->feature->isOK());
+		$this->assertEquals($isOk, $this->feature->isOK());
 	}
 
-	public function testIsOKFailsLarge()
+	/**
+	 * Provides status codes and their expected "OK"
+	 */
+	public function statusCodeProvider(): array
 	{
-		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(400);
-
-		$this->assertFalse($this->feature->isOK());
-	}
-
-	public function testIsOKSuccess()
-	{
-		$this->getFeatureResponse('Hello World');
-		$this->response->setStatusCode(200);
-
-		$this->assertTrue($this->feature->isOK());
+		return [
+			[100, false],
+			[200, true],
+			[201, true],
+			[300, true], // Redirects are acceptable if the body is empty
+			[301, true],
+			[400, false],
+			[401, false],
+			[599, false],
+		];
 	}
 
 	public function testIsOKEmpty()
@@ -110,22 +118,34 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertFalse($this->feature->response instanceof RedirectResponse);
 		$this->assertFalse($this->feature->isRedirect());
+		$this->feature->assertNotRedirect();
 	}
 
 	public function testAssertRedirectSuccess()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->feature->response = new RedirectResponse(new Config\App());
+		$this->feature->response = new RedirectResponse(new App());
 
 		$this->assertTrue($this->feature->response instanceof RedirectResponse);
 		$this->assertTrue($this->feature->isRedirect());
 		$this->feature->assertRedirect();
 	}
 
+	public function testAssertRedirectSuccessWithoutRedirectResponse()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->redirect('foo/bar');
+
+		$this->assertFalse($this->feature->response instanceof RedirectResponse);
+		$this->assertTrue($this->feature->isRedirect());
+		$this->feature->assertRedirect();
+		$this->assertEquals('foo/bar', $this->feature->getRedirectUrl());
+	}
+
 	public function testGetRedirectUrlReturnsUrl()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->feature->response = new RedirectResponse(new Config\App());
+		$this->feature->response = new RedirectResponse(new App());
 		$this->feature->response->redirect('foo/bar');
 
 		$this->assertEquals('foo/bar', $this->feature->getRedirectUrl());
@@ -138,6 +158,33 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($this->feature->getRedirectUrl());
 	}
 
+	public function testRedirectToSuccess()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('foo/bar');
+
+		$this->feature->assertRedirectTo('foo/bar');
+	}
+
+	public function testRedirectToSuccessFullURL()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('http://foo.com/bar');
+
+		$this->feature->assertRedirectTo('http://foo.com/bar');
+	}
+
+	public function testRedirectToSuccessMixedURL()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new App());
+		$this->feature->response->redirect('bar');
+
+		$this->feature->assertRedirectTo('http://example.com/index.php/bar');
+	}
+
 	public function testAssertStatus()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 201]);
@@ -145,16 +192,21 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->feature->assertStatus(201);
 	}
 
-	public function testAssertIsOK()
+	/**
+	 * @dataProvider statusCodeProvider
+	 */
+	public function testAssertIsOK(int $code, bool $isOk)
 	{
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 201]);
-		$this->feature->assertOK();
+		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => $code]);
 
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 301]);
-		$this->feature->assertOK();
-
-		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 401]);
-		$this->assertFalse($this->feature->isOK());
+		if ($isOk)
+		{
+			$this->feature->assertOK();
+		}
+		else
+		{
+			$this->feature->assertNotOK();
+		}
 	}
 
 	public function testAssertSessionHas()
@@ -221,8 +273,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetJSON()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
+		$formatter = Services::format()->getFormatter('application/json');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
 	}
@@ -231,8 +282,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON('', true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be "" - json_encode('');
 		$this->assertEquals('""', $this->feature->getJSON());
@@ -242,8 +291,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON(false, true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be FALSE - json_encode(false)
 		$this->assertEquals('false', $this->feature->getJSON());
@@ -253,8 +300,6 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
 		$this->response->setJSON(true, true);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
 
 		// this should be TRUE - json_encode(true)
 		$this->assertEquals('true', $this->feature->getJSON());
@@ -273,8 +318,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetXML()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/xml');
+		$formatter = Services::format()->getFormatter('application/xml');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getXML());
 	}
@@ -289,6 +333,17 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$this->feature->assertJSONFragment(['config' => ['key-a']]);
+		$this->feature->assertJSONFragment(['config' => ['key-a']], true);
+	}
+
+	public function testAssertJSONFragmentFollowingAssertArraySubset()
+	{
+		$this->getFeatureResponse([
+			'config' => '124',
+		]);
+
+		$this->feature->assertJSONFragment(['config' => 124]); // must fail on strict
+		$this->feature->assertJSONFragment(['config' => '124'], true);
 	}
 
 	public function testJsonExact()
@@ -315,41 +370,31 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->getFeatureResponse($data);
+		$formatter = Services::format()->getFormatter('application/json');
 
-		$config    = new \Config\Format();
-		$formatter = $config->getFormatter('application/json');
-		$expected  = $formatter->format($data);
-
-		$this->feature->assertJSONExact($expected);
+		$this->feature->assertJSONExact($formatter->format($data));
 	}
 
 	protected function getFeatureResponse($body = null, array $responseOptions = [], array $headers = [])
 	{
-		$this->response = new Response(new \Config\App());
+		$this->response = new Response(new App());
 		$this->response->setBody($body);
 
-		if (count($responseOptions))
+		foreach ($responseOptions as $key => $value)
 		{
-			foreach ($responseOptions as $key => $value)
-			{
-				$method = 'set' . ucfirst($key);
+			$method = 'set' . ucfirst($key);
 
-				if (method_exists($this->response, $method))
-				{
-					$this->response = $this->response->$method($value);
-				}
+			if (method_exists($this->response, $method))
+			{
+				$this->response = $this->response->$method($value);
 			}
 		}
 
-		if (count($headers))
+		foreach ($headers as $key => $value)
 		{
-			foreach ($headers as $key => $value)
-			{
-				$this->response = $this->response->setHeader($key, $value);
-			}
+			$this->response = $this->response->setHeader($key, $value);
 		}
 
 		$this->feature = new FeatureResponse($this->response);
 	}
-
 }

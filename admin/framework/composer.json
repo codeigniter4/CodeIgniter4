@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.2",
+		"php": "^7.3||^8.0",
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -16,20 +16,25 @@
 	},
 	"require-dev": {
 		"codeigniter4/codeigniter4-standard": "^1.0",
-		"fzaninotto/faker": "^1.9@dev",
-		"mikey179/vfsstream": "1.6.*",
-		"phpunit/phpunit": "^8.5",
+		"fakerphp/faker": "^1.9",
+		"mikey179/vfsstream": "^1.6",
+		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
 		"squizlabs/php_codesniffer": "^3.3"
+	},
+	"suggest": {
+		"ext-fileinfo": "Improves mime type detection for files"
 	},
 	"autoload": {
 		"psr-4": {
 			"CodeIgniter\\": "system/"
-		}
+		},
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
+		]
 	},
 	"scripts": {
 		"post-update-cmd": [
-			"@composer dump-autoload",
 			"CodeIgniter\\ComposerScripts::postUpdate"
 		],
 		"test": "phpunit"

@@ -1,7 +1,10 @@
 <?php
 namespace CodeIgniter\HTTP\Files;
 
-class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Mimes;
+
+class FileCollectionTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -143,28 +146,74 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'userfile1' => [
 				'name'     => 'fileA.txt',
 				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/fileA.txt',
+				'size'     => 4,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileA.txt',
 				'error'    => 0,
 			],
 			'userfile2' => [
 				'name'     => 'fileB.txt',
 				'type'     => 'text/csv',
-				'size'     => 248,
-				'tmp_name' => '/fileB.txt',
+				'size'     => 9,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileB.txt',
+				'error'    => 0,
+			],
+			'userfile3' => [
+				'name'     => 'fileC.csv',
+				'type'     => 'text/csv',
+				'size'     => 16,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileC.csv',
+				'error'    => 0,
+			],
+			'userfile4' => [
+				'name'     => 'fileD.zip',
+				'type'     => 'application/zip',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileD.zip',
+				'error'    => 0,
+			],
+			'userfile5' => [
+				'name'     => 'fileE.zip.rar',
+				'type'     => 'application/rar',
+				'size'     => 441,
+				'tmp_name' => SUPPORTPATH . 'HTTP/Files/tmp/fileE.zip.rar',
 				'error'    => 0,
 			],
 		];
 
 		$collection = new FileCollection();
 
+		// proposed extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile1');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 		$this->assertEquals('txt', $file->getExtension());
 
+		// proposed extension matches finfo_open mime type (text/plain)
 		$file = $collection->getFile('userfile2');
 		$this->assertInstanceOf(UploadedFile::class, $file);
-		$this->assertEquals('csv', $file->guessExtension());
+		$this->assertEquals('txt', $file->getExtension());
+		// but not client mime type
+		$this->assertEquals(null, Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+
+		// proposed extension does not match finfo_open mime type (text/plain)
+		// but can be resolved by reverse searching
+		$file = $collection->getFile('userfile3');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('csv', $file->getExtension());
+
+		// proposed extension matches finfo_open mime type (application/zip)
+		$file = $collection->getFile('userfile4');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('zip', $file->getExtension());
+
+		// proposed extension matches client mime type, but not finfo_open mime type (application/zip)
+		// this is a zip file (userFile4) but hat been renamed to 'rar'
+		$file = $collection->getFile('userfile5');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		// getExtension falls back to clientExtension (insecure)
+		$this->assertEquals('rar', $file->getExtension());
+		$this->assertEquals('rar', Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+		// guessExtension is secure and does not returns empty
+		$this->assertEquals('', $file->guessExtension());
 	}
 
 	//--------------------------------------------------------------------
@@ -489,21 +538,21 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$collection = new FileCollection();
 
-		$file_1 = $collection->getFile('userfile.0');
-		$this->assertInstanceOf(UploadedFile::class, $file_1);
-		$this->assertEquals('fileA.txt', $file_1->getName());
-		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
-		$this->assertEquals('txt', $file_1->getClientExtension());
-		$this->assertEquals('text/plain', $file_1->getClientMimeType());
-		$this->assertEquals(124, $file_1->getSize());
+		$file1 = $collection->getFile('userfile.0');
+		$this->assertInstanceOf(UploadedFile::class, $file1);
+		$this->assertEquals('fileA.txt', $file1->getName());
+		$this->assertEquals('/tmp/fileA.txt', $file1->getTempName());
+		$this->assertEquals('txt', $file1->getClientExtension());
+		$this->assertEquals('text/plain', $file1->getClientMimeType());
+		$this->assertEquals(124, $file1->getSize());
 
-		$file_2 = $collection->getFile('userfile.1');
-		$this->assertInstanceOf(UploadedFile::class, $file_2);
-		$this->assertEquals('fileB.txt', $file_2->getName());
-		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
-		$this->assertEquals('txt', $file_2->getClientExtension());
-		$this->assertEquals('text/csv', $file_2->getClientMimeType());
-		$this->assertEquals(248, $file_2->getSize());
+		$file2 = $collection->getFile('userfile.1');
+		$this->assertInstanceOf(UploadedFile::class, $file2);
+		$this->assertEquals('fileB.txt', $file2->getName());
+		$this->assertEquals('/tmp/fileB.txt', $file2->getTempName());
+		$this->assertEquals('txt', $file2->getClientExtension());
+		$this->assertEquals('text/csv', $file2->getClientMimeType());
+		$this->assertEquals(248, $file2->getSize());
 	}
 
 	//--------------------------------------------------------------------
@@ -557,21 +606,21 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$collection = new FileCollection();
 
-		$file_1 = $collection->getFile('my-form.details.avatars.0');
-		$this->assertInstanceOf(UploadedFile::class, $file_1);
-		$this->assertEquals('fileA.txt', $file_1->getName());
-		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
-		$this->assertEquals('txt', $file_1->getClientExtension());
-		$this->assertEquals('text/plain', $file_1->getClientMimeType());
-		$this->assertEquals(125, $file_1->getSize());
+		$file1 = $collection->getFile('my-form.details.avatars.0');
+		$this->assertInstanceOf(UploadedFile::class, $file1);
+		$this->assertEquals('fileA.txt', $file1->getName());
+		$this->assertEquals('/tmp/fileA.txt', $file1->getTempName());
+		$this->assertEquals('txt', $file1->getClientExtension());
+		$this->assertEquals('text/plain', $file1->getClientMimeType());
+		$this->assertEquals(125, $file1->getSize());
 
-		$file_2 = $collection->getFile('my-form.details.avatars.1');
-		$this->assertInstanceOf(UploadedFile::class, $file_2);
-		$this->assertEquals('fileB.txt', $file_2->getName());
-		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
-		$this->assertEquals('txt', $file_2->getClientExtension());
-		$this->assertEquals('text/plain', $file_2->getClientMimeType());
-		$this->assertEquals(243, $file_2->getSize());
+		$file2 = $collection->getFile('my-form.details.avatars.1');
+		$this->assertInstanceOf(UploadedFile::class, $file2);
+		$this->assertEquals('fileB.txt', $file2->getName());
+		$this->assertEquals('/tmp/fileB.txt', $file2->getTempName());
+		$this->assertEquals('txt', $file2->getClientExtension());
+		$this->assertEquals('text/plain', $file2->getClientMimeType());
+		$this->assertEquals(243, $file2->getSize());
 	}
 
 	//--------------------------------------------------------------------

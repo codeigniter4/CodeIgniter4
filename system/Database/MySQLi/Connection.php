@@ -1,52 +1,28 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use LogicException;
+use MySQLi;
+use mysqli_sql_exception;
+use stdClass;
+use Throwable;
 
 /**
  * Connection for MySQLi
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
 	/**
 	 * Database driver
@@ -54,6 +30,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var string
 	 */
 	public $DBDriver = 'MySQLi';
+
 	/**
 	 * DELETE hack flag
 	 *
@@ -64,22 +41,27 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var boolean
 	 */
 	public $deleteHack = true;
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
 	public $escapeChar = '`';
+
 	// --------------------------------------------------------------------
+
 	/**
 	 * MySQLi object
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
 	 *
-	 * @var \MySQLi
+	 * @var MySQLi
 	 */
 	public $mysqli;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -88,7 +70,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param boolean $persistent
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function connect(bool $persistent = false)
 	{
@@ -106,7 +88,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$socket   = '';
 		}
 
-		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
+		$clientFlags  = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
 		$this->mysqli = mysqli_init();
 
 		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
@@ -137,12 +119,28 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (is_array($this->encrypt))
 		{
-			$ssl                                                  = [];
-			empty($this->encrypt['ssl_key']) || $ssl['key']       = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) || $ssl['cert']     = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) || $ssl['ca']         = $this->encrypt['ssl_ca'];
-			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
-			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			$ssl = [];
+
+			if (! empty($this->encrypt['ssl_key']))
+			{
+				$ssl['key'] = $this->encrypt['ssl_key'];
+			}
+			if (! empty($this->encrypt['ssl_cert']))
+			{
+				$ssl['cert'] = $this->encrypt['ssl_cert'];
+			}
+			if (! empty($this->encrypt['ssl_ca']))
+			{
+				$ssl['ca'] = $this->encrypt['ssl_ca'];
+			}
+			if (! empty($this->encrypt['ssl_capath']))
+			{
+				$ssl['capath'] = $this->encrypt['ssl_capath'];
+			}
+			if (! empty($this->encrypt['ssl_cipher']))
+			{
+				$ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			}
 
 			if (! empty($ssl))
 			{
@@ -151,7 +149,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, 1);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -161,11 +159,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 					// https://bugs.php.net/bug.php?id=68344
 					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, '5.6', '>='))
 					{
-						$client_flags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
+						$clientFlags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
 					}
 				}
 
-				$client_flags += MYSQLI_CLIENT_SSL;
+				$clientFlags += MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
 					$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
 					$ssl['capath'] ?? null, $ssl['cipher'] ?? null
@@ -176,11 +174,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 		try
 		{
 			if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
-				$this->database, $port, $socket, $client_flags)
+				$this->database, $port, $socket, $clientFlags)
 			)
 			{
 				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-				if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
+				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
 					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
 										  ->fetch_object()->Value)
 				)
@@ -214,7 +212,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				return $this->mysqli;
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			// Clean sensitive information from errors.
 			$msg = $e->getMessage();
@@ -222,7 +220,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$msg = str_replace($this->username, '****', $msg);
 			$msg = str_replace($this->password, '****', $msg);
 
-			throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
+			throw new DatabaseException($msg, $e->getCode(), $e);
 		}
 
 		return false;
@@ -330,9 +328,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return $this->connID->query($this->prepQuery($sql));
 		}
-		catch (\mysqli_sql_exception $e)
+		catch (mysqli_sql_exception $e)
 		{
-			log_message('error', $e);
+			log_message('error', $e->getMessage());
+
 			if ($this->DBDebug)
 			{
 				throw $e;
@@ -386,11 +385,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		if (is_bool($str))
-		{
-			return $str;
-		}
-
 		if (! $this->connID)
 		{
 			$this->initialize();
@@ -479,7 +473,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -495,14 +489,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retVal[$i]       = new \stdClass();
+			$retVal[$i]       = new stdClass();
 			$retVal[$i]->name = $query[$i]->Field;
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
 			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
 		}
 
 		return $retVal;
@@ -514,9 +508,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
-	 * @throws \LogicException
+	 * @throws LogicException
 	 */
 	public function _indexData(string $table): array
 	{
@@ -538,7 +532,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if (empty($keys[$index['Key_name']]))
 			{
-				$keys[$index['Key_name']]       = new \stdClass();
+				$keys[$index['Key_name']]       = new stdClass();
 				$keys[$index['Key_name']]->name = $index['Key_name'];
 
 				if ($index['Key_name'] === 'PRIMARY')
@@ -551,14 +545,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				}
 				elseif ($index['Non_unique'])
 				{
-					if ($index['Index_type'] === 'SPATIAL')
-					{
-						$type = 'SPATIAL';
-					}
-					else
-					{
-						$type = 'INDEX';
-					}
+					$type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
 				}
 				else
 				{
@@ -580,7 +567,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return stdClass[]
 	 * @throws DatabaseException
 	 */
 	public function _foreignKeyData(string $table): array
@@ -611,7 +598,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj                      = new \stdClass();
+			$obj                      = new stdClass();
 			$obj->constraint_name     = $row->CONSTRAINT_NAME;
 			$obj->table_name          = $row->TABLE_NAME;
 			$obj->column_name         = $row->COLUMN_NAME;
@@ -652,12 +639,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	/**
 	 * Returns the last error code and message.
+	 * Must return this format: ['code' => string|int, 'message' => string]
+	 * intval(code) === 0 means "no error".
 	 *
-	 * Must return an array with keys 'code' and 'message':
-	 *
-	 *  return ['code' => null, 'message' => null);
-	 *
-	 * @return array
+	 * @return array<string,string|int>
 	 */
 	public function error(): array
 	{
@@ -738,5 +723,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return false;
 	}
+
 	//--------------------------------------------------------------------
 }

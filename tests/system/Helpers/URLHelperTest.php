@@ -1,15 +1,23 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class URLHelperTest extends CIUnitTestCase
 {
+	/**
+	 * @var App
+	 */
+	protected $config;
 
 	protected function setUp(): void
 	{
@@ -17,6 +25,16 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		helper('url');
 		Services::reset(true);
+		Factories::reset('config');
+
+		// Set a common base configuration (overriden by individual tests)
+		$this->config            = new App();
+		$this->config->baseURL   = 'http://example.com/';
+		$this->config->indexPage = 'index.php';
+		$_SERVER['HTTP_HOST']    = 'example.com';
+		$_SERVER['REQUEST_URI']  = '/';
+
+		//Config::injectMock('App', $this->config);
 	}
 
 	public function tearDown(): void
@@ -27,167 +45,156 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Test site_url
 
-	public function testSiteURLBasics()
+	/**
+	 * @dataProvider siteUrlProvider
+	 */
+	public function testSiteUrl($baseURL, $indexPage, $param, $protocol, $expected)
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
+		// Set the config
+		$this->config->baseURL   = $baseURL;
+		$this->config->indexPage = $indexPage;
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
+		// Mock the Request
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php', site_url('', null, $config));
+		$this->assertEquals($expected, site_url($param, $protocol, $this->config));
+	}
+
+	public function siteUrlProvider()
+	{
+		// baseURL, indexPage, param, protocol, expected
+		return [
+			[
+				'http://example.com/',
+				'index.php',
+				'',
+				null,
+				'http://example.com/index.php',
+			],
+			[
+				'http://example.com',
+				'index.php',
+				'',
+				null,
+				'http://example.com/index.php',
+			],
+			[
+				'http://example.com/',
+				'',
+				'',
+				null,
+				'http://example.com/',
+			],
+			[
+				'http://example.com/',
+				'banana.php',
+				'',
+				null,
+				'http://example.com/banana.php',
+			],
+			[
+				'http://example.com/',
+				'',
+				'abc',
+				null,
+				'http://example.com/abc',
+			],
+			[
+				'http://example.com/public/',
+				'index.php',
+				'',
+				null,
+				'http://example.com/public/index.php',
+			],
+			[
+				'http://example.com/public/',
+				'',
+				'',
+				null,
+				'http://example.com/public/',
+			],
+			[
+				'http://example.com/public',
+				'',
+				'',
+				null,
+				'http://example.com/public/',
+			],
+			[
+				'http://example.com/public',
+				'index.php',
+				'/',
+				null,
+				'http://example.com/public/index.php/',
+			],
+			[
+				'http://example.com/public/',
+				'index.php',
+				'/',
+				null,
+				'http://example.com/public/index.php/',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				'foo',
+				null,
+				'http://example.com/index.php/foo',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				'0',
+				null,
+				'http://example.com/index.php/0',
+			],
+			[
+				'http://example.com/public',
+				'index.php',
+				'foo',
+				null,
+				'http://example.com/public/index.php/foo',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				'foo',
+				'ftp',
+				'ftp://example.com/index.php/foo',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				'news/local/123',
+				null,
+				'http://example.com/index.php/news/local/123',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				[
+					'news',
+					'local',
+					'123',
+				],                null,
+				'http://example.com/index.php/news/local/123',
+			],
+		];
 	}
 
 	public function testSiteURLHTTPS()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-		$_SERVER['HTTPS']       = 'on';
+		$_SERVER['HTTPS'] = 'on';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('https://example.com/index.php', site_url('', null, $config));
-	}
-
-	public function testSiteURLNoIndex()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = '';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/', site_url('', null, $config));
-	}
-
-	public function testSiteURLDifferentIndex()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'banana.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/banana.php', site_url('', null, $config));
-	}
-
-	public function testSiteURLNoIndexButPath()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = '';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/abc', site_url('abc', null, $config));
-	}
-
-	public function testSiteURLAttachesPath()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/index.php/foo', site_url('foo', null, $config));
-	}
-
-	public function testSiteURLAttachesScheme()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('ftp://example.com/index.php/foo', site_url('foo', 'ftp', $config));
-	}
-
-	public function testSiteURLExample()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/index.php/news/local/123', site_url('news/local/123', null, $config));
-	}
-
-	public function testSiteURLSegments()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/index.php/news/local/123', site_url(['news', 'local', '123'], null, $config));
-	}
-
-	public function testSiteURLInSubfolder()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
-
-		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/foo/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/foo/public/bar');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/foo/public/bar', current_url());
+		$this->assertEquals('https://example.com/index.php', site_url('', null, $this->config));
 	}
 
 	/**
@@ -199,10 +206,8 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/test';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/test');
+		$request      = Services::request($this->config, false);
+		$request->uri = new URI('http://example.com/test');
 
 		Services::injectMock('request', $request);
 
@@ -218,10 +223,8 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/test/page';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/test/page');
+		$request      = Services::request($this->config, false);
+		$request->uri = new URI('http://example.com/test/page');
 
 		Services::injectMock('request', $request);
 
@@ -234,57 +237,55 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testBaseURLBasics()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		$this->assertEquals('http://example.com', base_url());
 	}
 
 	public function testBaseURLAttachesPath()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		$this->assertEquals('http://example.com/foo', base_url('foo'));
 	}
 
 	public function testBaseURLAttachesPathArray()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		$this->assertEquals('http://example.com/foo/bar', base_url(['foo', 'bar']));
 	}
 
 	public function testBaseURLAttachesScheme()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		$this->assertEquals('https://example.com/foo', base_url('foo', 'https'));
+	}
+
+	public function testBaseURLPathZero()
+	{
+		$this->assertEquals('http://example.com/0', base_url('0'));
 	}
 
 	public function testBaseURLHeedsBaseURL()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		$this->config->baseURL = 'http://example.com/public';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/public');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/public', base_url());
 	}
 
+	public function testBaseURLNoTrailingSlash()
+	{
+		// Since we're on a CLI, we must provide our own URI
+		$this->config->baseURL = 'http://example.com';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/foobar');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com', base_url());
+	}
+
 	public function testBaseURLExample()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		$this->assertEquals('http://example.com/blog/post/123', base_url('blog/post/123'));
 	}
 
@@ -297,10 +298,8 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/test';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/test');
+		$request      = Services::request($this->config, false);
+		$request->uri = new URI('http://example.com/test');
 
 		Services::injectMock('request', $request);
 
@@ -312,9 +311,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testBaseURLHTTPS()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-		$_SERVER['HTTPS']       = 'on';
+		$_SERVER['HTTPS'] = 'on';
 
 		$this->assertEquals('https://example.com/blog/post/123', base_url('blog/post/123'));
 	}
@@ -328,10 +325,8 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/test/page';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/test/page');
+		$request      = Services::request($this->config, false);
+		$request->uri = new URI('http://example.com/test/page');
 
 		Services::injectMock('request', $request);
 
@@ -342,14 +337,31 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBaseURLHasSubfolder()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/test';
+		$_SERVER['REQUEST_URI'] = '/subfolder/test';
+		$_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/subfolder';
-		$request         = Services::request($config, false);
-		$request->uri    = new URI('http://example.com/subfolder/test');
+		$this->config->baseURL = 'http://example.com/subfolder/';
+		Factories::injectMock('config', 'App', $this->config);
 
+		$request = Services::request($this->config, false);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/subfolder/foo', base_url('foo'));
+		$this->assertEquals('http://example.com/subfolder', base_url());
+	}
+
+	public function testBaseURLNoTrailingSlashHasSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/subfolder/test';
+		$_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
+
+		// Since we're on a CLI, we must provide our own URI
+		$this->config->baseURL = 'http://example.com/subfolder';
+		Factories::injectMock('config', 'App', $this->config);
+
+		$request = Services::request($this->config, false);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/subfolder/foo', base_url('foo'));
@@ -361,14 +373,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCurrentURLReturnsBasicURL()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		$this->config->baseURL = 'http://example.com/public';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/public');
 
 		Services::injectMock('request', $request);
 
@@ -377,14 +385,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCurrentURLReturnsObject()
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		$this->config->baseURL = 'http://example.com/public';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/public');
 
 		Services::injectMock('request', $request);
 
@@ -397,14 +401,13 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testCurrentURLEquivalence()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['REQUEST_URI'] = '/public';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		Factories::injectMock('config', 'App', $this->config);
 
+		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals(base_url(uri_string()), current_url());
@@ -414,16 +417,48 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+		$_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/foo/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/foo/public/bar');
+		$this->config->baseURL = 'http://example.com/foo/public';
+		Factories::injectMock('config', 'App', $this->config);
 
+		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/foo/public/bar', current_url());
+		$this->assertEquals('http://example.com/foo/public/bar?baz=quip', (string) current_url(true));
+
+		$uri = current_url(true);
+		$this->assertEquals(['bar'], $uri->getSegments());
+		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('example.com', $uri->getHost());
+		$this->assertEquals('http', $uri->getScheme());
+	}
+
+	public function testCurrentURLWithPortInSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['SERVER_PORT'] = '8080';
+		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+		$_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
+
+		// Since we're on a CLI, we must provide our own URI
+		$this->config->baseURL = 'http://example.com:8080/foo/public';
+		Factories::injectMock('config', 'App', $this->config);
+
+		$request = Services::request($this->config);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com:8080/foo/public/bar', current_url());
+		$this->assertEquals('http://example.com:8080/foo/public/bar?baz=quip', (string) current_url(true));
+
+		$uri = current_url(true);
+		$this->assertEquals(['bar'], $uri->getSegments());
+		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('example.com', $uri->getHost());
+		$this->assertEquals('http', $uri->getScheme());
+		$this->assertEquals('8080', $uri->getPort());
 	}
 
 	//--------------------------------------------------------------------
@@ -434,16 +469,13 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri1 = 'http://example.com/one?two';
 		$uri2 = 'http://example.com/two?foo';
 
-		$_SERVER['HTTP_HOST']         = 'example.com';
-		$_SERVER['REQUEST_URI']       = '/';
 		$_SERVER['HTTP_REFERER']      = $uri1;
 		$_SESSION['_ci_previous_url'] = $uri2;
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		$this->config->baseURL = 'http://example.com/public';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/public');
 
 		Services::injectMock('request', $request);
 
@@ -457,15 +489,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri1 = 'http://example.com/one?two';
 		$uri2 = 'http://example.com/two?foo';
 
-		$_SERVER['HTTP_HOST']    = 'example.com';
-		$_SERVER['REQUEST_URI']  = '/';
 		$_SERVER['HTTP_REFERER'] = $uri1;
 
 		// Since we're on a CLI, we must provide our own URI
-		$config          = new App();
-		$config->baseURL = 'http://example.com/public';
-		$request         = Services::request($config);
-		$request->uri    = new URI('http://example.com/public');
+		$this->config->baseURL = 'http://example.com/public';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/public');
 
 		Services::injectMock('request', $request);
 
@@ -475,33 +504,13 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	// Test uri_string
 
-	public function testUriString()
-	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$url = current_url();
-		$this->assertEquals('/', uri_string());
-	}
-
-	public function testUriStringExample()
+	public function testUriStringAbsolute()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/assets/image.jpg');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/assets/image.jpg');
 
 		Services::injectMock('request', $request);
 
@@ -509,16 +518,110 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/assets/image.jpg', uri_string());
 	}
 
+	public function testUriStringRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
+	}
+
+	public function testUriStringNoTrailingSlashAbsolute()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/assets/image.jpg', uri_string());
+	}
+
+	public function testUriStringNoTrailingSlashRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
+	}
+
+	public function testUriStringEmptyAbsolute()
+	{
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/', uri_string());
+	}
+
+	public function testUriStringEmptyRelative()
+	{
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('', uri_string(true));
+	}
+
+	public function testUriStringSubfolderAbsolute()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com/subfolder/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('/subfolder/assets/image.jpg', uri_string());
+	}
+
+	public function testUriStringSubfolderRelative()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+		$_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+
+		$this->config->baseURL = 'http://example.com/subfolder/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
+
+		Services::injectMock('request', $request);
+
+		$url = current_url();
+		$this->assertEquals('assets/image.jpg', uri_string(true));
+	}
+
 	//--------------------------------------------------------------------
 	// Test index_page
 
 	public function testIndexPage()
 	{
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
@@ -527,15 +630,13 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testIndexPageAlt()
 	{
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'banana.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$this->config->indexPage = 'banana.php';
+		$request                 = Services::request($this->config);
+		$request->uri            = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('banana.php', index_page($config));
+		$this->assertEquals('banana.php', index_page($this->config));
 	}
 
 	//--------------------------------------------------------------------
@@ -589,17 +690,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testAnchor($expected = '', $uri = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
-		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
+		$this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
 	}
 
 	public function anchorNoindexPatterns()
@@ -642,6 +737,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'<a href="http://example.com">http://example.com</a>',
 				'/',
 			],
+			'noindex08' => [
+				'<a href="http://example.com" class="btn btn-primary">http://example.com</a>',
+				'',
+				'',
+				['class' => 'btn btn-primary'],
+			],
 		];
 	}
 
@@ -650,17 +751,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = '';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$this->config->indexPage = '';
+		$request                 = Services::request($this->config);
+		$request->uri            = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
-		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
+		$this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
 	}
 
 	public function anchorSubpagePatterns()
@@ -707,17 +803,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = '';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$this->config->indexPage = '';
+		$request                 = Services::request($this->config);
+		$request->uri            = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
-		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
+		$this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
 	}
 
 	public function anchorExamplePatterns()
@@ -730,7 +821,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'title="News title"',
 			],
 			'egpage02' => [
-				'<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>',
+				'<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>',
 				'news/local/123',
 				'My News',
 				['title' => 'The best news!'],
@@ -753,17 +844,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
-		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
+		$this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
 	}
 
 	//--------------------------------------------------------------------
@@ -814,17 +899,11 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
-		$this->assertEquals($expected, anchor_popup($uri, $title, $attributes, $config));
+		$this->assertEquals($expected, anchor_popup($uri, $title, $attributes, $this->config));
 	}
 
 	//--------------------------------------------------------------------
@@ -839,7 +918,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'Click Here to Contact Me',
 			],
 			'page02' => [
-				'<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>',
+				'<a href="mailto:me@my-site.com" title="Mail me">Contact Me</a>',
 				'me@my-site.com',
 				'Contact Me',
 				['title' => 'Mail me'],
@@ -854,16 +933,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider mailtoPatterns
 	 */
-	public function testMailto($expected = '', $email, $title = '', $attributes = '')
+	public function testMailto($expected = '', $email = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
@@ -897,16 +970,10 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	/**
 	 * @dataProvider safeMailtoPatterns
 	 */
-	public function testSafeMailto($expected = '', $email, $title = '', $attributes = '')
+	public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
 	{
-		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
-
-		$config            = new App();
-		$config->baseURL   = 'http://example.com';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/');
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
@@ -1103,12 +1170,89 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	//--------------------------------------------------------------------
 	// Test prep_url
 
-	public function testPrepUrl()
+	public function prepUrlProvider()
 	{
-		$this->assertEquals('http://codeigniter.com', prep_url('codeigniter.com'));
-		$this->assertEquals('http://www.codeigniter.com', prep_url('www.codeigniter.com'));
-		$this->assertEquals('', prep_url());
-		$this->assertEquals('http://www.codeigniter.com', prep_url('http://www.codeigniter.com'));
+		// input, expected, secure
+		return [
+			[
+				'',
+				'',
+				false,
+			],
+			[
+				'//',
+				'',
+				false,
+			],
+			[
+				'//codeigniter.com',
+				'http://codeigniter.com',
+				false,
+			],
+			[
+				'codeigniter.com',
+				'http://codeigniter.com',
+				false,
+			],
+			[
+				'www.codeigniter.com',
+				'http://www.codeigniter.com',
+				false,
+			],
+			[
+				'http://www.codeigniter.com',
+				'http://www.codeigniter.com',
+				false,
+			],
+			[
+				'https://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				false,
+			],
+			[
+				'',
+				'',
+				true,
+			],
+			[
+				'//',
+				'',
+				true,
+			],
+			[
+				'//codeigniter.com',
+				'https://codeigniter.com',
+				true,
+			],
+			[
+				'codeigniter.com',
+				'https://codeigniter.com',
+				true,
+			],
+			[
+				'www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+			[
+				'http://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+			[
+				'https://www.codeigniter.com',
+				'https://www.codeigniter.com',
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider prepUrlProvider
+	 */
+	public function testPrepUrl(string $input, string $expected, bool $secure)
+	{
+		$this->assertSame($expected, prep_url($input, $secure));
 	}
 
 	//--------------------------------------------------------------------
@@ -1147,8 +1291,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testMbUrlTitle()
 	{
-		helper('text');
-
 		$words = [
 			'foo bar /'       => 'foo-bar',
 			'\  testing 12'   => 'testing-12',
@@ -1164,8 +1306,6 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testMbUrlTitleExtraDashes()
 	{
-		helper('text');
-
 		$words = [
 			'_foo bar_'                 => 'foo_bar',
 			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
@@ -1180,23 +1320,35 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Exploratory testing, investigating https://github.com/codeigniter4/CodeIgniter4/issues/2016
 
 	public function testBasedNoIndex()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com/ci/v4/';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/ci/v4/x/y');
+		$this->config->baseURL = 'http://example.com/ci/v4/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
-		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
+	}
+
+	public function testBasedNoTrailingSlash()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+
+		$this->config->baseURL = 'http://example.com/ci/v4';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/ci/v4/x/y');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
 	}
 
 	public function testBasedWithIndex()
@@ -1204,16 +1356,14 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/ci/v4/index.php/x/y';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com/ci/v4/';
-		$config->indexPage = 'index.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/ci/v4/index.php/x/y');
+		$this->config->baseURL = 'http://example.com/ci/v4/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/ci/v4/index.php/x/y');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
-		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
 	}
 
 	public function testBasedWithoutIndex()
@@ -1221,16 +1371,15 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com/ci/v4/';
-		$config->indexPage = '';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/ci/v4/x/y');
+		$this->config->baseURL   = 'http://example.com/ci/v4/';
+		$this->config->indexPage = '';
+		$request                 = Services::request($this->config);
+		$request->uri            = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/ci/v4/controller/method', site_url('controller/method', null, $config));
-		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
 	}
 
 	public function testBasedWithOtherIndex()
@@ -1238,16 +1387,155 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
-		$config            = new App();
-		$config->baseURL   = 'http://example.com/ci/v4/';
-		$config->indexPage = 'fc.php';
-		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/ci/v4/x/y');
+		$this->config->baseURL   = 'http://example.com/ci/v4/';
+		$this->config->indexPage = 'fc.php';
+		$request                 = Services::request($this->config);
+		$request->uri            = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/ci/v4/fc.php/controller/method', site_url('controller/method', null, $config));
-		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/fc.php/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
 	}
 
+	/**
+	 * @dataProvider urlToProvider
+	 */
+	public function testUrlTo(string $expected, string $input, ...$args)
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$routes = service('routes');
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'gotoPage']);
+		$routes->add('route/(:any)/to/(:num)', 'myOtherController::goto/$1/$2');
+
+		$this->assertEquals($expected, url_to($input, ...$args));
+	}
+
+	/**
+	 * @dataProvider urlToMissingRoutesProvider
+	 */
+	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
+	{
+		$this->expectException(RouterException::class);
+
+		url_to($route);
+	}
+
+	public function urlToProvider()
+	{
+		$page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
+
+		return [
+			[
+				"http://example.com/{$page}path/string/to/13",
+				'gotoPage',
+				'string',
+				13,
+			],
+			[
+				"http://example.com/{$page}route/string/to/13",
+				'myOtherController::goto',
+				'string',
+				13,
+			],
+		];
+	}
+
+	public function urlToMissingRoutesProvider()
+	{
+		return [
+			[
+				'',
+			],
+			[
+				'Nope::doesNotExist',
+			],
+		];
+	}
+
+	public function urlIsProvider()
+	{
+		return [
+			[
+				'foo/bar',
+				'foo/bar',
+				true,
+			],
+			[
+				'foo/bar',
+				'foo*',
+				true,
+			],
+			[
+				'foo/bar',
+				'foo',
+				false,
+			],
+			[
+				'foo/bar',
+				'baz/foo/bar',
+				false,
+			],
+			[
+				'',
+				'foo*',
+				false,
+			],
+			[
+				'foo/',
+				'foo*',
+				true,
+			],
+			[
+				'foo/',
+				'foo',
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider urlIsProvider
+	 */
+	public function testUrlIs(string $currentPath, string $testPath, bool $expected)
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$request      = Services::request();
+		$request->uri = new URI('http://example.com/' . $currentPath);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals($expected, url_is($testPath));
+	}
+
+	/**
+	 * @dataProvider urlIsProvider
+	 */
+	public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
+	{
+		$_SERVER['HTTP_HOST']    = 'example.com';
+		$this->config->indexPage = '';
+
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/' . $currentPath);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals($expected, url_is($testPath));
+	}
+
+	/**
+	 * @dataProvider urlIsProvider
+	 */
+	public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
+	{
+		$_SERVER['HTTP_HOST']  = 'example.com';
+		$this->config->baseURL = 'http://example.com/subfolder/';
+
+		$request      = Services::request($this->config);
+		$request->uri = new URI('http://example.com/subfolder/' . $currentPath);
+		Services::injectMock('request', $request);
+
+		$this->assertEquals($expected, url_is($testPath));
+	}
 }

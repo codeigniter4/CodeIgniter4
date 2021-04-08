@@ -5,10 +5,12 @@ use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
+use stdClass;
 
-class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseTraitTest extends CIUnitTestCase
 {
 
 	protected $request;
@@ -29,7 +31,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -41,6 +43,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$config = array_merge($config, $userConfig);
@@ -81,6 +84,11 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 				$this->request   = $request;
 				$this->response  = $response;
 				$this->formatter = $formatter;
+			}
+
+			public function resetFormatter()
+			{
+				$this->formatter = null;
 			}
 		};
 
@@ -151,7 +159,7 @@ EOH;
 	{
 		$this->formatter = null;
 		$controller      = $this->makeController();
-		$payload         = new \stdClass();
+		$payload         = new stdClass();
 		$payload->name   = 'Tom';
 		$payload->id     = 1;
 		$expected        = <<<EOH
@@ -412,9 +420,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 
@@ -440,9 +448,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 
@@ -465,7 +473,7 @@ EOH;
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
 		$config = [
-			'baseURL'          => 'http://example.com',
+			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
 			'negotiateLocale'  => false,
@@ -477,6 +485,7 @@ EOH;
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
@@ -511,10 +520,23 @@ EOH;
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
+		$this->assertEquals($this->formatter->format($data), $this->response->getJSON());
 
 		$controller->setResponseFormat('xml');
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
+	}
+
+	public function testXMLResponseFormat()
+	{
+		$data       = ['foo' => 'bar'];
+		$controller = $this->makeController();
+		$controller->resetFormatter();
+		$controller->setResponseFormat('xml');
+		$controller->respond($data, 201);
+
+		$xmlFormatter = new XMLFormatter();
+		$this->assertEquals($xmlFormatter->format($data), $this->response->getXML());
 	}
 }

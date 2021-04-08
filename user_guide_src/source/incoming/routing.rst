@@ -27,7 +27,7 @@ above it instead has a product ID. To overcome this, CodeIgniter allows you to r
 Setting your own routing rules
 ==============================
 
-Routing rules are defined in the **app/config/Routes.php** file. In it you'll see that
+Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
@@ -98,6 +98,26 @@ A URL with “product” as the first segment, and a number in the second will b
 and the “productLookupByID” method passing in the match as a variable to the method::
 
     $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
+
+Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
+
+	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
+
+will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the 
+Controller should take into account the maximum parameters::
+
+    public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
+        echo $seg1; // Will be 123 in all examples
+        echo $seg2; // false in first, 456 in second and third example
+        echo $seg3; // false in first and second, 789 in third
+    }
+
+If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the 
+routes. With the examples URLs from above::
+
+	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+
+will only match product/123 and generate 404 errors for other example.
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
@@ -203,18 +223,6 @@ extensive set of routes that all share the opening string, like when building an
     });
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
-It is possible to nest groups within groups for finer organization if you need it::
-
-    $routes->group('admin', function($routes)
-    {
-        $routes->group('users', function($routes)
-        {
-            $routes->add('list', 'Admin\Users::list');
-        });
-
-    });
-
-This would handle the URL at ``admin/users/list``.
 
 If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
 
@@ -234,6 +242,25 @@ run the filter before or after the controller. This is especially handy during a
     });
 
 The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``.
+
+It is possible to nest groups within groups for finer organization if you need it::
+
+    $routes->group('admin', function($routes)
+    {
+        $routes->group('users', function($routes)
+        {
+            $routes->add('list', 'Admin\Users::list');
+        });
+
+    });
+
+This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example 
+``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+
+At some point, you may want to group routes for the purpose of applying filters or other route 
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass 
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the 
+given route config options.
 
 Environment Restrictions
 ========================
@@ -400,6 +427,37 @@ be used when the first parameter is a language string::
     // Creates:
     $routes['users/(:num)'] = 'users/show/$2';
 
+.. _priority:
+
+Route processing queue
+----------------------
+
+When working with modules, it can be a problem if the routes in the application contain wildcards.
+Then the module routes will not be processed correctly.
+You can solve this problem by lowering the priority of route processing using the ``priority`` option. The parameter
+accepts positive integers and zero. The higher the number specified in the "priority", the lower
+route priority in the processing queue::
+
+    // First you need to enable sorting.
+    $routes->setPrioritize();
+
+    // App\Config\Routes
+    $routes->add('(.*)', 'Posts::index', ['priority' => 1]);
+
+    // Modules\Acme\Config\Routes
+    $routes->add('admin', 'Admin::index');
+
+    // The "admin" route will now be processed before the wildcard router.
+
+
+To disable this functionality, you must call the method with the parameter ``false``::
+
+    $routes->setPrioritize(false);
+
+.. note:: By default, all routes have a priority of 0.
+    Negative integers will be cast to the absolute value.
+
+
 Routes Configuration Options
 ============================
 
@@ -435,7 +493,7 @@ then you can change this value to save typing::
 Default Controller
 ------------------
 
-When a user visits the root of your site (i.e. example.com) the controller to use is determined by the value set by
+When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at ``/app/Controllers/Home.php``::
 
@@ -491,3 +549,18 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     {
         echo view('my_errors/not_found.html');
     });
+
+
+Route processing by priority
+----------------------------
+
+Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
+Disabled by default. This functionality affects all routes.
+For an example of use lowering the priority see :ref:`priority`::
+
+    // to enable
+    $routes->setPrioritize();
+
+    // to disable
+    $routes->setPrioritize(false);
+

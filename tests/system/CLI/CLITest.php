@@ -1,8 +1,10 @@
 <?php namespace CodeIgniter\CLI;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use ReflectionProperty;
 
-class CLITest extends \CodeIgniter\Test\CIUnitTestCase
+class CLITest extends CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -280,18 +282,25 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'b',
 			'c',
 			'd',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd2',
 			'da-sh',
+			'--fix',
+			'--opt-in',
+			'sure',
 		];
-		$_SERVER['argc'] = 8;
 		CLI::init();
 		$this->assertEquals(null, CLI::getSegment(7));
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('d', CLI::getSegment(3));
 		$this->assertEquals(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
+		$this->assertEquals(['parm' => 'pvalue', 'fix' => null, 'opt-in' => 'sure'], CLI::getOptions());
+		$this->assertEquals('-parm pvalue -fix -opt-in sure ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -fix -opt-in sure', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue --fix --opt-in sure ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue --fix --opt-in sure', CLI::getOptionString(true, true));
 	}
 
 	public function testParseCommandOption()
@@ -300,15 +309,17 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'ignored',
 			'b',
 			'c',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd',
 		];
-		$_SERVER['argc'] = 6;
 		CLI::init();
 		$this->assertEquals(['parm' => 'pvalue'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
 		$this->assertEquals('-parm pvalue ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue', CLI::getOptionString(true, true));
 		$this->assertNull(CLI::getOption('bogus'));
 		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
 	}
@@ -319,29 +330,31 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'ignored',
 			'b',
 			'c',
-			'-parm',
+			'--parm',
 			'pvalue',
 			'd',
-			'-p2',
-			'-p3',
+			'--p2',
+			'--p3',
 			'value 3',
 		];
-		$_SERVER['argc'] = 9;
 		CLI::init();
 		$this->assertEquals(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
-		$this->assertEquals('-parm pvalue -p2  -p3 "value 3" ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
+		$this->assertEquals('-parm pvalue -p2 -p3 "value 3"', CLI::getOptionString(false, true));
+		$this->assertEquals('--parm pvalue --p2 --p3 "value 3" ', CLI::getOptionString(true));
+		$this->assertEquals('--parm pvalue --p2 --p3 "value 3"', CLI::getOptionString(true, true));
 		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
 	}
 
 	public function testWindow()
 	{
-		$height = new \ReflectionProperty(CLI::class, 'height');
+		$height = new ReflectionProperty(CLI::class, 'height');
 		$height->setAccessible(true);
 		$height->setValue(null);
 		$this->assertTrue(is_int(CLI::getHeight()));
 
-		$width = new \ReflectionProperty(CLI::class, 'width');
+		$width = new ReflectionProperty(CLI::class, 'width');
 		$width->setAccessible(true);
 		$width->setValue(null);
 		$this->assertTrue(is_int(CLI::getWidth()));
@@ -362,17 +375,17 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tableProvider()
 	{
-		$head      = [
+		$head     = [
 			'ID',
 			'Title',
 		];
-		$one_row   = [
+		$oneRow   = [
 			[
 				'id'  => 1,
 				'foo' => 'bar',
 			],
 		];
-		$many_rows = [
+		$manyRows = [
 			[
 				'id'  => 1,
 				'foo' => 'bar',
@@ -389,14 +402,14 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		return [
 			[
-				$one_row,
+				$oneRow,
 				[],
 				'+---+-----+' . PHP_EOL .
 				'| 1 | bar |' . PHP_EOL .
 				'+---+-----+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$one_row,
+				$oneRow,
 				$head,
 				'+----+-------+' . PHP_EOL .
 				'| ID | Title |' . PHP_EOL .
@@ -405,7 +418,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'+----+-------+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$many_rows,
+				$manyRows,
 				[],
 				'+---+-----------------+' . PHP_EOL .
 				'| 1 | bar             |' . PHP_EOL .
@@ -414,7 +427,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'+---+-----------------+' . PHP_EOL . PHP_EOL,
 			],
 			[
-				$many_rows,
+				$manyRows,
 				$head,
 				'+----+-----------------+' . PHP_EOL .
 				'| ID | Title           |' . PHP_EOL .
@@ -423,6 +436,24 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 				'| 2  | bar * 2         |' . PHP_EOL .
 				'| 3  | bar + bar + bar |' . PHP_EOL .
 				'+----+-----------------+' . PHP_EOL . PHP_EOL,
+			],
+			// Multibyte letters
+			[
+				[
+					[
+						'id'  => 'ほげ',
+						'foo' => 'bar',
+					],
+				],
+				[
+					'ID',
+					'タイトル',
+				],
+				'+------+----------+' . PHP_EOL .
+				'| ID   | タイトル |' . PHP_EOL .
+				'+------+----------+' . PHP_EOL .
+				'| ほげ | bar      |' . PHP_EOL .
+				'+------+----------+' . PHP_EOL . PHP_EOL,
 			],
 		];
 	}

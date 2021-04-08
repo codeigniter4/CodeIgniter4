@@ -1,8 +1,14 @@
 <?php
+namespace CodeIgniter\View;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\View\Exceptions\ViewException;
 use CodeIgniter\View\View;
+use Config;
+use RuntimeException;
 
-class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
+class ViewTest extends CIUnitTestCase
 {
 
 	protected $loader;
@@ -15,7 +21,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->loader   = \CodeIgniter\Config\Services::locator();
+		$this->loader   = Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
 		$this->config   = new Config\View();
 	}
@@ -158,7 +164,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->expectException(\CodeIgniter\View\Exceptions\ViewException::class);
+		$this->expectException(ViewException::class);
 		$view->setVar('testString', 'Hello World');
 
 		$view->render('missing');
@@ -338,7 +344,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$view->setVar('testString', 'Hello World');
 		$expected = '';
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$this->assertStringContainsString($expected, $view->render('broken'));
 	}
 
@@ -370,4 +376,15 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
+	public function testCachedAutoDiscoverAndRender()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = '<h1>Hello World</h1>';
+
+		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+		// this second renderings should go thru the cache
+		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+	}
 }

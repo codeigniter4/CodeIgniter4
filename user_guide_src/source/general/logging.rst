@@ -62,13 +62,15 @@ Using Multiple Log Handlers
 ---------------------------
 
 The logging system can support multiple methods of handling logging running at the same time. Each handler can
-be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
+be set to handle specific levels and ignore the rest. Currently, three handlers come with a default install:
 
 - **File Handler** is the default handler and will create a single file for every day locally. This is the
   recommended method of logging.
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
   installed in the Chrome web browser, you can use this handler to display the log information in
   Chrome's console window.
+- **Errorlog Handler** This handler will take advantage of PHP's native ``error_log()`` function and write
+  the logs there. Currently, only the ``0`` and ``4`` message types of ``error_log()`` are supported.
 
 The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
 an array of handlers and their configuration. Each handler is specified with the key being the fully
@@ -130,7 +132,7 @@ Several core placeholders exist that will be automatically expanded for you base
 +----------------+---------------------------------------------------+
 | {session_vars} | $_SESSION variables                               |
 +----------------+---------------------------------------------------+
-| {env}          | Current environment name, i.e. development        |
+| {env}          | Current environment name, i.e., development       |
 +----------------+---------------------------------------------------+
 | {file}         | The name of file calling the logger               |
 +----------------+---------------------------------------------------+
@@ -152,11 +154,3 @@ like Composer. Next, you should modify ``/app/Config/Services.php`` to point the
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.
-
-LoggerAware Trait
-=================
-
-If you would like to implement your libraries in a framework-agnostic method, you can use
-the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
-Then, when you use your library under different environments for frameworks, your library should
-still be able to log as it would expect, as long as it can find a PSR3 compatible logger.

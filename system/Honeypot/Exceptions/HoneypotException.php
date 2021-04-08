@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Honeypot\Exceptions;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Honeypot\Exceptions;
 
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\ExceptionInterface;
@@ -24,5 +35,4 @@ class HoneypotException extends ConfigException implements ExceptionInterface
 	{
 		return new static(lang('Honeypot.theClientIsABot'));
 	}
-
 }

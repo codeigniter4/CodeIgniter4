@@ -1,15 +1,20 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 
 /**
  * @group DatabaseLive
  */
-class MetadataTest extends CIDatabaseTestCase
+class MetadataTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+	use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected $refresh = true;
+	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	/**
 	 * Array of expected tables.
@@ -29,15 +34,18 @@ class MetadataTest extends CIDatabaseTestCase
 			$prefix . 'user',
 			$prefix . 'job',
 			$prefix . 'misc',
+			$prefix . 'type_test',
 			$prefix . 'empty',
 			$prefix . 'secondary',
 			$prefix . 'stringifypkey',
+			$prefix . 'without_auto_increment',
+			$prefix . 'ip_table',
 		];
 	}
 
 	public function testListTables()
 	{
-		$result = $this->db->listTables();
+		$result = $this->db->listTables(true);
 
 		$this->assertEquals($this->expectedTables, array_values($result));
 	}
@@ -55,7 +63,7 @@ class MetadataTest extends CIDatabaseTestCase
 
 	public function testConstrainPrefixIgnoresOtherTables()
 	{
-		$this->forge = \Config\Database::forge($this->DBGroup);
+		$this->forge = Database::forge($this->DBGroup);
 
 		// Stash the prefix and change it
 		$DBPrefix = $this->db->getPrefix();
@@ -88,5 +96,4 @@ class MetadataTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 }

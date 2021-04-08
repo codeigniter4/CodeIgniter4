@@ -1,49 +1,20 @@
 <?php
 
-
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Controller;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -61,54 +32,98 @@ use Throwable;
  *       ->withURI($uri)
  *       ->withBody($body)
  *       ->controller('App\Controllers\Home')
- *       ->run('methodName');
+ *       ->execute('methodName');
+ *
+ * @deprecated Use ControllerTestTrait instead
  */
 trait ControllerTester
 {
-
 	/**
 	 * Controller configuration.
 	 *
-	 * @var BaseConfig
+	 * @var App
 	 */
 	protected $appConfig;
 
 	/**
 	 * Request.
 	 *
-	 * @var Request
+	 * @var IncomingRequest
 	 */
 	protected $request;
+
 	/**
 	 * Response.
 	 *
 	 * @var Response
 	 */
 	protected $response;
+
 	/**
 	 * Message logger.
 	 *
 	 * @var LoggerInterface
 	 */
 	protected $logger;
+
 	/**
 	 * Initialized controller.
 	 *
 	 * @var Controller
 	 */
 	protected $controller;
+
 	/**
 	 * URI of this request.
 	 *
 	 * @var string
 	 */
 	protected $uri = 'http://example.com';
+
 	/**
 	 * Request or response body.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $body;
+
+	/**
+	 * Initializes required components.
+	 */
+	protected function setUpControllerTester(): void
+	{
+		if (empty($this->appConfig))
+		{
+			$this->appConfig = config('App');
+		}
+
+		if (! $this->uri instanceof URI)
+		{
+			$this->uri = Services::uri($this->appConfig->baseURL ?? 'http://example.com/', false);
+		}
+
+		if (empty($this->request))
+		{
+			// Do some acrobatics so we can use the Request service with our own URI
+			$tempUri = Services::uri();
+			Services::injectMock('uri', $this->uri);
+
+			$this->withRequest(Services::request($this->appConfig, false)->setBody($this->body));
+
+			// Restore the URI service
+			Services::injectMock('uri', $tempUri);
+		}
+
+		if (empty($this->response))
+		{
+			$this->response = Services::response($this->appConfig, false);
+		}
+
+		if (empty($this->logger))
+		{
+			$this->logger = Services::logger();
+		}
+	}
 
 	/**
 	 * Loads the specified controller, and generates any needed dependencies.
@@ -124,31 +139,6 @@ trait ControllerTester
 			throw new InvalidArgumentException('Invalid Controller: ' . $name);
 		}
 
-		if (empty($this->appConfig))
-		{
-			$this->appConfig = new App();
-		}
-
-		if (! $this->uri instanceof URI)
-		{
-			$this->uri = new URI($this->appConfig->baseURL ?? 'http://example.com');
-		}
-
-		if (empty($this->request))
-		{
-			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body, new UserAgent());
-		}
-
-		if (empty($this->response))
-		{
-			$this->response = new Response($this->appConfig);
-		}
-
-		if (empty($this->logger))
-		{
-			$this->logger = Services::logger();
-		}
-
 		$this->controller = new $name();
 		$this->controller->initController($this->request, $this->response, $this->logger);
 
@@ -161,7 +151,9 @@ trait ControllerTester
 	 * @param string $method
 	 * @param array  $params
 	 *
-	 * @return \CodeIgniter\Test\ControllerResponse|\InvalidArgumentException
+	 * @throws InvalidArgumentException
+	 *
+	 * @return ControllerResponse
 	 */
 	public function execute(string $method, ...$params)
 	{
@@ -187,8 +179,15 @@ trait ControllerTester
 		}
 		catch (Throwable $e)
 		{
-			$result->response()
-					->setStatusCode($e->getCode());
+			$code = $e->getCode();
+
+			// If code is not a valid HTTP status then assume there is an error
+			if ($code < 100 || $code >= 600)
+			{
+				throw $e;
+			}
+
+			$result->response()->setStatusCode($code);
 		}
 		finally
 		{
@@ -302,7 +301,7 @@ trait ControllerTester
 	/**
 	 * Set the method's body, with method chaining.
 	 *
-	 * @param mixed $body
+	 * @param string|null $body
 	 *
 	 * @return mixed
 	 */
@@ -312,5 +311,4 @@ trait ControllerTester
 
 		return $this;
 	}
-
 }

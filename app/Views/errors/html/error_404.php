@@ -74,7 +74,7 @@
 
 		<p>
 			<?php if (! empty($message) && $message !== '(null)') : ?>
-				<?= esc($message) ?>
+				<?= esc(nl2br($message)) ?>
 			<?php else : ?>
 				Sorry! Cannot seem to find the page you were looking for.
 			<?php endif ?>

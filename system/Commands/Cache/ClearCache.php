@@ -1,9 +1,23 @@
-<?php namespace CodeIgniter\Commands\Cache;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Commands\Cache;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
+/**
+ * Clears current cache.
+ */
 class ClearCache extends BaseCommand
 {
 	/**
@@ -44,18 +58,19 @@ class ClearCache extends BaseCommand
 	];
 
 	/**
-	 * Creates a new migration file with the current timestamp.
+	 * Clears the cache
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
-		$config = config('Cache');
-
+		$config  = config('Cache');
 		$handler = $params[0] ?? $config->handler;
+
 		if (! array_key_exists($handler, $config->validHandlers))
 		{
 			CLI::error($handler . ' is not a valid cache handler.');
+
 			return;
 		}
 
@@ -64,10 +79,13 @@ class ClearCache extends BaseCommand
 
 		if (! $cache->clean())
 		{
+			// @codeCoverageIgnoreStart
 			CLI::error('Error while clearing the cache.');
+
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
-		CLI::write(CLI::color('Done', 'green'));
+		CLI::write(CLI::color('Cache cleared.', 'green'));
 	}
 }

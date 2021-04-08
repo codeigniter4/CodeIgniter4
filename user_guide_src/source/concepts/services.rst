@@ -16,7 +16,7 @@ configuration file. This file acts as a type of factory to create new instances 
 A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class::
 
-	$timer = new \CodeIgniter\Debug\Timer();
+    $timer = new \CodeIgniter\Debug\Timer();
 
 And this works great. Until you decide that you want to use a different timer class in its place.
 Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
@@ -30,7 +30,7 @@ class for us. This class is kept very simple. It only contains a method for each
 to use as a service. The method typically returns a shared instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class::
 
-	$timer = \Config\Services::timer();
+    $timer = \Config\Services::timer();
 
 When you need to change the implementation used, you can modify the services configuration file, and
 the change happens automatically throughout your application without you having to do anything. Now
@@ -50,16 +50,16 @@ required parameter is the service name. This is the same as the method name with
 file always returns a SHARED instance of the class, so calling the function multiple times should
 always return the same instance::
 
-	$logger = service('logger');
+    $logger = service('logger');
 
 If the creation method requires additional parameters, they can be passed after the service name::
 
-	$renderer = service('renderer', APPPATH.'views/');
+    $renderer = service('renderer', APPPATH . 'views/');
 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class::
 
-	$logger = single_service('logger');
+    $logger = single_service('logger');
 
 Defining Services
 =================
@@ -74,18 +74,18 @@ For example, the ``RouterCollection`` class implements the ``RouterCollectionInt
 want to create a replacement that provides a different way to create routes, you just need to
 create a new class that implements the ``RouterCollectionInterface``::
 
-	class MyRouter implements \CodeIgniter\Router\RouteCollectionInterface
-	{
-		// Implement required methods here.
-	}
+    class MyRouter implements \CodeIgniter\Router\RouteCollectionInterface
+    {
+        // Implement required methods here.
+    }
 
 Finally, modify **/app/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\Router\RouterCollection``::
 
-	public static function routes()
-	{
-		return new \App\Router\MyRouter();
-	}
+    public static function routes()
+    {
+        return new \App\Router\MyRouter();
+    }
 
 Allowing Parameters
 -------------------
@@ -98,15 +98,15 @@ to find the views at ``APPPATH.views/``. We want the developer to have the optio
 changing that path, though, if their needs require it. So the class accepts the ``$viewPath``
 as a constructor parameter. The service method looks like this::
 
-	public static function renderer($viewPath=APPPATH.'views/')
-	{
-		return new \CodeIgniter\View\View($viewPath);
-	}
+    public static function renderer($viewPath=APPPATH.'views/')
+    {
+        return new \CodeIgniter\View\View($viewPath);
+    }
 
 This sets the default path in the constructor method, but allows for easily changing
 the path it uses::
 
-	$renderer = \Config\Services::renderer('/shared/views');
+    $renderer = \Config\Services::renderer('/shared/views');
 
 Shared Classes
 -----------------
@@ -147,7 +147,9 @@ Imagine that you've created a new directory, ``Blog`` in your root directory. Th
 models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
 ``Blog\Config\Services.php``. The skeleton of the file should be::
 
-    <?php namespace Blog\Config;
+    <?php
+
+    namespace Blog\Config;
 
     use CodeIgniter\Config\BaseService;
 
@@ -155,7 +157,7 @@ models, etc, and you'd like to make some of the classes available as a service. 
     {
         public static function postManager()
         {
-            ...
+            // ...
         }
     }
 

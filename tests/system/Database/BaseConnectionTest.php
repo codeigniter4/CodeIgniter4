@@ -1,8 +1,13 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Throwable;
 
-class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseConnectionTest extends CIUnitTestCase
 {
 	protected $options = [
 		'DSN'      => '',
@@ -14,8 +19,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'DBPrefix' => 'test_',
 		'pConnect' => true,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => 'my/cacheDir',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -35,8 +38,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'DBPrefix' => 'test_',
 		'pConnect' => true,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
-		'cacheOn'  => false,
-		'cacheDir' => 'my/cacheDir',
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
 		'swapPre'  => '',
@@ -45,8 +46,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		'strictOn' => true,
 		'failover' => [],
 	];
-
-	//--------------------------------------------------------------------
 
 	public function testSavesConfigOptions()
 	{
@@ -59,8 +58,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('MockDriver', $db->DBDriver);
 		$this->assertTrue($db->pConnect);
 		$this->assertTrue($db->DBDebug);
-		$this->assertFalse($db->cacheOn);
-		$this->assertSame('my/cacheDir', $db->cacheDir);
 		$this->assertSame('utf8', $db->charset);
 		$this->assertSame('utf8_general_ci', $db->DBCollat);
 		$this->assertSame('', $db->swapPre);
@@ -70,36 +67,30 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame([], $db->failover);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testConnectionThrowExceptionWhenCannotConnect()
 	{
-		$db = new MockConnection($this->options);
-
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('Unable to connect to the database.');
-
-		$db->shouldReturn('connect', false)
-			->initialize();
+		try
+		{
+			$db = new MockConnection($this->options);
+			$db->shouldReturn('connect', false)->initialize();
+		}
+		catch (Throwable $e)
+		{
+			$this->assertInstanceOf(DatabaseException::class, $e);
+			$this->assertStringContainsString('Unable to connect to the database.', $e->getMessage());
+		}
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanConnectAndStoreConnection()
 	{
 		$db = new MockConnection($this->options);
-
-		$db->shouldReturn('connect', 123)
-			->initialize();
+		$db->shouldReturn('connect', 123)->initialize();
 
 		$this->assertSame(123, $db->getConnection());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 * @group  single
+	 * @group single
 	 */
 	public function testCanConnectToFailoverWhenNoConnectionAvailable()
 	{
@@ -107,29 +98,22 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$options['failover'] = [$this->failoverOptions];
 
 		$db = new MockConnection($options);
-
-		$db->shouldReturn('connect', [false, 345])
-		   ->initialize();
+		$db->shouldReturn('connect', [false, 345])->initialize();
 
 		$this->assertSame(345, $db->getConnection());
 		$this->assertSame('failover', $db->username);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testStoresConnectionTimings()
 	{
 		$start = microtime(true);
 
 		$db = new MockConnection($this->options);
-
 		$db->initialize();
 
 		$this->assertGreaterThan($start, $db->getConnectStart());
 		$this->assertGreaterThan(0.0, $db->getConnectDuration());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMagicIssetTrue()
 	{
@@ -138,8 +122,6 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue(isset($db->charset));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMagicIssetFalse()
 	{
 		$db = new MockConnection($this->options);
@@ -147,16 +129,12 @@ class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse(isset($db->foobar));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testMagicGet()
 	{
 		$db = new MockConnection($this->options);
 
-		$this->assertEquals('utf8', $db->charset);
+		$this->assertSame('utf8', $db->charset);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testMagicGetMissing()
 	{

@@ -1,6 +1,12 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class PredisHandlerTest extends CIUnitTestCase
 {
 	private $PredisHandler;
 	private static $key1 = 'key1';
@@ -22,7 +28,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config = new \Config\Cache();
+		$this->config = new Cache();
 
 		$this->PredisHandler = new PredisHandler($this->config);
 		if (! $this->PredisHandler->isSupported())
@@ -61,7 +67,20 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
 		$this->assertNull($this->PredisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
+		$this->assertNull($this->PredisHandler->get(self::$key1));
+	}
+
+	public function testRemember()
+	{
+		$this->PredisHandler->remember(self::$key1, 2, function () {
+			return 'value';
+		});
+
+		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
+		$this->assertNull($this->PredisHandler->get(self::$dummy));
+
+		CLI::wait(3);
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 
@@ -102,7 +121,7 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$actual = $this->PredisHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 

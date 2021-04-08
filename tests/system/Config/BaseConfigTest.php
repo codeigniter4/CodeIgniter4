@@ -1,7 +1,11 @@
 <?php
+
 namespace CodeIgniter\Config;
 
-class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use RuntimeException;
+
+class BaseConfigTest extends CIUnitTestCase
 {
 
 	protected $fixturesFolder;
@@ -18,10 +22,12 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			require $this->fixturesFolder . '/SimpleConfig.php';
 		}
+
 		if (! class_exists('RegistrarConfig', false))
 		{
 			require $this->fixturesFolder . '/RegistrarConfig.php';
 		}
+
 		if (! class_exists('Encryption', false))
 		{
 			require $this->fixturesFolder . '/Encryption.php';
@@ -152,7 +158,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
-	public function testSetsDefaultValuesEncryption()
+	public function testSetsDefaultValuesEncryptionUsingHex2Bin()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
@@ -160,6 +166,22 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// override config with ENV var
 		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($config->key));
+		$this->assertEquals('OpenSSL', $config->driver);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testSetDefaultValuesEncryptionUsingBase64()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
+		$dotenv->load();
+		$config = new \Encryption('base64');
+
+		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($config->key));
 		$this->assertEquals('OpenSSL', $config->driver);
 	}
 
@@ -173,6 +195,18 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// override config with ENV var
 		$this->assertEquals('84cf2c0811d5daf9e1c897825a3debce91f9a33391e639f72f7a4740b30675a2', bin2hex($config->key));
+		$this->assertEquals('MCrypt', $config->driver);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetDefaultValuesBase64()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
+		$dotenv->load();
+		$config = new \Encryption('base64');
+
+		$this->assertEquals('Psf8bUHRh1UJYG2M7e+5ec3MdjpKpzAr0twamcAvOcI=', base64_encode($config->key));
 		$this->assertEquals('MCrypt', $config->driver);
 	}
 
@@ -196,7 +230,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testRegistrars()
 	{
 		$config              = new \RegistrarConfig();
-		$config::$registrars = ['\Tests\Support\Config\Registrar'];
+		$config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
@@ -218,7 +252,7 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
 

@@ -71,25 +71,16 @@ by not hitting the file-system with extra ``is_file()`` calls. You can use the c
 third-party libraries that are not namespaced::
 
     $classmap = [
-        'Markdown' => APPPATH .'third_party/markdown.php'
+        'Markdown' => APPPATH . 'third_party/markdown.php'
     ];
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
-
-Legacy Support
-==============
-
-If neither of the above methods finds the class, and the class is not namespaced, the autoloader will look in the
-**/app/Libraries** and **/app/Models** directories to attempt to locate the files. This provides
-a measure to help ease the transition from previous versions.
-
-There are no configuration options for legacy support.
 
 Composer Support
 ================
 
 Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
-``ROOTPATH.'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
+``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
 the value defined in ``Config\Constants.php``.
 
 .. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be

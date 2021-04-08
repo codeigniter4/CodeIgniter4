@@ -2,16 +2,18 @@
 
 use \CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Modules;
 
 /**
  * @backupGlobals enabled
  */
-class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
+class CodeIgniterTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $codeigniter;
 
@@ -118,7 +120,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		// Inject mock router.
-		$routes = new RouteCollection(Services::locator(), new \Config\Modules());
+		$routes = new RouteCollection(Services::locator(), new Modules());
 		$routes->setAutoRoute(false);
 		$routes->set404Override(function () {
 			echo '404 Override by Closure.';
@@ -197,7 +199,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$_SERVER['argc'] = 2;
 
-		$response = Config\Services::response(null, false);
+		$response = Services::response(null, false);
 
 		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
 	}
@@ -230,7 +232,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 			'/',
 		];
 		$_SERVER['argc']            = 2;
-		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2';
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2.0';
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -275,13 +277,13 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
 
 		$response = $this->getPrivateProperty($codeigniter, 'response');
-		$this->assertNull($response->getHeader('Location'));
+		$this->assertNull($response->header('Location'));
 
 		ob_start();
 		$codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
+		$this->assertEquals('https://example.com/', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithNamed()
@@ -306,7 +308,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/named', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/named', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithURI()
@@ -331,7 +333,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/uri', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/uri', $response->header('Location')->getValue());
 	}
 
 	/**
@@ -357,7 +359,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('http://example.com/pages/notset', $response->getHeader('Location')->getValue());
+		$this->assertEquals('http://example.com/pages/notset', $response->header('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithHTTPCode303()

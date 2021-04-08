@@ -18,13 +18,13 @@
 
 project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
-copyright = '2019-2020 CodeIgniter Foundation'
+copyright = '2019-2021 CodeIgniter Foundation'
 
 # The short X.Y version.
-version = '4.0'
+version = '4.1'
 
 # The full version, including alpha/beta/rc tags.
-release = '4.0.4'
+release = '4.1.1'
 
 # -- General configuration ---------------------------------------------------
 
@@ -40,7 +40,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+# templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -137,4 +137,4 @@ man_pages = [
 epub_title = 'CodeIgniter4'
 epub_author = 'CodeIgniter Foundation'
 epub_publisher = 'CodeIgniter Foundation'
-epub_copyright = '2019-2020 CodeIgniter Foundation'
+epub_copyright = '2019-2021 CodeIgniter Foundation'

@@ -613,7 +613,7 @@ template, the original pseudo-variable is shown in the result::
 	// Result: Hello, John {initials} Doe
 
 If you provide a string substitution parameter when an array is expected,
-i.e. for a variable pair, the substitution is done for the opening variable
+i.e., for a variable pair, the substitution is done for the opening variable
 pair tag, but the closing variable pair tag is not rendered properly::
 
 	$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
@@ -696,7 +696,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-	.. php:method:: render($view[, $options[, $saveData=false]]])
+	.. php:method:: render($view[, $options[, $saveData=false]])
 
 		:param  string  $view: File name of the view source
 		:param  array   $options: Array of options, as key/value pairs
@@ -720,7 +720,7 @@ Class Reference
 		Any conditional substitutions are performed first, then remaining
 		substitutions are performed for each data pair.
 
-	.. php:method:: renderString($template[, $options[, $saveData=false]]])
+	.. php:method:: renderString($template[, $options[, $saveData=false]])
 
 		:param  string  $template: View source provided as a string
     		:param  array   $options: Array of options, as key/value pairs

@@ -1,46 +1,21 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Log;
 
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
+use Throwable;
 
 /**
  * The CodeIgntier Logger
@@ -53,17 +28,14 @@ use Psr\Log\LoggerInterface;
  * The context array can contain arbitrary data, the only assumption that
  * can be made by implementors is that if an Exception instance is given
  * to produce a stack trace, it MUST be in a key named "exception".
- *
- * @package CodeIgniter\Log
  */
 class Logger implements LoggerInterface
 {
-
 	/**
 	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
 	 *
-	 * @var array
+	 * @var array<string, integer>
 	 */
 	protected $logLevels = [
 		'emergency' => 1,
@@ -144,7 +116,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @param  \Config\Logger $config
 	 * @param  boolean        $debug
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
 	{
@@ -157,7 +129,7 @@ class Logger implements LoggerInterface
 			$temp = [];
 			foreach ($this->loggableLevels as $level)
 			{
-				$temp[] = array_search((int) $level, $this->logLevels);
+				$temp[] = array_search((int) $level, $this->logLevels, true);
 			}
 
 			$this->loggableLevels = $temp;
@@ -328,7 +300,7 @@ class Logger implements LoggerInterface
 	{
 		if (is_numeric($level))
 		{
-			$level = array_search((int) $level, $this->logLevels);
+			$level = array_search((int) $level, $this->logLevels, true);
 		}
 
 		// Is the level a valid level?
@@ -338,7 +310,7 @@ class Logger implements LoggerInterface
 		}
 
 		// Does the app want to log this right now?
-		if (! in_array($level, $this->loggableLevels))
+		if (! in_array($level, $this->loggableLevels, true))
 		{
 			return false;
 		}
@@ -367,7 +339,7 @@ class Logger implements LoggerInterface
 			}
 
 			/**
-			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
+			 * @var HandlerInterface
 			 */
 			$handler = $this->handlers[$className];
 
@@ -420,7 +392,7 @@ class Logger implements LoggerInterface
 		{
 			// Verify that the 'exception' key is actually an exception
 			// or error, both of which implement the 'Throwable' interface.
-			if ($key === 'exception' && $val instanceof \Throwable)
+			if ($key === 'exception' && $val instanceof Throwable)
 			{
 				$val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
 			}
@@ -490,7 +462,7 @@ class Logger implements LoggerInterface
 		];
 
 		// Generate Backtrace info
-		$trace = \debug_backtrace(false);
+		$trace = \debug_backtrace(0);
 
 		// So we search from the bottom (earliest) of the stack frames
 		$stackFrames = \array_reverse($trace);
@@ -498,7 +470,7 @@ class Logger implements LoggerInterface
 		// Find the first reference to a Logger class method
 		foreach ($stackFrames as $frame)
 		{
-			if (\in_array($frame['function'], $logFunctions))
+			if (\in_array($frame['function'], $logFunctions, true))
 			{
 				$file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
 				$line = $frame['line'] ?? 'unknown';
@@ -525,7 +497,7 @@ class Logger implements LoggerInterface
 	 *      becomes:
 	 *  APPPATH/Controllers/Home.php
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
 	 * @return string
 	 */

@@ -53,6 +53,8 @@ This folder contains tools or docs useful for project maintainers.
 
 ## Release Building Scripts
 
+*Do not use these scripts! They are left here for reference only.*
+
 The release workflow is detailed in its own writeup; these are the main
 scripts used by the release manager:
 

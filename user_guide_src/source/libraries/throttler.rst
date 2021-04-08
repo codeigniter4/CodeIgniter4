@@ -52,7 +52,9 @@ The Code
 You could make your own Throttler filter, at **app/Filters/Throttle.php**, 
 along the lines of:: 
 
-    <?php namespace App\Filters;
+    <?php
+
+    namespace App\Filters;
 
     use CodeIgniter\Filters\FilterInterface;
     use CodeIgniter\HTTP\RequestInterface;
@@ -61,42 +63,43 @@ along the lines of::
 
     class Throttle implements FilterInterface
     {
-            /**
-             * This is a demo implementation of using the Throttler class
-             * to implement rate limiting for your application.
-             *
-             * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-             * @param array|null                                         $arguments
-             *
-             * @return mixed
-             */
-            public function before(RequestInterface $request, $arguments = null)
+        /**
+         * This is a demo implementation of using the Throttler class
+         * to implement rate limiting for your application.
+         *
+         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+         * @param array|null                                         $arguments
+         *
+         * @return mixed
+         */
+        public function before(RequestInterface $request, $arguments = null)
+        {
+            $throttler = Services::throttler();
+
+            // Restrict an IP address to no more
+            // than 1 request per second across the
+            // entire site.
+            if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
             {
-                    $throttler = Services::throttler();
-
-                    // Restrict an IP address to no more
-                    // than 1 request per second across the
-                    // entire site.
-                    if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-                    {
-                            return Services::response()->setStatusCode(429);
-                    }
+                return Services::response()->setStatusCode(429);
             }
+        }
 
-            //--------------------------------------------------------------------
+        //--------------------------------------------------------------------
 
-            /**
-             * We don't have anything to do here.
-             *
-             * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-             * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
-             * @param array|null                                         $arguments
-             *
-             * @return mixed
-             */
-            public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-            {
-            }
+        /**
+         * We don't have anything to do here.
+         *
+         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+         * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
+         * @param array|null                                         $arguments
+         *
+         * @return mixed
+         */
+        public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+        {
+            // ...
+        }
     }
 
 When run, this method first grabs an instance of the throttler. Next, it uses the IP address as the bucket name,
@@ -151,3 +154,12 @@ Class Reference
     After ``check()`` has been run and returned FALSE, this method can be used
     to determine the time until a new token should be available and the action can be
     tried again. In this case, the minimum enforced wait time is one second.
+
+.. php:method:: remove(string $key) : self
+
+    :param string $key: The name of the bucket
+    :returns: $this
+    :rtype: self
+
+    Removes & resets the bucket.
+    Won't fail if the bucket doesn't exist.

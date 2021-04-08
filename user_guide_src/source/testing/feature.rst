@@ -14,33 +14,42 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase``
-class or use the ``CodeIgniter\Test\FeatureTestTrait``. Since these testing tools extend
-`CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
-are called before you take your actions.
+Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestCase``
+and ``CodeIgniter\Test\FeatureTestTrait`` traits. Since these testing tools rely on proper database
+staging you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
+are called if you implement your own methods.
 ::
 
-    <?php namespace App;
+    <?php
 
-    use CodeIgniter\Test\FeatureTestCase;
+    namespace App;
+
+    use CodeIgniter\Test\DatabaseTestTrait;
+    use CodeIgniter\Test\FeatureTestTrait;
 
     class TestFoo extends FeatureTestCase
     {
-        public function setUp(): void
+    	use DatabaseTestTrait, FeatureTestTrait;
+
+        protected function setUp(): void
         {
             parent::setUp();
+
+			$this->myClassMethod();
         }
 
-        public function tearDown(): void
+        protected function tearDown(): void
         {
             parent::tearDown();
+
+			$this->anotherClassMethod();
         }
     }
 
 Requesting A Page
 =================
 
-Essentially, the FeatureTestCase simply allows you to call an endpoint on your application and get the results back.
+Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
 to do this, you use the ``call()`` method. The first parameter is the HTTP method to use (most frequently either GET or POST).
 The second parameter is the path on your site to test. The third parameter accepts an array that is used to populate the
 superglobal variables for the HTTP verb you are using. So, a method of **GET** would have the **$_GET** variable
@@ -48,10 +57,10 @@ populated, while a **post** request would have the **$_POST** array populated.
 ::
 
     // Get a simple page
-    $result = $this->call('get', site_url());
+    $result = $this->call('get', '/');
 
     // Submit a form
-    $result = $this->call('post', site_url('contact'), [
+    $result = $this->call('post', 'contact'), [
         'name' => 'Fred Flintstone',
         'email' => 'flintyfred@example.com'
     ]);
@@ -98,12 +107,24 @@ that the current values of ``$_SESSION`` should be used. This is handy for testi
 
     $result = $this->withSession($values)
         ->get('admin');
-    
+
     // Or...
-    
+
     $_SESSION['logged_in'] = 123;
-    
+
     $result = $this->withSession()->get('admin');
+
+Setting Headers
+---------------
+
+You can set header values with the ``withHeaders()`` method. This takes an array of key/value pairs that would be
+passed as a header into the call.::
+
+    $headers = [
+        'CONTENT_TYPE' => 'application/json'
+    ];
+
+    $result = $this->withHeaders($headers)->post('users');
 
 Bypassing Events
 ----------------
@@ -114,251 +135,31 @@ to send out emails. You can tell the system to skip any event handling with the 
     $result = $this->skipEvents()
         ->post('users', $userInfo);
 
+Formatting The Request
+-----------------------
 
-Testing the Response
-====================
-
-Once you've performed a ``call()`` and have results, there are a number of new assertions that you can use in your
-tests.
-
-.. note:: The Response object is publicly available at ``$result->response``. You can use that instance to perform
-    other assertions against, if needed.
-
-Checking Response Status
-------------------------
-
-**isOK()**
-
-Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by
-a response status code in the 200 or 300's.
+You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
+`json` or `xml`. This will take the parameters passed into ``call(), post(), get()...`` and assign them to the
+body of the request in the given format. This will also set the `Content-Type` header for your request accordingly.
+This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
 ::
 
-    if ($result->isOK())
-    {
-        ...
-    }
+    // If your feature test contains this:
+    $result = $this->withBodyFormat('json')
+        ->post('users', $userInfo);
 
-**assertOK()**
+    // Your controller can then get the parameters passed in with:
+    $userInfo = $this->request->getJson();
 
-This assertion simply uses the **isOK()** method to test a response.
-::
-
-    $this->assertOK();
-
-**isRedirect()**
-
-Returns a boolean true/false based on whether the response is a redirected response.
-::
-
-    if ($result->isRedirect())
-    {
-        ...
-    }
-
-**assertRedirect()**
-
-Asserts that the Response is an instance of RedirectResponse.
-::
-
-    $this->assertRedirect();
-
-**getRedirectUrl()**
-
-Returns the URL set for a RedirectResponse, or null for failure.
-::
-
-    $url = $result->getRedirectUrl();
-    $this->assertEquals(site_url('foo/bar'), $url);
-
-**assertStatus(int $code)**
-
-Asserts that the HTTP status code returned matches $code.
-::
-
-    $this->assertStatus(403);
-
-
-Session Assertions
-------------------
-
-**assertSessionHas(string $key, $value = null)**
-
-Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable's value
-matches what was specified.
-::
-
-    $this->assertSessionHas('logged_in', 123);
-
-**assertSessionMissing(string $key)**
-
-Asserts that the resulting session does not include the specified $key.
-::
-
-    $this->assertSessionMissin('logged_in');
-
-
-Header Assertions
------------------
-
-**assertHeader(string $key, $value = null)**
-
-Asserts that a header named **$key** exists in the response. If **$value** is not empty, will also assert that
-the values match.
-::
-
-    $this->assertHeader('Content-Type', 'text/html');
-
-**assertHeaderMissing(string $key)**
-
-Asserts that a header name **$key** does not exist in the response.
-::
-
-    $this->assertHeader('Accepts');
-
-
-
-Cookie Assertions
------------------
-
-**assertCookie(string $key, $value = null, string $prefix = '')**
-
-Asserts that a cookie named **$key** exists in the response. If **$value** is not empty, will also assert that
-the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
-::
-
-    $this->assertCookie('foo', 'bar');
-
-**assertCookieMissing(string $key)**
-
-Asserts that a cookie named **$key** does not exist in the response.
-::
-
-    $this->assertCookieMissing('ci_session');
-
-**assertCookieExpired(string $key, string $prefix = '')**
-
-Asserts that a cookie named **$key** exists, but has expired. You can set the cookie prefix, if needed, by passing it
-in as the second parameter.
-::
-
-    $this->assertCookieExpired('foo');
-
-
-DOM Assertions
---------------
-
-You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
-assertions.
-
-**assertSee(string $search = null, string $element = null)**
-
-Asserts that text/HTML is on the page, either by itself or - more specifically - within
-a tag, as specified by type, class, or id::
-
-    // Check that "Hello World" is on the page
-    $this->assertSee('Hello World');
-    // Check that "Hello World" is within an h1 tag
-    $this->assertSee('Hello World', 'h1');
-    // Check that "Hello World" is within an element with the "notice" class
-    $this->assertSee('Hello World', '.notice');
-    // Check that "Hello World" is within an element with id of "title"
-    $this->assertSee('Hellow World', '#title');
-
-
-**assertDontSee(string $search = null, string $element = null)**
-
-Asserts the exact opposite of the **assertSee()** method::
-
-    // Checks that "Hello World" does NOT exist on the page
-    $results->dontSee('Hello World');
-    // Checks that "Hello World" does NOT exist within any h1 tag
-    $results->dontSee('Hello World', 'h1');
-
-**assertSeeElement(string $search)**
-
-Similar to **assertSee()**, however this only checks for an existing element. It does not check for specific text::
-
-    // Check that an element with class 'notice' exists
-    $results->seeElement('.notice');
-    // Check that an element with id 'title' exists
-    $results->seeElement('#title')
-
-**assertDontSeeElement(string $search)**
-
-Similar to **assertSee()**, however this only checks for an existing element that is missing. It does not check for
-specific text::
-
-    // Verify that an element with id 'title' does NOT exist
-    $results->dontSeeElement('#title');
-
-**assertSeeLink(string $text, string $details=null)**
-
-Asserts that an anchor tag is found with matching **$text** as the body of the tag::
-
-    // Check that a link exists with 'Upgrade Account' as the text::
-    $results->seeLink('Upgrade Account');
-    // Check that a link exists with 'Upgrade Account' as the text, AND a class of 'upsell'
-    $results->seeLink('Upgrade Account', '.upsell');
-
-**assertSeeInField(string $field, string $value=null)**
-
-Asserts that an input tag exists with the name and value::
-
-    // Check that an input exists named 'user' with the value 'John Snow'
-    $results->seeInField('user', 'John Snow');
-    // Check a multi-dimensional input
-    $results->seeInField('user[name]', 'John Snow');
-
-
-
-Working With JSON
------------------
-
-Responses will frequently contain JSON responses, especially when working with API methods. The following methods
-can help to test the responses.
-
-**getJSON()**
-
-This method will return the body of the response as a JSON string::
-
-    // Response body is this:
-    ['foo' => 'bar']
-
-    $json = $result->getJSON();
-
-    // $json is this:
-    {
-        "foo": "bar"
-    }
-
-.. note:: Be aware that the JSON string will be pretty-printed in the result.
-
-**assertJSONFragment(array $fragment)**
-
-Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.
-
-::
-
-    // Response body is this:
-    [
-        'config' => ['key-a', 'key-b']
-    ]
-
-    // Is true
-    $this->assertJSONFragment(['config' => ['key-a']);
-
-.. note:: This simply uses phpUnit's own `assertArraySubset() <https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset>`_
-    method to do the comparison.
-
-**assertJSONExact($test)**
-
-Similar to **assertJSONFragment()**, but checks the entire JSON response to ensure exact matches.
-
-
-Working With XML
+Setting the Body
 ----------------
 
-**getXML()**
+You can set the body of your request with the ``withBody()`` method. This allows you to format the body how you want
+to format it. It is recommended that you use this if you have more complicated xml's to test. This will also not set
+the Content-Type header for you so if you need that, you can set it with the ``withHeaders()`` method.
 
-If your application returns XML, you can retrieve it through this method.
+Checking the Response
+=====================
 
+``FeatureTestTrait::call()`` returns an instance of a ``TestResponse``. See `Testing Responses <response.html>`_ on
+how to use this class to perform additional assertions and verification in your test cases.

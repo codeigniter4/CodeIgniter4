@@ -7,10 +7,6 @@ The URL Helper file contains functions that assist in working with URLs.
 .. contents::
   :local:
 
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
 Loading this Helper
 ===================
 
@@ -24,7 +20,7 @@ The following functions are available:
 .. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
 
     :param  mixed         $uri: URI string or array of URI segments
-    :param  string        $protocol: Protocol, e.g. 'http' or 'https'
+    :param  string        $protocol: Protocol, e.g., 'http' or 'https'
     :param  \\Config\\App $altConfig: Alternate configuration to use
     :returns: Site URL
     :rtype:	string
@@ -58,7 +54,7 @@ The following functions are available:
 .. php:function:: base_url([$uri = ''[, $protocol = NULL]])
 
     :param  mixed   $uri: URI string or array of URI segments
-    :param  string  $protocol: Protocol, e.g. 'http' or 'https'
+    :param  string  $protocol: Protocol, e.g., 'http' or 'https'
     :returns: Base URL
     :rtype: string
 
@@ -112,19 +108,27 @@ The following functions are available:
     use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
     then a sanitized version of HTTP_REFERER will be used.
 
-.. php:function:: uri_string()
+.. php:function:: uri_string([$relative = false])
 
-    :returns: An URI string
+    :param	boolean	$relative: True if you would like the string relative to baseURL
+    :returns: A URI string
     :rtype:	string
 
-    Returns the path part relative to **baseUrl**.
+    Returns the path part of the current URL.
     For example, if your URL was this::
 
         http://some-site.com/blog/comments/123
 
     The function would return::
 
-        blog/comments/123
+        /blog/comments/123
+
+    Or with the optional relative parameter::
+    
+        app.baseURL = http://some-site.com/subfolder/
+
+        uri_string(); // "/subfolder/blog/comments/123"
+        uri_string(true); // "blog/comments/123"
 
 .. php:function:: index_page([$altConfig = NULL])
 
@@ -348,15 +352,59 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
-.. php:function:: prep_url($str = '')
+.. php:function:: prep_url([$str = ''[, $secure = false]])
 
-    :param  string  $str: URL string
+    :param  string   $str: URL string
+    :param  boolean  $secure: TRUE for https://
     :returns: Protocol-prefixed URL string
     :rtype: string
 
-    This function will add *http://* in the event that a protocol prefix
+    This function will add *http://* or *https://* in the event that a protocol prefix
     is missing from a URL.
 
     Pass the URL string to the function like this::
 
         $url = prep_url('example.com');
+
+.. php:function:: url_to($controller[, ...$args])
+
+    :param  string  $controller: The controller class and method
+    :param  mixed   ...$args: Additional arguments to be injected into the route
+    :returns: Absolute URL
+    :rtype: string
+
+    Builds an absolute URL to a controller method in your app. Example::
+
+        echo url_to('Home::index');
+
+    You can also add arguments to the route.
+    Here is an example::
+
+        echo url_to('Page::index', 'home');
+
+    The above example would return something like:
+    *http://example.com/page/home*
+
+    This is useful because you can still change your routes after putting links
+    into your views.
+
+.. php:function:: url_is($path)
+
+    :param string $path: The path to check the current URI path against.
+    :rtype: boolean
+
+    Compares the current URL's path against the given path to see if they match. Example::
+
+        if (url_is('admin')) { ... }
+
+    This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
+    any other applicable characters in the URL::
+
+        if (url_is('admin*')) { ... }
+
+    This would match any of the following:
+
+    - /admin
+    - /admin/
+    - /admin/users
+    - /admin/users/schools/classmates/...

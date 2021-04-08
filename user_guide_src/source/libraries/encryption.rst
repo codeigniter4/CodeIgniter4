@@ -13,12 +13,13 @@ encryption **handler** to suit your parameters as explained below.
 
 Encryption Service handlers must implement CodeIgniter's simple ``EncrypterInterface``.
 Using an appropriate PHP cryptographic extension or third-party library may require
-additional software is installed on your server and/or might need to be explicitly
+additional software to be installed on your server and/or might need to be explicitly
 enabled in your instance of PHP.
 
 The following PHP extensions are currently supported:
 
 - `OpenSSL <https://www.php.net/openssl>`_
+- `Sodium <https://www.php.net/manual/en/book.sodium>`_
 
 This is not a full cryptographic solution. If you need more capabilities, for example,
 public-key encryption, we suggest you consider direct use of OpenSSL or
@@ -31,10 +32,6 @@ A more comprehensive package like `Halite <https://github.com/paragonie/halite>`
 
 .. contents::
   :local:
-
-.. raw:: html
-
-  <div class="custom-index container"></div>
 
 .. _usage:
 
@@ -67,19 +64,18 @@ Configuring the Library
 
 The example above uses the configuration settings found in ``app/Config/Encryption.php``.
 
-There are only two settings:
-
-======== ===============================================
-Option   Possible values (default in parentheses)
-======== ===============================================
-key      Encryption key starter
-driver   Preferred handler (OpenSSL)
-======== ===============================================
+========== ====================================================
+Option     Possible values (default in parentheses)
+========== ====================================================
+key        Encryption key starter
+driver     Preferred handler, e.g., OpenSSL or Sodium (``OpenSSL``)
+blockSize  Padding length in bytes for SodiumHandler (``16``)
+digest     Message digest algorithm (``SHA512``)
+========== ====================================================
 
 You can replace the config file's settings by passing a configuration
 object of your own to the ``Services`` call. The ``$config`` variable must be
-an instance of either the `Config\\Encryption` class or an object
-that extends `CodeIgniter\\Config\\BaseConfig`.
+an instance of the ``Config\Encryption`` class.
 ::
 
     $config         = new \Config\Encryption();
@@ -87,7 +83,6 @@ that extends `CodeIgniter\\Config\\BaseConfig`.
     $config->driver = 'OpenSSL';
 
     $encrypter = \Config\Services::encrypter($config);
-
 
 Default Behavior
 ================
@@ -107,12 +102,16 @@ you can use the Encryption library's ``createKey()`` method.
 ::
 
 	// $key will be assigned a 32-byte (256-bit) random key
-	$key = Encryption::createKey(32);
+	$key = \CodeIgniter\Encryption\Encryption::createKey();
 
-The key can be stored in *app/Config/Encryption.php*, or you can design
+	// for the SodiumHandler, you can use either:
+	$key = sodium_crypto_secretbox_keygen();
+	$key = \CodeIgniter\Encryption\Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+
+The key can be stored in ``app/Config/Encryption.php``, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
 
-To save your key to your *app/Config/Encryption.php*, open the file
+To save your key to your ``app/Config/Encryption.php``, open the file
 and set::
 
 	public $key = 'YOUR KEY';
@@ -121,29 +120,68 @@ Encoding Keys or Results
 ------------------------
 
 You'll notice that the ``createKey()`` method outputs binary data, which
-is hard to deal with (i.e. a copy-paste may damage it), so you may use
-``bin2hex()``, ``hex2bin()`` or Base64-encoding to work with the key in
+is hard to deal with (i.e., a copy-paste may damage it), so you may use
+``bin2hex()``, or ``base64_encode`` to work with the key in
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
-	$encoded = bin2hex(Encryption::createKey(32));
+	$encoded = bin2hex(\CodeIgniter\Encryption\Encryption::createKey(32));
 
 	// Put the same value with hex2bin(),
 	// so that it is still passed as binary to the library:
 	$key = hex2bin('your-hex-encoded-key');
-
-	// In the Encryption config class you can use a special 'hex2bin:'
-	// prefix so that the value is still passed as binary to the library:
-	public $key = 'hex2bin:your-hex-encoded-key';
-
-	// You can also use the same prefix in your .env file
-	encryption.key = hex2bin:your-hex-encoded-key
 
 You might find the same technique useful for the results
 of encryption::
 
 	// Encrypt some text & make the results text
 	$encoded = base64_encode($encrypter->encrypt($plaintext));
+
+Using Prefixes in Storing Keys
+------------------------------
+
+You may take advantage of two special prefixes in storing your
+encryption keys: ``hex2bin:`` and ``base64:``. When these prefixes
+immediately precede the value of your key, ``Encryption`` will
+intelligently parse the key and still pass a binary string to
+the library.
+::
+
+	// In Encryption, you may use
+	public $key = 'hex2bin:<your-hex-encoded-key>'
+
+	// or
+	public $key = 'base64:<your-base64-encoded-key>'
+
+Similarly, you can use these prefixes in your ``.env`` file, too!
+::
+
+	// For hex2bin
+	encryption.key = hex2bin:<your-hex-encoded-key>
+
+	// or
+	encryption.key = base64:<your-base64-encoded-key>
+
+Padding
+=======
+
+Sometimes, the length of a message may provide a lot of information about its nature. If
+a message is one of "yes", "no" and "maybe", encrypting the message doesn't help: knowing
+the length is enough to know what the message is.
+
+Padding is a technique to mitigate this, by making the length a multiple of a given block size.
+
+Padding is implemented in ``SodiumHandler`` using libsodium's native ``sodium_pad`` and ``sodium_unpad``
+functions. This requires the use of a padding length (in bytes) that is added to the plaintext
+message prior to encryption, and removed after decryption. Padding is configurable via the
+``$blockSize`` property of ``Config\Encryption``. This value should be greater than zero.
+
+.. important:: You are advised not to devise your own padding implementation. You must always use
+	the more secure implementation of a library. Also, passwords should not be padded. Usage of
+	padding in order to hide the length of a password is not recommended. A client willing to send
+	a password to a server should hash it instead (even with a single iteration of the hash function).
+	This ensures that the length of the transmitted data is constant, and that the server doesn't
+	effortlessly get a copy of the password.
 
 Encryption Handler Notes
 ========================
@@ -158,6 +196,21 @@ CodeIgniter's OpenSSL handler uses the AES-256-CTR cipher.
 The *key* your configuration provides is used to derive two other keys, one for
 encryption and one for authentication. This is achieved by way of a technique known
 as an `HMAC-based Key Derivation Function <https://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
+
+Sodium Notes
+------------
+
+The `Sodium <https://www.php.net/manual/en/book.sodium>`_ extension is bundled by default in PHP as
+of PHP 7.2.0.
+
+Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
+sending secret messages in an end-to-end scenario. To encrypt and/or authenticate a string using
+a shared-key, such as symmetric encryption, Sodium uses the XSalsa20 algorithm to encrypt and
+HMAC-SHA512 for the authentication.
+
+.. note:: CodeIgniter's ``SodiumHandler`` uses ``sodium_memzero`` in every encryption or decryption
+	session. After each session, the message (whether plaintext or ciphertext) and starter key are
+	wiped out from the buffers. You may need to provide again the key before starting a new session.
 
 Message Length
 ==============
@@ -179,15 +232,13 @@ Instead of (or in addition to) using ``Services`` as described in :ref:`usage`,
 you can create an "Encrypter" directly, or change the settings of an existing instance.
 ::
 
-    // create an Encrypter instance
-    $encryption = new \Encryption\Encryption();
+    // create an Encryption instance
+    $encryption = new \CodeIgniter\Encryption\Encryption();
 
     // reconfigure an instance with different settings
     $encrypter = $encryption->initialize($config);
 
-Remember, that ``$config`` must me an instance of either a `Config\Encryption` class
-or an object that extends `CodeIgniter\Config\BaseConfig`.
-
+Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
 
 ***************
 Class Reference
@@ -195,22 +246,21 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Encryption\\Encryption
 
-	.. php:staticmethod:: createKey($length)
+	.. php:staticmethod:: createKey([$length = 32])
 
-		:param	int	$length: Output length
-		:returns:	A pseudo-random cryptographic key with the specified length, or FALSE on failure
+		:param int $length: Output length
+		:returns: A pseudo-random cryptographic key with the specified length, or ``false`` on failure
 		:rtype:	string
 
 		Creates a cryptographic key by fetching random data from
-		the operating system's sources (i.e. /dev/urandom).
+		the operating system's sources (*i.e.* ``/dev/urandom``).
 
+	.. php:method:: initialize([Encryption $config = null])
 
-	.. php:method:: initialize($config)
-
-		:param	BaseConfig	$config: Configuration parameters
-		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance
-		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:param Config\\Encryption $config: Configuration parameters
+		:returns: ``CodeIgniter\Encryption\EncrypterInterface`` instance
+		:rtype:	``CodeIgniter\Encryption\EncrypterInterface``
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Initializes (configures) the library to use different settings.
 
@@ -222,43 +272,52 @@ Class Reference
 
 .. php:interface:: CodeIgniter\\Encryption\\EncrypterInterface
 
-	.. php:method:: encrypt($data, $params = null)
+	.. php:method:: encrypt($data[, $params = null])
 
-		:param	string	$data: Data to encrypt
-		:param		$params: Configuration parameters (key)
-		:returns:	Encrypted data or FALSE on failure
+		:param string $data: Data to encrypt
+		:param array|string|null $params: Configuration parameters (key)
+		:returns: Encrypted data
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Encrypts the input data and returns its ciphertext.
 
-                If you pass parameters as the second argument, the ``key`` element
-                will be used as the starting key for this operation if ``$params``
-                is an array; or the starting key may be passed as a string.
+		If you pass parameters as the second argument, the ``key`` element
+		will be used as the starting key for this operation if ``$params``
+		is an array; or the starting key may be passed as a string.
+
+		If you are using the SodiumHandler and want to pass a different ``blockSize``
+		on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
 		Examples::
 
 			$ciphertext = $encrypter->encrypt('My secret message');
 			$ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key']);
+			$ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key', 'blockSize' => 32]);
 			$ciphertext = $encrypter->encrypt('My secret message', 'New secret key');
+			$ciphertext = $encrypter->encrypt('My secret message', ['blockSize' => 32]);
 
-	.. php:method:: decrypt($data, $params = null)
+	.. php:method:: decrypt($data[, $params = null])
 
-		:param	string	$data: Data to decrypt
-		:param		$params: Configuration parameters (key)
-		:returns:	Decrypted data or FALSE on failure
+		:param string $data: Data to decrypt
+		:param array|string|null $params: Configuration parameters (key)
+		:returns: Decrypted data
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
+		:throws: ``CodeIgniter\Encryption\Exceptions\EncryptionException``
 
 		Decrypts the input data and returns it in plain-text.
 
-                If you pass parameters as the second argument, the ``key`` element
-                will be used as the starting key for this operation if ``$params``
-                is an array; or the starting key may be passed as a string.
+		If you pass parameters as the second argument, the ``key`` element
+		will be used as the starting key for this operation if ``$params``
+		is an array; or the starting key may be passed as a string.
 
+		If you are using the SodiumHandler and want to pass a different ``blockSize``
+		on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
 		Examples::
 
 			echo $encrypter->decrypt($ciphertext);
 			echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key']);
+			echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key', 'blockSize' => 32]);
 			echo $encrypter->decrypt($ciphertext, 'New secret key');
+			echo $encrypter->decrypt($ciphertext, ['blockSize' => 32]);

@@ -2,6 +2,7 @@
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -13,7 +14,7 @@ use org\bovigo\vfs\vfsStream;
  *
  * Was unable to test fontPath & related logic.
  */
-class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+class GDHandlerTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void

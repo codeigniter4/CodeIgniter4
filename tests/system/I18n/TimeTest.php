@@ -1,11 +1,14 @@
 <?php
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\I18n\Exceptions\I18nException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
-class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
+class TimeTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -13,7 +16,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testNewTimeNow()
@@ -195,6 +198,16 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
 		$this->assertCloseEnoughString(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+	}
+
+	public function testCreateFromFormatWithInvalidFormat()
+	{
+		$format = 'foobar';
+
+		$this->expectException(I18nException::class);
+		$this->expectExceptionMessage(lang('Time.invalidFormat', [$format]));
+
+		$time = Time::createFromFormat($format, 'America/Chicago');
 	}
 
 	public function testCreateFromTimestamp()
@@ -915,7 +928,15 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
 		$time = Time::parse('March 10, 2017 14:00', 'America/Chicago');
 
-		$this->assertEquals('2:00 pm', $time->humanize());
+		$this->assertEquals('in 2 hours', $time->humanize());
+	}
+
+	public function testHumanizeHoursAWhileAgo()
+	{
+		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 8:00', 'America/Chicago');
+
+		$this->assertEquals('4 hours ago', $time->humanize());
 	}
 
 	public function testHumanizeMinutesSingle()
@@ -1000,4 +1021,14 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($time->weekOfWeek);
 	}
 
+	public function testUnserializeTimeObject()
+	{
+		$time1     = new Time('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
+		$timeCache = serialize($time1);
+		$time2     = unserialize($timeCache);
+
+		$this->assertInstanceOf(Time::class, $time2);
+		$this->assertTrue($time2->equals($time1));
+		$this->assertEquals($time1, $time2);
+	}
 }

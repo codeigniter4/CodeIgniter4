@@ -26,13 +26,19 @@ Let's try it: Hello World!
 ==========================
 
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
-and put the following code in it::
+and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController. you can
+also extend the CodeIgniter\\Controller if you do not need the functionality of the BaseController.
 
-    <?php namespace App\Controllers;
+The BaseController provides a convenient place for loading components and performing functions that are needed by all your
+controllers. You can extend this class in any new controller.
 
-    use CodeIgniter\Controller;
+For security reasons be sure to declare any new utility methods as protected or private.::
 
-    class Helloworld extends Controller
+    <?php
+
+    namespace App\Controllers;
+
+    class Helloworld extends BaseController
     {
         public function index()
         {
@@ -56,33 +62,34 @@ If you did it right you should see::
 
 This is valid::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\Controller;
+    namespace App\Controllers;
 
-    class Helloworld extends Controller
+
+    class Helloworld extends BaseController
     {
 
     }
 
 This is **not** valid::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\Controller;
+    namespace App\Controllers;
 
-    class helloworld extends Controller
+    class helloworld extends BaseController
     {
 
     }
 
 This is **not** valid::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\Controller;
+    namespace App\Controllers;
 
-    class HelloWorld extends Controller
+    class HelloWorld extends BaseController
     {
 
     }
@@ -117,11 +124,11 @@ controller gets called.**
 
 Let's try it. Add a new method to your controller::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\Controller;
+    namespace App\Controllers;
 
-    class Helloworld extends Controller
+    class Helloworld extends BaseController
     {
         public function index()
         {
@@ -152,11 +159,11 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
-    <?php namespace App\Controllers;
+    <?php
 
-    use CodeIgniter\Controller;
+    namespace App\Controllers;
 
-    class Products extends Controller
+    class Products extends BaseController
     {
         public function shoes($sandals, $id)
         {
@@ -338,9 +345,8 @@ these helper files will be automatically loaded into memory so that you can use 
 inside the controller::
 
     namespace App\Controllers;
-    use CodeIgniter\Controller;
 
-    class MyController extends Controller
+    class MyController extends BaseController
     {
         protected $helpers = ['url', 'form'];
     }

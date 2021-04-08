@@ -1,16 +1,21 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Database\Query;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class PreparedQueryTest extends CIDatabaseTestCase
+class PreparedQueryTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+	use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected $refresh = true;
+	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 
@@ -35,7 +40,40 @@ class PreparedQueryTest extends CIDatabaseTestCase
 			$placeholders = '$1, $2';
 		}
 
-		$expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
+		if ($this->db->DBDriver === 'SQLSRV')
+		{
+			$database = $this->db->getDatabase();
+			$expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
+		}
+		else
+		{
+			$expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
+		}
+		$this->assertEquals($expected, $query->getQueryString());
+
+		$query->close();
+	}
+
+	public function testPrepareReturnsManualPreparedQuery()
+	{
+		$query = $this->db->prepare(function ($db) {
+			$sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+
+			return (new Query($db))->setQuery($sql);
+		});
+
+		$this->assertInstanceOf(BasePreparedQuery::class, $query);
+
+		$pre = $this->db->DBPrefix;
+
+		$placeholders = '?, ?, ?';
+
+		if ($this->db->DBDriver === 'Postgre')
+		{
+			$placeholders = '$1, $2, $3';
+		}
+
+		$expected = "INSERT INTO {$pre}user (name, email, country) VALUES ({$placeholders})";
 		$this->assertEquals($expected, $query->getQueryString());
 
 		$query->close();
@@ -62,6 +100,20 @@ class PreparedQueryTest extends CIDatabaseTestCase
 		$query->close();
 	}
 
-	//--------------------------------------------------------------------
+	public function testExecuteRunsQueryAndReturnsManualResultObject()
+	{
+		$query = $this->db->prepare(function ($db) {
+			$sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
+			return (new Query($db))->setQuery($sql);
+		});
+
+		$query->execute('foo', 'foo@example.com', '');
+		$query->execute('bar', 'bar@example.com', '');
+
+		$this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
+		$this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+
+		$query->close();
+	}
 }

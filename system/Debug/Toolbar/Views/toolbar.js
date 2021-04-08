@@ -12,8 +12,8 @@ var ciDebugBar = {
 
 	init : function () {
 		this.toolbarContainer = document.getElementById('toolbarContainer');
-		this.toolbar = document.getElementById('debug-bar');
-		this.icon    = document.getElementById('debug-icon');
+		this.toolbar          = document.getElementById('debug-bar');
+		this.icon             = document.getElementById('debug-icon');
 
 		ciDebugBar.createListeners();
 		ciDebugBar.setToolbarState();
@@ -509,9 +509,9 @@ var ciDebugBar = {
 	//--------------------------------------------------------------------
 
 	setToolbarTheme: function () {
-		var btnTheme = document.getElementById('toolbar-theme');
-		var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
+		var btnTheme    = document.getElementById('toolbar-theme');
+		var isDarkMode  = window.matchMedia("(prefers-color-scheme: dark)").matches;
+		var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
 
 		// If a cookie is set with a value, we force the color scheme
 		if (ciDebugBar.readCookie('debug-bar-theme') === 'dark')
@@ -579,7 +579,7 @@ var ciDebugBar = {
 			var expires = "";
 		}
 
-		document.cookie = name + "=" + value + expires + "; path=/";
+		document.cookie = name + "=" + value + expires + "; path=/; samesite=Lax";
 	},
 
 	//--------------------------------------------------------------------
@@ -605,27 +605,30 @@ var ciDebugBar = {
 
 	//--------------------------------------------------------------------
 
-	trimSlash: function(text) {
+	trimSlash: function (text) {
 		return text.replace(/^\/|\/$/g, '');
 	},
 
-	routerLink: function() {
+	routerLink: function () {
 		var row, _location;
 		var rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"]');
-		var patt = /\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
+		var patt   = /\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
 
-		for (var i = 0; i < rowGet.length; i++) {
+		for (var i = 0; i < rowGet.length; i++)
+		{
 			row = rowGet[i];
-			if (!/\/\(.+?\)/.test(rowGet[i].innerText)) {
+			if (!/\/\(.+?\)/.test(rowGet[i].innerText))
+			{
 				row.style = 'cursor: pointer;';
 				row.setAttribute('title', location.origin + '/' + ciDebugBar.trimSlash(row.innerText));
-				row.addEventListener('click', function(ev) {
-					_location = location.origin + '/' + ciDebugBar.trimSlash(ev.target.innerText);
+				row.addEventListener('click', function (ev) {
+					_location          = location.origin + '/' + ciDebugBar.trimSlash(ev.target.innerText);
 					var redirectWindow = window.open(_location, '_blank');
 					redirectWindow.location;
 				});
 			}
-			else {
+			else
+			{
 				row.innerHTML = '<div>' + row.innerText + '</div>'
 					+ '<form data-debugbar-route-tpl="' + ciDebugBar.trimSlash(row.innerText.replace(patt, '?')) + '">'
 					+ row.innerText.replace(patt, '<input type="text" placeholder="$1">')
@@ -635,27 +638,35 @@ var ciDebugBar = {
 		}
 
 		rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"] form');
-		for (var i = 0; i < rowGet.length; i++) {
+		for (var i = 0; i < rowGet.length; i++)
+		{
 			row = rowGet[i];
 
-			row.addEventListener('submit', function(event) {
+			row.addEventListener('submit', function (event) {
 				event.preventDefault()
 				var inputArray = [], t = 0;
-				var input = event.target.querySelectorAll('input[type=text]'); 
-				var tpl = event.target.getAttribute('data-debugbar-route-tpl');
-				
-				for (var n = 0; n < input.length; n++) {
-					if (input[n].value.length > 0) inputArray.push(input[n].value);
+				var input      = event.target.querySelectorAll('input[type=text]');
+				var tpl        = event.target.getAttribute('data-debugbar-route-tpl');
+
+				for (var n = 0; n < input.length; n++)
+				{
+					if (input[n].value.length > 0)
+					{
+						inputArray.push(input[n].value);
+					}
 				}
 
-				if (inputArray.length > 0) {
-					_location = location.origin + '/' + tpl.replace(/\?/g, function() {return inputArray[t++]});
+				if (inputArray.length > 0)
+				{
+					_location = location.origin + '/' + tpl.replace(/\?/g, function () {
+						return inputArray[t++]
+					});
+
 					var redirectWindow = window.open(_location, '_blank');
 					redirectWindow.location;
 				}
 			})
 		}
-
 	}
 
 };

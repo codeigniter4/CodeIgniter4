@@ -1,13 +1,19 @@
 <?php
 
-class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\View;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Validation\Validation;
+use Config\Services;
+
+class ParserPluginTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\View\Parser
+	 * @var Parser
 	 */
 	protected $parser;
 	/**
-	 * @var \CodeIgniter\Validation\Validation
+	 * @var Validation
 	 */
 	protected $validator;
 
@@ -15,10 +21,10 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		\Config\Services::reset(true);
+		Services::reset(true);
 
-		$this->parser    = \Config\Services::parser();
-		$this->validator = \Config\Services::validation();
+		$this->parser    = Services::parser();
+		$this->validator = Services::validation();
 	}
 
 	public function testCurrentURL()
@@ -46,6 +52,17 @@ class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 		$template = '{+ mailto email=foo@example.com title=Silly +}';
 
 		$this->assertEquals(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3523
+	 */
+	public function testMailtoWithDashAndParenthesis()
+	{
+		helper('url');
+		$template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
+
+		$this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
 	}
 
 	public function testSafeMailto()

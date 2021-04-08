@@ -7,12 +7,12 @@ use to test your application. Those details can be found in the documentation.
 
 ## Resources
 * [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
-* [PHPUnit docs](https://phpunit.readthedocs.io/en/8.3/index.html)
+* [PHPUnit docs](https://phpunit.readthedocs.io/en/8.5/index.html)
 
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this 
-writing we are running version 8.5.2. Support for this has been built into the 
+writing we are running version 8.5.13. Support for this has been built into the 
 **composer.json** file that ships with CodeIgniter and can easily be installed 
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
@@ -80,7 +80,7 @@ HTML code coverage reports.
 Every test needs a *test case*, or class that your tests extend. CodeIgniter 4
 provides a few that you may use directly:
 * `CodeIgniter\Test\CIUnitTestCase` - for basic tests with no other service needs
-* `CodeIgniter\Test\CIDatabaseTestCase` - for tests that need database access
+* `CodeIgniter\Test\DatabaseTestTrait` - for tests that need database access
 
 Most of the time you will want to write your own test cases to hold functions and services
 common to your test suites.

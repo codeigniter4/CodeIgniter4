@@ -1,52 +1,21 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
 
 /**
  * Interface ConnectionInterface
- *
- * @package CodeIgniter\Database
  */
 interface ConnectionInterface
 {
-
 	/**
 	 * Initializes the database connection/settings.
 	 *
@@ -121,8 +90,10 @@ interface ConnectionInterface
 
 	/**
 	 * Returns the last error encountered by this connection.
+	 * Must return this format: ['code' => string|int, 'message' => string]
+	 * intval(code) === 0 means "no error".
 	 *
-	 * @return mixed
+	 * @return array<string,string|int>
 	 */
 	public function error(): array;
 
@@ -145,7 +116,6 @@ interface ConnectionInterface
 	public function getVersion(): string;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
@@ -157,7 +127,7 @@ interface ConnectionInterface
 	 * @param string $sql
 	 * @param mixed  ...$binds
 	 *
-	 * @return mixed
+	 * @return BaseResult|Query|boolean
 	 */
 	public function query(string $sql, $binds = null);
 
@@ -175,7 +145,6 @@ interface ConnectionInterface
 	public function simpleQuery(string $sql);
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
@@ -222,4 +191,12 @@ interface ConnectionInterface
 	public function callFunction(string $functionName, ...$params);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param  string $sql
+	 * @return boolean
+	 */
+	public function isWriteType($sql): bool;
 }

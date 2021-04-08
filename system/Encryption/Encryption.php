@@ -1,45 +1,18 @@
 <?php
+
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use Config\Encryption as EncryptionConfig;
 
 /**
  * CodeIgniter Encryption Manager
@@ -50,31 +23,38 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
  */
 class Encryption
 {
-
 	/**
 	 * The encrypter we create
 	 *
-	 * @var string
+	 * @var EncrypterInterface
 	 */
 	protected $encrypter;
 
 	/**
 	 * The driver being used
+	 *
+	 * @var string
 	 */
 	protected $driver;
 
 	/**
 	 * The key/seed being used
+	 *
+	 * @var string
 	 */
 	protected $key;
 
 	/**
-	 * The derived hmac key
+	 * The derived HMAC key
+	 *
+	 * @var string
 	 */
 	protected $hmacKey;
 
 	/**
 	 * HMAC digest to use
+	 *
+	 * @var string
 	 */
 	protected $digest = 'SHA512';
 
@@ -85,57 +65,65 @@ class Encryption
 	 */
 	protected $drivers = [
 		'OpenSSL',
+		'Sodium',
 	];
 
-	// --------------------------------------------------------------------
+	/**
+	 * Handlers that are to be installed
+	 *
+	 * @var array<string, boolean>
+	 */
+	protected $handlers = [];
 
 	/**
 	 * Class constructor
 	 *
-	 * @param  BaseConfig $config Configuration parameters
-	 * @return void
+	 * @param EncryptionConfig $config Configuration parameters
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
+	 *
+	 * @return void
 	 */
-	public function __construct(BaseConfig $config = null)
+	public function __construct(EncryptionConfig $config = null)
 	{
-		if (empty($config))
-		{
-			$config = new \Config\Encryption();
-		}
-		$this->driver = $config->driver;
-		$this->key    = $config->key;
+		$config = $config ?? new EncryptionConfig();
 
-		// determine what is installed
+		$this->key    = $config->key;
+		$this->driver = $config->driver;
+		$this->digest = $config->digest ?? 'SHA512';
+
+		// Map what we have installed
 		$this->handlers = [
 			'OpenSSL' => extension_loaded('openssl'),
+			// the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
+			'Sodium'  => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
 		];
 
-		// if any aren't there, bomb
-		if (in_array(false, $this->handlers))
+		// If requested driver is not active, bail
+		if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver]))
 		{
 			// this should never happen in travis-ci
-			// @codeCoverageIgnoreStart
 			throw EncryptionException::forNoHandlerAvailable($this->driver);
-			// @codeCoverageIgnoreEnd
 		}
 	}
 
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param  BaseConfig $config Configuration parameters
-	 * @return \CodeIgniter\Encryption\EncrypterInterface
+	 * @param EncryptionConfig $config Configuration parameters
 	 *
-	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
+	 * @throws EncryptionException
+	 *
+	 * @return EncrypterInterface
 	 */
-	public function initialize(BaseConfig $config = null)
+	public function initialize(EncryptionConfig $config = null)
 	{
 		// override config?
-		if (! empty($config))
+		if ($config)
 		{
-			$this->driver = $config->driver;
 			$this->key    = $config->key;
+			$this->driver = $config->driver;
+			$this->digest = $config->digest ?? 'SHA512';
 		}
 
 		// Insist on a driver
@@ -145,7 +133,7 @@ class Encryption
 		}
 
 		// Check for an unknown driver
-		if (! in_array($this->driver, $this->drivers))
+		if (! in_array($this->driver, $this->drivers, true))
 		{
 			throw EncryptionException::forUnKnownHandler($this->driver);
 		}
@@ -160,15 +148,15 @@ class Encryption
 
 		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($config);
+
 		return $this->encrypter;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Create a random key
 	 *
-	 * @param  integer $length Output length
+	 * @param integer $length Output length
+	 *
 	 * @return string
 	 */
 	public static function createKey($length = 32)
@@ -176,17 +164,16 @@ class Encryption
 		return random_bytes($length);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * __get() magic, providing readonly access to some of our protected properties
 	 *
-	 * @param  string $key Property name
+	 * @param string $key Property name
+	 *
 	 * @return mixed
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['key', 'digest', 'driver', 'drivers'], true))
+		if ($this->__isset($key))
 		{
 			return $this->{$key};
 		}
@@ -204,5 +191,4 @@ class Encryption
 	{
 		return in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
 	}
-
 }

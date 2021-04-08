@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
     PGSQL_ROOT_PASS="password"
     VIRTUALHOST="localhost"
     CODEIGNITER_PATH="/var/www/codeigniter"
-    PHP_VERSION=7.2
+    PHP_VERSION=7.3
     PGSQL_VERSION=10
     #APT_PROXY="192.168.10.1:3142"
 
@@ -86,6 +86,8 @@ Vagrant.configure("2") do |config|
     echo "================================================================================"
     echo "Updating and Installing Required Packages"
     echo "================================================================================"
+
+    add-apt-repository ppa:ondrej/php
 
     apt-get update
 
@@ -164,8 +166,8 @@ Vagrant.configure("2") do |config|
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
     grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/^Listen 80/Listen 80\\nListen 81\\nListen 82/" /etc/apache2/ports.conf
-    sed -i "s/^display_errors = Off/display_errors = On/" /etc/php/7.2/apache2/php.ini
-    sed -i "s/^display_startup_errors = Off/display_startup_errors = On/" /etc/php/7.2/apache2/php.ini
+    sed -i "s/^display_errors = Off/display_errors = On/" /etc/php/7.3/apache2/php.ini
+    sed -i "s/^display_startup_errors = Off/display_startup_errors = On/" /etc/php/7.3/apache2/php.ini
 
     echo "ServerName ${VIRTUALHOST}
 <Directory ${CODEIGNITER_PATH}>

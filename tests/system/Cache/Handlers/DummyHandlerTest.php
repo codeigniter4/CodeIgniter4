@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
-class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class DummyHandlerTest extends CIUnitTestCase
 {
 	private $dummyHandler;
 
@@ -18,6 +20,15 @@ class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGet()
 	{
 		$this->assertNull($this->dummyHandler->get('key'));
+	}
+
+	public function testRemember()
+	{
+		$dummyHandler = $this->dummyHandler->remember('key', 2, function () {
+			return 'value';
+		});
+
+		$this->assertNull($dummyHandler);
 	}
 
 	public function testSave()

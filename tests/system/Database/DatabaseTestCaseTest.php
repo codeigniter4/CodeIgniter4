@@ -1,11 +1,17 @@
 <?php namespace CodeIgniter\Database;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
 
-class DatabaseTestCaseTest extends CIDatabaseTestCase
+/**
+ * @group DatabaseLive
+ */
+class DatabaseTestCaseTest extends CIUnitTestCase
 {
-	protected $loaded = false;
+	use DatabaseTestTrait;
+
+	protected static $loaded = false;
 
 	/**
 	 * Should the db be refreshed before
@@ -41,10 +47,10 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 
 	public function setUp(): void
 	{
-		if (! $this->loaded)
+		if (! self::$loaded)
 		{
 			Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-			$this->loaded = true;
+			self::$loaded = true;
 		}
 
 		parent::setUp();

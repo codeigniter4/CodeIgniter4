@@ -3,10 +3,11 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 
-class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
+class DownloadResponseTest extends CIUnitTestCase
 {
 
 	public function tearDown(): void

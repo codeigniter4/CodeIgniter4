@@ -5,11 +5,12 @@ namespace CodeIgniter\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
 
 	protected $config;
@@ -133,6 +134,30 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response->setBody('<form></form>');
 		$this->response = $filters->run($uri, 'after');
 		$this->assertStringContainsString($this->config->name, $this->response->getBody());
+	}
+
+	public function testEmptyConfigContainer()
+	{
+		$config            = new \Config\Honeypot();
+		$config->container = '';
+		$honeypot          = new Honeypot($config);
+
+		$this->assertEquals(
+			'<div style="display:none">{template}</div>',
+			$this->getPrivateProperty($honeypot, 'config')->container
+		);
+	}
+
+	public function testNoTemplateConfigContainer()
+	{
+		$config            = new \Config\Honeypot();
+		$config->container = '<div></div>';
+		$honeypot          = new Honeypot($config);
+
+		$this->assertEquals(
+			'<div style="display:none">{template}</div>',
+			$this->getPrivateProperty($honeypot, 'config')->container
+		);
 	}
 
 }

@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Router;
@@ -49,11 +21,10 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class Router implements RouterInterface
 {
-
 	/**
 	 * A RouteCollection instance.
 	 *
-	 * @var RouteCollection
+	 * @var RouteCollectionInterface
 	 */
 	protected $collection;
 
@@ -61,7 +32,7 @@ class Router implements RouterInterface
 	 * Sub-directory that contains the requested controller class.
 	 * Primarily used by 'autoRoute'.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $directory;
 
@@ -127,12 +98,11 @@ class Router implements RouterInterface
 	 * The filter info from Route Collection
 	 * if the matched route should be filtered.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected $filterInfo;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
@@ -146,6 +116,7 @@ class Router implements RouterInterface
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
 
+		// @phpstan-ignore-next-line
 		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
@@ -155,8 +126,8 @@ class Router implements RouterInterface
 	 * @param string|null $uri
 	 *
 	 * @return mixed|string
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
-	 * @throws \CodeIgniter\Exceptions\PageNotFoundException
+	 * @throws RedirectException
+	 * @throws PageNotFoundException
 	 */
 	public function handle(string $uri = null)
 	{
@@ -173,6 +144,9 @@ class Router implements RouterInterface
 
 		// Decode URL-encoded string
 		$uri = urldecode($uri);
+
+		// Restart filterInfo
+		$this->filterInfo = null;
 
 		if ($this->checkRoutes($uri))
 		{
@@ -229,7 +203,7 @@ class Router implements RouterInterface
 	 * Returns the name of the method to run in the
 	 * chosen container.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function methodName(): string
 	{
@@ -273,7 +247,7 @@ class Router implements RouterInterface
 	 * during the parsing process as an array, ready to send to
 	 * instance->method(...$params).
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function params(): array
 	{
@@ -328,9 +302,9 @@ class Router implements RouterInterface
 	 * something like mod_rewrite to remove the page. This allows you to set
 	 * it a blank.
 	 *
-	 * @param $page
+	 * @param string $page
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function setIndexPage($page): self
 	{
@@ -391,15 +365,11 @@ class Router implements RouterInterface
 	 * @param string $uri The URI path to compare against the routes
 	 *
 	 * @return boolean Whether the route was matched or not.
-	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @throws RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
-
-		$uri = $uri === '/'
-			? $uri
-			: ltrim($uri, '/ ');
 
 		// Don't waste any time
 		if (empty($routes))
@@ -407,9 +377,16 @@ class Router implements RouterInterface
 			return false;
 		}
 
+		$uri = $uri === '/'
+			? $uri
+			: ltrim($uri, '/ ');
+
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			// Reset localeSegment
+			$localeSegment = null;
+
 			$key = $key === '/'
 				? $key
 				: ltrim($key, '/ ');
@@ -419,7 +396,7 @@ class Router implements RouterInterface
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key));
+				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key), true);
 
 				// Replace it with a regex so it
 				// will actually match.
@@ -442,7 +419,6 @@ class Router implements RouterInterface
 					// The following may be inefficient, but doesn't upset NetBeans :-/
 					$temp                 = (explode('/', $uri));
 					$this->detectedLocale = $temp[$localeSegment];
-					unset($localeSegment);
 				}
 
 				// Are we using Closures? If so, then we need
@@ -485,7 +461,7 @@ class Router implements RouterInterface
 					[
 						$controller,
 						$method,
-					] = explode( '::', $val );
+					] = explode('::', $val);
 
 					// Only replace slashes in the controller, not in the method.
 					$controller = str_replace('/', '\\', $controller);
@@ -521,7 +497,7 @@ class Router implements RouterInterface
 	{
 		$segments = explode('/', $uri);
 
-		$segments = $this->validateRequest($segments);
+		$segments = $this->scanControllers($segments);
 
 		// If we don't have any segments left - try the default controller;
 		// WARNING: Directories get shifted out of the segments array.
@@ -533,6 +509,12 @@ class Router implements RouterInterface
 		else
 		{
 			$this->controller = ucfirst(array_shift($segments));
+		}
+
+		$controllerName = $this->controllerName();
+		if (! $this->isValidSegment($controllerName))
+		{
+			throw new PageNotFoundException($this->controller . ' is not a valid controller name');
 		}
 
 		// Use the method name if it exists.
@@ -549,14 +531,15 @@ class Router implements RouterInterface
 		}
 
 		$defaultNamespace = $this->collection->getDefaultNamespace();
-		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $defaultNamespace;
+			$controller = '\\' . $defaultNamespace;
+
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $controllerName;
-			$controller  = strtolower($controller);
-			$methodName  = strtolower($this->methodName());
+
+			$controller = strtolower($controller);
+			$methodName = strtolower($this->methodName());
 
 			foreach ($this->collection->getRoutes('cli') as $route)
 			{
@@ -594,31 +577,61 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to validate the URI request and determine the controller path.
+	 * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
 	 *
 	 * @param array $segments URI segments
 	 *
-	 * @return array URI segments
+	 * @return array returns an array of remaining uri segments that don't map onto a directory
+	 *
+	 * @deprecated this function name does not properly describe its behavior so it has been deprecated
 	 */
 	protected function validateRequest(array $segments): array
 	{
+		return $this->scanControllers($segments);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
+	 *
+	 * @param array $segments URI segments
+	 *
+	 * @return array returns an array of remaining uri segments that don't map onto a directory
+	 */
+	protected function scanControllers(array $segments): array
+	{
 		$segments = array_filter($segments, function ($segment) {
-			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
+			return $segment !== '';
 		});
+		// numerically reindex the array, removing gaps
 		$segments = array_values($segments);
 
-		$c                  = count($segments);
-		$directory_override = isset($this->directory);
+		// if a prior directory value has been set, just return segments and get out of here
+		if (isset($this->directory))
+		{
+			return $segments;
+		}
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
+		$c = count($segments);
 		while ($c-- > 0)
 		{
-			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
-
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
+			$segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
+			// as soon as we encounter any segment that is not PSR-4 compliant, stop searching
+			if (! $this->isValidSegment($segmentConvert))
 			{
-				$this->setDirectory(array_shift($segments), true);
+				return $segments;
+			}
+
+			$test = APPPATH . 'Controllers/' . $this->directory . $segmentConvert;
+
+			// as long as each segment is *not* a controller file but does match a directory, add it to $this->directory
+			if (! is_file($test . '.php') && is_dir($test))
+			{
+				$this->setDirectory($segmentConvert, true, false);
+				array_shift($segments);
 				continue;
 			}
 
@@ -634,10 +647,11 @@ class Router implements RouterInterface
 	/**
 	 * Sets the sub-directory that the controller is in.
 	 *
-	 * @param string|null   $dir
-	 * @param boolean|false $append
+	 * @param string|null $dir
+	 * @param boolean     $append
+	 * @param boolean     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
 	 */
-	public function setDirectory(string $dir = null, bool $append = false)
+	public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
 	{
 		if (empty($dir))
 		{
@@ -645,16 +659,39 @@ class Router implements RouterInterface
 			return;
 		}
 
-		$dir = ucfirst($dir);
+		if ($validate)
+		{
+			$segments = explode('/', trim($dir, '/'));
+			foreach ($segments as $segment)
+			{
+				if (! $this->isValidSegment($segment))
+				{
+					return;
+				}
+			}
+		}
 
 		if ($append !== true || empty($this->directory))
 		{
-			$this->directory = str_replace('.', '', trim($dir, '/')) . '/';
+			$this->directory = trim($dir, '/') . '/';
 		}
 		else
 		{
-			$this->directory .= str_replace('.', '', trim($dir, '/')) . '/';
+			$this->directory .= trim($dir, '/') . '/';
 		}
+	}
+
+	/**
+	 * Returns true if the supplied $segment string represents a valid PSR-4 compliant namespace/directory segment
+	 *
+	 * regex comes from https://www.php.net/manual/en/language.variables.basics.php
+	 *
+	 * @param  string $segment
+	 * @return boolean
+	 */
+	private function isValidSegment(string $segment): bool
+	{
+		return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
 	}
 
 	//--------------------------------------------------------------------

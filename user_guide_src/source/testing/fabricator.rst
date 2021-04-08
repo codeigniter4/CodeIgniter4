@@ -6,13 +6,17 @@ Often you will need sample data for your application to run its tests. The ``Fab
 uses fzaninotto's `Faker <https://github.com/fzaninotto/Faker//>`_ to turn models into generators
 of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Supported Models
 ================
 
 ``Fabricator`` supports any model that extends the framework's core model, ``CodeIgniter\Model``.
 You may use your own custom models by ensuring they implement ``CodeIgniter\Test\Interfaces\FabricatorModel``::
 
-	class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel
+    class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel
 
 .. note:: In addition to methods, the interface outlines some necessary properties for the target model. Please see the interface code for details.
 
@@ -62,13 +66,13 @@ method where you can define exactly what the faked data should look like::
     {
         public function fake(Generator &$faker)
         {
-        	return [
-        	    'first'  => $faker->firstName,
-        	    'email'  => $faker->email,
-        	    'phone'  => $faker->phoneNumber,
-        	    'avatar' => Faker\Provider\Image::imageUrl(800, 400),
-        	    'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
-        	];
+            return [
+                'first'  => $faker->firstName,
+                'email'  => $faker->email,
+                'phone'  => $faker->phoneNumber,
+                'avatar' => Faker\Provider\Image::imageUrl(800, 400),
+                'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
+            ];
         }
 
 Notice in this example how the first three values are equivalent to the formatters from before. However for ``avatar``
@@ -215,8 +219,8 @@ Test Helper
 Often all you will need is a one-and-done fake object for testing. The Test Helper provides
 the ``fake($model, $overrides)`` function to do just this::
 
-	helper('test');
-	$user = fake('App\Models\UserModel', ['name' => 'Gerry']);
+    helper('test');
+    $user = fake('App\Models\UserModel', ['name' => 'Gerry']);
 
 This is equivalent to::
 
@@ -242,11 +246,11 @@ Your model's fake method could look like this::
 
         public function fake(Generator &$faker)
         {
-        	return [
+            return [
                 'first'    => $faker->firstName,
                 'email'    => $faker->email,
-                'group_id' => rand(1, Fabricator::getCount('users')),
-        	];
+                'group_id' => rand(1, Fabricator::getCount('groups')),
+            ];
         }
 
 Now creating a new user will ensure it is a part of a valid group: ``$user = fake(UserModel::class);``
@@ -276,5 +280,4 @@ you deleted a fake item but wanted to track the change.
 **resetCounts()**
 
 Resets all counts. Good idea to call this between test cases (though using
-``CIDatabaseTestCase::$refresh = true`` does it automatically).
-
+``CIUnitTestCase::$refresh = true`` does it automatically).

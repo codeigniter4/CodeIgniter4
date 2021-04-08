@@ -1,15 +1,21 @@
-<?php namespace CodeIgniter\Session;
+<?php
 
+namespace CodeIgniter\Session;
+
+use CodeIgniter\HTTP\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
+use Config\App as AppConfig;
 use Config\Logger;
 
 /**
  * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ *
+ * @preserveGlobalState disabled
  */
-class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
+class SessionTest extends CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -17,10 +23,6 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$_COOKIE  = [];
 		$_SESSION = [];
-	}
-
-	public function tearDown(): void
-	{
 	}
 
 	protected function getInstance($options = [])
@@ -37,12 +39,17 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookiePrefix'             => '',
 			'cookiePath'               => '/',
 			'cookieSecure'             => false,
+			'cookieSameSite'           => 'Lax',
 		];
 
-		$config = array_merge($defaults, $options);
-		$config = (object) $config;
+		$config    = array_merge($defaults, $options);
+		$appConfig = new AppConfig();
+		foreach ($config as $key => $c)
+		{
+			$appConfig->$key = $c;
+		}
 
-		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
+		$session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
 		$session->setLogger(new TestLogger(new Logger()));
 
 		return $session;
@@ -93,7 +100,9 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayNotHasKey('__ci_vars', $_SESSION);
 	}
 
-	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	 */
 	public function testCanSerializeArray()
 	{
 		$session = $this->getInstance();
@@ -537,9 +546,65 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$session = $this->getInstance();
 		$session->start();
-
 		$session->set('test.1', 'value');
-
 		$this->assertEquals('value', $session->get('test.1'));
+	}
+
+	public function testLaxSameSite()
+	{
+		$session = $this->getInstance(['cookieSameSite' => 'Lax']);
+		$session->start();
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+		$this->assertSame('Lax', $cookies[0]->getSameSite());
+	}
+
+	public function testNoneSameSite()
+	{
+		$session = $this->getInstance(['cookieSameSite' => 'None', 'cookieSecure' => true]);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+		$this->assertSame('None', $cookies[0]->getSameSite());
+	}
+
+	public function testNoSameSiteReturnsDefault()
+	{
+		$session = $this->getInstance(['cookieSameSite' => '']);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+		$this->assertSame('Lax', $cookies[0]->getSameSite());
+	}
+
+	public function testInvalidSameSite()
+	{
+		$this->expectException(CookieException::class);
+		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
+
+		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
+		$session->start();
+	}
+
+	public function testExpires()
+	{
+		$session = $this->getInstance(['sessionExpiration' => 8000]);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+		$this->assertGreaterThan(8000, $cookies[0]->getExpiresTimestamp());
+	}
+
+	public function testExpiresOnClose()
+	{
+		$session = $this->getInstance(['sessionExpiration' => 0]);
+		$session->start();
+
+		$cookies = $session->cookies;
+		$this->assertCount(1, $cookies);
+		$this->assertSame(0, $cookies[0]->getExpiresTimestamp());
 	}
 }

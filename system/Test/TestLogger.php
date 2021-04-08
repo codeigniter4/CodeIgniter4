@@ -1,10 +1,20 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
 
 class TestLogger extends Logger
 {
-
 	protected static $op_logs = [];
 
 	//--------------------------------------------------------------------
@@ -23,7 +33,7 @@ class TestLogger extends Logger
 	{
 		// While this requires duplicate work, we want to ensure
 		// we have the final message to test against.
-		$log_message = $this->interpolate($message, $context);
+		$logMessage = $this->interpolate($message, $context);
 
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
@@ -32,7 +42,7 @@ class TestLogger extends Logger
 
 		foreach ($trace as $row)
 		{
-			if (! in_array($row['function'], ['log', 'log_message']))
+			if (! in_array($row['function'], ['log', 'log_message'], true))
 			{
 				$file = basename($row['file'] ?? '');
 				break;
@@ -41,7 +51,7 @@ class TestLogger extends Logger
 
 		self::$op_logs[] = [
 				  'level'   => $level,
-				  'message' => $log_message,
+				  'message' => $logMessage,
 				  'file'    => $file,
 			  ];
 
@@ -78,5 +88,4 @@ class TestLogger extends Logger
 	{
 		return $this->cleanFileNames($file);
 	}
-
 }

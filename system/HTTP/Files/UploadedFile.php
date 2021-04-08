@@ -1,41 +1,12 @@
 <?php
 
-
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP\Files;
@@ -44,6 +15,8 @@ use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Mimes;
 use Exception;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Value object representing a single file uploaded through an
@@ -51,12 +24,9 @@ use Exception;
  * provide files.
  *
  * Typically, implementors will extend the SplFileInfo class.
- *
- * @package CodeIgniter\HTTP
  */
 class UploadedFile extends File implements UploadedFileInterface
 {
-
 	/**
 	 * The path to the temporary file.
 	 *
@@ -154,12 +124,13 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * @return boolean
 	 *
-	 * @throws \InvalidArgumentException if the $path specified is invalid.
-	 * @throws \RuntimeException on any error during the move operation.
-	 * @throws \RuntimeException on the second or subsequent call to the method.
+	 * @throws InvalidArgumentException if the $path specified is invalid.
+	 * @throws RuntimeException on any error during the move operation.
+	 * @throws RuntimeException on the second or subsequent call to the method.
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
+		$targetPath = rtrim($targetPath, '/') . '/';
 		$targetPath = $this->setPath($targetPath); //set the target path
 
 		if ($this->hasMoved)
@@ -172,7 +143,6 @@ class UploadedFile extends File implements UploadedFileInterface
 			throw HTTPException::forInvalidFile();
 		}
 
-		$targetPath  = rtrim($targetPath, '/') . '/';
 		$name        = is_null($name) ? $this->getName() : $name;
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
@@ -252,12 +222,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getError(): int
 	{
-		if (is_null($this->error))
-		{
-			return UPLOAD_ERR_OK;
-		}
-
-		return $this->error;
+		return $this->error ?? UPLOAD_ERR_OK;
 	}
 
 	//--------------------------------------------------------------------
@@ -280,7 +245,7 @@ class UploadedFile extends File implements UploadedFileInterface
 			UPLOAD_ERR_EXTENSION  => lang('HTTP.uploadErrExtension'),
 		];
 
-		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+		$error = $this->error ?? UPLOAD_ERR_OK;
 
 		return sprintf($errors[$error] ?? lang('HTTP.uploadErrUnknown'), $this->getName());
 	}
@@ -343,24 +308,29 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Overrides SPLFileInfo's to work with uploaded files, since
 	 * the temp file that's been uploaded doesn't have an extension.
 	 *
-	 * Is simply an alias for guessExtension for a safer method
-	 * than simply relying on the provided extension.
-	 * Additionally it will return clientExtension in case if there are
-	 * other extensions with the same mime type.
+	 * This method tries to guess the extension from the files mime
+	 * type but will return the clientExtension if it fails to do so.
+	 *
+	 * This method will always return a more or less helpfull extension
+	 * but might be insecure if the mime type is not machted. Consider
+	 * using guessExtension for a more safe version.
 	 */
 	public function getExtension(): string
 	{
-		return $this->guessExtension();
+		return $this->guessExtension() ?: $this->getClientExtension();
 	}
 
 	/**
-	 * Attempts to determine the best file extension.
+	 * Attempts to determine the best file extension from the file's
+	 * mime type. In contrast to getExtension, this method will return
+	 * an empty string if it fails to determine an extension instead of
+	 * falling back to the unsecure clientExtension.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function guessExtension(): string
 	{
-		return Mimes::guessExtensionFromType($this->getClientMimeType(), $this->getClientExtension()) ?? $this->getClientExtension();
+		return Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension()) ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -402,12 +372,13 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function store(string $folderName = null, string $fileName = null): string
 	{
-		$folderName = rtrim($folderName ?? date('Ymd'), '/') . '/' ;
+		$folderName = rtrim($folderName ?? date('Ymd'), '/') . '/';
 		$fileName   = $fileName ?? $this->getRandomName();
 
 		// Move the uploaded file to a new location.
-		return ($this->move(WRITEPATH . 'uploads/' . $folderName, $fileName)) ?
-				$folderName . $this->name : null;
+		$this->move(WRITEPATH . 'uploads/' . $folderName, $fileName);
+
+		return $folderName . $this->name;
 	}
 
 	//--------------------------------------------------------------------

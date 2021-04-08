@@ -77,7 +77,9 @@ Open up the **app/Models/** directory and create a new file called
 
 ::
 
-    <?php namespace App\Models;
+    <?php
+
+    namespace App\Models;
 
     use CodeIgniter\Model;
 
@@ -138,7 +140,9 @@ a new ``News`` controller is defined. Create the new controller at
 
 ::
 
-    <?php namespace App\Controllers;
+    <?php
+
+    namespace App\Controllers;
 
     use App\Models\NewsModel;
     use CodeIgniter\Controller;
@@ -197,18 +201,18 @@ and add the next piece of code.
 
 ::
 
-    <h2><?= esc($title); ?></h2>
+    <h2><?= esc($title) ?></h2>
 
     <?php if (! empty($news) && is_array($news)) : ?>
 
         <?php foreach ($news as $news_item): ?>
 
-            <h3><?= esc($news_item['title']); ?></h3>
+            <h3><?= esc($news_item['title']) ?></h3>
 
             <div class="main">
-                <?= esc($news_item['body']); ?>
+                <?= esc($news_item['body']) ?>
             </div>
-            <p><a href="/news/<?= esc($news_item['slug'], 'url'); ?>">View article</a></p>
+            <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
 
         <?php endforeach; ?>
 
@@ -264,8 +268,8 @@ The only thing left to do is create the corresponding view at
 
 ::
 
-    <h2><?= esc($news['title']); ?></h2>
-    <?= esc($news['body']); ?>
+    <h2><?= esc($news['title']) ?></h2>
+    <p><?= esc($news['body']) ?></p>
 
 Routing
 -------------------------------------------------------
@@ -283,7 +287,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
     $routes->get('news', 'News::index');
     $routes->get('(:any)', 'Pages::view/$1');
 
-Point your browser to your "news" page, i.e. ``localhost:8080/news``,
+Point your browser to your "news" page, i.e., ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link
 to display just the one article.
 

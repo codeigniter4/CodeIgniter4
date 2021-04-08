@@ -2,12 +2,18 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionException;
+use DateTime;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
+use Tests\Support\EntityCast\CastBase64;
+use Tests\Support\EntityCast\CastPassParameters;
+use Tests\Support\EntityCast\NotExtendsAbstractCast;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
+class EntityTest extends CIUnitTestCase
 {
 
 	use ReflectionHelper;
@@ -108,7 +114,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('made it', $entity->bar);
 
 		// But it shouldn't actually set a class property for the original name...
-		$this->expectException(\ReflectionException::class);
+		$this->expectException(ReflectionException::class);
 		$this->getPrivateProperty($entity, 'bar');
 	}
 
@@ -191,7 +197,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt         = new \DateTime('now');
+		$dt         = new DateTime('now');
 		$entity     = $this->getEntity();
 		$attributes = [
 			'created_at' => $dt,
@@ -246,7 +252,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt     = new \DateTime('now');
+		$dt     = new DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -332,6 +338,26 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertFalse($entity->fifth);
 	}
 
+	public function testCastCSV()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = [
+			'foo',
+			'bar',
+			'bam',
+		];
+
+		$entity->twelfth = $data;
+
+		$result = $entity->toRawArray();
+		$this->assertIsString($result['twelfth']);
+		$this->assertEquals('foo,bar,bam', $result['twelfth']);
+
+		$this->assertIsArray($entity->twelfth);
+		$this->assertEquals($data, $entity->twelfth);
+	}
+
 	public function testCastObject()
 	{
 		$entity = $this->getCastEntity();
@@ -363,16 +389,28 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(strtotime($date), $entity->ninth);
 	}
 
+	public function testCastTimestampException()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->ninth = 'some string';
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage('Type casting "timestamp" expects a correct timestamp.');
+
+		$entity->ninth;
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCastArray()
 	{
 		$entity = $this->getCastEntity();
 
-		$entity->setSeventh(['foo' => 'bar']);
+		$entity->seventh = ['foo' => 'bar'];
 
 		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-		$this->assertEquals(['foo' => 'bar'], $check);
+		$this->assertEquals(serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
@@ -621,6 +659,68 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 	//--------------------------------------------------------------------
 
+	public function testCastSetter()
+	{
+		$string = '321 String with numbers 123';
+		$entity = $this->getCastEntity();
+
+		$entity->first = $string;
+
+		$entity->cast(false);
+		$this->assertIsString($entity->first);
+		$this->assertEquals($string, $entity->first);
+
+		$entity->cast(true);
+		$this->assertIsInt($entity->first);
+		$this->assertEquals((int) $string, $entity->first);
+	}
+
+	public function testCastGetter()
+	{
+		$entity = new Entity();
+
+		$this->assertIsBool($entity->cast());
+	}
+
+	public function testCustomCast()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->first = 'base 64';
+
+		$fieldValue = $this->getPrivateProperty($entity, 'attributes')['first'];
+
+		$this->assertEquals(base64_encode('base 64'), $fieldValue);
+
+		$this->assertEquals('base 64', $entity->first);
+	}
+
+	public function testCustomCastException()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectErrorMessage(
+			'The Tests\Support\EntityCast\NotExtendsAbstractCast class '
+			. 'must inherit the CodeIgniter\EntityCast\AbstractCast class'
+		);
+		$entity->second = 'throw Exception';
+	}
+
+	public function testCustomCastParams()
+	{
+		$entity = $this->getCustomCastEntity();
+
+		$entity->third = 'value';
+
+		$this->assertEquals('value:["param1","param2","param3"]', $entity->third);
+
+		$entity->fourth = 'test_nullable_type';
+		$this->assertEquals('test_nullable_type:["nullable"]', $entity->fourth);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAsArray()
 	{
 		$entity = $this->getEntity();
@@ -628,11 +728,31 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'        => null,
-			'bar'        => ':bar',
-			'default'    => 'sumfin',
-			'created_at' => null,
-			'createdAt'  => null,
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
+		]);
+	}
+
+	public function testAsArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toArray(false, true, true);
+
+		$this->assertEquals($result, [
+			'foo'       => null,
+			'bar'       => ':bar',
+			'default'   => 'sumfin',
+			'createdAt' => null,
+			'entity'    => [
+				'foo'       => null,
+				'bar'       => ':bar',
+				'default'   => 'sumfin',
+				'createdAt' => null,
+			],
 		]);
 	}
 
@@ -643,10 +763,21 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'    => null,
-			'simple' => ':oo',
-			'bar'    => null,
-			'orig'   => ':oo',
+			'bar'  => null,
+			'orig' => ':oo',
+		]);
+	}
+
+	public function testAsArraySwapped()
+	{
+		$entity = $this->getSwappedEntity();
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'bar'          => 'foo',
+			'foo'          => 'bar',
+			'original_bar' => 'bar',
 		]);
 	}
 
@@ -691,6 +822,27 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar'        => null,
 			'default'    => 'sumfin',
 			'created_at' => null,
+		]);
+	}
+
+	public function testToRawArrayRecursive()
+	{
+		$entity         = $this->getEntity();
+		$entity->entity = $this->getEntity();
+
+		$result = $entity->toRawArray(false, true);
+
+		$this->assertEquals($result, [
+			'foo'        => null,
+			'bar'        => null,
+			'default'    => 'sumfin',
+			'created_at' => null,
+			'entity'     => [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			],
 		]);
 	}
 
@@ -799,7 +951,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
 	}
 
-	protected function getEntity()
+	protected function getEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -840,7 +992,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getMappedEntity()
+	protected function getMappedEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -872,7 +1024,29 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastEntity($data = null)
+	protected function getSwappedEntity() : Entity
+	{
+		return new class extends Entity
+		{
+			protected $attributes = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $_original = [
+				'foo' => 'foo',
+				'bar' => 'bar',
+			];
+
+			protected $datamap = [
+				'bar'          => 'foo',
+				'foo'          => 'bar',
+				'original_bar' => 'bar',
+			];
+		};
+	}
+
+	protected function getCastEntity($data = null) : Entity
 	{
 		return new class($data) extends Entity
 		{
@@ -888,6 +1062,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'ninth'    => null,
 				'tenth'    => null,
 				'eleventh' => null,
+				'twelfth'  => null,
 			];
 
 			protected $_original = [
@@ -902,6 +1077,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'ninth'    => null,
 				'tenth'    => null,
 				'eleventh' => null,
+				'twelfth'  => null,
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
@@ -917,6 +1093,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'ninth'    => 'timestamp',
 				'tenth'    => 'json',
 				'eleventh' => 'json-array',
+				'twelfth'  => 'csv',
 			];
 
 			public function setSeventh($seventh)
@@ -926,7 +1103,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastNullableEntity()
+	protected function getCastNullableEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -937,7 +1114,8 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 				'integer_0'             => null,
 				'string_value_not_null' => 'value',
 			];
-			protected $_original  = [
+
+			protected $_original = [
 				'string_null'           => null,
 				'string_empty'          => null,
 				'integer_null'          => null,
@@ -956,4 +1134,38 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
+	protected function getCustomCastEntity() : Entity
+	{
+		return new class extends Entity
+		{
+
+			protected $attributes = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			protected $_original = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			// 'bar' is db column, 'foo' is internal representation
+			protected $casts = [
+				'first'  => 'base64',
+				'second' => 'someType',
+				'third'  => 'type[param1, param2,param3]',
+				'fourth' => '?type',
+			];
+
+			protected $castHandlers = [
+				'base64'   => CastBase64::class,
+				'someType' => NotExtendsAbstractCast::class,
+				'type'     => CastPassParameters::class,
+			];
+		};
+	}
 }

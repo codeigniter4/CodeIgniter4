@@ -1,24 +1,27 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class InsertTest extends CIDatabaseTestCase
+class InsertTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testInsert()
 	{
-		$job_data = [
+		$jobData = [
 			'name'        => 'Grocery Sales',
 			'description' => 'Discount!',
 		];
 
-		$this->db->table('job')->insert($job_data);
+		$this->db->table('job')->insert($jobData);
 
 		$this->seeInDatabase('job', ['name' => 'Grocery Sales']);
 	}
@@ -27,7 +30,7 @@ class InsertTest extends CIDatabaseTestCase
 
 	public function testInsertBatch()
 	{
-		$job_data = [
+		$jobData = [
 			[
 				'name'        => 'Comedian',
 				'description' => 'Theres something in your teeth',
@@ -38,7 +41,7 @@ class InsertTest extends CIDatabaseTestCase
 			],
 		];
 
-		$this->db->table('job')->insertBatch($job_data);
+		$this->db->table('job')->insertBatch($jobData);
 
 		$this->seeInDatabase('job', ['name' => 'Comedian']);
 		$this->seeInDatabase('job', ['name' => 'Cab Driver']);

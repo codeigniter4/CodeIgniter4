@@ -1,12 +1,16 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
 
-class CITestSeeder extends \CodeIgniter\Database\Seeder
+namespace Tests\Support\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+class CITestSeeder extends Seeder
 {
 	public function run()
 	{
 		// Job Data
 		$data = [
-			'user'          => [
+			'user'                   => [
 				[
 					'name'    => 'Derek Jones',
 					'email'   => 'derek@world.com',
@@ -28,7 +32,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'country' => 'UK',
 				],
 			],
-			'job'           => [
+			'job'                    => [
 				[
 					'name'        => 'Developer',
 					'description' => 'Awesome job, but sometimes makes you bored',
@@ -46,7 +50,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'description' => 'Only Coldplay can actually called Musician',
 				],
 			],
-			'misc'          => [
+			'misc'                   => [
 				[
 					'key'   => '\\xxxfoo456',
 					'value' => 'Entry with \\xxx',
@@ -60,13 +64,76 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'value' => ' One  two   three	tab',
 				],
 			],
-			'stringifypkey' => [
+			'stringifypkey'          => [
 				[
 					'id'    => 'A01',
 					'value' => 'test',
 				],
 			],
+			'without_auto_increment' => [
+				[
+					'key'   => 'key',
+					'value' => 'value',
+				],
+			],
+			'type_test'              => [
+				[
+					'type_varchar'    => 'test',
+					'type_char'       => 'test',
+					'type_enum'       => 'appel',
+					'type_set'        => 'one',
+					'type_text'       => 'test text',
+					'type_mediumtext' => 'test medium text',
+					'type_smallint'   => 1,
+					'type_integer'    => 123,
+					'type_float'      => 10.1,
+					'type_real'       => 11.21,
+					'type_double'     => 23.22,
+					'type_decimal'    => 123123.2234,
+					'type_numeric'    => 123.23,
+					'type_blob'       => 'test blob',
+					'type_date'       => '2020-01-11T22:11:00.000+02:00',
+					'type_time'       => '2020-07-18T15:22:00.000+02:00',
+					'type_datetime'   => '2020-06-18T05:12:24.000+02:00',
+					'type_timestamp'  => '2019-07-18T21:53:21.000+02:00',
+					'type_bigint'     => 2342342,
+				],
+			],
 		];
+
+		//set SQL times to more correct format
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			 $data['type_test'][0]['type_date']      = '2020/01/11';
+			 $data['type_test'][0]['type_time']      = '15:22:00';
+			 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
+			 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
+		}
+
+		if ($this->db->DBDriver === 'Postgre')
+		{
+			$data['type_test'][0]['type_time'] = '15:22:00';
+			unset($data['type_test'][0]['type_enum']);
+			unset($data['type_test'][0]['type_set']);
+			unset($data['type_test'][0]['type_mediumtext']);
+			unset($data['type_test'][0]['type_real']);
+			unset($data['type_test'][0]['type_double']);
+			unset($data['type_test'][0]['type_decimal']);
+			unset($data['type_test'][0]['type_blob']);
+		}
+
+		if ($this->db->DBDriver === 'SQLSRV')
+		{
+			$data['type_test'][0]['type_date']     = '2020-01-11';
+			$data['type_test'][0]['type_time']     = '15:22:00.000';
+			$data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
+			unset($data['type_test'][0]['type_timestamp']);
+			unset($data['type_test'][0]['type_enum']);
+			unset($data['type_test'][0]['type_set']);
+			unset($data['type_test'][0]['type_mediumtext']);
+			unset($data['type_test'][0]['type_double']);
+			unset($data['type_test'][0]['type_blob']);
+		}
 
 		foreach ($data as $table => $dummy_data)
 		{
@@ -78,7 +145,4 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			}
 		}
 	}
-
-	//--------------------------------------------------------------------
-
 }

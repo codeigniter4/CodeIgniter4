@@ -1,40 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of the CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2019-2020 CodeIgniter Foundation
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
@@ -46,7 +18,6 @@ use CodeIgniter\Database\Query;
  */
 class Database extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has timeline data.
 	 *
@@ -86,7 +57,7 @@ class Database extends BaseCollector
 	 * The query instances that have been collected
 	 * through the DBQuery Event.
 	 *
-	 * @var array
+	 * @var Query[]
 	 */
 	protected static $queries = [];
 
@@ -106,7 +77,7 @@ class Database extends BaseCollector
 	 * The static method used during Events to collect
 	 * data.
 	 *
-	 * @param \CodeIgniter\Database\Query $query
+	 * @param Query $query
 	 *
 	 * @internal param $ array \CodeIgniter\Database\Query
 	 */
@@ -167,59 +138,12 @@ class Database extends BaseCollector
 	 */
 	public function display(): array
 	{
-		// Key words we want bolded
-		$highlight = [
-			'SELECT',
-			'DISTINCT',
-			'FROM',
-			'WHERE',
-			'AND',
-			'LEFT&nbsp;JOIN',
-			'RIGHT&nbsp;JOIN',
-			'JOIN',
-			'ORDER&nbsp;BY',
-			'GROUP&nbsp;BY',
-			'LIMIT',
-			'INSERT',
-			'INTO',
-			'VALUES',
-			'UPDATE',
-			'OR&nbsp;',
-			'HAVING',
-			'OFFSET',
-			'NOT&nbsp;IN',
-			'IN',
-			'LIKE',
-			'NOT&nbsp;LIKE',
-			'COUNT',
-			'MAX',
-			'MIN',
-			'ON',
-			'AS',
-			'AVG',
-			'SUM',
-			'(',
-			')',
-		];
-
-		$data = [
-			'queries' => [],
-		];
-
-		foreach (static::$queries as $query)
-		{
-			$sql = $query->getQuery();
-
-			foreach ($highlight as $term)
-			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-			}
-
-			$data['queries'][] = [
-				'duration' => ($query->getDuration(5) * 1000) . ' ms',
-				'sql'      => $sql,
+		$data['queries'] = array_map(function (Query $query) {
+			return [
+				'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
+				'sql'      => $query->debugToolbarDisplay(),
 			];
-		}
+		}, static::$queries);
 
 		return $data;
 	}
@@ -274,5 +198,4 @@ class Database extends BaseCollector
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
 	}
-
 }

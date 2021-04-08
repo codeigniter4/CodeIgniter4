@@ -1,0 +1,230 @@
+<?php
+namespace CodeIgniter\Test;
+
+use App\Controllers\Home;
+use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use Config\App;
+use Config\Services;
+use InvalidArgumentException;
+use Tests\Support\Controllers\Popcorn;
+
+/**
+ * Exercise our Controller class.
+ *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
+ */
+class ControllerTestTraitTest extends CIUnitTestCase
+{
+	use ControllerTestTrait;
+
+	public function testBadController()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(\App\Controllers\NeverHeardOfIt::class)
+				->execute('index');
+	}
+
+	public function testBadControllerMethod()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Home::class)
+				->execute('nothere');
+	}
+
+	public function testController()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Home::class)
+				->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertTrue($result->isOK());
+	}
+
+	public function testControllerWithoutLogger()
+	{
+		$result = $this->withURI('http://example.com')
+				->controller(Home::class)
+				->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertTrue($result->isOK());
+	}
+
+	public function testPopcornIndex()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertTrue($result->isOK());
+	}
+
+	public function testPopcornIndex2()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertEquals('Hi there', $body);
+	}
+
+	public function testPopcornFailure()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('pop');
+
+		$this->assertEquals(567, $result->response()->getStatusCode());
+	}
+
+	public function testPopcornException()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('popper');
+
+		$this->assertEquals(500, $result->response()->getStatusCode());
+	}
+
+	public function testPopcornIndexWithSupport()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$config = new App();
+		$body   = '';
+
+		$result = $this->withURI('http://example.com')
+				->withConfig($config)
+				->withRequest(Services::request($config))
+				->withResponse(Services::response($config))
+				->withLogger($logger)
+				->withBody($body)
+				->controller(Popcorn::class)
+				->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertEquals('Hi there', $body);
+	}
+
+	public function testRequestPassthrough()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('popper');
+
+		$req = $result->request();
+		$this->assertEquals('get', $req->getMethod());
+	}
+
+	public function testFailureResponse()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('oops');
+
+		$this->assertFalse($result->isOK());
+		$this->assertEquals(401, $result->response()->getStatusCode());
+	}
+
+	public function testEmptyResponse()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('weasel');
+
+		$body = $result->response()->getBody(); // empty
+		$this->assertEmpty($body);
+		$this->assertFalse($result->isOK());
+	}
+
+	public function testRedirect()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('goaway');
+
+		$this->assertTrue($result->isRedirect());
+	}
+
+	public function testDOMParserForward()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('index');
+
+		$this->assertTrue($result->see('Hi'));
+	}
+
+	public function testFailsForward()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(Popcorn::class)
+				->execute('index');
+
+		// won't fail, but doesn't do anything
+		$this->assertNull($result->ohno('Hi'));
+	}
+
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	public function testResponseOverriding()
+	{
+		$result = $this->withURI('http://example.com/rest/')
+				->controller(Popcorn::class)
+				->execute('index3');
+
+		$response = json_decode($result->response()->getBody());
+		$this->assertEquals('en', $response->lang);
+	}
+
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/2470
+	public function testControllerNoURI()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withLogger($logger)
+					   ->controller(Home::class)
+					   ->execute('index');
+
+		$body = $result->response()->getBody();
+		$this->assertTrue($result->isOK());
+	}
+
+	public function testRedirectRoute()
+	{
+		$result = $this->controller(Popcorn::class)
+						->execute('toindex');
+		$this->assertTrue($result->isRedirect());
+	}
+
+}

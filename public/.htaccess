@@ -18,7 +18,8 @@ Options All -Indexes
 
 	# Redirect Trailing Slashes...
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)/$ /$1 [L,R=301]
+	RewriteCond %{REQUEST_URI} (.+)/$
+      RewriteRule ^ %1 [L,R=301]
 
 	# Rewrite "www.example.com -> example.com"
 	RewriteCond %{HTTPS} !=on

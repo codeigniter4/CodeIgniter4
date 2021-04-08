@@ -4,10 +4,11 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
 
-class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class FormHelperTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -29,7 +30,7 @@ class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -90,7 +91,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -127,7 +128,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -164,14 +165,14 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="foo" value="bar" style="display:none;" />
-<input type="hidden" name="$Name" value="$Value" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
+<input type="hidden" name="$Name" value="$Value" />
 
 EOH;
 		}
@@ -180,7 +181,7 @@ EOH;
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
-<input type="hidden" name="foo" value="bar" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
 
 EOH;
 		}
@@ -208,12 +209,12 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
@@ -221,7 +222,7 @@ EOH;
 		else
 		{
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 
 EOH;
 		}
@@ -242,7 +243,7 @@ EOH;
 	{
 		$expected = <<<EOH
 
-<input type="hidden" name="username" value="johndoe" style="display:none;" />\n
+<input type="hidden" name="username" value="johndoe" />\n
 EOH;
 		$this->assertEquals($expected, form_hidden('username', 'johndoe'));
 	}
@@ -255,7 +256,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="foo" value="bar" style="display:none;" />
+<input type="hidden" name="foo" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden($data, null));
@@ -269,7 +270,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="name[foo]" value="bar" style="display:none;" />
+<input type="hidden" name="name[foo]" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden('name', $data));
@@ -279,7 +280,7 @@ EOH;
 	public function testFormInput()
 	{
 		$expected = <<<EOH
-<input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%"  />\n
+<input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
 EOH;
 		$data     = [
 			'name'      => 'username',
@@ -292,11 +293,27 @@ EOH;
 		$this->assertEquals($expected, form_input($data));
 	}
 
+	public function testFormInputWithExtra()
+	{
+		$expected = <<<EOH
+<input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
+EOH;
+		$data     = [
+			'id'   => 'identity',
+			'name' => 'identity',
+			'type' => 'email',
+		];
+		$extra    = [
+			'class' => 'form-control form-control-lg',
+		];
+		$this->assertEquals($expected, form_input($data, '', $extra));
+	}
+
 	// ------------------------------------------------------------------------
 	public function testFormPassword()
 	{
 		$expected = <<<EOH
-<input type="password" name="password" value=""  />\n
+<input type="password" name="password" value="" />\n
 EOH;
 		$this->assertEquals($expected, form_password('password'));
 	}
@@ -305,7 +322,7 @@ EOH;
 	public function testFormUpload()
 	{
 		$expected = <<<EOH
-<input type="file" name="attachment"  />\n
+<input type="file" name="attachment" />\n
 EOH;
 		$this->assertEquals($expected, form_upload('attachment'));
 	}
@@ -314,7 +331,7 @@ EOH;
 	public function testFormTextarea()
 	{
 		$expected = <<<EOH
-<textarea name="notes" cols="40" rows="10" >Notes</textarea>\n
+<textarea name="notes" cols="40" rows="10">Notes</textarea>\n
 EOH;
 		$this->assertEquals($expected, form_textarea('notes', 'Notes'));
 	}
@@ -327,10 +344,33 @@ EOH;
 			'value' => 'bar',
 		];
 		$expected = <<<EOH
-<textarea name="foo" cols="40" rows="10" >bar</textarea>
+<textarea name="foo" cols="40" rows="10">bar</textarea>
 
 EOH;
 		$this->assertEquals($expected, form_textarea($data));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsArray()
+	{
+		$extra    = [
+			'cols' => '30',
+			'rows' => '5',
+		];
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5">Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsString()
+	{
+		$extra    = 'cols="30" rows="5"';
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5">Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
 	}
 
 	// ------------------------------------------------------------------------
@@ -351,7 +391,7 @@ EOH;
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
-		$expected       = <<<EOH
+		$expected     = <<<EOH
 <select name="shirts" multiple="multiple">
 <option value="small" selected="selected">Small Shirt</option>
 <option value="med">Medium Shirt</option>
@@ -359,11 +399,11 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$shirts_on_sale = [
+		$shirtsOnSale = [
 			'small',
 			'large',
 		];
-		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirts_on_sale));
+		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirtsOnSale));
 		$options  = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',
@@ -517,6 +557,33 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testFormMultiselectArrayData()
+	{
+		$expected = <<<EOH
+<select name="shirts[]"  multiple="multiple">
+<option value="small">Small Shirt</option>
+<option value="med" selected="selected">Medium Shirt</option>
+<option value="large" selected="selected">Large Shirt</option>
+<option value="xlarge">Extra Large Shirt</option>
+</select>\n
+EOH;
+		$options  = [
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
+			'xlarge' => 'Extra Large Shirt',
+		];
+
+		$data  = [
+			'name' 	 	=> 'shirts[]',
+			'options'	=> $options,
+			'selected'  => ['med', 'large'],
+		];
+
+		$this->assertEquals($expected, form_multiselect($data));
+	}
+
+	// ------------------------------------------------------------------------
 	public function testFormFieldset()
 	{
 		$expected = <<<EOH
@@ -563,7 +630,7 @@ EOH;
 	public function testFormCheckbox()
 	{
 		$expected = <<<EOH
-<input type="checkbox" name="newsletter" value="accept" checked="checked"  />\n
+<input type="checkbox" name="newsletter" value="accept" checked="checked" />\n
 EOH;
 		$this->assertEquals($expected, form_checkbox('newsletter', 'accept', true));
 	}
@@ -577,7 +644,7 @@ EOH;
 			'checked' => true,
 		];
 		$expected = <<<EOH
-<input type="checkbox" name="foo" value="bar" checked="checked"  />
+<input type="checkbox" name="foo" value="bar" checked="checked" />
 
 EOH;
 		$this->assertEquals($expected, form_checkbox($data));
@@ -592,7 +659,7 @@ EOH;
 			'checked' => false,
 		];
 		$expected = <<<EOH
-<input type="checkbox" name="foo" value="bar"  />
+<input type="checkbox" name="foo" value="bar" />
 
 EOH;
 		$this->assertEquals($expected, form_checkbox($data));
@@ -602,7 +669,7 @@ EOH;
 	public function testFormRadio()
 	{
 		$expected = <<<EOH
-<input type="radio" name="newsletter" value="accept" checked="checked"  />\n
+<input type="radio" name="newsletter" value="accept" checked="checked" />\n
 EOH;
 		$this->assertEquals($expected, form_radio('newsletter', 'accept', true));
 	}
@@ -611,7 +678,7 @@ EOH;
 	public function testFormSubmit()
 	{
 		$expected = <<<EOH
-<input type="submit" name="mysubmit" value="Submit Post!"  />\n
+<input type="submit" name="mysubmit" value="Submit Post!" />\n
 EOH;
 		$this->assertEquals($expected, form_submit('mysubmit', 'Submit Post!'));
 	}
@@ -641,7 +708,7 @@ EOH;
 	public function testFormReset()
 	{
 		$expected = <<<EOH
-<input type="reset" name="myreset" value="Reset"  />\n
+<input type="reset" name="myreset" value="Reset" />\n
 EOH;
 		$this->assertEquals($expected, form_reset('myreset', 'Reset'));
 	}
@@ -650,7 +717,7 @@ EOH;
 	public function testFormButton()
 	{
 		$expected = <<<EOH
-<button name="name" type="button" >content</button>\n
+<button name="name" type="button">content</button>\n
 EOH;
 		$this->assertEquals($expected, form_button('name', 'content'));
 	}
@@ -663,7 +730,7 @@ EOH;
 			'content' => 'bar',
 		];
 		$expected = <<<EOH
-<button name="foo" type="button" >bar</button>
+<button name="foo" type="button">bar</button>
 
 EOH;
 		$this->assertEquals($expected, form_button($data));
@@ -686,7 +753,7 @@ EOH;
 			'bar1',
 		];
 		$expected = <<<EOH
-<input type="text" name="foo" value="bar" list="foo_list"  />
+<input type="text" name="foo" value="bar" list="foo_list" />
 
 <datalist id='foo_list'><option value='foo1'>
 <option value='bar1'>
@@ -881,35 +948,35 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesNull()
 	{
-		$expected = 'bar="" ';
+		$expected = 'bar=""';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => null], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringEmpty()
 	{
-		$expected = 'bar="" ';
+		$expected = 'bar=""';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => ''], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringFoo()
 	{
-		$expected = 'bar="foo" ';
+		$expected = 'bar="foo"';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => 'foo'], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt0()
 	{
-		$expected = 'ok="0" ';
+		$expected = 'ok="0"';
 		$this->assertEquals($expected, parse_form_attributes(['ok' => 0], []));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt1()
 	{
-		$expected = 'ok="1" ';
+		$expected = 'ok="1"';
 		$this->assertEquals($expected, parse_form_attributes(['ok' => 1], []));
 	}
 }
