@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 use JsonException;
 use CodeIgniter\Exceptions\CastException;
 use stdClass;
 
 /**
- * Class CastAsJson
+ * Class JsonCast
  */
-class CastAsJson extends AbstractCast
+class JsonCast extends BaseCast
 {
 
 	/**

@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsFloat
+ * Class FloatCast
  */
-class CastAsFloat extends AbstractCast
+class FloatCast extends BaseCast
 {
 
 	/**

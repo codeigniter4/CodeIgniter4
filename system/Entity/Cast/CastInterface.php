@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class AbstractCast
+ * Interface CastInterface
  */
-class AbstractCast implements CastInterface
+interface CastInterface
 {
 	/**
 	 * Get
@@ -24,10 +24,7 @@ class AbstractCast implements CastInterface
 	 *
 	 * @return mixed
 	 */
-	public static function get($value, array $params = [])
-	{
-		return $value;
-	}
+	public static function get($value, array $params = []);
 
 	/**
 	 * Set
@@ -37,8 +34,5 @@ class AbstractCast implements CastInterface
 	 *
 	 * @return mixed
 	 */
-	public static function set($value, array $params = [])
-	{
-		return $value;
-	}
+	public static function set($value, array $params = []);
 }

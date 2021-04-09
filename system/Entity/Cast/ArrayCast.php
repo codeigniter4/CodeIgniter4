@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsCommaSeparatedValues
+ * Class ArrayCast
  */
-class CastAsCommaSeparatedValues extends AbstractCast
+class ArrayCast extends BaseCast
 {
 
 	/**
@@ -22,7 +22,12 @@ class CastAsCommaSeparatedValues extends AbstractCast
 	 */
 	public static function get($value, array $params = []): array
 	{
-		return explode(',', $value);
+		if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
+		{
+			$value = unserialize($value);
+		}
+
+		return (array) $value;
 	}
 
 	/**
@@ -30,6 +35,6 @@ class CastAsCommaSeparatedValues extends AbstractCast
 	 */
 	public static function set($value, array $params = []): string
 	{
-		return implode(',', $value);
+		return serialize($value);
 	}
 }

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Exceptions\CastException;
 
 /**
- * Class CastAsTimestamp
+ * Class TimestampCast
  */
-class CastAsTimestamp extends AbstractCast
+class TimestampCast extends BaseCast
 {
 
 	/**

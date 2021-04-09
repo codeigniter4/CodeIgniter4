@@ -1,9 +1,10 @@
 <?php
 
+namespace Tests\Support\Entity\Cast;
 
-namespace Tests\Support\EntityCast;
+use CodeIgniter\Entity\Cast\BaseCast;
 
-class CastPassParameters extends \CodeIgniter\EntityCast\AbstractCast
+class CastPassParameters extends BaseCast
 {
 	/**
 	 * Set

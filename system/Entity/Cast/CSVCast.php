@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsArray
+ * Class CSVCast
  */
-class CastAsArray extends AbstractCast
+class CSVCast extends BaseCast
 {
 
 	/**
@@ -22,12 +22,7 @@ class CastAsArray extends AbstractCast
 	 */
 	public static function get($value, array $params = []): array
 	{
-		if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
-		{
-			$value = unserialize($value);
-		}
-
-		return (array) $value;
+		return explode(',', $value);
 	}
 
 	/**
@@ -35,6 +30,6 @@ class CastAsArray extends AbstractCast
 	 */
 	public static function set($value, array $params = []): string
 	{
-		return serialize($value);
+		return implode(',', $value);
 	}
 }

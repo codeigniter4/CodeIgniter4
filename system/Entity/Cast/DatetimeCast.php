@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 use Exception;
 use DateTime;
 use CodeIgniter\I18n\Time;
 
 /**
- * Class CastAsDatetime
+ * Class DatetimeCast
  */
-class CastAsDatetime extends AbstractCast
+class DatetimeCast extends BaseCast
 {
 
 	/**

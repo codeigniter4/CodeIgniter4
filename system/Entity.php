@@ -11,17 +11,17 @@
 
 namespace CodeIgniter;
 
-use CodeIgniter\EntityCast\CastAsArray;
-use CodeIgniter\EntityCast\CastAsBoolean;
-use CodeIgniter\EntityCast\CastAsCommaSeparatedValues;
-use CodeIgniter\EntityCast\CastAsDatetime;
-use CodeIgniter\EntityCast\CastAsFloat;
-use CodeIgniter\EntityCast\CastAsInteger;
-use CodeIgniter\EntityCast\CastInterface;
-use CodeIgniter\EntityCast\CastAsJson;
-use CodeIgniter\EntityCast\CastAsObject;
-use CodeIgniter\EntityCast\CastAsString;
-use CodeIgniter\EntityCast\CastAsTimestamp;
+use CodeIgniter\Entity\Cast\ArrayCast;
+use CodeIgniter\Entity\Cast\BooleanCast;
+use CodeIgniter\Entity\Cast\CastInterface;
+use CodeIgniter\Entity\Cast\CSVCast;
+use CodeIgniter\Entity\Cast\DatetimeCast;
+use CodeIgniter\Entity\Cast\FloatCast;
+use CodeIgniter\Entity\Cast\IntegerCast;
+use CodeIgniter\Entity\Cast\JsonCast;
+use CodeIgniter\Entity\Cast\ObjectCast;
+use CodeIgniter\Entity\Cast\StringCast;
+use CodeIgniter\Entity\Cast\TimestampCast;
 use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
@@ -70,19 +70,19 @@ class Entity implements JsonSerializable
 	 * @var array<string, string>
 	 */
 	private $defaultCastHandlers = [
-		'array'     => CastAsArray::class,
-		'bool'      => CastAsBoolean::class,
-		'boolean'   => CastAsBoolean::class,
-		'csv'       => CastAsCommaSeparatedValues::class,
-		'datetime'  => CastAsDatetime::class,
-		'double'    => CastAsFloat::class,
-		'float'     => CastAsFloat::class,
-		'int'       => CastAsInteger::class,
-		'integer'   => CastAsInteger::class,
-		'json'      => CastAsJson::class,
-		'object'    => CastAsObject::class,
-		'string'    => CastAsString::class,
-		'timestamp' => CastAsTimestamp::class,
+		'array'     => ArrayCast::class,
+		'bool'      => BooleanCast::class,
+		'boolean'   => BooleanCast::class,
+		'csv'       => CSVCast::class,
+		'datetime'  => DatetimeCast::class,
+		'double'    => FloatCast::class,
+		'float'     => FloatCast::class,
+		'int'       => IntegerCast::class,
+		'integer'   => IntegerCast::class,
+		'json'      => JsonCast::class,
+		'object'    => ObjectCast::class,
+		'string'    => StringCast::class,
+		'timestamp' => TimestampCast::class,
 	];
 
 	/**
@@ -498,7 +498,7 @@ class Entity implements JsonSerializable
 	 */
 	protected function mutateDate($value)
 	{
-		return CastAsDatetime::get($value);
+		return DatetimeCast::get($value);
 	}
 
 	//--------------------------------------------------------------------
@@ -590,7 +590,7 @@ class Entity implements JsonSerializable
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
-		return CastAsJson::get($value, $asArray ? ['array'] : []);
+		return JsonCast::get($value, $asArray ? ['array'] : []);
 	}
 
 	/**

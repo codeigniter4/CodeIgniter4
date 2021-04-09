@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsBoolean
+ * Class IntegerCast
  */
-class CastAsBoolean extends AbstractCast
+class IntegerCast extends BaseCast
 {
 
 	/**
 	 * @inheritDoc
 	 */
-	public static function get($value, array $params = []): bool
+	public static function get($value, array $params = []): int
 	{
-		return (bool) $value;
+		return (int) $value;
 	}
 }
