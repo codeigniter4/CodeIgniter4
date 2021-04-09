@@ -39,7 +39,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::SKIP, [
 		__DIR__ . '/app/Config/App.php',
 		__DIR__ . '/app/Views',
-		__DIR__ . '/system/Autoloader/FileLocator.php',
 		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
 		__DIR__ . '/system/ThirdParty',
 		__DIR__ . '/tests/system/Config/fixtures',
