@@ -81,8 +81,8 @@ jobs:
 
     steps:
       - name: Create database for MSSQL Server
-        if: ${{ matrix.db-platforms == 'SQLSRV'}}
-        run: sqlcmd -S localhost -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+        if: matrix.db-platforms == 'SQLSRV'
+        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
 
       - name: Checkout
         uses: actions/checkout@v2
