@@ -113,7 +113,7 @@ class Model extends BaseModel
 		$this->db = &$db;
 
 		parent::__construct($validation);
-		if (strpos($this->table, ' ') !== false)
+		if (stripos($this->table, ' as ') !== false)
 		{
 			// if the alias is written with the AS keyword, remove it
 			$this->tableAlias = preg_replace('/\s+AS\s+/i', ' ', $this->table);
