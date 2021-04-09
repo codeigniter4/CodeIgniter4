@@ -428,10 +428,12 @@ Let's say the class will be located in the 'app/Entity/Cast' directory::
 
     <?php
 
-    namespace App\Entity\Cast
+    namespace App\Entity\Cast;
+    
+    use CodeIgniter\Entity\Cast\BaseCast;
 
-    //The class must inherit the CodeIgniter\EntityCast\AbstractCast class
-    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    //The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
+    class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
         {
@@ -473,7 +475,9 @@ Now you need to register it::
 
 If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method::
 
-    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    use CodeIgniter\Entity\Cast\BaseCast;
+    
+    class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
         {
@@ -501,7 +505,9 @@ Additional parameters are indicated in square brackets and listed with a comma.
         'class' => 'SomeHandler',
     ];
 
-    class SomeHandler extends \CodeIgniter\EntityCast\AbstractCast
+    use CodeIgniter\Entity\Cast\BaseCast;
+    
+    class SomeHandler extends BaseCast
     {
         public static function get($value, array $params = [])
         {
