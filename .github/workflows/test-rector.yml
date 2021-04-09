@@ -50,19 +50,19 @@ jobs:
       - name: Validate composer.json
         run: composer validate --strict
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+#      - name: Get composer cache directory
+#        id: composer-cache
+#        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - name: Create composer cache directory
-        run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
+#      - name: Create composer cache directory
+#        run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
-      - name: Cache composer dependencies
-        uses: actions/cache@v2.1.4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
+#      - name: Cache composer dependencies
+#        uses: actions/cache@v2.1.4
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+#          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
         run: composer update --ansi --no-interaction
