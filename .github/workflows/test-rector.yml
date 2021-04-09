@@ -68,4 +68,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/rector process --dry-run --no-progress-bar
+        run: vendor/bin/rector process --dry-run --debug
