@@ -20,7 +20,7 @@
 		"mikey179/vfsstream": "^1.6",
 		"nexusphp/tachycardia": "^1.0",
 		"phpstan/phpstan": "0.12.83",
-		"phpstan/phpdoc-parser": "0.5.3",
+		"phpstan/phpdoc-parser": "0.5.2",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
 		"rector/rector": "^0.10",
