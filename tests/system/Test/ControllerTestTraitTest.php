@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\Test;
 
+use App\Controllers\NeverHeardOfIt;
 use App\Controllers\Home;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
@@ -25,7 +26,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
 		$logger = new Logger(new LoggerConfig());
 		$result = $this->withURI('http://example.com')
 				->withLogger($logger)
-				->controller(\App\Controllers\NeverHeardOfIt::class)
+				->controller(NeverHeardOfIt::class)
 				->execute('index');
 	}
 
