@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": "^7.3||^8.0",
+		"php": "^7.3 || ^8.0",
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -19,8 +19,8 @@
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
 		"nexusphp/tachycardia": "^1.0",
-		"phpstan/phpstan": "0.12.83",
 		"phpstan/phpdoc-parser": "0.5.2",
+		"phpstan/phpstan": "0.12.83",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
 		"rector/rector": "^0.10",
