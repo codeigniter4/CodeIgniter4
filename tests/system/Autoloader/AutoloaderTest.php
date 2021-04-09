@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use UnnamespacedClass;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -40,7 +41,7 @@ class AutoloaderTest extends CIUnitTestCase
 
 	public function testLoadStoredClass()
 	{
-		$this->assertInstanceOf('UnnamespacedClass', new \UnnamespacedClass());
+		$this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
 	}
 
 	public function testInitializeWithInvalidArguments()
