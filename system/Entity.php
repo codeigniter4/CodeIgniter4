@@ -22,7 +22,7 @@ use CodeIgniter\Entity\Cast\JsonCast;
 use CodeIgniter\Entity\Cast\ObjectCast;
 use CodeIgniter\Entity\Cast\StringCast;
 use CodeIgniter\Entity\Cast\TimestampCast;
-use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
 use JsonSerializable;
@@ -157,7 +157,6 @@ class Entity implements JsonSerializable
 	 * @param boolean $recursive   If true, inner entities will be casted as array as well.
 	 *
 	 * @return array
-	 * @throws Exception
 	 */
 	public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
 	{
@@ -511,8 +510,9 @@ class Entity implements JsonSerializable
 	 * @param string $attribute Attribute name
 	 * @param string $method    Allowed to "get" and "set"
 	 *
+	 * @throws CastException
+	 *
 	 * @return mixed
-	 * @throws Exception
 	 */
 	protected function castAs($value, string $attribute, string $method = 'get')
 	{
@@ -542,7 +542,7 @@ class Entity implements JsonSerializable
 
 		if (! in_array($method, ['get', 'set'], true))
 		{
-			throw CastException::forInvalidCastMethod();
+			throw CastException::forInvalidMethod($method);
 		}
 
 		$params = [];
@@ -571,7 +571,7 @@ class Entity implements JsonSerializable
 
 		if (! is_subclass_of($handlers[$type], CastInterface::class))
 		{
-			throw CastException::forMissingInterface($handlers[$type]);
+			throw CastException::forInvalidInterface($handlers[$type]);
 		}
 
 		return $handlers[$type]::$method($value, $params);
@@ -585,8 +585,9 @@ class Entity implements JsonSerializable
 	 * @param mixed   $value
 	 * @param boolean $asArray
 	 *
-	 * @return mixed
 	 * @throws CastException
+	 *
+	 * @return mixed
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
@@ -597,7 +598,6 @@ class Entity implements JsonSerializable
 	 * Support for json_encode()
 	 *
 	 * @return array|mixed
-	 * @throws Exception
 	 */
 	public function jsonSerialize()
 	{
