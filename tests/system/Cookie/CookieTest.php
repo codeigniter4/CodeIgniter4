@@ -3,7 +3,7 @@
 namespace CodeIgniter\Cookie;
 
 use CodeIgniter\Cookie\Cookie;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;

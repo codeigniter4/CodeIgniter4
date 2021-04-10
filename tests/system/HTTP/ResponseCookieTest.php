@@ -3,7 +3,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Cookie as CookieConfig;
