@@ -15,9 +15,9 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class CastException extends FrameworkException
 {
-	public static function forInvalidCastMethod()
+	public static function forInvalidCastMethod($method)
 	{
-		return new static(lang('Cast.invalidCastMethod'));
+		return new static(lang('Cast.invalidCastMethod', [$method]));
 	}
 
 	public static function forInvalidInterface($class)
