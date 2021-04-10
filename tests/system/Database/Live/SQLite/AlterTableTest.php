@@ -72,7 +72,7 @@ class AlterTableTest extends CIUnitTestCase
 
 	public function testFromTableFillsDetails()
 	{
-		$this->createTable('foo');
+		$this->createTable();
 
 		$this->assertTrue($this->db->tableExists('foo'));
 
@@ -109,7 +109,7 @@ class AlterTableTest extends CIUnitTestCase
 
 	public function testDropColumnSuccess()
 	{
-		$this->createTable('foo');
+		$this->createTable();
 
 		$result = $this->table
 			->fromTable('foo')
@@ -127,7 +127,7 @@ class AlterTableTest extends CIUnitTestCase
 
 	public function testDropColumnMaintainsKeys()
 	{
-		$this->createTable('foo');
+		$this->createTable();
 
 		$oldKeys = $this->db->getIndexData('foo');
 
@@ -190,7 +190,7 @@ class AlterTableTest extends CIUnitTestCase
 
 	public function testProcessCopiesOldData()
 	{
-		$this->createTable('foo');
+		$this->createTable();
 
 		$this->db->table('foo_fk')->insert([
 			'id'   => 1,

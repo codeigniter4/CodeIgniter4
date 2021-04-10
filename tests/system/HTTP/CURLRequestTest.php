@@ -163,7 +163,7 @@ class CURLRequestTest extends CIUnitTestCase
 			'base_uri' => 'http://www.foo.com/api/v1/',
 			'headers'  => ['fruit' => 'apple'],
 		];
-		$request = $this->getRequest([]);
+		$request = $this->getRequest();
 		$this->assertNull($request->header('fruit'));
 
 		$request = $this->getRequest($options);
@@ -227,7 +227,7 @@ class CURLRequestTest extends CIUnitTestCase
 			'delay'   => 2000,
 			'headers' => ['fruit' => 'apple'],
 		];
-		$request = $this->getRequest([]);
+		$request = $this->getRequest();
 		$this->assertEquals(0.0, $request->getDelay());
 
 		$request = $this->getRequest($options);

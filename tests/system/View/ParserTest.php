@@ -419,7 +419,7 @@ class ParserTest extends CIUnitTestCase
 		{
 			$expected = $value;
 		}
-		$this->assertEquals($expected, \esc($value, 'html'));
+		$this->assertEquals($expected, \esc($value));
 	}
 
 	//------------------------------------------------------------------------
@@ -764,7 +764,7 @@ class ParserTest extends CIUnitTestCase
 			return 'Hello, ' . trim($params[0]);
 		};
 
-		$this->parser = new Parser($config, $this->viewsDir, $this->loader);
+		$this->parser             = new Parser($config, $this->viewsDir, $this->loader);
 
 		$template = '{+ hello world +}';
 

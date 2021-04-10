@@ -352,7 +352,7 @@ class Entity implements JsonSerializable
 		// Or cast it as something?
 		elseif ($this->_cast)
 		{
-			$result = $this->castAs($result, $key, 'get');
+			$result = $this->castAs($result, $key);
 		}
 
 		return $result;

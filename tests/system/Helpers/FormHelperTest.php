@@ -453,7 +453,7 @@ EOH;
 </optgroup>
 </select>\n
 EOH;
-		$this->assertEquals($expected, form_dropdown('cars', $options, []));
+		$this->assertEquals($expected, form_dropdown('cars', $options));
 	}
 
 	public function testFormDropdownInferred()
@@ -481,7 +481,7 @@ EOH;
 </select>\n
 EOH;
 		$_POST['cars'] = 'audi';
-		$this->assertEquals($expected, form_dropdown('cars', $options, []));
+		$this->assertEquals($expected, form_dropdown('cars', $options));
 		unset($_POST['cars']);
 	}
 
@@ -574,10 +574,13 @@ EOH;
 			'xlarge' => 'Extra Large Shirt',
 		];
 
-		$data  = [
-			'name' 	 	=> 'shirts[]',
-			'options'	=> $options,
-			'selected'  => ['med', 'large'],
+		$data = [
+			'name'     => 'shirts[]',
+			'options'  => $options,
+			'selected' => [
+				'med',
+				'large',
+			],
 		];
 
 		$this->assertEquals($expected, form_multiselect($data));
