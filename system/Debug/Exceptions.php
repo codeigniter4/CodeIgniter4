@@ -324,7 +324,7 @@ class Exceptions
 			if(str_ends_with($path . '/' . $idx, $keyToMask)) {
 				if (is_array($trace) && array_key_exists($idx, $trace)) {
 					$trace[$idx] = '******************';
-				} else if (is_object($trace) && property_exists($trace, $idx)) {
+				} else if (is_object($trace) && property_exists($trace, $idx) && isset($trace->$idx)) {
 					$trace->$idx = '******************';
 				}
 			}
