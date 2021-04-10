@@ -12,6 +12,7 @@
 // Cast language settings
 return [
 	'BaseCastMissing'        => 'The {0} class must inherit the CodeIgniter\Entity\Cast\BaseCast class.',
+	'invalidCastMethod'      => 'The {0} is invalid cast method, valid methods are: ["get", "set"].',
 	'invalidTimestamp'       => 'Type casting "timestamp" expects a correct timestamp.',
 	'jsonErrorCtrlChar'      => 'Unexpected control character found.',
 	'jsonErrorDepth'         => 'Maximum stack depth exceeded.',
@@ -19,5 +20,4 @@ return [
 	'jsonErrorSyntax'        => 'Syntax error, malformed JSON.',
 	'jsonErrorUnknown'       => 'Unknown error.',
 	'jsonErrorUtf8'          => 'Malformed UTF-8 characters, possibly incorrectly encoded.',
-	'wrongCastMethod'        => 'Allowed methods for cast is "get" and "set".',
 ];
