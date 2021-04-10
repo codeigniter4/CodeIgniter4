@@ -18,7 +18,9 @@ use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
@@ -84,6 +86,11 @@ class Toolbar
 	 */
 	public function run(float $startTime, float $totalTime, RequestInterface $request, ResponseInterface $response): string
 	{
+		/**
+		 * @var IncomingRequest $request
+		 * @var Response $response
+		 */
+
 		// Data items used within the view.
 		$data['url']             = current_url();
 		$data['method']          = $request->getMethod(true);
@@ -295,6 +302,11 @@ class Toolbar
 	 */
 	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
 	{
+		/**
+		 * @var IncomingRequest $request
+		 * @var Response $response
+		 */
+
 		if (CI_DEBUG && ! is_cli())
 		{
 			global $app;
@@ -437,8 +449,8 @@ class Toolbar
 		{
 			$history = new History();
 			$history->setFiles(
-					Services::request()->getGet('debugbar_time'),
-					$this->config->maxHistory
+				(int) Services::request()->getGet('debugbar_time'),
+				$this->config->maxHistory
 			);
 
 			$data['collectors'][] = $history->getAsArray();
