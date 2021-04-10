@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Entity\Cast;
 
-use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 
 /**
  * Class TimestampCast
