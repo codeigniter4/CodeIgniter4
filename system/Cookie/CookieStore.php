@@ -12,7 +12,7 @@
 namespace CodeIgniter\Cookie;
 
 use ArrayIterator;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use Countable;
 use IteratorAggregate;
 use Traversable;
