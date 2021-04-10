@@ -3,7 +3,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
