@@ -262,7 +262,7 @@ Class Reference
 
     ::
 
-    	return $this->failValidationError($validation->getErrors());
+    	return $this->failValidationError($validation->getError('api_field'));
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
