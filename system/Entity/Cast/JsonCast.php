@@ -12,7 +12,7 @@
 namespace CodeIgniter\Entity\Cast;
 
 use JsonException;
-use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 use stdClass;
 
 /**
@@ -43,7 +43,7 @@ class JsonCast extends BaseCast
 			}
 			catch (JsonException $e)
 			{
-				throw CastException::forInvalidJsonFormatException($e->getCode());
+				throw CastException::forInvalidJsonFormat($e->getCode());
 			}
 		}
 
@@ -63,7 +63,7 @@ class JsonCast extends BaseCast
 			}
 			catch (JsonException $e)
 			{
-				throw CastException::forInvalidJsonFormatException($e->getCode());
+				throw CastException::forInvalidJsonFormat($e->getCode());
 			}
 		}
 
