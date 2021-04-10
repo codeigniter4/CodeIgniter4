@@ -99,7 +99,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
 		// The cookie is set to be cleared when the request is sent....
 		$this->assertEquals('', $cookie->getValue());
-		$this->assertEquals(0, $cookie->getExpiresTimestamp());
+		$this->assertEquals(0, $cookie->getExpires());
 	}
 
 	public function testGetCookie()

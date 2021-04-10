@@ -41,7 +41,7 @@ final class CookieTest extends CIUnitTestCase
 		$this->assertSame('test', $cookie->getName());
 		$this->assertSame('value', $cookie->getValue());
 		$this->assertSame($options['prefix'], $cookie->getPrefix());
-		$this->assertSame($options['expires'], $cookie->getExpiresTimestamp());
+		$this->assertSame($options['expires'], $cookie->getExpires());
 		$this->assertSame($options['path'], $cookie->getPath());
 		$this->assertSame($options['domain'], $cookie->getDomain());
 		$this->assertSame($options['secure'], $cookie->isSecure());
@@ -64,7 +64,7 @@ final class CookieTest extends CIUnitTestCase
 		$this->assertSame('test', $cookie->getName());
 		$this->assertSame('value', $cookie->getValue());
 		$this->assertSame($config->prefix, $cookie->getPrefix());
-		$this->assertSame($config->expires, $cookie->getExpiresTimestamp());
+		$this->assertSame($config->expires, $cookie->getExpires());
 		$this->assertSame($config->path, $cookie->getPath());
 		$this->assertSame($config->domain, $cookie->getDomain());
 		$this->assertSame($config->secure, $cookie->isSecure());
@@ -118,15 +118,15 @@ final class CookieTest extends CIUnitTestCase
 	{
 		// expires => 0
 		$cookie = Cookie::create('test', 'value');
-		$this->assertSame(0, $cookie->getExpiresTimestamp());
-		$this->assertSame('Thu, 01-Jan-1970 00:00:00 GMT', $cookie->getExpiresString());
+		$this->assertSame(0, $cookie->getExpires());
+		$this->assertSame('Thu, 01-Jan-1970 00:00:00 GMT', $cookie->getExpires(false));
 		$this->assertTrue($cookie->isExpired());
 		$this->assertSame(0, $cookie->getMaxAge());
 
 		$date   = new DateTimeImmutable('2021-01-10 00:00:00 GMT', new DateTimeZone('UTC'));
 		$cookie = Cookie::create('test', 'value', ['expires' => $date]);
-		$this->assertSame((int) $date->format('U'), $cookie->getExpiresTimestamp());
-		$this->assertSame('Sun, 10-Jan-2021 00:00:00 GMT', $cookie->getExpiresString());
+		$this->assertSame((int) $date->format('U'), $cookie->getExpires());
+		$this->assertSame('Sun, 10-Jan-2021 00:00:00 GMT', $cookie->getExpires(false));
 	}
 
 	/**
@@ -208,9 +208,9 @@ final class CookieTest extends CIUnitTestCase
 		$c = $a->withPrefix('my_');
 		$d = $a->withName('prod');
 		$e = $a->withValue('muffin');
-		$f = $a->withExpiresAt('+30 days');
-		$g = $a->withExpired();
-		$h = $a->withNeverExpiring();
+		$f = $a->withExpires('+30 days');
+		$g = $a->withExpires();
+		$h = $a->withExpires(time() + 5 * YEAR);
 		$i = $a->withDomain('localhost');
 		$j = $a->withPath('/web');
 		$k = $a->withSecure();
@@ -236,7 +236,7 @@ final class CookieTest extends CIUnitTestCase
 		$date = new DateTimeImmutable('2021-02-14 00:00:00 GMT', new DateTimeZone('UTC'));
 
 		$a = Cookie::create('cookie', 'lover');
-		$b = $a->withValue('monster')->withPath('/web')->withDomain('localhost')->withExpiresAt($date);
+		$b = $a->withValue('monster')->withPath('/web')->withDomain('localhost')->withExpires($date);
 		$c = $a->withSecure()->withHTTPOnly(false)->withSameSite(Cookie::SAMESITE_STRICT);
 
 		$max = (string) $b->getMaxAge();
@@ -269,7 +269,7 @@ final class CookieTest extends CIUnitTestCase
 		$cookie = Cookie::create('cookie', 'monster');
 
 		$this->assertTrue(isset($cookie['expire']));
-		$this->assertSame($cookie['expire'], $cookie->getExpiresTimestamp());
+		$this->assertSame($cookie['expire'], $cookie->getExpires());
 		$this->assertTrue(isset($cookie['httponly']));
 		$this->assertSame($cookie['httponly'], $cookie->isHTTPOnly());
 		$this->assertTrue(isset($cookie['samesite']));

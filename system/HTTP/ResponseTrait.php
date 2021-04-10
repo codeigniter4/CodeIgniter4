@@ -715,7 +715,7 @@ trait ResponseTrait
 					continue;
 				}
 
-				$cookie = $cookie->withValue('')->withExpired();
+				$cookie = $cookie->withValue('')->withExpires();
 				$found  = true;
 
 				$this->cookieStore = $store->put($cookie);

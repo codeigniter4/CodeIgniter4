@@ -140,7 +140,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => -1000]);
 		$cookie = $response->getCookie('bee');
-		$this->assertSame(0, $cookie->getExpiresTimestamp());
+		$this->assertSame(0, $cookie->getExpires());
 	}
 
 	public function testCookieDelete()
@@ -157,7 +157,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => '']);
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
+		$this->assertTrue($cookie->isExpired(), $cookie->getExpires() . ' should be less than ' . time());
 
 		// delete with no effect
 		$response = new Response(new App());
@@ -171,7 +171,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
+		$this->assertTrue($cookie->isExpired(), $cookie->getExpires() . ' should be less than ' . time());
 
 		$config = config('Cookie');
 		// delete cookie for real, with prefix
@@ -180,7 +180,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
-		$this->assertSame($cookie->getExpiresTimestamp(), 0);
+		$this->assertSame($cookie->getExpires(), 0);
 
 		// delete cookie with wrong prefix?
 		$config->prefix = 'mine';
@@ -188,10 +188,10 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee', '', '', 'wrong');
 		$cookie = $response->getCookie('bee');
-		$this->assertFalse($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
+		$this->assertFalse($cookie->isExpired(), $cookie->getExpires() . ' should be less than ' . time());
 		$response->deleteCookie('bee', '', '', 'mine');
 		$cookie = $response->getCookie('bee');
-		$this->assertSame($cookie->getExpiresTimestamp(), 0);
+		$this->assertSame($cookie->getExpires(), 0);
 
 		// delete cookie with wrong domain?
 		$config->domain = '.mine.com';
@@ -199,10 +199,10 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$response->setCookie(['name' => 'bees', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bees', 'wrong', '', '');
 		$cookie = $response->getCookie('bees');
-		$this->assertFalse($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
+		$this->assertFalse($cookie->isExpired(), $cookie->getExpires() . ' should be less than ' . time());
 		$response->deleteCookie('bees', '.mine.com', '', '');
 		$cookie = $response->getCookie('bees');
-		$this->assertSame($cookie->getExpiresTimestamp(), 0);
+		$this->assertSame($cookie->getExpires(), 0);
 	}
 
 	public function testCookieDefaultSetSameSite()

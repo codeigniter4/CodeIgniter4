@@ -102,18 +102,15 @@ interface CookieInterface
 	public function getValue(): string;
 
 	/**
-	 * Gets the time in Unix timestamp the cookie expires.
+	 * Gets the cookie expires time, when $timestamp is:
+	 * true it's returns Unix timestamp
+	 * false it's returns formatted time.
 	 *
-	 * @return integer
-	 */
-	public function getExpiresTimestamp(): int;
-
-	/**
-	 * Gets the formatted expires time.
+	 * @param boolean $timestamp
 	 *
-	 * @return string
+	 * @return integer|string
 	 */
-	public function getExpiresString(): string;
+	public function getExpires(bool $timestamp = true);
 
 	/**
 	 * Checks if the cookie is expired.

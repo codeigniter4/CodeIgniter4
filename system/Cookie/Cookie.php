@@ -354,17 +354,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getExpiresTimestamp(): int
+	public function getExpires(bool $timestamp = true)
 	{
-		return $this->expires;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getExpiresString(): string
-	{
-		return gmdate(self::EXPIRES_FORMAT, $this->expires);
+		return $timestamp ? $this->expires : gmdate(self::EXPIRES_FORMAT, $this->expires);
 	}
 
 	/**
@@ -496,35 +488,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function withExpiresAt($expires = 0)
+	public function withExpires($expires = 0)
 	{
 		$cookie = clone $this;
 
 		$cookie->expires = static::convertExpiresTimestamp($expires);
-
-		return $cookie;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function withExpired()
-	{
-		$cookie = clone $this;
-
-		$cookie->expires = 0;
-
-		return $cookie;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function withNeverExpiring()
-	{
-		$cookie = clone $this;
-
-		$cookie->expires = time() + 5 * YEAR;
 
 		return $cookie;
 	}
@@ -709,9 +677,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
 			$cookieHeader[] = sprintf('%s=%s', $this->getPrefixedName(), $value);
 
-			if ($this->getExpiresTimestamp() !== 0)
+			if ($this->getExpires() !== 0)
 			{
-				$cookieHeader[] = 'Expires=' . $this->getExpiresString();
+				$cookieHeader[] = 'Expires=' . $this->getExpires(false);
 				$cookieHeader[] = 'Max-Age=' . $this->getMaxAge();
 			}
 		}

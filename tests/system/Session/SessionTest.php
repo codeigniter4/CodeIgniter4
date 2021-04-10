@@ -617,7 +617,7 @@ class SessionTest extends CIUnitTestCase
 
 		$cookies = $session->cookies;
 		$this->assertCount(1, $cookies);
-		$this->assertGreaterThan(8000, $cookies[0]->getExpiresTimestamp());
+		$this->assertGreaterThan(8000, $cookies[0]->getExpires());
 	}
 
 	public function testExpiresOnClose()
@@ -627,6 +627,6 @@ class SessionTest extends CIUnitTestCase
 
 		$cookies = $session->cookies;
 		$this->assertCount(1, $cookies);
-		$this->assertSame(0, $cookies[0]->getExpiresTimestamp());
+		$this->assertSame(0, $cookies[0]->getExpires());
 	}
 }

@@ -372,7 +372,7 @@ class TestResponse extends TestCase
 	public function assertCookieExpired(string $key, string $prefix = '')
 	{
 		$this->assertTrue($this->response->hasCookie($key, null, $prefix));
-		$this->assertGreaterThan(time(), $this->response->getCookie($key, $prefix)->getExpiresTimestamp());
+		$this->assertGreaterThan(time(), $this->response->getCookie($key, $prefix)->getExpires());
 	}
 
 	//--------------------------------------------------------------------

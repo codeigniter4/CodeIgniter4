@@ -151,16 +151,16 @@ Once instantiated, you can easily access a ``Cookie``'s attribute by using one o
     $cookie->getName(); // 'remember_token'
     $cookie->getPrefix(); // '__Secure-'
     $cookie->getPrefixedName(); // '__Secure-remember_token'
-    $cookie->getExpiresTimestamp(); // Unix timestamp
-    $cookie->getExpiresString(); // 'Fri, 14-Feb-2025 00:00:00 GMT'
+    $cookie->getExpires(); // Unix timestamp
+    $cookie->getExpires(false); // 'Fri, 14-Feb-2025 00:00:00 GMT'
     $cookie->isExpired(); // false
     $cookie->getMaxAge(); // the difference from time() to expires
-    $cookie->isRaw(); // false
     $cookie->isSecure(); // true
     $cookie->getPath(); // '/'
     $cookie->getDomain(); // ''
-    $cookie->isHttpOnly(); // true
+    $cookie->isHTTPOnly(); // true
     $cookie->getSameSite(); // 'Lax'
+    $cookie->isRaw(); // false
 
     // additional getter
     $cookie->getId(); // '__Secure-remember_token;;/'
@@ -497,7 +497,7 @@ Class Reference
 
         Create Cookie objects on the fly.
 
-    .. php:method:: __construct(string $name[, string $value = ''[, $expires = 0[, ?string $prefix = null[, ?string $path = null[, ?string $domain = null[, bool $secure = false[, bool $httpOnly = true[, bool $raw = false[, string $sameSite = self::SAMESITE_LAX]]]]]]]]])
+    .. php:method:: __construct(string $name[, string $value = ''[, $expires = 0[, ?string $prefix = null[, ?string $path = null[, ?string $domain = null[, bool $secure = false[, bool $httponly = true[, bool $raw = false[, string $samesite = self::SAMESITE_LAX]]]]]]]]])
 
         :param string $name:
         :param string $value:
@@ -506,9 +506,9 @@ Class Reference
         :param string|null $path:
         :param string|null $domain:
         :param bool $secure:
-        :param bool $httpOnly:
+        :param bool $httponly:
         :param bool $raw:
-        :param string $sameSite:
+        :param string $samesite:
         :rtype: ``Cookie``
         :returns: ``Cookie`` instance
         :throws: ``CookieException``
@@ -525,8 +525,7 @@ Class Reference
     .. php:method:: getName(): string
     .. php:method:: getPrefixedName(): string
     .. php:method:: getValue(): string
-    .. php:method:: getExpiresTimestamp(): int
-    .. php:method:: getExpiresString(): string
+    .. php:method:: getExpires()
     .. php:method:: isExpired(): bool
     .. php:method:: getMaxAge(): int
     .. php:method:: getDomain(): string
@@ -568,28 +567,13 @@ Class Reference
 
         Creates a new Cookie with new value.
 
-    .. php:method:: withExpiresAt($expires)
+    .. php:method:: withExpires($expires)
 
         :param DateTimeInterface|string|int $expires:
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
         Creates a new Cookie with new cookie expires time.
-
-    .. php:method:: withExpired()
-
-        :rtype: ``Cookie``
-        :returns: new ``Cookie`` instance
-
-        Creates a new Cookie that will expire from the browser.
-
-    .. php:method:: withNeverExpiring()
-
-        :param string $name:
-        :rtype: ``Cookie``
-        :returns: new ``Cookie`` instance
-
-        Creates a new Cookie that will virtually never expire.
 
     .. php:method:: withDomain(?string $domain)
 
@@ -615,17 +599,17 @@ Class Reference
 
         Creates a new Cookie with new "Secure" attribute.
 
-    .. php:method:: withHttpOnly([bool $httpOnly = true])
+    .. php:method:: withHTTPOnly([bool $httponly = true])
 
-        :param bool $httpOnly:
+        :param bool $httponly:
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
         Creates a new Cookie with new "HttpOnly" attribute.
 
-    .. php:method:: withSameSite(string $sameSite)
+    .. php:method:: withSameSite(string $samesite)
 
-        :param string $sameSite:
+        :param string $samesite:
         :rtype: ``Cookie``
         :returns: new ``Cookie`` instance
 
