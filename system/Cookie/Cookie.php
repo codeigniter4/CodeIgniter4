@@ -12,7 +12,7 @@
 namespace CodeIgniter\Cookie;
 
 use ArrayAccess;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
