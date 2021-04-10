@@ -419,7 +419,7 @@ class ParserTest extends CIUnitTestCase
 		{
 			$expected = $value;
 		}
-		$this->assertEquals($expected, \esc($value, 'html'));
+		$this->assertEquals($expected, \esc($value));
 	}
 
 	//------------------------------------------------------------------------
