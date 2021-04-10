@@ -5,7 +5,7 @@ namespace CodeIgniter;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionException;
 use DateTime;
-use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Entity\Cast\CastBase64;
