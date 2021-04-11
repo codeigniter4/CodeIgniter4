@@ -318,24 +318,32 @@ class Exceptions
 	 */
 	protected function maskSensitiveData(&$trace, $keysToMask, $path = '') 
 	{
-		foreach($keysToMask as $keyToMask) {
+		foreach($keysToMask as $keyToMask) 
+		{
 			$explode = explode('/', $keyToMask);
 			$idx = end($explode);
-			if((strpos(strrev($path . '/' . $idx), strrev($keyToMask)) === 0)) {
-				if (is_array($trace) && array_key_exists($idx, $trace)) {
+			if((strpos(strrev($path . '/' . $idx), strrev($keyToMask)) === 0)) 
+			{
+				if (is_array($trace) && array_key_exists($idx, $trace)) 
+				{
 					$trace[$idx] = '******************';
-				} else if (is_object($trace) && property_exists($trace, $idx) && isset($trace->$idx)) {
+				} 
+				else if (is_object($trace) && property_exists($trace, $idx) && isset($trace->$idx)) 
+				{
 					$trace->$idx = '******************';
 				}
 			}
 		}
 			
-		if(!is_iterable($trace) && is_object($trace)) {
+		if(!is_iterable($trace) && is_object($trace)) 
+		{
 			$trace = get_object_vars($trace);
 		}
 		
-		if(is_iterable($trace)) {
-			foreach ($trace as $pathKey => $subarray) {
+		if(is_iterable($trace)) 
+		{
+			foreach ($trace as $pathKey => $subarray) 
+			{
 				$this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
 			}
 		}
