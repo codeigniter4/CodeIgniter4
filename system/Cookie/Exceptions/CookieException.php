@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP\Exceptions;
+namespace CodeIgniter\Cookie\Exceptions;
 
 use CodeIgniter\Exceptions\FrameworkException;
 

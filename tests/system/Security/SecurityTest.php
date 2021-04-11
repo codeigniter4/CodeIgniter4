@@ -11,6 +11,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
+use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 
 /**
@@ -21,7 +22,10 @@ class SecurityTest extends CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
+
 		$_COOKIE = [];
+
+		Factories::reset();
 	}
 
 	public function testBasicConfigIsSaved()
@@ -209,12 +213,13 @@ class SecurityTest extends CIUnitTestCase
 		$request = $this->createMock(IncomingRequest::class);
 		$request->method('isSecure')->willReturn(false);
 
-		$config = new MockAppConfig();
+		$config = new CookieConfig();
 
-		$config->cookieSecure = true;
+		$config->secure = true;
+		Factories::injectMock('config', CookieConfig::class, $config);
 
 		$security = $this->getMockBuilder(Security::class)
-			->setConstructorArgs([$config])
+			->setConstructorArgs([new MockAppConfig()])
 			->onlyMethods(['doSendCookie'])
 			->getMock();
 

@@ -12,7 +12,7 @@
 namespace CodeIgniter\Cookie;
 
 use ArrayIterator;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use Countable;
 use IteratorAggregate;
 use Traversable;
@@ -167,11 +167,8 @@ class CookieStore implements Countable, IteratorAggregate
 	public function remove(string $name, string $prefix = '')
 	{
 		$default = Cookie::setDefaults();
-		$name    = $prefix . $name;
-		$domain  = $default['domain'];
-		$path    = $default['path'];
 
-		$id = implode(';', [$name, $domain, $path]);
+		$id = implode(';', [$prefix . $name, $default['path'], $default['domain']]);
 
 		$store = clone $this;
 
@@ -191,7 +188,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @return void
 	 */
-	public function dispatch()
+	public function dispatch(): void
 	{
 		foreach ($this->cookies as $cookie)
 		{
@@ -217,7 +214,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @return array<string, Cookie>
 	 */
-	public function display()
+	public function display(): array
 	{
 		return $this->cookies;
 	}
@@ -237,7 +234,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @return integer
 	 */
-	public function count()
+	public function count(): int
 	{
 		return count($this->cookies);
 	}
@@ -285,7 +282,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @return void
 	 */
-	protected function setRawCookie(string $name, string $value, array $options)
+	protected function setRawCookie(string $name, string $value, array $options): void
 	{
 		setrawcookie($name, $value, $options);
 	}
@@ -301,7 +298,7 @@ class CookieStore implements Countable, IteratorAggregate
 	 *
 	 * @return void
 	 */
-	protected function setCookie(string $name, string $value, array $options)
+	protected function setCookie(string $name, string $value, array $options): void
 	{
 		setcookie($name, $value, $options);
 	}

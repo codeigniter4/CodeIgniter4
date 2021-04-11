@@ -3,9 +3,9 @@
 namespace CodeIgniter\Cookie;
 
 use CodeIgniter\Cookie\Cookie;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\App;
+use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
 use InvalidArgumentException;
@@ -41,35 +41,36 @@ final class CookieTest extends CIUnitTestCase
 		$this->assertSame('test', $cookie->getName());
 		$this->assertSame('value', $cookie->getValue());
 		$this->assertSame($options['prefix'], $cookie->getPrefix());
-		$this->assertSame($options['raw'], $cookie->isRaw());
 		$this->assertSame($options['expires'], $cookie->getExpiresTimestamp());
-		$this->assertSame($options['domain'], $cookie->getDomain());
 		$this->assertSame($options['path'], $cookie->getPath());
+		$this->assertSame($options['domain'], $cookie->getDomain());
 		$this->assertSame($options['secure'], $cookie->isSecure());
-		$this->assertSame($options['httponly'], $cookie->isHttpOnly());
+		$this->assertSame($options['httponly'], $cookie->isHTTPOnly());
 		$this->assertSame($options['samesite'], $cookie->getSameSite());
+		$this->assertSame($options['raw'], $cookie->isRaw());
 	}
 
 	public function testConfigInjectionForDefaults(): void
 	{
 		/**
-		 * @var App $app
+		 * @var CookieConfig $config
 		 */
-		$app = config('App', false);
-		$old = Cookie::setDefaults($app);
+		$config = new CookieConfig();
+
+		$old = Cookie::setDefaults($config);
 
 		$cookie = Cookie::create('test', 'value');
-		$this->assertSame($app->cookiePrefix . 'test', $cookie->getPrefixedName());
+		$this->assertSame($config->prefix . 'test', $cookie->getPrefixedName());
 		$this->assertSame('test', $cookie->getName());
 		$this->assertSame('value', $cookie->getValue());
-		$this->assertSame($app->cookiePrefix, $cookie->getPrefix());
-		$this->assertSame($app->cookieRaw, $cookie->isRaw());
-		$this->assertSame($app->cookieExpires, $cookie->getExpiresTimestamp());
-		$this->assertSame($app->cookieDomain, $cookie->getDomain());
-		$this->assertSame($app->cookiePath, $cookie->getPath());
-		$this->assertSame($app->cookieSecure, $cookie->isSecure());
-		$this->assertSame($app->cookieHTTPOnly, $cookie->isHttpOnly());
-		$this->assertSame($app->cookieSameSite, $cookie->getSameSite());
+		$this->assertSame($config->prefix, $cookie->getPrefix());
+		$this->assertSame($config->expires, $cookie->getExpiresTimestamp());
+		$this->assertSame($config->path, $cookie->getPath());
+		$this->assertSame($config->domain, $cookie->getDomain());
+		$this->assertSame($config->secure, $cookie->isSecure());
+		$this->assertSame($config->httponly, $cookie->isHTTPOnly());
+		$this->assertSame($config->samesite, $cookie->getSameSite());
+		$this->assertSame($config->raw, $cookie->isRaw());
 
 		Cookie::setDefaults($old);
 	}
@@ -213,7 +214,7 @@ final class CookieTest extends CIUnitTestCase
 		$i = $a->withDomain('localhost');
 		$j = $a->withPath('/web');
 		$k = $a->withSecure();
-		$l = $a->withHttpOnly();
+		$l = $a->withHTTPOnly();
 		$m = $a->withSameSite(Cookie::SAMESITE_STRICT);
 
 		$this->assertNotSame($a, $b);
@@ -236,7 +237,7 @@ final class CookieTest extends CIUnitTestCase
 
 		$a = Cookie::create('cookie', 'lover');
 		$b = $a->withValue('monster')->withPath('/web')->withDomain('localhost')->withExpiresAt($date);
-		$c = $a->withSecure()->withHttpOnly(false)->withSameSite(Cookie::SAMESITE_STRICT);
+		$c = $a->withSecure()->withHTTPOnly(false)->withSameSite(Cookie::SAMESITE_STRICT);
 
 		$max = (string) $b->getMaxAge();
 		$old = Cookie::setDefaults(['samesite' => '']);
@@ -270,7 +271,7 @@ final class CookieTest extends CIUnitTestCase
 		$this->assertTrue(isset($cookie['expire']));
 		$this->assertSame($cookie['expire'], $cookie->getExpiresTimestamp());
 		$this->assertTrue(isset($cookie['httponly']));
-		$this->assertSame($cookie['httponly'], $cookie->isHttpOnly());
+		$this->assertSame($cookie['httponly'], $cookie->isHTTPOnly());
 		$this->assertTrue(isset($cookie['samesite']));
 		$this->assertSame($cookie['samesite'], $cookie->getSameSite());
 		$this->assertTrue(isset($cookie['path']));

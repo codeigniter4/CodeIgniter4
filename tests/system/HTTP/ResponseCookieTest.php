@@ -3,9 +3,10 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\Cookie as CookieConfig;
 
 /**
  * @internal
@@ -30,9 +31,9 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookiePrefixed()
 	{
-		$config               = new App();
-		$config->cookiePrefix = 'mine';
-		$response             = new Response($config);
+		$config         = config('Cookie');
+		$config->prefix = 'mine';
+		$response       = new Response(new App());
 		$response->setCookie('foo', 'bar');
 
 		$this->assertInstanceOf(Cookie::class, $response->getCookie('foo'));
@@ -45,8 +46,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookiesAll()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie('foo', 'bar');
 		$response->setCookie('bee', 'bop');
 
@@ -57,8 +57,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieGet()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie('foo', 'bar');
 		$response->setCookie('bee', 'bop');
 
@@ -68,8 +67,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieDomain()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
@@ -79,8 +77,9 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$cookie = $response->getCookie('bee');
 		$this->assertSame('somewhere.com', $cookie->getDomain());
 
-		$config->cookieDomain = 'mine.com';
-		$response             = new Response($config);
+		$config         = config('Cookie');
+		$config->domain = 'mine.com';
+		$response       = new Response(new App());
 		$response->setCookie('alu', 'la');
 		$cookie = $response->getCookie('alu');
 		$this->assertSame('mine.com', $cookie->getDomain());
@@ -88,8 +87,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookiePath()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
@@ -102,8 +100,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieSecure()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
@@ -116,33 +113,31 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieHTTPOnly()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
-		$this->assertTrue($cookie->isHttpOnly());
+		$this->assertTrue($cookie->isHTTPOnly());
 
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => false]);
 		$cookie = $response->getCookie('bee');
-		$this->assertTrue($cookie->isHttpOnly());
+		$this->assertTrue($cookie->isHTTPOnly());
 	}
 
 	public function testCookieExpiry()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
 		$this->assertTrue($cookie->isExpired());
 
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$cookie = $response->getCookie('bee');
 		$this->assertFalse($cookie->isExpired());
 
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => -1000]);
 		$cookie = $response->getCookie('bee');
 		$this->assertSame(0, $cookie->getExpiresTimestamp());
@@ -150,8 +145,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieDelete()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		// foo is already expired, bee will stick around
 		$response->setCookie('foo', 'bar');
@@ -160,36 +154,37 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$this->assertFalse($cookie->isExpired());
 
 		// delete cookie manually
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => '']);
 		$cookie = $response->getCookie('bee');
 		$this->assertTrue($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
 
 		// delete with no effect
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie();
 		$cookie = $response->getCookie('bee');
 		$this->assertFalse($cookie->isExpired());
 
 		// delete cookie for real
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
 		$this->assertTrue($cookie->isExpired(), $cookie->getExpiresTimestamp() . ' should be less than ' . time());
 
+		$config = config('Cookie');
 		// delete cookie for real, with prefix
-		$config->cookiePrefix = 'mine';
-		$response             = new Response($config);
+		$config->prefix = 'mine';
+		$response       = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee');
 		$cookie = $response->getCookie('bee');
 		$this->assertSame($cookie->getExpiresTimestamp(), 0);
 
 		// delete cookie with wrong prefix?
-		$config->cookiePrefix = 'mine';
-		$response             = new Response($config);
+		$config->prefix = 'mine';
+		$response       = new Response(new App());
 		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bee', '', '', 'wrong');
 		$cookie = $response->getCookie('bee');
@@ -199,8 +194,8 @@ final class ResponseCookieTest extends CIUnitTestCase
 		$this->assertSame($cookie->getExpiresTimestamp(), 0);
 
 		// delete cookie with wrong domain?
-		$config->cookieDomain = '.mine.com';
-		$response             = new Response($config);
+		$config->domain = '.mine.com';
+		$response       = new Response(new App());
 		$response->setCookie(['name' => 'bees', 'value' => 'bop', 'expire' => 1000]);
 		$response->deleteCookie('bees', 'wrong', '', '');
 		$cookie = $response->getCookie('bees');
@@ -212,8 +207,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 	public function testCookieDefaultSetSameSite()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie([
 			'name'  => 'bar',
 			'value' => 'foo',
@@ -221,15 +215,15 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$allCookies = $response->getCookies();
 		$this->assertCount(1, $allCookies);
-		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
-		$this->assertSame('Lax', $allCookies['bar;;/']->getSameSite());
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;/;']);
+		$this->assertSame('Lax', $allCookies['bar;/;']->getSameSite());
 	}
 
 	public function testCookieStrictSetSameSite()
 	{
-		$config                 = new App();
-		$config->cookieSameSite = 'Strict';
-		$response               = new Response($config);
+		$config           = config('Cookie');
+		$config->samesite = 'Strict';
+		$response         = new Response(new App());
 		$response->setCookie([
 			'name'  => 'bar',
 			'value' => 'foo',
@@ -237,15 +231,15 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$allCookies = $response->getCookies();
 		$this->assertCount(1, $allCookies);
-		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
-		$this->assertSame('Strict', $allCookies['bar;;/']->getSameSite());
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;/;']);
+		$this->assertSame('Strict', $allCookies['bar;/;']->getSameSite());
 	}
 
 	public function testCookieBlankSetSameSite()
 	{
-		$config                 = new App();
-		$config->cookieSameSite = '';
-		$response               = new Response($config);
+		$config           = config('Cookie');
+		$config->samesite = '';
+		$response         = new Response(new App());
 		$response->setCookie([
 			'name'  => 'bar',
 			'value' => 'foo',
@@ -253,15 +247,15 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$allCookies = $response->getCookies();
 		$this->assertCount(1, $allCookies);
-		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
-		$this->assertSame('', $allCookies['bar;;/']->getSameSite());
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;/;']);
+		$this->assertSame('', $allCookies['bar;/;']->getSameSite());
 	}
 
 	public function testCookieWithoutSameSite()
 	{
-		$config = new App();
-		unset($config->cookieSameSite);
-		$response = new Response($config);
+		$config = new CookieConfig();
+		unset($config->samesite);
+		$response = new Response(new App());
 		$response->setCookie([
 			'name'  => 'bar',
 			'value' => 'foo',
@@ -269,14 +263,13 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$allCookies = $response->getCookies();
 		$this->assertCount(1, $allCookies);
-		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
-		$this->assertSame('Lax', $allCookies['bar;;/']->getSameSite());
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;/;']);
+		$this->assertSame('Lax', $allCookies['bar;/;']->getSameSite());
 	}
 
 	public function testCookieStrictSameSite()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 		$response->setCookie([
 			'name'     => 'bar',
 			'value'    => 'foo',
@@ -285,14 +278,13 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$allCookies = $response->getCookies();
 		$this->assertCount(1, $allCookies);
-		$this->assertInstanceOf(Cookie::class, $allCookies['bar;;/']);
-		$this->assertSame('Strict', $allCookies['bar;;/']->getSameSite());
+		$this->assertInstanceOf(Cookie::class, $allCookies['bar;/;']);
+		$this->assertSame('Strict', $allCookies['bar;/;']->getSameSite());
 	}
 
 	public function testCookieInvalidSameSite()
 	{
-		$config   = new App();
-		$response = new Response($config);
+		$response = new Response(new App());
 
 		$this->expectException(CookieException::class);
 		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));

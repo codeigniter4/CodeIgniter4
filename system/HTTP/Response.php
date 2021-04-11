@@ -13,9 +13,10 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
-use CodeIgniter\HTTP\Exceptions\CookieException;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Config\ContentSecurityPolicy as CSPConfig;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -151,7 +152,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		$this->noCache();
 
 		// We need CSP object even if not enabled to avoid calls to non existing methods
-		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
+		$this->CSP = new ContentSecurityPolicy(new CSPConfig());
 
 		$this->CSPEnabled = $config->CSPEnabled;
 
@@ -173,7 +174,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		}
 
 		$this->cookieStore = new CookieStore([]);
-		Cookie::setDefaults($config);
+		Cookie::setDefaults(config('Cookie'));
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');

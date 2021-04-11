@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": "^7.3||^8.0",
+		"php": "^7.3 || ^8.0",
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -22,7 +22,7 @@
 		"phpstan/phpstan": "0.12.83",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
-		"rector/rector": "^0.10",
+		"rector/rector": "0.10.4",
 		"squizlabs/php_codesniffer": "^3.3"
 	},
 	"suggest": {

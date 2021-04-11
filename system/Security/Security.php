@@ -15,6 +15,7 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App;
+use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 
 /**
@@ -136,11 +137,18 @@ class Security implements SecurityInterface
 		$this->headerName = $security->headerName ?? $config->CSRFHeaderName ?? $this->headerName;
 		$this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
 		$rawCookieName    = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
-		$this->cookieName = $config->cookiePrefix . $rawCookieName;
+
+		/**
+		 * @var CookieConfig
+		 */
+		$cookie = config('Cookie');
+
+		$cookiePrefix     = $cookie->prefix ?? $config->cookiePrefix;
+		$this->cookieName = $cookiePrefix . $rawCookieName;
 
 		$expires = $security->expires ?? $config->CSRFExpire ?? 7200;
 
-		Cookie::setDefaults($config);
+		Cookie::setDefaults($cookie);
 		$this->cookie = Cookie::create($rawCookieName, $this->generateHash(), [
 			'expires' => $expires === 0 ? 0 : time() + $expires,
 		]);

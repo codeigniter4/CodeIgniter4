@@ -20,15 +20,6 @@ use DateTimeInterface;
 interface CloneableCookieInterface extends CookieInterface
 {
 	/**
-	 * Creates a new Cookie with URL encoding option updated.
-	 *
-	 * @param boolean $raw
-	 *
-	 * @return static
-	 */
-	public function withRaw(bool $raw = true);
-
-	/**
 	 * Creates a new Cookie with a new cookie prefix.
 	 *
 	 * @param string $prefix
@@ -79,15 +70,6 @@ interface CloneableCookieInterface extends CookieInterface
 	public function withNeverExpiring();
 
 	/**
-	 * Creates a new Cookie with a new domain the cookie is available.
-	 *
-	 * @param string|null $domain
-	 *
-	 * @return static
-	 */
-	public function withDomain(?string $domain);
-
-	/**
 	 * Creates a new Cookie with a new path on the server the cookie is available.
 	 *
 	 * @param string|null $path
@@ -95,6 +77,15 @@ interface CloneableCookieInterface extends CookieInterface
 	 * @return static
 	 */
 	public function withPath(?string $path);
+
+	/**
+	 * Creates a new Cookie with a new domain the cookie is available.
+	 *
+	 * @param string|null $domain
+	 *
+	 * @return static
+	 */
+	public function withDomain(?string $domain);
 
 	/**
 	 * Creates a new Cookie with a new "Secure" attribute.
@@ -108,18 +99,27 @@ interface CloneableCookieInterface extends CookieInterface
 	/**
 	 * Creates a new Cookie with a new "HttpOnly" attribute
 	 *
-	 * @param boolean $httpOnly
+	 * @param boolean $httponly
 	 *
 	 * @return static
 	 */
-	public function withHttpOnly(bool $httpOnly = true);
+	public function withHTTPOnly(bool $httponly = true);
 
 	/**
 	 * Creates a new Cookie with a new "SameSite" attribute.
 	 *
-	 * @param string $sameSite
+	 * @param string $samesite
 	 *
 	 * @return static
 	 */
-	public function withSameSite(string $sameSite);
+	public function withSameSite(string $samesite);
+
+	/**
+	 * Creates a new Cookie with URL encoding option updated.
+	 *
+	 * @param boolean $raw
+	 *
+	 * @return static
+	 */
+	public function withRaw(bool $raw = true);
 }

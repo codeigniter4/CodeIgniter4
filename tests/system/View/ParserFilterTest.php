@@ -125,7 +125,7 @@ class ParserFilterTest extends CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$value1 = esc('<script>', 'html');
+		$value1 = esc('<script>');
 		$value2 = esc('<script>', 'js');
 
 		$data = [

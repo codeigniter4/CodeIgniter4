@@ -3,7 +3,6 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use DateTimeInterface;
 
 class App extends BaseConfig
 {
@@ -242,6 +241,8 @@ class App extends BaseConfig
 	 * Set a cookie name prefix if you need to avoid collisions.
 	 *
 	 * @var string
+	 * 
+	 * @deprecated use Config\Cookie::$prefix property instead.
 	 */
 	public $cookiePrefix = '';
 
@@ -253,6 +254,8 @@ class App extends BaseConfig
 	 * Set to `.your-domain.com` for site-wide cookies.
 	 *
 	 * @var string
+	 * 
+	 * @deprecated use Config\Cookie::$domain property instead.
 	 */
 	public $cookieDomain = '';
 
@@ -264,6 +267,8 @@ class App extends BaseConfig
 	 * Typically will be a forward slash.
 	 *
 	 * @var string
+	 * 
+	 * @deprecated use Config\Cookie::$path property instead.
 	 */
 	public $cookiePath = '/';
 
@@ -275,6 +280,8 @@ class App extends BaseConfig
 	 * Cookie will only be set if a secure HTTPS connection exists.
 	 *
 	 * @var boolean
+	 * 
+	 * @deprecated use Config\Cookie::$secure property instead.
 	 */
 	public $cookieSecure = false;
 
@@ -286,6 +293,8 @@ class App extends BaseConfig
 	 * Cookie will only be accessible via HTTP(S) (no JavaScript).
 	 *
 	 * @var boolean
+	 * 
+	 * @deprecated use Config\Cookie::$httponly property instead.
 	 */
 	public $cookieHTTPOnly = true;
 
@@ -310,39 +319,10 @@ class App extends BaseConfig
 	 * will be set on cookies. If set to `None`, `$cookieSecure` must also be set.
 	 *
 	 * @var string
+	 * 
+	 * @deprecated use Config\Cookie::$samesite property instead.
 	 */
 	public $cookieSameSite = 'Lax';
-
-	/**
-	 * --------------------------------------------------------------------------
-	 * Cookie Raw
-	 * --------------------------------------------------------------------------
-	 *
-	 * This flag allows setting a "raw" cookie, i.e., its name and value are
-	 * not URL encoded using `rawurlencode()`.
-	 *
-	 * If this is set to `true`, cookie names should be compliant of RFC 2616's
-	 * list of allowed characters.
-	 *
-	 * @var boolean
-	 *
-	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
-	 * @see https://tools.ietf.org/html/rfc2616#section-2.2
-	 */
-	public $cookieRaw = false;
-
-	/**
-	 * --------------------------------------------------------------------------
-	 * Cookie Expires Timestamp
-	 * --------------------------------------------------------------------------
-	 *
-	 * Default expires timestamp for cookies. Setting this to `0` will mean the
-	 * cookie will not have the `Expires` attribute and will behave as a session
-	 * cookie.
-	 *
-	 * @var DateTimeInterface|integer|string
-	 */
-	public $cookieExpires = 0;
 
 	/**
 	 * --------------------------------------------------------------------------

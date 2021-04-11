@@ -29,7 +29,7 @@ use InvalidArgumentException;
  * - Headers
  * - Message body
  *
- * @mixin \CodeIgniter\HTTP\RedirectResponse
+ * @mixin RedirectResponse
  */
 interface ResponseInterface
 {

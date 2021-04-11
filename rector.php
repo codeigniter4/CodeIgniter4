@@ -14,6 +14,7 @@ use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
+use Rector\DeadCode\Rector\MethodCall\RemoveDefaultArgumentValueRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -47,10 +48,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	]);
 
 	// auto import fully qualified class names
-	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
+	// temporary disable auto import as cause spaces on @param/@throws trimmed
+	// $parameters->set(Option::AUTO_IMPORT_NAMES, true);
 	$parameters->set(Option::ENABLE_CACHE, true);
 	$parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
-	$parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, __DIR__ . '/phpstan.neon.dist');
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
@@ -73,4 +74,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(SimplifyIfElseToTernaryRector::class);
 	$services->set(UnusedForeachValueToArrayKeysRector::class);
 	$services->set(RemoveConcatAutocastRector::class);
+	$services->set(RemoveDefaultArgumentValueRector::class);
 };
