@@ -2,7 +2,7 @@
 
 namespace Tests\Support;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 class SomeEntity extends Entity
 {
