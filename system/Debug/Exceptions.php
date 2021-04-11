@@ -321,7 +321,7 @@ class Exceptions
 		foreach($keysToMask as $keyToMask) {
 			$explode = explode('/', $keyToMask);
 			$idx = end($explode);
-			if(str_ends_with($path . '/' . $idx, $keyToMask)) {
+			if((strpos(strrev($path . '/' . $idx), strrev($keyToMask)) === 0)) {
 				if (is_array($trace) && array_key_exists($idx, $trace)) {
 					$trace[$idx] = '******************';
 				} else if (is_object($trace) && property_exists($trace, $idx) && isset($trace->$idx)) {
