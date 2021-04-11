@@ -12,7 +12,7 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
