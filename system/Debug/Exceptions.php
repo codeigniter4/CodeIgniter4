@@ -294,7 +294,9 @@ class Exceptions
 	protected function collectVars(Throwable $exception, int $statusCode): array
 	{
 		$trace = $exception->getTrace();
-		if(!empty($this->config->sensitiveDataInTrace)) {
+
+		if (! empty($this->config->sensitiveDataInTrace))
+		{
 			$this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
 		}
 		
