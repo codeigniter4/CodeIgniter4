@@ -143,8 +143,6 @@ class CodeIgniter
 	 */
 	protected $useSafeOutput = false;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -154,14 +152,16 @@ class CodeIgniter
 	{
 		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
 		{
-			die(lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION]));
+			$message = extension_loaded('intl')
+				? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
+				: sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
+
+			exit($message);
 		}
 
 		$this->startTime = microtime(true);
 		$this->config    = $config;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles some basic app and environment setup.
@@ -178,9 +178,7 @@ class CodeIgniter
 		// Run this check for manual installations
 		if (! is_file(COMPOSER_PATH))
 		{
-			// @codeCoverageIgnoreStart
-			$this->resolvePlatformExtensions();
-			// @codeCoverageIgnoreEnd
+			$this->resolvePlatformExtensions(); // @codeCoverageIgnore
 		}
 
 		// Set default locale on the server
@@ -193,19 +191,16 @@ class CodeIgniter
 
 		if (! CI_DEBUG)
 		{
-			// @codeCoverageIgnoreStart
-			Kint::$enabled_mode = false;
-			// @codeCoverageIgnoreEnd
+			Kint::$enabled_mode = false; // @codeCoverageIgnore
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks system for missing required PHP extensions.
 	 *
-	 * @return void
 	 * @throws FrameworkException
+	 *
+	 * @return void
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -229,13 +224,11 @@ class CodeIgniter
 			}
 		}
 
-		if ($missingExtensions)
+		if ($missingExtensions !== [])
 		{
 			throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Initializes Kint

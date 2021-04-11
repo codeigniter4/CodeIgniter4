@@ -2,7 +2,7 @@
 
 namespace {namespace};
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 class {class} extends Entity
 {

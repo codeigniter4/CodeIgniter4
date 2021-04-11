@@ -3,7 +3,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;

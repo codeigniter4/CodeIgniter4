@@ -9,19 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsFloat
+ * Class ObjectCast
  */
-class CastAsFloat extends AbstractCast
+class ObjectCast extends BaseCast
 {
-
 	/**
 	 * @inheritDoc
 	 */
-	public static function get($value, array $params = []): float
+	public static function get($value, array $params = []): object
 	{
-		return (float) $value;
+		return (object) $value;
 	}
 }

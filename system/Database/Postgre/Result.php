@@ -12,7 +12,7 @@
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
