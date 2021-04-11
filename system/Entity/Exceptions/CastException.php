@@ -22,12 +22,12 @@ class CastException extends FrameworkException
 
 	public static function forInvalidInterface($class)
 	{
-		return new static(lang('Cast.BaseCastMissing', [$class]));
+		return new static(lang('Cast.baseCastMissing', [$class]));
 	}
 
 	public static function forInvalidJsonFormat(int $error)
 	{
-		switch($error)
+		switch ($error)
 		{
 			case JSON_ERROR_DEPTH:
 				return new static(lang('Cast.jsonErrorDepth'));
