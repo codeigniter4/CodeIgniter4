@@ -25,6 +25,9 @@ class CastException extends CriticalError
 	 */
 	protected $code = 3;
 
+	/**
+	 * @deprecated use CodeIgniter\Entity\Exceptions\CastException instead.
+	 */
 	public static function forInvalidJsonFormatException(int $error)
 	{
 		switch($error)
