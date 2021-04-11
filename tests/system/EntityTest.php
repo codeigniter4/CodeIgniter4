@@ -701,8 +701,8 @@ class EntityTest extends CIUnitTestCase
 
 		$this->expectException(CastException::class);
 		$this->expectErrorMessage(
-			'The Tests\Support\Entity\Cast\NotExtendsBaseCast class '
-			. 'must inherit the CodeIgniter\Entity\Cast\BaseCast class'
+			'The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class '
+			. 'must inherit the "CodeIgniter\Entity\Cast\BaseCast" class'
 		);
 		$entity->second = 'throw Exception';
 	}
