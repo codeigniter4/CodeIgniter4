@@ -92,7 +92,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv-beta, gd, sqlite3, redis, memcached, pgsql
+          extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, pgsql
           coverage: xdebug
         env:
           update: true
