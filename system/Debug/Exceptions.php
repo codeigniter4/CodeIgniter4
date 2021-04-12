@@ -298,7 +298,7 @@ class Exceptions
 		{
 			$this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
 		}
-		
+
 		return [
 			'title'   => get_class($exception),
 			'type'    => get_class($exception),
@@ -336,12 +336,12 @@ class Exceptions
 				}
 			}
 		}
-			
+
 		if (! is_iterable($trace) && is_object($trace)) 
 		{
 			$trace = get_object_vars($trace);
 		}
-		
+
 		if (is_iterable($trace)) 
 		{
 			foreach ($trace as $pathKey => $subarray) 
