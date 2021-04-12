@@ -303,143 +303,6 @@ class Entity implements JsonSerializable
 	}
 
 	/**
-	 * Magic method to allow retrieval of protected and private class properties
-	 * either by their name, or through a `getCamelCasedProperty()` method.
-	 *
-	 * Examples:
-	 *  $p = $this->my_property
-	 *  $p = $this->getMyProperty()
-	 *
-	 * @param string $key
-	 *
-	 * @throws Exception
-	 *
-	 * @return mixed
-	 */
-	public function __get(string $key)
-	{
-		$key = $this->mapProperty($key);
-
-		$result = null;
-
-		// Convert to CamelCase for the method
-		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-
-		// if a set* method exists for this key,
-		// use that method to insert this value.
-		if (method_exists($this, $method))
-		{
-			$result = $this->$method();
-		}
-
-		// Otherwise return the protected property
-		// if it exists.
-		elseif (array_key_exists($key, $this->attributes))
-		{
-			$result = $this->attributes[$key];
-		}
-
-		// Do we need to mutate this into a date?
-		if (in_array($key, $this->dates, true))
-		{
-			$result = $this->mutateDate($result);
-		}
-		// Or cast it as something?
-		elseif ($this->_cast)
-		{
-			$result = $this->castAs($result, $key, 'get');
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Magic method to all protected/private class properties to be easily set,
-	 * either through a direct access or a `setCamelCasedProperty()` method.
-	 *
-	 * Examples:
-	 *  $this->my_property = $p;
-	 *  $this->setMyProperty() = $p;
-	 *
-	 * @param string     $key
-	 * @param mixed|null $value
-	 *
-	 * @throws Exception
-	 *
-	 * @return $this
-	 */
-	public function __set(string $key, $value = null)
-	{
-		$key = $this->mapProperty($key);
-
-		// Check if the field should be mutated into a date
-		if (in_array($key, $this->dates, true))
-		{
-			$value = $this->mutateDate($value);
-		}
-
-		$value = $this->castAs($value, $key, 'set');
-
-		// if a set* method exists for this key,
-		// use that method to insert this value.
-		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-		
-		if (method_exists($this, $method))
-		{
-			$this->$method($value);
-
-			return $this;
-		}
-
-		// Otherwise, just the value.
-		// This allows for creation of new class
-		// properties that are undefined, though
-		// they cannot be saved. Useful for
-		// grabbing values through joins,
-		// assigning relationships, etc.
-		$this->attributes[$key] = $value;
-
-		return $this;
-	}
-
-	/**
-	 * Unsets an attribute property.
-	 *
-	 * @param string $key
-	 *
-	 * @throws ReflectionException
-	 * 
-	 * @return void
-	 */
-	public function __unset(string $key): void
-	{
-		unset($this->attributes[$key]);
-	}
-
-	/**
-	 * Returns true if a property exists names $key, or a getter method
-	 * exists named like for __get().
-	 *
-	 * @param string $key
-	 *
-	 * @return boolean
-	 */
-	public function __isset(string $key): bool
-	{
-		$key = $this->mapProperty($key);
-
-		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-
-		if (method_exists($this, $method))
-		{
-			return true;
-		}
-
-		return isset($this->attributes[$key]);
-	}
-
-	/**
 	 * Set raw data array without any mutations
 	 *
 	 * @param  array $data
@@ -611,5 +474,142 @@ class Entity implements JsonSerializable
 		$this->_cast = $cast;
 
 		return $this;
+	}
+
+	/**
+	 * Magic method to allow retrieval of protected and private class properties
+	 * either by their name, or through a `getCamelCasedProperty()` method.
+	 *
+	 * Examples:
+	 *  $p = $this->my_property
+	 *  $p = $this->getMyProperty()
+	 *
+	 * @param string $key
+	 *
+	 * @throws Exception
+	 *
+	 * @return mixed
+	 */
+	public function __get(string $key)
+	{
+		$key = $this->mapProperty($key);
+
+		$result = null;
+
+		// Convert to CamelCase for the method
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+
+		// if a set* method exists for this key,
+		// use that method to insert this value.
+		if (method_exists($this, $method))
+		{
+			$result = $this->$method();
+		}
+
+		// Otherwise return the protected property
+		// if it exists.
+		elseif (array_key_exists($key, $this->attributes))
+		{
+			$result = $this->attributes[$key];
+		}
+
+		// Do we need to mutate this into a date?
+		if (in_array($key, $this->dates, true))
+		{
+			$result = $this->mutateDate($result);
+		}
+		// Or cast it as something?
+		elseif ($this->_cast)
+		{
+			$result = $this->castAs($result, $key);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Magic method to all protected/private class properties to be easily set,
+	 * either through a direct access or a `setCamelCasedProperty()` method.
+	 *
+	 * Examples:
+	 *  $this->my_property = $p;
+	 *  $this->setMyProperty() = $p;
+	 *
+	 * @param string     $key
+	 * @param mixed|null $value
+	 *
+	 * @throws Exception
+	 *
+	 * @return $this
+	 */
+	public function __set(string $key, $value = null)
+	{
+		$key = $this->mapProperty($key);
+
+		// Check if the field should be mutated into a date
+		if (in_array($key, $this->dates, true))
+		{
+			$value = $this->mutateDate($value);
+		}
+
+		$value = $this->castAs($value, $key, 'set');
+
+		// if a set* method exists for this key,
+		// use that method to insert this value.
+		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		
+		if (method_exists($this, $method))
+		{
+			$this->$method($value);
+
+			return $this;
+		}
+
+		// Otherwise, just the value.
+		// This allows for creation of new class
+		// properties that are undefined, though
+		// they cannot be saved. Useful for
+		// grabbing values through joins,
+		// assigning relationships, etc.
+		$this->attributes[$key] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Unsets an attribute property.
+	 *
+	 * @param string $key
+	 *
+	 * @throws ReflectionException
+	 * 
+	 * @return void
+	 */
+	public function __unset(string $key): void
+	{
+		unset($this->attributes[$key]);
+	}
+
+	/**
+	 * Returns true if a property exists names $key, or a getter method
+	 * exists named like for __get().
+	 *
+	 * @param string $key
+	 *
+	 * @return boolean
+	 */
+	public function __isset(string $key): bool
+	{
+		$key = $this->mapProperty($key);
+
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+
+		if (method_exists($this, $method))
+		{
+			return true;
+		}
+
+		return isset($this->attributes[$key]);
 	}
 }
