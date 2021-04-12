@@ -152,7 +152,11 @@ class CodeIgniter
 	{
 		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
 		{
-			exit(lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION]));
+			$message = extension_loaded('intl')
+				? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
+				: sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
+
+			exit($message);
 		}
 
 		$this->startTime = microtime(true);
