@@ -134,6 +134,7 @@ class BaseConfig
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
 		$shortPrefix = ltrim($shortPrefix, '\\');
+
 		switch (true)
 		{
 			case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
@@ -145,7 +146,9 @@ class BaseConfig
 			case array_key_exists("{$prefix}.{$property}", $_SERVER):
 				return $_SERVER["{$prefix}.{$property}"];
 			default:
-				$value = getenv($property);
+				$value = getenv("{$shortPrefix}.{$property}");
+				$value = $value === false ? getenv("{$prefix}.{$property}") : $value;
+
 				return $value === false ? null : $value;
 		}
 	}

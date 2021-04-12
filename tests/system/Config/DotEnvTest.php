@@ -172,7 +172,7 @@ class DotEnvTest extends CIUnitTestCase
 		$dotenv = new Dotenv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$this->assertEquals('complex', $_SERVER['simple.name']);
+		$this->assertEquals('complex', $_SERVER['SimpleConfig.simple.name']);
 	}
 
 	//--------------------------------------------------------------------
