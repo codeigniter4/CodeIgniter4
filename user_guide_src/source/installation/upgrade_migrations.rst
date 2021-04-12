@@ -119,3 +119,22 @@ Path: ``app/Database/Migrations``::
             $this->forge->dropTable('blog');
         }
     }
+
+Search & Replace
+================
+
+You can use to following table to search & replace your old CI3 files.
+
++------------------------------+----------------------------+
+|  Search                      | Replace                    |
++==============================+============================+
+| extends CI_Migration         | extends Migration          |
++------------------------------+----------------------------+
+| $this->dbforge->add_field    | $this->forge->addField     |
++------------------------------+----------------------------+
+| $this->dbforge->add_key      | $this->forge->addKey       |
++------------------------------+----------------------------+
+| $this->dbforge->create_table | $this->forge->createTable  |
++------------------------------+----------------------------+
+| $this->dbforge->drop_table   | $this->forge->dropTable    |
++------------------------------+----------------------------+
