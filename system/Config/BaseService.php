@@ -183,7 +183,7 @@ class BaseService
 		if (! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
-			array_push($params, false);
+			$params[] = false;
 
 			static::$instances[$key] = static::$key(...$params);
 		}

@@ -125,7 +125,7 @@ class Negotiate
 	 */
 	public function encoding(array $supported = []): string
 	{
-		array_push($supported, 'identity');
+		$supported[] = 'identity';
 
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}

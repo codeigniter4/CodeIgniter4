@@ -3,6 +3,7 @@
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
+use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -74,4 +75,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(UnusedForeachValueToArrayKeysRector::class);
 	$services->set(RemoveConcatAutocastRector::class);
 	$services->set(RemoveDefaultArgumentValueRector::class);
+	$services->set(ChangeArrayPushToArrayAssignRector::class);
 };
