@@ -10,6 +10,7 @@ use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
+use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
@@ -76,4 +77,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(RemoveConcatAutocastRector::class);
 	$services->set(RemoveDefaultArgumentValueRector::class);
 	$services->set(ChangeArrayPushToArrayAssignRector::class);
+	$services->set(UnnecessaryTernaryExpressionRector::class);
 };
