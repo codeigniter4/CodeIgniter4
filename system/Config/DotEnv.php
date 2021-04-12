@@ -51,7 +51,7 @@ class DotEnv
 	{
 		$vars = $this->parse();
 
-		return ($vars === null ? false : true);
+		return $vars !== null;
 	}
 
 	//--------------------------------------------------------------------

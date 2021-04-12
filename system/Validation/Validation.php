@@ -165,7 +165,7 @@ class Validation implements ValidationInterface
 			}
 		}
 
-		return ! empty($this->getErrors()) ? false : true;
+		return empty($this->getErrors());
 	}
 
 	//--------------------------------------------------------------------
