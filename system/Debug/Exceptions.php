@@ -294,7 +294,8 @@ class Exceptions
 	protected function collectVars(Throwable $exception, int $statusCode): array
 	{
 		$trace = $exception->getTrace();
-		if(!empty($this->config->sensitiveDataInTrace)) {
+		if(!empty($this->config->sensitiveDataInTrace)) 
+		{
 			$this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
 		}
 		
@@ -312,11 +313,11 @@ class Exceptions
 	/**
 	 * Mask sensitive data in the trace.
 	 *
-	 * @param array  $trace
-	 * @param array  $keysToMask
-	 * @param string $path
+	 * @param array|object $trace
+	 * @param array        $keysToMask
+	 * @param string       $path
 	 */
-	protected function maskSensitiveData(&$trace, $keysToMask, $path = '') 
+	protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '') 
 	{
 		foreach($keysToMask as $keyToMask) 
 		{
