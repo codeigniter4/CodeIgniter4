@@ -319,29 +319,30 @@ class Exceptions
 	 */
 	protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '') 
 	{
-		foreach($keysToMask as $keyToMask) 
+		foreach ($keysToMask as $keyToMask) 
 		{
 			$explode = explode('/', $keyToMask);
-			$idx = end($explode);
-			if((strpos(strrev($path . '/' . $idx), strrev($keyToMask)) === 0)) 
+			$index   = end($explode);
+
+			if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0)
 			{
-				if (is_array($trace) && array_key_exists($idx, $trace)) 
+				if (is_array($trace) && array_key_exists($index, $trace)) 
 				{
-					$trace[$idx] = '******************';
+					$trace[$index] = '******************';
 				} 
-				else if (is_object($trace) && property_exists($trace, $idx) && isset($trace->$idx)) 
+				elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) 
 				{
-					$trace->$idx = '******************';
+					$trace->$index = '******************';
 				}
 			}
 		}
 			
-		if(!is_iterable($trace) && is_object($trace)) 
+		if (! is_iterable($trace) && is_object($trace)) 
 		{
 			$trace = get_object_vars($trace);
 		}
 		
-		if(is_iterable($trace)) 
+		if (is_iterable($trace)) 
 		{
 			foreach ($trace as $pathKey => $subarray) 
 			{
