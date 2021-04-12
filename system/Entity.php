@@ -18,7 +18,7 @@ use CodeIgniter\Entity\Entity as CoreEntity;
  *
  * @deprecated use CodeIgniter\Entity\Entity class instead.
  */
-class Entity implements CoreEntity
+class Entity extends CoreEntity
 {
 	/**
 	 * Allows filling in Entity parameters during construction.
