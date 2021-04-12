@@ -145,7 +145,7 @@ class BaseConfig
 			case array_key_exists("{$prefix}.{$property}", $_SERVER):
 				return $_SERVER["{$prefix}.{$property}"];
 			default:
-				$value = getenv($property);
+				$value = strtolower($property) == 'path' ? false : getenv($property);
 				return $value === false ? null : $value;
 		}
 	}
