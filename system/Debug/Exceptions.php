@@ -309,7 +309,7 @@ class Exceptions
 			'trace'   => $trace,
 		];
 	}
-	
+
 	/**
 	 * Mask sensitive data in the trace.
 	 *
