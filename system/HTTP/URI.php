@@ -1133,7 +1133,7 @@ class URI
 		}
 
 		array_pop($path);
-		array_push($path, $reference->getPath());
+		$path[] = $reference->getPath();
 
 		return implode('/', $path);
 	}
@@ -1181,7 +1181,7 @@ class URI
 			}
 			elseif ($segment !== '.' && $segment !== '')
 			{
-				array_push($output, $segment);
+				$output[] = $segment;
 			}
 		}
 

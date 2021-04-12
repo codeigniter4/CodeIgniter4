@@ -286,9 +286,12 @@ trait GeneratorTrait
 	{
 		// Retrieves the namespace part from the fully qualified class name.
 		$namespace = trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\');
-
-		array_push($search, '<@php', '{namespace}', '{class}');
-		array_push($replace, '<?php', $namespace, str_replace($namespace . '\\', '', $class));
+		$search[]  = '<@php';
+		$search[]  = '{namespace}';
+		$search[]  = '{class}';
+		$replace[] = '<?php';
+		$replace[] = $namespace;
+		$replace[] = str_replace($namespace . '\\', '', $class);
 
 		return str_replace($search, $replace, $this->renderTemplate($data));
 	}
