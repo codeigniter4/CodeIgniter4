@@ -8,8 +8,8 @@ Upgrade Migrations
 Documentations
 ==============
 
-- `Database Migrations Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html?highlight=migration>`_
-- `Database Migrations Documentation Codeigniter 4.X </dbmgmt/migration.html?highlight=migration>`_
+- `Database Migrations Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html>`_
+- :doc:`Database Migrations Documentation Codeigniter 4.X </dbmgmt/migration>`
 
 What has been changed
 =====================
