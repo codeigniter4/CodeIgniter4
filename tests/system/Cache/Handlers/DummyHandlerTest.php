@@ -41,6 +41,11 @@ class DummyHandlerTest extends CIUnitTestCase
 		$this->assertTrue($this->dummyHandler->delete('key'));
 	}
 
+	public function testDeleteMatching()
+	{
+		$this->assertTrue($this->dummyHandler->deleteMatching('key*'));
+	}
+
 	public function testIncrement()
 	{
 		$this->assertTrue($this->dummyHandler->increment('key'));

@@ -15,6 +15,7 @@ use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Exception;
 use Predis\Client;
+use Predis\Collection\Iterator;
 
 /**
  * Predis cache handler
@@ -180,6 +181,30 @@ class PredisHandler extends BaseHandler
 	public function delete(string $key)
 	{
 		return ($this->redis->del($key) === 1);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob like pattern
+	 *
+	 * @return boolean
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$success = true;
+
+		foreach (new Iterator\Keyspace($this->redis, $pattern) as $key)
+		{
+			if ($this->redis->del($key) !== 1)
+			{
+				$success = false;
+			}
+		}
+
+		return $success;
 	}
 
 	//--------------------------------------------------------------------

@@ -89,6 +89,12 @@ class MemcachedHandlerTest extends CIUnitTestCase
 		$this->assertFalse($this->memcachedHandler->delete(self::$dummy));
 	}
 
+	public function testDeleteMatching()
+	{
+		// Not implemented for Memcached, should always return false
+		$this->assertFalse($this->memcachedHandler->deleteMatching('key*'));
+	}
+
 	public function testIncrement()
 	{
 		$this->memcachedHandler->save(self::$key1, 1);

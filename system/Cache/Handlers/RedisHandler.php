@@ -224,6 +224,34 @@ class RedisHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob like pattern
+	 *
+	 * @return boolean
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$success  = true;
+		$iterator = null;
+
+		while ($keys = $this->redis->scan($iterator, $pattern))
+		{
+			foreach ($keys as $key)
+			{
+				if ($this->redis->del($key) !== 1)
+				{
+					$success = false;
+				}
+			}
+		}
+
+		return $success;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
 	 * @param string  $key    Cache ID
