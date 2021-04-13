@@ -132,7 +132,7 @@ class MockCache implements CacheInterface
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		foreach ($this->cache as $key => $value)
+		foreach (array_keys($this->cache) as $key)
 		{
 			if (fnmatch($pattern, $key))
 			{

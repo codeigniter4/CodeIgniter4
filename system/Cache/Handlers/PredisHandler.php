@@ -15,7 +15,7 @@ use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Exception;
 use Predis\Client;
-use Predis\Collection\Iterator;
+use Predis\Collection\Iterator\Keyspace;
 
 /**
  * Predis cache handler
@@ -196,7 +196,7 @@ class PredisHandler extends BaseHandler
 	{
 		$success = true;
 
-		foreach (new Iterator\Keyspace($this->redis, $pattern) as $key)
+		foreach (new Keyspace($this->redis, $pattern) as $key)
 		{
 			if ($this->redis->del($key) !== 1)
 			{

@@ -173,7 +173,7 @@ class FileHandler extends BaseHandler
 
 		foreach (glob($this->path . $pattern) as $filename)
 		{
-			if (! is_file($filename) || ! unlink($filename))
+			if (! is_file($filename) || ! @unlink($filename))
 			{
 				$success = false;
 			}
