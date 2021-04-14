@@ -231,7 +231,7 @@ trait GeneratorTrait
 			$class = $matches[1] . ucfirst($matches[2]);
 		}
 
-		if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component))
+		if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, (string) $component))
 		{
 			$class .= ucfirst($component);
 		}

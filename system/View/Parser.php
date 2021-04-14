@@ -679,7 +679,7 @@ class Parser extends View
 		foreach ($filters as $filter)
 		{
 			// Grab any parameter we might need to send
-			preg_match('/\([\w<>=\/\\\,:.\-\s\+]+\)/', $filter, $param);
+			preg_match('/\([\w<>=\/\\,:.\\-\s\+]+\)/', $filter, $param);
 
 			// Remove the () and spaces to we have just the parameter left
 			$param = ! empty($param) ? trim($param[0], '() ') : null;

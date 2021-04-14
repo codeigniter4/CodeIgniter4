@@ -246,7 +246,7 @@ class FormatRules
 	 */
 	public function valid_json(string $str = null): bool
 	{
-		json_decode($str);
+		json_decode($str, false, 512, JSON_THROW_ON_ERROR);
 		return json_last_error() === JSON_ERROR_NONE;
 	}
 

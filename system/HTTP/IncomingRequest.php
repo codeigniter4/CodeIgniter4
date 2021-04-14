@@ -362,7 +362,7 @@ class IncomingRequest extends Request
 
 		if (! $assoc)
 		{
-			return json_decode(json_encode($data));
+			return json_decode(json_encode($data, JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
 		}
 
 		return $data;
@@ -727,14 +727,14 @@ class IncomingRequest extends Request
 		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
 			// strip the script name from the beginning of the URI
-			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0 && strpos($uri, '/index.php') === 0)
+			if (strpos($uri, (string) $_SERVER['SCRIPT_NAME']) === 0 && strpos($uri, '/index.php') === 0)
 			{
 				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
 			}
 			// if the script is nested, strip the parent folder & script from the URI
-			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
+			elseif (strpos($uri, (string) $_SERVER['SCRIPT_NAME']) > 0)
 			{
-				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
+				$uri = (string) substr($uri, strpos($uri, (string) $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
 			}
 			// or if index.php is implied
 			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)

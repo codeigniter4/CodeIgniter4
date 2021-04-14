@@ -224,7 +224,7 @@ class Security implements SecurityInterface
 		}
 		else
 		{
-			$json = json_decode($request->getBody());
+			$json = json_decode($request->getBody(), false, 512, JSON_THROW_ON_ERROR);
 
 			if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE)
 			{
@@ -254,7 +254,7 @@ class Security implements SecurityInterface
 		{
 			// We kill this since we're done and we don't want to pollute the JSON data.
 			unset($json->{$this->tokenName});
-			$request->setBody(json_encode($json));
+			$request->setBody(json_encode($json, JSON_THROW_ON_ERROR));
 		}
 
 		if ($this->regenerate)

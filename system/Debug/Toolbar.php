@@ -165,7 +165,7 @@ class Toolbar
 			$response->CSP->addImageSrc('data:');
 		}
 
-		return json_encode($data);
+		return json_encode($data, JSON_THROW_ON_ERROR);
 	}
 
 	//--------------------------------------------------------------------
@@ -431,7 +431,7 @@ class Toolbar
 	 */
 	protected function format(string $data, string $format = 'html'): string
 	{
-		$data = json_decode($data, true);
+		$data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
 		if ($this->config->maxHistory !== 0)
 		{

@@ -22,7 +22,7 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
-use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
+use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
@@ -52,6 +52,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
 	$parameters->set(Option::ENABLE_CACHE, true);
 	$parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
+	$parameters->set(Option::SETS, [
+		SetList::PHP_73
+	]);
 
 	$services = $containerConfigurator->services();
 	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
@@ -62,7 +65,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ForToForeachRector::class);
 	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
 	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
-	$services->set(ArrayKeyFirstLastRector::class);
 	$services->set(SimplifyStrposLowerRector::class);
 	$services->set(CombineIfRector::class);
 	$services->set(SimplifyIfReturnBoolRector::class);

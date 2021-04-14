@@ -82,7 +82,7 @@ class History extends BaseCollector
 			// Get the contents of this specific history request
 			$contents = file_get_contents($filename);
 
-			$contents = @json_decode($contents);
+			$contents = @json_decode($contents, false, 512, JSON_THROW_ON_ERROR);
 			if (json_last_error() === JSON_ERROR_NONE)
 			{
 				preg_match_all('/\d+/', $filename, $time);

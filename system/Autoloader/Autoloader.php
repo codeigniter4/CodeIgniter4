@@ -259,7 +259,7 @@ class Autoloader
 			{
 				$directory = rtrim($directory, '\\/');
 
-				if (strpos($class, $namespace) === 0)
+				if (strpos($class, (string) $namespace) === 0)
 				{
 					$filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
 					$filename = $this->includeFile($filePath);

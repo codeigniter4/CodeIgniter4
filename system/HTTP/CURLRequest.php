@@ -734,7 +734,7 @@ class CURLRequest extends Request
 		if (isset($config['json']))
 		{
 			// Will be set as the body in `applyBody()`
-			$json = json_encode($config['json']);
+			$json = json_encode($config['json'], JSON_THROW_ON_ERROR);
 			$this->setBody($json);
 			$this->setHeader('Content-Type', 'application/json');
 			$this->setHeader('Content-Length', (string) strlen($json));
