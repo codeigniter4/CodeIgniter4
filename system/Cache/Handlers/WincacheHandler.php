@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use Config\Cache;
+use Exception;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.
@@ -116,15 +117,15 @@ class WincacheHandler extends BaseHandler
 	/**
 	 * Deletes items from the cache store matching a given pattern.
 	 *
-	 * @param string $pattern Cache items glob like pattern
+	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return boolean
+	 * @throws Exception
 	 *
 	 * @codeCoverageIgnore
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		return false;
+		throw new Exception('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
 	}
 
 	//--------------------------------------------------------------------

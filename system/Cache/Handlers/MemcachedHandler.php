@@ -252,13 +252,13 @@ class MemcachedHandler extends BaseHandler
 	/**
 	 * Deletes items from the cache store matching a given pattern.
 	 *
-	 * @param string $pattern Cache items glob like pattern
+	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return boolean
+	 * @throws Exception
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		return false;
+		throw new Exception('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
 	}
 
 	//--------------------------------------------------------------------

@@ -188,7 +188,7 @@ class PredisHandler extends BaseHandler
 	/**
 	 * Deletes items from the cache store matching a given pattern.
 	 *
-	 * @param string $pattern Cache items glob like pattern
+	 * @param string $pattern Cache items glob-style pattern
 	 *
 	 * @return boolean
 	 */

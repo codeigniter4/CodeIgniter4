@@ -126,7 +126,7 @@ class MockCache implements CacheInterface
 	/**
 	 * Deletes items from the cache store matching a given pattern.
 	 *
-	 * @param string $pattern Cache items pattern
+	 * @param string $pattern Cache items glob-style pattern
 	 *
 	 * @return boolean
 	 */
