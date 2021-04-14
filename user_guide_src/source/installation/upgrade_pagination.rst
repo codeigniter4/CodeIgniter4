@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Pagination Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
-- `Pagination Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/libraries/pagination.html>`_
+- :doc:`Pagination Documentation Codeigniter 4.X </libraries/pagination>`
 
 
 What has been changed
@@ -59,4 +59,3 @@ Codeigniter Version 4.x
     ];
 
     echo view('users/index', $data);
-

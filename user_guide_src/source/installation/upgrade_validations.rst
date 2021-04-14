@@ -10,7 +10,7 @@ Documentations of Library
 =========================
 
 - `Form Validation Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
-- `Validation Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/libraries/validation.html>`_
+- :doc:`Validation Documentation Codeigniter 4.X </libraries/validation>`
 
 
 What has been changed

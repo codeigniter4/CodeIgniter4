@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Session Library Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/sessions.html>`_
-- `Session Library Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/libraries/sessions.html>`_
+- :doc:`Session Library Documentation Codeigniter 4.X </libraries/sessions>`
 
 
 What has been changed
@@ -50,4 +50,3 @@ Codeigniter Version 4.x
     $session->get('item');
     $session->item;
     session('item');
-

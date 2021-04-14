@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Language Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
-- `Localization Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/outgoing/localization.html>`_
+- :doc:`Localization Documentation Codeigniter 4.X </outgoing/localization>`
 
 
 What has been changed
@@ -62,5 +62,4 @@ Codeigniter Version 4.x
     ...
 
     echo lang('Errors.errorEmailMissing');
-
 

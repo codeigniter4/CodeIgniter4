@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Security Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/security.html>`_
-- `Security Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/libraries/security.html>`_
+- :doc:`Security Documentation Codeigniter 4.X </libraries/security>`
 
 .. note::
     If you use the `form helper </user_guide/helpers/form_helper.html>`_, then form_open() will automatically insert a hidden csrf field in your forms. So you do not have to upgrade this by yourself.
@@ -68,4 +68,3 @@ Codeigniter Version 4.x
         <?= csrf_field() ?>
         <input type="submit" value="Save">
     </form>
-

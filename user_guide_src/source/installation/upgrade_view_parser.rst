@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Template Parser Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/parser.html>`_
-- `View Parser Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/outgoing/view_parser.html>`_
+- :doc:`View Parser Documentation Codeigniter 4.X </outgoing/view_parser>`
 
 
 What has been changed
@@ -53,4 +53,3 @@ Codeigniter Version 4.x
 
     echo $parser->setData($data)
         ->render('blog_template');
-

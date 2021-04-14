@@ -9,7 +9,7 @@ Upgrade HTTP Responses
 Documentations
 ==============
 - `Output Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/output.html>`_
-- `HTTP Responses Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/outgoing/response.html>`_
+- :doc:`HTTP Responses Documentation Codeigniter 4.X </outgoing/response>`
 
 What has been changed
 =====================
@@ -18,7 +18,7 @@ What has been changed
 Upgrade Guide
 =============
 1. The methods in the HTML Responses class are named slightly different. The most important change in the naming is the switch from underscored method names to camelCase. The method ``set_content_type()`` from version 3 is now named ``setContentType()`` and so on.
-2. In the most cases you have to change ``$this->output`` to ``$this->response`` followed by the method. You can find all methods `here <http://codeigniter.com/user_guide/outgoing/response.html>`_.
+2. In the most cases you have to change ``$this->output`` to ``$this->response`` followed by the method. You can find all methods :doc:`here </outgoing/response>`.
 
 Code Example
 ============

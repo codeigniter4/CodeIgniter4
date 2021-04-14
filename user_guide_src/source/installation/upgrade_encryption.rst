@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `Encryption Library Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
-- `Encryption Service Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/libraries/encryption.html>`_
+- :doc:`Encryption Service Documentation Codeigniter 4.X </libraries/encryption>`
 
 
 What has been changed

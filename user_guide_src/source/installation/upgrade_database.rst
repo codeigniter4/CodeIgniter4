@@ -10,12 +10,12 @@ Documentations
 ==============
 
 - `Database Reference Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
-- `Working with Databases Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/database/index.html>`_
+- :doc:`Working with Databases Documentation Codeigniter 4.X </database/index>`
 
 
 What has been changed
 =====================
-- The functionality in CI4 is basically the same as in CI4.
+- The functionality in CI3 is basically the same as in CI4.
 - The method names have changed to camelCase and the query builder now needs to be initialized before you can run queries on it.
 
 Upgrade Guide
@@ -65,4 +65,3 @@ Codeigniter Version 4.x
                  ->where('id', $id)
                  ->limit(10, 20)
                  ->get();
-
