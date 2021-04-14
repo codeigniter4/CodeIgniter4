@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `URI Routing Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
-- `URI Routing Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/incoming/routing.html>`_
+- :doc:`URI Routing Documentation Codeigniter 4.X </incoming/routing>`
 
 
 What has been changed
@@ -74,4 +74,3 @@ Path: ``app/Config/Routes.php``::
     $routes->add('drivers/create', 'drivers::create');
     $routes->add('drivers/edit/(:any)', 'drivers::edit/$1');
     $routes->add('posts/(:any)', 'posts::view/$1');
-

@@ -10,7 +10,7 @@ Documentations
 ==============
 
 - `HTML Table Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/table.html>`_
-- `HTML Table Documentation Codeigniter 4.X <http://codeigniter.com/user_guide/outgoing/table.html>`_
+- :doc:`HTML Table Documentation Codeigniter 4.X </outgoing/table>`
 
 
 What has been changed
