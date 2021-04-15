@@ -16,7 +16,7 @@ use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
-use Rector\DeadCode\Rector\MethodCall\RemoveDefaultArgumentValueRector;
+use Utils\Rector\RemoveDefaultArgumentValueRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
