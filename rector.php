@@ -24,7 +24,6 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
-use Utils\Rector\RemoveDefaultArgumentValueRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -74,7 +73,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(SimplifyIfElseToTernaryRector::class);
 	$services->set(UnusedForeachValueToArrayKeysRector::class);
 	$services->set(RemoveConcatAutocastRector::class);
-	$services->set(RemoveDefaultArgumentValueRector::class);
 	$services->set(ChangeArrayPushToArrayAssignRector::class);
 	$services->set(UnnecessaryTernaryExpressionRector::class);
 };
