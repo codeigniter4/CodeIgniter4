@@ -178,7 +178,7 @@ class Connection extends BaseConnection
 			)
 			{
 				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=') 
+				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
 					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
 										  ->fetch_object()->Value)
 				)
