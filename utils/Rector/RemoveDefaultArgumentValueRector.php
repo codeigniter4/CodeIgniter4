@@ -16,6 +16,9 @@ use Rector\DeadCode\NodeManipulator\CallDefaultParamValuesResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
+/**
+ * Originally part of rector/rector dead-code set that removed @see https://github.com/rectorphp/rector/pull/6148
+ */
 final class RemoveDefaultArgumentValueRector extends AbstractRector
 {
 	/**

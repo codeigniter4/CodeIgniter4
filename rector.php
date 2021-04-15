@@ -16,7 +16,6 @@ use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
-use Utils\Rector\RemoveDefaultArgumentValueRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -25,6 +24,7 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
+use Utils\Rector\RemoveDefaultArgumentValueRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
