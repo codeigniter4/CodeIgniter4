@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsArray
+ * Class ArrayCast
  */
-class CastAsArray extends AbstractCast
+class ArrayCast extends BaseCast
 {
-
 	/**
 	 * @inheritDoc
 	 */

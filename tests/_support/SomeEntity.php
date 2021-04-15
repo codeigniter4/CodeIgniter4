@@ -2,7 +2,7 @@
 
 namespace Tests\Support;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 class SomeEntity extends Entity
 {
@@ -10,5 +10,4 @@ class SomeEntity extends Entity
 		'foo' => null,
 		'bar' => null,
 	];
-
 }

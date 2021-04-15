@@ -13,6 +13,8 @@ namespace CodeIgniter\Exceptions;
 
 /**
  * Cast Exceptions.
+ *
+ * @deprecated use CodeIgniter\Entity\Exceptions\CastException instead. 
  */
 class CastException extends CriticalError
 {
@@ -27,7 +29,7 @@ class CastException extends CriticalError
 
 	public static function forInvalidJsonFormatException(int $error)
 	{
-		switch($error)
+		switch ($error)
 		{
 			case JSON_ERROR_DEPTH:
 				return new static(lang('Cast.jsonErrorDepth'));
@@ -43,20 +45,4 @@ class CastException extends CriticalError
 				return new static(lang('Cast.jsonErrorUnknown'));
 		}
 	}
-
-	public static function forMissingInterface($class) : self
-	{
-		return new static(lang('Cast.abstractCastMissing', [$class]));
-	}
-
-	public static function forInvalidCastMethod() : self
-	{
-		return new static(lang('Cast.wrongCastMethod'));
-	}
-
-	public static function forInvalidTimestamp() : self
-	{
-		return new static(lang('Cast.invalidTimestamp'));
-	}
-
 }

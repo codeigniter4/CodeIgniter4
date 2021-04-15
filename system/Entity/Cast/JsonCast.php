@@ -9,18 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
+use CodeIgniter\Entity\Exceptions\CastException;
 use JsonException;
-use CodeIgniter\Exceptions\CastException;
 use stdClass;
 
 /**
- * Class CastAsJson
+ * Class JsonCast
  */
-class CastAsJson extends AbstractCast
+class JsonCast extends BaseCast
 {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -43,7 +42,7 @@ class CastAsJson extends AbstractCast
 			}
 			catch (JsonException $e)
 			{
-				throw CastException::forInvalidJsonFormatException($e->getCode());
+				throw CastException::forInvalidJsonFormat($e->getCode());
 			}
 		}
 
@@ -63,7 +62,7 @@ class CastAsJson extends AbstractCast
 			}
 			catch (JsonException $e)
 			{
-				throw CastException::forInvalidJsonFormatException($e->getCode());
+				throw CastException::forInvalidJsonFormat($e->getCode());
 			}
 		}
 
