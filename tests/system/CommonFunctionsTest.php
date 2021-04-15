@@ -212,7 +212,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 
 	public function testInvisibleEncoded()
 	{
-		$this->assertEquals('Javascript', remove_invisible_characters('Java%0cscript', true));
+		$this->assertEquals('Javascript', remove_invisible_characters('Java%0cscript'));
 	}
 
 	public function testAppTimezone()
