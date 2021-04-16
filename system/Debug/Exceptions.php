@@ -293,6 +293,12 @@ class Exceptions
 	 */
 	protected function collectVars(Throwable $exception, int $statusCode): array
 	{
+		$trace = $exception->getTrace();
+		if (! empty($this->config->sensitiveDataInTrace))
+		{
+			$this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
+		}
+
 		return [
 			'title'   => get_class($exception),
 			'type'    => get_class($exception),
@@ -300,8 +306,49 @@ class Exceptions
 			'message' => $exception->getMessage() ?? '(null)',
 			'file'    => $exception->getFile(),
 			'line'    => $exception->getLine(),
-			'trace'   => $exception->getTrace(),
+			'trace'   => $trace,
 		];
+	}
+
+	/**
+	 * Mask sensitive data in the trace.
+	 *
+	 * @param array|object $trace
+	 * @param array        $keysToMask
+	 * @param string       $path
+	 */
+	protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '') 
+	{
+		foreach ($keysToMask as $keyToMask) 
+		{
+			$explode = explode('/', $keyToMask);
+			$index   = end($explode);
+
+			if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0)
+			{
+				if (is_array($trace) && array_key_exists($index, $trace)) 
+				{
+					$trace[$index] = '******************';
+				} 
+				elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) 
+				{
+					$trace->$index = '******************';
+				}
+			}
+		}
+
+		if (! is_iterable($trace) && is_object($trace)) 
+		{
+			$trace = get_object_vars($trace);
+		}
+
+		if (is_iterable($trace)) 
+		{
+			foreach ($trace as $pathKey => $subarray) 
+			{
+				$this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
+			}
+		}
 	}
 
 	/**
