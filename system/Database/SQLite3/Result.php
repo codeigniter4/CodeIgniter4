@@ -14,7 +14,7 @@ namespace CodeIgniter\Database\SQLite3;
 use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**

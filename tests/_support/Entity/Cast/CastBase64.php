@@ -1,9 +1,10 @@
 <?php
 
+namespace Tests\Support\Entity\Cast;
 
-namespace Tests\Support\EntityCast;
+use CodeIgniter\Entity\Cast\BaseCast;
 
-class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+class CastBase64 extends BaseCast
 {
 	/**
 	 * Get

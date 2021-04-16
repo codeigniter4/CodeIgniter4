@@ -9,19 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsString
+ * Class IntegerCast
  */
-class CastAsString extends AbstractCast
+class IntegerCast extends BaseCast
 {
-
 	/**
 	 * @inheritDoc
 	 */
-	public static function get($value, array $params = []): string
+	public static function get($value, array $params = []): int
 	{
-		return (string) $value;
+		return (int) $value;
 	}
 }

@@ -3,7 +3,7 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use stdClass;
 use Tests\Support\Models\JobModel;

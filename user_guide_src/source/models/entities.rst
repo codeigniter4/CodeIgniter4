@@ -44,7 +44,7 @@ Entity itself at **app/Entities/User.php**.
 
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -163,7 +163,7 @@ Here's an updated User entity to provide some examples of how this could be used
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
     use CodeIgniter\I18n\Time;
 
     class User extends Entity
@@ -233,7 +233,7 @@ As an example, imagine you have the simplified User Entity that is used througho
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -260,7 +260,7 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -304,7 +304,7 @@ You can define which properties are automatically converted by adding the name t
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -339,7 +339,7 @@ For example, if you had a User entity with an **is_banned** property, you can ca
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -370,7 +370,7 @@ the value whenever the property is set::
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -403,7 +403,7 @@ by humans::
     
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class Widget extends Entity
     {
@@ -428,10 +428,12 @@ Let's say the class will be located in the 'app/Entity/Cast' directory::
 
     <?php
 
-    namespace App\Entity\Cast
+    namespace App\Entity\Cast;
+    
+    use CodeIgniter\Entity\Cast\BaseCast;
 
-    //The class must inherit the CodeIgniter\EntityCast\AbstractCast class
-    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    //The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
+    class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
         {
@@ -450,7 +452,7 @@ Now you need to register it::
 
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class MyEntity extends Entity
     {
@@ -473,7 +475,9 @@ Now you need to register it::
 
 If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method::
 
-    class CastBase64 extends \CodeIgniter\EntityCast\AbstractCast
+    use CodeIgniter\Entity\Cast\BaseCast;
+    
+    class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
         {
@@ -501,7 +505,9 @@ Additional parameters are indicated in square brackets and listed with a comma.
         'class' => 'SomeHandler',
     ];
 
-    class SomeHandler extends \CodeIgniter\EntityCast\AbstractCast
+    use CodeIgniter\Entity\Cast\BaseCast;
+    
+    class SomeHandler extends BaseCast
     {
         public static function get($value, array $params = [])
         {

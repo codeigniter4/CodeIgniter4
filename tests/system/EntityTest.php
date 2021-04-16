@@ -2,20 +2,19 @@
 
 namespace CodeIgniter;
 
-use CodeIgniter\Test\CIUnitTestCase;
-use ReflectionException;
-use DateTime;
-use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
-use Tests\Support\EntityCast\CastBase64;
-use Tests\Support\EntityCast\CastPassParameters;
-use Tests\Support\EntityCast\NotExtendsAbstractCast;
+use DateTime;
+use ReflectionException;
+use Tests\Support\Entity\Cast\CastBase64;
+use Tests\Support\Entity\Cast\CastPassParameters;
+use Tests\Support\Entity\Cast\NotExtendsBaseCast;
 use Tests\Support\SomeEntity;
 
 class EntityTest extends CIUnitTestCase
 {
-
 	use ReflectionHelper;
 
 	public function testSimpleSetAndGet()
@@ -701,8 +700,8 @@ class EntityTest extends CIUnitTestCase
 
 		$this->expectException(CastException::class);
 		$this->expectErrorMessage(
-			'The Tests\Support\EntityCast\NotExtendsAbstractCast class '
-			. 'must inherit the CodeIgniter\EntityCast\AbstractCast class'
+			'The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class '
+			. 'must inherit the "CodeIgniter\Entity\Cast\BaseCast" class'
 		);
 		$entity->second = 'throw Exception';
 	}
@@ -1163,7 +1162,7 @@ class EntityTest extends CIUnitTestCase
 
 			protected $castHandlers = [
 				'base64'   => CastBase64::class,
-				'someType' => NotExtendsAbstractCast::class,
+				'someType' => NotExtendsBaseCast::class,
 				'type'     => CastPassParameters::class,
 			];
 		};
