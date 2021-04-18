@@ -551,7 +551,7 @@ abstract class BaseModel
 			throw DataException::forFindColumnHaveMultipleColumns();
 		}
 
-		$resultSet = $resultSet = $this->doFindColumn($columnName);
+		$resultSet = $this->doFindColumn($columnName);
 
 		return $resultSet ? array_column($resultSet, $columnName) : null;
 	}
