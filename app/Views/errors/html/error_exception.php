@@ -43,12 +43,11 @@
 
 		<ul class="tabs" id="tabs">
 			<li><a href="#backtrace">Backtrace</a></li>
-				<li><a href="#server">Server</a></li>
-				<li><a href="#request">Request</a></li>
-				<li><a href="#response">Response</a></li>
-				<li><a href="#files">Files</a></li>
-				<li><a href="#memory">Memory</a></li>
-			</li>
+			<li><a href="#server">Server</a></li>
+			<li><a href="#request">Request</a></li>
+			<li><a href="#response">Response</a></li>
+			<li><a href="#files">Files</a></li>
+			<li><a href="#memory">Memory</a></li>
 		</ul>
 
 		<div class="tab-content">
