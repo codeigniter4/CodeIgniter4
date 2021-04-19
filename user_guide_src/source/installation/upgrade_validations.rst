@@ -147,13 +147,13 @@ Path: ``app/Controllers/``::
 
             if (! $this->validate([]))
             {
-                echo view('Signup', [
+                echo view('myform', [
                     'validation' => $this->validator,
                 ]);
             }
             else
             {
-                echo view('Success');
+                echo view('formsuccess');
             }
         }
     }
