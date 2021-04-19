@@ -374,8 +374,8 @@ and use any traits you need. For example:</p>
 
 <span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">DatabaseTestCase</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
-        <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
+    <span class="p">{</span>
 </pre></div>
 </div>
 <p>… becomes:</p>
@@ -384,10 +384,10 @@ and use any traits you need. For example:</p>
 
 <span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-        <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
-        <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testBadRow</span><span class="p">()</span>
+    <span class="p">{</span>
 </pre></div>
 </div>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">ControllerTester</span></code> has been superseded by <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> to standardize
@@ -397,9 +397,11 @@ approach and take advantage of the updated response testing (below).</p>
 <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> replaces <code class="docutils literal notranslate"><span class="pre">ControllerResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureResponse</span></code> with a complete
 set of methods and properties expected from both those classes. In most cases these changes
 will be “behind the scenes” by <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureTestCase</span></code>, but two
-changes to be aware of:
-* <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>’s <code class="docutils literal notranslate"><span class="pre">$request</span></code> and <code class="docutils literal notranslate"><span class="pre">$response</span></code> properties are protected and should only be access through their getter methods, <code class="docutils literal notranslate"><span class="pre">request()</span></code> and <code class="docutils literal notranslate"><span class="pre">response()</span></code>
-* <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> does not have <code class="docutils literal notranslate"><span class="pre">getBody()</span></code> and <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> methods, but rather uses the Response methods directly, e.g.: <code class="docutils literal notranslate"><span class="pre">$body</span> <span class="pre">=</span> <span class="pre">$result-&gt;response()-&gt;getBody();</span></code></p>
+changes to be aware of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>’s <code class="docutils literal notranslate"><span class="pre">$request</span></code> and <code class="docutils literal notranslate"><span class="pre">$response</span></code> properties are protected and should only be access through their getter methods, <code class="docutils literal notranslate"><span class="pre">request()</span></code> and <code class="docutils literal notranslate"><span class="pre">response()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> does not have <code class="docutils literal notranslate"><span class="pre">getBody()</span></code> and <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> methods, but rather uses the Response methods directly, e.g.: <code class="docutils literal notranslate"><span class="pre">$body</span> <span class="pre">=</span> <span class="pre">$result-&gt;response()-&gt;getBody();</span></code></p></li>
+</ul>
 </div>
 
 
@@ -418,7 +420,7 @@ changes to be aware of:
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Apr 10, 2021.
+        Last updated on Apr 19, 2021.
       </span>
 
     </p>

@@ -366,7 +366,7 @@
 <h2><a class="toc-backref" href="#id1">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://codeigniter.com/userguide3/general/controllers.html">Controller Documentation Codeigniter 3.X</a></p></li>
-<li><p><a class="reference external" href="/incoming/controllers.html">Controller Documentation Codeigniter 4.X</a></p></li>
+<li><p><a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller Documentation Codeigniter 4.X</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="what-has-been-changed">
@@ -375,7 +375,8 @@
 <li><p>Since namespaces have been added to CodeIgniter 4, the controllers must be changed to support namespaces.</p></li>
 <li><p>Controllers don’t use constructors any more (to invoke CI “magic”) unless those are part of base controllers you make.</p></li>
 <li><p>CI provides Request and Response objects for you to work with - more powerful than the CI3-way.</p></li>
-<li><p>If you want a base controller (<code class="docutils literal notranslate"><span class="pre">MY_Controller</span></code> in CI3), make it where you like, e.g., BaseController extends Controller, and then have your controllers extend it</p></li>
+<li><p>If you want a base controller (<code class="docutils literal notranslate"><span class="pre">MY_Controller</span></code> in CI3), make it where you like,
+e.g., BaseController extends Controller, and then have your controllers extend it</p></li>
 </ul>
 </div>
 <div class="section" id="upgrade-guide">
@@ -385,9 +386,15 @@
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers;</span></code></p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Controller</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">BaseController</span></code>.</p></li>
 </ol>
-<p>If you use sub-directories in your controller structure, you have to change the namespace according to that.
-For example, you have a version 3 controller located in <code class="docutils literal notranslate"><span class="pre">application/controllers/users/auth/Register.php</span></code>, the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers\Users\Auth;</span></code> and the controller path in the version 4 should look like this: <code class="docutils literal notranslate"><span class="pre">app/Controllers/Users/Auth/Register.php</span></code>. Make sure to have the first letters of the sub-directories as capitalized.
-After that you have to insert a “use” statement below the namespace definition in order to extend the “BaseController”: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">App\Controllers\BaseController;</span></code></p>
+<div class="line-block">
+<div class="line">If you use sub-directories in your controller structure, you have to change the namespace according to that.</div>
+<div class="line">For example, you have a version 3 controller located in <code class="docutils literal notranslate"><span class="pre">application/controllers/users/auth/Register.php</span></code>,
+the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers\Users\Auth;</span></code> and the controller path in the version 4
+should look like this: <code class="docutils literal notranslate"><span class="pre">app/Controllers/Users/Auth/Register.php</span></code>. Make sure to have the first letters of
+the sub-directories as capitalized.</div>
+<div class="line">After that you have to insert a “use” statement below the namespace definition in order to extend the “BaseController”:
+<code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">App\Controllers\BaseController;</span></code></div>
+</div>
 </div>
 <div class="section" id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
@@ -442,7 +449,7 @@ After that you have to insert a “use” statement below the namespace definiti
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Apr 10, 2021.
+        Last updated on Apr 19, 2021.
       </span>
 
     </p>

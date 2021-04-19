@@ -442,7 +442,8 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 <p><strong>Events</strong></p>
 <ul class="simple">
 <li><p>Hooks have been replaced by Events.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use <code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use
+<code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
 <li><p>Events are always enabled, and are available globally.</p></li>
 </ul>
 <p><strong>Extending the framework</strong></p>
@@ -464,8 +465,13 @@ your components instead of the default ones.</p></li>
 following namespaced conventions for your component.</p></li>
 <li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
 libraries, you have to find a new way to implement your functions. These
-libraries are <a class="reference external" href="http://codeigniter.com/userguide3/libraries/calendar.html">Calendaring</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/ftp.html">FTP</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/javascript.html">Javascript</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/cart.html">Shopping Cart</a>, <a class="reference external" href="http://codeigniter.com/userguide3/libraries/trackback.html">Trackback</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/xmlrpc.html">XML-RPC /-Server</a>, and <a class="reference external" href="http://codeigniter.com/userguide3/libraries/zip.html">Zip Encoding</a>.</p></li>
+libraries are <a class="reference external" href="http://codeigniter.com/userguide3/libraries/calendar.html">Calendaring</a>,
+<a class="reference external" href="http://codeigniter.com/userguide3/libraries/ftp.html">FTP</a>,
+<a class="reference external" href="http://codeigniter.com/userguide3/libraries/javascript.html">Javascript</a>,
+<a class="reference external" href="http://codeigniter.com/userguide3/libraries/cart.html">Shopping Cart</a>,
+<a class="reference external" href="http://codeigniter.com/userguide3/libraries/trackback.html">Trackback</a>,
+<a class="reference external" href="http://codeigniter.com/userguide3/libraries/xmlrpc.html">XML-RPC /-Server</a>,
+and <a class="reference external" href="http://codeigniter.com/userguide3/libraries/zip.html">Zip Encoding</a>.</p></li>
 <li><p>All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
 The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
 steps and examples to adjust your code.</p></li>
@@ -499,7 +505,7 @@ steps and examples to adjust your code.</p></li>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Apr 10, 2021.
+        Last updated on Apr 19, 2021.
       </span>
 
     </p>
