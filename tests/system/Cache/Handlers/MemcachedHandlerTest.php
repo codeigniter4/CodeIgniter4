@@ -5,6 +5,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use Exception;
 
 class MemcachedHandlerTest extends CIUnitTestCase
 {
@@ -91,8 +92,10 @@ class MemcachedHandlerTest extends CIUnitTestCase
 
 	public function testDeleteMatching()
 	{
-		// Not implemented for Memcached, should always return false
-		$this->assertFalse($this->memcachedHandler->deleteMatching('key*'));
+		// Not implemented for Memcached, should throw an exception
+		$this->expectException(Exception::class);
+
+		$this->memcachedHandler->deleteMatching('key*');
 	}
 
 	public function testIncrement()
