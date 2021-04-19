@@ -771,7 +771,7 @@ class MigrationRunner
 		if (is_cli())
 		{
 			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
-					'yellow') . "($history->namespace) " . $history->version . '_' . $this->getMigrationName($history->class);
+					'yellow') . "($history->namespace) " . $history->version . '_' . $history->class;
 		}
 	}
 
