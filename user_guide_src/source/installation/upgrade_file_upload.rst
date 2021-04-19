@@ -47,7 +47,7 @@ Codeigniter Version 3.11
             public function do_upload()
             {
                     $config['upload_path']          = './uploads/';
-                    $config['allowed_types']        = 'gif|jpg|png';
+                    $config['allowed_types']        = 'png|jpg|gif';
                     $config['max_size']             = 100;
                     $config['max_width']            = 1024;
                     $config['max_height']           = 768;
@@ -88,7 +88,7 @@ Codeigniter Version 4.x
             public function do_upload()
             {
                     $this->validate([
-                        'userfile' => 'uploaded[userfile]|max_size[userfile,1024]|mime_in[userfile,image/png,image/jpg,image/gif]|max_dims[userfile,1024,768]'
+                        'userfile' => 'uploaded[userfile]|max_size[userfile,100]|mime_in[userfile,image/png,image/jpg,image/gif]|ext_in[userfile,png,jpg,gif]|max_dims[userfile,1024,768]'
                     ]);
 
                     $file = $this->request->getFile('userfile');

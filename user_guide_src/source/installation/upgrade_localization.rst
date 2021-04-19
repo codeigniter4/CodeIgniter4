@@ -35,6 +35,7 @@ Codeigniter Version 3.11
 ------------------------
 ::
 
+    // error.php
     $lang['error_email_missing'] = 'You must submit an email address';
     $lang['error_url_missing'] = 'You must submit a URL';
     $lang['error_username_missing'] = 'You must submit a username';
@@ -48,6 +49,7 @@ Codeigniter Version 4.x
 -----------------------
 ::
 
+    // Errors.php
     return [
         'errorEmailMissing'    => 'You must submit an email address',
         'errorURLMissing'      => 'You must submit a URL',
@@ -62,4 +64,3 @@ Codeigniter Version 4.x
     ...
 
     echo lang('Errors.errorEmailMissing');
-
