@@ -9,7 +9,8 @@ Documentations
 ==============
 
 - `Model Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
-- `Model Documentation Codeigniter 4.X </models/model.html>`_
+- :doc:`Model Documentation Codeigniter 4.X </models/model>`
+
 
 What has been changed
 =====================
