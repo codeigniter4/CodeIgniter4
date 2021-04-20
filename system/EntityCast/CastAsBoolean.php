@@ -22,6 +22,6 @@ class CastAsBoolean extends AbstractCast
 	 */
 	public static function get($value, array $params = []): bool
 	{
-		return (bool) $value;
+		return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
 	}
 }
