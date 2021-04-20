@@ -34,6 +34,21 @@ class ArrayHelperTest extends CIUnitTestCase
 		$this->assertEquals(23, dot_array_search('foo.bar.baz', $data));
 	}
 
+	public function testArrayDotEscape()
+	{
+		$data = [
+			'foo'     => [
+				'bar.baz' => 23,
+			],
+			'foo.bar' => [
+				'baz' => 42,
+			],
+		];
+
+		$this->assertEquals(23, dot_array_search('foo.bar\.baz', $data));
+		$this->assertEquals(42, dot_array_search('foo\.bar.baz', $data));
+	}
+
 	public function testArrayDotReturnNullEmptyArray()
 	{
 		$data = [];
