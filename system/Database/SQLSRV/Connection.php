@@ -103,7 +103,10 @@ class Connection extends BaseConnection
 	/**
 	 * Connect to the database.
 	 *
-	 * @param  boolean $persistent
+	 * @param boolean $persistent
+	 *
+	 * @throws DatabaseException
+	 *
 	 * @return mixed
 	 */
 	public function connect(bool $persistent = false)
@@ -114,9 +117,9 @@ class Connection extends BaseConnection
 			'UID'                  => empty($this->username) ? '' : $this->username,
 			'PWD'                  => empty($this->password) ? '' : $this->password,
 			'Database'             => $this->database,
-			'ConnectionPooling'    => ($persistent === true) ? 1 : 0,
+			'ConnectionPooling'    => $persistent ? 1 : 0,
 			'CharacterSet'         => $charset,
-			'Encrypt'              => ($this->encrypt === true) ? 1 : 0,
+			'Encrypt'              => $this->encrypt === true ? 1 : 0,
 			'ReturnDatesAsStrings' => 1,
 		];
 
@@ -127,9 +130,10 @@ class Connection extends BaseConnection
 			unset($connection['UID'], $connection['PWD']);
 		}
 
-		if (false !== ($this->connID = sqlsrv_connect($this->hostname, $connection)))
+		$this->connID = sqlsrv_connect($this->hostname, $connection);
+
+		if ($this->connID !== false)
 		{
-			/* Disable warnings as errors behavior. */
 			sqlsrv_configure('WarningsReturnAsErrors', 0);
 
 			// Determine how identifiers are escaped
@@ -138,9 +142,18 @@ class Connection extends BaseConnection
 
 			$this->_quoted_identifier = empty($query) ? false : (bool) $query[0]->qi;
 			$this->escapeChar         = ($this->_quoted_identifier) ? '"' : ['[', ']'];
+
+			return $this->connID;
 		}
 
-		return $this->connID;
+		$errors = [];
+
+		foreach (sqlsrv_errors(SQLSRV_ERR_ERRORS) as $error)
+		{
+			$errors[] = preg_replace('/(\[.+\]\[.+\](?:\[.+\])?)(.+)/', '$2', $error['message']);
+		}
+
+		throw new DatabaseException(implode("\n", $errors));
 	}
 
 	/**
