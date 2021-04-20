@@ -12,12 +12,15 @@ class RedisHandlerTest extends CIUnitTestCase
 	private static $key1 = 'key1';
 	private static $key2 = 'key2';
 	private static $key3 = 'key3';
+	private static $key4 = 'another_key';
+
 	private static function getKeyArray()
 	{
 		return [
 			self::$key1,
 			self::$key2,
 			self::$key3,
+			self::$key4,
 		];
 	}
 
@@ -95,6 +98,26 @@ class RedisHandlerTest extends CIUnitTestCase
 
 		$this->assertTrue($this->redisHandler->delete(self::$key1));
 		$this->assertFalse($this->redisHandler->delete(self::$dummy));
+	}
+
+	public function testDeleteMatching()
+	{
+		$this->redisHandler->save(self::$key1, 'value');
+		$this->redisHandler->save(self::$key2, 'value2');
+		$this->redisHandler->save(self::$key3, 'value3');
+		$this->redisHandler->save(self::$key4, 'value4');
+
+		$this->assertSame('value', $this->redisHandler->get(self::$key1));
+		$this->assertSame('value2', $this->redisHandler->get(self::$key2));
+		$this->assertSame('value3', $this->redisHandler->get(self::$key3));
+		$this->assertSame('value4', $this->redisHandler->get(self::$key4));
+
+		$this->assertTrue($this->redisHandler->deleteMatching('key*'));
+
+		$this->assertNull($this->redisHandler->get(self::$key1));
+		$this->assertNull($this->redisHandler->get(self::$key2));
+		$this->assertNull($this->redisHandler->get(self::$key3));
+		$this->assertSame('value4', $this->redisHandler->get(self::$key4));
 	}
 
 	//FIXME: I don't like all Hash logic very much. It's wasting memory.

@@ -13,6 +13,7 @@ class FileHandlerTest extends CIUnitTestCase
 	private static $key1      = 'key1';
 	private static $key2      = 'key2';
 	private static $key3      = 'key3';
+	private static $key4      = 'another_key';
 
 	private static function getKeyArray()
 	{
@@ -20,6 +21,7 @@ class FileHandlerTest extends CIUnitTestCase
 			self::$key1,
 			self::$key2,
 			self::$key3,
+			self::$key4,
 		];
 	}
 
@@ -131,6 +133,26 @@ class FileHandlerTest extends CIUnitTestCase
 
 		$this->assertTrue($this->fileHandler->delete(self::$key1));
 		$this->assertFalse($this->fileHandler->delete(self::$dummy));
+	}
+
+	public function testDeleteMatching()
+	{
+		$this->fileHandler->save(self::$key1, 'value');
+		$this->fileHandler->save(self::$key2, 'value2');
+		$this->fileHandler->save(self::$key3, 'value3');
+		$this->fileHandler->save(self::$key4, 'value4');
+
+		$this->assertSame('value', $this->fileHandler->get(self::$key1));
+		$this->assertSame('value2', $this->fileHandler->get(self::$key2));
+		$this->assertSame('value3', $this->fileHandler->get(self::$key3));
+		$this->assertSame('value4', $this->fileHandler->get(self::$key4));
+
+		$this->assertTrue($this->fileHandler->deleteMatching('key*'));
+
+		$this->assertNull($this->fileHandler->get(self::$key1));
+		$this->assertNull($this->fileHandler->get(self::$key2));
+		$this->assertNull($this->fileHandler->get(self::$key3));
+		$this->assertSame('value4', $this->fileHandler->get(self::$key4));
 	}
 
 	public function testIncrement()

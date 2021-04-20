@@ -124,6 +124,28 @@ class MockCache implements CacheInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return boolean
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		foreach (array_keys($this->cache) as $key)
+		{
+			if (fnmatch($pattern, $key))
+			{
+				unset($this->cache[$key]);
+			}
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
 	 * @param string  $key    Cache ID

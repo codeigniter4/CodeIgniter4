@@ -89,6 +89,20 @@ class DummyHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return boolean
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
 	 * @param string  $key    Cache ID

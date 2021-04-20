@@ -12,12 +12,15 @@ class PredisHandlerTest extends CIUnitTestCase
 	private static $key1 = 'key1';
 	private static $key2 = 'key2';
 	private static $key3 = 'key3';
+	private static $key4 = 'another_key';
+
 	private static function getKeyArray()
 	{
 		return [
 			self::$key1,
 			self::$key2,
 			self::$key3,
+			self::$key4,
 		];
 	}
 
@@ -95,6 +98,26 @@ class PredisHandlerTest extends CIUnitTestCase
 
 		$this->assertTrue($this->PredisHandler->delete(self::$key1));
 		$this->assertFalse($this->PredisHandler->delete(self::$dummy));
+	}
+
+	public function testDeleteMatching()
+	{
+		$this->PredisHandler->save(self::$key1, 'value');
+		$this->PredisHandler->save(self::$key2, 'value2');
+		$this->PredisHandler->save(self::$key3, 'value3');
+		$this->PredisHandler->save(self::$key4, 'value4');
+
+		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
+		$this->assertSame('value2', $this->PredisHandler->get(self::$key2));
+		$this->assertSame('value3', $this->PredisHandler->get(self::$key3));
+		$this->assertSame('value4', $this->PredisHandler->get(self::$key4));
+
+		$this->assertTrue($this->PredisHandler->deleteMatching('key*'));
+
+		$this->assertNull($this->PredisHandler->get(self::$key1));
+		$this->assertNull($this->PredisHandler->get(self::$key2));
+		$this->assertNull($this->PredisHandler->get(self::$key3));
+		$this->assertSame('value4', $this->PredisHandler->get(self::$key4));
 	}
 
 	public function testClean()
