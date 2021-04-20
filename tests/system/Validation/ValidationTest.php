@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Validation;
+<?php
+
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
@@ -9,9 +11,11 @@ use Config\App;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
 
-class ValidationTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ValidationTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
@@ -945,5 +949,75 @@ class ValidationTest extends CIUnitTestCase
 		$this->assertEquals($expected, $errors['Username']);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @dataProvider dotNotationForIfExistProvider
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
+	 *
+	 * @param boolean $expected
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function testDotNotationOnIfExistRule(bool $expected, array $rules, array $data): void
+	{
+		$actual = $this->validation->setRules($rules)->run($data);
+		$this->assertSame($expected, $actual);
+	}
+
+	public function dotNotationForIfExistProvider()
+	{
+		yield 'dot-on-end-fail' => [
+			false,
+			['status.*' => 'if_exist|in_list[status_1,status_2]'],
+			['status'   => ['bad-status']],
+		];
+
+		yield 'dot-on-end-pass' => [
+			true,
+			['status.*' => 'if_exist|in_list[status_1,status_2]'],
+			['status'   => ['status_1']],
+		];
+
+		yield 'dot-on-middle-fail' => [
+			false,
+			['fizz.*.baz' => 'if_exist|numeric'],
+			['fizz'       => [
+				'bar' => ['baz' => 'yes'],
+			]],
+		];
+
+		yield 'dot-on-middle-pass' => [
+			true,
+			['fizz.*.baz' => 'if_exist|numeric'],
+			['fizz'       => [
+				'bar' => ['baz' => 30],
+			]],
+		];
+
+		yield 'dot-multiple-fail' => [
+			false,
+			['fizz.*.bar.*' => 'if_exist|numeric'],
+			['fizz' => [
+				'bos' => [
+					'bar' => [
+						'bub' => 'noo',
+					],
+				],
+			]],
+		];
+
+		yield 'dot-multiple-pass' => [
+			true,
+			['fizz.*.bar.*' => 'if_exist|numeric'],
+			['fizz' => [
+				'bos' => [
+					'bar' => [
+						'bub' => 5,
+					],
+				],
+			]],
+		];
+	}
 }

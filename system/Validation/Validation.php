@@ -215,11 +215,30 @@ class Validation implements ValidationInterface
 
 		if (in_array('if_exist', $rules, true))
 		{
-			// If the if_exist rule is defined
-			// and the current field does not exist in the input data
-			// we can return true, ignoring all other rules to this field.
-			if (! array_key_exists($field, array_flatten_with_dots($data)))
+			$flattenedData = array_flatten_with_dots($data);
+			$ifExistField  = $field;
+
+			if (strpos($field, '.*') !== false)
 			{
+				// We'll change the dot notation into a PCRE pattern
+				// that can be used later
+				$ifExistField = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
+
+				$dataIsExisting = array_reduce(array_keys($flattenedData), static function ($carry, $item) use ($ifExistField) {
+					$pattern = sprintf('/%s/u', $ifExistField);
+					return $carry || preg_match($pattern, $item) === 1;
+				}, false);
+			}
+			else
+			{
+				$dataIsExisting = array_key_exists($ifExistField, $flattenedData);
+			}
+
+			unset($ifExistField, $flattenedData);
+
+			if (! $dataIsExisting)
+			{
+				// we return early if `if_exist` is not satisfied. we have nothing to do here.
 				return true;
 			}
 
@@ -345,6 +364,7 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
+		/** @var IncomingRequest $request */
 		if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false)
 		{
 			$this->data = $request->getJSON(true);
@@ -365,7 +385,6 @@ class Validation implements ValidationInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
@@ -814,24 +833,21 @@ class Validation implements ValidationInterface
 	{
 		$nonEscapeBracket = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
 		$pipeNotInBracket = sprintf(
-				'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
-				$nonEscapeBracket,
-				$nonEscapeBracket,
-				$nonEscapeBracket
+			'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
+			$nonEscapeBracket,
+			$nonEscapeBracket,
+			$nonEscapeBracket
 		);
 
-		$_rules = preg_split(
-				$pipeNotInBracket,
-				$rules
-		);
+		$_rules = preg_split($pipeNotInBracket, $rules);
 
 		return array_unique($_rules);
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Misc
 	//--------------------------------------------------------------------
+
 	/**
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
@@ -847,6 +863,4 @@ class Validation implements ValidationInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 }
