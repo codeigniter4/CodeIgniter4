@@ -459,8 +459,22 @@ class Model extends BaseModel
 	 * @param array|object $data Data
 	 *
 	 * @return integer|array|string|null
+	 *
+	 * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
 	 */
 	protected function idValue($data)
+	{
+		return $this->getIdValue($data);
+	}
+
+	/**
+	 * Returns the id value for the data array or object
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return integer|array|string|null
+	 */
+	public function getIdValue($data)
 	{
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
@@ -636,7 +650,7 @@ class Model extends BaseModel
 		return parent::shouldUpdate($data) &&
 			($this->useAutoIncrement
 				? true
-				: $this->where($this->primaryKey, $this->idValue($data))->countAllResults() === 1
+				: $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1
 			);
 	}
 
