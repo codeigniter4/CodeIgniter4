@@ -536,6 +536,41 @@ deletion fails, the method will return FALSE.</p>
 
 <dl class="method">
 <dt>
+<code class="sig-name descname">deleteMatching($pattern): bool</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$pattern</strong> (<em>string</em>) – glob-style pattern to match cached items keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> if one of the deletes fails</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>This method will delete multiple items from the cache store at once by
+matching their keys against a glob pattern.
+If one of the cache item deletion fails, the method will return FALSE.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method is only implemented for File, Redis and Predis handlers.
+Due to limitations, it couldn’t be implemented for Memcached and Wincache handlers.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;prefix_*&#39;</span><span class="p">);</span> <span class="c1">// deletes all keys starting with &quot;prefix_&quot;</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;*_suffix&#39;</span><span class="p">);</span> <span class="c1">// deletes all keys ending with &quot;_suffix&quot;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>For more information on glob-style syntax, please see</dt><dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Glob_(programming)#Syntax">https://en.wikipedia.org/wiki/Glob_(programming)</a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
 <code class="sig-name descname">increment($key[, $offset = 1]): mixed</code></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -740,7 +775,7 @@ support your chosen cache.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Apr 19, 2021.
+        Last updated on Apr 20, 2021.
       </span>
 
     </p>
