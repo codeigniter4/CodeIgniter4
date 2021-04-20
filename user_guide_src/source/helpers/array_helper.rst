@@ -58,6 +58,7 @@ The following functions are available:
         $baz = dot_array_search('foo.*.baz', $data);
 
     If the array key contains a dot, then the key can be escaped with a backslash::
+
         $data = [
             'foo' => [
                 'bar.baz' => 23
@@ -65,7 +66,6 @@ The following functions are available:
             'foo.bar' => [
                 'baz' => 43
             ],
-
         ];
 
         // Returns: 23
