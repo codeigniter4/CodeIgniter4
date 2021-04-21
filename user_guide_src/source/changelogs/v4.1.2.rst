@@ -21,12 +21,13 @@ Changes:
 - `Model::errors()` and `BaseModel::errors()` now always returns `array`; there was no definition change but the docblock has been updated.
 - ``Entity::castAs`` has changed behavior. Added new parameter ``$method``. Type casting has been moved to separate handlers.
 - Entity. Timestamp casting now throws an exception when an invalid value is passed
-- ``Entity::castAsJson`` uses external cast handler ``CastAsJson::get``.
-- ``Entity::mutateDate`` uses external cast handler ``CastAsDatetime::get``.
+- ``Entity::castAsJson`` uses external cast handler ``JsonCast::get``.
+- ``Entity::mutateDate`` uses external cast handler ``DatetimeCast::get``.
 
 Deprecations:
 
 - Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
+- Deprecated `CodeIgniter\Entity` in favor of `CodeIgniter\Entity\Entity`
 - Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
 - Deprecated cookie-related properties of ``Security`` in order to use the ``Cookie`` class.
 - Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.

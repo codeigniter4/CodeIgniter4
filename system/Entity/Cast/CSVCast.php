@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\EntityCast;
+namespace CodeIgniter\Entity\Cast;
 
 /**
- * Class CastAsCommaSeparatedValues
+ * Class CSVCast
  */
-class CastAsCommaSeparatedValues extends AbstractCast
+class CSVCast extends BaseCast
 {
-
 	/**
 	 * @inheritDoc
 	 */

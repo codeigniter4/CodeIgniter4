@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 /**
  * Class BaseResult
