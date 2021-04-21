@@ -1054,7 +1054,7 @@ if (! function_exists('service'))
 	 *  - $timer = \CodeIgniter\Config\Services::timer();
 	 *
 	 * @param string $name
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return mixed
 	 */
@@ -1069,8 +1069,8 @@ if (! function_exists('single_service'))
 	/**
 	 * Always returns a new instance of the class.
 	 *
-	 * @param string     $name
-	 * @param array|null $params
+	 * @param string $name
+	 * @param mixed  ...$params
 	 *
 	 * @return mixed
 	 */
