@@ -368,12 +368,13 @@
 <li><p><cite>Model::errors()</cite> and <cite>BaseModel::errors()</cite> now always returns <cite>array</cite>; there was no definition change but the docblock has been updated.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAs</span></code> has changed behavior. Added new parameter <code class="docutils literal notranslate"><span class="pre">$method</span></code>. Type casting has been moved to separate handlers.</p></li>
 <li><p>Entity. Timestamp casting now throws an exception when an invalid value is passed</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAsJson</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">CastAsJson::get</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Entity::mutateDate</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">CastAsDatetime::get</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAsJson</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">JsonCast::get</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Entity::mutateDate</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">DatetimeCast::get</span></code>.</p></li>
 </ul>
 <p>Deprecations:</p>
 <ul class="simple">
 <li><p>Language strings and exceptions on invalid cookie samesite are deprecated for the <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>’s own exception message.</p></li>
+<li><p>Deprecated <cite>CodeIgniterEntity</cite> in favor of <cite>CodeIgniterEntityEntity</cite></p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Response</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Security</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Session</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>

@@ -405,7 +405,7 @@ Entity itself at <strong>app/Entities/User.php</strong>.</p>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -517,7 +517,7 @@ the attributes directly, allowing you to enforce any business logic or data conv
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
@@ -583,7 +583,7 @@ with the Entity class’ data mapping features.</p>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -609,7 +609,7 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -649,7 +649,7 @@ of helpful methods in an immutable, localized way.</p>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -683,7 +683,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -714,7 +714,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -746,7 +746,7 @@ by humans:</p>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Widget</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -772,10 +772,12 @@ by humans:</p>
 Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">namespace</span> <span class="nx">App\Entity\Cast</span>
+<span class="k">namespace</span> <span class="nx">App\Entity\Cast</span><span class="p">;</span>
 
-<span class="c1">//The class must inherit the CodeIgniter\EntityCast\AbstractCast class</span>
-<span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\EntityCast\AbstractCast</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
+
+<span class="c1">//The class must inherit the CodeIgniter\Entity\Cast\BaseCast class</span>
+<span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
     <span class="p">{</span>
@@ -794,7 +796,7 @@ Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MyEntity</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -816,7 +818,9 @@ Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p
 </pre></div>
 </div>
 <p>If you don’t need to change values when getting or setting a value. Then just don’t implement the appropriate method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\EntityCast\AbstractCast</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
     <span class="p">{</span>
@@ -839,7 +843,9 @@ Additional parameters are indicated in square brackets and listed with a comma.<
     <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;SomeHandler&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">class</span> <span class="nc">SomeHandler</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\EntityCast\AbstractCast</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SomeHandler</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
     <span class="p">{</span>
