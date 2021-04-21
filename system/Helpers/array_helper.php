@@ -26,7 +26,11 @@ if (! function_exists('dot_array_search'))
 	 */
 	function dot_array_search(string $index, array $array)
 	{
-		$segments = explode('.', rtrim(rtrim($index, '* '), '.'));
+		$segments = preg_split('/(?<!\\\)\./', rtrim($index, '* '), 0, PREG_SPLIT_NO_EMPTY);
+
+		$segments = array_map(static function ($key) {
+			return str_replace('\.', '.', $key);
+		}, $segments);
 
 		return _array_search_dot($segments, $array);
 	}
