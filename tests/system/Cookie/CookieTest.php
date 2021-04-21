@@ -34,7 +34,7 @@ final class CookieTest extends CIUnitTestCase
 
 	public function testCookieInitializationWithDefaults(): void
 	{
-		$cookie  = Cookie::create('test', 'value');
+		$cookie  = new Cookie('test', 'value');
 		$options = Cookie::setDefaults();
 
 		$this->assertSame($options['prefix'] . 'test', $cookie->getPrefixedName());
@@ -59,7 +59,7 @@ final class CookieTest extends CIUnitTestCase
 
 		$old = Cookie::setDefaults($config);
 
-		$cookie = Cookie::create('test', 'value');
+		$cookie = new Cookie('test', 'value');
 		$this->assertSame($config->prefix . 'test', $cookie->getPrefixedName());
 		$this->assertSame('test', $cookie->getName());
 		$this->assertSame('value', $cookie->getValue());
@@ -78,53 +78,53 @@ final class CookieTest extends CIUnitTestCase
 	public function testValidationOfRawCookieName(): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create("test;\n", '', ['raw' => true]);
+		new Cookie("test;\n", '', ['raw' => true]);
 	}
 
 	public function testValidationOfEmptyCookieName(): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create('', 'value');
+		new Cookie('', 'value');
 	}
 
 	public function testValidationOfSecurePrefix(): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create('test', 'value', ['prefix' => '__Secure-', 'secure' => false]);
+		new Cookie('test', 'value', ['prefix' => '__Secure-', 'secure' => false]);
 	}
 
 	public function testValidationOfHostPrefix(): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create('test', 'value', ['prefix' => '__Host-', 'domain' => 'localhost']);
+		new Cookie('test', 'value', ['prefix' => '__Host-', 'domain' => 'localhost']);
 	}
 
 	public function testValidationOfSameSite(): void
 	{
 		Cookie::setDefaults(['samesite' => '']);
-		$this->assertInstanceOf(Cookie::class, Cookie::create('test'));
+		$this->assertInstanceOf(Cookie::class, new Cookie('test'));
 
 		$this->expectException(CookieException::class);
-		Cookie::create('test', '', ['samesite' => 'Yes']);
+		new Cookie('test', '', ['samesite' => 'Yes']);
 	}
 
 	public function testValidationOfSameSiteNone(): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create('test', '', ['samesite' => Cookie::SAMESITE_NONE, 'secure' => false]);
+		new Cookie('test', '', ['samesite' => Cookie::SAMESITE_NONE, 'secure' => false]);
 	}
 
 	public function testExpirationTime(): void
 	{
 		// expires => 0
-		$cookie = Cookie::create('test', 'value');
+		$cookie = new Cookie('test', 'value');
 		$this->assertSame(0, $cookie->getExpiresTimestamp());
 		$this->assertSame('Thu, 01-Jan-1970 00:00:00 GMT', $cookie->getExpiresString());
 		$this->assertTrue($cookie->isExpired());
 		$this->assertSame(0, $cookie->getMaxAge());
 
 		$date   = new DateTimeImmutable('2021-01-10 00:00:00 GMT', new DateTimeZone('UTC'));
-		$cookie = Cookie::create('test', 'value', ['expires' => $date]);
+		$cookie = new Cookie('test', 'value', ['expires' => $date]);
 		$this->assertSame((int) $date->format('U'), $cookie->getExpiresTimestamp());
 		$this->assertSame('Sun, 10-Jan-2021 00:00:00 GMT', $cookie->getExpiresString());
 	}
@@ -139,7 +139,7 @@ final class CookieTest extends CIUnitTestCase
 	public function testInvalidExpires($expires): void
 	{
 		$this->expectException(CookieException::class);
-		Cookie::create('test', 'value', ['expires' => $expires]);
+		new Cookie('test', 'value', ['expires' => $expires]);
 	}
 
 	public static function invalidExpiresProvider(): iterable
@@ -174,41 +174,57 @@ final class CookieTest extends CIUnitTestCase
 	public static function setCookieHeaderProvider(): iterable
 	{
 		yield 'basic' => [
-			'test=value',
-			['name' => 'test', 'value' => 'value'],
-		];
+				  'test=value',
+				  [
+					  'name'  => 'test',
+					  'value' => 'value',
+				  ],
+			  ];
 
 		yield 'empty-value' => [
-			'test',
-			['name' => 'test', 'value' => ''],
-		];
+				  'test',
+				  [
+					  'name'  => 'test',
+					  'value' => '',
+				  ],
+			  ];
 
 		yield 'with-other-attrs' => [
-			'test=value; Max-Age=3600; Path=/web',
-			['name' => 'test', 'value' => 'value', 'path' => '/web'],
-		];
+				  'test=value; Max-Age=3600; Path=/web',
+				  [
+					  'name'  => 'test',
+					  'value' => 'value',
+					  'path'  => '/web',
+				  ],
+			  ];
 
 		yield 'with-flags' => [
-			'test=value; Secure; HttpOnly; SameSite=Lax',
-			['name' => 'test', 'value' => 'value', 'secure' => true, 'httponly' => true, 'samesite' => 'Lax'],
-		];
+				  'test=value; Secure; HttpOnly; SameSite=Lax',
+				  [
+					  'name'     => 'test',
+					  'value'    => 'value',
+					  'secure'   => true,
+					  'httponly' => true,
+					  'samesite' => 'Lax',
+				  ],
+			  ];
 	}
 
 	public function testValidNamePerRfcYieldsSameNameRegardlessOfRawParam(): void
 	{
-		$cookie1 = Cookie::create('testing', '', ['raw' => false]);
-		$cookie2 = Cookie::create('testing', '', ['raw' => true]);
+		$cookie1 = new Cookie('testing', '', ['raw' => false]);
+		$cookie2 = new Cookie('testing', '', ['raw' => true]);
 		$this->assertSame($cookie1->getPrefixedName(), $cookie2->getPrefixedName());
 	}
 
 	public function testCloningCookies(): void
 	{
-		$a = Cookie::create('dev', 'cookie');
+		$a = new Cookie('dev', 'cookie');
 		$b = $a->withRaw();
 		$c = $a->withPrefix('my_');
 		$d = $a->withName('prod');
 		$e = $a->withValue('muffin');
-		$f = $a->withExpiresAt('+30 days');
+		$f = $a->withExpires('+30 days');
 		$g = $a->withExpired();
 		$h = $a->withNeverExpiring();
 		$i = $a->withDomain('localhost');
@@ -235,8 +251,8 @@ final class CookieTest extends CIUnitTestCase
 	{
 		$date = new DateTimeImmutable('2021-02-14 00:00:00 GMT', new DateTimeZone('UTC'));
 
-		$a = Cookie::create('cookie', 'lover');
-		$b = $a->withValue('monster')->withPath('/web')->withDomain('localhost')->withExpiresAt($date);
+		$a = new Cookie('cookie', 'lover');
+		$b = $a->withValue('monster')->withPath('/web')->withDomain('localhost')->withExpires($date);
 		$c = $a->withSecure()->withHTTPOnly(false)->withSameSite(Cookie::SAMESITE_STRICT);
 
 		$max = (string) $b->getMaxAge();
@@ -266,7 +282,7 @@ final class CookieTest extends CIUnitTestCase
 
 	public function testArrayAccessOfCookie(): void
 	{
-		$cookie = Cookie::create('cookie', 'monster');
+		$cookie = new Cookie('cookie', 'monster');
 
 		$this->assertTrue(isset($cookie['expire']));
 		$this->assertSame($cookie['expire'], $cookie->getExpiresTimestamp());
@@ -284,12 +300,14 @@ final class CookieTest extends CIUnitTestCase
 	public function testCannotSetPropertyViaArrayAccess(): void
 	{
 		$this->expectException(LogicException::class);
-		Cookie::create('cookie', 'monster')['expires'] = 7200;
+		$cookie            = new Cookie('cookie', 'monster');
+		$cookie['expires'] = 7200;
 	}
 
 	public function testCannotUnsetPropertyViaArrayAccess(): void
 	{
 		$this->expectException(LogicException::class);
-		unset(Cookie::create('cookie', 'monster')['path']);
+		$cookie = new Cookie('cookie', 'monster');
+		unset($cookie['path']);
 	}
 }
