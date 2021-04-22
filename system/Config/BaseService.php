@@ -185,7 +185,7 @@ class BaseService
 			// Make sure $getShared is false
 			$params[] = false;
 
-			static::$instances[$key] = static::$key(...$params);
+			static::$instances[$key] = \Config\Services::$key(...$params);
 		}
 
 		return static::$instances[$key];
