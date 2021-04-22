@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
+use Kint\Kint;
 
 /**
  * Debug Toolbar
@@ -109,7 +110,26 @@ class Toolbar
 			{
 				foreach ($items as $key => $value)
 				{
-					$varData[esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc($this->processVar($value)) . '</pre>';
+					if (is_string($value))
+					{
+						$varData[esc($key)] = esc($value);
+					}
+					else
+					{
+						$oldKintMode       = Kint::$mode_default;
+						$oldKintCalledFrom = Kint::$display_called_from;
+
+						Kint::$mode_default        = Kint::MODE_RICH;
+						Kint::$display_called_from = false;
+
+						$kint = @Kint::dump($value);
+						$kint = substr($kint, strpos($kint, '</style>') + 8 );
+
+						Kint::$mode_default        = $oldKintMode;
+						Kint::$display_called_from = $oldKintCalledFrom;
+
+						$varData[esc($key)] = $kint;
+					}
 				}
 			}
 
@@ -343,12 +363,19 @@ class Toolbar
 				return;
 			}
 
+			$oldKintMode        = Kint::$mode_default;
+			Kint::$mode_default = Kint::MODE_RICH;
+			$kintScript         = @Kint::dump('');
+			Kint::$mode_default = $oldKintMode;
+			$kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8 );
+
 			$script = PHP_EOL
 					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
 					. 'data-time="' . $time . '" '
 					. 'src="' . site_url() . '?debugbar"></script>'
 					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
 					. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
+					. $kintScript
 					. PHP_EOL;
 
 			if (strpos($response->getBody(), '<head>') !== false)
@@ -467,28 +494,5 @@ class Toolbar
 		}
 
 		return $output;
-	}
-
-	/**
-	 * Process the varable to string for display
-	 *
-	 * @param mixed $var Variable
-	 *
-	 * @return boolean|string
-	 */
-	protected function processVar($var)
-	{
-		if (is_object($var))
-		{
-			$var = is_callable([$var, 'toArray']) ? $var->toArray() : get_class($var);
-		}
-		if (is_array($var))
-		{
-			foreach ($var as &$aVar)
-			{
-				$aVar = $this->processVar($aVar);
-			}
-		}
-		return print_r($var, true);
 	}
 }
