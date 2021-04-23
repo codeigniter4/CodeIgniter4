@@ -83,8 +83,6 @@ class Validation implements ValidationInterface
 	 */
 	protected $view;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Validation constructor.
 	 *
@@ -99,8 +97,6 @@ class Validation implements ValidationInterface
 
 		$this->view = $view;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Runs the validation process, returning true/false determining whether
@@ -151,26 +147,31 @@ class Validation implements ValidationInterface
 			$values = dot_array_search($field, $data);
 			$values = is_array($values) ? $values : [$values];
 
+			if ($values === [])
+			{
+				// We'll process the values right away if an empty array
+				$this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+			}
+
 			foreach ($values as $value)
 			{
-				$this->processRules($field, $setup['label'] ?? $field, $value ?? '', $rules, $data);
+				// Otherwise, we'll let the loop do the job
+				$this->processRules($field, $setup['label'] ?? $field, $value, $rules, $data);
 			}
 		}
 
 		return $this->getErrors() === [];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Check; runs the validation process, returning true or false
+	 * Runs the validation process, returning true or false
 	 * determining whether validation was successful or not.
 	 *
-	 * @param mixed    $value  Value to validation.
-	 * @param string   $rule   Rule.
-	 * @param string[] $errors Errors.
+	 * @param mixed    $value
+	 * @param string   $rule
+	 * @param string[] $errors
 	 *
-	 * @return boolean True if valid, else false.
+	 * @return boolean
 	 */
 	public function check($value, string $rule, array $errors = []): bool
 	{
@@ -178,8 +179,6 @@ class Validation implements ValidationInterface
 
 		return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Runs all of $rules against $field, until one fails, or
@@ -189,9 +188,9 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string       $field
 	 * @param string|null  $label
-	 * @param string|array $value Value to be validated, can be a string or an array
+	 * @param string|array $value
 	 * @param array|null   $rules
-	 * @param array        $data  All of the fields to check.
+	 * @param array        $data
 	 *
 	 * @return boolean
 	 */
@@ -278,12 +277,12 @@ class Validation implements ValidationInterface
 
 		foreach ($rules as $rule)
 		{
-			$callable = is_callable($rule);
-			$passed   = false;
+			$isCallable = is_callable($rule);
 
-			// Rules can contain parameters: max_length[5]
-			$param = false;
-			if (! $callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
+			$passed = false;
+			$param  = false;
+
+			if (! $isCallable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
 			{
 				$rule  = $match[1];
 				$param = $match[2];
@@ -293,7 +292,7 @@ class Validation implements ValidationInterface
 			$error = null;
 
 			// If it's a callable, call and and get out of here.
-			if ($callable)
+			if ($isCallable)
 			{
 				$passed = $param === false ? $rule($value) : $rule($value, $param, $data);
 			}
@@ -309,9 +308,9 @@ class Validation implements ValidationInterface
 						continue;
 					}
 
-					$found = true;
-
+					$found  = true;
 					$passed = $param === false ? $set->$rule($value, $error) : $set->$rule($value, $param, $data, $error);
+
 					break;
 				}
 
@@ -343,7 +342,6 @@ class Validation implements ValidationInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
@@ -374,10 +372,6 @@ class Validation implements ValidationInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
-	// Rules
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets an individual rule and custom error messages for a single field.
@@ -411,7 +405,6 @@ class Validation implements ValidationInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Stores the rules that should be used to validate the items.
 	 * Rules should be an array formatted like:
@@ -443,10 +436,12 @@ class Validation implements ValidationInterface
 			{
 				continue;
 			}
+
 			if (! array_key_exists('errors', $rule))
 			{
 				continue;
 			}
+
 			$this->customErrors[$field] = $rule['errors'];
 			unset($rule['errors']);
 		}
@@ -455,8 +450,6 @@ class Validation implements ValidationInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns all of the rules currently defined.
@@ -467,8 +460,6 @@ class Validation implements ValidationInterface
 	{
 		return $this->rules;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks to see if the rule for key $field has been set or not.
@@ -481,8 +472,6 @@ class Validation implements ValidationInterface
 	{
 		return array_key_exists($field, $this->rules);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get rule group.
@@ -507,8 +496,6 @@ class Validation implements ValidationInterface
 
 		return $this->config->$group;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Set rule group.
@@ -543,11 +530,10 @@ class Validation implements ValidationInterface
 			throw ValidationException::forInvalidTemplate($template);
 		}
 
-		return $this->view->setVar('errors', $this->getErrors())
-						->render($this->config->templates[$template]);
+		return $this->view
+			->setVar('errors', $this->getErrors())
+			->render($this->config->templates[$template]);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Displays a single error in formatted HTML as defined in the $template view.
@@ -569,11 +555,10 @@ class Validation implements ValidationInterface
 			throw ValidationException::forInvalidTemplate($template);
 		}
 
-		return $this->view->setVar('error', $this->getError($field))
-						->render($this->config->templates[$template]);
+		return $this->view
+			->setVar('error', $this->getError($field))
+			->render($this->config->templates[$template]);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Loads all of the rulesets classes that have been defined in the
@@ -591,8 +576,6 @@ class Validation implements ValidationInterface
 			$this->ruleSetInstances[] = new $file();
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Loads custom rule groups (if set) into the current rules.
@@ -636,8 +619,6 @@ class Validation implements ValidationInterface
 
 		return $this->rules;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Replace any placeholders within the rules with the values that
@@ -695,11 +676,6 @@ class Validation implements ValidationInterface
 		return $rules;
 	}
 
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Errors
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks to see if an error exists for the given field.
 	 *
@@ -711,8 +687,6 @@ class Validation implements ValidationInterface
 	{
 		return array_key_exists($field, $this->getErrors());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the error(s) for a specified $field (or empty string if not
@@ -731,8 +705,6 @@ class Validation implements ValidationInterface
 
 		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the array of errors that were encountered during
@@ -762,7 +734,6 @@ class Validation implements ValidationInterface
 		return $this->errors ?? [];
 	}
 
-	//--------------------------------------------------------------------
 	/**
 	 * Sets the error for a specific field. Used by custom validation methods.
 	 *
@@ -777,8 +748,6 @@ class Validation implements ValidationInterface
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to find the appropriate error message
@@ -834,10 +803,7 @@ class Validation implements ValidationInterface
 		return array_unique($_rules);
 	}
 
-	//--------------------------------------------------------------------
 	// Misc
-	//--------------------------------------------------------------------
-
 	/**
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
