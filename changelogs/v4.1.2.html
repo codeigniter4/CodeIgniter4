@@ -370,6 +370,7 @@
 <li><p>Entity. Timestamp casting now throws an exception when an invalid value is passed</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAsJson</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">JsonCast::get</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::mutateDate</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">DatetimeCast::get</span></code>.</p></li>
+<li><p>In order for <code class="docutils literal notranslate"><span class="pre">Config\**</span></code> classes to get their respective properties’ values from the <code class="docutils literal notranslate"><span class="pre">.env</span></code>, it is now necessary to namespace the property with the name of the class. Previously, the property names are enough but now disallowed because it can get system environment variables, like <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
 </ul>
 <p>Deprecations:</p>
 <ul class="simple">
@@ -406,7 +407,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Apr 21, 2021.
+        Last updated on Apr 23, 2021.
       </span>
 
     </p>
