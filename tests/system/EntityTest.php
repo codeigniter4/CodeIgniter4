@@ -543,7 +543,7 @@ class EntityTest extends CIUnitTestCase
 
 		// Check if serialiazed
 		$check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
-		$this->assertEquals(json_encode([1, 2, 3]), $check);
+		$this->assertEquals(json_encode([1, 2, 3], JSON_THROW_ON_ERROR), $check);
 
 		// Check if unserialized
 		$this->assertEquals([1, 2, 3], $entity->eleventh);
@@ -563,7 +563,7 @@ class EntityTest extends CIUnitTestCase
 
 		// Check if serialiazed
 		$check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
-		$this->assertEquals(json_encode([1, 2, 3]), $check);
+		$this->assertEquals(json_encode([1, 2, 3], JSON_THROW_ON_ERROR), $check);
 
 		// Check if unserialized
 		$this->assertEquals([1, 2, 3], $entity->eleventh);
@@ -947,7 +947,7 @@ class EntityTest extends CIUnitTestCase
 	{
 		$entity = $this->getEntity();
 		$entity->setBar('foo');
-		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
+		$this->assertEquals(json_encode($entity->toArray(), JSON_THROW_ON_ERROR), json_encode($entity, JSON_THROW_ON_ERROR));
 	}
 
 	protected function getEntity() : Entity

@@ -205,7 +205,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
 				->controller(Popcorn::class)
 				->execute('index3');
 
-		$response = json_decode($result->response()->getBody());
+		$response = json_decode($result->response()->getBody(), null, 512, JSON_THROW_ON_ERROR);
 		$this->assertEquals('en', $response->lang);
 	}
 

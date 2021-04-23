@@ -115,7 +115,7 @@ trait RequestTrait
 					}
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxyIP, $separator) === false)
+					if (strpos($proxyIP, (string) $separator) === false)
 					{
 						continue;
 					}

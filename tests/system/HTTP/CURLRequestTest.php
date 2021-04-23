@@ -923,7 +923,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
 		$this->assertEquals('post', $this->request->getMethod());
 
-		$expected = json_encode($params);
+		$expected = json_encode($params, JSON_THROW_ON_ERROR);
 		$this->assertEquals($expected, $this->request->getBody());
 	}
 
@@ -940,7 +940,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		];
 		$this->request->setJSON($params)->post('/post');
 
-		$this->assertEquals(json_encode($params), $this->request->getBody());
+		$this->assertEquals(json_encode($params, JSON_THROW_ON_ERROR), $this->request->getBody());
 		$this->assertEquals('application/json', $this->request->getHeaderLine('Content-Type'));
 	}
 

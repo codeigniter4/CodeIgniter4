@@ -254,7 +254,7 @@ class Security implements SecurityInterface
 		{
 			// We kill this since we're done and we don't want to pollute the JSON data.
 			unset($json->{$this->tokenName});
-			$request->setBody(json_encode($json));
+			$request->setBody(json_encode($json, JSON_THROW_ON_ERROR));
 		}
 
 		if ($this->regenerate)

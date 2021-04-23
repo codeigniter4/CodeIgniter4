@@ -467,7 +467,7 @@ final class ValidationTest extends CIUnitTestCase
 			'role'     => 'administrator',
 			'usepass'  => 0,
 		];
-		$json = json_encode($data);
+		$json = json_encode($data, JSON_THROW_ON_ERROR);
 
 		$_SERVER['CONTENT_TYPE'] = 'application/json';
 
@@ -955,8 +955,8 @@ final class ValidationTest extends CIUnitTestCase
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
 	 *
 	 * @param boolean $expected
-	 * @param array $rules
-	 * @param array $data
+	 * @param array   $rules
+	 * @param array   $data
 	 *
 	 * @return void
 	 */
@@ -969,55 +969,63 @@ final class ValidationTest extends CIUnitTestCase
 	public function dotNotationForIfExistProvider()
 	{
 		yield 'dot-on-end-fail' => [
-			false,
-			['status.*' => 'if_exist|in_list[status_1,status_2]'],
-			['status'   => ['bad-status']],
-		];
+				  false,
+				  ['status.*' => 'if_exist|in_list[status_1,status_2]'],
+				  ['status' => ['bad-status']],
+			  ];
 
 		yield 'dot-on-end-pass' => [
-			true,
-			['status.*' => 'if_exist|in_list[status_1,status_2]'],
-			['status'   => ['status_1']],
-		];
+				  true,
+				  ['status.*' => 'if_exist|in_list[status_1,status_2]'],
+				  ['status' => ['status_1']],
+			  ];
 
 		yield 'dot-on-middle-fail' => [
-			false,
-			['fizz.*.baz' => 'if_exist|numeric'],
-			['fizz'       => [
-				'bar' => ['baz' => 'yes'],
-			]],
-		];
+				  false,
+				  ['fizz.*.baz' => 'if_exist|numeric'],
+				  [
+					   'fizz' => [
+						   'bar' => ['baz' => 'yes'],
+					   ],
+				   ],
+			  ];
 
 		yield 'dot-on-middle-pass' => [
-			true,
-			['fizz.*.baz' => 'if_exist|numeric'],
-			['fizz'       => [
-				'bar' => ['baz' => 30],
-			]],
-		];
+				  true,
+				  ['fizz.*.baz' => 'if_exist|numeric'],
+				  [
+					   'fizz' => [
+						   'bar' => ['baz' => 30],
+					   ],
+				   ],
+			  ];
 
 		yield 'dot-multiple-fail' => [
-			false,
-			['fizz.*.bar.*' => 'if_exist|numeric'],
-			['fizz' => [
-				'bos' => [
-					'bar' => [
-						'bub' => 'noo',
-					],
-				],
-			]],
-		];
+				  false,
+				  ['fizz.*.bar.*' => 'if_exist|numeric'],
+				  [
+					   'fizz' => [
+						   'bos' => [
+							   'bar' => [
+								   'bub' => 'noo',
+							   ],
+						   ],
+					   ],
+				   ],
+			  ];
 
 		yield 'dot-multiple-pass' => [
-			true,
-			['fizz.*.bar.*' => 'if_exist|numeric'],
-			['fizz' => [
-				'bos' => [
-					'bar' => [
-						'bub' => 5,
-					],
-				],
-			]],
-		];
+				  true,
+				  ['fizz.*.bar.*' => 'if_exist|numeric'],
+				  [
+					   'fizz' => [
+						   'bos' => [
+							   'bar' => [
+								   'bub' => 5,
+							   ],
+						   ],
+					   ],
+				   ],
+			  ];
 	}
 }

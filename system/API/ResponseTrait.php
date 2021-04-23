@@ -401,7 +401,7 @@ trait ResponseTrait
 		{
 			// Recursively convert objects into associative arrays
 			// Conversion not required for JSONFormatter
-			$data = json_decode(json_encode($data), true);
+			$data = json_decode(json_encode($data, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
 		}
 
 		return $this->formatter->format($data);

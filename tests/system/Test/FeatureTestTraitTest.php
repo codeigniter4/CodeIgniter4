@@ -353,7 +353,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
 
 		$request = $this->withBodyFormat('json')->setRequestBody($request, ['foo1' => 'bar1']);
 
-		$this->assertJsonStringEqualsJsonString(json_encode(['foo1' => 'bar1']), $request->getBody());
+		$this->assertJsonStringEqualsJsonString(json_encode(['foo1' => 'bar1'], JSON_THROW_ON_ERROR), $request->getBody());
 		$this->assertTrue('application/json' === $request->header('Content-Type')->getValue());
 	}
 

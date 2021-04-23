@@ -308,7 +308,7 @@ class IncomingRequestTest extends CIUnitTestCase
 				'fizz' => 'buzz',
 			],
 		];
-		$json    = json_encode($jsonObj);
+		$json    = json_encode($jsonObj, JSON_THROW_ON_ERROR);
 
 		$config          = new App();
 		$config->baseURL = 'http://example.com/';
@@ -330,7 +330,7 @@ class IncomingRequestTest extends CIUnitTestCase
 				'foo'  => 'bar',
 			],
 		];
-		$json    = json_encode($jsonObj);
+		$json    = json_encode($jsonObj, JSON_THROW_ON_ERROR);
 
 		$config          = new App();
 		$config->baseURL = 'http://example.com/';
@@ -345,7 +345,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
 	public function testGetJsonVarCanFilter()
 	{
-		$json = json_encode(['foo' => 'bar']);
+		$json = json_encode(['foo' => 'bar'], JSON_THROW_ON_ERROR);
 
 		$config          = new App();
 		$config->baseURL = 'http://example.com/';
@@ -361,7 +361,7 @@ class IncomingRequestTest extends CIUnitTestCase
 			'foo'  => 'bar',
 			'fizz' => 'buzz',
 		];
-		$json    = json_encode($jsonObj);
+		$json    = json_encode($jsonObj, JSON_THROW_ON_ERROR);
 
 		$config          = new App();
 		$config->baseURL = 'http://example.com/';
