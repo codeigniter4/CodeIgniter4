@@ -42,9 +42,7 @@ parameters:
 		- '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
 		- '#Negated boolean expression is always (true|false)#'
 		- '#Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given#'
-		- '#Return type \(bool\) of method CodeIgniter\\Log\\Logger::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::(emergency|alert|critical|error|warning|notice|info|debug|log)\(\)#'
 		- '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
-		- '#Return type \(bool\) of method CodeIgniter\\Test\\TestLogger::log\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::log\(\)#'
 	parallel:
 		processTimeout: 300.0
 	scanDirectories:
