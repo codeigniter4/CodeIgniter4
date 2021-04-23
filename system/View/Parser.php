@@ -570,6 +570,7 @@ class Parser extends View
 	{
 		// Any dollar signs in the pattern will be misinterpreted, so slash them
 		$pattern = addcslashes($pattern, '$');
+		$content = (string) $content;
 
 		// Flesh out the main pattern from the delimiters and escape the hash
 		// See https://regex101.com/r/IKdUlk/1
@@ -579,7 +580,7 @@ class Parser extends View
 		}
 
 		// Replace the content in the template
-		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+		return preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
 			// Check for {! !} syntax to not escape this one.
 			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) === '!}')
 			{
@@ -587,9 +588,7 @@ class Parser extends View
 			}
 
 			return $this->prepareReplacement($matches, $content, $escape);
-		}, $template);
-
-		return $template;
+		}, (string) $template);
 	}
 
 	//--------------------------------------------------------------------
