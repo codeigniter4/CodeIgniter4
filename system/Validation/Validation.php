@@ -106,9 +106,9 @@ class Validation implements ValidationInterface
 	 * Runs the validation process, returning true/false determining whether
 	 * validation was successful or not.
 	 *
-	 * @param array  $data    The array of data to validate.
-	 * @param string $group   The pre-defined group of rules to apply.
-	 * @param string $dbGroup The database group to use.
+	 * @param array|null  $data    The array of data to validate.
+	 * @param string|null $group   The predefined group of rules to apply.
+	 * @param string|null $dbGroup The database group to use.
 	 *
 	 * @return boolean
 	 */
@@ -120,7 +120,6 @@ class Validation implements ValidationInterface
 		$data['DBGroup'] = $dbGroup;
 
 		$this->loadRuleSets();
-
 		$this->loadRuleGroup($group);
 
 		// If no rules exist, we return false to ensure
@@ -130,8 +129,8 @@ class Validation implements ValidationInterface
 			return false;
 		}
 
-		// Replace any placeholders (i.e. {id}) in the rules with
-		// the value found in $data, if exists.
+		// Replace any placeholders (e.g. {id}) in the rules with
+		// the value found in $data, if any.
 		$this->rules = $this->fillPlaceholders($this->rules, $data);
 
 		// Need this for searching arrays in validation.
@@ -139,33 +138,26 @@ class Validation implements ValidationInterface
 
 		// Run through each rule. If we have any field set for
 		// this rule, then we need to run them through!
-		foreach ($this->rules as $rField => $rSetup)
+		foreach ($this->rules as $field => $setup)
 		{
 			// Blast $rSetup apart, unless it's already an array.
-			$rules = $rSetup['rules'] ?? $rSetup;
+			$rules = $setup['rules'] ?? $setup;
 
 			if (is_string($rules))
 			{
 				$rules = $this->splitRules($rules);
 			}
 
-			$value          = dot_array_search($rField, $data);
-			$fieldNameToken = explode('.', $rField);
+			$values = dot_array_search($field, $data);
+			$values = is_array($values) ? $values : [$values];
 
-			if (is_array($value) && end($fieldNameToken) === '*')
+			foreach ($values as $value)
 			{
-				foreach ($value as $val)
-				{
-					$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
-				}
-			}
-			else
-			{
-				$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+				$this->processRules($field, $setup['label'] ?? $field, $value ?? '', $rules, $data);
 			}
 		}
 
-		return empty($this->getErrors());
+		return $this->getErrors() === [];
 	}
 
 	//--------------------------------------------------------------------
@@ -183,11 +175,8 @@ class Validation implements ValidationInterface
 	public function check($value, string $rule, array $errors = []): bool
 	{
 		$this->reset();
-		$this->setRule('check', null, $rule, $errors);
 
-		return $this->run([
-			'check' => $value,
-		]);
+		return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
 	}
 
 	//--------------------------------------------------------------------
@@ -343,7 +332,8 @@ class Validation implements ValidationInterface
 					$value = '[' . implode(', ', $value) . ']';
 				}
 
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param, $value)
+				$this->errors[$field] = is_null($error)
+					? $this->getErrorMessage($rule, $field, $label, $param, $value)
 					: $error; // @phpstan-ignore-line
 
 				return false;
