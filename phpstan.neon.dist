@@ -46,6 +46,7 @@ parameters:
 		- '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
 		- '#Return type \(bool\) of method CodeIgniter\\Test\\TestLogger::log\(\) should be compatible with return type \(null\) of method Psr\\Log\\LoggerInterface::log\(\)#'
 		- '#Parameter \#2 \$assoc of function json_decode expects bool, null given#'
+	reportUnmatchedIgnoredErrors: false
 	parallel:
 		processTimeout: 300.0
 	scanDirectories:
