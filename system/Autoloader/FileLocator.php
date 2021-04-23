@@ -217,6 +217,8 @@ class FileLocator
 			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
 				$fullPath = $namespace['path'] . $path;
+				$fullPath = realpath($fullPath) ?: $fullPath;
+
 				if ($prioritizeApp)
 				{
 					$foundPaths[] = $fullPath;
