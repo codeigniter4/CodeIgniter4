@@ -250,9 +250,9 @@ Class Reference
 
     	return $this->failNotFound('User 13 cannot be found.');
 
-.. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
+.. php:method:: failValidationError($errors = 'Bad Request'[, string $code=null[, string $message = '']])
 
-    :param string  $description: The error message to show the user.
+    :param mixed  $errors: A message or an array of messages to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -263,6 +263,12 @@ Class Reference
     ::
 
     	return $this->failValidationError($validation->getError('api_field'));
+
+    ``$errors`` can also take an array of errors to return such as:
+
+    ::
+
+        return $this->failValidationError($validation->getErrors());
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -318,3 +324,4 @@ Class Reference
     ::
 
     	return $this->failServerError('Server error.');
+

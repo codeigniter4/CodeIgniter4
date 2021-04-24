@@ -341,6 +341,25 @@ EOH;
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
 	}
 
+	public function testValidationErrorCanTakeAnArray()
+	{
+		$controller = $this->makeController();
+		$controller->failValidationError(['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason');
+
+		$expected = [
+			'status'   => 400,
+			'error'    => 'FAT CHANCE',
+			'messages' => [
+				'foo' => 'Nope',
+				'bar' => 'No way',
+			],
+		];
+
+		$this->assertEquals('A Custom Reason', $this->response->getReason());
+		$this->assertEquals(400, $this->response->getStatusCode());
+		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
+	}
+
 	public function testResourceExists()
 	{
 		$controller = $this->makeController();
