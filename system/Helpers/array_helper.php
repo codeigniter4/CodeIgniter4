@@ -39,8 +39,10 @@ if (! function_exists('dot_array_search'))
 if (! function_exists('_array_search_dot'))
 {
 	/**
-	 * Used by dot_array_search to recursively search the
+	 * Used by `dot_array_search` to recursively search the
 	 * array with wildcards.
+	 *
+	 * @internal This should not be used on its own.
 	 *
 	 * @param array $indexes
 	 * @param array $array

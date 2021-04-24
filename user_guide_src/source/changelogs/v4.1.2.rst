@@ -24,6 +24,7 @@ Changes:
 - ``Entity::castAsJson`` uses external cast handler ``JsonCast::get``.
 - ``Entity::mutateDate`` uses external cast handler ``DatetimeCast::get``.
 - In order for ``Config\**`` classes to get their respective properties' values from the ``.env``, it is now necessary to namespace the property with the name of the class. Previously, the property names are enough but now disallowed because it can get system environment variables, like ``PATH``.
+- The array helper ``_array_search_dot`` is now marked for ``@internal`` use. As this is used by ``dot_array_search``, users should not use ``_array_search_dot`` directly in their code.
 
 Deprecations:
 
