@@ -79,4 +79,12 @@ class FabricatorLiveTest extends CIUnitTestCase
 
 		fake(ValidModel::class, ['name' => 'eh']);
 	}
+
+	public function testHelperDoesNotPersist()
+	{
+		helper('test');
+		$result = fake(UserModel::class, ['name' => 'Derek'], false);
+		$this->assertEquals('Derek', $result->name);
+		$this->dontSeeInDatabase('user', ['name' => 'Derek']);
+	}
 }
