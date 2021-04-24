@@ -70,6 +70,13 @@ class Autoloader
 	protected $classmap = [];
 
 	/**
+	 * Stores files as a list.
+	 *
+	 * @var array<int, string>
+	 */
+	protected $files = [];
+
+	/**
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
@@ -97,6 +104,11 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
+		if (isset($config->files))
+		{
+			$this->files = $config->files;
+		}
+
 		// Should we load through Composer's namespaces, also?
 		if ($modules->discoverInComposer)
 		{
@@ -116,6 +128,12 @@ class Autoloader
 
 		// Now prepend another loader for the files in our class map.
 		spl_autoload_register([$this, 'loadClassmap'], true, true); // @phpstan-ignore-line
+
+		// Load our non-class files
+		foreach ($this->files as $file)
+		{
+			$this->includeFile($file);
+		}
 	}
 
 	/**
