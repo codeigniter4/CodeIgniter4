@@ -21,7 +21,9 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
-use Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector;
+use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
+use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
@@ -31,6 +33,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 	// paths to refactor; solid alternative to CLI arguments
 	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
+
+	$parameters->set(Option::SETS, [
+		SetList::PHP_73,
+	]);
 
 	// do you need to include constants, class aliases or custom autoloader? files listed will be executed
 	$parameters->set(Option::BOOTSTRAP_FILES, [
@@ -45,6 +51,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . '/tests/system/Config/fixtures',
 		__DIR__ . '/tests/_support',
 		PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
+		JsonThrowOnErrorRector::class,
+		StringifyStrNeedlesRector::class,
 	]);
 
 	// auto import fully qualified class names
@@ -61,7 +69,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ForToForeachRector::class);
 	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
 	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
-	$services->set(ArrayKeyFirstLastRector::class);
 	$services->set(SimplifyStrposLowerRector::class);
 	$services->set(CombineIfRector::class);
 	$services->set(SimplifyIfReturnBoolRector::class);
