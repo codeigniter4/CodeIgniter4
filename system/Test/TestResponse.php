@@ -406,7 +406,8 @@ class TestResponse extends TestCase
 	 */
 	public function assertJSONFragment(array $fragment, bool $strict = false)
 	{
-		$json    = json_decode($this->getJSON(), true);
+		$json = json_decode($this->getJSON(), true);
+		$this->assertIsArray($json, 'Response does not have valid json');
 		$patched = array_replace_recursive($json, $fragment);
 
 		if ($strict)
