@@ -275,13 +275,27 @@ trait ResponseTrait
 	/**
 	 * Used when the data provided by the client cannot be validated.
 	 *
-	 * @param string|string[] $errors
-	 * @param string          $code
-	 * @param string          $message
+	 * @param string $description
+	 * @param string $code
+	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failValidationError($errors = 'Bad Request', string $code = null, string $message = '')
+	public function failValidationError(string $description = 'Bad Request', string $code = null, string $message = '')
+	{
+		return $this->fail($description, $this->codes['invalid_data'], $code, $message);
+	}
+
+	/**
+	 * Used when the data provided by the client cannot be validated on multiple fields.
+	 *
+	 * @param array       $errors
+	 * @param string|null $code
+	 * @param string      $message
+	 *
+	 * @return mixed
+	 */
+	public function failValidationErrors(array $errors, string $code = null, string $message = '')
 	{
 		return $this->fail($errors, $this->codes['invalid_data'], $code, $message);
 	}

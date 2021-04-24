@@ -341,10 +341,10 @@ EOH;
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
 	}
 
-	public function testValidationErrorCanTakeAnArray()
+	public function testValidationErrors()
 	{
 		$controller = $this->makeController();
-		$controller->failValidationError(['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason');
+		$controller->failValidationErrors(['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
 			'status'   => 400,
