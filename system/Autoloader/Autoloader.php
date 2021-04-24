@@ -202,7 +202,7 @@ class Autoloader
 	{
 		$file = $this->classmap[$class] ?? '';
 
-		if ($file !== '')
+		if (is_string($file) && $file !== '')
 		{
 			return $this->includeFile($file);
 		}
