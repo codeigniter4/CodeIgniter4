@@ -12,7 +12,7 @@ on:
       - 'system/**'
       - '.github/workflows/test-rector.yml'
       - composer.json
-      - 'utils/Rector'
+      - 'utils/Rector/**'
       - 'rector.php'
   push:
     branches:
@@ -23,7 +23,7 @@ on:
       - 'system/**'
       - '.github/workflows/test-rector.yml'
       - composer.json
-      - 'utils/Rector'
+      - 'utils/Rector/**'
       - 'rector.php'
 
 jobs:
