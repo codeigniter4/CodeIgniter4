@@ -244,7 +244,7 @@ if (! function_exists('cookie'))
 	 */
 	function cookie(string $name, string $value = '', array $options = []): Cookie
 	{
-		return Cookie::create($name, $value, $options);
+		return new Cookie($name, $value, $options);
 	}
 }
 

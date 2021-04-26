@@ -192,7 +192,7 @@ class Session implements SessionInterface
 		 */
 		$config = config('Cookie');
 
-		$this->cookie = Cookie::create($this->sessionCookieName, '', [
+		$this->cookie = new Cookie($this->sessionCookieName, '', [
 			'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
 			'path'     => $config->path,
 			'domain'   => $config->domain,
@@ -1009,7 +1009,7 @@ class Session implements SessionInterface
 	protected function setCookie()
 	{
 		$expiration   = $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration;
-		$this->cookie = $this->cookie->withValue(session_id())->withExpiresAt($expiration);
+		$this->cookie = $this->cookie->withValue(session_id())->withExpires($expiration);
 
 		cookies([$this->cookie], false)->dispatch();
 	}

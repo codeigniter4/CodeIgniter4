@@ -53,7 +53,7 @@ interface CloneableCookieInterface extends CookieInterface
 	 *
 	 * @return static
 	 */
-	public function withExpiresAt($expires = 0);
+	public function withExpires($expires);
 
 	/**
 	 * Creates a new Cookie that will expire the cookie from the browser.

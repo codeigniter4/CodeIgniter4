@@ -32,8 +32,8 @@ final class CookieStoreTest extends CIUnitTestCase
 	public function testCookieStoreInitialization(): void
 	{
 		$cookies = [
-			Cookie::create('dev', 'cookie'),
-			Cookie::create('prod', 'cookie', ['raw' => true]),
+			new Cookie('dev', 'cookie'),
+			new Cookie('prod', 'cookie', ['raw' => true]),
 		];
 
 		$store = new CookieStore($cookies);
@@ -76,12 +76,12 @@ final class CookieStoreTest extends CIUnitTestCase
 	public function testPutRemoveCookiesInStore(): void
 	{
 		$cookies = [
-			Cookie::create('dev', 'cookie'),
-			Cookie::create('prod', 'cookie', ['raw' => true]),
+			new Cookie('dev', 'cookie'),
+			new Cookie('prod', 'cookie', ['raw' => true]),
 		];
 
 		$store  = new CookieStore($cookies);
-		$bottle = $store->put(Cookie::create('test', 'cookie'));
+		$bottle = $store->put(new Cookie('test', 'cookie'));
 		$jar    = $store->remove('dev');
 
 		$this->assertNotSame($store->display(), $bottle->display());
@@ -94,8 +94,8 @@ final class CookieStoreTest extends CIUnitTestCase
 	public function testCookieDispatching(): void
 	{
 		$cookies = [
-			'dev'  => Cookie::create('dev', 'cookie'),
-			'prod' => Cookie::create('prod', 'cookie', ['raw' => true]),
+			'dev'  => new Cookie('dev', 'cookie'),
+			'prod' => new Cookie('prod', 'cookie', ['raw' => true]),
 		];
 
 		$dev  = $cookies['dev']->getOptions();

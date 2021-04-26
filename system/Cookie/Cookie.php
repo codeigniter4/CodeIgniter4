@@ -27,7 +27,7 @@ use LogicException;
  * reassign this new instance to a new variable to capture it.
  *
  * ```php
- * $cookie = Cookie::create('test_cookie', 'test_value');
+ * $cookie = new Cookie('test_cookie', 'test_value');
  * $cookie->getName(); // test_cookie
  *
  * $cookie->withName('prod_cookie');
@@ -149,8 +149,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 			$newDefaults = $config;
 		}
 
-		// This array union ensures that even if passed `$config`
-		// is not `CookieConfig` or `array`, no empty defaults will occur.
+		// This array union ensures that even if passed `$config` is not
+		// `CookieConfig` or `array`, no empty defaults will occur.
 		self::$defaults = $newDefaults + $oldDefaults;
 
 		return $oldDefaults;
@@ -197,21 +197,19 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 			$data[strtolower($attr)] = $val;
 		}
 
-		return static::create($name, $value, $data);
+		return new static($name, $value, $data);
 	}
 
 	/**
-	 * Create Cookie objects on the fly.
+	 * Construct a new Cookie instance.
 	 *
-	 * @param string               $name
-	 * @param string               $value
-	 * @param array<string, mixed> $options
+	 * @param string               $name    The cookie's name
+	 * @param string               $value   The cookie's value
+	 * @param array<string, mixed> $options The cookie's options
 	 *
 	 * @throws CookieException
-	 *
-	 * @return static
 	 */
-	public static function create(string $name, string $value = '', array $options = [])
+	final public function __construct(string $name, string $value = '', array $options = [])
 	{
 		$options += self::$defaults;
 
@@ -224,56 +222,14 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 			unset($options['max-age']);
 		}
 
-		return new static(
-			$name,
-			$value,
-			$options['expires'],
-			$options['prefix'],
-			$options['path'],
-			$options['domain'],
-			$options['secure'],
-			$options['httponly'],
-			$options['raw'],
-			$options['samesite']
-		);
-	}
-
-	/**
-	 * Construct a new Cookie instance.
-	 *
-	 * @param string                           $name     The name of the cookie
-	 * @param string                           $value    The value of the cookie
-	 * @param DateTimeInterface|integer|string $expires  The time the cookie expires
-	 * @param string|null                      $prefix   The prefix of the cookie
-	 * @param string|null                      $path     The path on the server in which the cookie is available
-	 * @param string|null                      $domain   The domain in which the cookie is available
-	 * @param boolean                          $secure   Whether to send back the cookie over HTTPS
-	 * @param boolean                          $httponly Whether to forbid JavaScript access to cookies
-	 * @param boolean                          $raw      Whether the cookie should be sent with no URL encoding
-	 * @param string                           $samesite Whether the cookie will be available for cross-site requests
-	 *
-	 * @throws CookieException
-	 */
-	final public function __construct(
-		string $name,
-		string $value = '',
-		$expires = 0,
-		string $prefix = null,
-		string $path = null,
-		string $domain = null,
-		bool $secure = false,
-		bool $httponly = true,
-		bool $raw = false,
-		string $samesite = self::SAMESITE_LAX
-	)
-	{
 		// to retain BC
-		$prefix   = $prefix ?: self::$defaults['prefix'];
-		$path     = $path ?: self::$defaults['path'];
-		$domain   = $domain ?: self::$defaults['domain'];
-		$secure   = $secure ?: self::$defaults['secure'];
-		$httponly = $httponly ?: self::$defaults['httponly'];
-		$samesite = $samesite ?: self::$defaults['samesite'];
+		$prefix   = $options['prefix'] ?: self::$defaults['prefix'];
+		$path     = $options['path'] ?: self::$defaults['path'];
+		$domain   = $options['domain'] ?: self::$defaults['domain'];
+		$secure   = $options['secure'] ?: self::$defaults['secure'];
+		$httponly = $options['httponly'] ?: self::$defaults['httponly'];
+		$samesite = $options['samesite'] ?: self::$defaults['samesite'];
+		$raw      = $options['raw'] ?: self::$defaults['raw'];
 
 		$this->validateName($name, $raw);
 		$this->validatePrefix($prefix, $secure, $path, $domain);
@@ -282,7 +238,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 		$this->prefix   = $prefix;
 		$this->name     = $name;
 		$this->value    = $value;
-		$this->expires  = static::convertExpiresTimestamp($expires);
+		$this->expires  = static::convertExpiresTimestamp($options['expires']);
 		$this->path     = $path;
 		$this->domain   = $domain;
 		$this->secure   = $secure;
@@ -438,7 +394,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	 */
 	public function getOptions(): array
 	{
-		// This is the order of options in `setcookie`. DO NOT change.
+		// This is the order of options in `setcookie`. DO NOT CHANGE.
 		return [
 			'expires'  => $this->expires,
 			'path'     => $this->path,
@@ -496,7 +452,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function withExpiresAt($expires = 0)
+	public function withExpires($expires)
 	{
 		$cookie = clone $this;
 

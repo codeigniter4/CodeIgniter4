@@ -149,7 +149,7 @@ class Security implements SecurityInterface
 		$expires = $security->expires ?? $config->CSRFExpire ?? 7200;
 
 		Cookie::setDefaults($cookie);
-		$this->cookie = Cookie::create($rawCookieName, $this->generateHash(), [
+		$this->cookie = new Cookie($rawCookieName, $this->generateHash(), [
 			'expires' => $expires === 0 ? 0 : time() + $expires,
 		]);
 	}
