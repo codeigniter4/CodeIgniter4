@@ -17,15 +17,11 @@ class UpdateTest extends CIUnitTestCase
 
 	public function testUpdateSetsAllWithoutWhere()
 	{
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Updates are not allowed unless they contain a "where" or "like" clause.');
+
 		$this->db->table('user')
 					->update(['name' => 'Bobby']);
-
-		$result = $this->db->table('user')->get()->getResult();
-
-		$this->assertEquals('Bobby', $result[0]->name);
-		$this->assertEquals('Bobby', $result[1]->name);
-		$this->assertEquals('Bobby', $result[2]->name);
-		$this->assertEquals('Bobby', $result[3]->name);
 	}
 
 	//--------------------------------------------------------------------
@@ -226,18 +222,13 @@ class UpdateTest extends CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	// @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
-	public function testSetWithoutEscape()
+	public function testSetWithoutEscapeWillThrowException()
 	{
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Updates are not allowed unless they contain a "where" or "like" clause.');
 		$this->db->table('job')
 				 ->set('description', 'name', false)
 				 ->update();
-
-		$result = $this->db->table('user')->get()->getResultArray();
-
-		$this->seeInDatabase('job', [
-			'name'        => 'Developer',
-			'description' => 'Developer',
-		]);
 	}
 
 }
