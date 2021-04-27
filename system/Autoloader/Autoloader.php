@@ -132,7 +132,10 @@ class Autoloader
 		// Load our non-class files
 		foreach ($this->files as $file)
 		{
-			$this->includeFile($file);
+			if (is_string($file))
+			{
+				$this->includeFile($file);
+			}
 		}
 	}
 
