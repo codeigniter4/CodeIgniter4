@@ -2463,6 +2463,17 @@ class BaseBuilder
 			$this->where($where);
 		}
 
+		if (empty($this->QBWhere))
+		{
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('Updates are not allowed unless they contain a "where" or "like" clause.');
+			}
+			// @codeCoverageIgnoreStart
+			return false;
+			// @codeCoverageIgnoreEnd
+		}
+
 		if (! empty($limit))
 		{
 			if (! $this->canLimitWhereUpdates)

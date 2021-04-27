@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Models;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use stdClass;
@@ -80,6 +81,24 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->assertTrue($result);
 		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+	}
+
+	public function testUpdateThrowDatabaseExceptionForNullId(): void
+	{
+		$data = [
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
+
+		$this->createModel(UserModel::class);
+		$this->model->insert($data);
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Updates are not allowed unless they contain a "where" or "like" clause.');
+
+		$this->model->update(null, ['name' => 'Foo Bar']);
 	}
 
 	public function testUpdateResultFail(): void
