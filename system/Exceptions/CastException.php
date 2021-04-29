@@ -14,7 +14,9 @@ namespace CodeIgniter\Exceptions;
 /**
  * Cast Exceptions.
  *
- * @deprecated use CodeIgniter\Entity\Exceptions\CastException instead. 
+ * @deprecated use CodeIgniter\Entity\Exceptions\CastException instead.
+ *
+ * @codeCoverageIgnore
  */
 class CastException extends CriticalError
 {

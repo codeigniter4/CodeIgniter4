@@ -584,6 +584,8 @@ class Router implements RouterInterface
 	 * @return array returns an array of remaining uri segments that don't map onto a directory
 	 *
 	 * @deprecated this function name does not properly describe its behavior so it has been deprecated
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected function validateRequest(array $segments): array
 	{

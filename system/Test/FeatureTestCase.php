@@ -30,6 +30,8 @@ use ReflectionException;
  * against your application.
  *
  * @deprecated Use FeatureTestTrait instead
+ *
+ * @codeCoverageIgnore
  */
 class FeatureTestCase extends CIUnitTestCase
 {

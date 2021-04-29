@@ -130,6 +130,8 @@ class Controller
 	 * Handles "auto-loading" helper files.
 	 *
 	 * @deprecated Use `helper` function instead of using this method.
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected function loadHelpers()
 	{
