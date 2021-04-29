@@ -223,6 +223,8 @@ class Response extends Message implements MessageInterface, ResponseInterface
 	 * @return string
 	 *
 	 * @deprecated Use getReasonPhrase()
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function getReason(): string
 	{

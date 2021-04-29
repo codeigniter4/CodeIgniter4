@@ -35,6 +35,8 @@ use Throwable;
  *       ->execute('methodName');
  *
  * @deprecated Use ControllerTestTrait instead
+ *
+ * @codeCoverageIgnore
  */
 trait ControllerTester
 {

@@ -17,6 +17,8 @@ use CodeIgniter\Config\Factories;
  * Returns new or shared Model instances
  *
  * @deprecated Use CodeIgniter\Config\Factories::models()
+ *
+ * @codeCoverageIgnore
  */
 class ModelFactory
 {

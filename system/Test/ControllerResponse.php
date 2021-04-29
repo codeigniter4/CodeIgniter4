@@ -18,6 +18,8 @@ use Config\Services;
  * Testable response from a controller
  *
  * @deprecated Use TestResponse directly
+ *
+ * @codeCoverageIgnore
  */
 class ControllerResponse extends TestResponse
 {
