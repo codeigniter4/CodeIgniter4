@@ -8,10 +8,11 @@ Release Date: Not released
 Enhancements:
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
-- New `assertRedirectTo()` assertion available for HTTP tests.
+- New ``assertRedirectTo()`` assertion available for HTTP tests.
 - New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
 - Entity. Added custom type casting functionality.
 - New option in routing. The ``priority`` option lower the priority of specific route processing.
+- The ``Autoloader`` class can now load files which do not contain PHP classes. The list of `non-class` files will be listed in the ``$files`` property of ``Config\Autoload`` class.
 
 Changes:
 

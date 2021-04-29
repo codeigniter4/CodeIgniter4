@@ -242,4 +242,20 @@ class AutoloaderTest extends CIUnitTestCase
 		$namespaces = $this->loader->getNamespace();
 		$this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
 	}
+
+	public function testAutoloaderLoadsNonClassFiles(): void
+	{
+		$config = new Autoload();
+
+		$config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, new Modules());
+		$this->loader->register();
+
+		$this->assertTrue(function_exists('autoload_foo'));
+		$this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
+		$this->assertTrue(defined('AUTOLOAD_CONSTANT'));
+		$this->assertSame('foo', AUTOLOAD_CONSTANT);
+	}
 }

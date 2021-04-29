@@ -32,11 +32,10 @@ directory in the main project root::
 
 Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
 
-    $psr4 = [
-        'Config'        => APPPATH . 'Config',
-        APP_NAMESPACE   => APPPATH,                // For custom namespace
-        'App'           => APPPATH,                // To ensure filters, etc still found,
-        'Acme'          => ROOTPATH.'acme'
+    public $psr4 = [
+        APP_NAMESPACE => APPPATH, // For custom namespace
+        'Config'      => APPPATH . 'Config',
+        'Acme'        => ROOTPATH . 'acme',
     ];
 
 Now that this is set up, we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
@@ -62,6 +61,27 @@ A common directory structure within a module will mimic the main application fol
 Of course, there is nothing forcing you to use this exact structure, and you should organize it in the manner that
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
 or Repositories, etc.
+
+===========================
+Autoloading Non-class Files
+===========================
+
+More often than not that your module will not contain only PHP classes but also others like procedural
+functions, bootstrapping files, module constants files, etc. which are not normally loaded the way classes
+are loaded. One approach for this is using ``require``-ing the file(s) at the start of the file where it
+would be used.
+
+Another approach provided by CodeIgniter is to autoload these *non-class* files like how you would autoload
+your classes. All we need to do is provide the list of paths to those files and include them in the
+``$files`` property of your ``app/Config/Autoload.php`` file.
+
+::
+
+    public $files = [
+        'path/to/my/functions.php',
+        'path/to/my/constants.php',
+        'path/to/my/bootstrap.php',
+    ];
 
 ==============
 Auto-Discovery
