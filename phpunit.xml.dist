@@ -9,10 +9,9 @@
 		 colors="true"
 		 failOnRisky="true"
 		 failOnWarning="true"
-		 verbose="true"
-		 ignoreDeprecatedCodeUnits="true">
+		 verbose="true">
 
-	<coverage processUncoveredFiles="true">
+	<coverage processUncoveredFiles="true" ignoreDeprecatedCodeUnits="true">
 		<include>
 			<directory suffix=".php">./system</directory>
 		</include>
