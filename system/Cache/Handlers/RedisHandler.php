@@ -230,24 +230,27 @@ class RedisHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	public function deleteMatching(string $pattern)
-	{
-		$success  = true;
-		$iterator = null;
-
-		while ($keys = $this->redis->scan($iterator, $pattern))
-		{
-			foreach ($keys as $key)
-			{
-				if ($this->redis->del($key) !== 1)
-				{
-					$success = false;
-				}
-			}
-		}
-
-		return $success;
-	}
+        public function deleteMatching(string $pattern)
+        {
+                $success  = true;
+                $iterator = null;
+                do
+                {
+                        $keys = $this->redis->scan($iterator, $pattern);
+                        if(is_array($keys) && !empty($keys))
+                        {
+                                foreach ($keys as $key)
+                                {       
+                                        if ($this->redis->del($key) !== 1)
+                                        {
+                                                $success = false;
+                                        }
+                         
+                                }
+                        }
+                } while ($keys !== false);
+                return $success;
+        }
 
 	//--------------------------------------------------------------------
 
