@@ -13,7 +13,6 @@ namespace CodeIgniter\Cookie;
 
 use ArrayAccess;
 use CodeIgniter\Cookie\Exceptions\CookieException;
-use Config\App;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
 use InvalidArgumentException;
@@ -128,7 +127,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 	public static function setDefaults($config = [])
 	{
 		$oldDefaults = self::$defaults;
-
 		$newDefaults = [];
 
 		if ($config instanceof CookieConfig)
@@ -222,16 +220,15 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 			unset($options['max-age']);
 		}
 
-		// to retain BC
+		// to retain backward compatibility with previous versions' fallback
 		$prefix   = $options['prefix'] ?: self::$defaults['prefix'];
 		$path     = $options['path'] ?: self::$defaults['path'];
 		$domain   = $options['domain'] ?: self::$defaults['domain'];
 		$secure   = $options['secure'] ?: self::$defaults['secure'];
 		$httponly = $options['httponly'] ?: self::$defaults['httponly'];
 		$samesite = $options['samesite'] ?: self::$defaults['samesite'];
-		$raw      = $options['raw'] ?: self::$defaults['raw'];
 
-		$this->validateName($name, $raw);
+		$this->validateName($name, $options['raw']);
 		$this->validatePrefix($prefix, $secure, $path, $domain);
 		$this->validateSameSite($samesite, $secure);
 
@@ -244,7 +241,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 		$this->secure   = $secure;
 		$this->httponly = $httponly;
 		$this->samesite = ucfirst(strtolower($samesite));
-		$this->raw      = $raw;
+		$this->raw      = $options['raw'];
 	}
 
 	//=========================================================================
@@ -289,9 +286,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 		else
 		{
 			$search  = str_split(self::$reservedCharsList);
-			$replace = array_map(static function (string $char): string {
-				return rawurlencode($char);
-			}, $search);
+			$replace = array_map('rawurlencode', $search);
 
 			$name .= str_replace($search, $replace, $this->getName());
 		}

@@ -174,40 +174,24 @@ final class CookieTest extends CIUnitTestCase
 	public static function setCookieHeaderProvider(): iterable
 	{
 		yield 'basic' => [
-				  'test=value',
-				  [
-					  'name'  => 'test',
-					  'value' => 'value',
-				  ],
-			  ];
+			'test=value',
+			['name' => 'test', 'value' => 'value'],
+		];
 
 		yield 'empty-value' => [
-				  'test',
-				  [
-					  'name'  => 'test',
-					  'value' => '',
-				  ],
-			  ];
+			'test',
+			['name' => 'test', 'value' => ''],
+		];
 
 		yield 'with-other-attrs' => [
-				  'test=value; Max-Age=3600; Path=/web',
-				  [
-					  'name'  => 'test',
-					  'value' => 'value',
-					  'path'  => '/web',
-				  ],
-			  ];
+			'test=value; Max-Age=3600; Path=/web',
+			['name' => 'test', 'value' => 'value', 'path' => '/web'],
+		];
 
 		yield 'with-flags' => [
-				  'test=value; Secure; HttpOnly; SameSite=Lax',
-				  [
-					  'name'     => 'test',
-					  'value'    => 'value',
-					  'secure'   => true,
-					  'httponly' => true,
-					  'samesite' => 'Lax',
-				  ],
-			  ];
+			'test=value; Secure; HttpOnly; SameSite=Lax',
+			['name' => 'test', 'value' => 'value', 'secure' => true, 'httponly' => true, 'samesite' => 'Lax'],
+		];
 	}
 
 	public function testValidNamePerRfcYieldsSameNameRegardlessOfRawParam(): void

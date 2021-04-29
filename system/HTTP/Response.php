@@ -174,7 +174,15 @@ class Response extends Message implements MessageInterface, ResponseInterface
 		}
 
 		$this->cookieStore = new CookieStore([]);
-		Cookie::setDefaults(config('Cookie'));
+		Cookie::setDefaults(config('Cookie') ?? [
+			// @todo Remove this fallback when deprecated `App` members are removed
+			'prefix'   => $config->cookiePrefix,
+			'path'     => $config->cookiePath,
+			'domain'   => $config->cookieDomain,
+			'secure'   => $config->cookieSecure,
+			'httponly' => $config->cookieHTTPOnly,
+			'samesite' => $config->cookieSameSite ?? Cookie::SAMESITE_LAX,
+		]);
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
