@@ -9,7 +9,8 @@
 		 colors="true"
 		 failOnRisky="true"
 		 failOnWarning="true"
-		 verbose="true">
+		 verbose="true"
+		 ignoreDeprecatedCodeUnits="true">
 
 	<coverage processUncoveredFiles="true">
 		<include>
