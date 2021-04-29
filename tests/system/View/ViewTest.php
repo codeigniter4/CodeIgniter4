@@ -367,7 +367,7 @@ class ViewTest extends CIUnitTestCase
 		$this->assertEquals(true, $this->getPrivateProperty($view, 'saveData'));
 	}
 
-	public function testRenderSaveDataUseAflterSaveDataFalse()
+	public function testRenderSaveDataUseAfterSaveDataFalse()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 		$view->setVar('testString', 'test');
@@ -386,5 +386,18 @@ class ViewTest extends CIUnitTestCase
 		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
 		// this second renderings should go thru the cache
 		$this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+	}
+
+	public function testRenderNestedSections()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+
+		$content = $view->render('nested_section');
+
+		$this->assertStringContainsString('<p>First</p>', $content);
+		$this->assertStringContainsString('<p>Second</p>', $content);
+		$this->assertStringContainsString('<p>Third</p>', $content);
 	}
 }
