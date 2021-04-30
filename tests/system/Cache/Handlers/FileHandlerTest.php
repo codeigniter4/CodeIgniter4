@@ -150,6 +150,9 @@ class FileHandlerTest extends CIUnitTestCase
 
 		// check that there remains (101 - 13) = 88 items is cache store
 		$this->assertSame(88, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
 	}
 
 	public function testDeleteMatchingSuffix()
@@ -169,6 +172,9 @@ class FileHandlerTest extends CIUnitTestCase
 
 		// check that there remains (101 - 13) = 88 items is cache store
 		$this->assertSame(90, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
 	}
 
 	public function testIncrement()
