@@ -136,23 +136,22 @@ Class Reference
 
         $cache->delete('cache_item_id');
 
-.. php:method:: deleteMatching($pattern): bool
+.. php:method:: deleteMatching($pattern): integer
 
     :param string $pattern: glob-style pattern to match cached items keys
-    :returns: ``true`` on success, ``false`` if one of the deletes fails
-    :rtype: bool
+    :returns: number of deleted items
+    :rtype: integer
 
     This method will delete multiple items from the cache store at once by
-    matching their keys against a glob pattern.
-    If one of the cache item deletion fails, the method will return FALSE.
+    matching their keys against a glob-style pattern. It will return the total number of deleted items.
 
     .. important:: This method is only implemented for File, Redis and Predis handlers.
         Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
 
     Example::
 
-        $cache->deleteMatching('prefix_*'); // deletes all keys starting with "prefix_"
-        $cache->deleteMatching('*_suffix'); // deletes all keys ending with "_suffix"
+        $cache->deleteMatching('prefix_*'); // deletes all items of which keys start with "prefix_"
+        $cache->deleteMatching('*_suffix'); // deletes all items of which keys end with "_suffix"
 
     For more information on glob-style syntax, please see
         `https://en.wikipedia.org/wiki/Glob_(programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
