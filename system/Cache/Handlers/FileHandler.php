@@ -282,7 +282,10 @@ class FileHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
 	{
@@ -290,7 +293,7 @@ class FileHandler extends BaseHandler
 
 		if (! is_file($this->path . $key))
 		{
-			return false;
+			return false; // This will return null in a future release
 		}
 
 		$data = @unserialize(file_get_contents($this->path . $key));
@@ -301,17 +304,17 @@ class FileHandler extends BaseHandler
 
 			if (! isset($data['ttl']))
 			{
-				return false;
+				return false; // This will return null in a future release
 			}
 
 			return [
-				'expire' => $mtime + $data['ttl'],
+				'expire' => $data['time'] + $data['ttl'],
 				'mtime'  => $mtime,
 				'data'   => $data['data'],
 			];
 		}
 
-		return false;
+		return false; // This will return null in a future release
 	}
 
 	//--------------------------------------------------------------------

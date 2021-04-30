@@ -71,7 +71,7 @@ class WincacheHandler extends BaseHandler
 		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : null;
+		return $success ? $data : null;
 	}
 
 	//--------------------------------------------------------------------
@@ -147,7 +147,7 @@ class WincacheHandler extends BaseHandler
 		$success = false;
 		$value   = wincache_ucache_inc($key, $offset, $success);
 
-		return ($success === true) ? $value : false; // @phpstan-ignore-line
+		return $success ? $value : false; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -169,7 +169,7 @@ class WincacheHandler extends BaseHandler
 		$success = false;
 		$value   = wincache_ucache_dec($key, $offset, $success);
 
-		return ($success === true) ? $value : false; // @phpstan-ignore-line
+		return $success ? $value : false; // @phpstan-ignore-line
 	}
 
 	//--------------------------------------------------------------------
@@ -210,7 +210,10 @@ class WincacheHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -225,14 +228,14 @@ class WincacheHandler extends BaseHandler
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
 			return [
-				'expire'   => $ttl - $age,
+				'expire'   => time() + $ttl,
 				'hitcount' => $hitcount,
 				'age'      => $age,
 				'ttl'      => $ttl,
 			];
 		}
 
-		return false;
+		return false; // This will return null in a future release
 	}
 
 	//--------------------------------------------------------------------

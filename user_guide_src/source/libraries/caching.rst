@@ -216,8 +216,8 @@ Class Reference
 .. php:method:: getMetadata(string $key)
 
     :param string $key: Cache item name
-    :returns: Metadata for the cached item
-    :rtype: mixed
+    :returns: Metadata for the cached item with at least the "expires" key for absolute epoch expiry, ``null`` for missing items.
+    :rtype: array|null
 
     This method will return detailed information on a specific item in the
     cache.
@@ -227,7 +227,8 @@ Class Reference
         var_dump($cache->getMetadata('my_cached_item'));
 
 .. note:: The information returned and the structure of the data is dependent
-          on which adapter is being used.
+          on which adapter is being used. Some adapters (File, Memcached, Wincache)
+          still return ``false`` for missing items.
 
 *******
 Drivers
