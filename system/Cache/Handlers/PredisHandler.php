@@ -190,21 +190,19 @@ class PredisHandler extends BaseHandler
 	 *
 	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return boolean
+	 * @return integer The number of deleted items
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		$success = true;
+		$deleted = 0;
+		$matchedKeys = [];
 
 		foreach (new Keyspace($this->redis, $pattern) as $key)
 		{
-			if ($this->redis->del($key) !== 1)
-			{
-				$success = false;
-			}
+			$matchedKeys[] = $key;
 		}
 
-		return $success;
+		return $this->redis->del($matchedKeys);
 	}
 
 	//--------------------------------------------------------------------

@@ -13,7 +13,6 @@ class FileHandlerTest extends CIUnitTestCase
 	private static $key1      = 'key1';
 	private static $key2      = 'key2';
 	private static $key3      = 'key3';
-	private static $key4      = 'another_key';
 
 	private static function getKeyArray()
 	{
@@ -21,7 +20,6 @@ class FileHandlerTest extends CIUnitTestCase
 			self::$key1,
 			self::$key2,
 			self::$key3,
-			self::$key4,
 		];
 	}
 
@@ -135,24 +133,48 @@ class FileHandlerTest extends CIUnitTestCase
 		$this->assertFalse($this->fileHandler->delete(self::$dummy));
 	}
 
-	public function testDeleteMatching()
+	public function testDeleteMatchingPrefix()
 	{
-		$this->fileHandler->save(self::$key1, 'value');
-		$this->fileHandler->save(self::$key2, 'value2');
-		$this->fileHandler->save(self::$key3, 'value3');
-		$this->fileHandler->save(self::$key4, 'value4');
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->fileHandler->save('key_' . $i, 'value' . $i);
+		}
 
-		$this->assertSame('value', $this->fileHandler->get(self::$key1));
-		$this->assertSame('value2', $this->fileHandler->get(self::$key2));
-		$this->assertSame('value3', $this->fileHandler->get(self::$key3));
-		$this->assertSame('value4', $this->fileHandler->get(self::$key4));
+		// check that there are 101 items is cache store
+		$this->assertSame(101, count($this->fileHandler->getCacheInfo()));
 
-		$this->assertTrue($this->fileHandler->deleteMatching('key*'));
+		// Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
+		// (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
+		$this->assertSame(13, $this->fileHandler->deleteMatching('key_1*'));
 
-		$this->assertNull($this->fileHandler->get(self::$key1));
-		$this->assertNull($this->fileHandler->get(self::$key2));
-		$this->assertNull($this->fileHandler->get(self::$key3));
-		$this->assertSame('value4', $this->fileHandler->get(self::$key4));
+		// check that there remains (101 - 13) = 88 items is cache store
+		$this->assertSame(88, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
+	}
+
+	public function testDeleteMatchingSuffix()
+	{
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->fileHandler->save('key_' . $i, 'value' . $i);
+		}
+
+		// check that there are 101 items is cache store
+		$this->assertSame(101, count($this->fileHandler->getCacheInfo()));
+
+		// Checking that given the suffix "1", deleteMatching deletes 11 keys:
+		// (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
+		$this->assertSame(11, $this->fileHandler->deleteMatching('*1'));
+
+		// check that there remains (101 - 13) = 88 items is cache store
+		$this->assertSame(90, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
 	}
 
 	public function testIncrement()

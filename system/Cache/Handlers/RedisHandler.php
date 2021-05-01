@@ -228,25 +228,30 @@ class RedisHandler extends BaseHandler
 	 *
 	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return boolean
+	 * @return integer The number of deleted items
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		$success  = true;
+		$matchedKeys = [];
 		$iterator = null;
 
-		while ($keys = $this->redis->scan($iterator, $pattern))
+		do
 		{
-			foreach ($keys as $key)
+			// Scan for some keys
+			$keys = $this->redis->scan($iterator, $pattern);
+
+			// Redis may return empty results, so protect against that
+			if ($keys !== false)
 			{
-				if ($this->redis->del($key) !== 1)
+				foreach ($keys as $key)
 				{
-					$success = false;
+					$matchedKeys[] = $key;
 				}
 			}
 		}
+		while ($iterator > 0); // @phpstan-ignore-line
 
-		return $success;
+		return $this->redis->del($matchedKeys);
 	}
 
 	//--------------------------------------------------------------------
