@@ -672,10 +672,10 @@ on which adapter is being used.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Metadata for the cached item</p>
+<dd class="field-even"><p>Metadata for the cached item. <code class="docutils literal notranslate"><span class="pre">null</span></code> for missing items, or an array with at least the “expire” key for absolute epoch expiry (<code class="docutils literal notranslate"><span class="pre">null</span></code> for never expires).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p>array|null</p>
 </dd>
 </dl>
 <p>This method will return detailed information on a specific item in the
@@ -689,7 +689,8 @@ cache.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The information returned and the structure of the data is dependent
-on which adapter is being used.</p>
+on which adapter is being used. Some adapters (File, Memcached, Wincache)
+still return <code class="docutils literal notranslate"><span class="pre">false</span></code> for missing items.</p>
 </div>
 </div>
 <div class="section" id="drivers">
