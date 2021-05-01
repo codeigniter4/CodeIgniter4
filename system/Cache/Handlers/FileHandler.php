@@ -282,7 +282,10 @@ class FileHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
 	{
@@ -290,28 +293,36 @@ class FileHandler extends BaseHandler
 
 		if (! is_file($this->path . $key))
 		{
-			return false;
+			return false; // This will return null in a future release
 		}
 
 		$data = @unserialize(file_get_contents($this->path . $key));
 
-		if (is_array($data))
+		if (! is_array($data) || ! isset($data['ttl']))
 		{
-			$mtime = filemtime($this->path . $key);
-
-			if (! isset($data['ttl']))
-			{
-				return false;
-			}
-
-			return [
-				'expire' => $mtime + $data['ttl'],
-				'mtime'  => $mtime,
-				'data'   => $data['data'],
-			];
+			return false; // This will return null in a future release
 		}
 
-		return false;
+		// Consider expired items as missing
+		$expire = $data['time'] + $data['ttl'];
+
+		// @phpstan-ignore-next-line
+		if ($data['ttl'] > 0 && time() > $expire)
+		{
+			// If the file is still there then remove it
+			if (is_file($this->path . $key))
+			{
+				unlink($this->path . $key);
+			}
+
+			return false; // This will return null in a future release
+		}
+
+		return [
+			'expire' => $expire,
+			'mtime'  => filemtime($this->path . $key),
+			'data'   => $data['data'],
+		];
 	}
 
 	//--------------------------------------------------------------------

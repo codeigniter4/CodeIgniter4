@@ -322,7 +322,9 @@ class RedisHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
@@ -333,8 +335,10 @@ class RedisHandler extends BaseHandler
 		if ($value !== null)
 		{
 			$time = time();
+			$ttl  = $this->redis->ttl($key);
+
 			return [
-				'expire' => $time + $this->redis->ttl($key),
+				'expire' => $ttl > 0 ? time() + $ttl : null,
 				'mtime'  => $time,
 				'data'   => $value,
 			];
