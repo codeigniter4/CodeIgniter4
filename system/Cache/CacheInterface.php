@@ -41,7 +41,7 @@ interface CacheInterface
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60);
 
@@ -52,7 +52,7 @@ interface CacheInterface
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key);
 
@@ -85,7 +85,7 @@ interface CacheInterface
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function clean();
 
