@@ -39,6 +39,7 @@ Deprecations:
 - Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
 - Deprecated ``ControllerTester`` to use the ``ControllerTestTrait`` instead.
 - Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
+- Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
 
 Bugs Fixed:
 
