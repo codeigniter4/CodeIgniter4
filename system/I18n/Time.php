@@ -1253,19 +1253,18 @@ class Time extends DateTime
 	{
 		if ($time instanceof Time)
 		{
-			$time = $time->toDateTime()
-					->setTimezone(new DateTimeZone('UTC'));
-		}
-		elseif ($time instanceof DateTime || $time instanceof DateTimeImmutable)
-		{
-			$time = $time->setTimezone(new DateTimeZone('UTC'));
+			$time = $time->toDateTime();
 		}
 		elseif (is_string($time))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 			$time     = new DateTime($time, $timezone);
-			$time     = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+
+		if ($time instanceof DateTime || $time instanceof DateTimeImmutable)
+		{
+			$time = $time->setTimezone(new DateTimeZone('UTC'));
 		}
 
 		return $time;
