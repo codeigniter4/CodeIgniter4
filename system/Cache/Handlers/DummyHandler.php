@@ -93,7 +93,7 @@ class DummyHandler extends BaseHandler
 	 *
 	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return integer $deleted The number of deleted items
+	 * @return integer The number of deleted items
 	 */
 	public function deleteMatching(string $pattern)
 	{

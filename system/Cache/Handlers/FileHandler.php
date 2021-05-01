@@ -165,13 +165,13 @@ class FileHandler extends BaseHandler
 	 *
 	 * @param string $pattern Cache items glob-style pattern
 	 *
-	 * @return integer $deleted The number of deleted items
+	 * @return integer The number of deleted items
 	 */
 	public function deleteMatching(string $pattern)
 	{
 		$deleted = 0;
 
-		foreach (glob($this->path . $pattern) as $filename)
+		foreach (glob($this->path . $pattern,  GLOB_NOSORT) as $filename)
 		{
 			if (is_file($filename) && @unlink($filename))
 			{
