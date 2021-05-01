@@ -199,7 +199,7 @@ class PredisHandler extends BaseHandler
 
 		foreach (new Keyspace($this->redis, $pattern) as $key)
 		{
-			array_push($matchedKeys, $key);
+			$matchedKeys[] = $key;
 		}
 
 		return $this->redis->del($matchedKeys);

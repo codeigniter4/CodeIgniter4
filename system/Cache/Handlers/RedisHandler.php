@@ -245,7 +245,7 @@ class RedisHandler extends BaseHandler
 			{
 				foreach ($keys as $key)
 				{
-					array_push($matchedKeys, $key);
+					$matchedKeys[] = $key;
 				}
 			}
 		}
