@@ -273,7 +273,7 @@ class PredisHandler extends BaseHandler
 	 *
 	 * @return array|false|null
 	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
@@ -282,8 +282,10 @@ class PredisHandler extends BaseHandler
 		if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
 		{
 			$time = time();
+			$ttl  = $this->redis->ttl($key);
+
 			return [
-				'expire' => $time + $this->redis->ttl($key),
+				'expire' => $ttl > 0 ? time() + $ttl : null,
 				'mtime'  => $time,
 				'data'   => $data['__ci_value'],
 			];

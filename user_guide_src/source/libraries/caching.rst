@@ -216,7 +216,7 @@ Class Reference
 .. php:method:: getMetadata(string $key)
 
     :param string $key: Cache item name
-    :returns: Metadata for the cached item with at least the "expires" key for absolute epoch expiry, ``null`` for missing items.
+    :returns: Metadata for the cached item. ``null`` for missing items, or an array with at least the "expire" key for absolute epoch expiry (``null`` for never expires).
     :rtype: array|null
 
     This method will return detailed information on a specific item in the

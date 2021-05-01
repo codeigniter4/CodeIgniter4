@@ -212,7 +212,7 @@ class WincacheHandler extends BaseHandler
 	 *
 	 * @return array|false|null
 	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
 	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 *
 	 * @codeCoverageIgnore
@@ -228,7 +228,7 @@ class WincacheHandler extends BaseHandler
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
 			return [
-				'expire'   => time() + $ttl,
+				'expire'   => $ttl > 0 ? time() + $ttl : null,
 				'hitcount' => $hitcount,
 				'age'      => $age,
 				'ttl'      => $ttl,

@@ -344,7 +344,7 @@ class MemcachedHandler extends BaseHandler
 	 *
 	 * @return array|false|null
 	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
 	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
@@ -359,10 +359,13 @@ class MemcachedHandler extends BaseHandler
 			return false; // This will return null in a future release
 		}
 
-		list($data, $time, $ttl) = $stored;
+		list($data, $time, $limit) = $stored;
+
+		// Calculate the remaining time to live from the original limit
+		$ttl = time() - $time - $limit;
 
 		return [
-			'expire' => $time + $ttl,
+			'expire' => $limit > 0 ? $time + $limit : null,
 			'mtime'  => $time,
 			'data'   => $data,
 		];

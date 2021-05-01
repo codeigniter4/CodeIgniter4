@@ -110,7 +110,7 @@ interface CacheInterface
 	 *
 	 * @return array|false|null
 	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expires' key for absolute epoch expiry.
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
 	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key);
