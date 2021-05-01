@@ -57,7 +57,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (! empty($config))
 		{
@@ -269,7 +269,7 @@ class MemcachedHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -292,7 +292,7 @@ class MemcachedHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -328,7 +328,7 @@ class MemcachedHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public function getCacheInfo()
 	{
@@ -380,6 +380,6 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('memcached') || extension_loaded('memcache'));
+		return extension_loaded('memcached') || extension_loaded('memcache');
 	}
 }

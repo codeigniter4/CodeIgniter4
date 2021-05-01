@@ -57,7 +57,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (! empty($config))
 		{
@@ -72,7 +72,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function __destruct()
 	{
-		if ($this->redis) // @phpstan-ignore-line
+		if (isset($this->redis))
 		{
 			$this->redis->close();
 		}
@@ -218,7 +218,7 @@ class RedisHandler extends BaseHandler
 	{
 		$key = $this->prefix . $key;
 
-		return ($this->redis->del($key) === 1);
+		return $this->redis->del($key) === 1;
 	}
 
 	//--------------------------------------------------------------------
@@ -262,7 +262,7 @@ class RedisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -279,7 +279,7 @@ class RedisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -308,7 +308,7 @@ class RedisHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getCacheInfo()
 	{
@@ -358,6 +358,4 @@ class RedisHandler extends BaseHandler
 	{
 		return extension_loaded('redis');
 	}
-
-	//--------------------------------------------------------------------
 }
