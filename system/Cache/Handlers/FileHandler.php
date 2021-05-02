@@ -71,7 +71,7 @@ class FileHandler extends BaseHandler
 		}
 
 		$this->mode   = $config->file['mode'] ?? 0640;
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 	}
 
 	//--------------------------------------------------------------------
@@ -81,7 +81,6 @@ class FileHandler extends BaseHandler
 	 */
 	public function initialize()
 	{
-		// Not to see here...
 	}
 
 	//--------------------------------------------------------------------
@@ -190,7 +189,7 @@ class FileHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -223,7 +222,7 @@ class FileHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -268,7 +267,7 @@ class FileHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public function getCacheInfo()
 	{
@@ -534,6 +533,8 @@ class FileHandler extends BaseHandler
 			$returnedValues = explode(',', $returnedValues);
 		}
 
+		$fileInfo = [];
+
 		foreach ($returnedValues as $key)
 		{
 			switch ($key)
@@ -565,8 +566,6 @@ class FileHandler extends BaseHandler
 			}
 		}
 
-		return $fileInfo; // @phpstan-ignore-line
+		return $fileInfo;
 	}
-
-	//--------------------------------------------------------------------
 }

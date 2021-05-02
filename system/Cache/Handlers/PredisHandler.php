@@ -58,7 +58,7 @@ class PredisHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (isset($config->redis))
 		{
@@ -101,10 +101,9 @@ class PredisHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$data = array_combine([
-			'__ci_type',
-			'__ci_value',
-		], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
+		$data = array_combine(
+			['__ci_type', '__ci_value'],
+			$this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
@@ -180,7 +179,7 @@ class PredisHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
-		return ($this->redis->del($key) === 1);
+		return $this->redis->del($key) === 1;
 	}
 
 	//--------------------------------------------------------------------
@@ -194,7 +193,6 @@ class PredisHandler extends BaseHandler
 	 */
 	public function deleteMatching(string $pattern)
 	{
-		$deleted = 0;
 		$matchedKeys = [];
 
 		foreach (new Keyspace($this->redis, $pattern) as $key)
@@ -213,7 +211,7 @@ class PredisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -228,7 +226,7 @@ class PredisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -255,7 +253,7 @@ class PredisHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getCacheInfo()
 	{
