@@ -19,6 +19,7 @@
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
 		"nexusphp/tachycardia": "^1.0",
+		"nikic/php-parser": "4.10.4",
 		"phpstan/phpstan": "0.12.85",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
