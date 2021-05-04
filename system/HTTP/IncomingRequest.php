@@ -124,7 +124,7 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param object      $config
+	 * @param App         $config
 	 * @param URI         $uri
 	 * @param string|null $body
 	 * @param UserAgent   $userAgent
