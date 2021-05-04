@@ -592,6 +592,10 @@ class URITest extends CIUnitTestCase
 				'/',
 			],
 			[
+				'//',
+				'/',
+			],
+			[
 				'/foo/..',
 				'/',
 			],

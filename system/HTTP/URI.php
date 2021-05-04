@@ -193,7 +193,7 @@ class URI
 	 *
 	 * @param string $path
 	 *
-	 * @return string
+	 * @return   string
 	 * @internal
 	 */
 	public static function removeDotSegments(string $path): string
@@ -230,21 +230,18 @@ class URI
 		}
 
 		$output = implode('/', $output);
-		$output = ltrim($output, '/ ');
+		$output = trim($output, '/ ');
 
-		if ($output !== '/')
+		// Add leading slash if necessary
+		if (strpos($path, '/') === 0)
 		{
-			// Add leading slash if necessary
-			if (strpos($path, '/') === 0)
-			{
-				$output = '/' . $output;
-			}
+			$output = '/' . $output;
+		}
 
-			// Add trailing slash if necessary
-			if (substr($path, -1, 1) === '/')
-			{
-				$output .= '/';
-			}
+		// Add trailing slash if necessary
+		if ($output !== '/' && substr($path, -1, 1) === '/')
+		{
+			$output .= '/';
 		}
 
 		return $output;
