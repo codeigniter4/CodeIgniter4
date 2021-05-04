@@ -2,7 +2,11 @@
 
 namespace CodeIgniter\Validation;
 
-class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
+use Tests\Support\Validation\TestRules;
+
+class FormatRulesTest extends CIUnitTestCase
 {
 
 	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
@@ -14,11 +18,11 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected $validation;
 	protected $config = [
 		'ruleSets'      => [
-			\CodeIgniter\Validation\Rules::class,
-			\CodeIgniter\Validation\FormatRules::class,
-			\CodeIgniter\Validation\FileRules::class,
-			\CodeIgniter\Validation\CreditCardRules::class,
-			\Tests\Support\Validation\TestRules::class,
+			Rules::class,
+			FormatRules::class,
+			FileRules::class,
+			CreditCardRules::class,
+			TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
@@ -33,7 +37,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];

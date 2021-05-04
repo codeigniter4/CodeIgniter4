@@ -12,11 +12,12 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use Config\Cache;
+use Exception;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.
- * Windows-only, so not testable on travis-ci.
- * Unusable methods flagged for code coverage ignoring.
+ *
+ * @codeCoverageIgnore
  */
 class WincacheHandler extends BaseHandler
 {
@@ -36,19 +37,16 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Takes care of any handler-specific setup that must be done.
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function initialize()
 	{
-		// Nothing to see here...
 	}
 
 	//--------------------------------------------------------------------
@@ -59,18 +57,15 @@ class WincacheHandler extends BaseHandler
 	 * @param string $key Cache item name
 	 *
 	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
-
 		$success = false;
-		$data    = wincache_ucache_get($key, $success);
+
+		$data = wincache_ucache_get($this->prefix . $key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : null;
+		return $success ? $data : null;
 	}
 
 	//--------------------------------------------------------------------
@@ -82,15 +77,11 @@ class WincacheHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
-
-		return wincache_ucache_set($key, $value, $ttl);
+		return wincache_ucache_set($this->prefix . $key, $value, $ttl);
 	}
 
 	//--------------------------------------------------------------------
@@ -100,15 +91,25 @@ class WincacheHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
-	 *
-	 * @codeCoverageIgnore
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		return wincache_ucache_delete($this->prefix . $key);
+	}
 
-		return wincache_ucache_delete($key);
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @throws Exception
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		throw new Exception('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
 	}
 
 	//--------------------------------------------------------------------
@@ -119,18 +120,11 @@ class WincacheHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
+	 * @return integer|false
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
-
-		$success = false;
-		$value   = wincache_ucache_inc($key, $offset, $success);
-
-		return ($success === true) ? $value : false; // @phpstan-ignore-line
+		return wincache_ucache_inc($this->prefix . $key, $offset);
 	}
 
 	//--------------------------------------------------------------------
@@ -141,18 +135,11 @@ class WincacheHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
+	 * @return integer|false
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
-
-		$success = false;
-		$value   = wincache_ucache_dec($key, $offset, $success);
-
-		return ($success === true) ? $value : false; // @phpstan-ignore-line
+		return wincache_ucache_dec($this->prefix . $key, $offset);
 	}
 
 	//--------------------------------------------------------------------
@@ -160,9 +147,7 @@ class WincacheHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
-	 *
-	 * @codeCoverageIgnore
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -177,9 +162,7 @@ class WincacheHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
+	 * @return array|false
 	 */
 	public function getCacheInfo()
 	{
@@ -193,29 +176,28 @@ class WincacheHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
-	 *
-	 * @codeCoverageIgnore
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
-
-		if ($stored = wincache_ucache_info(false, $key))
+		if ($stored = wincache_ucache_info(false, $this->prefix . $key))
 		{
 			$age      = $stored['ucache_entries'][1]['age_seconds'];
 			$ttl      = $stored['ucache_entries'][1]['ttl_seconds'];
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
 			return [
-				'expire'   => $ttl - $age,
+				'expire'   => $ttl > 0 ? time() + $ttl : null,
 				'hitcount' => $hitcount,
 				'age'      => $age,
 				'ttl'      => $ttl,
 			];
 		}
 
-		return false;
+		return false; // This will return null in a future release
 	}
 
 	//--------------------------------------------------------------------
@@ -227,8 +209,6 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('wincache') && ini_get('wincache.ucenabled'));
+		return extension_loaded('wincache') && ini_get('wincache.ucenabled');
 	}
-
-	//--------------------------------------------------------------------
 }

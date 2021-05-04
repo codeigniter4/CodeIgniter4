@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use DateTime;
@@ -28,7 +29,7 @@ use InvalidArgumentException;
  * - Headers
  * - Message body
  *
- * @mixin \CodeIgniter\HTTP\RedirectResponse
+ * @mixin RedirectResponse
  */
 interface ResponseInterface
 {
@@ -185,6 +186,7 @@ interface ResponseInterface
 	 * @see http://tools.ietf.org/html/rfc5988
 	 *
 	 * @return Response
+	 *
 	 * @todo Recommend moving to Pager
 	 */
 	public function setLink(PagerInterface $pager);
@@ -358,7 +360,7 @@ interface ResponseInterface
 	 * @param string|null $name
 	 * @param string      $prefix
 	 *
-	 * @return mixed
+	 * @return Cookie[]|Cookie|null
 	 */
 	public function getCookie(string $name = null, string $prefix = '');
 
@@ -377,7 +379,7 @@ interface ResponseInterface
 	/**
 	 * Returns all cookies currently set.
 	 *
-	 * @return array
+	 * @return Cookie[]
 	 */
 	public function getCookies();
 

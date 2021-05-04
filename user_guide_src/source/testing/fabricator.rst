@@ -6,6 +6,10 @@ Often you will need sample data for your application to run its tests. The ``Fab
 uses fzaninotto's `Faker <https://github.com/fzaninotto/Faker//>`_ to turn models into generators
 of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Supported Models
 ================
 
@@ -213,7 +217,7 @@ Test Helper
 ===========
 
 Often all you will need is a one-and-done fake object for testing. The Test Helper provides
-the ``fake($model, $overrides)`` function to do just this::
+the ``fake($model, $overrides, $persist = true)`` function to do just this::
 
     helper('test');
     $user = fake('App\Models\UserModel', ['name' => 'Gerry']);
@@ -223,6 +227,8 @@ This is equivalent to::
     $fabricator = new Fabricator('App\Models\UserModel');
     $fabricator->setOverrides(['name' => 'Gerry']);
     $user = $fabricator->create();
+
+If you just need a fake object without saving it to the database you can pass false into the persist parameter.
 
 Table Counts
 ============
@@ -276,4 +282,4 @@ you deleted a fake item but wanted to track the change.
 **resetCounts()**
 
 Resets all counts. Good idea to call this between test cases (though using
-``CIDatabaseTestCase::$refresh = true`` does it automatically).
+``CIUnitTestCase::$refresh = true`` does it automatically).

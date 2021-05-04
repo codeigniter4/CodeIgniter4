@@ -1,12 +1,14 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Config\Config;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class URITest extends \CodeIgniter\Test\CIUnitTestCase
+class URITest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -18,7 +20,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tearDown(): void
 	{
-		Config::reset();
+		Factories::reset('config');
 	}
 
 	//--------------------------------------------------------------------
@@ -976,7 +978,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$config->indexPage                 = 'index.php';
 		$config->forceGlobalSecureRequests = true;
 
-		Config::injectMock('App', $config);
+		Factories::injectMock('config', 'App', $config);
 
 		$request      = Services::request($config);
 		$request->uri = new URI('http://example.com/ci/v4/controller/method');
@@ -1036,5 +1038,4 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $uri);
 	}
-
 }

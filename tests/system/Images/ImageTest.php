@@ -1,9 +1,10 @@
 <?php namespace CodeIgniter\Images;
 
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class ImageTest extends \CodeIgniter\Test\CIUnitTestCase
+class ImageTest extends CIUnitTestCase
 {
 
 	protected $path = 'tests/_support/ci-logo.png';

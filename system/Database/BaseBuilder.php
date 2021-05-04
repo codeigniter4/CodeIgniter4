@@ -22,8 +22,6 @@ use InvalidArgumentException;
  * Provides the core Query Builder methods.
  * Database-specific Builders might need to override
  * certain methods to make them work.
- *
- * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
@@ -151,7 +149,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -247,7 +245,6 @@ class BaseBuilder
 	];
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -263,6 +260,9 @@ class BaseBuilder
 			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
 		}
 
+		/**
+		 * @var BaseConnection $db
+		 */
 		$this->db = $db;
 
 		$this->tableName = $tableName;
@@ -281,11 +281,10 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns the current database connection
 	 *
-	 * @return ConnectionInterface
+	 * @return ConnectionInterface|BaseConnection
 	 */
 	public function db(): ConnectionInterface
 	{
@@ -372,7 +371,10 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($select as $val)
 		{
@@ -656,7 +658,10 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (! $this->hasOperator($cond))
 		{
@@ -776,7 +781,10 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $k => $v)
 		{
@@ -1036,7 +1044,10 @@ class BaseBuilder
 			// @codeCoverageIgnoreEnd
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		$ok = $key;
 
@@ -1329,14 +1340,12 @@ class BaseBuilder
 	 */
 	protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
 	{
-		$likeStatement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
-
 		if ($insensitiveSearch === true)
 		{
-			$likeStatement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
+			return "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
 		}
 
-		return $likeStatement;
+		return "{$prefix} {$column} {$not} LIKE :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------
@@ -1546,7 +1555,10 @@ class BaseBuilder
 	 */
 	public function groupBy($by, bool $escape = null)
 	{
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if (is_string($by))
 		{
@@ -1638,7 +1650,10 @@ class BaseBuilder
 			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		if ($escape === false)
 		{
@@ -2005,7 +2020,6 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Get_Where
 	 *
@@ -2082,9 +2096,8 @@ class BaseBuilder
 				{
 					throw new DatabaseException('insertBatch() called with no data');
 				}
-				// @codeCoverageIgnoreStart
-				return false;
-				// @codeCoverageIgnoreEnd
+
+				return false; // @codeCoverageIgnore
 			}
 
 			$this->setInsertBatch($set, '', $escape);
@@ -2100,7 +2113,7 @@ class BaseBuilder
 
 			if ($this->testMode)
 			{
-				++ $affectedRows;
+				++$affectedRows;
 			}
 			else
 			{
@@ -2174,6 +2187,7 @@ class BaseBuilder
 			ksort($row); // puts $row in the same order as our keys
 
 			$clean = [];
+
 			foreach ($row as $k => $value)
 			{
 				$clean[] = ':' . $this->setBind($k, $value, $escape) . ':';
@@ -2236,7 +2250,7 @@ class BaseBuilder
 	 *
 	 * @throws DatabaseException
 	 *
-	 * @return BaseResult|Query|false
+	 * @return Query|boolean
 	 */
 	public function insert(array $set = null, bool $escape = null)
 	{
@@ -2380,7 +2394,7 @@ class BaseBuilder
 	 * Groups tables in FROM clauses if needed, so there is no confusion
 	 * about operator precedence.
 	 *
-	 * Note: This is only used (and overridden) by MySQL and CUBRID.
+	 * Note: This is only used (and overridden) by MySQL and SQLSRV.
 	 *
 	 * @return string
 	 */
@@ -2467,7 +2481,7 @@ class BaseBuilder
 
 			$result = $this->db->query($sql, $this->binds, false);
 
-			if ($result->resultID !== false)
+			if ($result !== false)
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
@@ -2686,7 +2700,10 @@ class BaseBuilder
 			return null;
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		if (! is_bool($escape))
+		{
+			$escape = $this->db->protectIdentifiers;
+		}
 
 		foreach ($key as $v)
 		{
@@ -2816,7 +2833,7 @@ class BaseBuilder
 	 * @param integer $limit     The limit clause
 	 * @param boolean $resetData
 	 *
-	 * @return mixed
+	 * @return string|boolean
 	 * @throws DatabaseException
 	 */
 	public function delete($where = '', int $limit = null, bool $resetData = true)
@@ -3042,16 +3059,14 @@ class BaseBuilder
 	 */
 	protected function compileIgnore(string $statement)
 	{
-		$sql = '';
-
 		if ($this->QBIgnore &&
 			isset($this->supportedIgnoreStatements[$statement])
 		)
 		{
-			$sql = trim($this->supportedIgnoreStatements[$statement]) . ' ';
+			return trim($this->supportedIgnoreStatements[$statement]) . ' ';
 		}
 
-		return $sql;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
@@ -3274,7 +3289,7 @@ class BaseBuilder
 				$i = 0;
 				foreach ($out[$val] as $data)
 				{
-					$array[$i ++][$val] = $data;
+					$array[$i++][$val] = $data;
 				}
 			}
 		}
@@ -3480,16 +3495,17 @@ class BaseBuilder
 
 		if (! array_key_exists($key, $this->bindsKeyCount))
 		{
-			$this->bindsKeyCount[$key] = 0;
+			$this->bindsKeyCount[$key] = 1;
 		}
+
 		$count = $this->bindsKeyCount[$key]++;
 
-		$this->binds[$key . $count] = [
+		$this->binds[$key . '.' . $count] = [
 			$value,
 			$escape,
 		];
 
-		return $key . $count;
+		return $key . '.' . $count;
 	}
 
 	//--------------------------------------------------------------------

@@ -7,7 +7,8 @@ use CodeIgniter\Database\Config;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -16,8 +17,10 @@ use org\bovigo\vfs\vfsStream;
 /**
  * @group DatabaseLive
  */
-class MigrationRunnerTest extends CIDatabaseTestCase
+class MigrationRunnerTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	protected $refresh = true;
 
 	protected $root;

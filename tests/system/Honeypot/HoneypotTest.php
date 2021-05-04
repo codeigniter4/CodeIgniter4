@@ -5,11 +5,12 @@ namespace CodeIgniter\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
+class HoneypotTest extends CIUnitTestCase
 {
 
 	protected $config;

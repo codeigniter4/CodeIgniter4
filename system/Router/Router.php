@@ -103,7 +103,6 @@ class Router implements RouterInterface
 	protected $filterInfo;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
@@ -498,7 +497,7 @@ class Router implements RouterInterface
 	{
 		$segments = explode('/', $uri);
 
-		$segments = $this->validateRequest($segments);
+		$segments = $this->scanControllers($segments);
 
 		// If we don't have any segments left - try the default controller;
 		// WARNING: Directories get shifted out of the segments array.
@@ -510,6 +509,12 @@ class Router implements RouterInterface
 		else
 		{
 			$this->controller = ucfirst(array_shift($segments));
+		}
+
+		$controllerName = $this->controllerName();
+		if (! $this->isValidSegment($controllerName))
+		{
+			throw new PageNotFoundException($this->controller . ' is not a valid controller name');
 		}
 
 		// Use the method name if it exists.
@@ -526,7 +531,6 @@ class Router implements RouterInterface
 		}
 
 		$defaultNamespace = $this->collection->getDefaultNamespace();
-		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
 			$controller = '\\' . $defaultNamespace;
@@ -573,32 +577,63 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to validate the URI request and determine the controller path.
+	 * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
 	 *
 	 * @param array $segments URI segments
 	 *
-	 * @return array URI segments
+	 * @return array returns an array of remaining uri segments that don't map onto a directory
+	 *
+	 * @deprecated this function name does not properly describe its behavior so it has been deprecated
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected function validateRequest(array $segments): array
 	{
+		return $this->scanControllers($segments);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
+	 *
+	 * @param array $segments URI segments
+	 *
+	 * @return array returns an array of remaining uri segments that don't map onto a directory
+	 */
+	protected function scanControllers(array $segments): array
+	{
 		$segments = array_filter($segments, function ($segment) {
-			// @phpstan-ignore-next-line
-			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
+			return $segment !== '';
 		});
+		// numerically reindex the array, removing gaps
 		$segments = array_values($segments);
 
-		$c                 = count($segments);
-		$directoryOverride = isset($this->directory);
+		// if a prior directory value has been set, just return segments and get out of here
+		if (isset($this->directory))
+		{
+			return $segments;
+		}
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
+		$c = count($segments);
 		while ($c-- > 0)
 		{
-			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
-
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directoryOverride === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
+			$segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
+			// as soon as we encounter any segment that is not PSR-4 compliant, stop searching
+			if (! $this->isValidSegment($segmentConvert))
 			{
-				$this->setDirectory(array_shift($segments), true);
+				return $segments;
+			}
+
+			$test = APPPATH . 'Controllers/' . $this->directory . $segmentConvert;
+
+			// as long as each segment is *not* a controller file but does match a directory, add it to $this->directory
+			if (! is_file($test . '.php') && is_dir($test))
+			{
+				$this->setDirectory($segmentConvert, true, false);
+				array_shift($segments);
 				continue;
 			}
 
@@ -614,10 +649,11 @@ class Router implements RouterInterface
 	/**
 	 * Sets the sub-directory that the controller is in.
 	 *
-	 * @param string|null   $dir
-	 * @param boolean|false $append
+	 * @param string|null $dir
+	 * @param boolean     $append
+	 * @param boolean     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
 	 */
-	public function setDirectory(string $dir = null, bool $append = false)
+	public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
 	{
 		if (empty($dir))
 		{
@@ -625,16 +661,39 @@ class Router implements RouterInterface
 			return;
 		}
 
-		$dir = ucfirst($dir);
+		if ($validate)
+		{
+			$segments = explode('/', trim($dir, '/'));
+			foreach ($segments as $segment)
+			{
+				if (! $this->isValidSegment($segment))
+				{
+					return;
+				}
+			}
+		}
 
 		if ($append !== true || empty($this->directory))
 		{
-			$this->directory = str_replace('.', '', trim($dir, '/')) . '/';
+			$this->directory = trim($dir, '/') . '/';
 		}
 		else
 		{
-			$this->directory .= str_replace('.', '', trim($dir, '/')) . '/';
+			$this->directory .= trim($dir, '/') . '/';
 		}
+	}
+
+	/**
+	 * Returns true if the supplied $segment string represents a valid PSR-4 compliant namespace/directory segment
+	 *
+	 * regex comes from https://www.php.net/manual/en/language.variables.basics.php
+	 *
+	 * @param  string $segment
+	 * @return boolean
+	 */
+	private function isValidSegment(string $segment): bool
+	{
+		return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
 	}
 
 	//--------------------------------------------------------------------

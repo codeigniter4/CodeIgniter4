@@ -99,14 +99,14 @@ class FileCollection
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
-				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+				return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
 					$uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+				return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
 					$uploadedFile : null;
 			}
 		}

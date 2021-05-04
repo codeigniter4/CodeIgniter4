@@ -121,11 +121,26 @@ class Connection extends BaseConnection
 		{
 			$ssl = [];
 
-			empty($this->encrypt['ssl_key'])    || $ssl['key']    = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert'])   || $ssl['cert']   = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca'])     || $ssl['ca']     = $this->encrypt['ssl_ca'];
-			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
-			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			if (! empty($this->encrypt['ssl_key']))
+			{
+				$ssl['key'] = $this->encrypt['ssl_key'];
+			}
+			if (! empty($this->encrypt['ssl_cert']))
+			{
+				$ssl['cert'] = $this->encrypt['ssl_cert'];
+			}
+			if (! empty($this->encrypt['ssl_ca']))
+			{
+				$ssl['ca'] = $this->encrypt['ssl_ca'];
+			}
+			if (! empty($this->encrypt['ssl_capath']))
+			{
+				$ssl['capath'] = $this->encrypt['ssl_capath'];
+			}
+			if (! empty($this->encrypt['ssl_cipher']))
+			{
+				$ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			}
 
 			if (! empty($ssl))
 			{
@@ -142,7 +157,7 @@ class Connection extends BaseConnection
 					//
 					// https://secure.php.net/ChangeLog-5.php#5.6.16
 					// https://bugs.php.net/bug.php?id=68344
-					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, '5.6', '>='))
+					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, 'mysqlnd 5.6', '>='))
 					{
 						$clientFlags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
 					}
@@ -163,7 +178,7 @@ class Connection extends BaseConnection
 			)
 			{
 				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
+				if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
 					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
 										  ->fetch_object()->Value)
 				)
@@ -315,7 +330,8 @@ class Connection extends BaseConnection
 		}
 		catch (mysqli_sql_exception $e)
 		{
-			log_message('error', $e);
+			log_message('error', $e->getMessage());
+
 			if ($this->DBDebug)
 			{
 				throw $e;
@@ -529,14 +545,7 @@ class Connection extends BaseConnection
 				}
 				elseif ($index['Non_unique'])
 				{
-					if ($index['Index_type'] === 'SPATIAL')
-					{
-						$type = 'SPATIAL';
-					}
-					else
-					{
-						$type = 'INDEX';
-					}
+					$type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
 				}
 				else
 				{
@@ -630,12 +639,10 @@ class Connection extends BaseConnection
 
 	/**
 	 * Returns the last error code and message.
+	 * Must return this format: ['code' => string|int, 'message' => string]
+	 * intval(code) === 0 means "no error".
 	 *
-	 * Must return an array with keys 'code' and 'message':
-	 *
-	 *  return ['code' => null, 'message' => null);
-	 *
-	 * @return array
+	 * @return array<string,string|int>
 	 */
 	public function error(): array
 	{

@@ -83,4 +83,19 @@ class GeneratorsTest extends CIUnitTestCase
 		is_file($file) && unlink($file);
 		is_dir($dir) && rmdir($dir);
 	}
+
+	public function testSuffixingHasNoEffect(): void
+	{
+		command('make:foo bar --suffix');
+		$file1 = APPPATH . 'Commands/Bar.php';
+		$file2 = APPPATH . 'Commands/BarCommand.php';
+		$dir   = dirname($file1);
+
+		$this->assertFileExists($file1);
+		$this->assertFileDoesNotExist($file2);
+
+		is_file($file1) && unlink($file1);
+		is_file($file2) && unlink($file2);
+		is_dir($dir) && rmdir($dir);
+	}
 }

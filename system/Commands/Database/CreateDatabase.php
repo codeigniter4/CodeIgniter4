@@ -86,16 +86,23 @@ class CreateDatabase extends BaseCommand
 			$name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
 		}
 
-		$db = Database::connect();
-
 		try
 		{
+			/**
+			 * @var Database $config
+			 */
+			$config = config('Database');
+
+			// Set to an empty database to prevent connection errors.
+			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
+			$config->{$group}['database'] = '';
+
+			$db = Database::connect();
+
 			// Special SQLite3 handling
 			if ($db instanceof Connection)
 			{
-				$config = config('Database');
-				$group  = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
-				$ext    = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
+				$ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
 
 				if (! in_array($ext, ['db', 'sqlite'], true))
 				{
@@ -125,33 +132,26 @@ class CreateDatabase extends BaseCommand
 					unset($dbName);
 				}
 
-				// Connect to new SQLite3 to create new database,
-				// then reset the altered Config\Database instance
+				// Connect to new SQLite3 to create new database
 				$db = Database::connect(null, false);
 				$db->connect();
-				Factories::reset('config');
 
 				if (! is_file($db->getDatabase()) && $name !== ':memory:')
 				{
 					// @codeCoverageIgnoreStart
 					CLI::error('Database creation failed.', 'light_gray', 'red');
 					CLI::newLine();
-
 					return;
 					// @codeCoverageIgnoreEnd
 				}
 			}
-			else
+			elseif (! Database::forge()->createDatabase($name))
 			{
-				if (! Database::forge()->createDatabase($name))
-				{
-					// @codeCoverageIgnoreStart
-					CLI::error('Database creation failed.', 'light_gray', 'red');
-					CLI::newLine();
-
-					return;
-					// @codeCoverageIgnoreEnd
-				}
+				// @codeCoverageIgnoreStart
+				CLI::error('Database creation failed.', 'light_gray', 'red');
+				CLI::newLine();
+				return;
+				// @codeCoverageIgnoreEnd
 			}
 
 			CLI::write("Database \"{$name}\" successfully created.", 'green');
@@ -160,6 +160,11 @@ class CreateDatabase extends BaseCommand
 		catch (Throwable $e)
 		{
 			$this->showError($e);
+		}
+		finally
+		{
+			// Reset the altered config no matter what happens.
+			Factories::reset('config');
 		}
 	}
 }

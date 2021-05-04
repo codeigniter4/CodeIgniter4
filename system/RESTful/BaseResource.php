@@ -61,12 +61,9 @@ abstract class BaseResource extends Controller
 		}
 
 		// make a model object if needed
-		if (empty($this->model) && ! empty($this->modelName))
+		if (empty($this->model) && ! empty($this->modelName) && class_exists($this->modelName))
 		{
-			if (class_exists($this->modelName))
-			{
-				$this->model = model($this->modelName);
-			}
+			$this->model = model($this->modelName);
 		}
 
 		// determine model name if needed

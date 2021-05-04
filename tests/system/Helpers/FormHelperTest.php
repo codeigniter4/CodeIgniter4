@@ -4,10 +4,11 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Services;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
 
-class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+class FormHelperTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -29,7 +30,7 @@ class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -90,7 +91,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -127,7 +128,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -164,7 +165,7 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
@@ -208,12 +209,12 @@ EOH;
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
+		if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
 		{
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
@@ -221,7 +222,7 @@ EOH;
 		else
 		{
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 
 EOH;
 		}
@@ -290,6 +291,22 @@ EOH;
 			'style'     => 'width:50%',
 		];
 		$this->assertEquals($expected, form_input($data));
+	}
+
+	public function testFormInputWithExtra()
+	{
+		$expected = <<<EOH
+<input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
+EOH;
+		$data     = [
+			'id'   => 'identity',
+			'name' => 'identity',
+			'type' => 'email',
+		];
+		$extra    = [
+			'class' => 'form-control form-control-lg',
+		];
+		$this->assertEquals($expected, form_input($data, '', $extra));
 	}
 
 	// ------------------------------------------------------------------------
@@ -374,7 +391,7 @@ EOH;
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
-		$expected       = <<<EOH
+		$expected     = <<<EOH
 <select name="shirts" multiple="multiple">
 <option value="small" selected="selected">Small Shirt</option>
 <option value="med">Medium Shirt</option>
@@ -382,11 +399,11 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$shirts_on_sale = [
+		$shirtsOnSale = [
 			'small',
 			'large',
 		];
-		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirts_on_sale));
+		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirtsOnSale));
 		$options  = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',
@@ -436,7 +453,7 @@ EOH;
 </optgroup>
 </select>\n
 EOH;
-		$this->assertEquals($expected, form_dropdown('cars', $options, []));
+		$this->assertEquals($expected, form_dropdown('cars', $options));
 	}
 
 	public function testFormDropdownInferred()
@@ -464,7 +481,7 @@ EOH;
 </select>\n
 EOH;
 		$_POST['cars'] = 'audi';
-		$this->assertEquals($expected, form_dropdown('cars', $options, []));
+		$this->assertEquals($expected, form_dropdown('cars', $options));
 		unset($_POST['cars']);
 	}
 
@@ -537,6 +554,36 @@ EOH;
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_multiselect('shirts[]', $options, ['med', 'large']));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormMultiselectArrayData()
+	{
+		$expected = <<<EOH
+<select name="shirts[]"  multiple="multiple">
+<option value="small">Small Shirt</option>
+<option value="med" selected="selected">Medium Shirt</option>
+<option value="large" selected="selected">Large Shirt</option>
+<option value="xlarge">Extra Large Shirt</option>
+</select>\n
+EOH;
+		$options  = [
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
+			'xlarge' => 'Extra Large Shirt',
+		];
+
+		$data = [
+			'name'     => 'shirts[]',
+			'options'  => $options,
+			'selected' => [
+				'med',
+				'large',
+			],
+		];
+
+		$this->assertEquals($expected, form_multiselect($data));
 	}
 
 	// ------------------------------------------------------------------------

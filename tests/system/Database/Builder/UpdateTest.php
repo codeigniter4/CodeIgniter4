@@ -1,14 +1,14 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
 
-class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
+class UpdateTest extends CIUnitTestCase
 {
+	/** @var MockConnection */
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
@@ -16,8 +16,6 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdate()
 	{
@@ -37,11 +35,9 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateInternalWhereAndLimit()
 	{
@@ -51,21 +47,19 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1  LIMIT 5';
 		$expectedBinds = [
-			'id'   => [
-				1,
-				true,
-			],
 			'name' => [
 				'Programmer',
 				true,
 			],
+			'id'   => [
+				1,
+				true,
+			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithSet()
 	{
@@ -75,21 +69,19 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
-			'id'   => [
-				1,
-				true,
-			],
 			'name' => [
 				'Programmer',
 				true,
 			],
+			'id'   => [
+				1,
+				true,
+			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateThrowsExceptionWithNoData()
 	{
@@ -100,8 +92,6 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 		$builder->update(null, null, null, true);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateBatch()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -110,48 +100,49 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'id'          => 2,
 				'name'        => 'Comedian',
-				'description' => 'Theres something in your teeth',
+				'description' => 'There\'s something in your teeth',
 			],
 			[
 				'id'          => 3,
 				'name'        => 'Cab Driver',
-				'description' => 'Iam yellow',
+				'description' => 'I am yellow',
 			],
 		];
 
-		$this->db->shouldReturn('execute', 1)
-				 ->shouldReturn('affectedRows', 1);
-
+		$this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
 		$builder->updateBatch($updateData, 'id');
 
 		$query = $this->db->getLastQuery();
-
 		$this->assertInstanceOf(MockQuery::class, $query);
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
-WHEN "id" = :id: THEN :name:
-WHEN "id" = :id0: THEN :name0:
-ELSE "name" END, "description" = CASE 
-WHEN "id" = :id: THEN :description:
-WHEN "id" = :id0: THEN :description0:
-ELSE "description" END
-WHERE "id" IN(:id:,:id0:)';
+		$space = ' ';
 
-		$this->assertEquals($expected, $query->getOriginalQuery() );
+		$expected = <<<EOF
+		UPDATE "jobs" SET "name" = CASE{$space}
+		WHEN "id" = :id: THEN :name:
+		WHEN "id" = :id.1: THEN :name.1:
+		ELSE "name" END, "description" = CASE{$space}
+		WHEN "id" = :id: THEN :description:
+		WHEN "id" = :id.1: THEN :description.1:
+		ELSE "description" END
+		WHERE "id" IN(:id:,:id.1:)
+		EOF;
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
-WHEN "id" = 2 THEN \'Comedian\'
-WHEN "id" = 3 THEN \'Cab Driver\'
-ELSE "name" END, "description" = CASE 
-WHEN "id" = 2 THEN \'Theres something in your teeth\'
-WHEN "id" = 3 THEN \'Iam yellow\'
-ELSE "description" END
-WHERE "id" IN(2,3)';
+		$this->assertSame($expected, $query->getOriginalQuery());
 
-		$this->assertEquals($expected, $query->getQuery() );
+		$expected = <<<EOF
+		UPDATE "jobs" SET "name" = CASE{$space}
+		WHEN "id" = 2 THEN 'Comedian'
+		WHEN "id" = 3 THEN 'Cab Driver'
+		ELSE "name" END, "description" = CASE{$space}
+		WHEN "id" = 2 THEN 'There''s something in your teeth'
+		WHEN "id" = 3 THEN 'I am yellow'
+		ELSE "description" END
+		WHERE "id" IN(2,3)
+		EOF;
+
+		$this->assertSame($expected, $query->getQuery() );
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateBatchThrowsExceptionWithNoData()
 	{
@@ -163,8 +154,6 @@ WHERE "id" IN(2,3)';
 		$builder->updateBatch(null, 'id');
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateBatchThrowsExceptionWithNoID()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -175,8 +164,6 @@ WHERE "id" IN(2,3)';
 		$builder->updateBatch([]);
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testUpdateBatchThrowsExceptionWithEmptySetArray()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
@@ -186,8 +173,6 @@ WHERE "id" IN(2,3)';
 
 		$builder->updateBatch([], 'id');
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithWhereSameColumn()
 	{
@@ -201,17 +186,15 @@ WHERE "id" IN(2,3)';
 				'foobar',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'Programmer',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithWhereSameColumn2()
 	{
@@ -229,17 +212,15 @@ WHERE "id" IN(2,3)';
 				'foobar',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'Programmer',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testUpdateWithWhereSameColumn3()
 	{
@@ -256,19 +237,19 @@ WHERE "id" IN(2,3)';
 				'Programmer',
 				true,
 			],
-			'name0' => [
+			'name.1' => [
 				'foobar',
 				true,
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
-
-	// @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	/**
+	 * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	 */
 	public function testSetWithoutEscape()
 	{
 		$builder = new BaseBuilder('mytable', $this->db);
@@ -286,11 +267,9 @@ WHERE "id" IN(2,3)';
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetWithAndWithoutEscape()
 	{
@@ -314,7 +293,7 @@ WHERE "id" IN(2,3)';
 			],
 		];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
+		$this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 }

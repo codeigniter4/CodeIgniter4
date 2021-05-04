@@ -22,11 +22,9 @@ class FileLocator
 	/**
 	 * The Autoloader to use.
 	 *
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $autoloader;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -38,15 +36,13 @@ class FileLocator
 		$this->autoloader = $autoloader;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Attempts to locate a file by examining the name for a namespace
 	 * and looking through the PSR-4 namespaced files that we know about.
 	 *
-	 * @param string $file   The namespaced file to locate
-	 * @param string $folder The folder within the namespace that we should look for the file.
-	 * @param string $ext    The file extension the file should have.
+	 * @param string      $file   The namespaced file to locate
+	 * @param string|null $folder The folder within the namespace that we should look for the file.
+	 * @param string      $ext    The file extension the file should have.
 	 *
 	 * @return string|false The path to the file, or false if not found.
 	 */
@@ -55,7 +51,7 @@ class FileLocator
 		$file = $this->ensureExt($file, $ext);
 
 		// Clears the folder name if it is at the beginning of the filename
-		if (! empty($folder) && ($pos = strpos($file, $folder)) === 0)
+		if (! empty($folder) && strpos($file, $folder) === 0)
 		{
 			$file = substr($file, strlen($folder . '/'));
 		}
@@ -92,6 +88,7 @@ class FileLocator
 			{
 				continue;
 			}
+
 			$paths = $namespaces[$prefix];
 
 			$filename = implode('/', $segments);
@@ -127,8 +124,6 @@ class FileLocator
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Examines a file and returns the fully qualified domain name.
@@ -168,6 +163,7 @@ class FileLocator
 			{
 				$dlm = false;
 			}
+
 			if (($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
 				&& $tokens[$i - 1][0] === T_WHITESPACE
 				&& $token[0] === T_STRING)
@@ -184,8 +180,6 @@ class FileLocator
 
 		return $namespace . '\\' . $className;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Searches through all of the defined namespaces looking for a file.
@@ -218,20 +212,19 @@ class FileLocator
 			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
 				$fullPath = $namespace['path'] . $path;
+				$fullPath = realpath($fullPath) ?: $fullPath;
+
 				if ($prioritizeApp)
 				{
 					$foundPaths[] = $fullPath;
 				}
+				elseif (strpos($fullPath, APPPATH) === 0)
+				{
+					$appPaths[] = $fullPath;
+				}
 				else
 				{
-					if (strpos($fullPath, APPPATH) === 0)
-					{
-						$appPaths[] = $fullPath;
-					}
-					else
-					{
-						$foundPaths[] = $fullPath;
-					}
+					$foundPaths[] = $fullPath;
 				}
 			}
 		}
@@ -246,8 +239,6 @@ class FileLocator
 
 		return $foundPaths;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures a extension is at the end of a filename
@@ -271,8 +262,6 @@ class FileLocator
 
 		return $path;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Return the namespace mappings we know about.
@@ -312,8 +301,6 @@ class FileLocator
 		return $namespaces;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Find the qualified name of a file according to
 	 * the namespace of the first matched namespace path.
@@ -346,6 +333,7 @@ class FileLocator
 						ltrim(str_replace('/', '\\', mb_substr(
 							$path, mb_strlen($namespace['path']))
 						), '\\');
+
 				// Remove the file extension (.php)
 				$className = mb_substr($className, 0, -4);
 
@@ -359,8 +347,6 @@ class FileLocator
 
 		return false;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Scans the defined namespaces, returning a list of all files
@@ -400,8 +386,6 @@ class FileLocator
 
 		return $files;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Scans the provided namespace, returning a list of all files
@@ -443,8 +427,6 @@ class FileLocator
 
 		return $files;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks the app folder to see if the file can be found.

@@ -1,7 +1,7 @@
 Version 4.0.0-beta.4
-====================================================
+====================
 
-Release Date: Not released
+Release Date: Jul 25, 2019
 
 Highlights:
 

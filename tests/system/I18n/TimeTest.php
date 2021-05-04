@@ -2,11 +2,13 @@
 namespace CodeIgniter\I18n;
 
 use CodeIgniter\I18n\Exceptions\I18nException;
+use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
-class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
+class TimeTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -14,7 +16,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testNewTimeNow()
@@ -1002,12 +1004,11 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Missing tests
 
-	public function testInstance()
+	public function testCreateFromInstance()
 	{
 		$datetime = new DateTime();
-		$time     = Time::instance($datetime);
+		$time     = Time::createFromInstance($datetime);
 		$this->assertTrue($time instanceof Time);
 		$this->assertTrue($time->sameAs($datetime));
 	}

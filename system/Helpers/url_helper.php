@@ -47,7 +47,7 @@ if (! function_exists('site_url'))
 		{
 			$fullPath .= rtrim($config->indexPage, '/');
 		}
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$fullPath .= '/' . $uri;
 		}
@@ -99,7 +99,7 @@ if (! function_exists('base_url'))
 		unset($config);
 
 		// Merge in the path set by the user, if any
-		if (! empty($uri))
+		if ($uri !== '')
 		{
 			$url = $url->resolveRelativeURI($uri);
 		}
@@ -447,9 +447,9 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		foreach ($x as $i => $value)
 		{
-			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
+			$output .= 'l[' . $i . "] = '" . $value . "';";
 		}
 
 		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'

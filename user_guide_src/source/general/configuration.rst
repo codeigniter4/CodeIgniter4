@@ -103,7 +103,7 @@ Settings are stored in **.env** files as a simple a collection of name/value pai
 
     S3_BUCKET = dotenv
     SECRET_KEY = super_secret_key
-        CI_ENVIRONMENT = development
+    CI_ENVIRONMENT = development
 
 When your application runs, **.env** will be loaded automatically, and the variables put
 into the environment. If a variable already exists in the environment, it will NOT be
@@ -165,7 +165,7 @@ the configuration class properties are left unchanged. In this usage, the prefix
 the full (case-sensitive) namespace of the class.
 ::
 
-    Config\App.CSRFProtection  = true
+    Config\App.CSRFProtection = true
     Config\App.CSRFCookieName = csrf_cookie
     Config\App.CSPEnabled = true
 
@@ -177,11 +177,26 @@ the configuration class name. If the short prefix matches the class name,
 the value from **.env** replaces the configuration file value.
 ::
 
-    app.CSRFProtection  = true
+    app.CSRFProtection = true
     app.CSRFCookieName = csrf_cookie
     app.CSPEnabled = true
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
+
+Environment Variables as Replacements for Data
+==============================================
+
+It is very important to always remember that environment variables contained in your **.env** are
+**only replacements for existing data**. This means that you cannot expect to fill your ``.env`` with all
+the replacements for your configurations but have nothing to receive these replacements in the
+related configuration file(s).
+
+The ``.env`` only serves to fill or replace the values in your configuration files. That said, your
+configuration files should have a container or receiving property for those. Adding so many variables in
+your ``.env`` with nothing to contain them in the receiving end is useless.
+
+Simply put, you cannot just put ``app.myNewConfig = foo`` in your ``.env`` and expect your ``Config\App``
+to magically have that property and value at run time.
 
 Treating Environment Variables as Arrays
 ========================================

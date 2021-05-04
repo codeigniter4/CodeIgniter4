@@ -26,7 +26,7 @@ if (! function_exists('fake'))
 	 *
 	 * @return object|array
 	 */
-	function fake($model, array $overrides = null)
+	function fake($model, array $overrides = null, $persist = true)
 	{
 		// Get a model-appropriate Fabricator instance
 		$fabricator = new Fabricator($model);
@@ -37,6 +37,11 @@ if (! function_exists('fake'))
 			$fabricator->setOverrides($overrides);
 		}
 
-		return $fabricator->create();
+		if ($persist)
+		{
+			return $fabricator->create();
+		}
+
+		return $fabricator->make();
 	}
 }

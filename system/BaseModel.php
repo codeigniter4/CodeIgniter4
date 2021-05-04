@@ -12,12 +12,14 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
+use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use InvalidArgumentException;
@@ -44,8 +46,6 @@ use stdClass;
  */
 abstract class BaseModel
 {
-	// region Properties
-
 	/**
 	 * Pager instance.
 	 * Populated after calling $this->paginate()
@@ -160,7 +160,7 @@ abstract class BaseModel
 	/**
 	 * Database Connection
 	 *
-	 * @var object
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -200,7 +200,7 @@ abstract class BaseModel
 	/**
 	 * Our validator instance.
 	 *
-	 * @var ValidationInterface
+	 * @var Validation
 	 */
 	protected $validation;
 
@@ -288,10 +288,6 @@ abstract class BaseModel
 	 */
 	protected $afterDelete = [];
 
-	// endregion
-
-	// region Constructor
-
 	/**
 	 * BaseModel constructor.
 	 *
@@ -302,12 +298,23 @@ abstract class BaseModel
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 		$this->tempAllowCallbacks = $this->allowCallbacks;
-		$this->validation         = $validation ?? Services::validation(null, false);
+
+		/**
+		 * @var Validation $validation
+		 */
+		$validation       = $validation ?? Services::validation(null, false);
+		$this->validation = $validation;
+
+		$this->initialize();
 	}
 
-	// endregion
-
-	// region Abstract Methods
+	/**
+	 * Initializes the instance with any additional steps.
+	 * Optionally implemented by child classes.
+	 */
+	protected function initialize()
+	{
+	}
 
 	/**
 	 * Fetches the row of database
@@ -357,7 +364,7 @@ abstract class BaseModel
 	 *
 	 * @param array $data Data
 	 *
-	 * @return object|integer|string|false
+	 * @return integer|string|boolean
 	 */
 	abstract protected function doInsert(array $data);
 
@@ -407,7 +414,7 @@ abstract class BaseModel
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return object|boolean
+	 * @return string|boolean
 	 *
 	 * @throws DatabaseException
 	 */
@@ -483,10 +490,6 @@ abstract class BaseModel
 	 */
 	abstract public function chunk(int $size, Closure $userFunc);
 
-	// endregion
-
-	// region CRUD & Finders
-
 	/**
 	 * Fetches the row of database
 	 *
@@ -548,7 +551,7 @@ abstract class BaseModel
 			throw DataException::forFindColumnHaveMultipleColumns();
 		}
 
-		$resultSet = $resultSet = $this->doFindColumn($columnName);
+		$resultSet = $this->doFindColumn($columnName);
 
 		return $resultSet ? array_column($resultSet, $columnName) : null;
 	}
@@ -666,11 +669,7 @@ abstract class BaseModel
 		{
 			$response = $this->insert($data, false);
 
-			if ($response instanceof BaseResult)
-			{
-				$response = $response->resultID !== false;
-			}
-			elseif ($response !== false)
+			if ($response !== false)
 			{
 				$response = true;
 			}
@@ -708,7 +707,7 @@ abstract class BaseModel
 	 * @param array|object|null $data     Data
 	 * @param boolean           $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return BaseResult|object|integer|string|false
+	 * @return integer|string|boolean
 	 *
 	 * @throws ReflectionException
 	 */
@@ -1087,32 +1086,23 @@ abstract class BaseModel
 	 * Grabs the last error(s) that occurred. If data was validated,
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
+	 * The return array should be in the following format:
+	 *  ['source' => 'message']
 	 *
 	 * @param boolean $forceDB Always grab the db error, not validation
 	 *
-	 * @return array|null
+	 * @return array<string,string>
 	 */
 	public function errors(bool $forceDB = false)
 	{
 		// Do we have validation errors?
-		if (! $forceDB && ! $this->skipValidation)
+		if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors()))
 		{
-			$errors = $this->validation->getErrors();
-
-			if (! empty($errors))
-			{
-				return $errors;
-			}
+			return $errors;
 		}
 
-		$error = $this->doErrors();
-
-		return $error['message'] ?? null;
+		return $this->doErrors();
 	}
-
-	// endregion
-
-	// region Pager
 
 	/**
 	 * Works with Pager to get the size and offset parameters.
@@ -1143,10 +1133,6 @@ abstract class BaseModel
 
 		return $this->findAll($perPage, $offset);
 	}
-
-	// endregion
-
-	// region Allowed Fields
 
 	/**
 	 * It could be used when you have to change default or override current allowed fields.
@@ -1202,7 +1188,7 @@ abstract class BaseModel
 			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
-		foreach ($data as $key => $val)
+		foreach (array_keys($data) as $key)
 		{
 			if (! in_array($key, $this->allowedFields, true))
 			{
@@ -1212,10 +1198,6 @@ abstract class BaseModel
 
 		return $data;
 	}
-
-	// endregion
-
-	// region Timestamps
 
 	/**
 	 * Sets the date or current date if null value is passed
@@ -1290,10 +1272,6 @@ abstract class BaseModel
 				return (string) $value;
 		}
 	}
-
-	// endregion
-
-	// region Validation
 
 	/**
 	 * Set the value of the skipValidation flag.
@@ -1437,7 +1415,6 @@ abstract class BaseModel
 		// or an array of rules.
 		if (is_string($rules))
 		{
-			// @phpstan-ignore-next-line
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
@@ -1481,7 +1458,7 @@ abstract class BaseModel
 			return [];
 		}
 
-		foreach ($rules as $field => $rule)
+		foreach (array_keys($rules) as $field)
 		{
 			if (! array_key_exists($field, $data))
 			{
@@ -1491,10 +1468,6 @@ abstract class BaseModel
 
 		return $rules;
 	}
-
-	// endregion
-
-	// region Callbacks
 
 	/**
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
@@ -1553,10 +1526,6 @@ abstract class BaseModel
 
 		return $eventData;
 	}
-
-	// endregion
-
-	// region Utility
 
 	/**
 	 * Sets the return type of the results to be as an associative array.
@@ -1707,10 +1676,6 @@ abstract class BaseModel
 		return $data;
 	}
 
-	// endregion
-
-	// region Magic
-
 	/**
 	 * Provides the db connection and model's properties.
 	 *
@@ -1746,13 +1711,7 @@ abstract class BaseModel
 		{
 			return true;
 		}
-
-		if (isset($this->db->$name))
-		{
-			return true;
-		}
-
-		return false;
+		return isset($this->db->$name);
 	}
 
 	/**
@@ -1765,19 +1724,13 @@ abstract class BaseModel
 	 */
 	public function __call(string $name, array $params)
 	{
-		$result = null;
-
 		if (method_exists($this->db, $name))
 		{
-			$result = $this->db->{$name}(...$params);
+			return $this->db->{$name}(...$params);
 		}
 
-		return $result;
+		return null;
 	}
-
-	// endregion
-
-	// region Deprecated
 
 	/**
 	 * Replace any placeholders within the rules with the values that
@@ -1839,6 +1792,4 @@ abstract class BaseModel
 
 		return $rules;
 	}
-
-	// endregion
 }

@@ -161,7 +161,6 @@ class Forge
 	protected $default = ' DEFAULT ';
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -173,7 +172,6 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Provides access to the forge's current database connection.
 	 *
@@ -240,11 +238,11 @@ class Forge
 		}
 		catch (Throwable $e)
 		{
+			// @phpstan-ignore-next-line
 			if ($this->db->DBDebug)
 			{
 				throw new DatabaseException('Unable to create the specified database.', 0, $e);
 			}
-
 			return false; // @codeCoverageIgnore
 		}
 	}
@@ -524,7 +522,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			if (! isset($this->db->dataCache['table_names'][$table]))
+			if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true))
 			{
 				$this->db->dataCache['table_names'][] = $table;
 			}
@@ -774,7 +772,10 @@ class Forge
 	public function addColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field]; // @phpstan-ignore-line
+		if (! is_array($field))
+		{
+			$field = [$field];
+		}
 
 		foreach (array_keys($field) as $k)
 		{
@@ -793,9 +794,9 @@ class Forge
 			return false;
 		}
 
-		for ($i = 0, $c = count($sqls); $i < $c; $i++)
+		foreach ($sqls as $sql)
 		{
-			if ($this->db->query($sqls[$i]) === false)
+			if ($this->db->query($sql) === false)
 			{
 				return false;
 			}
@@ -845,7 +846,10 @@ class Forge
 	public function modifyColumn(string $table, $field): bool
 	{
 		// Work-around for literal column definitions
-		is_array($field) || $field = [$field]; // @phpstan-ignore-line
+		if (! is_array($field))
+		{
+			$field = [$field];
+		}
 
 		foreach (array_keys($field) as $k)
 		{
@@ -871,9 +875,9 @@ class Forge
 
 		if ($sqls !== null)
 		{
-			for ($i = 0, $c = count($sqls); $i < $c; $i++)
+			foreach ($sqls as $sql)
 			{
-				if ($this->db->query($sqls[$i]) === false)
+				if ($this->db->query($sql) === false)
 				{
 					return false;
 				}

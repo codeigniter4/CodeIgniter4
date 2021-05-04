@@ -73,7 +73,6 @@ class CURLRequest extends Request
 	protected $delay = 0.0;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes an array of options to set the following possible class properties:
 	 *
@@ -105,7 +104,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sends an HTTP request to the specified $url. If this is a relative
 	 * URL, it will be merged with $this->baseURI to form a complete URL.
@@ -130,7 +128,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a GET request.
 	 *
@@ -145,7 +142,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a DELETE request.
 	 *
@@ -160,7 +156,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a HEAD request.
 	 *
@@ -175,7 +170,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending an OPTIONS request.
 	 *
@@ -190,7 +184,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a PATCH request.
 	 *
@@ -205,7 +198,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a POST request.
 	 *
@@ -220,7 +212,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Convenience method for sending a PUT request.
 	 *
@@ -375,7 +366,6 @@ class CURLRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Fires the actual cURL request.
 	 *
@@ -482,7 +472,7 @@ class CURLRequest extends Request
 
 		$set = [];
 
-		foreach ($headers as $name => $value)
+		foreach (array_keys($headers) as $name)
 		{
 			$set[] = $name . ': ' . $this->getHeaderLine($name);
 		}

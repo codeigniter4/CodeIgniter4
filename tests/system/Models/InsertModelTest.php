@@ -3,7 +3,7 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use stdClass;
 use Tests\Support\Models\JobModel;
@@ -119,7 +119,7 @@ final class InsertModelTest extends LiveModelTestCase
 		$this->createModel(JobModel::class);
 
 		$result = $this->model->protect(false)->insert($data, false);
-		$this->assertTrue($result->resultID !== false);
+		$this->assertTrue($result);
 
 		$lastInsertId = $this->model->getInsertID();
 		$this->seeInDatabase('job', ['id' => $lastInsertId]);
@@ -136,7 +136,7 @@ final class InsertModelTest extends LiveModelTestCase
 
 		$this->createModel(JobModel::class);
 		$result = $this->model->protect(false)->insert($data, false);
-		$this->assertFalse($result->resultID);
+		$this->assertFalse($result);
 
 		$lastInsertId = $this->model->getInsertID();
 		$this->assertSame(0, $lastInsertId);

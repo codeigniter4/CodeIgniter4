@@ -2,9 +2,11 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
+use stdClass;
 
-class TableTest extends \CodeIgniter\Test\CIUnitTestCase
+class TableTest extends CIUnitTestCase
 {
 
 	public function setUp(): void
@@ -187,7 +189,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// Now on to the actual column creation
 
-		$five_values = [
+		$fiveValues = [
 			'Laura',
 			'Red',
 			'15',
@@ -197,8 +199,8 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// No column count - no changes to the array
 		$this->assertEquals(
-				$five_values,
-				$this->table->makeColumns($five_values)
+				$fiveValues,
+				$this->table->makeColumns($fiveValues)
 		);
 
 		// Column count of 3 leaves us with one &nbsp;
@@ -214,7 +216,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 				'&nbsp;',
 			],
 		],
-				$this->table->makeColumns($five_values, 3)
+				$this->table->makeColumns($fiveValues, 3)
 		);
 	}
 
@@ -294,7 +296,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSetFromObject()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 
@@ -410,7 +412,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 			'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">',
 		];
 
-		$table = new \CodeIgniter\View\Table($customSettings);
+		$table = new Table($customSettings);
 
 		// Prepare the data
 		$data = [
@@ -444,7 +446,7 @@ class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGenerateFromDBResult()
 	{
 		// This needs to be passed by reference to CI_DB_result::__construct()
-		$dummy           = new \stdClass();
+		$dummy           = new stdClass();
 		$dummy->connID   = null;
 		$dummy->resultID = null;
 		$DBResult        = new DBResultDummy($dummy->connID, $dummy->resultID);

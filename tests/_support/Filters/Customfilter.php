@@ -18,8 +18,7 @@ class Customfilter implements \CodeIgniter\Filters\FilterInterface
 
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
-} 
+}

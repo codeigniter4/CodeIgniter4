@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,7 +10,7 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseSendTest extends CIUnitTestCase
 {
 
 	/**
@@ -104,7 +105,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	public function testRedirectResponseCookies()
 	{
-		$login_time = time();
+		$loginTime = time();
 
 		$response = new Response(new App());
 		$response->pretend(false);
@@ -114,7 +115,7 @@ class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$answer1 = $response->redirect('/login')
 				->setCookie('foo', 'bar', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+				->setCookie('login_time', $loginTime, YEAR);
 		$this->assertTrue($answer1->hasCookie('foo', 'bar'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
 		$response->setBody('Hello');

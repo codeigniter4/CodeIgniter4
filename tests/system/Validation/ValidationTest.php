@@ -1,26 +1,32 @@
-<?php namespace CodeIgniter\Validation;
+<?php
+
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Tests\Support\Validation\TestRules;
 
-class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class ValidationTest extends CIUnitTestCase
 {
-
 	/**
 	 * @var Validation
 	 */
 	protected $validation;
 	protected $config = [
 		'ruleSets'      => [
-			\CodeIgniter\Validation\Rules::class,
-			\CodeIgniter\Validation\FormatRules::class,
-			\CodeIgniter\Validation\FileRules::class,
-			\CodeIgniter\Validation\CreditCardRules::class,
-			\Tests\Support\Validation\TestRules::class,
+			Rules::class,
+			FormatRules::class,
+			FileRules::class,
+			CreditCardRules::class,
+			TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
@@ -61,7 +67,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		Services::reset(true);
 
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -294,7 +300,8 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testSetRuleGroupWithCustomErrorMessage()
 	{
-		$this->validation->reset()->setRuleGroup('login');
+		$this->validation->reset();
+		$this->validation->setRuleGroup('login');
 		$this->validation->run([
 			'username' => 'codeigniter',
 		]);
@@ -544,7 +551,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(ValidationException::class);
 
 		$this->config['ruleSets'] = null;
-		$this->validation         = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation         = new Validation((object) $this->config, Services::renderer());
 		$this->validation->reset();
 
 		$data = [
@@ -943,5 +950,131 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $errors['Username']);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @dataProvider dotNotationForIfExistProvider
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
+	 *
+	 * @param boolean $expected
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function testDotNotationOnIfExistRule(bool $expected, array $rules, array $data): void
+	{
+		$actual = $this->validation->setRules($rules)->run($data);
+		$this->assertSame($expected, $actual);
+	}
+
+	public function dotNotationForIfExistProvider()
+	{
+		yield 'dot-on-end-fail' => [
+			false,
+			['status.*' => 'if_exist|in_list[status_1,status_2]'],
+			['status'   => ['bad-status']],
+		];
+
+		yield 'dot-on-end-pass' => [
+			true,
+			['status.*' => 'if_exist|in_list[status_1,status_2]'],
+			['status'   => ['status_1']],
+		];
+
+		yield 'dot-on-middle-fail' => [
+			false,
+			['fizz.*.baz' => 'if_exist|numeric'],
+			['fizz'       => [
+				'bar' => ['baz' => 'yes'],
+			]],
+		];
+
+		yield 'dot-on-middle-pass' => [
+			true,
+			['fizz.*.baz' => 'if_exist|numeric'],
+			['fizz'       => [
+				'bar' => ['baz' => 30],
+			]],
+		];
+
+		yield 'dot-multiple-fail' => [
+			false,
+			['fizz.*.bar.*' => 'if_exist|numeric'],
+			['fizz' => [
+				'bos' => [
+					'bar' => [
+						'bub' => 'noo',
+					],
+				],
+			]],
+		];
+
+		yield 'dot-multiple-pass' => [
+			true,
+			['fizz.*.bar.*' => 'if_exist|numeric'],
+			['fizz' => [
+				'bos' => [
+					'bar' => [
+						'bub' => 5,
+					],
+				],
+			]],
+		];
+	}
+
+	/**
+	 * @dataProvider validationArrayDataCaseProvider
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
+	 *
+	 * @param boolean $expected
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function testValidationOfArrayData(bool $expected, array $rules, array $data): void
+	{
+		$actual = $this->validation->setRules($rules)->run($data);
+		$this->assertSame($expected, $actual);
+	}
+
+	public function validationArrayDataCaseProvider(): iterable
+	{
+		yield 'fail-empty-string' => [
+			false,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => ''],
+			]],
+		];
+
+		yield 'pass-nonempty-string' => [
+			true,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => 'boz'],
+			]],
+		];
+
+		yield 'fail-empty-array' => [
+			false,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => []],
+			]],
+		];
+
+		yield 'pass-nonempty-array' => [
+			true,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => ['boz']],
+			]],
+		];
+	}
 }

@@ -47,6 +47,11 @@ class CodeIgniter
 	const CI_VERSION = '4.1.1';
 
 	/**
+	 * @var string
+	 */
+	private const MIN_PHP_VERSION = '7.3';
+
+	/**
 	 * App startup time.
 	 *
 	 * @var mixed
@@ -138,8 +143,6 @@ class CodeIgniter
 	 */
 	protected $useSafeOutput = false;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -147,11 +150,18 @@ class CodeIgniter
 	 */
 	public function __construct(App $config)
 	{
+		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
+		{
+			$message = extension_loaded('intl')
+				? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
+				: sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
+
+			exit($message);
+		}
+
 		$this->startTime = microtime(true);
 		$this->config    = $config;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Handles some basic app and environment setup.
@@ -168,9 +178,7 @@ class CodeIgniter
 		// Run this check for manual installations
 		if (! is_file(COMPOSER_PATH))
 		{
-			// @codeCoverageIgnoreStart
-			$this->resolvePlatformExtensions();
-			// @codeCoverageIgnoreEnd
+			$this->resolvePlatformExtensions(); // @codeCoverageIgnore
 		}
 
 		// Set default locale on the server
@@ -183,19 +191,16 @@ class CodeIgniter
 
 		if (! CI_DEBUG)
 		{
-			// @codeCoverageIgnoreStart
-			Kint::$enabled_mode = false;
-			// @codeCoverageIgnoreEnd
+			Kint::$enabled_mode = false; // @codeCoverageIgnore
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks system for missing required PHP extensions.
 	 *
-	 * @return void
 	 * @throws FrameworkException
+	 *
+	 * @return void
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -219,13 +224,11 @@ class CodeIgniter
 			}
 		}
 
-		if ($missingExtensions)
+		if ($missingExtensions !== [])
 		{
 			throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
 		}
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Initializes Kint
@@ -326,6 +329,7 @@ class CodeIgniter
 
 			$this->response->pretend($this->useSafeOutput)->send();
 			$this->callExit(EXIT_SUCCESS);
+			return;
 		}
 
 		try
@@ -343,6 +347,7 @@ class CodeIgniter
 			$this->sendResponse();
 
 			$this->callExit(EXIT_SUCCESS);
+			return;
 		}
 		catch (PageNotFoundException $e)
 		{
@@ -667,7 +672,7 @@ class CodeIgniter
 			$output  = $cachedResponse['output'];
 
 			// Clear all default headers
-			foreach ($this->response->headers() as $key => $val)
+			foreach (array_keys($this->response->headers()) as $key)
 			{
 				$this->response->removeHeader($key);
 			}
@@ -905,7 +910,7 @@ class CodeIgniter
 	 */
 	protected function createController()
 	{
-		$class = new $this->controller(); // @phpstan-ignore-line
+		$class = new $this->controller();
 		$class->initController($this->request, $this->response, Services::logger());
 
 		$this->benchmark->stop('controller_constructor');
@@ -991,13 +996,10 @@ class CodeIgniter
 			}
 			// @codeCoverageIgnoreEnd
 		}
-		else
+		// When testing, one is for phpunit, another is for test case.
+		elseif (ob_get_level() > 2)
 		{
-			// When testing, one is for phpunit, another is for test case.
-			if (ob_get_level() > 2)
-			{
-				ob_end_flush();
-			}
+			ob_end_flush();
 		}
 
 		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');

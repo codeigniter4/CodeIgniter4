@@ -102,11 +102,11 @@ you can use the Encryption library's ``createKey()`` method.
 ::
 
 	// $key will be assigned a 32-byte (256-bit) random key
-	$key = Encryption::createKey();
+	$key = \CodeIgniter\Encryption\Encryption::createKey();
 
 	// for the SodiumHandler, you can use either:
 	$key = sodium_crypto_secretbox_keygen();
-	$key = Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+	$key = \CodeIgniter\Encryption\Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
 The key can be stored in ``app/Config/Encryption.php``, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
@@ -125,7 +125,7 @@ is hard to deal with (i.e., a copy-paste may damage it), so you may use
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
-	$encoded = bin2hex(Encryption::createKey(32));
+	$encoded = bin2hex(\CodeIgniter\Encryption\Encryption::createKey(32));
 
 	// Put the same value with hex2bin(),
 	// so that it is still passed as binary to the library:
@@ -233,7 +233,7 @@ you can create an "Encrypter" directly, or change the settings of an existing in
 ::
 
     // create an Encryption instance
-    $encryption = new CodeIgniter\Encryption\Encryption();
+    $encryption = new \CodeIgniter\Encryption\Encryption();
 
     // reconfigure an instance with different settings
     $encrypter = $encryption->initialize($config);

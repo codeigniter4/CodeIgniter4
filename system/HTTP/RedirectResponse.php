@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 
@@ -139,10 +140,7 @@ class RedirectResponse extends Response
 	 */
 	public function withCookies()
 	{
-		foreach (Services::response()->getCookies() as $cookie)
-		{
-			$this->cookies[] = $cookie;
-		}
+		$this->cookieStore = new CookieStore(Services::response()->getCookies());
 
 		return $this;
 	}
@@ -157,7 +155,7 @@ class RedirectResponse extends Response
 	 */
 	public function withHeaders()
 	{
-		foreach (Services::response()->getHeaders() as $name => $header)
+		foreach (Services::response()->headers() as $name => $header)
 		{
 			$this->setHeader($name, $header->getValue());
 		}

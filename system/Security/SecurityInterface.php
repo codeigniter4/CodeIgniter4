@@ -25,7 +25,7 @@ interface SecurityInterface
 	 * @param RequestInterface $request
 	 *
 	 * @return $this|false
-	 * 
+	 *
 	 * @throws SecurityException
 	 */
 	public function verify(RequestInterface $request);
@@ -62,6 +62,8 @@ interface SecurityInterface
 	 * Check if CSRF cookie is expired.
 	 *
 	 * @return boolean
+	 *
+	 * @deprecated
 	 */
 	public function isExpired(): bool;
 

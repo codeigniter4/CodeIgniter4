@@ -12,7 +12,6 @@
 namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
 
 /**
@@ -81,6 +80,7 @@ class EntityGenerator extends BaseCommand
 		$this->directory = 'Entities';
 		$this->template  = 'entity.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.entity';
 		$this->execute($params);
 	}
 }

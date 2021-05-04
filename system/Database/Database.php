@@ -23,7 +23,7 @@ class Database
 	/**
 	 * Maintains an array of the instances of all connections that have
 	 * been created.
-	 * 
+	 *
 	 * Helps to keep track of all open connections for performance
 	 * monitoring, logging, etc.
 	 *
@@ -41,9 +41,9 @@ class Database
 	 * @param string $alias
 	 *
 	 * @return mixed
-	 * 
+	 *
 	 * @throws InvalidArgumentException
-	 * 
+	 *
 	 * @internal param bool $useBuilder
 	 */
 	public function load(array $params = [], string $alias = '')
@@ -72,7 +72,6 @@ class Database
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a Forge instance for the current database type.
 	 *
@@ -92,7 +91,6 @@ class Database
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates a Utils instance for the current database type.
 	 *
@@ -119,7 +117,7 @@ class Database
 	 * @param array $params
 	 *
 	 * @return array
-	 * 
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	protected function parseDSN(array $params): array

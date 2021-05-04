@@ -200,7 +200,7 @@ class Commands
 	{
 		$alternatives = [];
 
-		foreach ($collection as $commandName => $attributes)
+		foreach (array_keys($collection) as $commandName)
 		{
 			$lev = levenshtein($name, $commandName);
 

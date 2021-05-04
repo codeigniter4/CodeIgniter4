@@ -2,9 +2,11 @@
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
+class SelectTest extends CIUnitTestCase
 {
 	protected $db;
 
@@ -258,6 +260,19 @@ class SelectTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
 
 		$builder->selectSum('name,role');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSimpleSelectWithSQLSRV()
+	{
+		$this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+		$builder = new SQLSRVBuilder('users', $this->db);
+
+		$expected = 'SELECT * FROM "test"."dbo"."users"';
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

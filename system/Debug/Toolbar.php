@@ -18,10 +18,13 @@ use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
+use Kint\Kint;
 
 /**
  * Debug Toolbar
@@ -84,6 +87,11 @@ class Toolbar
 	 */
 	public function run(float $startTime, float $totalTime, RequestInterface $request, ResponseInterface $response): string
 	{
+		/**
+		 * @var IncomingRequest $request
+		 * @var Response $response
+		 */
+
 		// Data items used within the view.
 		$data['url']             = current_url();
 		$data['method']          = $request->getMethod(true);
@@ -109,7 +117,26 @@ class Toolbar
 			{
 				foreach ($items as $key => $value)
 				{
-					$varData[esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
+					if (is_string($value))
+					{
+						$varData[esc($key)] = esc($value);
+					}
+					else
+					{
+						$oldKintMode       = Kint::$mode_default;
+						$oldKintCalledFrom = Kint::$display_called_from;
+
+						Kint::$mode_default        = Kint::MODE_RICH;
+						Kint::$display_called_from = false;
+
+						$kint = @Kint::dump($value);
+						$kint = substr($kint, strpos($kint, '</style>') + 8 );
+
+						Kint::$mode_default        = $oldKintMode;
+						Kint::$display_called_from = $oldKintCalledFrom;
+
+						$varData[esc($key)] = $kint;
+					}
 				}
 			}
 
@@ -140,7 +167,7 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->headers() as $name => $header)
+		foreach ($request->headers() as $header)
 		{
 			$data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
 		}
@@ -295,6 +322,11 @@ class Toolbar
 	 */
 	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
 	{
+		/**
+		 * @var IncomingRequest $request
+		 * @var Response $response
+		 */
+
 		if (CI_DEBUG && ! is_cli())
 		{
 			global $app;
@@ -343,12 +375,19 @@ class Toolbar
 				return;
 			}
 
+			$oldKintMode        = Kint::$mode_default;
+			Kint::$mode_default = Kint::MODE_RICH;
+			$kintScript         = @Kint::dump('');
+			Kint::$mode_default = $oldKintMode;
+			$kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8 );
+
 			$script = PHP_EOL
 					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
 					. 'data-time="' . $time . '" '
 					. 'src="' . site_url() . '?debugbar"></script>'
 					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
 					. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
+					. $kintScript
 					. PHP_EOL;
 
 			if (strpos($response->getBody(), '<head>') !== false)
@@ -437,8 +476,8 @@ class Toolbar
 		{
 			$history = new History();
 			$history->setFiles(
-					Services::request()->getGet('debugbar_time'),
-					$this->config->maxHistory
+				(int) Services::request()->getGet('debugbar_time'),
+				$this->config->maxHistory
 			);
 
 			$data['collectors'][] = $history->getAsArray();

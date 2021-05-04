@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Model;
 use Config\Services;
 
 /**
@@ -21,7 +22,7 @@ use Config\Services;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
- * @method static \CodeIgniter\Model models(...$arguments)
+ * @method static Model models(...$arguments)
  * @method static \Config\BaseConfig config(...$arguments)
  */
 class Factories
@@ -102,18 +103,22 @@ class Factories
 		if (isset(self::$basenames[$options['component']][$basename]))
 		{
 			$class = self::$basenames[$options['component']][$basename];
-		}
-		else
-		{
-			// Try to locate the class
-			if (! $class = self::locateClass($options, $name))
-			{
-				return null;
-			}
 
-			self::$instances[$options['component']][$class]    = new $class(...$arguments);
-			self::$basenames[$options['component']][$basename] = $class;
+			// Need to verify if the shared instance matches the request
+			if (self::verifyInstanceOf($options, $class))
+			{
+				return self::$instances[$options['component']][$class];
+			}
 		}
+
+		// Try to locate the class
+		if (! $class = self::locateClass($options, $name))
+		{
+			return null;
+		}
+
+		self::$instances[$options['component']][$class]    = new $class(...$arguments);
+		self::$basenames[$options['component']][$basename] = $class;
 
 		return self::$instances[$options['component']][$class];
 	}
@@ -162,17 +167,13 @@ class Factories
 			{
 				return null;
 			}
-
 			$files = [$file];
 		}
 		// No namespace? Search for it
-		else
+		// Check all namespaces, prioritizing App and modules
+		elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
 		{
-			// Check all namespaces, prioritizing App and modules
-			if (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
-			{
-				return null;
-			}
+			return null;
 		}
 
 		// Check all files for a valid class
@@ -254,16 +255,11 @@ class Factories
 			return self::$options[$component];
 		}
 
-		// Handle Config as a special case to prevent logic loops
-		if ($component === 'config')
-		{
-			$values = self::$configOptions;
-		}
-		// Load values from the best Factory configuration (will include Registrars)
-		else
-		{
-			$values = config('Factory')->$component ?? [];
-		}
+		$values = $component === 'config'
+			// Handle Config as a special case to prevent logic loops
+			? self::$configOptions
+			// Load values from the best Factory configuration (will include Registrars)
+			: config('Factory')->$component ?? [];
 
 		return self::setOptions($component, $values);
 	}

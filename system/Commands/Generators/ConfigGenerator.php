@@ -80,6 +80,7 @@ class ConfigGenerator extends BaseCommand
 		$this->directory = 'Config';
 		$this->template  = 'config.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.config';
 		$this->execute($params);
 	}
 

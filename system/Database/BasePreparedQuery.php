@@ -56,7 +56,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	protected $db;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor.
 	 *
@@ -90,7 +89,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		$sql = preg_replace('/:[^\s,)]+/', '?', $sql);
 
 		/**
-		 * @var \CodeIgniter\Database\Query $query
+		 * @var Query $query
 		 */
 		$query = new $queryClass($this->db);
 
@@ -119,7 +118,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	abstract public function _prepare(string $sql, array $options = []);
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a new set of data and runs it against the currently
 	 * prepared query. Upon success, will return a Results object.

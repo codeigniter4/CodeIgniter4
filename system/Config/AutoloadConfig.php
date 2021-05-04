@@ -12,7 +12,7 @@
 namespace CodeIgniter\Config;
 
 /**
- * AUTOLOADER
+ * AUTOLOADER CONFIGURATION
  *
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
@@ -32,7 +32,7 @@ class AutoloadConfig
 	 * but this should be done prior to creating any namespaced classes,
 	 * else you will need to modify all of those classes for this to work.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	public $psr4 = [];
 
@@ -46,9 +46,21 @@ class AutoloadConfig
 	 * searched for within one or more directories as they would if they
 	 * were being autoloaded through a namespace.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	public $classmap = [];
+
+	/**
+	 * -------------------------------------------------------------------
+	 * Files
+	 * -------------------------------------------------------------------
+	 * The files array provides a list of paths to __non-class__ files
+	 * that will be autoloaded. This can be useful for bootstrap operations
+	 * or for loading functions.
+	 *
+	 * @var array<int, string>
+	 */
+	public $files = [];
 
 	/**
 	 * -------------------------------------------------------------------
@@ -61,7 +73,7 @@ class AutoloadConfig
 	 * Do not change the name of the CodeIgniter namespace or your application
 	 * will break.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $corePsr4 = [
 		'CodeIgniter' => SYSTEMPATH,
@@ -78,7 +90,7 @@ class AutoloadConfig
 	 * searched for within one or more directories as they would if they
 	 * were being autoloaded through a namespace.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $coreClassmap = [
 		'Psr\Log\AbstractLogger'           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
@@ -92,7 +104,15 @@ class AutoloadConfig
 		'Laminas\Escaper\Escaper'          => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
 	];
 
-	//--------------------------------------------------------------------
+	/**
+	 * -------------------------------------------------------------------
+	 * Core Files
+	 * -------------------------------------------------------------------
+	 * List of files from the framework to be autoloaded early.
+	 *
+	 * @var array<int, string>
+	 */
+	protected $coreFiles = [];
 
 	/**
 	 * Constructor.
@@ -111,5 +131,6 @@ class AutoloadConfig
 
 		$this->psr4     = array_merge($this->corePsr4, $this->psr4);
 		$this->classmap = array_merge($this->coreClassmap, $this->classmap);
+		$this->files    = array_merge($this->coreFiles, $this->files);
 	}
 }

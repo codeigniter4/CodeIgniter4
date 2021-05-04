@@ -2,12 +2,13 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
  * @backupGlobals enabled
  */
-class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
+class DotEnvTest extends CIUnitTestCase
 {
 
 	protected $fixturesFolder;
@@ -171,7 +172,7 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new Dotenv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
-		$this->assertEquals('complex', $_SERVER['simple.name']);
+		$this->assertEquals('complex', $_SERVER['SimpleConfig.simple.name']);
 	}
 
 	//--------------------------------------------------------------------
@@ -206,6 +207,7 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('{$NVAR1} {$NVAR2}', $_ENV['NVAR3']); // not resolved
 		$this->assertEquals('Hello World!', $_ENV['NVAR4']);
 		$this->assertEquals('$NVAR1 {NVAR2}', $_ENV['NVAR5']); // not resolved
+		$this->assertEquals('Hello/World!', $_ENV['NVAR8']);
 	}
 
 	//--------------------------------------------------------------------

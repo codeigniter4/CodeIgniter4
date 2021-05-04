@@ -89,6 +89,7 @@ class MigrationGenerator extends BaseCommand
 			$params[0] = "_create_{$table}_table";
 		}
 
+		$this->classNameLang = 'CLI.generator.className.migration';
 		$this->execute($params);
 	}
 

@@ -13,6 +13,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use Config\Cache;
+use Throwable;
 
 /**
  * File system cache handler
@@ -70,7 +71,7 @@ class FileHandler extends BaseHandler
 		}
 
 		$this->mode   = $config->file['mode'] ?? 0640;
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 	}
 
 	//--------------------------------------------------------------------
@@ -80,7 +81,6 @@ class FileHandler extends BaseHandler
 	 */
 	public function initialize()
 	{
-		// Not to see here...
 	}
 
 	//--------------------------------------------------------------------
@@ -110,7 +110,7 @@ class FileHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
@@ -124,7 +124,16 @@ class FileHandler extends BaseHandler
 
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path . $key, $this->mode);
+			try
+			{
+				chmod($this->path . $key, $this->mode);
+			}
+			// @codeCoverageIgnoreStart
+			catch (Throwable $e)
+			{
+				log_message('debug', 'Failed to set mode on cache file: ' . $e->getMessage());
+			}
+			// @codeCoverageIgnoreEnd
 
 			return true;
 		}
@@ -139,7 +148,7 @@ class FileHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
@@ -151,12 +160,36 @@ class FileHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return integer The number of deleted items
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$deleted = 0;
+
+		foreach (glob($this->path . $pattern,  GLOB_NOSORT) as $filename)
+		{
+			if (is_file($filename) && @unlink($filename))
+			{
+				$deleted++;
+			}
+		}
+
+		return $deleted;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -189,7 +222,7 @@ class FileHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -219,7 +252,7 @@ class FileHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -234,7 +267,7 @@ class FileHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public function getCacheInfo()
 	{
@@ -248,7 +281,10 @@ class FileHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expires' key for absolute epoch expiry (or null).
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
 	{
@@ -256,28 +292,36 @@ class FileHandler extends BaseHandler
 
 		if (! is_file($this->path . $key))
 		{
-			return false;
+			return false; // This will return null in a future release
 		}
 
 		$data = @unserialize(file_get_contents($this->path . $key));
 
-		if (is_array($data))
+		if (! is_array($data) || ! isset($data['ttl']))
 		{
-			$mtime = filemtime($this->path . $key);
-
-			if (! isset($data['ttl']))
-			{
-				return false;
-			}
-
-			return [
-				'expire' => $mtime + $data['ttl'],
-				'mtime'  => $mtime,
-				'data'   => $data['data'],
-			];
+			return false; // This will return null in a future release
 		}
 
-		return false;
+		// Consider expired items as missing
+		$expire = $data['time'] + $data['ttl'];
+
+		// @phpstan-ignore-next-line
+		if ($data['ttl'] > 0 && time() > $expire)
+		{
+			// If the file is still there then remove it
+			if (is_file($this->path . $key))
+			{
+				unlink($this->path . $key);
+			}
+
+			return false; // This will return null in a future release
+		}
+
+		return [
+			'expire' => $expire,
+			'mtime'  => filemtime($this->path . $key),
+			'data'   => $data['data'],
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -489,6 +533,8 @@ class FileHandler extends BaseHandler
 			$returnedValues = explode(',', $returnedValues);
 		}
 
+		$fileInfo = [];
+
 		foreach ($returnedValues as $key)
 		{
 			switch ($key)
@@ -520,8 +566,6 @@ class FileHandler extends BaseHandler
 			}
 		}
 
-		return $fileInfo; // @phpstan-ignore-line
+		return $fileInfo;
 	}
-
-	//--------------------------------------------------------------------
 }

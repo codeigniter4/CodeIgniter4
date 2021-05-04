@@ -1,7 +1,10 @@
 <?php
 namespace CodeIgniter\I18n;
 
-class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Locale;
+
+class TimeDifferenceTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -9,7 +12,7 @@ class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		helper('date');
-		\Locale::setDefault('America/Chicago');
+		Locale::setDefault('America/Chicago');
 	}
 
 	public function testDifferenceBasics()
@@ -28,6 +31,14 @@ class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(-61368, $obj->getHours());
 		$this->assertEquals(-3682080, $obj->getMinutes());
 		$this->assertEquals(-220924800, $obj->getSeconds());
+
+		$this->assertEquals(-7, $obj->years);
+		$this->assertEquals(-84, $obj->months);
+		$this->assertEquals(-365, $obj->weeks);
+		$this->assertEquals(-2557, $obj->days);
+		$this->assertEquals(-61368, $obj->hours);
+		$this->assertEquals(-3682080, $obj->minutes);
+		$this->assertEquals(-220924800, $obj->seconds);
 
 		$this->assertEquals($diff / YEAR, $obj->getYears(true));
 		$this->assertEquals($diff / MONTH, $obj->getMonths(true));
@@ -191,12 +202,28 @@ class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Just now', $diff->humanize('en'));
 	}
 
-	public function testGetter()
+	public function testGetterUTC()
+	{
+		$current = Time::parse('March 10, 2017', 'UTC');
+		$diff    = $current->difference('March 18, 2017', 'UTC');
+
+		$this->assertEquals(8, $diff->getDays());
+		$this->assertEquals(8, $diff->days);
+		$this->assertEquals(-8, (int) round($diff->getDays(true)));
+		$this->assertNull($diff->nonsense);
+	}
+
+	public function testGetterChicagoTime()
 	{
 		$current = Time::parse('March 10, 2017', 'America/Chicago');
 		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-		$this->assertEquals(-8, (int) round($diff->days));
+		// Daylight Saving Time had begun since Sun, 12 Mar, 02:00.
+		$this->assertEquals(7, $diff->getDays());
+		$this->assertEquals(7, $diff->days);
+
+		// The raw value does not take Daylight Saving Time into account.
+		$this->assertEquals(-8, (int) round($diff->getDays(true)));
 		$this->assertNull($diff->nonsense);
 	}
 

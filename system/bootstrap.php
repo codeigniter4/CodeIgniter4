@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
-use Config\App;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -155,7 +153,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$app = new CodeIgniter(new App());
+$app = Services::codeigniter();
 $app->initialize();
 
 return $app;

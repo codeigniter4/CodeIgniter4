@@ -18,7 +18,7 @@ use CodeIgniter\CLI\GeneratorTrait;
 /**
  * Generates a migration file for database sessions.
  *
- * @deprecated Use make:migration --session instead.
+ * @deprecated Use `make:migration --session` instead.
  *
  * @codeCoverageIgnore
  */

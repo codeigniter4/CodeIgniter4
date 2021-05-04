@@ -1,7 +1,10 @@
 <?php
 
+namespace CodeIgniter;
 
-class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class CommonFunctionsSendTest extends CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -21,14 +24,14 @@ class CommonFunctionsSendTest extends \CodeIgniter\Test\CIUnitTestCase
 	 */
 	public function testRedirectResponseCookiesSent()
 	{
-		$login_time = time();
+		$loginTime = time();
 
 		$routes = service('routes');
 		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
 		$response = redirect()->route('login')
 				->setCookie('foo', 'onething', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+				->setCookie('login_time', $loginTime, YEAR);
 		$response->pretend(false);
 		$this->assertTrue($response->hasCookie('foo', 'onething'));
 		$this->assertTrue($response->hasCookie('login_time'));

@@ -15,7 +15,7 @@ class CLIRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\CLIRequest
+	 * @var CLIRequest
 	 */
 	protected $request;
 

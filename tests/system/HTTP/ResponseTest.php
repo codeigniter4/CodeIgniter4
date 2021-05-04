@@ -3,6 +3,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -169,7 +170,7 @@ class ResponseTest extends CIUnitTestCase
 		Factories::injectMock('config', 'App', $config);
 
 		$response = new Response($config);
-		$pager    = \Config\Services::pager();
+		$pager    = Services::pager();
 
 		$pager->store('default', 3, 10, 200);
 		$response->setLink($pager);
@@ -432,10 +433,10 @@ class ResponseTest extends CIUnitTestCase
 
 		ob_start();
 		$actual->sendBody();
-		$actual_output = ob_get_contents();
+		$actualOutput = ob_get_contents();
 		ob_end_clean();
 
-		$this->assertSame('data', $actual_output);
+		$this->assertSame('data', $actualOutput);
 	}
 
 	public function testGetDownloadResponseByFilePath()
@@ -450,10 +451,10 @@ class ResponseTest extends CIUnitTestCase
 
 		ob_start();
 		$actual->sendBody();
-		$actual_output = ob_get_contents();
+		$actualOutput = ob_get_contents();
 		ob_end_clean();
 
-		$this->assertSame(file_get_contents(__FILE__), $actual_output);
+		$this->assertSame(file_get_contents(__FILE__), $actualOutput);
 	}
 
 	public function testVagueDownload()
@@ -517,12 +518,12 @@ class ResponseTest extends CIUnitTestCase
 	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	public function testRedirectResponseCookies()
 	{
-		$login_time = time();
+		$loginTime = time();
 
 		$response = new Response(new App());
 		$answer1  = $response->redirect('/login')
 				->setCookie('foo', 'bar', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
+				->setCookie('login_time', $loginTime, YEAR);
 
 		$this->assertTrue($answer1->hasCookie('foo'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
@@ -551,8 +552,8 @@ class ResponseTest extends CIUnitTestCase
 		$config                 = new App();
 		$config->cookieSameSite = 'Invalid';
 
-		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('Security.invalidSameSiteSetting', ['Invalid']));
+		$this->expectException(CookieException::class);
+		$this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
 		new Response($config);
 	}
 }

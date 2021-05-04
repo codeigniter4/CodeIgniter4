@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use UnnamespacedClass;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -10,7 +11,7 @@ use Config\Services;
 class AutoloaderTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * @var Autoloader
 	 */
 	protected $loader;
 
@@ -40,7 +41,7 @@ class AutoloaderTest extends CIUnitTestCase
 
 	public function testLoadStoredClass()
 	{
-		$this->assertInstanceOf('UnnamespacedClass', new \UnnamespacedClass());
+		$this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
 	}
 
 	public function testInitializeWithInvalidArguments()
@@ -240,5 +241,21 @@ class AutoloaderTest extends CIUnitTestCase
 
 		$namespaces = $this->loader->getNamespace();
 		$this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+	}
+
+	public function testAutoloaderLoadsNonClassFiles(): void
+	{
+		$config = new Autoload();
+
+		$config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, new Modules());
+		$this->loader->register();
+
+		$this->assertTrue(function_exists('autoload_foo'));
+		$this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
+		$this->assertTrue(defined('AUTOLOAD_CONSTANT'));
+		$this->assertSame('foo', AUTOLOAD_CONSTANT);
 	}
 }

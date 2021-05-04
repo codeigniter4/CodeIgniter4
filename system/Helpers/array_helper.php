@@ -22,11 +22,15 @@ if (! function_exists('dot_array_search'))
 	 * @param string $index
 	 * @param array  $array
 	 *
-	 * @return mixed|null
+	 * @return mixed
 	 */
 	function dot_array_search(string $index, array $array)
 	{
-		$segments = explode('.', rtrim(rtrim($index, '* '), '.'));
+		$segments = preg_split('/(?<!\\\)\./', rtrim($index, '* '), 0, PREG_SPLIT_NO_EMPTY);
+
+		$segments = array_map(static function ($key) {
+			return str_replace('\.', '.', $key);
+		}, $segments);
 
 		return _array_search_dot($segments, $array);
 	}
@@ -35,20 +39,20 @@ if (! function_exists('dot_array_search'))
 if (! function_exists('_array_search_dot'))
 {
 	/**
-	 * Used by dot_array_search to recursively search the
+	 * Used by `dot_array_search` to recursively search the
 	 * array with wildcards.
+	 *
+	 * @internal This should not be used on its own.
 	 *
 	 * @param array $indexes
 	 * @param array $array
 	 *
-	 * @return mixed|null
+	 * @return mixed
 	 */
 	function _array_search_dot(array $indexes, array $array)
 	{
 		// Grab the current index
-		$currentIndex = $indexes
-			? array_shift($indexes)
-			: null;
+		$currentIndex = $indexes ? array_shift($indexes) : null;
 
 		if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*'))
 		{
@@ -58,18 +62,28 @@ if (! function_exists('_array_search_dot'))
 		// Handle Wildcard (*)
 		if ($currentIndex === '*')
 		{
-			// If $array has more than 1 item, we have to loop over each.
+			$answer = [];
+
 			foreach ($array as $value)
 			{
-				$answer = _array_search_dot($indexes, $value);
-
-				if ($answer !== null)
-				{
-					return $answer;
-				}
+				$answer[] = _array_search_dot($indexes, $value);
 			}
 
-			// Still here after searching all child nodes?
+			$answer = array_filter($answer, static function ($value) {
+				return $value !== null;
+			});
+
+			if ($answer !== [])
+			{
+				if (count($answer) === 1)
+				{
+					// If array only has one element, we return that element for BC.
+					return current($answer);
+				}
+
+				return $answer;
+			}
+
 			return null;
 		}
 
@@ -81,7 +95,7 @@ if (! function_exists('_array_search_dot'))
 		}
 
 		// Do we need to recursively search this value?
-		if (is_array($array[$currentIndex]) && $array[$currentIndex])
+		if (is_array($array[$currentIndex]) && $array[$currentIndex] !== [])
 		{
 			return _array_search_dot($indexes, $array[$currentIndex]);
 		}
@@ -110,12 +124,9 @@ if (! function_exists('array_deep_search'))
 
 		foreach ($array as $value)
 		{
-			if (is_array($value))
+			if (is_array($value) && ($result = array_deep_search($key, $value)))
 			{
-				if ($result = array_deep_search($key, $value))
-				{
-					return $result;
-				}
+				return $result;
 			}
 		}
 

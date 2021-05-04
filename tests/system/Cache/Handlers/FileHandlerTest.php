@@ -1,7 +1,12 @@
 <?php
+
 namespace CodeIgniter\Cache\Handlers;
 
-class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class FileHandlerTest extends CIUnitTestCase
 {
 
 	private static $directory = 'FileHandler';
@@ -32,7 +37,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 
 		// Initialize path
-		$this->config                     = new \Config\Cache();
+		$this->config                     = new Cache();
 		$this->config->file['storePath'] .= self::$directory;
 
 		if (! is_dir($this->config->file['storePath']))
@@ -79,7 +84,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSetDefaultPath()
 	{
 		// Initialize path
-		$config                    = new \Config\Cache();
+		$config                    = new Cache();
 		$config->file['storePath'] = null;
 
 		$this->fileHandler = new FileHandler($config);
@@ -95,7 +100,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->fileHandler->get(self::$key1));
 		$this->assertNull($this->fileHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->fileHandler->get(self::$key1));
 	}
 
@@ -108,7 +113,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('value', $this->fileHandler->get(self::$key1));
 		$this->assertNull($this->fileHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(3);
+		CLI::wait(3);
 		$this->assertNull($this->fileHandler->get(self::$key1));
 	}
 
@@ -126,6 +131,50 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertTrue($this->fileHandler->delete(self::$key1));
 		$this->assertFalse($this->fileHandler->delete(self::$dummy));
+	}
+
+	public function testDeleteMatchingPrefix()
+	{
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->fileHandler->save('key_' . $i, 'value' . $i);
+		}
+
+		// check that there are 101 items is cache store
+		$this->assertSame(101, count($this->fileHandler->getCacheInfo()));
+
+		// Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
+		// (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
+		$this->assertSame(13, $this->fileHandler->deleteMatching('key_1*'));
+
+		// check that there remains (101 - 13) = 88 items is cache store
+		$this->assertSame(88, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
+	}
+
+	public function testDeleteMatchingSuffix()
+	{
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->fileHandler->save('key_' . $i, 'value' . $i);
+		}
+
+		// check that there are 101 items is cache store
+		$this->assertSame(101, count($this->fileHandler->getCacheInfo()));
+
+		// Checking that given the suffix "1", deleteMatching deletes 11 keys:
+		// (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
+		$this->assertSame(11, $this->fileHandler->deleteMatching('*1'));
+
+		// check that there remains (101 - 13) = 88 items is cache store
+		$this->assertSame(90, count($this->fileHandler->getCacheInfo()));
+
+		// Clear all files
+		$this->fileHandler->clean();
 	}
 
 	public function testIncrement()
@@ -171,7 +220,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$actual = $this->fileHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 
@@ -197,7 +246,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSaveMode($int, $string)
 	{
 		// Initialize mode
-		$config               = new \Config\Cache();
+		$config               = new Cache();
 		$config->file['mode'] = $int;
 
 		$this->fileHandler = new FileHandler($config);
@@ -214,10 +263,22 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function modeProvider()
 	{
 		return [
-			[0640, '640'],
-			[0600, '600'],
-			[0660, '660'],
-			[0777, '777'],
+			[
+				0640,
+				'640',
+			],
+			[
+				0600,
+				'600',
+			],
+			[
+				0660,
+				'660',
+			],
+			[
+				0777,
+				'777',
+			],
 		];
 	}
 
@@ -248,7 +309,7 @@ final class BaseTestFileHandler extends FileHandler
 
 	public function __construct()
 	{
-		$this->config                     = new \Config\Cache();
+		$this->config                     = new Cache();
 		$this->config->file['storePath'] .= self::$directory;
 
 		parent::__construct($this->config);
@@ -256,10 +317,10 @@ final class BaseTestFileHandler extends FileHandler
 
 	public function getFileInfoTest()
 	{
-		$tmp_handle = tmpfile();
-		stream_get_meta_data($tmp_handle)['uri'];
+		$tmpHandle = tmpfile();
+		stream_get_meta_data($tmpHandle)['uri'];
 
-		return $this->getFileInfo(stream_get_meta_data($tmp_handle)['uri'], [
+		return $this->getFileInfo(stream_get_meta_data($tmpHandle)['uri'], [
 			'name',
 			'server_path',
 			'size',

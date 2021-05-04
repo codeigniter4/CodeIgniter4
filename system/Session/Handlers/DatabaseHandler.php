@@ -144,7 +144,7 @@ class DatabaseHandler extends BaseHandler
 		}
 
 		$builder = $this->db->table($this->table)
-				->select('data')
+				->select($this->platform === 'postgre' ? "encode(data, 'base64') AS data" : 'data')
 				->where('id', $sessionID);
 
 		if ($this->matchIP)
@@ -165,9 +165,6 @@ class DatabaseHandler extends BaseHandler
 			return '';
 		}
 
-		// PostgreSQL's variant of a BLOB datatype is Bytea, which is a
-		// PITA to work with, so we use base64-encoded data in a TEXT
-		// field instead.
 		if (is_bool($result))
 		{
 			$result = '';
@@ -214,8 +211,8 @@ class DatabaseHandler extends BaseHandler
 			$insertData = [
 				'id'         => $sessionID,
 				'ip_address' => $this->ipAddress,
-				'timestamp'  => time(),
-				'data'       => $this->platform === 'postgre' ? base64_encode($sessionData) : $sessionData,
+				'timestamp'  => 'now()',
+				'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
 			];
 
 			if (! $this->db->table($this->table)->insert($insertData))
@@ -237,12 +234,12 @@ class DatabaseHandler extends BaseHandler
 		}
 
 		$updateData = [
-			'timestamp' => time(),
+			'timestamp' => 'now()',
 		];
 
 		if ($this->fingerprint !== md5($sessionData))
 		{
-			$updateData['data'] = ($this->platform === 'postgre') ? base64_encode($sessionData) : $sessionData;
+			$updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($sessionData) : $sessionData;
 		}
 
 		if (! $builder->update($updateData))
@@ -320,7 +317,8 @@ class DatabaseHandler extends BaseHandler
 	 */
 	public function gc($maxlifetime): bool
 	{
-		return ($this->db->table($this->table)->delete('timestamp < ' . (time() - $maxlifetime))) ? true : $this->fail();
+		$interval = implode(" '"[(int)($this->platform === 'postgre')], ['', "{$maxlifetime} second", '']);
+		return ($this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}")) ? true : $this->fail();
 	}
 
 	//--------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -12,7 +13,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 	protected $streamFilter;
 
 	/**
-	 * @var \CodeIgniter\Database\BaseConnection
+	 * @var BaseConnection
 	 */
 	protected $connection;
 
