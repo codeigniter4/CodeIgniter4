@@ -23,13 +23,6 @@ use Memcached;
 class MemcachedHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	/**
 	 * The memcached object
 	 *
 	 * @var Memcached|Memcache
@@ -166,7 +159,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		if ($this->memcached instanceof Memcached)
 		{
@@ -206,7 +199,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		if (! $this->config['raw'])
 		{
@@ -242,7 +235,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->memcached->delete($key);
 	}
@@ -278,7 +271,7 @@ class MemcachedHandler extends BaseHandler
 			return false;
 		}
 
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		// @phpstan-ignore-next-line
 		return $this->memcached->increment($key, $offset, $offset, 60);
@@ -301,7 +294,7 @@ class MemcachedHandler extends BaseHandler
 			return false;
 		}
 
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		//FIXME: third parameter isn't other handler actions.
 		// @phpstan-ignore-next-line
@@ -349,8 +342,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key    = static::validateKey($key, $this->prefix);
 		$stored = $this->memcached->get($key);
 
 		// if not an array, don't try to count for PHP7.2

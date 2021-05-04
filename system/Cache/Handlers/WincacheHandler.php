@@ -22,15 +22,6 @@ use Exception;
 class WincacheHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Cache $config
@@ -60,6 +51,7 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
+		$key     = static::validateKey($key);
 		$success = false;
 
 		$data = wincache_ucache_get($this->prefix . $key, $success);
@@ -81,6 +73,8 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
+		$key = static::validateKey($key);
+
 		return wincache_ucache_set($this->prefix . $key, $value, $ttl);
 	}
 
@@ -95,6 +89,8 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
+		$key = static::validateKey($key);
+
 		return wincache_ucache_delete($this->prefix . $key);
 	}
 
@@ -124,6 +120,8 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
+		$key = static::validateKey($key);
+
 		return wincache_ucache_inc($this->prefix . $key, $offset);
 	}
 
@@ -139,6 +137,8 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
+		$key = static::validateKey($key);
+
 		return wincache_ucache_dec($this->prefix . $key, $offset);
 	}
 
@@ -183,6 +183,8 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function getMetaData(string $key)
 	{
+		$key = static::validateKey($key);
+
 		if ($stored = wincache_ucache_info(false, $this->prefix . $key))
 		{
 			$age      = $stored['ucache_entries'][1]['age_seconds'];
