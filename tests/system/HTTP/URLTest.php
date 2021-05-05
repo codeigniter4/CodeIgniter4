@@ -151,17 +151,16 @@ final class URLTest extends CIUnitTestCase
 	/**
 	 * @dataProvider configProvider
 	 */
-	public function testConstructorConfig(array $configs, string $baseURL)
+	public function testConstructorConfig(array $configs, string $baseURL, string $siteURL)
 	{
 		foreach ($configs as $key => $value)
 		{
 			$this->setConfig($key, $value);
 		}
 
-		$url      = new URL('testaroo', $this->config);
-		$expected = rtrim($baseURL, '/') . '/testaroo';
+		$url = new URL('testaroo', $this->config);
 
-		$this->assertSame($expected, (string) $url);
+		$this->assertSame($siteURL, (string) $url);
 	}
 
 	/**
@@ -180,7 +179,7 @@ final class URLTest extends CIUnitTestCase
 	/**
 	 * @dataProvider configProvider
 	 */
-	public function testBase(array $configs, string $expected)
+	public function testBase(array $configs, string $baseURL, string $siteURL)
 	{
 		foreach ($configs as $key => $value)
 		{
@@ -191,7 +190,14 @@ final class URLTest extends CIUnitTestCase
 
 		$url = URL::base();
 
-		$this->assertSame($expected, (string) $url);
+		$this->assertSame($baseURL, (string) $url);
+	}
+
+	public function testBaseWithUri()
+	{
+		$url = URL::base('images/cat.gif');
+
+		$this->assertSame('http://example.com/images/cat.gif', (string) $url);
 	}
 
 	public function testTo()
@@ -270,25 +276,29 @@ final class URLTest extends CIUnitTestCase
 				[
 					'baseURL' => 'http://bananas.com',
 				],
-				'http://bananas.com/index.php',
+				'http://bananas.com/',
+				'http://bananas.com/index.php/testaroo',
 			],
 			[
 				[
 					'baseURL' => 'http://bananas.com/',
 				],
-				'http://bananas.com/index.php',
+				'http://bananas.com/',
+				'http://bananas.com/index.php/testaroo',
 			],
 			[
 				[
 					'baseURL' => 'http://bananas.com/subfolder/',
 				],
-				'http://bananas.com/subfolder/index.php',
+				'http://bananas.com/subfolder/',
+				'http://bananas.com/subfolder/index.php/testaroo',
 			],
 			[
 				[
 					'indexPage' => '',
 				],
 				'http://example.com/',
+				'http://example.com/testaroo',
 			],
 			[
 				[
@@ -296,26 +306,30 @@ final class URLTest extends CIUnitTestCase
 					'indexPage' => '',
 				],
 				'http://bananas.com/subfolder/',
+				'http://bananas.com/subfolder/testaroo',
 			],
 			[
 				[
 					'forceGlobalSecureRequests' => true,
 				],
-				'https://example.com/index.php',
+				'https://example.com/',
+				'https://example.com/index.php/testaroo',
 			],
 			[
 				[
 					'baseURL'                   => 'http://bananas.com/',
 					'forceGlobalSecureRequests' => true,
 				],
-				'https://bananas.com/index.php',
+				'https://bananas.com/',
+				'https://bananas.com/index.php/testaroo',
 			],
 			[
 				[
 					'baseURL'                   => 'https://bananas.com/subfolder/',
 					'forceGlobalSecureRequests' => true,
 				],
-				'https://bananas.com/subfolder/index.php',
+				'https://bananas.com/subfolder/',
+				'https://bananas.com/subfolder/index.php/testaroo',
 			],
 		];
 	}

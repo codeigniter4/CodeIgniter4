@@ -39,26 +39,34 @@ class URL
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an instance representing the current URL.
+	 * Returns an instance representing the base URL.
+	 *
+	 * @param string $uri Additional URI string to include
 	 *
 	 * @return static
 	 */
-	final public static function base()
+	final public static function base(string $uri = '')
 	{
-		return new static('');
+		// Base URLs never include the index page
+		$config            = clone config('App');
+		$config->indexPage = '';
+
+		return new static($uri, $config);
 	}
 
 	/**
-	 * Returns an instance representing the current URL.
+	 * Returns an instance representing a routed URL.
 	 *
-	 * @param string $uri
+	 * @param string $uri Named route, reverse route, or URI string
 	 *
 	 * @return static
 	 */
 	final public static function to(string $uri)
 	{
+		$uri = rtrim($uri, '/ ');
+
 		// Check for a named or reverse-route
-		if ($route = Services::routes()->reverseRoute($uri))
+		if ($uri !== '' && $route = Services::routes()->reverseRoute($uri))
 		{
 			return new static($route);
 		}
