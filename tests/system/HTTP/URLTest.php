@@ -193,9 +193,9 @@ final class URLTest extends CIUnitTestCase
 		$this->assertSame($baseURL, (string) $url);
 	}
 
-	public function testBaseWithUri()
+	public function testPublic()
 	{
-		$url = URL::base('images/cat.gif');
+		$url = URL::public('images/cat.gif');
 
 		$this->assertSame('http://example.com/images/cat.gif', (string) $url);
 	}
@@ -207,20 +207,20 @@ final class URLTest extends CIUnitTestCase
 		$this->assertSame('http://example.com/index.php/fruit/basket', (string) $url);
 	}
 
-	public function testToNamedRoute()
+	public function testNamedRoute()
 	{
-		Services::routes()->add('apples', 'Home::index', ['as' => 'home']);
+		Services::routes()->add('apples', 'Home::index', ['as' => 'orchard']);
 
-		$url = URL::to('home');
+		$url = URL::route('orchard');
 
 		$this->assertSame('http://example.com/index.php/apples', (string) $url);
 	}
 
-	public function testToReverseRoute()
+	public function testReverseRoute()
 	{
 		Services::routes()->add('oranges', 'Basket::fruit');
 
-		$url = URL::to('App\Controllers\Basket::fruit');
+		$url = URL::route('App\Controllers\Basket::fruit');
 
 		$this->assertSame('http://example.com/index.php/oranges', (string) $url);
 	}
@@ -367,11 +367,11 @@ final class URLTest extends CIUnitTestCase
 			],
 			[
 				'?blahblah=true',
-				'http://example.com/index.php?blahblah=true',
+				'http://example.com/index.php',
 			],
 			[
 				'http://example.com/index.php?blahblah=true',
-				'http://example.com/index.php?blahblah=true',
+				'http://example.com/index.php',
 			],
 		];
 	}

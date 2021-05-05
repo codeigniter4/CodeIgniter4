@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -20,7 +21,7 @@ use InvalidArgumentException;
  * URI wrapper to work with complete project URLs.
  * This class creates immutable instances.
  */
-class URL
+final class URL
 {
 	/**
 	 * Underlying URI instance
@@ -34,18 +35,29 @@ class URL
 	 *
 	 * @var string
 	 */
-	protected $relativePath;
+	private $relativePath;
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an instance representing the base URL.
+	 * Creates the base URL.
+	 *
+	 * @return static
+	 */
+	public static function base()
+	{
+		return static::public('');
+	}
+
+	/**
+	 * Creates a URL to unrouted public files (typically assets).
+	 * Similar to base_url('path/to/file')
 	 *
 	 * @param string $uri Additional URI string to include
 	 *
 	 * @return static
 	 */
-	final public static function base(string $uri = '')
+	public static function public(string $uri)
 	{
 		// Base URLs never include the index page
 		$config            = clone config('App');
@@ -55,33 +67,45 @@ class URL
 	}
 
 	/**
-	 * Returns an instance representing a routed URL.
-	 *
-	 * @param string $uri Named route, reverse route, or URI string
-	 *
-	 * @return static
-	 */
-	final public static function to(string $uri)
-	{
-		$uri = rtrim($uri, '/ ');
-
-		// Check for a named or reverse-route
-		if ($uri !== '' && $route = Services::routes()->reverseRoute($uri))
-		{
-			return new static($route);
-		}
-
-		return new static($uri);
-	}
-
-	/**
 	 * Returns an instance representing the current URL.
 	 *
 	 * @return static
 	 */
-	final public static function current()
+	public static function current()
 	{
 		return static::fromRequest(Services::request());
+	}
+
+	/**
+	 * Creates a framework URL.
+	 *
+	 * @param string $uri
+	 *
+	 * @return static
+	 */
+	public static function to(string $uri)
+	{
+		return new static(rtrim($uri, '/ '));
+	}
+
+	/**
+	 * Creates a URL to a named or reverse route.
+	 *
+	 * @param string $uri Named or reverse route
+	 *
+	 * @return static
+	 *
+	 * @throws RouterException
+	 */
+	public static function route(string $uri)
+	{
+		// Check for a named or reverse-route
+		if ($route = Services::routes()->reverseRoute($uri))
+		{
+			return new static($route);
+		}
+
+		throw RouterException::forInvalidRoute($uri);
 	}
 
 	/**
@@ -92,7 +116,7 @@ class URL
 	 *
 	 * @return static
 	 */
-	final public static function fromRequest(IncomingRequest $request)
+	public static function fromRequest(IncomingRequest $request)
 	{
 		$path  = $request->detectPath($request->config->uriProtocol);
 		$query = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
@@ -109,7 +133,7 @@ class URL
 	 * @param string   $relativePath
 	 * @param App|null $config
 	 */
-	final public function __construct(string $relativePath = '', App $config = null)
+	public function __construct(string $relativePath = '', App $config = null)
 	{
 		$config = $config ?? config('App');
 
@@ -175,11 +199,14 @@ class URL
 
 	/**
 	 * Returns this URL as a string.
+	 * Since this is typically for routing and
+	 * link purposes we strip any queries, but
+	 * they can be accessed via getUri().
 	 *
 	 * @return string
 	 */
 	public function __toString(): string
 	{
-		return (string) $this->uri;
+		return (string) $this->getUri()->setQuery('');
 	}
 }
