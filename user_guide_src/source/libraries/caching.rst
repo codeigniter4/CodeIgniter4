@@ -229,6 +229,21 @@ Class Reference
           on which adapter is being used. Some adapters (File, Memcached, Wincache)
           still return ``false`` for missing items.
 
+.. php:staticmethod:: validateKey(string $key, string $prefix)
+
+    :param string $key: Potential cache key
+    :param string $prefix: Optional prefix
+    :returns: The verified and prefixed key. If the key exceeds the driver's max key length it will be hashed.
+    :rtype: string
+
+    This method is used by handler methods to check that keys are valid. It will throw
+    an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
+
+    Example::
+
+        $prefixedKey = BaseHandler::validateKey($key, $prefix);
+
+
 *******
 Drivers
 *******
