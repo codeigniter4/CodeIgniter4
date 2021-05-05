@@ -14,7 +14,7 @@ class BaseHandlerTest extends CIUnitTestCase
 		$this->expectException('InvalidArgumentException');
 		$this->expectExceptionMessage('Cache key must be a string');
 
-		BaseHandler::validateKey(false);
+		BaseHandler::validateKey($input);
 	}
 
 	public function invalidTypeProvider(): array

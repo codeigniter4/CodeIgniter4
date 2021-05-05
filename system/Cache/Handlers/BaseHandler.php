@@ -23,8 +23,7 @@ abstract class BaseHandler implements CacheInterface
 {
 	/**
 	 * Reserved characters that cannot be used in a key or tag.
-	 *
-	 * @see https://github.com/symfony/cache-contracts/blob/c0446463729b89dd4fa62e9aeecc80287323615d/ItemInterface.php#L43
+	 * From https://github.com/symfony/cache-contracts/blob/c0446463729b89dd4fa62e9aeecc80287323615d/ItemInterface.php#L43
 	 */
 	public const RESERVED_CHARACTERS = '{}()/\@:';
 
@@ -44,13 +43,12 @@ abstract class BaseHandler implements CacheInterface
 	/**
 	 * Validates a cache key according to PSR-6.
 	 * Keys that exceed MAX_KEY_LENGTH are hashed.
+	 * From https://github.com/symfony/cache/blob/7b024c6726af21fd4984ac8d1eae2b9f3d90de88/CacheItem.php#L158
 	 *
 	 * @param string $key    The key to validate
 	 * @param string $prefix Optional prefix to include in length calculations
 	 *
 	 * @throws InvalidArgumentException When $key is not valid
-	 *
-	 * @see https://github.com/symfony/cache/blob/7b024c6726af21fd4984ac8d1eae2b9f3d90de88/CacheItem.php#L158
 	 */
 	public static function validateKey($key, $prefix = ''): string
 	{
