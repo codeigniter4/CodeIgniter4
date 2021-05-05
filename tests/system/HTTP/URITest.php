@@ -568,6 +568,34 @@ class URITest extends CIUnitTestCase
 	{
 		return [
 			[
+				'',
+				'',
+			],
+			[
+				'/',
+				'/',
+			],
+			[
+				'.',
+				'',
+			],
+			[
+				'..',
+				'',
+			],
+			[
+				'/.',
+				'/',
+			],
+			[
+				'/..',
+				'/',
+			],
+			[
+				'//',
+				'/',
+			],
+			[
 				'/foo/..',
 				'/',
 			],
@@ -641,8 +669,7 @@ class URITest extends CIUnitTestCase
 	 */
 	public function testRemoveDotSegments($path, $expected)
 	{
-		$uri = new URI();
-		$this->assertEquals($expected, $uri->removeDotSegments($path));
+		$this->assertEquals($expected, URI::removeDotSegments($path));
 	}
 
 	//--------------------------------------------------------------------

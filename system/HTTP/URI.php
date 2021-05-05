@@ -143,6 +143,113 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Builds a representation of the string from the component parts.
+	 *
+	 * @param string $scheme
+	 * @param string $authority
+	 * @param string $path
+	 * @param string $query
+	 * @param string $fragment
+	 *
+	 * @return string
+	 */
+	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
+	{
+		$uri = '';
+		if (! empty($scheme))
+		{
+			$uri .= $scheme . '://';
+		}
+
+		if (! empty($authority))
+		{
+			$uri .= $authority;
+		}
+
+		if ($path !== '')
+		{
+			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
+		}
+
+		if ($query)
+		{
+			$uri .= '?' . $query;
+		}
+
+		if ($fragment)
+		{
+			$uri .= '#' . $fragment;
+		}
+
+		return $uri;
+	}
+
+	/**
+	 * Used when resolving and merging paths to correctly interpret and
+	 * remove single and double dot segments from the path per
+	 * RFC 3986 Section 5.2.4
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
+	 *
+	 * @param string $path
+	 *
+	 * @return   string
+	 * @internal
+	 */
+	public static function removeDotSegments(string $path): string
+	{
+		if ($path === '' || $path === '/')
+		{
+			return $path;
+		}
+
+		$output = [];
+
+		$input = explode('/', $path);
+
+		if ($input[0] === '')
+		{
+			unset($input[0]);
+			$input = array_values($input);
+		}
+
+		// This is not a perfect representation of the
+		// RFC, but matches most cases and is pretty
+		// much what Guzzle uses. Should be good enough
+		// for almost every real use case.
+		foreach ($input as $segment)
+		{
+			if ($segment === '..')
+			{
+				array_pop($output);
+			}
+			elseif ($segment !== '.' && $segment !== '')
+			{
+				$output[] = $segment;
+			}
+		}
+
+		$output = implode('/', $output);
+		$output = trim($output, '/ ');
+
+		// Add leading slash if necessary
+		if (strpos($path, '/') === 0)
+		{
+			$output = '/' . $output;
+		}
+
+		// Add trailing slash if necessary
+		if ($output !== '/' && substr($path, -1, 1) === '/')
+		{
+			$output .= '/';
+		}
+
+		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $uri
@@ -592,51 +699,7 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds a representation of the string from the component parts.
-	 *
-	 * @param string $scheme
-	 * @param string $authority
-	 * @param string $path
-	 * @param string $query
-	 * @param string $fragment
-	 *
-	 * @return string
-	 */
-	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
-	{
-		$uri = '';
-		if (! empty($scheme))
-		{
-			$uri .= $scheme . '://';
-		}
-
-		if (! empty($authority))
-		{
-			$uri .= $authority;
-		}
-
-		if ($path !== '')
-		{
-			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
-		}
-
-		if ($query)
-		{
-			$uri .= '?' . $query;
-		}
-
-		if ($fragment)
-		{
-			$uri .= '#' . $fragment;
-		}
-
-		return $uri;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Parses the given string an saves the appropriate authority pieces.
+	 * Parses the given string and saves the appropriate authority pieces.
 	 *
 	 * @param string $str
 	 *
@@ -947,7 +1010,7 @@ class URI
 		$path = urldecode($path);
 
 		// Remove dot segments
-		$path = $this->removeDotSegments($path);
+		$path = self::removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
 		if (strpos($orig, './') === 0)
@@ -1136,74 +1199,6 @@ class URI
 		$path[] = $reference->getPath();
 
 		return implode('/', $path);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Used when resolving and merging paths to correctly interpret and
-	 * remove single and double dot segments from the path per
-	 * RFC 3986 Section 5.2.4
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
-	 *
-	 * @param string $path
-	 *
-	 * @return   string
-	 * @internal param \CodeIgniter\HTTP\URI $uri
-	 */
-	public function removeDotSegments(string $path): string
-	{
-		if ($path === '' || $path === '/')
-		{
-			return $path;
-		}
-
-		$output = [];
-
-		$input = explode('/', $path);
-
-		if ($input[0] === '')
-		{
-			unset($input[0]);
-			$input = array_values($input);
-		}
-
-		// This is not a perfect representation of the
-		// RFC, but matches most cases and is pretty
-		// much what Guzzle uses. Should be good enough
-		// for almost every real use case.
-		foreach ($input as $segment)
-		{
-			if ($segment === '..')
-			{
-				array_pop($output);
-			}
-			elseif ($segment !== '.' && $segment !== '')
-			{
-				$output[] = $segment;
-			}
-		}
-
-		$output = implode('/', $output);
-		$output = ltrim($output, '/ ');
-
-		if ($output !== '/')
-		{
-			// Add leading slash if necessary
-			if (strpos($path, '/') === 0)
-			{
-				$output = '/' . $output;
-			}
-
-			// Add trailing slash if necessary
-			if (substr($path, -1, 1) === '/')
-			{
-				$output .= '/';
-			}
-		}
-
-		return $output;
 	}
 
 	//--------------------------------------------------------------------
