@@ -21,11 +21,9 @@ use Throwable;
 class FileHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
+	 * Maximum key length.
 	 */
-	protected $prefix;
+	public const MAX_KEY_LENGTH = PHP_MAXPATHLEN;
 
 	/**
 	 * Where to store cached files on the disk.
@@ -94,8 +92,7 @@ class FileHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = static::validateKey($key, $this->prefix);
 		$data = $this->getItem($key);
 
 		return is_array($data) ? $data['data'] : null;
@@ -114,7 +111,7 @@ class FileHandler extends BaseHandler
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		$contents = [
 			'time' => time(),
@@ -152,7 +149,7 @@ class FileHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return is_file($this->path . $key) && unlink($this->path . $key);
 	}
@@ -170,7 +167,7 @@ class FileHandler extends BaseHandler
 	{
 		$deleted = 0;
 
-		foreach (glob($this->path . $pattern,  GLOB_NOSORT) as $filename)
+		foreach (glob($this->path . $pattern, GLOB_NOSORT) as $filename)
 		{
 			if (is_file($filename) && @unlink($filename))
 			{
@@ -193,8 +190,7 @@ class FileHandler extends BaseHandler
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = static::validateKey($key, $this->prefix);
 		$data = $this->getItem($key);
 
 		if ($data === false)
@@ -222,12 +218,11 @@ class FileHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = static::validateKey($key, $this->prefix);
 		$data = $this->getItem($key);
 
 		if ($data === false)
@@ -288,7 +283,7 @@ class FileHandler extends BaseHandler
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		if (! is_file($this->path . $key))
 		{
@@ -342,26 +337,26 @@ class FileHandler extends BaseHandler
 	 * Does the heavy lifting of actually retrieving the file and
 	 * verifying it's age.
 	 *
-	 * @param string $key
+	 * @param string $filename
 	 *
 	 * @return boolean|mixed
 	 */
-	protected function getItem(string $key)
+	protected function getItem(string $filename)
 	{
-		if (! is_file($this->path . $key))
+		if (! is_file($this->path . $filename))
 		{
 			return false;
 		}
 
-		$data = unserialize(file_get_contents($this->path . $key));
+		$data = unserialize(file_get_contents($this->path . $filename));
 
 		// @phpstan-ignore-next-line
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
 			// If the file is still there then remove it
-			if (is_file($this->path . $key))
+			if (is_file($this->path . $filename))
 			{
-				unlink($this->path . $key);
+				unlink($this->path . $filename);
 			}
 
 			return false;

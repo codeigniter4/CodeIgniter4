@@ -22,13 +22,6 @@ use RedisException;
 class RedisHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	/**
 	 * Default config
 	 *
 	 * @var array
@@ -134,8 +127,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = static::validateKey($key, $this->prefix);
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
@@ -173,7 +165,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		switch ($dataType = gettype($value))
 		{
@@ -216,7 +208,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->redis->del($key) === 1;
 	}
@@ -233,7 +225,7 @@ class RedisHandler extends BaseHandler
 	public function deleteMatching(string $pattern)
 	{
 		$matchedKeys = [];
-		$iterator = null;
+		$iterator    = null;
 
 		do
 		{
@@ -266,7 +258,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->redis->hIncrBy($key, 'data', $offset);
 	}
@@ -283,7 +275,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->redis->hIncrBy($key, 'data', -$offset);
 	}
@@ -328,8 +320,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key   = static::validateKey($key, $this->prefix);
 		$value = $this->get($key);
 
 		if ($value !== null)

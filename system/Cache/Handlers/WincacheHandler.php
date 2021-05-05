@@ -22,15 +22,6 @@ use Exception;
 class WincacheHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Cache $config
@@ -60,9 +51,10 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
+		$key     = static::validateKey($key, $this->prefix);
 		$success = false;
 
-		$data = wincache_ucache_get($this->prefix . $key, $success);
+		$data = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
 		return $success ? $data : null;
@@ -81,7 +73,9 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		return wincache_ucache_set($this->prefix . $key, $value, $ttl);
+		$key = static::validateKey($key, $this->prefix);
+
+		return wincache_ucache_set($key, $value, $ttl);
 	}
 
 	//--------------------------------------------------------------------
@@ -95,7 +89,9 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function delete(string $key)
 	{
-		return wincache_ucache_delete($this->prefix . $key);
+		$key = static::validateKey($key, $this->prefix);
+
+		return wincache_ucache_delete($key);
 	}
 
 	//--------------------------------------------------------------------
@@ -124,7 +120,9 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		return wincache_ucache_inc($this->prefix . $key, $offset);
+		$key = static::validateKey($key, $this->prefix);
+
+		return wincache_ucache_inc($key, $offset);
 	}
 
 	//--------------------------------------------------------------------
@@ -139,7 +137,9 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		return wincache_ucache_dec($this->prefix . $key, $offset);
+		$key = static::validateKey($key, $this->prefix);
+
+		return wincache_ucache_dec($key, $offset);
 	}
 
 	//--------------------------------------------------------------------
@@ -183,7 +183,9 @@ class WincacheHandler extends BaseHandler
 	 */
 	public function getMetaData(string $key)
 	{
-		if ($stored = wincache_ucache_info(false, $this->prefix . $key))
+		$key = static::validateKey($key, $this->prefix);
+
+		if ($stored = wincache_ucache_info(false, $key))
 		{
 			$age      = $stored['ucache_entries'][1]['age_seconds'];
 			$ttl      = $stored['ucache_entries'][1]['ttl_seconds'];

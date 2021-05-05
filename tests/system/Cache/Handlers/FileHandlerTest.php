@@ -51,6 +51,8 @@ class FileHandlerTest extends CIUnitTestCase
 
 	public function tearDown(): void
 	{
+		parent::tearDown();
+
 		if (is_dir($this->config->file['storePath']))
 		{
 			chmod($this->config->file['storePath'], 0777);
@@ -123,6 +125,17 @@ class FileHandlerTest extends CIUnitTestCase
 
 		chmod($this->config->file['storePath'], 0444);
 		$this->assertFalse($this->fileHandler->save(self::$key2, 'value'));
+	}
+
+	public function testSaveExcessiveKeyLength()
+	{
+		$key  = str_repeat('a', PHP_MAXPATHLEN + 10);
+		$file = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . md5($key);
+
+		$this->assertTrue($this->fileHandler->save($key, 'value'));
+		$this->assertFileExists($file);
+
+		unlink($file);
 	}
 
 	public function testDelete()
