@@ -692,6 +692,31 @@ cache.</p>
 on which adapter is being used. Some adapters (File, Memcached, Wincache)
 still return <code class="docutils literal notranslate"><span class="pre">false</span></code> for missing items.</p>
 </div>
+<dl class="staticmethod">
+<dt id="validateKey">
+<em class="property">static </em><code class="sig-name descname">validateKey</code><span class="sig-paren">(</span><em class="sig-param">string $key</em>, <em class="sig-param">string $prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#validateKey" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$key</strong> (<em>string</em>) – Potential cache key</p></li>
+<li><p><strong>$prefix</strong> (<em>string</em>) – Optional prefix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The verified and prefixed key. If the key exceeds the driver’s max key length it will be hashed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+<p>This method is used by handler methods to check that keys are valid. It will throw
+an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> for non-strings, invalid characters, and empty lengths.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$prefixedKey</span> <span class="o">=</span> <span class="nx">BaseHandler</span><span class="o">::</span><span class="na">validateKey</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 <div class="section" id="drivers">
 <h2><a class="toc-backref" href="#id4">Drivers</a><a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
