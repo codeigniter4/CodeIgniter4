@@ -12,7 +12,6 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\App;
 use InvalidArgumentException;
 
 /**
@@ -166,7 +165,7 @@ class URI
 			$uri .= $authority;
 		}
 
-		if ($path !== '')
+		if (isset($path) && $path !== '')
 		{
 			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
 		}
@@ -465,7 +464,7 @@ class URI
 	 */
 	public function getHost(): string
 	{
-		return $this->host;
+		return $this->host ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -665,33 +664,45 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Allow the URI to be output as a string by simply casting it to a string
-	 * or echoing out.
+	 * Formats the URI as a string.
+	 *
+	 * Warning: For backwards-compatability this method
+	 * assumes URIs with the same host as baseURL should
+	 * be relative to the project's configuration.
+	 * This aspect of __toString() is deprecated and should be avoided.
+	 *
+	 * @return string
 	 */
 	public function __toString(): string
 	{
-		// If hosted in a sub-folder, we will have additional
-		// segments that show up prior to the URI path we just
-		// grabbed from the request, so add it on if necessary.
-		$config   = config(App::class);
-		$baseUri  = new self($config->baseURL);
-		$basePath = trim($baseUri->getPath(), '/') . '/';
-		$path     = $this->getPath();
-		$trimPath = ltrim($path, '/');
+		$path   = $this->getPath();
+		$scheme = $this->getScheme();
 
-		if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
-		{
-			$path = $basePath . $trimPath;
-		}
+		// Check if this is an internal URI
+		$config  = config('App');
+		$baseUri = new self($config->baseURL);
 
-		// force https if needed
-		if ($config->forceGlobalSecureRequests)
+		// If the hosts matches then assume this should be relative to baseURL
+		if ($this->getHost() === $baseUri->getHost())
 		{
-			$this->setScheme('https');
+			// Check for additional segments
+			$basePath = trim($baseUri->getPath(), '/') . '/';
+			$trimPath = ltrim($path, '/');
+
+			if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
+			{
+				$path = $basePath . $trimPath;
+			}
+
+			// Check for forced HTTPS
+			if ($config->forceGlobalSecureRequests)
+			{
+				$scheme = 'https';
+			}
 		}
 
 		return static::createURIString(
-			$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
+			$scheme, $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
 			$this->getQuery(), $this->getFragment()
 		);
 	}
