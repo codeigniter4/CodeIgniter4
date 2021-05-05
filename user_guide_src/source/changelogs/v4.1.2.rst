@@ -16,6 +16,7 @@ Enhancements:
 
 Changes:
 
+- Layouts in views now support nested sections.
 - ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
 - ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
 - To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
@@ -30,6 +31,7 @@ Changes:
 
 Deprecations:
 
+- Deprecated ``Codeigniter\View\View::$currentSection`` property.
 - Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
 - Deprecated `CodeIgniter\Entity` in favor of `CodeIgniter\Entity\Entity`
 - Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
