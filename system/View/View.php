@@ -109,12 +109,22 @@ class View implements RendererInterface
 	 */
 	protected $layout;
 
+
 	/**
 	 * Holds the sections and their data.
 	 *
 	 * @var array
 	 */
 	protected $sections = [];
+
+	/**
+	 * The name of the current section being rendered,
+	 * if any.
+	 *
+	 * @var string|null
+	 * @deprecated
+	 */
+	protected $currentSection;
 
 	/**
 	 * The name of the current section being rendered,
@@ -405,9 +415,12 @@ class View implements RendererInterface
 	 * @param string $name Section name
 	 *
 	 * @return void
+	 *
 	 */
-	public function section(string $name): void
+	public function section(string $name)
 	{
+		//Saved to prevent BC.
+		$this->currentSection = $name;
 		$this->sectionStack[] = $name;
 
 		ob_start();
@@ -419,7 +432,7 @@ class View implements RendererInterface
 	 * @return void
 	 * @throws RuntimeException
 	 */
-	public function endSection(): void
+	public function endSection()
 	{
 		$contents = ob_get_clean();
 
