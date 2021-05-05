@@ -3,6 +3,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Services;
@@ -33,6 +34,13 @@ final class URLTest extends CIUnitTestCase
 		$this->config->forceGlobalSecureRequests = false;
 
 		Factories::injectMock('config', 'App', $this->config);
+	}
+
+	protected function tearDown(): void
+	{
+		parent::tearDown();
+
+		URL::setCurrent(null);
 	}
 
 	//--------------------------------------------------------------------
@@ -209,7 +217,7 @@ final class URLTest extends CIUnitTestCase
 
 	public function testNamedRoute()
 	{
-		Services::routes()->add('apples', 'Home::index', ['as' => 'orchard']);
+		Services::routes()->add('apples', '\App\Controllers\Home::index', ['as' => 'orchard']);
 
 		$url = URL::route('orchard');
 
@@ -218,11 +226,40 @@ final class URLTest extends CIUnitTestCase
 
 	public function testReverseRoute()
 	{
-		Services::routes()->add('oranges', 'Basket::fruit');
+		Services::routes()->add('oranges', '\App\Controllers\Basket::fruit');
 
 		$url = URL::route('App\Controllers\Basket::fruit');
 
 		$this->assertSame('http://example.com/index.php/oranges', (string) $url);
+	}
+
+	public function testMissingRoute()
+	{
+		$this->expectException(RouterException::class);
+		$this->expectExceptionMessage('Foo\Bar\Baz::bam route cannot be found while reverse-routing');
+
+		URL::route('Foo\Bar\Baz::bam');
+	}
+
+	public function testSetCurrent()
+	{
+		$url = new URL('fruitcake');
+
+		URL::setCurrent($url);
+		$result = URL::current();
+
+		$this->assertSame($url, $result);
+	}
+
+	public function testSetCurrentNull()
+	{
+		$url = new URL('fruitcake');
+
+		URL::setCurrent($url);
+		URL::setCurrent(null);
+		$result = URL::current();
+
+		$this->assertNotSame($url, $result);
 	}
 
 	//--------------------------------------------------------------------

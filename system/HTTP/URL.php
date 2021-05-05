@@ -24,6 +24,13 @@ use InvalidArgumentException;
 final class URL
 {
 	/**
+	 * Explicit URL to use for current.
+	 *
+	 * @var static|null
+	 */
+	private static $current;
+
+	/**
 	 * Underlying URI instance
 	 *
 	 * @var URI
@@ -73,6 +80,11 @@ final class URL
 	 */
 	public static function current()
 	{
+		if (isset(self::$current))
+		{
+			return self::$current;
+		}
+
 		return static::fromRequest(Services::request());
 	}
 
@@ -122,6 +134,18 @@ final class URL
 		$query = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
 
 		return new static($path . $query, $request->config);
+	}
+
+	/**
+	 * Injects a URL to use for the current.
+	 * Useful for testing components whose behavior
+	 * depends on the URL being visited.
+	 *
+	 * @param URL|null $url
+	 */
+	public static function setCurrent(?URL $url)
+	{
+		self::$current = $url;
 	}
 
 	//--------------------------------------------------------------------
