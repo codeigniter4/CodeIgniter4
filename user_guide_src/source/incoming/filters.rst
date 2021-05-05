@@ -167,11 +167,8 @@ specify the method name in lowercase. It's value would be an array of filters to
         'get'  => ['baz'],
     ]
 
-In addition to the standard HTTP methods, this also supports two special cases: 'cli', and 'ajax'. The names are
-self-explanatory here, but 'cli' would apply to all requests that were run from the command line, while 'ajax'
-would apply to every AJAX request.
-
-.. note:: The AJAX requests depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
+In addition to the standard HTTP methods, this also supports one special case: 'cli'. The 'cli' method would apply to
+all requests that were run from the command line.
 
 $filters
 ========
