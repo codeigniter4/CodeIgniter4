@@ -274,7 +274,7 @@ class PredisHandler extends BaseHandler
 	 *
 	 * @return array|false|null
 	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expires' key for absolute epoch expiry (or null).
+	 *   with at least the 'expire' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
