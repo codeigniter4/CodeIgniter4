@@ -470,13 +470,13 @@ and returns a <strong>Time</strong> instance, instead of DateTime:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="instance">
-<h3>instance()<a class="headerlink" href="#instance" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="createfrominstance">
+<h3>createFromInstance()<a class="headerlink" href="#createfrominstance" title="Permalink to this headline">¶</a></h3>
 <p>When working with other libraries that provide a DateTime instance, you can use this method to convert that
 to a Time instance, optionally setting the locale. The timezone will be automatically determined from the DateTime
 instance passed in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dt</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">instance</span><span class="p">(</span><span class="nv">$dt</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromInstance</span><span class="p">(</span><span class="nv">$dt</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@ human readable format that is geared towards being easily understood. It can cre
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 05, 2021.
+        Last updated on May 08, 2021.
       </span>
 
     </p>
