@@ -784,7 +784,7 @@ class Time extends DateTime
 	public function setTimezone($timezone)
 	{
 		$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
-		return Time::instance($this->toDateTime()->setTimezone($timezone), $this->locale);
+		return Time::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
 	}
 
 	/**
