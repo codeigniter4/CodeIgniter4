@@ -36,8 +36,7 @@
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-develop": "4.x-dev",
-			"dev-master": "4.x"
+			"dev-develop": "4.x-dev"
 		}
 	},
 	"autoload": {
