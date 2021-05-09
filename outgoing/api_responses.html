@@ -661,12 +661,12 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="failValidationError">
-<code class="sig-name descname">failValidationError</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Bad Request'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationError" title="Permalink to this definition">¶</a></dt>
+<dt id="failValidationErrors">
+<code class="sig-name descname">failValidationErrors</code><span class="sig-paren">(</span><em class="sig-param">$errors</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationErrors" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
+<li><p><strong>$errors</strong> (<em>mixed</em>) – The error message or array of messages to show the user.</p></li>
 <li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
 <li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
 </ul>
@@ -675,9 +675,8 @@ the client should not try again because it won’t help. Status code is 403.</p>
 <dd class="field-even"><p>The value of the Response object’s send() method.</p>
 </dd>
 </dl>
-<p>Sets the appropriate status code to use when data the client sent did not pass validation rules.
-Status code is typically 400.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationError</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">(</span><span class="s1">&#39;api_field&#39;</span><span class="p">));</span>
+<p>Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -789,7 +788,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 08, 2021.
+        Last updated on May 09, 2021.
       </span>
 
     </p>
