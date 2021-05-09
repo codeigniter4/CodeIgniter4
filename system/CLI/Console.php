@@ -65,9 +65,16 @@ class Console
 
 	/**
 	 * Displays basic information about the Console.
+	 *
+	 * @param boolean $suppress
 	 */
-	public function showHeader()
+	public function showHeader(bool $suppress = false)
 	{
+		if ($suppress)
+		{
+			return;
+		}
+
 		CLI::write(sprintf('CodeIgniter v%s Command Line Tool - Server Time: %s UTC%s', CodeIgniter::CI_VERSION, date('Y-m-d H:i:s'), date('P')), 'green');
 		CLI::newLine();
 	}

@@ -52,7 +52,13 @@ error_reporting(-1);
 ini_set('display_errors', '1');
 
 // Show basic information before we do anything else.
-$console->showHeader();
+if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true)))
+{
+	unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
+	$suppress = true;
+}
+
+$console->showHeader($suppress);
 
 // fire off the command in the main framework.
 $response = $console->run();
