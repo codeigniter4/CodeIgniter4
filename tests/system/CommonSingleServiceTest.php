@@ -77,6 +77,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 				'__callStatic',
 				'serviceExists',
 				'reset',
+				'resetSingle',
 				'injectMock',
 				'encrypter', // Encrypter needs a starter key
 				'session', // Headers already sent
