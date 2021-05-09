@@ -250,19 +250,18 @@ Class Reference
 
     	return $this->failNotFound('User 13 cannot be found.');
 
-.. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
+.. php:method:: failValidationErrors($errors[, string $code=null[, string $message = '']])
 
-    :param string  $description: The error message to show the user.
+    :param mixed  $errors: The error message or array of messages to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
 
-    Sets the appropriate status code to use when data the client sent did not pass validation rules.
-    Status code is typically 400.
+    Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.
 
     ::
 
-    	return $this->failValidationError($validation->getError('api_field'));
+    	return $this->failValidationErrors($validation->getErrors());
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -318,3 +317,4 @@ Class Reference
     ::
 
     	return $this->failServerError('Server error.');
+
