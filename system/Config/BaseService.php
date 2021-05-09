@@ -301,6 +301,17 @@ class BaseService
 	}
 
 	/**
+	 * Resets any mock and shared instances for a single service.
+	 *
+	 * @param string $name
+	 */
+	public static function resetSingle(string $name)
+	{
+		unset(static::$mocks[$name]);
+		unset(static::$instances[$name]);
+	}
+
+	/**
 	 * Inject mock object for testing.
 	 *
 	 * @param string $name

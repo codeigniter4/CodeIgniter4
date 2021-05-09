@@ -26,6 +26,7 @@ use CodeIgniter\Security\Security;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
+use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
@@ -310,6 +311,30 @@ class ServicesTest extends CIUnitTestCase
 		$this->assertInstanceOf(MockResponse::class, $response2);
 
 		$this->assertTrue($response !== $response2);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testResetSingle()
+	{
+		Services::injectMock('response', new MockResponse(new App()));
+		Services::injectMock('security', new MockSecurity(new App()));
+		$response = service('response');
+		$security = service('security');
+		$this->assertInstanceOf(MockResponse::class, $response);
+		$this->assertInstanceOf(MockSecurity::class, $security);
+
+		Services::resetSingle('response');
+
+		$response2 = service('response');
+		$security2 = service('security');
+		$this->assertNotInstanceOf(MockResponse::class, $response2);
+		$this->assertInstanceOf(MockSecurity::class, $security2);
+
+		$this->assertNotSame($response, $response2);
+		$this->assertSame($security, $security2);
 	}
 
 	public function testFilters()
