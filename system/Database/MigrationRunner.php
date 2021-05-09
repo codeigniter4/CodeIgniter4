@@ -738,20 +738,24 @@ class MigrationRunner
 	 */
 	protected function addHistory($migration, int $batch)
 	{
-		$this->db->table($this->table)
-				 ->insert([
-					 'version'   => $migration->version,
-					 'class'     => $migration->class,
-					 'group'     => $this->group,
-					 'namespace' => $migration->namespace,
-					 'time'      => time(),
-					 'batch'     => $batch,
-				 ]);
+		$this->db->table($this->table)->insert([
+			'version'   => $migration->version,
+			'class'     => $migration->class,
+			'group'     => $this->group,
+			'namespace' => $migration->namespace,
+			'time'      => time(),
+			'batch'     => $batch,
+		]);
 
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'),
-					'yellow') . "($migration->namespace) " . $migration->version . '_' . $migration->class;
+			$this->cliMessages[] = sprintf(
+				"\t%s(%s) %s_%s",
+				CLI::color(lang('Migrations.added'), 'yellow'),
+				$migration->namespace,
+				$migration->version,
+				$migration->class
+			);
 		}
 	}
 
@@ -770,8 +774,13 @@ class MigrationRunner
 
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
-					'yellow') . "($history->namespace) " . $history->version . '_' . $this->getMigrationName($history->class);
+			$this->cliMessages[] = sprintf(
+				"\t%s(%s) %s_%s",
+				CLI::color(lang('Migrations.removed'), 'yellow'),
+				$history->namespace,
+				$history->version,
+				$history->class
+			);
 		}
 	}
 
