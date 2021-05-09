@@ -37,6 +37,7 @@ Deprecations:
 - Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
 - Deprecated ``ControllerTester`` to use the ``ControllerTestTrait`` instead.
 - Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
+- Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
 
 Bugs Fixed:
 
