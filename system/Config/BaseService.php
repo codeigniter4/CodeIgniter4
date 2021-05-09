@@ -307,8 +307,7 @@ class BaseService
 	 */
 	public static function resetSingle(string $name)
 	{
-		unset(static::$mocks[$name]);
-		unset(static::$instances[$name]);
+		unset(static::$mocks[$name], static::$instances[$name]);
 	}
 
 	/**
