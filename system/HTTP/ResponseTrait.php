@@ -607,7 +607,7 @@ trait ResponseTrait
 			$expire = $expire > 0 ? time() + $expire : 0;
 		}
 
-		$options = [
+		$cookie = new Cookie($name, $value, [
 			'expires'  => $expire ?: 0,
 			'domain'   => $domain,
 			'path'     => $path,
@@ -615,9 +615,7 @@ trait ResponseTrait
 			'secure'   => $secure,
 			'httponly' => $httponly,
 			'samesite' => $samesite ?? '',
-		];
-
-		$cookie = Cookie::create($name, $value, $options);
+		]);
 
 		$this->cookieStore = $this->cookieStore->put($cookie);
 

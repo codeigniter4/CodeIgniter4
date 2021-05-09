@@ -568,6 +568,34 @@ class URITest extends CIUnitTestCase
 	{
 		return [
 			[
+				'',
+				'',
+			],
+			[
+				'/',
+				'/',
+			],
+			[
+				'.',
+				'',
+			],
+			[
+				'..',
+				'',
+			],
+			[
+				'/.',
+				'/',
+			],
+			[
+				'/..',
+				'/',
+			],
+			[
+				'//',
+				'/',
+			],
+			[
 				'/foo/..',
 				'/',
 			],
@@ -641,8 +669,7 @@ class URITest extends CIUnitTestCase
 	 */
 	public function testRemoveDotSegments($path, $expected)
 	{
-		$uri = new URI();
-		$this->assertEquals($expected, $uri->removeDotSegments($path));
+		$this->assertEquals($expected, URI::removeDotSegments($path));
 	}
 
 	//--------------------------------------------------------------------
@@ -980,19 +1007,19 @@ class URITest extends CIUnitTestCase
 
 		Factories::injectMock('config', 'App', $config);
 
-		$request      = Services::request($config);
-		$request->uri = new URI('http://example.com/ci/v4/controller/method');
+		$uri     = new URI('http://example.com/ci/v4/controller/method');
+		$request = new IncomingRequest($config, $uri, 'php://input', new UserAgent());
 
 		Services::injectMock('request', $request);
 
-		// going through request
+		// Detected by request
 		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $request->uri);
 
-		// standalone
+		// Standalone
 		$uri = new URI('http://example.com/ci/v4/controller/method');
 		$this->assertEquals('https://example.com/ci/v4/controller/method', (string) $uri);
 
-		$this->assertEquals($uri->getPath(), $request->uri->getPath());
+		$this->assertEquals(trim($uri->getPath(), '/'), trim($request->uri->getPath(), '/'));
 	}
 
 	public function testZeroAsURIPath()

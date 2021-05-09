@@ -12,7 +12,6 @@ class RedisHandlerTest extends CIUnitTestCase
 	private static $key1 = 'key1';
 	private static $key2 = 'key2';
 	private static $key3 = 'key3';
-	private static $key4 = 'another_key';
 
 	private static function getKeyArray()
 	{
@@ -20,7 +19,6 @@ class RedisHandlerTest extends CIUnitTestCase
 			self::$key1,
 			self::$key2,
 			self::$key3,
-			self::$key4,
 		];
 	}
 
@@ -100,24 +98,46 @@ class RedisHandlerTest extends CIUnitTestCase
 		$this->assertFalse($this->redisHandler->delete(self::$dummy));
 	}
 
-	public function testDeleteMatching()
+	public function testDeleteMatchingPrefix()
 	{
-		$this->redisHandler->save(self::$key1, 'value');
-		$this->redisHandler->save(self::$key2, 'value2');
-		$this->redisHandler->save(self::$key3, 'value3');
-		$this->redisHandler->save(self::$key4, 'value4');
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->redisHandler->save('key_' . $i, 'value' . $i);
+		}
 
-		$this->assertSame('value', $this->redisHandler->get(self::$key1));
-		$this->assertSame('value2', $this->redisHandler->get(self::$key2));
-		$this->assertSame('value3', $this->redisHandler->get(self::$key3));
-		$this->assertSame('value4', $this->redisHandler->get(self::$key4));
+		// check that there are 101 items is cache store
+		$dbInfo = explode(',', $this->redisHandler->getCacheInfo()['db0']);
+		$this->assertSame('keys=101', $dbInfo[0]);
 
-		$this->assertTrue($this->redisHandler->deleteMatching('key*'));
+		// Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
+		// (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
+		$this->assertSame(13, $this->redisHandler->deleteMatching('key_1*'));
 
-		$this->assertNull($this->redisHandler->get(self::$key1));
-		$this->assertNull($this->redisHandler->get(self::$key2));
-		$this->assertNull($this->redisHandler->get(self::$key3));
-		$this->assertSame('value4', $this->redisHandler->get(self::$key4));
+		// check that there remains (101 - 13) = 88 items is cache store
+		$dbInfo = explode(',', $this->redisHandler->getCacheInfo()['db0']);
+		$this->assertSame('keys=88', $dbInfo[0]);
+	}
+
+	public function testDeleteMatchingSuffix()
+	{
+		// Save 101 items to match on
+		for ($i = 1; $i <= 101; $i++)
+		{
+			$this->redisHandler->save('key_' . $i, 'value' . $i);
+		}
+
+		// check that there are 101 items is cache store
+		$dbInfo = explode(',', $this->redisHandler->getCacheInfo()['db0']);
+		$this->assertSame('keys=101', $dbInfo[0]);
+
+		// Checking that given the suffix "1", deleteMatching deletes 11 keys:
+		// (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
+		$this->assertSame(11, $this->redisHandler->deleteMatching('*1'));
+
+		// check that there remains (101 - 13) = 88 items is cache store
+		$dbInfo = explode(',', $this->redisHandler->getCacheInfo()['db0']);
+		$this->assertSame('keys=90', $dbInfo[0]);
 	}
 
 	//FIXME: I don't like all Hash logic very much. It's wasting memory.
@@ -132,7 +152,6 @@ class RedisHandlerTest extends CIUnitTestCase
 	public function testClean()
 	{
 		$this->redisHandler->save(self::$key1, 1);
-		$this->redisHandler->save(self::$key2, 'value');
 
 		$this->assertTrue($this->redisHandler->clean());
 	}

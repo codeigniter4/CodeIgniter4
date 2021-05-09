@@ -49,6 +49,20 @@ class ArrayHelperTest extends CIUnitTestCase
 		$this->assertEquals(42, dot_array_search('foo\.bar.baz', $data));
 	}
 
+	public function testArraySearchDotMultiLevels()
+	{
+		$data1 = ['bar' => [['foo' => 'baz']]];
+		$data2 = ['bar' => [
+			['foo' => 'bizz'],
+			['foo' => 'buzz'],
+		]];
+		$data3 = ['baz' => 'none'];
+
+		$this->assertSame('baz', dot_array_search('bar.*.foo', $data1));
+		$this->assertSame(['bizz', 'buzz'], dot_array_search('bar.*.foo', $data2));
+		$this->assertNull(dot_array_search('bar.*.foo', $data3));
+	}
+
 	public function testArrayDotReturnNullEmptyArray()
 	{
 		$data = [];

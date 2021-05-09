@@ -109,6 +109,7 @@ class View implements RendererInterface
 	 */
 	protected $layout;
 
+
 	/**
 	 * Holds the sections and their data.
 	 *
@@ -121,8 +122,17 @@ class View implements RendererInterface
 	 * if any.
 	 *
 	 * @var string|null
+	 * @deprecated
 	 */
 	protected $currentSection;
+
+	/**
+	 * The name of the current section being rendered,
+	 * if any.
+	 *
+	 * @var array<string>
+	 */
+	protected $sectionStack = [];
 
 	/**
 	 * Constructor
@@ -227,7 +237,7 @@ class View implements RendererInterface
 		// When using layouts, the data has already been stored
 		// in $this->sections, and no other valid output
 		// is allowed in $output so we'll overwrite it.
-		if (! is_null($this->layout) && empty($this->currentSection))
+		if (! is_null($this->layout) && $this->sectionStack === [])
 		{
 			$layoutView   = $this->layout;
 			$this->layout = null;
@@ -402,35 +412,44 @@ class View implements RendererInterface
 	/**
 	 * Starts holds content for a section within the layout.
 	 *
-	 * @param string $name
+	 * @param string $name Section name
+	 *
+	 * @return void
+	 *
 	 */
 	public function section(string $name)
 	{
+		//Saved to prevent BC.
 		$this->currentSection = $name;
+		$this->sectionStack[] = $name;
 
 		ob_start();
 	}
 
 	/**
+	 * Captures the last section
+	 *
+	 * @return void
 	 * @throws RuntimeException
 	 */
 	public function endSection()
 	{
 		$contents = ob_get_clean();
 
-		if (empty($this->currentSection))
+		if ($this->sectionStack === [])
 		{
 			throw new RuntimeException('View themes, no current section.');
 		}
 
-		// Ensure an array exists so we can store multiple entries for this.
-		if (! array_key_exists($this->currentSection, $this->sections))
-		{
-			$this->sections[$this->currentSection] = [];
-		}
-		$this->sections[$this->currentSection][] = $contents;
+		$section = array_pop($this->sectionStack);
 
-		$this->currentSection = null;
+		// Ensure an array exists so we can store multiple entries for this.
+		if (! array_key_exists($section, $this->sections))
+		{
+			$this->sections[$section] = [];
+		}
+
+		$this->sections[$section][] = $contents;
 	}
 
 	/**

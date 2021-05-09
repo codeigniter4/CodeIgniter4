@@ -8,13 +8,15 @@ Release Date: Not released
 Enhancements:
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
-- New `assertRedirectTo()` assertion available for HTTP tests.
+- New ``assertRedirectTo()`` assertion available for HTTP tests.
 - New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
 - Entity. Added custom type casting functionality.
 - New option in routing. The ``priority`` option lower the priority of specific route processing.
+- The ``Autoloader`` class can now load files which do not contain PHP classes. The list of `non-class` files will be listed in the ``$files`` property of ``Config\Autoload`` class.
 
 Changes:
 
+- Layouts in views now support nested sections.
 - ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
 - ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
 - To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
@@ -24,9 +26,12 @@ Changes:
 - ``Entity::castAsJson`` uses external cast handler ``JsonCast::get``.
 - ``Entity::mutateDate`` uses external cast handler ``DatetimeCast::get``.
 - In order for ``Config\**`` classes to get their respective properties' values from the ``.env``, it is now necessary to namespace the property with the name of the class. Previously, the property names are enough but now disallowed because it can get system environment variables, like ``PATH``.
+- The array helper ``_array_search_dot`` is now marked for ``@internal`` use. As this is used by ``dot_array_search``, users should not use ``_array_search_dot`` directly in their code.
+- ``CacheInterface::getMetaData()`` returns ``null`` for misses, or an array with at least the "expires" key set to the absolute epoch expiration, or ``null`` for "never expires". The File, Memcached, and Wincache Handlers still return ``false`` which will become ``null`` in a future release.
 
 Deprecations:
 
+- Deprecated ``Codeigniter\View\View::$currentSection`` property.
 - Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
 - Deprecated `CodeIgniter\Entity` in favor of `CodeIgniter\Entity\Entity`
 - Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
@@ -37,6 +42,8 @@ Deprecations:
 - Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
 - Deprecated ``ControllerTester`` to use the ``ControllerTestTrait`` instead.
 - Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
+- Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
+- Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
 - Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
 
 Bugs Fixed:

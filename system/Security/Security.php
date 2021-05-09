@@ -127,9 +127,7 @@ class Security implements SecurityInterface
 	 */
 	public function __construct(App $config)
 	{
-		/**
-		 * @var SecurityConfig
-		 */
+		/** @var SecurityConfig */
 		$security = config('Security');
 
 		// Store CSRF-related configurations
@@ -138,9 +136,7 @@ class Security implements SecurityInterface
 		$this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
 		$rawCookieName    = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
 
-		/**
-		 * @var CookieConfig
-		 */
+		/** @var CookieConfig */
 		$cookie = config('Cookie');
 
 		$cookiePrefix     = $cookie->prefix ?? $config->cookiePrefix;
@@ -149,7 +145,7 @@ class Security implements SecurityInterface
 		$expires = $security->expires ?? $config->CSRFExpire ?? 7200;
 
 		Cookie::setDefaults($cookie);
-		$this->cookie = Cookie::create($rawCookieName, $this->generateHash(), [
+		$this->cookie = new Cookie($rawCookieName, $this->generateHash(), [
 			'expires' => $expires === 0 ? 0 : time() + $expires,
 		]);
 	}

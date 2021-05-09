@@ -11,7 +11,7 @@
 		 failOnWarning="true"
 		 verbose="true">
 
-	<coverage processUncoveredFiles="true">
+	<coverage processUncoveredFiles="true" ignoreDeprecatedCodeUnits="true">
 		<include>
 			<directory suffix=".php">./system</directory>
 		</include>

@@ -77,6 +77,8 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 * @return boolean
 	 *
 	 * @deprecated Use Validation instead
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
@@ -91,6 +93,8 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 * @return string
 	 *
 	 * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function getMethod(bool $upper = false): string
 	{
@@ -105,6 +109,8 @@ class Request extends Message implements MessageInterface, RequestInterface
 	 * @return Request
 	 *
 	 * @deprecated Use withMethod() instead for immutability
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function setMethod(string $method)
 	{

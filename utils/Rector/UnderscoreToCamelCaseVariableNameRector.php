@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Utils\Rector;
 
 use Nette\Utils\Strings;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
-use Rector\BetterPhpDocParser\PhpDocManipulator\PropertyDocBlockManipulator;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
-use Rector\Core\Util\StaticRectorStrings;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Symplify\PackageBuilder\Strings\StringFormatConverter;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -30,22 +30,22 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 	private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
 
 	/**
-	 * @var PropertyDocBlockManipulator
-	 */
-	private $propertyDocBlockManipulator;
-
-	/**
 	 * @var ReservedKeywordAnalyzer
 	 */
 	private $reservedKeywordAnalyzer;
 
+	/**
+	 * @var StringFormatConverter
+	 */
+	private $stringFormatConverter;
+
 	public function __construct(
-		PropertyDocBlockManipulator $propertyDocBlockManipulator,
-		ReservedKeywordAnalyzer $reservedKeywordAnalyzer
+		ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
+		StringFormatConverter $stringFormatConverter
 	)
 	{
-		$this->propertyDocBlockManipulator = $propertyDocBlockManipulator;
-		$this->reservedKeywordAnalyzer     = $reservedKeywordAnalyzer;
+		$this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
+		$this->stringFormatConverter   = $stringFormatConverter;
 	}
 
 	public function getRuleDefinition(): RuleDefinition
@@ -109,7 +109,7 @@ CODE_SAMPLE
 			return null;
 		}
 
-		$camelCaseName = StaticRectorStrings::underscoreToCamelCase($nodeName);
+		$camelCaseName = $this->stringFormatConverter->underscoreAndHyphenToCamelCase($nodeName);
 		if ($camelCaseName === 'this')
 		{
 			return null;
@@ -153,15 +153,23 @@ CODE_SAMPLE
 			return;
 		}
 
-		if (! $match = Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
+		if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
 		{
 			return;
 		}
 
-		$this->propertyDocBlockManipulator->renameParameterNameInDocBlock(
-			$parentNode,
-			$match['paramName'],
-			$camelCaseName
-		);
+		$phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentNode);
+		$paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
+
+		foreach ($paramTagValueNodes as $paramTagValueNode)
+		{
+			if ($paramTagValueNode->parameterName === '$' . $variableName)
+			{
+				$paramTagValueNode->parameterName = '$' . $camelCaseName;
+				break;
+			}
+		}
+
+		$parentNode->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
 	}
 }

@@ -187,19 +187,17 @@ class Session implements SessionInterface
 		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
 		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-		/**
-		 * @var CookieConfig
-		 */
-		$config = config('Cookie');
+		/** @var CookieConfig */
+		$cookie = config('Cookie');
 
-		$this->cookie = Cookie::create($this->sessionCookieName, '', [
+		$this->cookie = new Cookie($this->sessionCookieName, '', [
 			'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
-			'path'     => $config->path,
-			'domain'   => $config->domain,
-			'secure'   => $config->secure,
+			'path'     => $cookie->path ?? $config->cookiePath,
+			'domain'   => $cookie->domain ?? $config->cookieDomain,
+			'secure'   => $cookie->secure ?? $config->cookieSecure,
 			'httponly' => true, // for security
-			'samesite' => $config->samesite,
-			'raw'      => $config->raw,
+			'samesite' => $cookie->samesite ?? $config->cookieSameSite ?? Cookie::SAMESITE_LAX,
+			'raw'      => $cookie->raw ?? false,
 		]);
 
 		helper('array');
@@ -1009,7 +1007,7 @@ class Session implements SessionInterface
 	protected function setCookie()
 	{
 		$expiration   = $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration;
-		$this->cookie = $this->cookie->withValue(session_id())->withExpiresAt($expiration);
+		$this->cookie = $this->cookie->withValue(session_id())->withExpires($expiration);
 
 		cookies([$this->cookie], false)->dispatch();
 	}

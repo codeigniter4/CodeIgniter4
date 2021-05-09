@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
+use Config\App;
 use stdClass;
 
 class ResponseTraitTest extends CIUnitTestCase
@@ -30,7 +31,8 @@ class ResponseTraitTest extends CIUnitTestCase
 
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
-		$config = [
+		$config = new App();
+		foreach ([
 			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
@@ -44,9 +46,10 @@ class ResponseTraitTest extends CIUnitTestCase
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
 			'cookieSameSite'   => 'Lax',
-		];
-
-		$config = array_merge($config, $userConfig);
+		] as $key => $value)
+		{
+			$config->$key = $value;
+		}
 
 		if (is_null($this->request))
 		{
@@ -491,7 +494,8 @@ EOH;
 
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
-		$config = [
+		$config = new App();
+		foreach ([
 			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
@@ -505,10 +509,13 @@ EOH;
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
 			'cookieSameSite'   => 'Lax',
-		];
+		] as $key => $value)
+		{
+			$config->$key = $value;
+		}
 
-		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
-		$response = new MockResponse((object) $config);
+		$request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
+		$response = new MockResponse($config);
 
 		$controller = new class($request, $response)
 		{

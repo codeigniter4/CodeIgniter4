@@ -60,6 +60,18 @@ matches the section name exists.::
 
 The ``endSection()`` does not need the section name. It automatically knows which one to close.
 
+Sections can contain nested sections::
+
+    <?= $this->extend('default') ?>
+
+    <?= $this->section('content') ?>
+        <h1>Hello World!</h1>
+        <?= $this->section('javascript') ?>
+           let a = 'a';
+        <?= $this->endSection() ?>
+    <?= $this->endSection() ?>
+
+
 ******************
 Rendering the View
 ******************

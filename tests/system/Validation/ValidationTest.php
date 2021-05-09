@@ -300,7 +300,8 @@ final class ValidationTest extends CIUnitTestCase
 
 	public function testSetRuleGroupWithCustomErrorMessage()
 	{
-		$this->validation->reset()->setRuleGroup('login');
+		$this->validation->reset();
+		$this->validation->setRuleGroup('login');
 		$this->validation->run([
 			'username' => 'codeigniter',
 		]);
@@ -1017,6 +1018,62 @@ final class ValidationTest extends CIUnitTestCase
 						'bub' => 5,
 					],
 				],
+			]],
+		];
+	}
+
+	/**
+	 * @dataProvider validationArrayDataCaseProvider
+	 *
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
+	 *
+	 * @param boolean $expected
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	public function testValidationOfArrayData(bool $expected, array $rules, array $data): void
+	{
+		$actual = $this->validation->setRules($rules)->run($data);
+		$this->assertSame($expected, $actual);
+	}
+
+	public function validationArrayDataCaseProvider(): iterable
+	{
+		yield 'fail-empty-string' => [
+			false,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => ''],
+			]],
+		];
+
+		yield 'pass-nonempty-string' => [
+			true,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => 'boz'],
+			]],
+		];
+
+		yield 'fail-empty-array' => [
+			false,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => []],
+			]],
+		];
+
+		yield 'pass-nonempty-array' => [
+			true,
+			['bar.*.foo' => 'required'],
+			['bar' => [
+				['foo' => 'baz'],
+				['foo' => ['boz']],
 			]],
 		];
 	}

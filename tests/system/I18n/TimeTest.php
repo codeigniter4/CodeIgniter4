@@ -1004,12 +1004,11 @@ class TimeTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	// Missing tests
 
-	public function testInstance()
+	public function testCreateFromInstance()
 	{
 		$datetime = new DateTime();
-		$time     = Time::instance($datetime);
+		$time     = Time::createFromInstance($datetime);
 		$this->assertTrue($time instanceof Time);
 		$this->assertTrue($time->sameAs($datetime));
 	}

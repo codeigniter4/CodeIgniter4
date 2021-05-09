@@ -6,7 +6,7 @@ use CodeIgniter\Config\AutoloadConfig;
 
 /**
  * -------------------------------------------------------------------
- * AUTO-LOADER
+ * AUTOLOADER CONFIGURATION
  * -------------------------------------------------------------------
  *
  * This file defines the namespaces and class maps so the Autoloader
@@ -31,12 +31,12 @@ class Autoload extends AutoloadConfig
 	 * else you will need to modify all of those classes for this to work.
 	 *
 	 * Prototype:
-	 *
+	 *```
 	 *   $psr4 = [
 	 *       'CodeIgniter' => SYSTEMPATH,
 	 *       'App'	       => APPPATH
 	 *   ];
-	 *
+	 *```
 	 * @var array<string, string>
 	 */
 	public $psr4 = [
@@ -55,12 +55,30 @@ class Autoload extends AutoloadConfig
 	 * were being autoloaded through a namespace.
 	 *
 	 * Prototype:
-	 *
+	 *```
 	 *   $classmap = [
 	 *       'MyClass'   => '/path/to/class/file.php'
 	 *   ];
-	 *
+	 *```
 	 * @var array<string, string>
 	 */
 	public $classmap = [];
+
+	/**
+	 * -------------------------------------------------------------------
+	 * Files
+	 * -------------------------------------------------------------------
+	 * The files array provides a list of paths to __non-class__ files
+	 * that will be autoloaded. This can be useful for bootstrap operations
+	 * or for loading functions.
+	 *
+	 * Prototype:
+	 * ```
+	 *	  $files = [
+	 *	 	   '/path/to/my/file.php',
+	 *    ];
+	 * ```
+	 * @var array<int, string>
+	 */
+	public $files = [];
 }

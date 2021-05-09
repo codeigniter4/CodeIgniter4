@@ -124,15 +124,15 @@ This method takes a UNIX timestamp and, optionally, the timezone and locale, to 
 
     $time = Time::createFromTimestamp(1501821586, 'America/Chicago', 'en_US');
 
-instance()
-----------
+createFromInstance()
+--------------------
 
 When working with other libraries that provide a DateTime instance, you can use this method to convert that
 to a Time instance, optionally setting the locale. The timezone will be automatically determined from the DateTime
 instance passed in::
 
     $dt   = new DateTime('now');
-    $time = Time::instance($dt, 'en_US');
+    $time = Time::createFromInstance($dt, 'en_US');
 
 toDateTime()
 ------------

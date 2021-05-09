@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -123,7 +124,7 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param object      $config
+	 * @param App         $config
 	 * @param URI         $uri
 	 * @param string|null $body
 	 * @param UserAgent   $userAgent
@@ -149,7 +150,7 @@ class IncomingRequest extends Request
 
 		$this->populateHeaders();
 
-		// Get our current URI.
+		// Determine the current URI
 		// NOTE: This WILL NOT match the actual URL in the browser since for
 		// everything this cares about (and the router, etc) is the portion
 		// AFTER the script name. So, if hosted in a sub-folder this will
@@ -157,6 +158,12 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		// Check if the baseURL scheme needs to be coerced into its secure version
+		if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http')
+		{
+			$this->uri->setScheme('https');
+		}
 
 		$this->validLocales = $config->supportedLocales;
 
@@ -610,11 +617,11 @@ class IncomingRequest extends Request
 
 		// It's possible the user forgot a trailing slash on their
 		// baseURL, so let's help them out.
-		$baseURL = ! empty($baseURL) ? rtrim($baseURL, '/ ') . '/' : $baseURL;
+		$baseURL = $baseURL === '' ? $baseURL : rtrim($baseURL, '/ ') . '/';
 
 		// Based on our baseURL provided by the developer
 		// set our current domain name, scheme
-		if (! empty($baseURL))
+		if ($baseURL !== '')
 		{
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
@@ -758,12 +765,9 @@ class IncomingRequest extends Request
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
 
-		if ($uri === '/' || $uri === '')
-		{
-			return '/';
-		}
+		$uri = URI::removeDotSegments($uri);
 
-		return $this->removeRelativeDirectory($uri);
+		return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
 	}
 
 	//--------------------------------------------------------------------
@@ -793,7 +797,9 @@ class IncomingRequest extends Request
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
 
-		return $this->removeRelativeDirectory($uri);
+		$uri = URI::removeDotSegments($uri);
+
+		return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
 	}
 
 	//--------------------------------------------------------------------
@@ -806,22 +812,13 @@ class IncomingRequest extends Request
 	 * @param string $uri
 	 *
 	 * @return string
+	 *
+	 * @deprecated Use URI::removeDotSegments() directly
 	 */
 	protected function removeRelativeDirectory(string $uri): string
 	{
-		$uris = [];
-		$tok  = strtok($uri, '/');
-		while ($tok !== false)
-		{
-			if ((! empty($tok) || $tok === '0') && $tok !== '..')
-			{
-				$uris[] = $tok;
-			}
-			$tok = strtok('/');
-		}
+		$uri = URI::removeDotSegments($uri);
 
-		return implode('/', $uris);
+		return $uri === '/' ? $uri : ltrim($uri, '/');
 	}
-
-	// --------------------------------------------------------------------
 }
