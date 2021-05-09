@@ -328,7 +328,9 @@ class FormatRules
 	}
 
 	/**
-	 * Checks a URL to ensure it's formed correctly.
+	 * Checks a string to ensure it is (loosely) a URL.
+	 * Warning: this rule will pass basic strings like
+	 * "banana"; use valid_url_strict for a stricter rule.
 	 *
 	 * @param string $str
 	 *
@@ -354,6 +356,35 @@ class FormatRules
 		$str = 'http://' . $str;
 
 		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
+	}
+
+	/**
+	 * Checks a URL to ensure it's formed correctly.
+	 *
+	 * @param string $str
+	 *
+	 * @return boolean
+	 */
+	public function valid_url_strict(string $str = null): bool
+	{
+		if (empty($str))
+		{
+			return false;
+		}
+
+		/**
+		 * Pattern borrowed from Laravel.
+		 *
+		 * @see https://github.com/laravel/framework/blob/277c2fbd0cebd2cb194807654d870f4040e288c0/src/Illuminate/Routing/UrlGenerator.php#L583
+		 */
+		$pattern = '~^(#|//|https?://|(mailto|tel|sms):)~';
+
+		if (filter_var($str, FILTER_VALIDATE_URL) !== false)
+		{
+			return (bool) preg_match($pattern, $str);
+		}
+
+		return false;
 	}
 
 	/**

@@ -76,7 +76,7 @@ class FormatRulesTest extends CIUnitTestCase
 	/**
 	 * @dataProvider urlProvider
 	 */
-	public function testValidURL(?string $url, bool $expected)
+	public function testValidURL(?string $url, bool $isLoose, bool $isStrict)
 	{
 		$data = [
 			'foo' => $url,
@@ -86,7 +86,23 @@ class FormatRulesTest extends CIUnitTestCase
 			'foo' => 'valid_url',
 		]);
 
-		$this->assertEquals($expected, $this->validation->run($data));
+		$this->assertEquals($isLoose, $this->validation->run($data));
+	}
+
+	/**
+	 * @dataProvider urlProvider
+	 */
+	public function testStrictURL(?string $url, bool $isLoose, bool $isStrict)
+	{
+		$data = [
+			'foo' => $url,
+		];
+
+		$this->validation->setRules([
+			'foo' => 'valid_url_strict',
+		]);
+
+		$this->assertEquals($isStrict, $this->validation->run($data));
 	}
 
 	public function urlProvider()
@@ -95,59 +111,83 @@ class FormatRulesTest extends CIUnitTestCase
 			[
 				'www.codeigniter.com',
 				true,
+				false,
 			],
 			[
 				'http://codeigniter.com',
 				true,
+				true,
 			],
-			//https://bugs.php.net/bug.php?id=51192
+			// https://bugs.php.net/bug.php?id=51192
 			[
 				'http://accept-dashes.tld',
 				true,
+				true,
 			],
 			[
-				'http://reject_underscores',
+				'http://test_underscores',
+				false,
 				false,
 			],
 			// https://github.com/codeigniter4/CodeIgniter/issues/4415
 			[
 				'http://[::1]/ipv6',
 				true,
+				true,
 			],
 			[
 				'htt://www.codeigniter.com',
+				false,
 				false,
 			],
 			[
 				'',
 				false,
+				false,
+			],
+			[
+				'codeigniter',
+				true,
+				false,
 			],
 			[
 				'code igniter',
+				false,
 				false,
 			],
 			[
 				null,
 				false,
+				false,
 			],
 			[
 				'http://',
 				true,
-			], // this is apparently valid!
+				false,
+			],
 			[
 				'http:///oops.com',
+				false,
 				false,
 			],
 			[
 				'123.com',
 				true,
+				false,
 			],
 			[
 				'abc.123',
 				true,
+				false,
 			],
 			[
 				'http:8080//abc.com',
+				true,
+				false,
+			],
+			[
+				'mailto:support@codeigniter.com',
+				true,
 				true,
 			],
 		];
