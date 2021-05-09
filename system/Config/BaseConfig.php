@@ -61,6 +61,8 @@ class BaseConfig
 	{
 		static::$moduleConfig = config('Modules');
 
+		$this->registerProperties();
+
 		$properties  = array_keys(get_object_vars($this));
 		$prefix      = static::class;
 		$slashAt     = strrpos($prefix, '\\');
@@ -84,8 +86,6 @@ class BaseConfig
 				}
 			}
 		}
-
-		$this->registerProperties();
 	}
 
 	/**

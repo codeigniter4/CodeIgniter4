@@ -246,8 +246,42 @@ Do not track **.env** files with your version control system. If you do, and the
 Registrars
 ==========
 
-A configuration file can also specify any number of "registrars", which are any
-other classes which might provide additional configuration properties.
+"Registrars" are any other classes which might provide additional configuration properties.
+Registrars provide a means of altering a configuration at runtime across namespaces and files.
+There are two ways to implement a Registrar: implicit and explicit.
+
+.. note:: Values from **.env** always take priority over Registrars.
+
+Implicit Registrars
+-------------------
+
+Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
+is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
+named for each configuration class you wish to extend. For example, a third-party module might
+wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
+already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
+the single ``Pager()`` method (note the case-sensitivity)::
+
+	class Registrar
+	{
+		public static function Pager(): array
+		{
+			return [
+				'templates' => [
+					'module_pager' => 'MyModule\Views\Pager',
+				],
+			];
+		}
+	}
+
+Registrar methods must always return an array, with keys corresponding to the properties
+of the target config file. Existing values are merged, and Registrar properties have
+overwrite priority.
+
+Explicit Registrars
+-------------------
+
+A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
 holding an array of the names of candidate registrars.::
 
@@ -304,7 +338,3 @@ by treating ``RegionalSales`` as a "registrar". The resulting configuration prop
     $target   = 45;
     $campaign = "Winter Wonderland";
 
-In addition to explicit registrars defined by the ``$registrars`` property, you may also
-define registrars in any namespace using the **Config/Registrars.php** file, if discovery
-is enabled in :doc:`Modules </general/modules>`. These files work the same as the classes
-described above, using methods named for each configuration class you wish to extend.
