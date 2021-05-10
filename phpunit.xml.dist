@@ -43,6 +43,9 @@
 		<testsuite name="Database">
 			<directory>./tests/system/Database</directory>
 		</testsuite>
+		<testsuite name="Psr">
+			<directory>./tests/psr</directory>
+		</testsuite>
 	</testsuites>
 
 	<extensions>
