@@ -260,11 +260,11 @@ final class UpdateModelTest extends LiveModelTestCase
 		$this->createModel(EventModel::class);
 
 		$data = (object) [
-							 'name'    => 'Foo',
-							 'email'   => 'foo@example.com',
-							 'country' => 'US',
-							 'deleted' => 0,
-						 ];
+			 'name'    => 'Foo',
+			 'email'   => 'foo@example.com',
+			 'country' => 'US',
+			 'deleted' => 0,
+		 ];
 
 		$id = $this->model->insert($data);
 
@@ -373,7 +373,7 @@ final class UpdateModelTest extends LiveModelTestCase
 	{
 		$this->createModel(UserModel::class);
 
-		$result = $this->model->replace(['country' => 'UK'], true);
+		$result = $this->model->where('id', 1)->replace(['country' => 'UK'], true);
 
 		// Without timestamps should NOT set the updated at time.
 		$this->assertFalse(strpos($result, 'updated_at') !== false);
@@ -381,7 +381,7 @@ final class UpdateModelTest extends LiveModelTestCase
 		// If we change useTimestamps to true, it should update the field.
 		$this->setPrivateProperty($this->model, 'useTimestamps', true);
 
-		$result = $this->model->replace(['country' => 'UK'], true);
+		$result = $this->model->where('id', 1)->replace(['country' => 'UK'], true);
 
 		$this->assertTrue(strpos($result, 'updated_at') !== false);
 	}
