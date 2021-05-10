@@ -316,12 +316,15 @@ trait FeatureTestTrait
 	 */
 	protected function setupRequest(string $method, string $path = null): IncomingRequest
 	{
-		$config = config(App::class);
-		$uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
+		$path    = URI::removeDotSegments($path);
+		$config  = config(App::class);
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
-		$request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
-		$request->uri = $uri;
+		// $path may have a query in it
+		$parts                   = explode('?', $path);
+		$_SERVER['QUERY_STRING'] = $parts[1] ?? '';
 
+		$request->setPath($parts[0]);
 		$request->setMethod($method);
 		$request->setProtocolVersion('1.1');
 
