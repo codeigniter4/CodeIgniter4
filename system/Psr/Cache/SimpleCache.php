@@ -49,9 +49,9 @@ final class SimpleCache implements CacheInterface
 	/**
 	 * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
 	 *
-	 * @param string                     $key   The key of the item to store.
-	 * @param mixed                      $value The value of the item to store. Must be serializable.
-	 * @param null|integer|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
+	 * @param string                    $key   The key of the item to store.
+	 * @param mixed                     $value The value of the item to store. Must be serializable.
+	 * @param null|integer|DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
 	 *                                          the driver supports TTL then the library may set a default value
 	 *                                          for it or let the driver take care of that.
 	 *
@@ -154,8 +154,8 @@ final class SimpleCache implements CacheInterface
 	/**
 	 * Persists a set of key => value pairs in the cache, with an optional TTL.
 	 *
-	 * @param iterable                   $values A list of key => value pairs for a multiple-set operation.
-	 * @param null|integer|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
+	 * @param iterable                  $values A list of key => value pairs for a multiple-set operation.
+	 * @param null|integer|DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
 	 *                                           the driver supports TTL then the library may set a default value
 	 *                                           for it or let the driver take care of that.
 	 *
@@ -239,12 +239,7 @@ final class SimpleCache implements CacheInterface
 
 		$meta = $this->adapter->getMetaData($key);
 
-		// If the adapter does not return an array or if the item is expired then it is a miss
-		if (! is_array($meta) || (is_int($meta['expire']) && $meta['expire'] < time()))
-		{
-			return false;
-		}
-
-		return true;
+		// The adapter must return an array that is not expired
+		return is_array($meta) && is_int($meta['expire']) && $meta['expire'] > time();
 	}
 }

@@ -273,15 +273,7 @@ final class Pool implements CacheItemPoolInterface
 		}
 
 		// Deteremine TTL
-		if ($expiration = $item->getExpiration())
-		{
-			$ttl = Time::now()->difference($expiration)->getSeconds();
-		}
-		// Set it never to expire
-		else
-		{
-			$ttl = 0;
-		}
+		$ttl = ($expiration = $item->getExpiration()) ? Time::now()->difference($expiration)->getSeconds() : 0;
 
 		return $this->adapter->save($item->getKey(), $item->get(), $ttl);
 	}
