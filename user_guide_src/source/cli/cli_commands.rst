@@ -31,6 +31,10 @@ Some commands take additional arguments, which should be provided directly after
 
     > php spark db:seed DevUserSeeder
 
+You may always pass ``--no-header`` to suppress the header output, helpful for parsing results::
+
+    > php spark cache:clear --no-header
+
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly::
 
