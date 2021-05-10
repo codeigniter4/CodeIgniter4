@@ -129,7 +129,7 @@ class FileHandlerTest extends CIUnitTestCase
 
 	public function testSaveExcessiveKeyLength()
 	{
-		$key  = str_repeat('a', PHP_MAXPATHLEN + 10);
+		$key  = str_repeat('a', 260);
 		$file = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . md5($key);
 
 		$this->assertTrue($this->fileHandler->save($key, 'value'));
