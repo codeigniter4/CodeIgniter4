@@ -272,8 +272,9 @@ final class Deprecation
 			return self::normalizeVariablesWithDollars($parameterName);
 		}, (array) $parameterNames);
 
-		$paramCount = count($parameterNames);
-		$parameters = implode('", "', $parameterNames);
+		$paramCount  = count($parameterNames);
+		$parameters  = implode('", "', $parameterNames);
+		$classMethod = self::normalizeMethodsWithParens($classMethod);
 
 		$message = $paramCount > 1
 			? lang('Deprecation.methodParametersDeprecated', [$parameters, $classMethod])
