@@ -29,14 +29,12 @@ use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+	$containerConfigurator->import(SetList::PHP_73);
+
 	$parameters = $containerConfigurator->parameters();
 
 	// paths to refactor; solid alternative to CLI arguments
 	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
-
-	$parameters->set(Option::SETS, [
-		SetList::PHP_73,
-	]);
 
 	// do you need to include constants, class aliases or custom autoloader? files listed will be executed
 	$parameters->set(Option::BOOTSTRAP_FILES, [
