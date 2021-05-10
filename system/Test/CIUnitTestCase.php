@@ -362,7 +362,12 @@ abstract class CIUnitTestCase extends TestCase
 	{
 		$result = TestLogger::didLog($level, $expectedMessage);
 
-		$this->assertTrue($result);
+		$this->assertTrue($result, sprintf(
+			'Failed asserting that expected message "%s" with level "%s" was logged.',
+			$expectedMessage ?? '',
+			$level
+		));
+
 		return $result;
 	}
 
