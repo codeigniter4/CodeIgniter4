@@ -63,6 +63,16 @@ class IncomingRequest extends Request
 	public $uri;
 
 	/**
+	 * The detected path (relative to SCRIPT_NAME).
+	 * Note: current_url() uses this to build its URI,
+	 * so this becomes the source for the "current URL"
+	 * when working with the share request instance.
+	 *
+	 * @var string|null
+	 */
+	protected $path;
+
+	/**
 	 * File collection
 	 *
 	 * @var FileCollection|null
@@ -158,12 +168,6 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
-
-		// Check if the baseURL scheme needs to be coerced into its secure version
-		if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http')
-		{
-			$this->uri->setScheme('https');
-		}
 
 		$this->validLocales = $config->supportedLocales;
 
@@ -613,11 +617,34 @@ class IncomingRequest extends Request
 	 */
 	protected function detectURI(string $protocol, string $baseURL)
 	{
-		$this->uri->setPath($this->detectPath($protocol));
+		// Passing the config is unnecessary but left for legacy purposes
+		$config          = clone $this->config;
+		$config->baseURL = $baseURL;
+
+		$this->setPath($this->detectPath($protocol), $config);
+	}
+
+	/**
+	 * Sets the relative path and updates the URI object.
+	 * Note: Since current_url() accesses the shared request
+	 * instance, this can be used to change the "current URL"
+	 * for testing.
+	 *
+	 * @param string $path   URI path relative to SCRIPT_NAME
+	 * @param App    $config Optional alternate config to use
+	 *
+	 * @return $this
+	 */
+	public function setPath(string $path, App $config = null)
+	{
+		$this->path = $path;
+		$this->uri->setPath($path);
+
+		$config = $config ?? $this->config;
 
 		// It's possible the user forgot a trailing slash on their
 		// baseURL, so let's help them out.
-		$baseURL = $baseURL === '' ? $baseURL : rtrim($baseURL, '/ ') . '/';
+		$baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
 
 		// Based on our baseURL provided by the developer
 		// set our current domain name, scheme
@@ -629,23 +656,44 @@ class IncomingRequest extends Request
 
 			// Ensure we have any query vars
 			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
-		}
-		else
-		{
-			// @codeCoverageIgnoreStart
-			if (! is_cli())
+
+			// Check if the baseURL scheme needs to be coerced into its secure version
+			if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http')
 			{
-				die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+				$this->uri->setScheme('https');
 			}
-			// @codeCoverageIgnoreEnd
 		}
+		// @codeCoverageIgnoreStart
+		elseif (! is_cli())
+		{
+			die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+		}
+		// @codeCoverageIgnoreEnd
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Based on the URIProtocol Config setting, will attempt to
-	 * detect the path portion of the current URI.
+	 * Returns the path relative to SCRIPT_NAME,
+	 * running detection as necessary.
+	 *
+	 * @return string
+	 */
+	public function getPath(): string
+	{
+		if (is_null($this->path))
+		{
+			$this->detectPath($this->config->uriProtocol);
+		}
+
+		return $this->path;
+	}
+
+	/**
+	 * Detects the relative path based on
+	 * the URIProtocol Config setting.
 	 *
 	 * @param string $protocol
 	 *
@@ -661,18 +709,18 @@ class IncomingRequest extends Request
 		switch ($protocol)
 		{
 			case 'REQUEST_URI':
-				$path = $this->parseRequestURI();
+				$this->path = $this->parseRequestURI();
 				break;
 			case 'QUERY_STRING':
-				$path = $this->parseQueryString();
+				$this->path = $this->parseQueryString();
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
+				$this->path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
 				break;
 		}
 
-		return $path;
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
@@ -731,23 +779,23 @@ class IncomingRequest extends Request
 		$query = $parts['query'] ?? '';
 		$uri   = $parts['path'] ?? '';
 
-		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
+		// Strip the SCRIPT_NAME path from the URI
+		if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
-			// strip the script name from the beginning of the URI
-			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0 && strpos($uri, '/index.php') === 0)
+			// Compare each segment, dropping them until there is no match
+			$segments = $keep = explode('/', $uri);
+			foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment)
 			{
-				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+				// If these segments are not the same then we're done
+				if ($segment !== $segments[$i])
+				{
+					break;
+				}
+
+				array_shift($keep);
 			}
-			// if the script is nested, strip the parent folder & script from the URI
-			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
-			{
-				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
-			}
-			// or if index.php is implied
-			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
-			{
-				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
-			}
+
+			$uri = implode('/', $keep);
 		}
 
 		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
@@ -763,7 +811,10 @@ class IncomingRequest extends Request
 			$_SERVER['QUERY_STRING'] = $query;
 		}
 
+		// Update our globals for values likely to been have changed
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		$this->populateGlobals('server');
+		$this->populateGlobals('get');
 
 		$uri = URI::removeDotSegments($uri);
 
@@ -795,7 +846,10 @@ class IncomingRequest extends Request
 			$uri                     = $uri[0];
 		}
 
+		// Update our globals for values likely to been have changed
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		$this->populateGlobals('server');
+		$this->populateGlobals('get');
 
 		$uri = URI::removeDotSegments($uri);
 

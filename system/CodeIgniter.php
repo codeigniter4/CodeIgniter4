@@ -400,7 +400,7 @@ class CodeIgniter
 			$filters->enableFilter($routeFilter, 'after');
 		}
 
-		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->getUri()->getPath();
+		$uri = $this->determinePath();
 
 		// Never run filters when running through Spark cli
 		if (! defined('SPARKED'))
@@ -846,8 +846,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
-		// @phpstan-ignore-next-line
-		return (is_cli() && ! (ENVIRONMENT === 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
+		return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
 	}
 
 	//--------------------------------------------------------------------

@@ -273,6 +273,20 @@ The object gives you full abilities to grab any part of the request on it's own:
     echo $uri->getSegment(1);       // 'path'
     echo $uri->getTotalSegments();  // 3
 
+You can work with the current URI string (the path relative to your baseURL) using the ``getPath()`` and ``setPath()`` methods.
+Note that this relative path on the shared instance of ``IncomingRequest`` is what the :doc:`URL Helper </helpers/url_helper>`
+functions use, so this is a helpful way to "spoof" an incoming request for testing::
+
+	class MyMenuTest extends CIUnitTestCase
+	{
+		public function testActiveLinkUsesCurrentUrl()
+		{
+			service('request')->setPath('users/list');
+			$menu = new MyMenu();
+			$this->assertTrue('users/list', $menu->getActiveLink());
+		}
+	}
+
 Uploaded Files
 --------------
 
