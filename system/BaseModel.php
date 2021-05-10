@@ -1079,6 +1079,17 @@ abstract class BaseModel
 			return false;
 		}
 
+		// If the model is using timestamps we need to set the update_at time.
+		if ($this->useTimestamps && empty($data[$this->updatedField]))
+		{
+			if (! is_array($data))
+			{
+				$data = [];
+			}
+
+			$data[$this->updatedField] = $this->setDate();
+		}
+
 		return $this->doReplace($data, $returnSQL);
 	}
 
