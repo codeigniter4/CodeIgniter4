@@ -535,3 +535,21 @@ The methods provided by the parent classes that are available are:
         This method returns the User Agent string from the SERVER data::
 
             $request->getUserAgent();
+
+    .. php:method:: getPath()
+
+        :returns:	    The current URI path relative to ``$_SERVER['SCRIPT_NAME']``
+        :rtype:	string
+
+        This is the safest method to determine the "current URI", since ``IncomingRequest::$uri``
+        may not be aware of the complete App configuration for base URLs.
+
+    .. php:method:: setPath($path)
+
+        :param	string	$path: The relative path to use as the current URI
+        :returns:	    This Incoming Request
+        :rtype:	IncomingRequest
+
+        Used mostly just for testing purposes, this allows you to set the relative path
+        value for the current request instead of relying on URI detection. This will also
+        update the underlying ``URI`` instance with the new path.
