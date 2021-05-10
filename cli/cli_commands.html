@@ -389,6 +389,10 @@ available commands. You should pass the name of the command as the first argumen
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">DevUserSeeder</span>
 </pre></div>
 </div>
+<p>You may always pass <code class="docutils literal notranslate"><span class="pre">--no-header</span></code> to suppress the header output, helpful for parsing results:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">cache</span><span class="o">:</span><span class="nx">clear</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nb">header</span>
+</pre></div>
+</div>
 <p>For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">version</span>
@@ -605,7 +609,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 09, 2021.
+        Last updated on May 10, 2021.
       </span>
 
     </p>
