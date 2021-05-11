@@ -11,9 +11,7 @@
 
 namespace CodeIgniter\Psr\Cache;
 
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\I18n\Time;
-use Config\Cache;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 

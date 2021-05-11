@@ -14,7 +14,6 @@ namespace CodeIgniter\Psr\Cache;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\I18n\Time;
 use DateInterval;
-use DateTime;
 use DateTimeInterface;
 use InvalidArgumentException;
 use Psr\Cache\CacheItemInterface;

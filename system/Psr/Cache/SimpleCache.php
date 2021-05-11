@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Psr\Cache;
 
-use CodeIgniter\I18n\Time;
 use DateInterval;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
