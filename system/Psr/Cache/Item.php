@@ -249,7 +249,8 @@ final class Item implements CacheItemInterface
 	{
 		if (isset($this->expiration))
 		{
-			return $this->expiration->isBefore(Time::now());
+			$now = Time::now();
+			return $this->expiration->isBefore($now) || $this->expiration->sameAs($now);
 		}
 
 		return false;
