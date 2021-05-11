@@ -6,9 +6,12 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
+use Nexus\PHPUnit\Extension\Expeditable;
 
 final class CommandRunnerTest extends CIUnitTestCase
 {
+	use Expeditable;
+
 	/** @var resource */
 	private $streamFilter;
 
