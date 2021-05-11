@@ -410,6 +410,7 @@ directory existed at <strong>app/Language/en-US</strong> then that would be used
 method that will automatically perform <a class="reference internal" href="../incoming/content_negotiation.html"><span class="doc">content negotiation</span></a> for you to
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.</p>
+<p>Should you ever need to set the locale directly you may use <code class="docutils literal notranslate"><span class="pre">IncomingRequest::setLocale(string</span> <span class="pre">$locale)</span></code>.</p>
 <div class="section" id="content-negotiation">
 <h4>Content Negotiation<a class="headerlink" href="#content-negotiation" title="Permalink to this headline">¶</a></h4>
 <p>You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
@@ -685,7 +686,7 @@ up because the translations folders get mapped appropriately.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 10, 2021.
+        Last updated on May 11, 2021.
       </span>
 
     </p>
