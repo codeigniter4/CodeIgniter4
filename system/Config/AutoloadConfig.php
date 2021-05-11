@@ -93,15 +93,22 @@ class AutoloadConfig
 	 * @var array<string, string>
 	 */
 	protected $coreClassmap = [
-		'Psr\Log\AbstractLogger'           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
-		'Psr\Log\InvalidArgumentException' => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
-		'Psr\Log\LoggerAwareInterface'     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
-		'Psr\Log\LoggerAwareTrait'         => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
-		'Psr\Log\LoggerInterface'          => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
-		'Psr\Log\LoggerTrait'              => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
-		'Psr\Log\LogLevel'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
-		'Psr\Log\NullLogger'               => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
-		'Laminas\Escaper\Escaper'          => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
+		'Laminas\Escaper\Escaper'                  => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
+		'Psr\Cache\CacheException'                 => SYSTEMPATH . 'ThirdParty/PSR/Cache/CacheException.php',
+		'Psr\Cache\CacheItemInterface'             => SYSTEMPATH . 'ThirdParty/PSR/Cache/CacheItemInterface.php',
+		'Psr\Cache\CacheItemPoolInterface'         => SYSTEMPATH . 'ThirdParty/PSR/Cache/CacheItemPoolInterface.php',
+		'Psr\Cache\InvalidArgumentException'       => SYSTEMPATH . 'ThirdParty/PSR/Cache/InvalidArgumentException.php',
+		'Psr\Log\AbstractLogger'                   => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
+		'Psr\Log\InvalidArgumentException'         => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
+		'Psr\Log\LoggerAwareInterface'             => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
+		'Psr\Log\LoggerAwareTrait'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
+		'Psr\Log\LoggerInterface'                  => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
+		'Psr\Log\LoggerTrait'                      => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
+		'Psr\Log\LogLevel'                         => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
+		'Psr\Log\NullLogger'                       => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
+		'Psr\SimpleCache\CacheException'           => SYSTEMPATH . 'ThirdParty/PSR/SimpleCache/CacheException.php',
+		'Psr\SimpleCache\CacheInterface'           => SYSTEMPATH . 'ThirdParty/PSR/SimpleCache/CacheInterface.php',
+		'Psr\SimpleCache\InvalidArgumentException' => SYSTEMPATH . 'ThirdParty/PSR/InvalidArgumentException.php',
 	];
 
 	/**
