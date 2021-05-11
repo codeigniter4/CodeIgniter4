@@ -63,7 +63,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 		// Since we're on a CLI, we must provide our own URI
 		$this->config->baseURL = 'http://example.com/public';
 
-		$this->assertEquals('http://example.com/public/', current_url());
+		$this->assertEquals('http://example.com/public/index.php/', current_url());
 	}
 
 	public function testCurrentURLReturnsObject()
@@ -74,7 +74,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 		$url = current_url(true);
 
 		$this->assertInstanceOf(URI::class, $url);
-		$this->assertEquals('http://example.com/public/', (string) $url);
+		$this->assertEquals('http://example.com/public/index.php/', (string) $url);
 	}
 
 	public function testCurrentURLEquivalence()
@@ -89,7 +89,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
 
-		$this->assertEquals(base_url(uri_string()), current_url());
+		$this->assertEquals(site_url(uri_string()), current_url());
 	}
 
 	public function testCurrentURLInSubfolder()
@@ -105,12 +105,11 @@ final class CurrentUrlTest extends CIUnitTestCase
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/foo/public/bar', current_url());
-		$this->assertEquals('http://example.com/foo/public/bar?baz=quip', (string) current_url(true));
+		$this->assertEquals('http://example.com/foo/public/index.php/bar', current_url());
+		$this->assertEquals('http://example.com/foo/public/index.php/bar?baz=quip', (string) current_url(true));
 
 		$uri = current_url(true);
-		$this->assertEquals(['bar'], $uri->getSegments());
-		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals('foo', $uri->getSegment(1));
 		$this->assertEquals('example.com', $uri->getHost());
 		$this->assertEquals('http', $uri->getScheme());
 	}
@@ -129,12 +128,12 @@ final class CurrentUrlTest extends CIUnitTestCase
 		$request = Services::request($this->config);
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com:8080/foo/public/bar', current_url());
-		$this->assertEquals('http://example.com:8080/foo/public/bar?baz=quip', (string) current_url(true));
+		$this->assertEquals('http://example.com:8080/foo/public/index.php/bar', current_url());
+		$this->assertEquals('http://example.com:8080/foo/public/index.php/bar?baz=quip', (string) current_url(true));
 
 		$uri = current_url(true);
-		$this->assertEquals(['bar'], $uri->getSegments());
-		$this->assertEquals('bar', $uri->getSegment(1));
+		$this->assertEquals(['foo', 'public', 'index.php', 'bar'], $uri->getSegments());
+		$this->assertEquals('foo', $uri->getSegment(1));
 		$this->assertEquals('example.com', $uri->getHost());
 		$this->assertEquals('http', $uri->getScheme());
 		$this->assertEquals('8080', $uri->getPort());
