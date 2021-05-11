@@ -6,12 +6,6 @@ use DateTime;
 
 final class DateHelperTest extends CIUnitTestCase
 {
-
-	private $name;
-	private $value;
-	private $expire;
-	private $response;
-
 	protected function setUp(): void
 	{
 		parent::setUp();
