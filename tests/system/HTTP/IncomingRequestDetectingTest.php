@@ -67,7 +67,7 @@ class IncomingRequestDetectingTest extends CIUnitTestCase
 	{
 		$this->request->uri     = '/ci/index.php/popcorn/woot?code=good#pos';
 		$_SERVER['REQUEST_URI'] = '/ci/index.php/popcorn/woot';
-		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$_SERVER['SCRIPT_NAME'] = '/ci/index.php';
 		$expected               = 'popcorn/woot';
 		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}

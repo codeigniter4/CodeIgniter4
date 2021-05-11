@@ -594,7 +594,7 @@ class IncomingRequestTest extends CIUnitTestCase
 		return [
 			'not /index.php' => [
 				'/test.php',
-				'test.php',
+				'/',
 			],
 			'/index.php'     => [
 				'/index.php',
@@ -615,5 +615,72 @@ class IncomingRequestTest extends CIUnitTestCase
 		$_SERVER['SCRIPT_NAME'] = $path;
 		$request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
 		$this->assertEquals($detectPath, $request->detectPath());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetPath()
+	{
+		$_SERVER['REQUEST_URI'] = '/index.php/fruits/banana';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+
+		$this->assertEquals('fruits/banana', $request->getPath());
+	}
+
+	public function testGetPathIsRelative()
+	{
+		$_SERVER['REQUEST_URI'] = '/sub/folder/index.php/fruits/banana';
+		$_SERVER['SCRIPT_NAME'] = '/sub/folder/index.php';
+
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+
+		$this->assertEquals('fruits/banana', $request->getPath());
+	}
+
+	public function testGetPathStoresDetectedValue()
+	{
+		$_SERVER['REQUEST_URI'] = '/fruits/banana';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+
+		$_SERVER['REQUEST_URI'] = '/candy/snickers';
+
+		$this->assertEquals('fruits/banana', $request->getPath());
+	}
+
+	public function testGetPathIsRediscovered()
+	{
+		$_SERVER['REQUEST_URI'] = '/fruits/banana';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+
+		$_SERVER['REQUEST_URI'] = '/candy/snickers';
+		$request->detectPath();
+
+		$this->assertEquals('candy/snickers', $request->getPath());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetPath()
+	{
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+		$this->assertEquals('', $request->getPath());
+
+		$request->setPath('foobar');
+		$this->assertEquals('foobar', $request->getPath());
+	}
+
+	public function testSetPathUpdatesURI()
+	{
+		$request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+
+		$request->setPath('apples');
+
+		$this->assertEquals('apples', $request->uri->getPath());
 	}
 }

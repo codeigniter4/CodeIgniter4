@@ -273,6 +273,20 @@ The object gives you full abilities to grab any part of the request on it's own:
     echo $uri->getSegment(1);       // 'path'
     echo $uri->getTotalSegments();  // 3
 
+You can work with the current URI string (the path relative to your baseURL) using the ``getPath()`` and ``setPath()`` methods.
+Note that this relative path on the shared instance of ``IncomingRequest`` is what the :doc:`URL Helper </helpers/url_helper>`
+functions use, so this is a helpful way to "spoof" an incoming request for testing::
+
+	class MyMenuTest extends CIUnitTestCase
+	{
+		public function testActiveLinkUsesCurrentUrl()
+		{
+			service('request')->setPath('users/list');
+			$menu = new MyMenu();
+			$this->assertTrue('users/list', $menu->getActiveLink());
+		}
+	}
+
 Uploaded Files
 --------------
 
@@ -521,3 +535,21 @@ The methods provided by the parent classes that are available are:
         This method returns the User Agent string from the SERVER data::
 
             $request->getUserAgent();
+
+    .. php:method:: getPath()
+
+        :returns:	    The current URI path relative to ``$_SERVER['SCRIPT_NAME']``
+        :rtype:	string
+
+        This is the safest method to determine the "current URI", since ``IncomingRequest::$uri``
+        may not be aware of the complete App configuration for base URLs.
+
+    .. php:method:: setPath($path)
+
+        :param	string	$path: The relative path to use as the current URI
+        :returns:	    This Incoming Request
+        :rtype:	IncomingRequest
+
+        Used mostly just for testing purposes, this allows you to set the relative path
+        value for the current request instead of relying on URI detection. This will also
+        update the underlying ``URI`` instance with the new path.
