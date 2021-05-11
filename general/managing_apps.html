@@ -367,14 +367,14 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 <p>You will need to modify two additional files in your project root, so that
 they can find the <code class="docutils literal notranslate"><span class="pre">Paths</span></code> configuration file:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 44:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 36:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nb">realpath</span><span class="p">(</span><span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">)</span> <span class="o">?:</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this if you move your application folder</span>
 </pre></div>
 </div>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/public/index.php</span></code> is the front controller for your webapp; the config
-path is specified on or about line 28:</p>
+path is specified on or about line 20:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nb">realpath</span><span class="p">(</span><span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">)</span> <span class="o">?:</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this if you move your application folder</span>
 </pre></div>
