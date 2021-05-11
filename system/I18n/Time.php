@@ -297,7 +297,7 @@ class Time extends DateTime
 	 */
 	public static function createFromTimestamp(int $timestamp, $timezone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d H:i:s', $timestamp), $timezone, $locale);
+		return new Time(gmdate('Y-m-d H:i:s', $timestamp), $timezone ?? 'UTC', $locale);
 	}
 
 	//--------------------------------------------------------------------
