@@ -24,7 +24,8 @@
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
 		"rector/rector": "0.10.21",
-		"squizlabs/php_codesniffer": "^3.3"
+		"squizlabs/php_codesniffer": "^3.3",
+		"symplify/composer-json-manipulator": "^9.3"
 	},
 	"suggest": {
 		"ext-fileinfo": "Improves mime type detection for files"
