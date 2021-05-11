@@ -366,10 +366,11 @@ but does not, and will not, meet all of them.</p>
 <p><strong>PSR-4: Autoloading Standard</strong></p>
 <p>This PSR provides a method for organizing file and namespaces to allow for a standard method of autoloading
 classes. Our <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> meets the PSR-4 recommendations.</p>
-<p><strong>PSR-6: Caching Interface</strong></p>
-<p>CodeIgniter will not be trying to meet this PSR, as we believe it oversteps its needs. The newly proposed
-<a class="reference external" href="https://github.com/dragoonis/fig-standards/blob/psr-simplecache/proposed/simplecache.md">SimpleCache Interfaces</a>
-do look like something we would consider.</p>
+<p><strong>PSR-6: Caching Interfaces</strong>
+<strong>PSR-16: SimpleCache Interface</strong></p>
+<p>While the framework Cache components do not adhere to PSR-6 or PSR-16, a separate set of adapters are
+provided for both in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Psr\Cache</span></code>. It is recommended that projects use the native Cache
+drivers directly as the adapters are only intended for compatibility with third-party libraries.</p>
 <p><strong>PSR-7: HTTP Message Interface</strong></p>
 <p>This PSR standardizes a way of representing the HTTP interactions. While many of the concepts became part of our
 HTTP layer, CodeIgniter does not strive for compatibility with this recommendation.</p>
