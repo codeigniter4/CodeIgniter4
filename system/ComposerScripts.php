@@ -11,10 +11,12 @@
 
 namespace CodeIgniter;
 
+use Composer\Script\Event;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use UnexpectedValueException;
 
 /**
  * This class is used by Composer during installs and updates
@@ -50,13 +52,21 @@ final class ComposerScripts
 			'from' => __DIR__ . '/../vendor/kint-php/kint/resources/',
 			'to'   => __DIR__ . '/ThirdParty/Kint/resources/',
 		],
-		'escaper' => [
+		'laminas-escaper' => [
 			'from' => __DIR__ . '/../vendor/laminas/laminas-escaper/src/',
 			'to'   => __DIR__ . '/ThirdParty/Escaper/',
+		],
+		'psr-cache' => [
+			'from' => __DIR__ . '/../vendor/psr/cache/src/',
+			'to'   => __DIR__ . '/ThirdParty/PSR/Cache/',
 		],
 		'psr-log' => [
 			'from' => __DIR__ . '/../vendor/psr/log/Psr/Log/',
 			'to'   => __DIR__ . '/ThirdParty/PSR/Log/',
+		],
+		'psr-simple-cache' => [
+			'from' => __DIR__ . '/../vendor/psr/simple-cache/src/',
+			'to'   => __DIR__ . '/ThirdParty/PSR/SimpleCache/',
 		],
 	];
 
@@ -66,15 +76,18 @@ final class ComposerScripts
 	 *
 	 * @return void
 	 */
-	public static function postUpdate()
+	public static function postUpdate(Event $event)
 	{
+		$event->getIO()->write('> <info>Removing:</info> ' . basename(self::$path) . '/');
 		self::recursiveDelete(self::$path);
 
-		foreach (self::$dependencies as $dependency)
+		foreach (self::$dependencies as $name => $dependency)
 		{
+			$event->getIO()->write("> <info>Copying:</info> $name");
 			self::recursiveMirror($dependency['from'], $dependency['to']);
 		}
 
+		$event->getIO()->write('> <info>Copying:</info> kint-init');
 		self::copyKintInitFiles();
 		self::recursiveDelete(self::$dependencies['psr-log']['to'] . 'Test/');
 	}
@@ -84,13 +97,15 @@ final class ComposerScripts
 	 *
 	 * @param string $directory
 	 *
+	 * @throws UnexpectedValueException
+	 *
 	 * @return void
 	 */
 	private static function recursiveDelete(string $directory): void
 	{
 		if (! is_dir($directory))
 		{
-			echo sprintf('Cannot recursively delete "%s" as it does not exist.', $directory);
+			throw new UnexpectedValueException(sprintf('Cannot recursively delete "%s" as it does not exist.', $directory));
 		}
 
 		/** @var SplFileInfo $file */
@@ -110,6 +125,9 @@ final class ComposerScripts
 				@unlink($path);
 			}
 		}
+
+		// delete the top level directory
+		@rmdir($directory);
 	}
 
 	/**
@@ -118,6 +136,8 @@ final class ComposerScripts
 	 *
 	 * @param string $originDir
 	 * @param string $targetDir
+	 *
+	 * @throws UnexpectedValueException
 	 *
 	 * @return void
 	 */
@@ -128,14 +148,12 @@ final class ComposerScripts
 
 		if (! is_dir($originDir))
 		{
-			echo sprintf('The origin directory "%s" was not found.', $originDir);
-			exit(1);
+			throw new UnexpectedValueException(sprintf('The origin directory "%s" was not found.', $originDir));
 		}
 
 		if (is_dir($targetDir))
 		{
-			echo sprintf('The target directory "%s" is existing. Run %s::recursiveDelete(\'%s\') first.', $targetDir, self::class, $targetDir);
-			exit(1);
+			throw new UnexpectedValueException(sprintf('The target directory "%s" is existing. Run %s::recursiveDelete(\'%s\') first.', $targetDir, self::class, $targetDir));
 		}
 
 		@mkdir($targetDir, 0755, true);

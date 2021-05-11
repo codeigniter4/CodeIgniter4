@@ -22,6 +22,7 @@ parameters:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
+		- system/ComposerScripts.php
 		- system/Config/Routes.php
 		- system/Debug/Toolbar/Views/toolbar.tpl.php
 		- system/Images/Handlers/GDHandler.php
