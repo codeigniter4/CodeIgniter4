@@ -14,18 +14,12 @@ namespace CodeIgniter\Psr\Cache;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
-use Config\Services;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 final class Pool implements CacheItemPoolInterface
 {
-	/**
-	 * The adapter to use.
-	 *
-	 * @var CacheInterface
-	 */
-	private $adapter;
+	use SupportTrait;
 
 	/**
 	 * Deferred Items to be saved.
@@ -33,35 +27,6 @@ final class Pool implements CacheItemPoolInterface
 	 * @var array<string, Item>
 	 */
 	private $deferred = [];
-
-	/**
-	 * Initializes the underlying adapter
-	 * from an existing instance or from the
-	 * Cache Service (with optional config).
-	 *
-	 * @param object|null $object
-	 *
-	 * @throws CacheArgumentException
-	 */
-	public function __construct($object = null)
-	{
-		if (is_null($object))
-		{
-			$this->adapter = Services::cache();
-		}
-		elseif ($object instanceof Cache)
-		{
-			$this->adapter = Services::cache($object, false);
-		}
-		elseif ($object instanceof CacheInterface)
-		{
-			$this->adapter = $object;
-		}
-		else
-		{
-			throw new CacheArgumentException('Cache Pool constructor only accepts an adapter or configuration');
-		}
-	}
 
 	/**
 	 * Commits any deferred Items.

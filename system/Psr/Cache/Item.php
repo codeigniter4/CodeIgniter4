@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Psr\Cache;
 
+use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\I18n\Time;
 use DateInterval;
 use DateTime;
 use DateTimeInterface;
+use InvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 final class Item implements CacheItemInterface
@@ -54,28 +56,21 @@ final class Item implements CacheItemInterface
 	/**
 	 * Validates a cache key according to PSR-6.
 	 *
-	 * @param string $key The key to validate
+	 * @param mixed $key The key to validate
 	 *
 	 * @throws CacheArgumentException When $key is not valid
-	 *
-	 * @see https://github.com/symfony/cache/blob/7b024c6726af21fd4984ac8d1eae2b9f3d90de88/CacheItem.php#L158
 	 */
-	public static function validateKey($key): string
+	public static function validateKey($key)
 	{
-		if (! is_string($key))
+		// Use the framework's Cache key validation
+		try
 		{
-			throw new CacheArgumentException('Cache key must be a string');
+			BaseHandler::validateKey($key);
 		}
-		if ($key === '')
+		catch (InvalidArgumentException $e)
 		{
-			throw new CacheArgumentException('Cache key cannot be empty.');
+			throw new CacheArgumentException($e->getMessage(), $e->getCode(), $e);
 		}
-		if (strpbrk($key, self::RESERVED_CHARACTERS) !== false)
-		{
-			throw new CacheArgumentException('Cache key contains reserved characters ' . self::RESERVED_CHARACTERS);
-		}
-
-		return $key;
 	}
 
 	/**

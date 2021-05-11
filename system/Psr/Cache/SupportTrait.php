@@ -11,11 +11,8 @@
 
 namespace CodeIgniter\Psr\Cache;
 
-use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Cache\CacheInterface;
 use Config\Cache;
-use Config\Services;
-use InvalidArgumentException;
 
 /**
  * Cache Support Trait
@@ -33,26 +30,6 @@ trait SupportTrait
 	private $adapter;
 
 	/**
-	 * Validates a cache key according to PSR-6.
-	 *
-	 * @param mixed $key The key to validate
-	 *
-	 * @throws CacheArgumentException When $key is not valid
-	 */
-	public static function validateKey($key)
-	{
-		// Use the framework's Cache key validation
-		try
-		{
-			BaseHandler::validateKey($key);
-		}
-		catch (InvalidArgumentException $e)
-		{
-			throw new CacheArgumentException($e->getMessage(), $e->getCode(), $e);
-		}
-	}
-
-	/**
 	 * Initializes the underlying adapter
 	 * from an existing instance or from the
 	 * Cache Service (with optional config).
@@ -65,11 +42,11 @@ trait SupportTrait
 	{
 		if (is_null($object))
 		{
-			$this->adapter = Services::cache();
+			$this->adapter = service('cache');
 		}
 		elseif ($object instanceof Cache)
 		{
-			$this->adapter = Services::cache($object, false);
+			$this->adapter = service('cache', $object, false);
 		}
 		elseif ($object instanceof CacheInterface)
 		{

@@ -33,7 +33,7 @@ final class SimpleCache implements CacheInterface
 	 */
 	public function get($key, $default = null)
 	{
-		self::validateKey($key);
+		Item::validateKey($key);
 
 		$meta = $this->adapter->getMetaData($key);
 
@@ -62,7 +62,7 @@ final class SimpleCache implements CacheInterface
 	 */
 	public function set($key, $value, $ttl = null)
 	{
-		self::validateKey($key);
+		Item::validateKey($key);
 
 		// Get TTL as an integer (seconds)
 		if (is_null($ttl))
@@ -100,7 +100,7 @@ final class SimpleCache implements CacheInterface
 	 */
 	public function delete($key)
 	{
-		self::validateKey($key);
+		Item::validateKey($key);
 
 		// Nonexistant keys return true
 		if (! is_array($this->adapter->getMetaData($key)))
@@ -235,7 +235,7 @@ final class SimpleCache implements CacheInterface
 	 */
 	public function has($key)
 	{
-		self::validateKey($key);
+		Item::validateKey($key);
 
 		$meta = $this->adapter->getMetaData($key);
 
