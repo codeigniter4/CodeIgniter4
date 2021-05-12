@@ -32,7 +32,7 @@ jobs:
         php-versions: ['7.4', '8.0']
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
