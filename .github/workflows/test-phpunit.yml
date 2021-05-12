@@ -89,7 +89,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@2.11.0
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
