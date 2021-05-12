@@ -9,6 +9,9 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 final class MiscUrlTest extends CIUnitTestCase
 {
 	/**
