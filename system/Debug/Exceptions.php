@@ -17,9 +17,10 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
-use function error_reporting;
 use ErrorException;
 use Throwable;
+
+use function error_reporting;
 
 /**
  * Exceptions manager
@@ -77,7 +78,7 @@ class Exceptions
 	{
 		$this->ob_level = ob_get_level();
 
-		$this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+		$this->viewPath = rtrim($config->errorViewPath, '\/ ') . DIRECTORY_SEPARATOR;
 
 		$this->config = $config;
 
@@ -97,10 +98,9 @@ class Exceptions
 		set_exception_handler([$this, 'exceptionHandler']);
 
 		// Set the Error Handler
-		set_error_handler([$this, 'errorHandler']);
+		set_error_handler([$this, 'errorHandler'], E_ALL & ~E_USER_DEPRECATED);
 
 		// Set the handler for shutdown to catch Parse errors
-		// Do we need this in PHP7?
 		register_shutdown_function([$this, 'shutdownHandler']);
 	}
 
@@ -117,10 +117,7 @@ class Exceptions
 	 */
 	public function exceptionHandler(Throwable $exception)
 	{
-		[
-			$statusCode,
-			$exitCode,
-		] = $this->determineCodes($exception);
+		[$statusCode, $exitCode] = $this->determineCodes($exception);
 
 		// Log it
 		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
@@ -152,24 +149,21 @@ class Exceptions
 	//--------------------------------------------------------------------
 
 	/**
-	 * Even in PHP7, some errors make it through to the errorHandler, so
-	 * convert these to Exceptions and let the exception handler log it and
+	 * Converts error to exception and let the exception handler log and
 	 * display it.
 	 *
-	 * This seems to be primarily when a user triggers it with trigger_error().
-	 *
-	 * @param integer      $severity
-	 * @param string       $message
-	 * @param string|null  $file
-	 * @param integer|null $line
-	 *
+	 * @param int $severity The level of the error raised
+	 * @param string $message The error message
+	 * @param string|null $file The filename that the error was raised in
+	 * @param int|null $line The line number where the error was raised
+	 * @return bool
 	 * @throws ErrorException
 	 */
-	public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
+	public function errorHandler(int $severity, string $message, string $file = null, int $line = null): bool
 	{
 		if (! (error_reporting() & $severity))
 		{
-			return;
+			return true;
 		}
 
 		// Convert it to an exception and pass it along.
@@ -190,7 +184,7 @@ class Exceptions
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
 		// Fatal Error?
-		if (! is_null($error) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
+		if ($error !== null && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
 		{
 			$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 		}
