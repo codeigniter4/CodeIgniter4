@@ -42,9 +42,12 @@ if (! function_exists('_get_uri'))
 		{
 			throw new InvalidArgumentException('_get_uri() requires a valid baseURL.');
 		}
+
+		// If a full URI was passed then convert it
 		if (is_int(strpos($relativePath, '://')))
 		{
-			throw new InvalidArgumentException('_get_uri() only accepts relative paths.');
+			$full         = new URI($relativePath);
+			$relativePath = URI::createURIString(null, null, $full->getPath(), $full->getQuery(), $full->getFragment());
 		}
 
 		$relativePath = URI::removeDotSegments($relativePath);
