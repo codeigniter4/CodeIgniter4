@@ -8,6 +8,9 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class URITest extends CIUnitTestCase
 {
 
