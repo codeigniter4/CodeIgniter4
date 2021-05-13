@@ -21,13 +21,11 @@ use ReflectionException;
 class CommandRunner extends Controller
 {
 	/**
-	 * The Command Manager
+	 * Instance of class managing the collection of commands
 	 *
 	 * @var Commands
 	 */
 	protected $commands;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -58,8 +56,6 @@ class CommandRunner extends Controller
 		return $this->index($params);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Default command.
 	 *
@@ -70,14 +66,9 @@ class CommandRunner extends Controller
 	 */
 	public function index(array $params)
 	{
-		$command = array_shift($params);
+		$command = array_shift($params) ?? 'list';
 
-		if (is_null($command))
-		{
-			$command = 'list';
-		}
-
-		return service('commands')->run($command, $params);
+		return $this->commands->run($command, $params);
 	}
 
 	/**
