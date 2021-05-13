@@ -395,17 +395,18 @@ into its appropriate sections:</p>
 </div>
 <div class="section" id="the-current-uri">
 <h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline">¶</a></h3>
-<p>Many times, all you really want is an object representing the current URL of this request. This can be accessed
-in two different ways. The first is to grab it directly from the current request object. Assuming that you’re in
-a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> you can get it like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>Second, you can use one of the functions available in the <strong>url_helper</strong>:</p>
+<p>Many times, all you really want is an object representing the current URL of this request.
+You can use one of the functions available in the <strong>url_helper</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.</p>
+<p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.
+This URI is based on the path (relative to your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code>) as determined by the current request object and
+your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (baseURL, indexPage, and forceGlobalSecureRequests).
+Assuming that you’re in a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> you can get this relative path:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="uri-strings">
@@ -413,7 +414,7 @@ a controller that extends <code class="docutils literal notranslate"><span class
 <p>Many times, all you really want is to get a string representation of a URI. This is easy to do by simply casting
 the URI as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$uri</span><span class="p">;</span>  <span class="c1">// http://example.com</span>
+<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$uri</span><span class="p">;</span>  <span class="c1">// http://example.com/index.php</span>
 </pre></div>
 </div>
 <p>If you know the pieces of the URI and just want to ensure it’s all formatted correctly, you can generate a string
@@ -659,7 +660,7 @@ that will prevent throwing exceptions.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 11, 2021.
+        Last updated on May 13, 2021.
       </span>
 
     </p>

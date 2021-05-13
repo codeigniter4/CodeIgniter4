@@ -352,6 +352,11 @@
 <h1>Version 4.1.2<a class="headerlink" href="#version-4-1-2" title="Permalink to this headline">¶</a></h1>
 <p>Release Date: Not released</p>
 <p><strong>4.1.2 release of CodeIgniter4</strong></p>
+<p>BREAKING:</p>
+<p>Fixed <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> that prevented
+configurations with an <code class="docutils literal notranslate"><span class="pre">indexPage</span></code> from including that value in the return value. Any installations
+using <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code> should expect altered values from <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> and all its dependencies
+(including Response Testing, Pager, Form Helper, Pager, and View Parser).</p>
 <p>Enhancements:</p>
 <ul class="simple">
 <li><p>New HTTP classes, <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> and <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>, for abstracting web cookies.</p></li>
@@ -415,7 +420,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 11, 2021.
+        Last updated on May 13, 2021.
       </span>
 
     </p>
