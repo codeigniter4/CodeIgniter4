@@ -10,6 +10,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
+ * Since base_url() only slightly modifies
+ * site_url() these functions are tested
+ * simultaneously.
+ *
  * @backupGlobals enabled
  */
 final class SiteUrlTest extends CIUnitTestCase
@@ -32,10 +36,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
 		Services::reset(true);
 
-		// Set a common base configuration (overriden by individual tests)
-		$this->config            = new App();
-		$this->config->baseURL   = 'http://example.com/';
-		$this->config->indexPage = 'index.php';
+		$this->config = new App();
 		Factories::injectMock('config', 'App', $this->config);
 	}
 
@@ -49,188 +50,222 @@ final class SiteUrlTest extends CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider siteUrlProvider
+	 * Takes a multitude of various config input and verifies
+	 * that base_url() and site_url() return the expected result.
+	 *
+	 * @param string      $baseURL
+	 * @param string      $indexPage
+	 * @param string|null $scheme
+	 * @param boolean     $secure
+	 * @param string      $path
+	 * @param string      $expectedSiteUrl
+	 *
+	 * @dataProvider configProvider
 	 */
-	public function testSiteUrl($baseURL, $indexPage, $param, $protocol, $expected)
+	public function testUrls($baseURL, $indexPage, $scheme, $secure, $path, $expectedSiteUrl)
 	{
 		// Set the config
-		$this->config->baseURL   = $baseURL;
-		$this->config->indexPage = $indexPage;
+		$this->config->baseURL                   = $baseURL;
+		$this->config->indexPage                 = $indexPage;
+		$this->config->forceGlobalSecureRequests = $secure;
 
-		// Mock the Request
-		$request      = Services::request($this->config);
-		$request->uri = new URI('http://example.com/');
-		Services::injectMock('request', $request);
+		$this->assertEquals($expectedSiteUrl, site_url($path, $scheme, $this->config));
 
-		$this->assertEquals($expected, site_url($param, $protocol, $this->config));
+		// base_url is always the trimmed site_url without index page
+		$expectedBaseUrl = $indexPage === '' ? $expectedSiteUrl : str_replace('/' . $indexPage, '', $expectedSiteUrl);
+		$expectedBaseUrl = rtrim($expectedBaseUrl, '/');
+		$this->assertEquals($expectedBaseUrl, base_url($path, $scheme));
 	}
 
-	public function siteUrlProvider()
+	public function configProvider()
 	{
-		// baseURL, indexPage, param, protocol, expected
+		// baseURL, indexPage, scheme, path, expectedSiteUrl
 		return [
 			[
 				'http://example.com/',
 				'index.php',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/index.php',
 			],
 			[
 				'http://example.com',
 				'index.php',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/index.php',
 			],
 			[
 				'http://example.com/',
 				'',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/',
 			],
 			[
 				'http://example.com/',
 				'banana.php',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/banana.php',
 			],
 			[
 				'http://example.com/',
 				'',
-				'abc',
 				null,
+				false,
+				'abc',
 				'http://example.com/abc',
 			],
 			[
 				'http://example.com/public/',
 				'index.php',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/public/index.php',
 			],
 			[
 				'http://example.com/public/',
 				'',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/public/',
 			],
 			[
 				'http://example.com/public',
 				'',
-				'',
 				null,
+				false,
+				'',
 				'http://example.com/public/',
 			],
 			[
 				'http://example.com/public',
 				'index.php',
-				'/',
 				null,
+				false,
+				'/',
 				'http://example.com/public/index.php/',
 			],
 			[
 				'http://example.com/public/',
 				'index.php',
-				'/',
 				null,
+				false,
+				'/',
 				'http://example.com/public/index.php/',
 			],
 			[
 				'http://example.com/',
 				'index.php',
-				'foo',
 				null,
+				false,
+				'foo',
 				'http://example.com/index.php/foo',
 			],
 			[
 				'http://example.com/',
 				'index.php',
-				'0',
 				null,
+				false,
+				'0',
 				'http://example.com/index.php/0',
 			],
 			[
 				'http://example.com/public',
 				'index.php',
-				'foo',
 				null,
+				false,
+				'foo',
 				'http://example.com/public/index.php/foo',
 			],
 			[
 				'http://example.com/',
 				'index.php',
-				'foo',
+				null,
+				false,
+				'foo?bar=bam',
+				'http://example.com/index.php/foo?bar=bam',
+			],
+			[
+				'http://example.com/',
+				'index.php',
+				null,
+				false,
+				'test#banana',
+				'http://example.com/index.php/test#banana',
+			],
+			[
+				'http://example.com/',
+				'index.php',
 				'ftp',
+				false,
+				'foo',
 				'ftp://example.com/index.php/foo',
 			],
 			[
 				'http://example.com/',
 				'index.php',
-				'news/local/123',
 				null,
+				false,
+				'news/local/123',
 				'http://example.com/index.php/news/local/123',
 			],
 			[
 				'http://example.com/',
 				'index.php',
-				[
-					'news',
-					'local',
-					'123',
-				],                null,
+				null,
+				false,
+				['news', 'local', '123'],
 				'http://example.com/index.php/news/local/123',
 			],
 		];
 	}
 
-	public function testSiteURLHTTPS()
-	{
-		$_SERVER['HTTPS'] = 'on';
-
-		$request      = Services::request($this->config);
-		$request->uri = new URI('http://example.com/');
-
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('https://example.com/index.php', site_url('', null, $this->config));
-	}
+	//--------------------------------------------------------------------
+	// base_url
+	//--------------------------------------------------------------------
 
 	/**
+	 * These tests are only really relevant to show that base_url()
+	 * has no interaction with the current request URI.
+	 *
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
-	public function testSiteURLWithSegments()
+	public function testBaseURLDiscovery()
 	{
+		$this->config->baseURL = 'http://example.com/';
+
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/test';
 
-		// Since we're on a CLI, we must provide our own URI
-		$request      = Services::request($this->config, false);
-		$request->uri = new URI('http://example.com/test');
+		$this->assertEquals('http://example.com', base_url());
 
-		Services::injectMock('request', $request);
-
-		$this->assertEquals('http://example.com/index.php', site_url());
-	}
-
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
-	 */
-	public function testSiteURLWithSegmentsAgain()
-	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/test/page';
 
-		// Since we're on a CLI, we must provide our own URI
-		$request      = Services::request($this->config, false);
-		$request->uri = new URI('http://example.com/test/page');
+		$this->assertEquals('http://example.com', base_url());
+		$this->assertEquals('http://example.com/profile', base_url('profile'));
+	}
+
+	public function testBaseURLService()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+
+		$this->config->baseURL = 'http://example.com/ci/v4/';
+		$request               = Services::request($this->config);
+		$request->uri          = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php', site_url());
-		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
 	}
 }

@@ -81,9 +81,10 @@ The following functions are available:
     This would give you something like:
     *http://example.com/images/icons/edit.png*
 
-.. php:function:: current_url([$returnObject = false])
+.. php:function:: current_url([$returnObject = false[, $request = null]])
 
     :param	boolean	$returnObject: True if you would like a URI instance returned, instead of a string.
+    :param	IncomingRequest|null	$request: An alternate request to use for path detection; useful for testing.
     :returns: The current URL
     :rtype:	string|\\CodeIgniter\\HTTP\\URI
 
@@ -93,7 +94,9 @@ The following functions are available:
     .. note:: Calling this function is the same as doing this:
         ::
 
-            base_url(uri_string());
+            site_url(uri_string());
+
+.. important:: Prior to **4.1.2** this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
 
 .. php:function:: previous_url([$returnObject = false])
 
