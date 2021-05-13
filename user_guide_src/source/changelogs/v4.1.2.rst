@@ -5,6 +5,13 @@ Release Date: Not released
 
 **4.1.2 release of CodeIgniter4**
 
+BREAKING:
+
+Fixed `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()`` that prevented
+configurations with an ``indexPage`` from including that value in the return value. Any installations
+using ``App::$indexPage`` should expect altered values from ``current_url()`` and all its dependencies
+(including Response Testing, Pager, Form Helper, Pager, and View Parser).
+
 Enhancements:
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.

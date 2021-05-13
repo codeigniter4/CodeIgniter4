@@ -31,17 +31,17 @@ into its appropriate sections::
 The Current URI
 ---------------
 
-Many times, all you really want is an object representing the current URL of this request. This can be accessed
-in two different ways. The first is to grab it directly from the current request object. Assuming that you're in
-a controller that extends ``CodeIgniter\Controller`` you can get it like::
-
-	$uri = $this->request->uri;
-
-Second, you can use one of the functions available in the **url_helper**::
+Many times, all you really want is an object representing the current URL of this request.
+You can use one of the functions available in the **url_helper**::
 
 	$uri = current_url(true);
-
+	
 You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
+This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
+your settings in ``Config\App`` (baseURL, indexPage, and forceGlobalSecureRequests).
+Assuming that you're in a controller that extends ``CodeIgniter\Controller`` you can get this relative path::
+
+	$path = $this->request->getPath();
 
 ===========
 URI Strings
@@ -51,7 +51,7 @@ Many times, all you really want is to get a string representation of a URI. This
 the URI as a string::
 
 	$uri = current_url(true);
-	echo (string)$uri;  // http://example.com
+	echo (string) $uri;  // http://example.com/index.php
 
 If you know the pieces of the URI and just want to ensure it's all formatted correctly, you can generate a string
 using the URI class' static ``createURIString()`` method::
