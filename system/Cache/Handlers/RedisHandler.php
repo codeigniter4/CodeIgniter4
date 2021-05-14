@@ -241,7 +241,7 @@ class RedisHandler extends BaseHandler
 				}
 			}
 		}
-		while ($iterator > 0); // @phpstan-ignore-line
+		while ($iterator > 0);
 
 		return $this->redis->del($matchedKeys);
 	}
