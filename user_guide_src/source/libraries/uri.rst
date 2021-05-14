@@ -35,7 +35,7 @@ Many times, all you really want is an object representing the current URL of thi
 You can use one of the functions available in the **url_helper**::
 
 	$uri = current_url(true);
-	
+
 You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
 This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
 your settings in ``Config\App`` (baseURL, indexPage, and forceGlobalSecureRequests).
