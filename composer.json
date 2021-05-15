@@ -12,16 +12,9 @@
 		"ext-mbstring": "*",
 		"kint-php/kint": "^3.3",
 		"laminas/laminas-escaper": "^2.6",
-		"psr/cache": "^1.0",
-		"psr/log": "^1.1",
-		"psr/simple-cache": "^1.0"
-	},
-	"provide": {
-		"psr/cache-implementation": "^1.0",
-		"psr/simple-cache-implementation": "^1.0"
+		"psr/log": "^1.1"
 	},
 	"require-dev": {
-		"cache/integration-tests": "^0.17.0",
 		"codeigniter4/codeigniter4-standard": "^1.0",
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
