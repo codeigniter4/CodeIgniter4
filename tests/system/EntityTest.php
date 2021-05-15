@@ -4,6 +4,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
@@ -493,6 +494,32 @@ class EntityTest extends CIUnitTestCase
 		$this->assertSame(null, $entity->integer_null);
 		$this->assertSame(0, $entity->integer_0);
 		$this->assertSame('value', $entity->string_value_not_null);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCastURI()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = 'https://codeigniter.com/banana';
+
+		$entity->thirteenth = $data;
+		$this->assertInstanceOf(URI::class, $entity->thirteenth);
+		$this->assertSame($data, (string) $entity->thirteenth);
+		$this->assertSame('/banana', $entity->thirteenth->getPath());
+	}
+
+	public function testURICastURI()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = 'https://codeigniter.com/banana';
+
+		$entity->thirteenth = new URI($data);
+		$this->assertInstanceOf(URI::class, $entity->thirteenth);
+		$this->assertSame($data, (string) $entity->thirteenth);
+		$this->assertSame('/banana', $entity->thirteenth->getPath());
 	}
 
 	//--------------------------------------------------------------------
@@ -1050,49 +1077,52 @@ class EntityTest extends CIUnitTestCase
 		return new class($data) extends Entity
 		{
 			protected $attributes = [
-				'first'    => null,
-				'second'   => null,
-				'third'    => null,
-				'fourth'   => null,
-				'fifth'    => null,
-				'sixth'    => null,
-				'seventh'  => null,
-				'eighth'   => null,
-				'ninth'    => null,
-				'tenth'    => null,
-				'eleventh' => null,
-				'twelfth'  => null,
+				'first'      => null,
+				'second'     => null,
+				'third'      => null,
+				'fourth'     => null,
+				'fifth'      => null,
+				'sixth'      => null,
+				'seventh'    => null,
+				'eighth'     => null,
+				'ninth'      => null,
+				'tenth'      => null,
+				'eleventh'   => null,
+				'twelfth'    => null,
+				'thirteenth' => null,
 			];
 
 			protected $_original = [
-				'first'    => null,
-				'second'   => null,
-				'third'    => null,
-				'fourth'   => null,
-				'fifth'    => null,
-				'sixth'    => null,
-				'seventh'  => null,
-				'eighth'   => null,
-				'ninth'    => null,
-				'tenth'    => null,
-				'eleventh' => null,
-				'twelfth'  => null,
+				'first'      => null,
+				'second'     => null,
+				'third'      => null,
+				'fourth'     => null,
+				'fifth'      => null,
+				'sixth'      => null,
+				'seventh'    => null,
+				'eighth'     => null,
+				'ninth'      => null,
+				'tenth'      => null,
+				'eleventh'   => null,
+				'twelfth'    => null,
+				'thirteenth' => null,
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
 			protected $casts = [
-				'first'    => 'integer',
-				'second'   => 'float',
-				'third'    => 'double',
-				'fourth'   => 'string',
-				'fifth'    => 'boolean',
-				'sixth'    => 'object',
-				'seventh'  => 'array',
-				'eighth'   => 'datetime',
-				'ninth'    => 'timestamp',
-				'tenth'    => 'json',
-				'eleventh' => 'json-array',
-				'twelfth'  => 'csv',
+				'first'      => 'integer',
+				'second'     => 'float',
+				'third'      => 'double',
+				'fourth'     => 'string',
+				'fifth'      => 'boolean',
+				'sixth'      => 'object',
+				'seventh'    => 'array',
+				'eighth'     => 'datetime',
+				'ninth'      => 'timestamp',
+				'tenth'      => 'json',
+				'eleventh'   => 'json-array',
+				'twelfth'    => 'csv',
+				'thirteenth' => 'uri',
 			];
 
 			public function setSeventh($seventh)
