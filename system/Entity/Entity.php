@@ -22,6 +22,7 @@ use CodeIgniter\Entity\Cast\JsonCast;
 use CodeIgniter\Entity\Cast\ObjectCast;
 use CodeIgniter\Entity\Cast\StringCast;
 use CodeIgniter\Entity\Cast\TimestampCast;
+use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
@@ -82,6 +83,7 @@ class Entity implements JsonSerializable
 		'object'    => ObjectCast::class,
 		'string'    => StringCast::class,
 		'timestamp' => TimestampCast::class,
+		'uri'       => URICast::class,
 	];
 
 	/**
@@ -226,7 +228,6 @@ class Entity implements JsonSerializable
 					}
 
 					return $value;
-
 				}, $this->attributes);
 			}
 
@@ -305,7 +306,7 @@ class Entity implements JsonSerializable
 	/**
 	 * Set raw data array without any mutations
 	 *
-	 * @param  array $data
+	 * @param array $data
 	 *
 	 * @return $this
 	 */
@@ -461,7 +462,7 @@ class Entity implements JsonSerializable
 	/**
 	 * Change the value of the private $_cast property
 	 *
-	 * @param  boolean|null $cast
+	 * @param boolean|null $cast
 	 *
 	 * @return boolean|Entity
 	 */
@@ -509,7 +510,7 @@ class Entity implements JsonSerializable
 		// insert this value. should be outside $isNullable check,
 		// so maybe wants to do sth with null value automatically
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-		
+
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
@@ -603,7 +604,7 @@ class Entity implements JsonSerializable
 	 * Unsets an attribute property.
 	 *
 	 * @param string $key
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __unset(string $key): void
