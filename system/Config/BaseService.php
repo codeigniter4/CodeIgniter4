@@ -65,6 +65,7 @@ use Config\Images;
 use Config\Migrations;
 use Config\Modules;
 use Config\Pager as ConfigPager;
+use Config\Services;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
@@ -82,6 +83,9 @@ use Config\View as ConfigView;
  * of the applications built on top of CodeIgniter. A bonus side-effect
  * is that IDEs are able to determine what class you are calling
  * whereas with DI Containers there usually isn't a way for them to do this.
+ *
+ * Warning: To allow overrides by service providers do not use static calls,
+ * rather call out to \Config\Services instead.
  *
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
@@ -185,7 +189,7 @@ class BaseService
 			// Make sure $getShared is false
 			$params[] = false;
 
-			static::$instances[$key] = \Config\Services::$key(...$params);
+			static::$instances[$key] = Services::$key(...$params);
 		}
 
 		return static::$instances[$key];
