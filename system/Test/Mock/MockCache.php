@@ -235,11 +235,11 @@ class MockCache extends BaseHandler implements CacheInterface
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return string[] Keys currently present in the store
 	 */
 	public function getCacheInfo()
 	{
-		return [];
+		return array_keys($this->cache);
 	}
 
 	//--------------------------------------------------------------------
