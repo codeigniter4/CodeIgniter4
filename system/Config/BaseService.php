@@ -65,7 +65,7 @@ use Config\Images;
 use Config\Migrations;
 use Config\Modules;
 use Config\Pager as ConfigPager;
-use Config\Services;
+use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
@@ -85,7 +85,7 @@ use Config\View as ConfigView;
  * whereas with DI Containers there usually isn't a way for them to do this.
  *
  * Warning: To allow overrides by service providers do not use static calls,
- * rather call out to \Config\Services instead.
+ * instead call out to \Config\Services (imported as AppServices).
  *
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
@@ -189,7 +189,7 @@ class BaseService
 			// Make sure $getShared is false
 			$params[] = false;
 
-			static::$instances[$key] = Services::$key(...$params);
+			static::$instances[$key] = AppServices::$key(...$params);
 		}
 
 		return static::$instances[$key];
