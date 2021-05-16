@@ -152,11 +152,13 @@ class CodeIgniter
 	{
 		if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
 		{
+			// @codeCoverageIgnoreStart
 			$message = extension_loaded('intl')
 				? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
 				: sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
 
 			exit($message);
+			// @codeCoverageIgnoreEnd
 		}
 
 		$this->startTime = microtime(true);
@@ -505,18 +507,7 @@ class CodeIgniter
 	protected function detectEnvironment()
 	{
 		// Make sure ENVIRONMENT isn't already set by other means.
-		if (! defined('ENVIRONMENT'))
-		{
-			// running under Continuous Integration server?
-			if (getenv('CI') !== false)
-			{
-				define('ENVIRONMENT', 'testing');
-			}
-			else
-			{
-				define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
-			}
-		}
+		defined('ENVIRONMENT') || define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production'); // @codeCoverageIgnore
 	}
 
 	//--------------------------------------------------------------------
@@ -998,7 +989,7 @@ class CodeIgniter
 		// When testing, one is for phpunit, another is for test case.
 		elseif (ob_get_level() > 2)
 		{
-			ob_end_flush();
+			ob_end_flush(); // @codeCoverageIgnore
 		}
 
 		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
