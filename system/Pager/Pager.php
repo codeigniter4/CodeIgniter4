@@ -67,10 +67,10 @@ class Pager implements PagerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param PagerConfig       $config
-	 * @param RendererInterface $view
+	 * @param PagerConfig            $config
+	 * @param RendererInterface|null $view
 	 */
-	public function __construct(PagerConfig $config, RendererInterface $view)
+	public function __construct(PagerConfig $config, ?RendererInterface $view = null)
 	{
 		$this->config = $config;
 		$this->view   = $view;
@@ -152,6 +152,12 @@ class Pager implements PagerInterface
 		if (! array_key_exists($template, $this->config->templates))
 		{
 			throw PagerException::forInvalidTemplate($template);
+		}
+
+		if (isset($this->view))
+		{
+			return $this->view->setVar('pager', $pager)
+				->render($this->config->templates[$template]);
 		}
 
 		return view($this->config->templates[$template], ['pager' => $pager]);
