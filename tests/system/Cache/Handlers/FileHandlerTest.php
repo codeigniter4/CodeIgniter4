@@ -6,9 +6,8 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
-class FileHandlerTest extends CIUnitTestCase
+final class FileHandlerTest extends CIUnitTestCase
 {
-
 	private static $directory = 'FileHandler';
 	private static $key1      = 'key1';
 	private static $key2      = 'key2';
@@ -95,6 +94,12 @@ class FileHandlerTest extends CIUnitTestCase
 		$this->assertInstanceOf(FileHandler::class, $this->fileHandler);
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testGet()
 	{
 		$this->fileHandler->save(self::$key1, 'value', 2);
@@ -106,6 +111,12 @@ class FileHandlerTest extends CIUnitTestCase
 		$this->assertNull($this->fileHandler->get(self::$key1));
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testRemember()
 	{
 		$this->fileHandler->remember(self::$key1, 2, function () {
@@ -295,8 +306,6 @@ class FileHandlerTest extends CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testFileHandler()
 	{
 		$fileHandler = new BaseTestFileHandler();
@@ -316,7 +325,6 @@ class FileHandlerTest extends CIUnitTestCase
 
 final class BaseTestFileHandler extends FileHandler
 {
-
 	private static $directory = 'FileHandler';
 	private $config;
 
@@ -344,5 +352,4 @@ final class BaseTestFileHandler extends FileHandler
 			'fileperms',
 		]);
 	}
-
 }

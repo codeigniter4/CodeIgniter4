@@ -6,7 +6,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
-class RedisHandlerTest extends CIUnitTestCase
+final class RedisHandlerTest extends CIUnitTestCase
 {
 	private $redisHandler;
 	private static $key1 = 'key1';
@@ -32,10 +32,6 @@ class RedisHandlerTest extends CIUnitTestCase
 		$this->config = new Cache();
 
 		$this->redisHandler = new RedisHandler($this->config);
-		if (! $this->redisHandler->isSupported())
-		{
-			$this->markTestSkipped('Not support redis');
-		}
 
 		$this->redisHandler->initialize();
 	}
@@ -61,6 +57,12 @@ class RedisHandlerTest extends CIUnitTestCase
 		$this->assertInstanceOf(RedisHandler::class, $this->redisHandler);
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testGet()
 	{
 		$this->redisHandler->save(self::$key1, 'value', 2);
@@ -72,6 +74,12 @@ class RedisHandlerTest extends CIUnitTestCase
 		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testRemember()
 	{
 		$this->redisHandler->remember(self::$key1, 2, function () {

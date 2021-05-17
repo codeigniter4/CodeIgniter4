@@ -6,7 +6,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
-class PredisHandlerTest extends CIUnitTestCase
+final class PredisHandlerTest extends CIUnitTestCase
 {
 	private $PredisHandler;
 	private static $key1 = 'key1';
@@ -32,10 +32,6 @@ class PredisHandlerTest extends CIUnitTestCase
 		$this->config = new Cache();
 
 		$this->PredisHandler = new PredisHandler($this->config);
-		if (! $this->PredisHandler->isSupported())
-		{
-			$this->markTestSkipped('Not support Predis');
-		}
 
 		$this->PredisHandler->initialize();
 	}
@@ -61,6 +57,12 @@ class PredisHandlerTest extends CIUnitTestCase
 		$this->assertInstanceOf(PRedisHandler::class, $this->PredisHandler);
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testGet()
 	{
 		$this->PredisHandler->save(self::$key1, 'value', 2);
@@ -72,6 +74,12 @@ class PredisHandlerTest extends CIUnitTestCase
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testRemember()
 	{
 		$this->PredisHandler->remember(self::$key1, 2, function () {
