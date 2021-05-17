@@ -165,7 +165,7 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
                 </Limit>
                 <LimitExcept GET POST OPTIONS>
                         # Apache <= 2.2:
-                        #Order deny,allow
+                        # Order deny,allow
                         # Deny from all
 
                         # Apache >= 2.4:
