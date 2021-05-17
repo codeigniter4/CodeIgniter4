@@ -243,6 +243,32 @@ class ForgeTest extends CIUnitTestCase
 		}
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4693
+	 */
+	public function testCreateTableWithNullableFieldsGivesNullDataType(): void
+	{
+		$this->forge->addField([
+			'id'   => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => true],
+			'name' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+		]);
+
+		$createTable = $this->getPrivateMethodInvoker($this->forge, '_createTable');
+
+		$sql = $createTable('forge_nullable_table', false, []);
+
+		if ($this->db->DBDriver !== 'SQLSRV')
+		{
+			// @see https://regex101.com/r/bIHVNw/1
+			$this->assertMatchesRegularExpression('/(?:`name`|"name") VARCHAR(.*) NULL/', $sql);
+		}
+		else
+		{
+			// sqlsrv table fields are default nullable
+			$this->assertMatchesRegularExpression('/"name" VARCHAR/', $sql);
+		}
+	}
+
 	public function testCreateTableWithStringField()
 	{
 		$this->forge->dropTable('forge_test_table', true);

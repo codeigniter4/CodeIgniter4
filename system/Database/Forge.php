@@ -150,6 +150,8 @@ class Forge
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var string
+	 *
+	 * @internal Used for marking nullable fields. Not covered by BC promise.
 	 */
 	protected $null = '';
 

@@ -88,8 +88,10 @@ class Forge extends BaseForge
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var string
+	 *
+	 * @internal
 	 */
-	protected $_null = 'NULL';
+	protected $null = 'NULL';
 
 	//--------------------------------------------------------------------
 
