@@ -136,7 +136,7 @@ A common practice in shared hosting environments is to use the Apache module "mo
 
 The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
 
-Because CodeIgniter4 requires the server to find the framework front controller at ``/public/index.php``, you must specify this location as an alternative to search for the request, even if CodeIgniter4 is installed within the per-user web directory.
+Because CodeIgniter4 expects the server to find the framework front controller at ``/public/index.php`` by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
 
 The default user web directory ``~/public_html`` is specified by the default ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
 
