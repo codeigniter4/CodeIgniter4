@@ -30,9 +30,10 @@ classes. Our :doc:`Autoloader </concepts/autoloader>` meets the PSR-4 recommenda
 **PSR-6: Caching Interfaces**
 **PSR-16: SimpleCache Interface**
 
-While the framework Cache components do not adhere to PSR-6 or PSR-16, a separate set of adapters will
-be provided for both as a supplemental module. It is recommended that projects use the native Cache
-drivers directly as the adapters are only intended for compatibility with third-party libraries.
+While the framework Cache components do not adhere to PSR-6 or PSR-16, a separate set of adapters
+are available from the CodeIgniter4 organization as a supplemental module. It is recommended that
+projects use the native Cache drivers directly as the adapters are only intended for compatibility
+with third-party libraries. For more information visit the `CodeIgniter4 Cache repo <https://github.com/codeigniter4/cache>`_.
 
 **PSR-7: HTTP Message Interface**
 
