@@ -463,8 +463,25 @@ abstract class BaseModel
 	 * @param array|object $data Data
 	 *
 	 * @return integer|array|string|null
+	 *
+	 * @deprecated Add an override on getIdValue() instead. Will be removed in version 5.0.
 	 */
 	abstract protected function idValue($data);
+
+	/**
+	 * Public getter to return the id value using the idValue() method
+	 * For example with SQL this will return $data->$this->primaryKey
+	 *
+	 * @param array|object $data
+	 *
+	 * @return array|integer|string|null
+	 *
+	 * @todo: Make abstract in version 5.0
+	 */
+	public function getIdValue($data)
+	{
+		return $this->idValue($data);
+	}
 
 	/**
 	 * Override countAllResults to account for soft deleted accounts.
@@ -663,7 +680,7 @@ abstract class BaseModel
 
 		if ($this->shouldUpdate($data))
 		{
-			$response = $this->update($this->idValue($data), $data);
+			$response = $this->update($this->getIdValue($data), $data);
 		}
 		else
 		{
@@ -687,7 +704,7 @@ abstract class BaseModel
 	 */
 	protected function shouldUpdate($data) : bool
 	{
-		return ! empty($this->idValue($data));
+		return ! empty($this->getIdValue($data));
 	}
 
 	/**

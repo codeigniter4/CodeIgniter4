@@ -52,6 +52,7 @@ Deprecations:
 - Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
 - Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
 - Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
+- Deprecated ``BaseModel::idValue()`` in favor of public ``BaseModel::getIdValue()``. ``BaseModel::getIdValue()`` will be defined as abstract in future any custom Model classes should be updated.
 
 Bugs Fixed:
 
