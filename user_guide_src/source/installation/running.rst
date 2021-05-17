@@ -178,8 +178,8 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
                 Options MultiViews Indexes FollowSymLinks
                 <Limit GET POST OPTIONS>
                         # Apache <= 2.2:
-                        #Order allow,deny
-                        #Allow from all
+                        # Order allow,deny
+                        # Allow from all
 
                         # Apache >= 2.4:
                         Require all granted
