@@ -138,7 +138,7 @@ The following assumes that the server is already configured for mod_userdir. A g
 
 Because CodeIgniter4 expects the server to find the framework front controller at ``/public/index.php`` by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
 
-The default user web directory ``~/public_html`` is specified by the default ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
+The default user web directory ``~/public_html`` is specified by the ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
 
     UserDir public_html
 
