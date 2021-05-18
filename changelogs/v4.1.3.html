@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Working With HTTP Requests &mdash; CodeIgniter 4.1.2 documentation</title>
+  <title>Version 4.1.3 &mdash; CodeIgniter 4.1.2 documentation</title>
   
 
   
@@ -43,8 +43,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Security Guidelines" href="security.html" />
-    <link rel="prev" title="Factories" href="factories.html" /> 
+    <link rel="next" title="Version 4.1.2" href="v4.1.2.html" />
+    <link rel="prev" title="Change Logs" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -118,15 +118,15 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">CodeIgniter4 Overview</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="structure.html">Application Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mvc.html">Models, Views, and Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoloader.html">Autoloading Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
-<li class="toctree-l2"><a class="reference internal" href="factories.html">Factories</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Working With HTTP Requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
 </ul>
 </li>
 </ul>
@@ -329,9 +329,9 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">CodeIgniter4 Overview</a> &raquo;</li>
+          <li><a href="index.html">Change Logs</a> &raquo;</li>
         
-      <li>Working With HTTP Requests</li>
+      <li>Version 4.1.3</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -348,117 +348,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="working-with-http-requests">
-<h1>Working With HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Permalink to this headline">¶</a></h1>
-<p>In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests
-and responses work. Since this is what you work with while developing web applications, understanding the
-concepts behind HTTP is a <strong>must</strong> for all developers that want to be successful.</p>
-<p>The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
-how to work with the requests and responses within CodeIgniter.</p>
-<div class="section" id="what-is-http">
-<h2>What is HTTP?<a class="headerlink" href="#what-is-http" title="Permalink to this headline">¶</a></h2>
-<p>HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
-requests a page, it asks the server if it can get the page. The server then prepares the page and sends
-a response back to the browser that asked for it. That’s pretty much it. Obviously, there are some complexities
-that you can use, but the basics are really pretty simple.</p>
-<p>HTTP is the term used to describe that exchange convention. It stands for HyperText Transfer Protocol. Your goal when
-you develop web applications is to always understand what the browser is requesting, and be able to
-respond appropriately.</p>
-<div class="section" id="the-request">
-<h3>The Request<a class="headerlink" href="#the-request" title="Permalink to this headline">¶</a></h3>
-<p>Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
-to the server and waits for a response.</p>
-<p>The request would look something like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
-<span class="nx">Host</span> <span class="nx">codeigniter</span><span class="o">.</span><span class="nx">com</span>
-<span class="nx">Accept</span><span class="o">:</span> <span class="nx">text</span><span class="o">/</span><span class="nx">html</span>
-<span class="nx">User</span><span class="o">-</span><span class="nx">Agent</span><span class="o">:</span> <span class="nx">Chrome</span><span class="o">/</span><span class="mf">46.0</span><span class="o">.</span><span class="mf">2490.80</span>
-</pre></div>
-</div>
-<p>This message displays all of the information necessary to know what the client is requesting. It tells the
-method for the request (GET, POST, DELETE, etc), and the version of HTTP it supports.</p>
-<p>The request also includes a number of optional request headers that can contain a wide variety of
-information such as what languages the client wants the content displayed as, the types of formats the
-client accepts, and much more. Wikipedia has an article that lists <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">all header fields</a> if you want to look it over.</p>
-</div>
-<div class="section" id="the-response">
-<h3>The Response<a class="headerlink" href="#the-response" title="Permalink to this headline">¶</a></h3>
-<p>Once the server receives the request, your application will take that information and generate some output.
-The server will bundle your output as part of its response to the client. This is also represented as
-a simple text message that looks something like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="nx">OK</span>
-<span class="nx">Server</span><span class="o">:</span> <span class="nx">nginx</span><span class="o">/</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span>
-<span class="nx">Date</span><span class="o">:</span> <span class="nx">Thu</span><span class="p">,</span> <span class="mo">05</span> <span class="nx">Nov</span> <span class="mi">2015</span> <span class="mo">05</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">22</span> <span class="nx">GMT</span>
-<span class="nx">Content</span><span class="o">-</span><span class="nx">Type</span><span class="o">:</span> <span class="nx">text</span><span class="o">/</span><span class="nx">html</span><span class="p">;</span> <span class="nx">charset</span><span class="o">=</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">8</span>
-
-<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
-<span class="o">&lt;/</span><span class="nx">html</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<p>The response tells the client what version of the HTTP specification that it’s using and, probably most
-importantly, the status code (200). The status code is one of a number of codes that have been standardized
-to have a very specific meaning to the client. This can tell them that it was successful (200), or that the page
-wasn’t found (404). Head over to IANA for a <a class="reference external" href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">full list of HTTP status codes</a>.</p>
-</div>
-<div class="section" id="working-with-requests-and-responses">
-<h3>Working with Requests and Responses<a class="headerlink" href="#working-with-requests-and-responses" title="Permalink to this headline">¶</a></h3>
-<p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
-abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
-is an object-oriented representation of the HTTP request. It provides everything you need:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
-
-<span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
-
-<span class="c1">// the URI being requested (i.e., /about)</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
-
-<span class="c1">// Retrieve $_GET and $_POST variables</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-
-<span class="c1">// Retrieve from $_REQUEST which should include</span>
-<span class="c1">// both $_GET and $_POST contents</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-
-<span class="c1">// Retrieve JSON from AJAX calls</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
-
-<span class="c1">// Retrieve server variables</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-
-<span class="c1">// Retrieve an HTTP Request header, with case-insensitive names</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
-
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>  <span class="c1">// GET, POST, PUT, etc</span>
-</pre></div>
-</div>
-<p>The request class does a lot of work in the background for you, that you never need to worry about.
-The <cite>isAJAX()</cite> and <cite>isSecure()</cite> methods check several different methods to determine the correct answer.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
-</div>
-<p>CodeIgniter also provides a <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation
-of the HTTP response. This gives you an easy and powerful way to construct your response to the client:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
-
-<span class="nv">$response</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">);</span>
-
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_OK</span><span class="p">);</span>
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$output</span><span class="p">);</span>
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">noCache</span><span class="p">();</span>
-
-<span class="c1">// Sends the output to the browser</span>
-<span class="c1">// This is typically handled by the framework</span>
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>In addition, the Response class allows you to work the HTTP cache layer for the best performance.</p>
-</div>
-</div>
+  <div class="section" id="version-4-1-3">
+<h1>Version 4.1.3<a class="headerlink" href="#version-4-1-3" title="Permalink to this headline">¶</a></h1>
+<p>Release Date: Not released</p>
+<p><strong>4.1.3 release of CodeIgniter4</strong></p>
 </div>
 
 
@@ -467,8 +360,8 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="security.html" class="btn btn-neutral float-right" title="Security Guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="factories.html" class="btn btn-neutral float-left" title="Factories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.1.2.html" class="btn btn-neutral float-right" title="Version 4.1.2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

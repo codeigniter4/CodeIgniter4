@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Upgrading from 4.0.4 to 4.0.5 &mdash; CodeIgniter 4.1.1 documentation</title>
+  <title>Upgrading from 4.0.4 to 4.0.5 &mdash; CodeIgniter 4.1.2 documentation</title>
   
 
   
@@ -404,6 +404,89 @@ which you may use, and <code class="docutils literal notranslate"><span class="p
 <p><strong>ConfigServices</strong></p>
 <p>Service discovery has been updated to allow third-party services (when enabled via Modules) to take precedence over core services. Update
 <strong>app/Config/Services.php</strong> so the class extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p>
+<div class="section" id="project-files">
+<h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline">¶</a></h2>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space
+will break your application. All changes noted here are optional until the next major version,
+and any mandatory changes will be covered in the sections above.</p>
+</div>
+<div class="section" id="content-changes">
+<h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline">¶</a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/*</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/index.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composer.json</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="all-changes">
+<h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline">¶</a></h3>
+<p>This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no affect on the runtime:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">LICENSE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Boot/development.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Boot/production.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Boot/testing.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cache.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/ContentSecurityPolicy.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Database.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/DocTypes.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Email.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Encryption.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Filters.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/ForeignCharacters.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Format.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Generators.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Honeypot.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Images.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Kint.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Logger.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Migrations.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Mimes.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Modules.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Pager.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Paths.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Routes.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Services.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Toolbar.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/UserAgents.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Validation.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/View.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Controllers/BaseController.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Controllers/Home.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/cli/error_404.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/cli/error_exception.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/debug.css</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/debug.js</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_exception.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composer.json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">license.txt</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/index.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -422,7 +505,7 @@ which you may use, and <code class="docutils literal notranslate"><span class="p
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 17, 2021.
+        Last updated on May 18, 2021.
       </span>
 
     </p>

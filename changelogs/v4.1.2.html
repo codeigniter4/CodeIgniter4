@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Version 4.1.2 &mdash; CodeIgniter 4.1.1 documentation</title>
+  <title>Version 4.1.2 &mdash; CodeIgniter 4.1.2 documentation</title>
   
 
   
@@ -44,7 +44,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Version 4.1.1" href="v4.1.1.html" />
-    <link rel="prev" title="Change Logs" href="index.html" /> 
+    <link rel="prev" title="Version 4.1.3" href="v4.1.3.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -350,7 +350,7 @@
             
   <div class="section" id="version-4-1-2">
 <h1>Version 4.1.2<a class="headerlink" href="#version-4-1-2" title="Permalink to this headline">¶</a></h1>
-<p>Release Date: Not released</p>
+<p>Release Date: May 16, 2021</p>
 <p><strong>4.1.2 release of CodeIgniter4</strong></p>
 <p>BREAKING:</p>
 <p>Fixed <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> that prevented
@@ -397,9 +397,9 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Time::instance()</span></code>, use <code class="docutils literal notranslate"><span class="pre">Time::createFromInstance()</span></code> instead (now accepts <code class="docutils literal notranslate"><span class="pre">DateTimeInterface</span></code>).</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">IncomingRequest::removeRelativeDirectory()</span></code>, use <code class="docutils literal notranslate"><span class="pre">URI::removeDotSegments()</span></code> instead</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">\API\ResponseTrait::failValidationError</span></code> to use <code class="docutils literal notranslate"><span class="pre">\API\ResponseTrait::failValidationErrors</span></code> instead</p></li>
-<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">BaseModel::idValue()</span></code> in favor of public <code class="docutils literal notranslate"><span class="pre">BaseModel::getIdValue()</span></code>. <code class="docutils literal notranslate"><span class="pre">BaseModel::getIdValue()</span></code> will be defined as abstract in future any custom Model classes should be updated.</p></li>
 </ul>
 <p>Bugs Fixed:</p>
+<p><em>See the repo’s **CHANGELOG.MD*</em> for a complete list of bugs fixed.*</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (unless <code class="docutils literal notranslate"><span class="pre">DBDebug==true</span></code>, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.</p></li>
 </ul>
@@ -412,7 +412,7 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="v4.1.1.html" class="btn btn-neutral float-right" title="Version 4.1.1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.1.3.html" class="btn btn-neutral float-left" title="Version 4.1.3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -421,7 +421,7 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 17, 2021.
+        Last updated on May 18, 2021.
       </span>
 
     </p>

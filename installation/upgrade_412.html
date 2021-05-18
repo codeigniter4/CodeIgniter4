@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Upgrading from 4.1.1 to 4.1.2 &mdash; CodeIgniter 4.1.1 documentation</title>
+  <title>Upgrading from 4.1.1 to 4.1.2 &mdash; CodeIgniter 4.1.2 documentation</title>
   
 
   
@@ -352,6 +352,25 @@
             
   <div class="section" id="upgrading-from-4-1-1-to-4-1-2">
 <h1>Upgrading from 4.1.1 to 4.1.2<a class="headerlink" href="#upgrading-from-4-1-1-to-4-1-2" title="Permalink to this headline">¶</a></h1>
+<p><strong>current_url() and indexPage</strong></p>
+<p>Due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code>,
+the resulting URIs could be incorrect for a project’s configuration, most importantly: <code class="docutils literal notranslate"><span class="pre">indexPage</span></code>
+would <em>not</em> be included. Projects using <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code> should expect altered values from
+<code class="docutils literal notranslate"><span class="pre">current_url()</span></code> and all its dependencies (including Response Testing, Pager, Form Helper, Pager,
+and View Parser). Update your projects accordingly.</p>
+<p><strong>Cache Keys</strong></p>
+<p>Cache handlers had wildly different compatibility for keys. The updated cache drivers now pass
+all keys through validation, roughly matching PSR-6’s recommendations:</p>
+<blockquote>
+<div><p>A string of at least one character that uniquely identifies a cached item. Implementing libraries
+MUST support keys consisting of the characters A-Z, a-z, 0-9, _, and . in any order in UTF-8 encoding
+and a length of up to 64 characters. Implementing libraries MAY support additional characters and
+encodings or longer lengths, but must support at least that minimum. Libraries are responsible for
+their own escaping of key strings as appropriate, but MUST be able to return the original unmodified
+key string. The following characters are reserved for future extensions and MUST NOT be supported by
+implementing libraries: <code class="docutils literal notranslate"><span class="pre">{}()/\&#64;:</span></code></p>
+</div></blockquote>
+<p>Update your projects to remove any invalid cache keys.</p>
 <p><strong>BaseConnection::query() return values</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (or throw an
@@ -402,6 +421,66 @@ changes to be aware of:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>’s <code class="docutils literal notranslate"><span class="pre">$request</span></code> and <code class="docutils literal notranslate"><span class="pre">$response</span></code> properties are protected and should only be access through their getter methods, <code class="docutils literal notranslate"><span class="pre">request()</span></code> and <code class="docutils literal notranslate"><span class="pre">response()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> does not have <code class="docutils literal notranslate"><span class="pre">getBody()</span></code> and <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> methods, but rather uses the Response methods directly, e.g.: <code class="docutils literal notranslate"><span class="pre">$body</span> <span class="pre">=</span> <span class="pre">$result-&gt;response()-&gt;getBody();</span></code></p></li>
 </ul>
+<div class="section" id="project-files">
+<h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline">¶</a></h2>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space
+will break your application. All changes noted here are optional until the next major version,
+and any mandatory changes will be covered in the sections above.</p>
+</div>
+<div class="section" id="content-changes">
+<h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline">¶</a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/*</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="all-changes">
+<h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline">¶</a></h3>
+<p>This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no affect on the runtime:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/ContentSecurityPolicy.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Logger.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Mimes.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Modules.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Controllers/BaseController.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/debug.css</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_404.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_exception.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/welcome_message.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composer.json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contributing/guidelines.rst</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpstan.neon.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/index.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rector.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -420,7 +499,7 @@ changes to be aware of:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 17, 2021.
+        Last updated on May 18, 2021.
       </span>
 
     </p>
