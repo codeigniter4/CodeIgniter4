@@ -14,6 +14,8 @@ namespace CodeIgniter\I18n;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use DateInterval;
 use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 use IntlCalendar;
@@ -57,7 +59,7 @@ class Time extends DateTime
 	protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
 	/**
-	 * @var \CodeIgniter\I18n\Time|DateTime|null
+	 * @var static|DateTimeInterface|null
 	 */
 	protected static $testNow;
 
@@ -93,18 +95,14 @@ class Time extends DateTime
 		$timezone       = ! empty($timezone) ? $timezone : date_default_timezone_get();
 		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
-		if (! empty($time))
+		// If the time string was a relative string (i.e. 'next Tuesday')
+		// then we need to adjust the time going in so that we have a current
+		// timezone to work with.
+		if (! empty($time) && (is_string($time) && static::hasRelativeKeywords($time)))
 		{
-			// If the time string was a relative string (i.e. 'next Tuesday')
-			// then we need to adjust the time going in so that we have a current
-			// timezone to work with.
-			if (is_string($time) && static::hasRelativeKeywords($time))
-			{
-				$instance = new DateTime('now', $this->timezone);
-				$instance->modify($time);
-
-				$time = $instance->format('Y-m-d H:i:s');
-			}
+			$instance = new DateTime('now', $this->timezone);
+			$instance->modify($time);
+			$time = $instance->format('Y-m-d H:i:s');
 		}
 
 		parent::__construct($time, $this->timezone);
@@ -299,7 +297,26 @@ class Time extends DateTime
 	 */
 	public static function createFromTimestamp(int $timestamp, $timezone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d H:i:s', $timestamp), $timezone, $locale);
+		return new Time(gmdate('Y-m-d H:i:s', $timestamp), $timezone ?? 'UTC', $locale);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Takes an instance of DateTimeInterface and returns an instance of Time with it's same values.
+	 *
+	 * @param DateTimeInterface $dateTime
+	 * @param string|null       $locale
+	 *
+	 * @return Time
+	 * @throws Exception
+	 */
+	public static function createFromInstance(DateTimeInterface $dateTime, string $locale = null)
+	{
+		$date     = $dateTime->format('Y-m-d H:i:s');
+		$timezone = $dateTime->getTimezone();
+
+		return new Time($date, $timezone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -312,13 +329,13 @@ class Time extends DateTime
 	 *
 	 * @return Time
 	 * @throws Exception
+	 *
+	 * @deprecated         Use createFromInstance() instead
+	 * @codeCoverageIgnore
 	 */
 	public static function instance(DateTime $dateTime, string $locale = null)
 	{
-		$date     = $dateTime->format('Y-m-d H:i:s');
-		$timezone = $dateTime->getTimezone();
-
-		return new Time($date, $timezone, $locale);
+		return self::createFromInstance($dateTime, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -345,9 +362,9 @@ class Time extends DateTime
 	 * Creates an instance of Time that will be returned during testing
 	 * when calling 'Time::now' instead of the current time.
 	 *
-	 * @param Time|DateTime|string|null $datetime
-	 * @param DateTimeZone|string|null  $timezone
-	 * @param string|null               $locale
+	 * @param Time|DateTimeInterface|string|null $datetime
+	 * @param DateTimeZone|string|null           $timezone
+	 * @param string|null                        $locale
 	 *
 	 * @throws Exception
 	 */
@@ -365,7 +382,7 @@ class Time extends DateTime
 		{
 			$datetime = new Time($datetime, $timezone, $locale);
 		}
-		elseif ($datetime instanceof DateTime && ! $datetime instanceof Time)
+		elseif ($datetime instanceof DateTimeInterface && ! $datetime instanceof Time)
 		{
 			$datetime = new Time($datetime->format('Y-m-d H:i:s'), $timezone);
 		}
@@ -767,7 +784,7 @@ class Time extends DateTime
 	public function setTimezone($timezone)
 	{
 		$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
-		return Time::instance($this->toDateTime()->setTimezone($timezone), $this->locale);
+		return Time::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
 	}
 
 	/**
@@ -1042,8 +1059,8 @@ class Time extends DateTime
 	 * and are not required to be in the same timezone, as both times are
 	 * converted to UTC and compared that way.
 	 *
-	 * @param Time|DateTime|string $testTime
-	 * @param string|null          $timezone
+	 * @param Time|DateTimeInterface|string $testTime
+	 * @param string|null                   $timezone
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -1064,15 +1081,15 @@ class Time extends DateTime
 	/**
 	 * Ensures that the times are identical, taking timezone into account.
 	 *
-	 * @param Time|DateTime|string $testTime
-	 * @param string|null          $timezone
+	 * @param Time|DateTimeInterface|string $testTime
+	 * @param string|null                   $timezone
 	 *
 	 * @return boolean
 	 * @throws Exception
 	 */
 	public function sameAs($testTime, string $timezone = null): bool
 	{
-		if ($testTime instanceof DateTime)
+		if ($testTime instanceof DateTimeInterface)
 		{
 			$testTime = $testTime->format('Y-m-d H:i:s');
 		}
@@ -1236,19 +1253,18 @@ class Time extends DateTime
 	{
 		if ($time instanceof Time)
 		{
-			$time = $time->toDateTime()
-					->setTimezone(new DateTimeZone('UTC'));
-		}
-		elseif ($time instanceof DateTime)
-		{
-			$time = $time->setTimezone(new DateTimeZone('UTC'));
+			$time = $time->toDateTime();
 		}
 		elseif (is_string($time))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 			$time     = new DateTime($time, $timezone);
-			$time     = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+
+		if ($time instanceof DateTime || $time instanceof DateTimeImmutable)
+		{
+			$time = $time->setTimezone(new DateTimeZone('UTC'));
 		}
 
 		return $time;

@@ -103,7 +103,7 @@ Settings are stored in **.env** files as a simple a collection of name/value pai
 
     S3_BUCKET = dotenv
     SECRET_KEY = super_secret_key
-        CI_ENVIRONMENT = development
+    CI_ENVIRONMENT = development
 
 When your application runs, **.env** will be loaded automatically, and the variables put
 into the environment. If a variable already exists in the environment, it will NOT be
@@ -165,7 +165,7 @@ the configuration class properties are left unchanged. In this usage, the prefix
 the full (case-sensitive) namespace of the class.
 ::
 
-    Config\App.CSRFProtection  = true
+    Config\App.CSRFProtection = true
     Config\App.CSRFCookieName = csrf_cookie
     Config\App.CSPEnabled = true
 
@@ -177,11 +177,26 @@ the configuration class name. If the short prefix matches the class name,
 the value from **.env** replaces the configuration file value.
 ::
 
-    app.CSRFProtection  = true
+    app.CSRFProtection = true
     app.CSRFCookieName = csrf_cookie
     app.CSPEnabled = true
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
+
+Environment Variables as Replacements for Data
+==============================================
+
+It is very important to always remember that environment variables contained in your **.env** are
+**only replacements for existing data**. This means that you cannot expect to fill your ``.env`` with all
+the replacements for your configurations but have nothing to receive these replacements in the
+related configuration file(s).
+
+The ``.env`` only serves to fill or replace the values in your configuration files. That said, your
+configuration files should have a container or receiving property for those. Adding so many variables in
+your ``.env`` with nothing to contain them in the receiving end is useless.
+
+Simply put, you cannot just put ``app.myNewConfig = foo`` in your ``.env`` and expect your ``Config\App``
+to magically have that property and value at run time.
 
 Treating Environment Variables as Arrays
 ========================================
@@ -231,8 +246,42 @@ Do not track **.env** files with your version control system. If you do, and the
 Registrars
 ==========
 
-A configuration file can also specify any number of "registrars", which are any
-other classes which might provide additional configuration properties.
+"Registrars" are any other classes which might provide additional configuration properties.
+Registrars provide a means of altering a configuration at runtime across namespaces and files.
+There are two ways to implement a Registrar: implicit and explicit.
+
+.. note:: Values from **.env** always take priority over Registrars.
+
+Implicit Registrars
+-------------------
+
+Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
+is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
+named for each configuration class you wish to extend. For example, a third-party module might
+wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
+already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
+the single ``Pager()`` method (note the case-sensitivity)::
+
+	class Registrar
+	{
+		public static function Pager(): array
+		{
+			return [
+				'templates' => [
+					'module_pager' => 'MyModule\Views\Pager',
+				],
+			];
+		}
+	}
+
+Registrar methods must always return an array, with keys corresponding to the properties
+of the target config file. Existing values are merged, and Registrar properties have
+overwrite priority.
+
+Explicit Registrars
+-------------------
+
+A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
 holding an array of the names of candidate registrars.::
 
@@ -289,7 +338,3 @@ by treating ``RegionalSales`` as a "registrar". The resulting configuration prop
     $target   = 45;
     $campaign = "Winter Wonderland";
 
-In addition to explicit registrars defined by the ``$registrars`` property, you may also
-define registrars in any namespace using the **Config/Registrars.php** file, if discovery
-is enabled in :doc:`Modules </general/modules>`. These files work the same as the classes
-described above, using methods named for each configuration class you wish to extend.

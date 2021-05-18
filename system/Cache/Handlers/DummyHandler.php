@@ -23,7 +23,6 @@ class DummyHandler extends BaseHandler
 	 */
 	public function initialize()
 	{
-		// Nothing to see here...
 	}
 
 	//--------------------------------------------------------------------
@@ -33,7 +32,7 @@ class DummyHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return mixed
+	 * @return null
 	 */
 	public function get(string $key)
 	{
@@ -49,7 +48,7 @@ class DummyHandler extends BaseHandler
 	 * @param integer $ttl      Time to live
 	 * @param Closure $callback Callback return value
 	 *
-	 * @return mixed
+	 * @return null
 	 */
 	public function remember(string $key, int $ttl, Closure $callback)
 	{
@@ -65,7 +64,7 @@ class DummyHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
@@ -79,11 +78,25 @@ class DummyHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return integer The number of deleted items
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		return 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -94,7 +107,7 @@ class DummyHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -109,7 +122,7 @@ class DummyHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -121,7 +134,7 @@ class DummyHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -136,7 +149,7 @@ class DummyHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return null
 	 */
 	public function getCacheInfo()
 	{
@@ -150,7 +163,7 @@ class DummyHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return null
 	 */
 	public function getMetaData(string $key)
 	{
@@ -168,6 +181,4 @@ class DummyHandler extends BaseHandler
 	{
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 }

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Exceptions;
 
 use CodeIgniter\Exceptions\DebugTraceableTrait;
+use CodeIgniter\Exceptions\ExceptionInterface;
 use RuntimeException;
 
 /**

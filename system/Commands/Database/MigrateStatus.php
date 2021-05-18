@@ -90,7 +90,7 @@ class MigrateStatus extends BaseCommand
 		// Collection of migration status
 		$status = [];
 
-		foreach ($namespaces as $namespace => $path)
+		foreach (array_keys($namespaces) as $namespace)
 		{
 			if (ENVIRONMENT !== 'testing')
 			{

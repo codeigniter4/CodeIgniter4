@@ -86,7 +86,7 @@ trait MessageTrait
 		}
 		unset($contentType);
 
-		foreach ($_SERVER as $key => $val)
+		foreach (array_keys($_SERVER) as $key)
 		{
 			if (sscanf($key, 'HTTP_%s', $header) === 1)
 			{

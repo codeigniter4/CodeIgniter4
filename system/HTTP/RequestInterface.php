@@ -14,9 +14,9 @@ namespace CodeIgniter\HTTP;
 /**
  * Expected behavior of an HTTP request
  *
- * @mixin \CodeIgniter\HTTP\IncomingRequest
- * @mixin \CodeIgniter\HTTP\CLIRequest
- * @mixin \CodeIgniter\HTTP\CURLRequest
+ * @mixin IncomingRequest
+ * @mixin CLIRequest
+ * @mixin CURLRequest
  */
 interface RequestInterface
 {

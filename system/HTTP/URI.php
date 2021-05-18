@@ -12,7 +12,6 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\App;
 use InvalidArgumentException;
 
 /**
@@ -139,6 +138,113 @@ class URI
 	 * @var boolean
 	 */
 	protected $rawQueryString = false;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Builds a representation of the string from the component parts.
+	 *
+	 * @param string $scheme
+	 * @param string $authority
+	 * @param string $path
+	 * @param string $query
+	 * @param string $fragment
+	 *
+	 * @return string
+	 */
+	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
+	{
+		$uri = '';
+		if (! empty($scheme))
+		{
+			$uri .= $scheme . '://';
+		}
+
+		if (! empty($authority))
+		{
+			$uri .= $authority;
+		}
+
+		if (isset($path) && $path !== '')
+		{
+			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
+		}
+
+		if ($query)
+		{
+			$uri .= '?' . $query;
+		}
+
+		if ($fragment)
+		{
+			$uri .= '#' . $fragment;
+		}
+
+		return $uri;
+	}
+
+	/**
+	 * Used when resolving and merging paths to correctly interpret and
+	 * remove single and double dot segments from the path per
+	 * RFC 3986 Section 5.2.4
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
+	 *
+	 * @param string $path
+	 *
+	 * @return   string
+	 * @internal
+	 */
+	public static function removeDotSegments(string $path): string
+	{
+		if ($path === '' || $path === '/')
+		{
+			return $path;
+		}
+
+		$output = [];
+
+		$input = explode('/', $path);
+
+		if ($input[0] === '')
+		{
+			unset($input[0]);
+			$input = array_values($input);
+		}
+
+		// This is not a perfect representation of the
+		// RFC, but matches most cases and is pretty
+		// much what Guzzle uses. Should be good enough
+		// for almost every real use case.
+		foreach ($input as $segment)
+		{
+			if ($segment === '..')
+			{
+				array_pop($output);
+			}
+			elseif ($segment !== '.' && $segment !== '')
+			{
+				$output[] = $segment;
+			}
+		}
+
+		$output = implode('/', $output);
+		$output = trim($output, '/ ');
+
+		// Add leading slash if necessary
+		if (strpos($path, '/') === 0)
+		{
+			$output = '/' . $output;
+		}
+
+		// Add trailing slash if necessary
+		if ($output !== '/' && substr($path, -1, 1) === '/')
+		{
+			$output .= '/';
+		}
+
+		return $output;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -280,14 +386,11 @@ class URI
 			$authority = $this->getUserInfo() . '@' . $authority;
 		}
 
-		if (! empty($this->port) && ! $ignorePort)
+		// Don't add port if it's a standard port for
+		// this scheme
+		if (! empty($this->port) && ! $ignorePort && $this->port !== $this->defaultPorts[$this->scheme])
 		{
-			// Don't add port if it's a standard port for
-			// this scheme
-			if ($this->port !== $this->defaultPorts[$this->scheme])
-			{
-				$authority .= ':' . $this->port;
-			}
+			$authority .= ':' . $this->port;
 		}
 
 		$this->showPassword = false;
@@ -361,7 +464,7 @@ class URI
 	 */
 	public function getHost(): string
 	{
-		return $this->host;
+		return $this->host ?? '';
 	}
 
 	//--------------------------------------------------------------------
@@ -561,33 +664,45 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Allow the URI to be output as a string by simply casting it to a string
-	 * or echoing out.
+	 * Formats the URI as a string.
+	 *
+	 * Warning: For backwards-compatability this method
+	 * assumes URIs with the same host as baseURL should
+	 * be relative to the project's configuration.
+	 * This aspect of __toString() is deprecated and should be avoided.
+	 *
+	 * @return string
 	 */
 	public function __toString(): string
 	{
-		// If hosted in a sub-folder, we will have additional
-		// segments that show up prior to the URI path we just
-		// grabbed from the request, so add it on if necessary.
-		$config   = config(App::class);
-		$baseUri  = new self($config->baseURL);
-		$basePath = trim($baseUri->getPath(), '/') . '/';
-		$path     = $this->getPath();
-		$trimPath = ltrim($path, '/');
+		$path   = $this->getPath();
+		$scheme = $this->getScheme();
 
-		if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
-		{
-			$path = $basePath . $trimPath;
-		}
+		// Check if this is an internal URI
+		$config  = config('App');
+		$baseUri = new self($config->baseURL);
 
-		// force https if needed
-		if ($config->forceGlobalSecureRequests)
+		// If the hosts matches then assume this should be relative to baseURL
+		if ($this->getHost() === $baseUri->getHost())
 		{
-			$this->setScheme('https');
+			// Check for additional segments
+			$basePath = trim($baseUri->getPath(), '/') . '/';
+			$trimPath = ltrim($path, '/');
+
+			if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
+			{
+				$path = $basePath . $trimPath;
+			}
+
+			// Check for forced HTTPS
+			if ($config->forceGlobalSecureRequests)
+			{
+				$scheme = 'https';
+			}
 		}
 
 		return static::createURIString(
-			$this->getScheme(), $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
+			$scheme, $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
 			$this->getQuery(), $this->getFragment()
 		);
 	}
@@ -595,51 +710,7 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds a representation of the string from the component parts.
-	 *
-	 * @param string $scheme
-	 * @param string $authority
-	 * @param string $path
-	 * @param string $query
-	 * @param string $fragment
-	 *
-	 * @return string
-	 */
-	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
-	{
-		$uri = '';
-		if (! empty($scheme))
-		{
-			$uri .= $scheme . '://';
-		}
-
-		if (! empty($authority))
-		{
-			$uri .= $authority;
-		}
-
-		if ($path !== '')
-		{
-			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
-		}
-
-		if ($query)
-		{
-			$uri .= '?' . $query;
-		}
-
-		if ($fragment)
-		{
-			$uri .= '#' . $fragment;
-		}
-
-		return $uri;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Parses the given string an saves the appropriate authority pieces.
+	 * Parses the given string and saves the appropriate authority pieces.
 	 *
 	 * @param string $str
 	 *
@@ -950,7 +1021,7 @@ class URI
 		$path = urldecode($path);
 
 		// Remove dot segments
-		$path = $this->removeDotSegments($path);
+		$path = self::removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
 		if (strpos($orig, './') === 0)
@@ -1013,14 +1084,11 @@ class URI
 		}
 
 		// Port
-		if (isset($parts['port']))
+		if (isset($parts['port']) && ! is_null($parts['port']))
 		{
-			if (! is_null($parts['port']))
-			{
-				// Valid port numbers are enforced by earlier parse_url or setPort()
-				$port       = $parts['port'];
-				$this->port = $port;
-			}
+			// Valid port numbers are enforced by earlier parse_url or setPort()
+			$port       = $parts['port'];
+			$this->port = $port;
 		}
 
 		if (isset($parts['pass']))
@@ -1139,77 +1207,9 @@ class URI
 		}
 
 		array_pop($path);
-		array_push($path, $reference->getPath());
+		$path[] = $reference->getPath();
 
 		return implode('/', $path);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Used when resolving and merging paths to correctly interpret and
-	 * remove single and double dot segments from the path per
-	 * RFC 3986 Section 5.2.4
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
-	 *
-	 * @param string $path
-	 *
-	 * @return   string
-	 * @internal param \CodeIgniter\HTTP\URI $uri
-	 */
-	public function removeDotSegments(string $path): string
-	{
-		if ($path === '' || $path === '/')
-		{
-			return $path;
-		}
-
-		$output = [];
-
-		$input = explode('/', $path);
-
-		if ($input[0] === '')
-		{
-			unset($input[0]);
-			$input = array_values($input);
-		}
-
-		// This is not a perfect representation of the
-		// RFC, but matches most cases and is pretty
-		// much what Guzzle uses. Should be good enough
-		// for almost every real use case.
-		foreach ($input as $segment)
-		{
-			if ($segment === '..')
-			{
-				array_pop($output);
-			}
-			elseif ($segment !== '.' && $segment !== '')
-			{
-				array_push($output, $segment);
-			}
-		}
-
-		$output = implode('/', $output);
-		$output = ltrim($output, '/ ');
-
-		if ($output !== '/')
-		{
-			// Add leading slash if necessary
-			if (strpos($path, '/') === 0)
-			{
-				$output = '/' . $output;
-			}
-
-			// Add trailing slash if necessary
-			if (substr($path, -1, 1) === '/')
-			{
-				$output .= '/';
-			}
-		}
-
-		return $output;
 	}
 
 	//--------------------------------------------------------------------

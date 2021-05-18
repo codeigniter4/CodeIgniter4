@@ -80,6 +80,7 @@ class SeederGenerator extends BaseCommand
 		$this->directory = 'Database\Seeds';
 		$this->template  = 'seeder.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.seeder';
 		$this->execute($params);
 	}
 }

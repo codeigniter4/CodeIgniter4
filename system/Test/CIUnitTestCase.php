@@ -13,24 +13,31 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockCache;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
+use Config\App;
+use Config\Autoload;
+use Config\Modules;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
- * PHPunit test case.
+ * Framework test case for PHPUnit.
  */
 abstract class CIUnitTestCase extends TestCase
 {
 	use ReflectionHelper;
 
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $app;
 
@@ -52,6 +59,158 @@ abstract class CIUnitTestCase extends TestCase
 	 * @var array of methods
 	 */
 	protected $tearDownMethods = [];
+
+	/**
+	 * Store of identified traits.
+	 *
+	 * @var string[]|null
+	 */
+	private $traits;
+
+	//--------------------------------------------------------------------
+	// Database Properties
+	//--------------------------------------------------------------------
+
+	/**
+	 * Should run db migration?
+	 *
+	 * @var boolean
+	 */
+	protected $migrate = true;
+
+	/**
+	 * Should run db migration only once?
+	 *
+	 * @var boolean
+	 */
+	protected $migrateOnce = false;
+
+	/**
+	 * Should run seeding only once?
+	 *
+	 * @var boolean
+	 */
+	protected $seedOnce = false;
+
+	/**
+	 * Should the db be refreshed before test?
+	 *
+	 * @var boolean
+	 */
+	protected $refresh = true;
+
+	/**
+	 * The seed file(s) used for all tests within this test case.
+	 * Should be fully-namespaced or relative to $basePath
+	 *
+	 * @var string|array
+	 */
+	protected $seed = '';
+
+	/**
+	 * The path to the seeds directory.
+	 * Allows overriding the default application directories.
+	 *
+	 * @var string
+	 */
+	protected $basePath = SUPPORTPATH . 'Database';
+
+	/**
+	 * The namespace(s) to help us find the migration classes.
+	 * Empty is equivalent to running `spark migrate -all`.
+	 * Note that running "all" runs migrations in date order,
+	 * but specifying namespaces runs them in namespace order (then date)
+	 *
+	 * @var string|array|null
+	 */
+	protected $namespace = 'Tests\Support';
+
+	/**
+	 * The name of the database group to connect to.
+	 * If not present, will use the defaultGroup.
+	 *
+	 * @var string
+	 */
+	protected $DBGroup = 'tests';
+
+	/**
+	 * Our database connection.
+	 *
+	 * @var BaseConnection
+	 */
+	protected $db;
+
+	/**
+	 * Migration Runner instance.
+	 *
+	 * @var MigrationRunner|mixed
+	 */
+	protected $migrations;
+
+	/**
+	 * Seeder instance
+	 *
+	 * @var Seeder
+	 */
+	protected $seeder;
+
+	/**
+	 * Stores information needed to remove any
+	 * rows inserted via $this->hasInDatabase();
+	 *
+	 * @var array
+	 */
+	protected $insertCache = [];
+
+	//--------------------------------------------------------------------
+	// Feature Properties
+	//--------------------------------------------------------------------
+
+	/**
+	 * If present, will override application
+	 * routes when using call().
+	 *
+	 * @var RouteCollection|null
+	 */
+	protected $routes;
+
+	/**
+	 * Values to be set in the SESSION global
+	 * before running the test.
+	 *
+	 * @var array
+	 */
+	protected $session = [];
+
+	/**
+	 * Enabled auto clean op buffer after request call
+	 *
+	 * @var boolean
+	 */
+	protected $clean = true;
+
+	/**
+	 * Custom request's headers
+	 *
+	 * @var array
+	 */
+	protected $headers = [];
+
+	/**
+	 * Allows for formatting the request body to what
+	 * the controller is going to expect
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = '';
+
+	/**
+	 * Allows for directly setting the body to what
+	 * it needs to be.
+	 *
+	 * @var mixed
+	 */
+	protected $requestBody = '';
 
 	//--------------------------------------------------------------------
 	// Staging
@@ -80,6 +239,15 @@ abstract class CIUnitTestCase extends TestCase
 		{
 			$this->$method();
 		}
+
+		// Check for the database trait
+		if (method_exists($this, 'setUpDatabase'))
+		{
+			$this->setUpDatabase();
+		}
+
+		// Check for other trait methods
+		$this->callTraitMethods('setUp');
 	}
 
 	protected function tearDown(): void
@@ -89,6 +257,41 @@ abstract class CIUnitTestCase extends TestCase
 		foreach ($this->tearDownMethods as $method)
 		{
 			$this->$method();
+		}
+
+		// Check for the database trait
+		if (method_exists($this, 'tearDownDatabase'))
+		{
+			$this->tearDownDatabase();
+		}
+
+		// Check for other trait methods
+		$this->callTraitMethods('tearDown');
+	}
+
+	/**
+	 * Checks for traits with corresponding
+	 * methods for setUp or tearDown.
+	 *
+	 * @param string $stage 'setUp' or 'tearDown'
+	 *
+	 * @return void
+	 */
+	private function callTraitMethods(string $stage): void
+	{
+		if (is_null($this->traits))
+		{
+			$this->traits = class_uses_recursive($this);
+		}
+
+		foreach ($this->traits as $trait)
+		{
+			$method = $stage . class_basename($trait);
+
+			if (method_exists($this, $method))
+			{
+				$this->$method();
+			}
 		}
 	}
 
@@ -159,7 +362,12 @@ abstract class CIUnitTestCase extends TestCase
 	{
 		$result = TestLogger::didLog($level, $expectedMessage);
 
-		$this->assertTrue($result);
+		$this->assertTrue($result, sprintf(
+			'Failed asserting that expected message "%s" with level "%s" was logged.',
+			$expectedMessage ?? '',
+			$level
+		));
+
 		return $result;
 	}
 
@@ -326,9 +534,13 @@ abstract class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$path = __DIR__ . '/../bootstrap.php';
-		$path = realpath($path) ?: $path;
-		return require $path;
+		// Initialize the autoloader.
+		Services::autoloader()->initialize(new Autoload(), new Modules());
+
+		$app = new MockCodeIgniter(new App());
+		$app->initialize();
+
+		return $app;
 	}
 
 	/**

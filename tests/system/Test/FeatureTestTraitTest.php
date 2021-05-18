@@ -1,16 +1,21 @@
 <?php
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestCase;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\Test\TestResponse;
 
 /**
  * @group                       DatabaseLive
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class FeatureTestCaseTest extends FeatureTestCase
+class FeatureTestTraitTest extends CIUnitTestCase
 {
+	use FeatureTestTrait;
 
 	protected function setUp(): void
 	{
@@ -49,11 +54,11 @@ class FeatureTestCaseTest extends FeatureTestCase
 		]);
 		$response = $this->call('get', 'home');
 
-		$this->assertInstanceOf(FeatureResponse::class, $response);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\Response::class, $response->response);
+		$this->assertInstanceOf(TestResponse::class, $response);
+		$this->assertInstanceOf(Response::class, $response->response());
 		$this->assertTrue($response->isOK());
-		$this->assertEquals('Hello Earth', $response->response->getBody());
-		$this->assertEquals(200, $response->response->getStatusCode());
+		$this->assertEquals('Hello Earth', $response->response()->getBody());
+		$this->assertEquals(200, $response->response()->getStatusCode());
 	}
 
 	public function testCallPost()
@@ -215,7 +220,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			],
 		]);
 		$response = $this->get('home');
-		$response->assertEmpty($response->response->getBody());
+		$response->assertEmpty($response->response()->getBody());
 	}
 
 	public function testEchoesWithParams()
@@ -326,6 +331,20 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
 		$response->assertOK();
 		$response->assertJSONExact(['foo' => 'bar']);
+	}
+
+	public function testCallWithJsonRequestObject()
+	{
+		$this->withRoutes([
+			[
+				'post',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::echoJson',
+			],
+		]);
+		$response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
+		$response->assertOK();
+		$response->assertJSONExact((object) ['foo' => 'bar']);
 	}
 
 	public function testSetupRequestBodyWithParams()

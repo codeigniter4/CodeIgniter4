@@ -1,7 +1,11 @@
 <?php
 
+namespace CodeIgniter;
+
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
+use ReflectionClass;
+use ReflectionMethod;
 
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
@@ -33,14 +37,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 		$params = [];
 		$method = new ReflectionMethod(Services::class, $service);
 
-		if ($method->getNumberOfParameters() === 1)
-		{
-			$params[] = true;
-		}
-		else
-		{
-			$params[] = $method->getParameters()[0]->getDefaultValue();
-		}
+		$params[] = $method->getNumberOfParameters() === 1 ? true : $method->getParameters()[0]->getDefaultValue();
 
 		$service1 = single_service($service, ...$params);
 		$service2 = single_service($service, ...$params);
@@ -80,6 +77,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 				'__callStatic',
 				'serviceExists',
 				'reset',
+				'resetSingle',
 				'injectMock',
 				'encrypter', // Encrypter needs a starter key
 				'session', // Headers already sent

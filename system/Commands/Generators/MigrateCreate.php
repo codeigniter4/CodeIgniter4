@@ -17,7 +17,7 @@ use CodeIgniter\CLI\CLI;
 /**
  * Deprecated class for the migration creation command.
  *
- * @deprecated Use make:command instead.
+ * @deprecated Use make:migration instead.
  *
  * @codeCoverageIgnore
  */
@@ -67,8 +67,8 @@ class MigrateCreate extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'      => 'Set root namespace. Defaults to APP_NAMESPACE',
-		'--force' => 'Force overwrite existing files.',
+		'--namespace' => 'Set root namespace. Defaults to APP_NAMESPACE',
+		'--force'     => 'Force overwrite existing files.',
 	];
 
 	/**

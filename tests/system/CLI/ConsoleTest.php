@@ -3,6 +3,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -21,7 +22,7 @@ class ConsoleTest extends CIUnitTestCase
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
-		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
+		$this->env = new DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
@@ -47,16 +48,24 @@ class ConsoleTest extends CIUnitTestCase
 
 	public function testNew()
 	{
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$this->assertInstanceOf(Console::class, $console);
 	}
 
 	public function testHeader()
 	{
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$console->showHeader();
 		$result = CITestStreamFilter::$buffer;
 		$this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)) > 0);
+	}
+
+	public function testNoHeader()
+	{
+		$console = new Console($this->app);
+		$console->showHeader(true);
+		$result = CITestStreamFilter::$buffer;
+		$this->assertSame('', $result);
 	}
 
 	public function testRun()
@@ -64,7 +73,7 @@ class ConsoleTest extends CIUnitTestCase
 		$request = new CLIRequest(config('App'));
 		$this->app->setRequest($request);
 
-		$console = new \CodeIgniter\CLI\Console($this->app);
+		$console = new Console($this->app);
 		$console->run(true);
 		$result = CITestStreamFilter::$buffer;
 

@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
@@ -55,11 +56,27 @@ class IncomingRequest extends Request
 	protected $enableCSRF = false;
 
 	/**
-	 * A \CodeIgniter\HTTP\URI instance.
+	 * The URI for this request.
+	 *
+	 * Note: This WILL NOT match the actual URL in the browser since for
+	 * everything this cares about (and the router, etc) is the portion
+	 * AFTER the script name. So, if hosted in a sub-folder this will
+	 * appear different than actual URL. If you need that use getPath().
 	 *
 	 * @var URI
 	 */
 	public $uri;
+
+	/**
+	 * The detected path (relative to SCRIPT_NAME).
+	 *
+	 * Note: current_url() uses this to build its URI,
+	 * so this becomes the source for the "current URL"
+	 * when working with the share request instance.
+	 *
+	 * @var string|null
+	 */
+	protected $path;
 
 	/**
 	 * File collection
@@ -120,11 +137,10 @@ class IncomingRequest extends Request
 	protected $userAgent;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
-	 * @param object      $config
+	 * @param App         $config
 	 * @param URI         $uri
 	 * @param string|null $body
 	 * @param UserAgent   $userAgent
@@ -142,25 +158,16 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body      = ! empty($body) ? $body : null;
-		$this->config    = $config;
-		$this->userAgent = $userAgent;
+		$this->config       = $config;
+		$this->uri          = $uri;
+		$this->body         = ! empty($body) ? $body : null;
+		$this->userAgent    = $userAgent;
+		$this->validLocales = $config->supportedLocales;
 
 		parent::__construct($config);
 
 		$this->populateHeaders();
-
-		// Get our current URI.
-		// NOTE: This WILL NOT match the actual URL in the browser since for
-		// everything this cares about (and the router, etc) is the portion
-		// AFTER the script name. So, if hosted in a sub-folder this will
-		// appear different than actual URL. If you need that, use current_url().
-		$this->uri = $uri;
-
 		$this->detectURI($config->uriProtocol, $config->baseURL);
-
-		$this->validLocales = $config->supportedLocales;
-
 		$this->detectLocale($config);
 	}
 
@@ -184,29 +191,293 @@ class IncomingRequest extends Request
 		$this->setLocale($this->negotiate('language', $config->supportedLocales));
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Sets up our URI object based on the information we have. This is
+	 * either provided by the user in the baseURL Config setting, or
+	 * determined from the environment as needed.
+	 *
+	 * @param string $protocol
+	 * @param string $baseURL
+	 */
+	protected function detectURI(string $protocol, string $baseURL)
+	{
+		// Passing the config is unnecessary but left for legacy purposes
+		$config          = clone $this->config;
+		$config->baseURL = $baseURL;
+
+		$this->setPath($this->detectPath($protocol), $config);
+	}
 
 	/**
-	 * Returns the default locale as set in Config\App.php
+	 * Detects the relative path based on
+	 * the URIProtocol Config setting.
+	 *
+	 * @param string $protocol
 	 *
 	 * @return string
 	 */
-	public function getDefaultLocale(): string
+	public function detectPath(string $protocol = ''): string
 	{
-		return $this->defaultLocale;
+		if (empty($protocol))
+		{
+			$protocol = 'REQUEST_URI';
+		}
+
+		switch ($protocol)
+		{
+			case 'REQUEST_URI':
+				$this->path = $this->parseRequestURI();
+				break;
+			case 'QUERY_STRING':
+				$this->path = $this->parseQueryString();
+				break;
+			case 'PATH_INFO':
+			default:
+				$this->path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
+				break;
+		}
+
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Gets the current locale, with a fallback to the default
-	 * locale if none is set.
+	 * Will parse the REQUEST_URI and automatically detect the URI from it,
+	 * fixing the query string if necessary.
+	 *
+	 * @return string The URI it found.
+	 */
+	protected function parseRequestURI(): string
+	{
+		if (! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+		{
+			return '';
+		}
+
+		// parse_url() returns false if no host is present, but the path or query string
+		// contains a colon followed by a number. So we attach a dummy host since
+		// REQUEST_URI does not include the host. This allows us to parse out the query string and path.
+		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
+		$query = $parts['query'] ?? '';
+		$uri   = $parts['path'] ?? '';
+
+		// Strip the SCRIPT_NAME path from the URI
+		if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
+		{
+			// Compare each segment, dropping them until there is no match
+			$segments = $keep = explode('/', $uri);
+			foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment)
+			{
+				// If these segments are not the same then we're done
+				if ($segment !== $segments[$i])
+				{
+					break;
+				}
+
+				array_shift($keep);
+			}
+
+			$uri = implode('/', $keep);
+		}
+
+		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
+		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
+		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
+		{
+			$query                   = explode('?', $query, 2);
+			$uri                     = $query[0];
+			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
+		}
+		else
+		{
+			$_SERVER['QUERY_STRING'] = $query;
+		}
+
+		// Update our globals for values likely to been have changed
+		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		$this->populateGlobals('server');
+		$this->populateGlobals('get');
+
+		$uri = URI::removeDotSegments($uri);
+
+		return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
+	}
+
+	/**
+	 * Parse QUERY_STRING
+	 *
+	 * Will parse QUERY_STRING and automatically detect the URI from it.
 	 *
 	 * @return string
 	 */
-	public function getLocale(): string
+	protected function parseQueryString(): string
 	{
-		return $this->locale ?? $this->defaultLocale;
+		$uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
+
+		if (trim($uri, '/') === '')
+		{
+			return '';
+		}
+
+		if (strncmp($uri, '/', 1) === 0)
+		{
+			$uri                     = explode('?', $uri, 2);
+			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
+			$uri                     = $uri[0];
+		}
+
+		// Update our globals for values likely to been have changed
+		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		$this->populateGlobals('server');
+		$this->populateGlobals('get');
+
+		$uri = URI::removeDotSegments($uri);
+
+		return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Provides a convenient way to work with the Negotiate class
+	 * for content negotiation.
+	 *
+	 * @param string  $type
+	 * @param array   $supported
+	 * @param boolean $strictMatch
+	 *
+	 * @return string
+	 */
+	public function negotiate(string $type, array $supported, bool $strictMatch = false): string
+	{
+		if (is_null($this->negotiator))
+		{
+			$this->negotiator = Services::negotiator($this, true);
+		}
+
+		switch (strtolower($type))
+		{
+			case 'media':
+				return $this->negotiator->media($supported, $strictMatch);
+			case 'charset':
+				return $this->negotiator->charset($supported);
+			case 'encoding':
+				return $this->negotiator->encoding($supported);
+			case 'language':
+				return $this->negotiator->language($supported);
+		}
+
+		throw HTTPException::forInvalidNegotiationType($type);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if this request was made from the command line (CLI).
+	 *
+	 * @return boolean
+	 */
+	public function isCLI(): bool
+	{
+		return is_cli();
+	}
+
+	/**
+	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
+	 *
+	 * @return boolean
+	 */
+	public function isAJAX(): bool
+	{
+		return $this->hasHeader('X-Requested-With') && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
+	}
+
+	/**
+	 * Attempts to detect if the current connection is secure through
+	 * a few different methods.
+	 *
+	 * @return boolean
+	 */
+	public function isSecure(): bool
+	{
+		if (! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		{
+			return true;
+		}
+
+		if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https')
+		{
+			return true;
+		}
+		return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the relative path and updates the URI object.
+	 * Note: Since current_url() accesses the shared request
+	 * instance, this can be used to change the "current URL"
+	 * for testing.
+	 *
+	 * @param string $path   URI path relative to SCRIPT_NAME
+	 * @param App    $config Optional alternate config to use
+	 *
+	 * @return $this
+	 */
+	public function setPath(string $path, App $config = null)
+	{
+		$this->path = $path;
+		$this->uri->setPath($path);
+
+		$config = $config ?? $this->config;
+
+		// It's possible the user forgot a trailing slash on their
+		// baseURL, so let's help them out.
+		$baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
+
+		// Based on our baseURL provided by the developer
+		// set our current domain name, scheme
+		if ($baseURL !== '')
+		{
+			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
+			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
+			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+
+			// Ensure we have any query vars
+			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
+
+			// Check if the baseURL scheme needs to be coerced into its secure version
+			if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http')
+			{
+				$this->uri->setScheme('https');
+			}
+		}
+		// @codeCoverageIgnoreStart
+		elseif (! is_cli())
+		{
+			die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+		}
+		// @codeCoverageIgnoreEnd
+
+		return $this;
+	}
+
+	/**
+	 * Returns the path relative to SCRIPT_NAME,
+	 * running detection as necessary.
+	 *
+	 * @return string
+	 */
+	public function getPath(): string
+	{
+		if (is_null($this->path))
+		{
+			$this->detectPath($this->config->uriProtocol);
+		}
+
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
@@ -233,62 +504,31 @@ class IncomingRequest extends Request
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Gets the current locale, with a fallback to the default
+	 * locale if none is set.
+	 *
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale ?? $this->defaultLocale;
+	}
 
 	/**
-	 * Determines if this request was made from the command line (CLI).
+	 * Returns the default locale as set in Config\App.php
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function isCLI(): bool
+	public function getDefaultLocale(): string
 	{
-		return is_cli();
+		return $this->defaultLocale;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
-	 *
-	 * @return boolean
-	 */
-	public function isAJAX(): bool
-	{
-		return $this->hasHeader('X-Requested-With') && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to detect if the current connection is secure through
-	 * a few different methods.
-	 *
-	 * @return boolean
-	 */
-	public function isSecure(): bool
-	{
-		if (! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-		{
-			return true;
-		}
-
-		if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https')
-		{
-			return true;
-		}
-
-		if ($this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off')
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fetch an item from the $_REQUEST object or a JSON input stream. This is the simplest way
+	 * Fetch an item from JSON input stream with fallback to $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
@@ -300,7 +540,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		if ($this->isJSON())
+		if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && ! is_null($this->body))
 		{
 			if (is_null($index))
 			{
@@ -312,14 +552,13 @@ class IncomingRequest extends Request
 				$output = [];
 				foreach ($index as $key)
 				{
-					$output[$key] = $this->getJsonVar($key);
+					$output[$key] = $this->getJsonVar($key, false, $filter, $flags);
 				}
 				return $output;
 			}
 
-			return $this->getJsonVar($index);
+			return $this->getJsonVar($index, false, $filter, $flags);
 		}
-
 		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
@@ -348,20 +587,31 @@ class IncomingRequest extends Request
 	/**
 	 * Get a specific variable from a JSON input stream
 	 *
-	 * @param string  $index The variable that you want which can use dot syntax for getting specific values.
-	 * @param boolean $assoc If true, return the result as an associative array.
-	 *
+	 * @param  string             $index  The variable that you want which can use dot syntax for getting specific values.
+	 * @param  boolean            $assoc  If true, return the result as an associative array.
+	 * @param  integer|null       $filter Filter Constant
+	 * @param  array|integer|null $flags  Option
 	 * @return mixed
 	 */
-	public function getJsonVar(string $index, bool $assoc = false)
+	public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
 	{
 		helper('array');
 
 		$data = dot_array_search($index, $this->getJSON(true));
-		if (is_array($data) && ! $assoc)
+
+		if (! is_array($data))
+		{
+			$filter = $filter ?? FILTER_DEFAULT;
+			$flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+
+			return filter_var($data, $filter, $flags);
+		}
+
+		if (! $assoc)
 		{
 			return json_decode(json_encode($data));
 		}
+
 		return $data;
 	}
 
@@ -467,7 +717,6 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Fetch the user agent string
 	 *
@@ -495,7 +744,7 @@ class IncomingRequest extends Request
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
 		{
-			return;
+			return null;
 		}
 
 		// Check for the value in the POST array first.
@@ -532,9 +781,11 @@ class IncomingRequest extends Request
 			}
 		}
 
-		//      // return null if requested session key not found
-		//      return null;
+		// requested session key not found
+		return null;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an array of all files that have been uploaded with this
@@ -551,8 +802,6 @@ class IncomingRequest extends Request
 
 		return $this->files->all(); // return all files
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Verify if a file exist, by the name of the input field used to upload it, in the collection
@@ -571,8 +820,6 @@ class IncomingRequest extends Request
 
 		return $this->files->getFileMultiple($fileID);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieves a single file by the name of the input field used
@@ -595,208 +842,6 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets up our URI object based on the information we have. This is
-	 * either provided by the user in the baseURL Config setting, or
-	 * determined from the environment as needed.
-	 *
-	 * @param string $protocol
-	 * @param string $baseURL
-	 */
-	protected function detectURI(string $protocol, string $baseURL)
-	{
-		$this->uri->setPath($this->detectPath($protocol));
-
-		// It's possible the user forgot a trailing slash on their
-		// baseURL, so let's help them out.
-		$baseURL = ! empty($baseURL) ? rtrim($baseURL, '/ ') . '/' : $baseURL;
-
-		// Based on our baseURL provided by the developer
-		// set our current domain name, scheme
-		if (! empty($baseURL))
-		{
-			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
-			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-
-			// Ensure we have any query vars
-			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
-		}
-		else
-		{
-			// @codeCoverageIgnoreStart
-			if (! is_cli())
-			{
-				die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
-			}
-			// @codeCoverageIgnoreEnd
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Based on the URIProtocol Config setting, will attempt to
-	 * detect the path portion of the current URI.
-	 *
-	 * @param string $protocol
-	 *
-	 * @return string
-	 */
-	public function detectPath(string $protocol = ''): string
-	{
-		if (empty($protocol))
-		{
-			$protocol = 'REQUEST_URI';
-		}
-
-		switch ($protocol)
-		{
-			case 'REQUEST_URI':
-				$path = $this->parseRequestURI();
-				break;
-			case 'QUERY_STRING':
-				$path = $this->parseQueryString();
-				break;
-			case 'PATH_INFO':
-			default:
-				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
-				break;
-		}
-
-		return $path;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Provides a convenient way to work with the Negotiate class
-	 * for content negotiation.
-	 *
-	 * @param string  $type
-	 * @param array   $supported
-	 * @param boolean $strictMatch
-	 *
-	 * @return string
-	 */
-	public function negotiate(string $type, array $supported, bool $strictMatch = false): string
-	{
-		if (is_null($this->negotiator))
-		{
-			$this->negotiator = Services::negotiator($this, true);
-		}
-
-		switch (strtolower($type))
-		{
-			case 'media':
-				return $this->negotiator->media($supported, $strictMatch);
-			case 'charset':
-				return $this->negotiator->charset($supported);
-			case 'encoding':
-				return $this->negotiator->encoding($supported);
-			case 'language':
-				return $this->negotiator->language($supported);
-		}
-
-		throw HTTPException::forInvalidNegotiationType($type);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Will parse the REQUEST_URI and automatically detect the URI from it,
-	 * fixing the query string if necessary.
-	 *
-	 * @return string The URI it found.
-	 */
-	protected function parseRequestURI(): string
-	{
-		if (! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
-		{
-			return '';
-		}
-
-		// parse_url() returns false if no host is present, but the path or query string
-		// contains a colon followed by a number. So we attach a dummy host since
-		// REQUEST_URI does not include the host. This allows us to parse out the query string and path.
-		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
-		$query = $parts['query'] ?? '';
-		$uri   = $parts['path'] ?? '';
-
-		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
-		{
-			// strip the script name from the beginning of the URI
-			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
-			{
-				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
-			}
-			// if the script is nested, strip the parent folder & script from the URI
-			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
-			{
-				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
-			}
-			// or if index.php is implied
-			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
-			{
-				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
-			}
-		}
-
-		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
-		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
-		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
-		{
-			$query                   = explode('?', $query, 2);
-			$uri                     = $query[0];
-			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
-		}
-		else
-		{
-			$_SERVER['QUERY_STRING'] = $query;
-		}
-
-		parse_str($_SERVER['QUERY_STRING'], $_GET);
-
-		if ($uri === '/' || $uri === '')
-		{
-			return '/';
-		}
-
-		return $this->removeRelativeDirectory($uri);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Parse QUERY_STRING
-	 *
-	 * Will parse QUERY_STRING and automatically detect the URI from it.
-	 *
-	 * @return string
-	 */
-	protected function parseQueryString(): string
-	{
-		$uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
-
-		if (trim($uri, '/') === '')
-		{
-			return '';
-		}
-
-		if (strncmp($uri, '/', 1) === 0)
-		{
-			$uri                     = explode('?', $uri, 2);
-			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
-			$uri                     = $uri[0];
-		}
-
-		parse_str($_SERVER['QUERY_STRING'], $_GET);
-
-		return $this->removeRelativeDirectory($uri);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Remove relative directory (../) and multi slashes (///)
 	 *
 	 * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
@@ -804,22 +849,13 @@ class IncomingRequest extends Request
 	 * @param string $uri
 	 *
 	 * @return string
+	 *
+	 * @deprecated Use URI::removeDotSegments() directly
 	 */
 	protected function removeRelativeDirectory(string $uri): string
 	{
-		$uris = [];
-		$tok  = strtok($uri, '/');
-		while ($tok !== false)
-		{
-			if ((! empty($tok) || $tok === '0') && $tok !== '..')
-			{
-				$uris[] = $tok;
-			}
-			$tok = strtok('/');
-		}
+		$uri = URI::removeDotSegments($uri);
 
-		return implode('/', $uris);
+		return $uri === '/' ? $uri : ltrim($uri, '/');
 	}
-
-	// --------------------------------------------------------------------
 }

@@ -280,10 +280,26 @@ trait ResponseTrait
 	 * @param string $message
 	 *
 	 * @return mixed
+	 *
+	 * @deprecated Use failValidationErrors instead
 	 */
 	public function failValidationError(string $description = 'Bad Request', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['invalid_data'], $code, $message);
+	}
+
+	/**
+	 * Used when the data provided by the client cannot be validated on one or more fields.
+	 *
+	 * @param string|string[] $errors
+	 * @param string|null 	  $code
+	 * @param string		  $message
+	 *
+	 * @return mixed
+	 */
+	public function failValidationErrors($errors, string $code = null, string $message = '')
+	{
+		return $this->fail($errors, $this->codes['invalid_data'], $code, $message);
 	}
 
 	//--------------------------------------------------------------------

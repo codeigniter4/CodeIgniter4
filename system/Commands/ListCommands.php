@@ -124,9 +124,7 @@ class ListCommands extends BaseCommand
 				CLI::write($output);
 			}
 
-			end($groups);
-
-			if ($group !== key($groups))
+			if ($group !== array_key_last($groups))
 			{
 				CLI::newLine();
 			}
@@ -140,7 +138,7 @@ class ListCommands extends BaseCommand
 	 */
 	protected function listSimple(array $commands)
 	{
-		foreach ($commands as $title => $command)
+		foreach (array_keys($commands) as $title)
 		{
 			CLI::write($title);
 		}

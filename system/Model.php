@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -39,14 +40,11 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @property ConnectionInterface $db
- *
- * @mixin BaseBuilder
+ * @mixin    BaseBuilder
+ * @property BaseConnection $db
  */
 class Model extends BaseModel
 {
-	// region Properties
-
 	/**
 	 * Name of database table
 	 *
@@ -92,10 +90,6 @@ class Model extends BaseModel
 	 */
 	protected $escape = [];
 
-	// endregion
-
-	// region Constructor
-
 	/**
 	 * Model constructor.
 	 *
@@ -104,21 +98,15 @@ class Model extends BaseModel
 	 */
 	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
 	{
+		/**
+		 * @var BaseConnection $db
+		 */
+		$db = $db ?? Database::connect($this->DBGroup);
+
+		$this->db = &$db;
+
 		parent::__construct($validation);
-
-		if (is_null($db))
-		{
-			$this->db = Database::connect($this->DBGroup);
-		}
-		else
-		{
-			$this->db = &$db;
-		}
 	}
-
-	// endregion
-
-	// region Setters
 
 	/**
 	 * Specify the table associated with a model
@@ -133,10 +121,6 @@ class Model extends BaseModel
 
 		return $this;
 	}
-
-	// endregion
-
-	// region Database Methods
 
 	/**
 	 * Fetches the row of database from $this->table with a primary key
@@ -187,7 +171,7 @@ class Model extends BaseModel
 	 */
 	protected function doFindColumn(string $columnName)
 	{
-		return $this->select($columnName)->asArray()->find();
+		return $this->select($columnName)->asArray()->find(); // @phpstan-ignore-line
 	}
 
 	/**
@@ -229,12 +213,9 @@ class Model extends BaseModel
 		{
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
-		else
+		elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
 		{
-			if ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
-			{
-				$builder->groupBy($this->table . '.' . $this->primaryKey);
-			}
+			$builder->groupBy($this->table . '.' . $this->primaryKey);
 		}
 
 		// Some databases, like PostgreSQL, need order
@@ -253,7 +234,7 @@ class Model extends BaseModel
 	 *
 	 * @param array $data Data
 	 *
-	 * @return BaseResult|integer|string|false
+	 * @return Query|boolean
 	 */
 	protected function doInsert(array $data)
 	{
@@ -278,17 +259,9 @@ class Model extends BaseModel
 		$result = $builder->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result->resultID)
+		if ($result)
 		{
-			if (! $this->useAutoIncrement)
-			{
-				$this->insertID = $data[$this->primaryKey];
-			}
-			else
-			{
-				// @phpstan-ignore-next-line
-				$this->insertID = $this->db->insertID();
-			}
+			$this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
 		}
 
 		return $result;
@@ -379,7 +352,7 @@ class Model extends BaseModel
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return BaseResult|boolean
+	 * @return string|boolean
 	 *
 	 * @throws DatabaseException
 	 */
@@ -403,9 +376,7 @@ class Model extends BaseModel
 					);
 				}
 
-				// @codeCoverageIgnoreStart
-				return false;
-				// @codeCoverageIgnoreEnd
+				return false; // @codeCoverageIgnore
 			}
 
 			$set[$this->deletedField] = $this->setDate();
@@ -415,14 +386,10 @@ class Model extends BaseModel
 				$set[$this->updatedField] = $this->setDate();
 			}
 
-			$result = $builder->update($set);
-		}
-		else
-		{
-			$result = $builder->delete();
+			return $builder->update($set);
 		}
 
-		return $result;
+		return $builder->delete();
 	}
 
 	/**
@@ -467,13 +434,37 @@ class Model extends BaseModel
 
 	/**
 	 * Grabs the last error(s) that occurred from the Database connection.
+	 * The return array should be in the following format:
+	 *  ['source' => 'message']
 	 * This methods works only with dbCalls
 	 *
-	 * @return array|null
+	 * @return array<string,string>
 	 */
 	protected function doErrors()
 	{
-		return $this->db->error();
+		// $error is always ['code' => string|int, 'message' => string]
+		$error = $this->db->error();
+
+		if ((int) $error['code'] === 0)
+		{
+			return [];
+		}
+
+		return [get_class($this->db) => $error['message']];
+	}
+
+	/**
+	 * Returns the id value for the data array or object
+	 *
+	 * @param array|object $data Data
+	 *
+	 * @return integer|array|string|null
+	 *
+	 * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
+	 */
+	protected function idValue($data)
+	{
+		return $this->getIdValue($data);
 	}
 
 	/**
@@ -483,7 +474,7 @@ class Model extends BaseModel
 	 *
 	 * @return integer|array|string|null
 	 */
-	protected function idValue($data)
+	public function getIdValue($data)
 	{
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
@@ -570,10 +561,6 @@ class Model extends BaseModel
 		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
 
-	// endregion
-
-	// region Builder
-
 	/**
 	 * Provides a shared instance of the Query Builder.
 	 *
@@ -638,7 +625,7 @@ class Model extends BaseModel
 	{
 		$data = is_array($key) ? $key : [$key => $value];
 
-		foreach ($data as $k => $v)
+		foreach (array_keys($data) as $k)
 		{
 			$this->tempData['escape'][$k] = $escape;
 		}
@@ -647,12 +634,6 @@ class Model extends BaseModel
 
 		return $this;
 	}
-
-	// endregion
-
-	// region Overrides
-
-	// region CRUD & Finders
 
 	/**
 	 * This method is called on save to determine if entry have to be updated
@@ -669,7 +650,7 @@ class Model extends BaseModel
 		return parent::shouldUpdate($data) &&
 			($this->useAutoIncrement
 				? true
-				: $this->where($this->primaryKey, $this->idValue($data))->countAllResults() === 1
+				: $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1
 			);
 	}
 
@@ -737,10 +718,6 @@ class Model extends BaseModel
 		return parent::update($id, $data);
 	}
 
-	// endregion
-
-	// region Utility
-
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array with raw values.
@@ -757,22 +734,15 @@ class Model extends BaseModel
 	{
 		$properties = parent::objectToRawArray($data, $onlyChanged);
 
-		if (method_exists($data, 'toRawArray'))
+		// Always grab the primary key otherwise updates will fail.
+		if (method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+				&& ! empty($data->{$this->primaryKey})))
 		{
-			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-				&& ! empty($data->{$this->primaryKey}))
-			{
-				$properties[$this->primaryKey] = $data->{$this->primaryKey};
-			}
+			$properties[$this->primaryKey] = $data->{$this->primaryKey};
 		}
 
 		return $properties;
 	}
-
-	// endregion
-
-	// region Magic
 
 	/**
 	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
@@ -809,13 +779,7 @@ class Model extends BaseModel
 		{
 			return true;
 		}
-
-		if (isset($this->builder()->$name))
-		{
-			return true;
-		}
-
-		return false;
+		return isset($this->builder()->$name);
 	}
 
 	/**
@@ -855,12 +819,6 @@ class Model extends BaseModel
 
 		return $result;
 	}
-
-	// endregion
-
-	// endregion
-
-	// region Deprecated
 
 	/**
 	 * Takes a class an returns an array of it's public and protected
@@ -937,7 +895,4 @@ class Model extends BaseModel
 
 		return $properties;
 	}
-
-	// endregion
-
 }

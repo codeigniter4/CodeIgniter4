@@ -78,6 +78,13 @@ class ContentSecurityPolicy
 	 *
 	 * @var array|string
 	 */
+	protected $frameSrc = [];
+
+	/**
+	 * Used for security enforcement
+	 *
+	 * @var array|string
+	 */
 	protected $imageSrc = [];
 
 	/**
@@ -376,6 +383,26 @@ class ContentSecurityPolicy
 	}
 
 	/**
+	 * Adds a new valid endpoint for valid frame sources. Can be either
+	 * a URI class or a simple string.
+	 *
+	 * @see http://www.w3.org/TR/CSP/#directive-frame-src
+	 *
+	 * @param string|array $uri
+	 * @param boolean|null $explicitReporting
+	 *
+	 * @return $this
+	 */
+	public function addFrameSrc($uri, bool $explicitReporting = null)
+	{
+		$this->addOption($uri, 'frameSrc', $explicitReporting ?? $this->reportOnly);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Adds a new valid endpoint for valid image sources. Can be either
 	 * a URI class or a simple string.
 	 *
@@ -660,6 +687,7 @@ class ContentSecurityPolicy
 			'font-src'        => 'fontSrc',
 			'form-action'     => 'formAction',
 			'frame-ancestors' => 'frameAncestors',
+			'frame-src'       => 'frameSrc',
 			'img-src'         => 'imageSrc',
 			'media-src'       => 'mediaSrc',
 			'object-src'      => 'objectSrc',
@@ -759,16 +787,13 @@ class ContentSecurityPolicy
 			{
 				$reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
 			}
-			else
+			elseif (strpos($value, 'nonce-') === 0)
 			{
-				if (strpos($value, 'nonce-') === 0)
-				{
-					$sources[] = "'{$value}'";
-				}
-				else
+				$sources[] = "'{$value}'";
+			}
+			else
 				{
 					$sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
-				}
 			}
 		}
 

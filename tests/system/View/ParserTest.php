@@ -3,7 +3,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
@@ -419,7 +419,7 @@ class ParserTest extends CIUnitTestCase
 		{
 			$expected = $value;
 		}
-		$this->assertEquals($expected, \esc($value, 'html'));
+		$this->assertEquals($expected, \esc($value));
 	}
 
 	//------------------------------------------------------------------------
@@ -919,6 +919,41 @@ class ParserTest extends CIUnitTestCase
 		$this->assertSame('<p style="color: #f00">Price $: 12.50</p>', $this->parser->renderString($template));
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4367
+	 */
+	public function testParseLoopWithHashInPrecession(): void
+	{
+		$data = [
+			'heading' => 'My Title',
+			'entries' => [
+				[
+					'title' => 'Subtitle',
+					'body'  => 'Lorem ipsum',
+				],
+			],
+		];
+
+		$template = <<<'EOF'
+		<h3>#{heading}</h3>
+		{entries}
+			<h5>#{title}</h5>
+			<p>{body}</p>
+		{/entries}
+		EOF;
+
+		$expected = <<<'EOF'
+		<h3>#My Title</h3>
+
+			<h5>#Subtitle</h5>
+			<p>Lorem ipsum</p>
+
+		EOF;
+
+		$this->parser->setData($data);
+		$this->assertSame($expected, $this->parser->renderString($template));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCachedRender()
@@ -942,7 +977,7 @@ class ParserTest extends CIUnitTestCase
 	public function testRenderCannotFindView()
 	{
 		$this->expectException(ViewException::class);
-		$this->expectExceptionMessageMatches('!/View/Views/Simplest\.php\z!');
+		$this->expectExceptionMessageMatches('!\AInvalid file: (?:.+)View(?:/|\\\\)Views(?:/|\\\\)Simplest\.php\z!');
 
 		$this->parser->setData(['testString' => 'Hello World']);
 		$this->parser->render('Simplest');

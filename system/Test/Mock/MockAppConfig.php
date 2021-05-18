@@ -11,7 +11,9 @@
 
 namespace CodeIgniter\Test\Mock;
 
-class MockAppConfig
+use Config\App;
+
+class MockAppConfig extends App
 {
 	public $baseURL = 'http://example.com/';
 

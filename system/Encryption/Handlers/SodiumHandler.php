@@ -87,7 +87,7 @@ class SodiumHandler extends BaseHandler
 
 		// Extract info from encrypted data
 		$nonce      = self::substr($data, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-		$ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null);
+		$ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
 		// decrypt data
 		$data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);

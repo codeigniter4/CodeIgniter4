@@ -81,6 +81,7 @@ class ValidationGenerator extends BaseCommand
 		$this->directory = 'Validation';
 		$this->template  = 'validation.tpl.php';
 
+		$this->classNameLang = 'CLI.generator.className.validation';
 		$this->execute($params);
 	}
 }

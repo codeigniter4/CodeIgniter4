@@ -36,7 +36,6 @@ class Config extends BaseConfig
 	static protected $factory;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Creates the default
 	 *
@@ -119,7 +118,6 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a new instance of the Database Utilities class.
 	 *
@@ -135,7 +133,6 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Returns a new instance of the Database Seeder.
 	 *

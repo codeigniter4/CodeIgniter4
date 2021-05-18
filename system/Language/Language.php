@@ -146,7 +146,7 @@ class Language
 	/**
 	 * @return array|string|null
 	 */
-	private function getTranslationOutput(string $locale, string $file, string $parsedLine)
+	protected function getTranslationOutput(string $locale, string $file, string $parsedLine)
 	{
 		$output = $this->language[$locale][$file][$parsedLine] ?? null;
 		if ($output !== null)

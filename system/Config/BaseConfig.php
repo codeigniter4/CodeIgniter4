@@ -61,6 +61,8 @@ class BaseConfig
 	{
 		static::$moduleConfig = config('Modules');
 
+		$this->registerProperties();
+
 		$properties  = array_keys(get_object_vars($this));
 		$prefix      = static::class;
 		$slashAt     = strrpos($prefix, '\\');
@@ -84,8 +86,6 @@ class BaseConfig
 				}
 			}
 		}
-
-		$this->registerProperties();
 	}
 
 	/**
@@ -102,29 +102,22 @@ class BaseConfig
 	{
 		if (is_array($property))
 		{
-			foreach ($property as $key => $val)
+			foreach (array_keys($property) as $key)
 			{
 				$this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
 			}
 		}
-		else
+		elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
 		{
-			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false)
+			if ($value === 'false')
 			{
-				if (! is_null($value))
-				{
-					if ($value === 'false')
-					{
-						$value = false;
-					}
-					elseif ($value === 'true')
-					{
-						$value = true;
-					}
-
-					$property = is_bool($value) ? $value : trim($value, '\'"');
-				}
+				$value = false;
 			}
+			elseif ($value === 'true')
+			{
+				$value = true;
+			}
+			$property = is_bool($value) ? $value : trim($value, '\'"');
 		}
 		return $property;
 	}
@@ -141,6 +134,7 @@ class BaseConfig
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
 		$shortPrefix = ltrim($shortPrefix, '\\');
+
 		switch (true)
 		{
 			case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
@@ -152,7 +146,9 @@ class BaseConfig
 			case array_key_exists("{$prefix}.{$property}", $_SERVER):
 				return $_SERVER["{$prefix}.{$property}"];
 			default:
-				$value = getenv($property);
+				$value = getenv("{$shortPrefix}.{$property}");
+				$value = $value === false ? getenv("{$prefix}.{$property}") : $value;
+
 				return $value === false ? null : $value;
 		}
 	}

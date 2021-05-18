@@ -1,14 +1,11 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-final class DateHelperTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use DateTime;
+
+final class DateHelperTest extends CIUnitTestCase
 {
-
-	private $name;
-	private $value;
-	private $expire;
-	private $response;
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -19,7 +16,7 @@ final class DateHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testNowDefault()
 	{
-		$time = new \DateTime();
+		$time = new DateTime();
 		$this->assertCloseEnough(now(), time());  // close enough
 	}
 

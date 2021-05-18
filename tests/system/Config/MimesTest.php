@@ -1,6 +1,11 @@
-<?php namespace Config;
+<?php
 
-class MimesTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Config;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Mimes;
+
+class MimesTest extends CIUnitTestCase
 {
 	public function extensionsList()
 	{

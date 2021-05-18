@@ -157,13 +157,10 @@ class DownloadResponse extends Response
 		$mime    = null;
 		$charset = '';
 
-		if ($this->setMime === true)
+		if ($this->setMime === true && ($lastDotPosition = strrpos($this->filename, '.')) !== false)
 		{
-			if (($lastDotPosition = strrpos($this->filename, '.')) !== false)
-			{
-				$mime    = Mimes::guessTypeFromExtension(substr($this->filename, $lastDotPosition + 1));
-				$charset = $this->charset;
-			}
+			$mime    = Mimes::guessTypeFromExtension(substr($this->filename, $lastDotPosition + 1));
+			$charset = $this->charset;
 		}
 
 		if (! is_string($mime))
@@ -246,7 +243,6 @@ class DownloadResponse extends Response
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the Content Type header for this response with the mime type
 	 * and, optionally, the charset.

@@ -1,11 +1,13 @@
 <?php namespace CodeIgniter\Autoloader;
 
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Autoload;
 use Config\Modules;
 
-class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
+class FileLocatorTest extends CIUnitTestCase
 {
 	/**
-	 * @var \CodeIgniter\Autoloader\FileLocator
+	 * @var FileLocator
 	 */
 	protected $locator;
 
@@ -16,7 +18,7 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		$autoloader = new Autoloader();
-		$autoloader->initialize(new \Config\Autoload(), new Modules());
+		$autoloader->initialize(new Autoload(), new Modules());
 		$autoloader->addNamespace([
 			'Unknown'       => '/i/do/not/exist',
 			'Tests/Support' => TESTPATH . '_support/',
@@ -220,7 +222,7 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedWin = APPPATH . 'Config\App.php';
 		$expectedLin = APPPATH . 'Config/App.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 	}
 
 	//--------------------------------------------------------------------
@@ -240,11 +242,11 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expectedWin = SYSTEMPATH . 'Filters\DebugToolbar.php';
 		$expectedLin = SYSTEMPATH . 'Filters/DebugToolbar.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 
 		$expectedWin = SYSTEMPATH . 'Filters\Filters.php';
 		$expectedLin = SYSTEMPATH . 'Filters/Filters.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
 	}
 
 	//--------------------------------------------------------------------

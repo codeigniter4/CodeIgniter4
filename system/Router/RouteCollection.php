@@ -134,7 +134,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var string
 	 */
-	protected $HTTPVerb;
+	protected $HTTPVerb = '*';
 
 	/**
 	 * The default list of HTTP methods (and CLI for command line usage)
@@ -197,6 +197,20 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected $moduleConfig;
 
+	/**
+	 * Flag for sorting routes by priority.
+	 *
+	 * @var boolean
+	 */
+	protected $prioritize = false;
+
+	/**
+	 * Route priority detection flag.
+	 *
+	 * @var boolean
+	 */
+	protected $prioritizeDetected = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -212,7 +226,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Registers a new constraint with the system. Constraints are used
 	 * by the routes as placeholders for regular expressions to make defining
@@ -239,7 +252,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
@@ -257,7 +269,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default controller to use when no other controller has been
 	 * specified.
@@ -274,7 +285,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default method to call on the controller when no other
 	 * method has been set in the route.
@@ -291,7 +301,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Tells the system whether to convert dashes in URI strings into
 	 * underscores. In some search engines, including Google, dashes
@@ -311,7 +320,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * If TRUE, the system will attempt to match the URI against
 	 * Controllers by matching each segment against folders/files
@@ -332,7 +340,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the class/method that should be called if routing doesn't
 	 * find a match. It can be either a closure or the controller/method
@@ -401,7 +408,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resource' method.
@@ -520,6 +526,22 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
+		// sorting routes by priority
+		if ($this->prioritizeDetected && $this->prioritize && $routes !== [])
+		{
+			$order = [];
+
+			foreach ($routes as $key => $value)
+			{
+				$key                    = $key === '/' ? $key : ltrim($key, '/ ');
+				$priority               = $this->getRoutesOptions($key, $verb)['priority'] ?? 0;
+				$order[$priority][$key] = $value;
+			}
+
+			ksort($order);
+			$routes = array_merge(...$order);
+		}
+
 		return $routes;
 	}
 
@@ -590,7 +612,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Adds a single route to the collection.
 	 *
@@ -744,7 +765,6 @@ class RouteCollection implements RouteCollectionInterface
 	// be expanded in the future. See the docblock for 'add' method above for
 	// current list of globally available options.
 	//
-
 	/**
 	 * Creates a collections of HTTP-verb based routes for a controller.
 	 *
@@ -975,7 +995,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a single route to match for multiple HTTP Verbs.
 	 *
@@ -1007,7 +1026,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to GET requests.
 	 *
@@ -1025,7 +1043,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to POST requests.
 	 *
@@ -1043,7 +1060,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to PUT requests.
 	 *
@@ -1061,7 +1077,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to DELETE requests.
 	 *
@@ -1079,7 +1094,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to HEAD requests.
 	 *
@@ -1097,7 +1111,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to PATCH requests.
 	 *
@@ -1115,7 +1128,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to OPTIONS requests.
 	 *
@@ -1133,7 +1145,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Specifies a route that is only available to command-line requests.
 	 *
@@ -1151,7 +1162,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
 	 *
@@ -1367,6 +1377,17 @@ class RouteCollection implements RouteCollectionInterface
 
 		$options = array_merge($this->currentOptions ?? [], $options ?? []);
 
+		// Route priority detect
+		if (isset($options['priority']))
+		{
+			$options['priority'] = abs((int) $options['priority']);
+
+			if ($options['priority'] > 0)
+			{
+				$this->prioritizeDetected = true;
+			}
+		}
+
 		// Hostname limiting?
 		if (! empty($options['hostname']))
 		{
@@ -1418,21 +1439,17 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		//If is redirect, No processing
-		if (! isset($options['redirect']))
+		if (! isset($options['redirect']) && is_string($to))
 		{
-			if (is_string($to))
-			{
-				// If no namespace found, add the default namespace
-				if (strpos($to, '\\') === false || strpos($to, '\\') > 0)
+			// If no namespace found, add the default namespace
+			if (strpos($to, '\\') === false || strpos($to, '\\') > 0)
 				{
 					$namespace = $options['namespace'] ?? $this->defaultNamespace;
 					$to        = trim($namespace, '\\') . '\\' . $to;
-				}
-
-				// Always ensure that we escape our namespace so we're not pointing to
-				// \CodeIgniter\Routes\Controller::method.
-				$to = '\\' . ltrim($to, '\\');
 			}
+			// Always ensure that we escape our namespace so we're not pointing to
+			// \CodeIgniter\Routes\Controller::method.
+			$to = '\\' . ltrim($to, '\\');
 		}
 
 		$name = $options['as'] ?? $from;
@@ -1551,7 +1568,7 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Reset the routes, so that a FeatureTestCase can provide the
+	 * Reset the routes, so that a test case can provide the
 	 * explicit ones needed for it.
 	 */
 	public function resetRoutes()
@@ -1561,6 +1578,8 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$this->routes[$verb] = [];
 		}
+
+		$this->prioritizeDetected = false;
 	}
 
 	//--------------------------------------------------------------------
@@ -1595,5 +1614,19 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Enable or Disable sorting routes by priority
+	 *
+	 * @param boolean $enabled The value status
+	 *
+	 * @return $this
+	 */
+	public function setPrioritize(bool $enabled = true)
+	{
+		$this->prioritize = $enabled;
+
+		return $this;
 	}
 }

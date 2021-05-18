@@ -42,6 +42,13 @@ trait GeneratorTrait
 	protected $template;
 
 	/**
+	 * Language string key for required class names.
+	 *
+	 * @var string
+	 */
+	protected $classNameLang = '';
+
+	/**
 	 * Whether to require class name.
 	 *
 	 * @internal
@@ -58,6 +65,15 @@ trait GeneratorTrait
 	 * @var boolean
 	 */
 	private $sortImports = true;
+
+	/**
+	 * Whether the `--suffix` option has any effect.
+	 *
+	 * @internal
+	 *
+	 * @var boolean
+	 */
+	private $enabledSuffixing = true;
 
 	/**
 	 * The params array for easy access by other methods.
@@ -195,18 +211,27 @@ trait GeneratorTrait
 		if (is_null($class) && $this->hasClassName)
 		{
 			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('CLI.generator.className'), null, 'required');
+			$nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
+			$class    = CLI::prompt(lang($nameLang), null, 'required');
 			CLI::newLine();
 			// @codeCoverageIgnoreEnd
 		}
 
 		helper('inflector');
 
-		$component = strtolower(singular($this->component));
-		$class     = strtolower($class);
-		$class     = strpos($class, $component) !== false ? str_replace($component, ucfirst($component), $class) : $class;
+		$component = singular($this->component);
 
-		if ($this->getOption('suffix') && ! strripos($class, $component))
+		/**
+		 * @see https://regex101.com/r/a5KNCR/1
+		 */
+		$pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)/i', $component);
+
+		if (preg_match($pattern, $class, $matches) === 1)
+		{
+			$class = $matches[1] . ucfirst($matches[2]);
+		}
+
+		if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component))
 		{
 			$class .= ucfirst($component);
 		}
@@ -261,9 +286,12 @@ trait GeneratorTrait
 	{
 		// Retrieves the namespace part from the fully qualified class name.
 		$namespace = trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\');
-
-		array_push($search, '<@php', '{namespace}', '{class}');
-		array_push($replace, '<?php', $namespace, str_replace($namespace . '\\', '', $class));
+		$search[]  = '<@php';
+		$search[]  = '{namespace}';
+		$search[]  = '{class}';
+		$replace[] = '<?php';
+		$replace[] = $namespace;
+		$replace[] = str_replace($namespace . '\\', '', $class);
 
 		return str_replace($search, $replace, $this->renderTemplate($data));
 	}
@@ -308,16 +336,14 @@ trait GeneratorTrait
 
 		if (! $base = reset($base))
 		{
-			// @codeCoverageIgnoreStart
 			CLI::error(lang('CLI.namespaceNotDefined', [$namespace]), 'light_gray', 'red');
 			CLI::newLine();
 
 			return '';
-			// @codeCoverageIgnoreEnd
 		}
 
 		$base = realpath($base) ?: $base;
-		$file = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, trim(str_replace($namespace, '', $class), '\\')) . '.php';
+		$file = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, trim(str_replace($namespace . '\\', '', $class), '\\')) . '.php';
 
 		return implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $file), 0, -1)) . DIRECTORY_SEPARATOR . $this->basename($file);
 	}
@@ -346,6 +372,20 @@ trait GeneratorTrait
 	protected function setSortImports(bool $sortImports)
 	{
 		$this->sortImports = $sortImports;
+
+		return $this;
+	}
+
+	/**
+	 * Allows child generators to modify the internal `$enabledSuffixing` flag.
+	 *
+	 * @param boolean $enabledSuffixing
+	 *
+	 * @return $this
+	 */
+	protected function setEnabledSuffixing(bool $enabledSuffixing)
+	{
+		$this->enabledSuffixing = $enabledSuffixing;
 
 		return $this;
 	}

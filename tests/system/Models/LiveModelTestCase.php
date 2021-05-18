@@ -4,15 +4,17 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
 
 /**
  * LiveModelTestCase should be in testing Model's features that
  * requires a database connection.
  */
-abstract class LiveModelTestCase extends CIDatabaseTestCase
+abstract class LiveModelTestCase extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
 	use ReflectionHelper;
 
 	/**

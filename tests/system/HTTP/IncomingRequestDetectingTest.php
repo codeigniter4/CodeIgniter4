@@ -2,16 +2,17 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
+class IncomingRequestDetectingTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 * @var IncomingRequest
 	 */
 	protected $request;
 
@@ -66,7 +67,7 @@ class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->request->uri     = '/ci/index.php/popcorn/woot?code=good#pos';
 		$_SERVER['REQUEST_URI'] = '/ci/index.php/popcorn/woot';
-		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$_SERVER['SCRIPT_NAME'] = '/ci/index.php';
 		$expected               = 'popcorn/woot';
 		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}

@@ -103,7 +103,7 @@ have the correct namespace relative to ``App``.
 
 .. note:: Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.
 
-When testing database results, you must use the `CIDatabaseTestClass <database.html>`_ class.
+When testing database results, you must use the `DatabaseTestTrait <database.html>`_ in your class.
 
 Staging
 -------
@@ -149,6 +149,30 @@ that or provide their own::
         {
             $this->model->purgeDeleted()
         }
+
+Traits
+------
+
+A common way to enhance your tests is by using traits to consolidate staging across different
+test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
+to run named for the trait itself. For example, if you needed to add authentication to some
+of your test cases you could create an authentication trait with a set up method to fake a
+logged in user::
+
+	trait AuthTrait
+	{
+		protected setUpAuthTrait()
+		{
+			$user = $this->createFakeUser();
+			$this->logInUser($user);
+		}
+	...
+
+	class AuthenticationFeatureTest
+	{
+		use AuthTrait;
+	...
+
 
 Additional Assertions
 ---------------------
@@ -285,8 +309,8 @@ Mocking Services
 
 You will often find that you need to mock one of the services defined in **app/Config/Services.php** to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
-true when testing controllers and other integration testing. The **Services** class provides two methods to make this
-simple: ``injectMock()``, and ``reset()``.
+true when testing controllers and other integration testing. The **Services** class provides the following methods
+to simplify this.
 
 **injectMock()**
 
@@ -311,7 +335,11 @@ class exactly. The second parameter is the instance to replace it with.
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
-.. note:: The ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
+**resetSingle(string $name)**
+
+Removes any mock and shared instances for a single service, by its name.
+
+.. note:: The ``Cache``, ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
 
 Mocking Factory Instances
 =========================

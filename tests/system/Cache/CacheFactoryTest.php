@@ -1,7 +1,11 @@
 <?php
 namespace CodeIgniter\Cache;
 
-class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Cache\Handlers\DummyHandler;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
+
+class CacheFactoryTest extends CIUnitTestCase
 {
 
 	private static $directory = 'CacheFactory';
@@ -15,7 +19,7 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config             = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
@@ -82,10 +86,10 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->config->handler = 'dummy';
 
-		$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config));
+		$this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config));
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config             = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
@@ -104,11 +108,11 @@ class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 		else
 		{
-			$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
+			$this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
 		}
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config             = new Cache();
 		$this->config->storePath .= self::$directory;
 	}
 

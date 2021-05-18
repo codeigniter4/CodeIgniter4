@@ -71,8 +71,7 @@ if (! function_exists('form_open'))
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = Services::filters()
-						  ->getFilters()['before'];
+		$before = Services::filters()->getFilters()['before'];
 
 		if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{
@@ -110,7 +109,7 @@ if (! function_exists('form_open_multipart'))
 	{
 		if (is_string($attributes))
 		{
-			$attributes .= ' enctype="' . esc('multipart/form-data', 'attr') . '"';
+			$attributes .= ' enctype="' . esc('multipart/form-data') . '"';
 		}
 		else
 		{
@@ -217,8 +216,11 @@ if (! function_exists('form_password'))
 	 */
 	function form_password($data = '', string $value = '', $extra = ''): string
 	{
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
-		$data['type']            = 'password';
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
+		$data['type'] = 'password';
 
 		return form_input($data, $value, $extra);
 	}
@@ -246,7 +248,10 @@ if (! function_exists('form_upload'))
 			'name' => '',
 		];
 
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
 
 		$data['type'] = 'file';
 
@@ -285,12 +290,12 @@ if (! function_exists('form_textarea'))
 		}
 
 		// Unsets default rows and cols if defined in extra field as array or string.
-		if ((is_array($extra) && array_key_exists('rows', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'rows=') !== false))
+		if ((is_array($extra) && array_key_exists('rows', $extra)) || (is_string($extra) && stripos(preg_replace('/\s+/', '', $extra), 'rows=') !== false))
 		{
 			unset($defaults['rows']);
 		}
 
-		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'cols=') !== false))
+		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && stripos(preg_replace('/\s+/', '', $extra), 'cols=') !== false))
 		{
 			unset($defaults['cols']);
 		}
@@ -308,14 +313,14 @@ if (! function_exists('form_multiselect'))
 	/**
 	 * Multi-select menu
 	 *
-	 * @param string $name
-	 * @param array  $options
-	 * @param array  $selected
-	 * @param mixed  $extra
+	 * @param mixed $name
+	 * @param array $options
+	 * @param array $selected
+	 * @param mixed $extra
 	 *
 	 * @return string
 	 */
-	function form_multiselect(string $name = '', array $options = [], array $selected = [], $extra = ''): string
+	function form_multiselect($name = '', array $options = [], array $selected = [], $extra = ''): string
 	{
 		$extra = stringify_attributes($extra);
 
@@ -363,9 +368,14 @@ if (! function_exists('form_dropdown'))
 			$defaults = ['name' => $data];
 		}
 
-		is_array($selected) || $selected = [$selected]; // @phpstan-ignore-line
-
-		is_array($options) || $options = [$options]; // @phpstan-ignore-line
+		if (! is_array($selected))
+		{
+			$selected = [$selected];
+		}
+		if (! is_array($options))
+		{
+			$options = [$options];
+		}
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -381,6 +391,12 @@ if (! function_exists('form_dropdown'))
 			{
 				$selected = [$_POST[$data]];
 			}
+		}
+
+		// standardize selected as strings, like  the option keys will be.
+		foreach ($selected as $key => $item)
+		{
+			$selected[$key] = (string) $item;
 		}
 
 		$extra    = stringify_attributes($extra);
@@ -455,12 +471,9 @@ if (! function_exists('form_checkbox'))
 		{
 			$defaults['checked'] = 'checked';
 		}
-		else
+		elseif (isset($defaults['checked']))
 		{
-			if (isset($defaults['checked']))
-			{
-				unset($defaults['checked']);
-			}
+			unset($defaults['checked']);
 		}
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -483,8 +496,11 @@ if (! function_exists('form_radio'))
 	 */
 	function form_radio($data = '', string $value = '', bool $checked = false, $extra = ''): string
 	{
-		is_array($data) || $data = ['name' => $data]; // @phpstan-ignore-line
-		$data['type']            = 'radio';
+		if (! is_array($data))
+		{
+			$data = ['name' => $data];
+		}
+		$data['type'] = 'radio';
 
 		return form_checkbox($data, $value, $checked, $extra);
 	}
@@ -505,13 +521,7 @@ if (! function_exists('form_submit'))
 	 */
 	function form_submit($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults = [
-			'type'  => 'submit',
-			'name'  => is_array($data) ? '' : $data,
-			'value' => $value,
-		];
-
-		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+		return form_input($data, $value, $extra, 'submit');
 	}
 }
 
@@ -530,13 +540,7 @@ if (! function_exists('form_reset'))
 	 */
 	function form_reset($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults = [
-			'type'  => 'reset',
-			'name'  => is_array($data) ? '' : $data,
-			'value' => $value,
-		];
-
-		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+		return form_input($data, $value, $extra, 'reset');
 	}
 }
 
@@ -916,7 +920,7 @@ if (! function_exists('parse_form_attributes'))
 	{
 		if (is_array($attributes))
 		{
-			foreach ($default as $key => $val)
+			foreach (array_keys($default) as $key)
 			{
 				if (isset($attributes[$key]))
 				{
@@ -944,7 +948,7 @@ if (! function_exists('parse_form_attributes'))
 				{
 					continue;
 				}
-				$att .= $key . '="' . $val . '"' . ($val === end($default) ? '' : ' ');
+				$att .= $key . '="' . $val . '"' . ($key === array_key_last($default) ? '' : ' ');
 			}
 			else
 			{

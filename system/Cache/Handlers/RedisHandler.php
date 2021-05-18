@@ -22,13 +22,6 @@ use RedisException;
 class RedisHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	/**
 	 * Default config
 	 *
 	 * @var array
@@ -57,7 +50,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (! empty($config))
 		{
@@ -72,7 +65,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function __destruct()
 	{
-		if ($this->redis) // @phpstan-ignore-line
+		if (isset($this->redis))
 		{
 			$this->redis->close();
 		}
@@ -134,8 +127,7 @@ class RedisHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key  = static::validateKey($key, $this->prefix);
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
@@ -169,11 +161,11 @@ class RedisHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		switch ($dataType = gettype($value))
 		{
@@ -212,13 +204,46 @@ class RedisHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
-		return ($this->redis->del($key) === 1);
+		return $this->redis->del($key) === 1;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return integer The number of deleted items
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$matchedKeys = [];
+		$iterator    = null;
+
+		do
+		{
+			// Scan for some keys
+			$keys = $this->redis->scan($iterator, $pattern);
+
+			// Redis may return empty results, so protect against that
+			if ($keys !== false)
+			{
+				foreach ($keys as $key)
+				{
+					$matchedKeys[] = $key;
+				}
+			}
+		}
+		while ($iterator > 0);
+
+		return $this->redis->del($matchedKeys);
 	}
 
 	//--------------------------------------------------------------------
@@ -229,11 +254,11 @@ class RedisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->redis->hIncrBy($key, 'data', $offset);
 	}
@@ -246,11 +271,11 @@ class RedisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->redis->hIncrBy($key, 'data', -$offset);
 	}
@@ -260,7 +285,7 @@ class RedisHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -275,7 +300,7 @@ class RedisHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getCacheInfo()
 	{
@@ -289,19 +314,22 @@ class RedisHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expire' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key   = static::validateKey($key, $this->prefix);
 		$value = $this->get($key);
 
 		if ($value !== null)
 		{
 			$time = time();
+			$ttl  = $this->redis->ttl($key);
+
 			return [
-				'expire' => $time + $this->redis->ttl($key),
+				'expire' => $ttl > 0 ? time() + $ttl : null,
 				'mtime'  => $time,
 				'data'   => $value,
 			];
@@ -321,6 +349,4 @@ class RedisHandler extends BaseHandler
 	{
 		return extension_loaded('redis');
 	}
-
-	//--------------------------------------------------------------------
 }

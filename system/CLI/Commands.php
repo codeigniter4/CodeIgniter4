@@ -11,14 +11,12 @@
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Log\Logger;
-use Config\Services;
 use ReflectionClass;
 use ReflectionException;
 
 /**
- * Class Commands
- *
  * Core functionality for running, listing, etc commands.
  */
 class Commands
@@ -44,7 +42,8 @@ class Commands
 	 */
 	public function __construct($logger = null)
 	{
-		$this->logger = $logger ?? Services::logger();
+		$this->logger = $logger ?? service('logger');
+		$this->discoverCommands();
 	}
 
 	/**
@@ -55,8 +54,6 @@ class Commands
 	 */
 	public function run(string $command, array $params)
 	{
-		$this->discoverCommands();
-
 		if (! $this->verifyCommand($command, $this->commands))
 		{
 			return;
@@ -77,39 +74,39 @@ class Commands
 	 */
 	public function getCommands()
 	{
-		$this->discoverCommands();
-
 		return $this->commands;
 	}
 
 	/**
 	 * Discovers all commands in the framework and within user code,
 	 * and collects instances of them to work with.
+	 *
+	 * @return void
 	 */
 	public function discoverCommands()
 	{
-		if (! empty($this->commands))
+		if ($this->commands !== [])
 		{
 			return;
 		}
 
-		$files = service('locator')->listFiles('Commands/');
+		/** @var FileLocator $locator */
+		$locator = service('locator');
+		$files   = $locator->listFiles('Commands/');
 
 		// If no matching command files were found, bail
-		if (empty($files))
+		// This should never happen in unit testing.
+		if ($files === [])
 		{
-			// This should never happen in unit testing.
-			// if it does, we have far bigger problems!
-			// @codeCoverageIgnoreStart
-			return;
-			// @codeCoverageIgnoreEnd
+			return; // @codeCoverageIgnore
 		}
 
 		// Loop over each file checking to see if a command with that
-		// alias exists in the class. If so, return it. Otherwise, try the next.
+		// alias exists in the class.
 		foreach ($files as $file)
 		{
-			$className = Services::locator()->findQualifiedNameFromPath($file);
+			$className = $locator->findQualifiedNameFromPath($file);
+
 			if (empty($className) || ! class_exists($className))
 			{
 				continue;
@@ -124,10 +121,10 @@ class Commands
 					continue;
 				}
 
+				/** @var BaseCommand $class */
 				$class = new $className($this->logger, $this);
 
-				// Store it!
-				if (! is_null($class->group))
+				if (isset($class->group))
 				{
 					$this->commands[$class->name] = [
 						'class'       => $className,
@@ -137,7 +134,6 @@ class Commands
 					];
 				}
 
-				$class = null;
 				unset($class);
 			}
 			catch (ReflectionException $e)
@@ -200,7 +196,7 @@ class Commands
 	{
 		$alternatives = [];
 
-		foreach ($collection as $commandName => $attributes)
+		foreach (array_keys($collection) as $commandName)
 		{
 			$lev = levenshtein($name, $commandName);
 

@@ -5,10 +5,13 @@ use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
+use Config\App;
+use stdClass;
 
-class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
+class ResponseTraitTest extends CIUnitTestCase
 {
 
 	protected $request;
@@ -28,7 +31,8 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
-		$config = [
+		$config = new App();
+		foreach ([
 			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
@@ -42,9 +46,10 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
 			'cookieSameSite'   => 'Lax',
-		];
-
-		$config = array_merge($config, $userConfig);
+		] as $key => $value)
+		{
+			$config->$key = $value;
+		}
 
 		if (is_null($this->request))
 		{
@@ -157,7 +162,7 @@ EOH;
 	{
 		$this->formatter = null;
 		$controller      = $this->makeController();
-		$payload         = new \stdClass();
+		$payload         = new stdClass();
 		$payload->name   = 'Tom';
 		$payload->id     = 1;
 		$expected        = <<<EOH
@@ -339,6 +344,25 @@ EOH;
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
 	}
 
+	public function testValidationErrors()
+	{
+		$controller = $this->makeController();
+		$controller->failValidationErrors(['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason');
+
+		$expected = [
+			'status'   => 400,
+			'error'    => 'FAT CHANCE',
+			'messages' => [
+				'foo' => 'Nope',
+				'bar' => 'No way',
+			],
+		];
+
+		$this->assertEquals('A Custom Reason', $this->response->getReason());
+		$this->assertEquals(400, $this->response->getStatusCode());
+		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
+	}
+
 	public function testResourceExists()
 	{
 		$controller = $this->makeController();
@@ -418,9 +442,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 
@@ -446,9 +470,9 @@ EOH;
 			'application/json',
 			'application/xml',
 		];
-		for ($i = 0; $i < count($goodMimes); $i ++)
+		foreach ($goodMimes as $goodMime)
 		{
-			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+			$this->tryValidContentType($goodMime, $goodMime . $chars);
 		}
 	}
 
@@ -470,7 +494,8 @@ EOH;
 
 	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
 	{
-		$config = [
+		$config = new App();
+		foreach ([
 			'baseURL'          => 'http://example.com/',
 			'uriProtocol'      => 'REQUEST_URI',
 			'defaultLocale'    => 'en',
@@ -484,10 +509,13 @@ EOH;
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
 			'cookieSameSite'   => 'Lax',
-		];
+		] as $key => $value)
+		{
+			$config->$key = $value;
+		}
 
-		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
-		$response = new MockResponse((object) $config);
+		$request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
+		$response = new MockResponse($config);
 
 		$controller = new class($request, $response)
 		{

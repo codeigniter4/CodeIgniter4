@@ -11,7 +11,7 @@
  * from correctFCPATH();
  */
 
-class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
+class BootstrapFCPATHTest extends CIUnitTestCase
 {
 	private $currentDir = __dir__;
 	private $dir1       = '/tmp/dir1';

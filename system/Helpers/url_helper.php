@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
@@ -18,49 +19,92 @@ use Config\Services;
  * CodeIgniter URL Helpers
  */
 
+if (! function_exists('_get_uri'))
+{
+	/**
+	 * Used by the other URL functions to build a
+	 * framework-specific URI based on the App config.
+	 *
+	 * @internal Outside of the framework this should not be used directly.
+	 *
+	 * @param string   $relativePath May include queries or fragments
+	 * @param App|null $config
+	 *
+	 * @return URI
+	 *
+	 * @throws InvalidArgumentException For invalid paths or config
+	 */
+	function _get_uri(string $relativePath = '', App $config = null): URI
+	{
+		$config = $config ?? config('App');
+
+		if ($config->baseURL === '')
+		{
+			throw new InvalidArgumentException('_get_uri() requires a valid baseURL.');
+		}
+
+		// If a full URI was passed then convert it
+		if (is_int(strpos($relativePath, '://')))
+		{
+			$full         = new URI($relativePath);
+			$relativePath = URI::createURIString(null, null, $full->getPath(), $full->getQuery(), $full->getFragment());
+		}
+
+		$relativePath = URI::removeDotSegments($relativePath);
+
+		// Build the full URL based on $config and $relativePath
+		$url = rtrim($config->baseURL, '/ ') . '/';
+
+		// Check for an index page
+		if ($config->indexPage !== '')
+		{
+			$url .= $config->indexPage;
+
+			// Check if we need a separator
+			if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?')
+			{
+				$url .= '/';
+			}
+		}
+
+		$url .= $relativePath;
+
+		$uri = new URI($url);
+
+		// Check if the baseURL scheme needs to be coerced into its secure version
+		if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http')
+		{
+			$uri->setScheme('https');
+		}
+
+		return $uri;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('site_url'))
 {
 	/**
-	 * Return a site URL to use in views
+	 * Returns a site URL as defined by the App config.
 	 *
-	 * @param mixed       $uri       URI string or array of URI segments
-	 * @param string|null $protocol
-	 * @param App|null    $altConfig Alternate configuration to use
+	 * @param mixed       $relativePath URI string or array of URI segments
+	 * @param string|null $scheme
+	 * @param App|null    $config       Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function site_url($uri = '', string $protocol = null, App $altConfig = null): string
+	function site_url($relativePath = '', string $scheme = null, App $config = null): string
 	{
-		// convert segment array to string
-		if (is_array($uri))
+		// Convert array of segments to a string
+		if (is_array($relativePath))
 		{
-			$uri = implode('/', $uri);
+			$relativePath = implode('/', $relativePath);
 		}
 
-		// use alternate config if provided, else default one
-		$config = $altConfig ?? config(App::class);
+		$uri = _get_uri($relativePath, $config);
 
-		$fullPath = rtrim(base_url(), '/') . '/';
-
-		// Add index page, if so configured
-		if (! empty($config->indexPage))
-		{
-			$fullPath .= rtrim($config->indexPage, '/');
-		}
-		if (! empty($uri))
-		{
-			$fullPath .= '/' . $uri;
-		}
-
-		$url = new URI($fullPath);
-
-		// allow the scheme to be over-ridden; else, use default
-		if (! empty($protocol))
-		{
-			$url->setScheme($protocol);
-		}
-
-		return (string) $url;
+		return URI::createURIString($scheme ?? $uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 }
 
@@ -69,54 +113,19 @@ if (! function_exists('site_url'))
 if (! function_exists('base_url'))
 {
 	/**
-	 * Return the base URL to use in views
+	 * Returns the base URL as defined by the App config.
+	 * Base URLs are trimmed site URLs without the index page.
 	 *
-	 * @param  mixed  $uri      URI string or array of URI segments
-	 * @param  string $protocol
+	 * @param  mixed  $relativePath URI string or array of URI segments
+	 * @param  string $scheme
 	 * @return string
 	 */
-	function base_url($uri = '', string $protocol = null): string
+	function base_url($relativePath = '', string $scheme = null): string
 	{
-		// convert segment array to string
-		if (is_array($uri))
-		{
-			$uri = implode('/', $uri);
-		}
-		$uri = trim($uri, '/');
+		$config            = clone config('App');
+		$config->indexPage = '';
 
-		// We should be using the configured baseURL that the user set;
-		// otherwise get rid of the path, because we have
-		// no way of knowing the intent...
-		$config = Services::request()->config;
-
-		// If baseUrl does not have a trailing slash it won't resolve
-		// correctly for users hosting in a subfolder.
-		$baseUrl = ! empty($config->baseURL) && $config->baseURL !== '/'
-			? rtrim($config->baseURL, '/ ') . '/'
-			: $config->baseURL;
-
-		$url = new URI($baseUrl);
-		unset($config);
-
-		// Merge in the path set by the user, if any
-		if (! empty($uri))
-		{
-			$url = $url->resolveRelativeURI($uri);
-		}
-
-		// If the scheme wasn't provided, check to
-		// see if it was a secure request
-		if (empty($protocol) && Services::request()->isSecure())
-		{
-			$protocol = 'https';
-		}
-
-		if (! empty($protocol))
-		{
-			$url->setScheme($protocol);
-		}
-
-		return rtrim((string) $url, '/ ');
+		return rtrim(site_url($relativePath, $scheme, $config), '/');
 	}
 }
 
@@ -125,22 +134,32 @@ if (! function_exists('base_url'))
 if (! function_exists('current_url'))
 {
 	/**
-	 * Current URL
+	 * Returns the current full URL based on the IncomingRequest.
+	 * String returns ignore query and fragment parts.
 	 *
-	 * Returns the full URL (including segments) of the page where this
-	 * function is placed
-	 *
-	 * @param boolean $returnObject True to return an object instead of a strong
+	 * @param boolean              $returnObject True to return an object instead of a string
+	 * @param IncomingRequest|null $request      A request to use when retrieving the path
 	 *
 	 * @return string|URI
 	 */
-	function current_url(bool $returnObject = false)
+	function current_url(bool $returnObject = false, IncomingRequest $request = null)
 	{
-		$uri = clone Services::request()->uri;
+		$request = $request ?? Services::request();
+		$path    = $request->getPath();
 
-		// Since we're basing off of the IncomingRequest URI,
-		// we are guaranteed to have a host based on our own configs.
-		return $returnObject ? $uri : (string) $uri->setQuery('');
+		// Append queries and fragments
+		if ($query = $request->getUri()->getQuery())
+		{
+			$path .= '?' . $query;
+		}
+		if ($fragment = $request->getUri()->getFragment())
+		{
+			$path .= '#' . $fragment;
+		}
+
+		$uri = _get_uri($path);
+
+		return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
 	}
 }
 
@@ -285,7 +304,7 @@ if (! function_exists('anchor_popup'))
 		// use alternate config if provided, else default one
 		$config = $altConfig ?? config(App::class);
 
-		$siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
+		$siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config);
 		$siteUrl = rtrim($siteUrl, '/');
 
 		if ($title === '')
@@ -447,9 +466,9 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		foreach ($x as $i => $value)
 		{
-			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
+			$output .= 'l[' . $i . "] = '" . $value . "';";
 		}
 
 		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'

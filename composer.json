@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": "^7.3||^8.0",
+		"php": "^7.3 || ^8.0",
 		"ext-curl": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -18,11 +18,13 @@
 		"codeigniter4/codeigniter4-standard": "^1.0",
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
-		"phpstan/phpstan": "0.12.69",
+		"nexusphp/tachycardia": "^1.0",
+		"phpstan/phpstan": "0.12.86",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
-		"rector/rector": "^0.9",
-		"squizlabs/php_codesniffer": "^3.3"
+		"rector/rector": "0.11.2",
+		"squizlabs/php_codesniffer": "^3.3",
+		"symplify/package-builder": "^9.3"
 	},
 	"suggest": {
 		"ext-fileinfo": "Improves mime type detection for files"
@@ -31,6 +33,11 @@
 		"optimize-autoloader": true,
 		"preferred-install": "dist",
 		"sort-packages": true
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-develop": "4.x-dev"
+		}
 	},
 	"autoload": {
 		"psr-4": {
@@ -49,7 +56,7 @@
 	"scripts": {
 		"post-update-cmd": [
 			"CodeIgniter\\ComposerScripts::postUpdate",
-			"bash admin/setup.sh"
+			"bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
 		],
 		"analyze": "phpstan analyze",
 		"test": "phpunit"

@@ -1,9 +1,15 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Psr\Log\LoggerInterface;
 
 /**
  * Exercise our core Controller class.
@@ -12,34 +18,34 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
+class ControllerTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\CodeIgniter
+	 * @var CodeIgniter
 	 */
 	protected $codeigniter;
 
 	/**
-	 * @var \CodeIgniter\Controller
+	 * @var Controller
 	 */
 	protected $controller;
 
 	/**
 	 * Current request.
 	 *
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var Request
 	 */
 	protected $request;
 
 	/**
 	 * Current response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var Response
 	 */
 	protected $response;
 	/**
-	 * @var \Psr\Log\LoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $logger;
 
@@ -50,8 +56,8 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		$this->config      = new App();
-		$this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
+		$this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+		$this->response    = new Response($this->config);
 		$this->logger      = \Config\Services::logger();
 		$this->codeigniter = new MockCodeIgniter($this->config);
 	}

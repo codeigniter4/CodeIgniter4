@@ -13,8 +13,62 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\CLI\Commands;
+use CodeIgniter\CodeIgniter;
+use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Debug\Exceptions;
+use CodeIgniter\Debug\Iterator;
+use CodeIgniter\Debug\Timer;
+use CodeIgniter\Debug\Toolbar;
+use CodeIgniter\Email\Email;
+use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Filters\Filters;
+use CodeIgniter\Format\Format;
+use CodeIgniter\Honeypot\Honeypot;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Negotiate;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Language\Language;
+use CodeIgniter\Log\Logger;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Router\RouteCollectionInterface;
+use CodeIgniter\Router\Router;
+use CodeIgniter\Security\Security;
+use CodeIgniter\Session\Session;
+use CodeIgniter\Throttle\Throttler;
+use CodeIgniter\Typography\Typography;
+use CodeIgniter\Validation\Validation;
+use CodeIgniter\View\Cell;
+use CodeIgniter\View\Parser;
+use CodeIgniter\View\RendererInterface;
+use CodeIgniter\View\View;
+use Config\App;
 use Config\Autoload;
+use Config\Cache;
+use Config\Encryption;
+use Config\Exceptions as ConfigExceptions;
+use Config\Filters as ConfigFilters;
+use Config\Format as ConfigFormat;
+use Config\Honeypot as ConfigHoneyPot;
+use Config\Images;
+use Config\Migrations;
 use Config\Modules;
+use Config\Pager as ConfigPager;
+use Config\Services as AppServices;
+use Config\Toolbar as ConfigToolbar;
+use Config\Validation as ConfigValidation;
+use Config\View as ConfigView;
 
 /**
  * Services Configuration file.
@@ -30,8 +84,46 @@ use Config\Modules;
  * is that IDEs are able to determine what class you are calling
  * whereas with DI Containers there usually isn't a way for them to do this.
  *
+ * Warning: To allow overrides by service providers do not use static calls,
+ * instead call out to \Config\Services (imported as AppServices).
+ *
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
+ *
+ * @method static CacheInterface cache(Cache $config = null, $getShared = true)
+ * @method static CLIRequest clirequest(App $config = null, $getShared = true)
+ * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
+ * @method static Commands commands($getShared = true)
+ * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
+ * @method static Email email($config = null, $getShared = true)
+ * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)
+ * @method static Exceptions exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
+ * @method static Filters filters(ConfigFilters $config = null, $getShared = true)
+ * @method static Format format(ConfigFormat $config = null, $getShared = true)
+ * @method static Honeypot honeypot(ConfigHoneyPot $config = null, $getShared = true)
+ * @method static BaseHandler image($handler = null, Images $config = null, $getShared = true)
+ * @method static Iterator iterator($getShared = true)
+ * @method static Language language($locale = null, $getShared = true)
+ * @method static Logger logger($getShared = true)
+ * @method static MigrationRunner migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
+ * @method static Negotiate negotiator(RequestInterface $request = null, $getShared = true)
+ * @method static Pager pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
+ * @method static Parser parser($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static View renderer($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static IncomingRequest request(App $config = null, $getShared = true)
+ * @method static Response response(App $config = null, $getShared = true)
+ * @method static RedirectResponse redirectresponse(App $config = null, $getShared = true)
+ * @method static RouteCollection routes($getShared = true)
+ * @method static Router router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
+ * @method static Security security(App $config = null, $getShared = true)
+ * @method static Session session(App $config = null, $getShared = true)
+ * @method static Throttler throttler($getShared = true)
+ * @method static Timer timer($getShared = true)
+ * @method static Toolbar toolbar(ConfigToolbar $config = null, $getShared = true)
+ * @method static URI uri($uri = null, $getShared = true)
+ * @method static Validation validation(ConfigValidation $config = null, $getShared = true)
+ * @method static Cell viewcell($getShared = true)
+ * @method static Typography typography($getShared = true)
  */
 class BaseService
 {
@@ -78,7 +170,7 @@ class BaseService
 	 * $key must be a name matching a service.
 	 *
 	 * @param string $key
-	 * @param array  ...$params
+	 * @param mixed  ...$params
 	 *
 	 * @return mixed
 	 */
@@ -95,9 +187,9 @@ class BaseService
 		if (! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
-			array_push($params, false);
+			$params[] = false;
 
-			static::$instances[$key] = static::$key(...$params);
+			static::$instances[$key] = AppServices::$key(...$params);
 		}
 
 		return static::$instances[$key];
@@ -210,6 +302,16 @@ class BaseService
 		{
 			static::autoloader()->initialize(new Autoload(), new Modules());
 		}
+	}
+
+	/**
+	 * Resets any mock and shared instances for a single service.
+	 *
+	 * @param string $name
+	 */
+	public static function resetSingle(string $name)
+	{
+		unset(static::$mocks[$name], static::$instances[$name]);
 	}
 
 	/**

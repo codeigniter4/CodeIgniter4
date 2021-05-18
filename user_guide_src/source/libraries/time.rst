@@ -124,15 +124,15 @@ This method takes a UNIX timestamp and, optionally, the timezone and locale, to 
 
     $time = Time::createFromTimestamp(1501821586, 'America/Chicago', 'en_US');
 
-instance()
-----------
+createFromInstance()
+--------------------
 
 When working with other libraries that provide a DateTime instance, you can use this method to convert that
 to a Time instance, optionally setting the locale. The timezone will be automatically determined from the DateTime
 instance passed in::
 
     $dt   = new DateTime('now');
-    $time = Time::instance($dt, 'en_US');
+    $time = Time::createFromInstance($dt, 'en_US');
 
 toDateTime()
 ------------
@@ -457,7 +457,7 @@ Works exactly the same as **isBefore()** except checks if the time is after the 
 Viewing Differences
 ===================
 
-To compare two Times directly, you would use the **difference()** method, which returns a **CodeIgniter\I18n\TimeDifference**
+To compare two Times directly, you would use the **difference()** method, which returns a **CodeIgniter\\I18n\\TimeDifference**
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string::
 

@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 /**
  * Class BaseResult
@@ -288,7 +288,10 @@ abstract class BaseResult implements ResultInterface
 		if (! is_numeric($n))
 		{
 			// We cache the row data for subsequent uses
-			is_array($this->rowData) || $this->rowData = $this->getRowArray();
+			if (! is_array($this->rowData))
+			{
+				$this->rowData = $this->getRowArray();
+			}
 
 			// array_key_exists() instead of isset() to allow for NULL values
 			if (empty($this->rowData) || ! array_key_exists($n, $this->rowData))

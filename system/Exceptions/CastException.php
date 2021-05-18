@@ -13,6 +13,10 @@ namespace CodeIgniter\Exceptions;
 
 /**
  * Cast Exceptions.
+ *
+ * @deprecated use CodeIgniter\Entity\Exceptions\CastException instead.
+ *
+ * @codeCoverageIgnore
  */
 class CastException extends CriticalError
 {
@@ -27,7 +31,7 @@ class CastException extends CriticalError
 
 	public static function forInvalidJsonFormatException(int $error)
 	{
-		switch($error)
+		switch ($error)
 		{
 			case JSON_ERROR_DEPTH:
 				return new static(lang('Cast.jsonErrorDepth'));

@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Query;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
  */
-class PretendTest extends CIDatabaseTestCase
+class PretendTest extends CIUnitTestCase
 {
+	use DatabaseTestTrait;
+
 	public function tearDown(): void
 	{
 		// We share `$this->db` in testing, so we need to restore the state.

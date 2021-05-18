@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
-class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+class DummyHandlerTest extends CIUnitTestCase
 {
 	private $dummyHandler;
 
@@ -37,6 +39,11 @@ class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testDelete()
 	{
 		$this->assertTrue($this->dummyHandler->delete('key'));
+	}
+
+	public function testDeleteMatching()
+	{
+		$this->assertSame(0, $this->dummyHandler->deleteMatching('key*'));
 	}
 
 	public function testIncrement()

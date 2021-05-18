@@ -32,7 +32,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * The image/file instance
 	 *
-	 * @var \CodeIgniter\Images\Image
+	 * @var Image
 	 */
 	protected $image;
 

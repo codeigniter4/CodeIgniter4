@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -67,6 +68,7 @@ use Config\Pager as PagerConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
+use Config\Services as AppServices;
 
 /**
  * Services Configuration file.
@@ -134,6 +136,26 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * CodeIgniter, the core of the framework.
+	 *
+	 * @param App|null $config
+	 * @param boolean  $getShared
+	 *
+	 * @return CodeIgniter
+	 */
+	public static function codeigniter(App $config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('codeigniter', $config);
+		}
+
+		$config = $config ?? config('App');
+
+		return new CodeIgniter($config);
+	}
+
+	/**
 	 * The commands utility for running and working with CLI commands.
 	 *
 	 * @param boolean $getShared
@@ -187,7 +209,7 @@ class Services extends BaseService
 	 * @param EmailConfig|array|null $config
 	 * @param boolean                $getShared
 	 *
-	 * @return Email|mixed
+	 * @return Email
 	 */
 	public static function email($config = null, bool $getShared = true)
 	{
@@ -254,8 +276,8 @@ class Services extends BaseService
 		}
 
 		$config   = $config ?? config('Exceptions');
-		$request  = $request ?? static::request();
-		$response = $response ?? static::response();
+		$request  = $request ?? AppServices::request();
+		$response = $response ?? AppServices::response();
 
 		return new Exceptions($config, $request, $response);
 	}
@@ -282,7 +304,7 @@ class Services extends BaseService
 
 		$config = $config ?? config('Filters');
 
-		return new Filters($config, static::request(), static::response());
+		return new Filters($config, AppServices::request(), AppServices::response());
 	}
 
 	//--------------------------------------------------------------------
@@ -395,7 +417,7 @@ class Services extends BaseService
 		}
 
 		// Use '?:' for empty string check
-		$locale = $locale ?: static::request()->getLocale();
+		$locale = $locale ?: AppServices::request()->getLocale();
 
 		return new Language($locale);
 	}
@@ -462,7 +484,7 @@ class Services extends BaseService
 			return static::getSharedInstance('negotiator', $request);
 		}
 
-		$request = $request ?? static::request();
+		$request = $request ?? AppServices::request();
 
 		return new Negotiate($request);
 	}
@@ -486,7 +508,7 @@ class Services extends BaseService
 		}
 
 		$config = $config ?? config('Pager');
-		$view   = $view ?? static::renderer();
+		$view   = $view ?? AppServices::renderer();
 
 		return new Pager($config, $view);
 	}
@@ -512,7 +534,7 @@ class Services extends BaseService
 		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
 		$config   = $config ?? config('View');
 
-		return new Parser($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
+		return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
 	}
 
 	//--------------------------------------------------------------------
@@ -538,7 +560,7 @@ class Services extends BaseService
 		$viewPath = $viewPath ?: config('Paths')->viewDirectory;
 		$config   = $config ?? config('View');
 
-		return new View($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
+		return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
 	}
 
 	//--------------------------------------------------------------------
@@ -562,7 +584,7 @@ class Services extends BaseService
 
 		return new IncomingRequest(
 			$config,
-			static::uri(),
+			AppServices::uri(),
 			'php://input',
 			new UserAgent()
 		);
@@ -609,7 +631,7 @@ class Services extends BaseService
 
 		$config   = $config ?? config('App');
 		$response = new RedirectResponse($config);
-		$response->setProtocolVersion(static::request()->getProtocolVersion());
+		$response->setProtocolVersion(AppServices::request()->getProtocolVersion());
 
 		return $response;
 	}
@@ -631,7 +653,7 @@ class Services extends BaseService
 			return static::getSharedInstance('routes');
 		}
 
-		return new RouteCollection(static::locator(), config('Modules'));
+		return new RouteCollection(AppServices::locator(), config('Modules'));
 	}
 
 	//--------------------------------------------------------------------
@@ -653,8 +675,8 @@ class Services extends BaseService
 			return static::getSharedInstance('router', $routes, $request);
 		}
 
-		$routes  = $routes ?? static::routes();
-		$request = $request ?? static::request();
+		$routes  = $routes ?? AppServices::routes();
+		$request = $request ?? AppServices::request();
 
 		return new Router($routes, $request);
 	}
@@ -677,7 +699,7 @@ class Services extends BaseService
 			return static::getSharedInstance('security', $config);
 		}
 
-		$config = $config ?? config('Security') ?? config('App');
+		$config = $config ?? config('App');
 
 		return new Security($config);
 	}
@@ -700,10 +722,10 @@ class Services extends BaseService
 		}
 
 		$config = $config ?? config('App');
-		$logger = static::logger();
+		$logger = AppServices::logger();
 
 		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config, static::request()->getIPAddress());
+		$driver     = new $driverName($config, AppServices::request()->getIPAddress());
 		$driver->setLogger($logger);
 
 		$session = new Session($driver, $config);
@@ -734,7 +756,7 @@ class Services extends BaseService
 			return static::getSharedInstance('throttler');
 		}
 
-		return new Throttler(static::cache());
+		return new Throttler(AppServices::cache());
 	}
 
 	//--------------------------------------------------------------------
@@ -818,7 +840,7 @@ class Services extends BaseService
 
 		$config = $config ?? config('Validation');
 
-		return new Validation($config, static::renderer());
+		return new Validation($config, AppServices::renderer());
 	}
 
 	//--------------------------------------------------------------------
@@ -838,7 +860,7 @@ class Services extends BaseService
 			return static::getSharedInstance('viewcell');
 		}
 
-		return new Cell(static::cache());
+		return new Cell(AppServices::cache());
 	}
 
 	//--------------------------------------------------------------------

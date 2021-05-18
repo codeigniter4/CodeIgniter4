@@ -12,7 +12,7 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
@@ -47,7 +47,7 @@ class Result extends BaseResult
 	public function getFieldNames(): array
 	{
 		$fieldNames = [];
-		foreach (sqlsrv_field_metadata($this->resultID) as $offset => $field)
+		foreach (sqlsrv_field_metadata($this->resultID) as $field)
 		{
 			$fieldNames[] = $field['Name'];
 		}

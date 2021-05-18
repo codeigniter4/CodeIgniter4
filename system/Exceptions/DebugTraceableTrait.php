@@ -20,7 +20,7 @@ trait DebugTraceableTrait
 	 * @param integer        $code
 	 * @param Throwable|null $previous
 	 */
-	public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
+	final public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
 	{
 		parent::__construct($message, $code, $previous);
 
@@ -28,7 +28,10 @@ trait DebugTraceableTrait
 
 		if (isset($trace['class']) && $trace['class'] === static::class)
 		{
-			['line' => $this->line, 'file' => $this->file] = $trace;
+			[
+				'line' => $this->line,
+				'file' => $this->file,
+			] = $trace;
 		}
 	}
 }

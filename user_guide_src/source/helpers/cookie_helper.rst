@@ -54,11 +54,11 @@ The following functions are available:
 
 .. php:function:: delete_cookie($name[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
-    :param	string	$name: Cookie name
-    :param	string	$domain: Cookie domain (usually: .yourdomain.com)
-    :param	string	$path: Cookie path
-    :param	string	$prefix: Cookie name prefix
-    :rtype:	void
+    :param string $name: Cookie name
+    :param string $domain: Cookie domain (usually: .yourdomain.com)
+    :param string $path: Cookie path
+    :param string $prefix: Cookie name prefix
+    :rtype: void
 
     Lets you delete a cookie. Unless you've set a custom path or other
     values, only the name of the cookie is needed.
@@ -73,3 +73,12 @@ The following functions are available:
     ::
 
         delete_cookie($name, $domain, $path, $prefix);
+
+.. php:function:: has_cookie(string $name[, ?string $value = null[, string $prefix = '']])
+
+    :param string $name: Cookie name
+    :param string|null $value: Cookie value
+    :param string $prefix: Cookie prefix
+    :rtype: bool
+
+    Checks if a cookie exists by name. This is an alias of ``Response::hasCookie()``.

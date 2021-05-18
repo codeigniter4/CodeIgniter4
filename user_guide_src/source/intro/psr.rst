@@ -27,11 +27,13 @@ CodeIgniter's :doc:`Logger </general/logging>` implements all of the interfaces 
 This PSR provides a method for organizing file and namespaces to allow for a standard method of autoloading
 classes. Our :doc:`Autoloader </concepts/autoloader>` meets the PSR-4 recommendations.
 
-**PSR-6: Caching Interface**
+**PSR-6: Caching Interfaces**
+**PSR-16: SimpleCache Interface**
 
-CodeIgniter will not be trying to meet this PSR, as we believe it oversteps its needs. The newly proposed
-`SimpleCache Interfaces <https://github.com/dragoonis/fig-standards/blob/psr-simplecache/proposed/simplecache.md>`_
-do look like something we would consider.
+While the framework Cache components do not adhere to PSR-6 or PSR-16, a separate set of adapters
+are available from the CodeIgniter4 organization as a supplemental module. It is recommended that
+projects use the native Cache drivers directly as the adapters are only intended for compatibility
+with third-party libraries. For more information visit the `CodeIgniter4 Cache repo <https://github.com/codeigniter4/cache>`_.
 
 **PSR-7: HTTP Message Interface**
 

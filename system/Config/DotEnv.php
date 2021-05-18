@@ -51,7 +51,7 @@ class DotEnv
 	{
 		$vars = $this->parse();
 
-		return ($vars === null ? false : true);
+		return $vars !== null;
 	}
 
 	//--------------------------------------------------------------------
@@ -243,7 +243,7 @@ class DotEnv
 		if (strpos($value, '$') !== false)
 		{
 			$value = preg_replace_callback(
-				'/\${([a-zA-Z0-9_]+)}/',
+				'/\${([a-zA-Z0-9_\.]+)}/',
 				function ($matchedPatterns) {
 					$nestedVariable = $this->getVariable($matchedPatterns[1]);
 

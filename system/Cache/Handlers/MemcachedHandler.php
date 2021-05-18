@@ -23,13 +23,6 @@ use Memcached;
 class MemcachedHandler extends BaseHandler
 {
 	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
-	/**
 	 * The memcached object
 	 *
 	 * @var Memcached|Memcache
@@ -57,7 +50,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (! empty($config))
 		{
@@ -166,7 +159,7 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		if ($this->memcached instanceof Memcached)
 		{
@@ -202,11 +195,11 @@ class MemcachedHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		if (! $this->config['raw'])
 		{
@@ -238,13 +231,27 @@ class MemcachedHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		return $this->memcached->delete($key);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @throws Exception
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		throw new Exception('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
 	}
 
 	//--------------------------------------------------------------------
@@ -255,7 +262,7 @@ class MemcachedHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
@@ -264,7 +271,7 @@ class MemcachedHandler extends BaseHandler
 			return false;
 		}
 
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		// @phpstan-ignore-next-line
 		return $this->memcached->increment($key, $offset, $offset, 60);
@@ -278,7 +285,7 @@ class MemcachedHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
@@ -287,7 +294,7 @@ class MemcachedHandler extends BaseHandler
 			return false;
 		}
 
-		$key = $this->prefix . $key;
+		$key = static::validateKey($key, $this->prefix);
 
 		//FIXME: third parameter isn't other handler actions.
 		// @phpstan-ignore-next-line
@@ -299,7 +306,7 @@ class MemcachedHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -314,7 +321,7 @@ class MemcachedHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public function getCacheInfo()
 	{
@@ -328,24 +335,29 @@ class MemcachedHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expire' key for absolute epoch expiry (or null).
+	 *   Some handlers may return false when an item does not exist, which is deprecated.
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
-
+		$key    = static::validateKey($key, $this->prefix);
 		$stored = $this->memcached->get($key);
 
 		// if not an array, don't try to count for PHP7.2
 		if (! is_array($stored) || count($stored) !== 3)
 		{
-			return false;
+			return false; // This will return null in a future release
 		}
 
-		list($data, $time, $ttl) = $stored;
+		list($data, $time, $limit) = $stored;
+
+		// Calculate the remaining time to live from the original limit
+		$ttl = time() - $time - $limit;
 
 		return [
-			'expire' => $time + $ttl,
+			'expire' => $limit > 0 ? $time + $limit : null,
 			'mtime'  => $time,
 			'data'   => $data,
 		];
@@ -360,6 +372,6 @@ class MemcachedHandler extends BaseHandler
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('memcached') || extension_loaded('memcache'));
+		return extension_loaded('memcached') || extension_loaded('memcache');
 	}
 }

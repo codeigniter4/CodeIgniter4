@@ -105,7 +105,7 @@ interface ValidationInterface
 	 *        'field2' => 'error message',
 	 *    ]
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function getErrors(): array;
 

@@ -32,7 +32,6 @@ class Negotiate
 	protected $request;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
@@ -47,7 +46,6 @@ class Negotiate
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Stores the request instance to grab the headers from.
 	 *
@@ -127,7 +125,7 @@ class Negotiate
 	 */
 	public function encoding(array $supported = []): string
 	{
-		array_push($supported, 'identity');
+		$supported[] = 'identity';
 
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}

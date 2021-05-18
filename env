@@ -25,25 +25,11 @@
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
 # app.sessionCookieName = 'ci_session'
+# app.sessionExpiration = 7200
 # app.sessionSavePath = NULL
 # app.sessionMatchIP = false
 # app.sessionTimeToUpdate = 300
 # app.sessionRegenerateDestroy = false
-
-# app.cookiePrefix = ''
-# app.cookieDomain = ''
-# app.cookiePath = '/'
-# app.cookieSecure = false
-# app.cookieHTTPOnly = false
-# app.cookieSameSite = 'Lax'
-
-# app.CSRFProtection  = false
-# app.CSRFTokenName   = 'csrf_test_name'
-# app.CSRFCookieName  = 'csrf_cookie_name'
-# app.CSRFExpire      = 7200
-# app.CSRFRegenerate  = true
-# app.CSRFExcludeURIs = []
-# app.CSRFSameSite    = 'Lax'
 
 # app.CSPEnabled = false
 
@@ -56,12 +42,14 @@
 # database.default.username = root
 # database.default.password = root
 # database.default.DBDriver = MySQLi
+# database.default.DBPrefix =
 
 # database.tests.hostname = localhost
 # database.tests.database = ci4
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
+# database.tests.DBPrefix =
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
@@ -78,12 +66,26 @@
 # contentsecuritypolicy.fontSrc = null
 # contentsecuritypolicy.formAction = null
 # contentsecuritypolicy.frameAncestors = null
+# contentsecuritypolicy.frameSrc = null
 # contentsecuritypolicy.mediaSrc = null
 # contentsecuritypolicy.objectSrc = null
 # contentsecuritypolicy.pluginTypes = null
 # contentsecuritypolicy.reportURI = null
 # contentsecuritypolicy.sandbox = false
 # contentsecuritypolicy.upgradeInsecureRequests = false
+
+#--------------------------------------------------------------------
+# COOKIE
+#--------------------------------------------------------------------
+
+# cookie.prefix = ''
+# cookie.expires = 0
+# cookie.path = '/'
+# cookie.domain = ''
+# cookie.secure = false
+# cookie.httponly = false
+# cookie.samesite = 'Lax'
+# cookie.raw = false
 
 #--------------------------------------------------------------------
 # ENCRYPTION
@@ -108,13 +110,13 @@
 # SECURITY
 #--------------------------------------------------------------------
 
-# security.tokenName  = 'csrf_token_name'
+# security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'
 # security.cookieName = 'csrf_cookie_name'
-# security.expires    = 7200
+# security.expires = 7200
 # security.regenerate = true
-# security.redirect   = true
-# security.samesite   = 'Lax'
+# security.redirect = true
+# security.samesite = 'Lax'
 
 #--------------------------------------------------------------------
 # LOGGER

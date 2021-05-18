@@ -189,13 +189,10 @@ class Exceptions
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if (! is_null($error))
+		// Fatal Error?
+		if (! is_null($error) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
 		{
-			// Fatal Error?
-			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
-			{
-				$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
-			}
+			$this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 		}
 	}
 
@@ -296,6 +293,12 @@ class Exceptions
 	 */
 	protected function collectVars(Throwable $exception, int $statusCode): array
 	{
+		$trace = $exception->getTrace();
+		if (! empty($this->config->sensitiveDataInTrace))
+		{
+			$this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
+		}
+
 		return [
 			'title'   => get_class($exception),
 			'type'    => get_class($exception),
@@ -303,8 +306,49 @@ class Exceptions
 			'message' => $exception->getMessage() ?? '(null)',
 			'file'    => $exception->getFile(),
 			'line'    => $exception->getLine(),
-			'trace'   => $exception->getTrace(),
+			'trace'   => $trace,
 		];
+	}
+
+	/**
+	 * Mask sensitive data in the trace.
+	 *
+	 * @param array|object $trace
+	 * @param array        $keysToMask
+	 * @param string       $path
+	 */
+	protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '') 
+	{
+		foreach ($keysToMask as $keyToMask) 
+		{
+			$explode = explode('/', $keyToMask);
+			$index   = end($explode);
+
+			if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0)
+			{
+				if (is_array($trace) && array_key_exists($index, $trace)) 
+				{
+					$trace[$index] = '******************';
+				} 
+				elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) 
+				{
+					$trace->$index = '******************';
+				}
+			}
+		}
+
+		if (! is_iterable($trace) && is_object($trace)) 
+		{
+			$trace = get_object_vars($trace);
+		}
+
+		if (is_iterable($trace)) 
+		{
+			foreach ($trace as $pathKey => $subarray) 
+			{
+				$this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
+			}
+		}
 	}
 
 	/**

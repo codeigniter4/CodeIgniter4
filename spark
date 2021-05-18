@@ -1,14 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-// Valid PHP Version?
-$minPHPVersion = '7.2';
-if (version_compare(PHP_VERSION, $minPHPVersion, '<'))
-{
-	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . PHP_VERSION);
-}
-unset($minPHPVersion);
-
 /*
  * --------------------------------------------------------------------
  * CodeIgniter command-line tools
@@ -60,7 +52,13 @@ error_reporting(-1);
 ini_set('display_errors', '1');
 
 // Show basic information before we do anything else.
-$console->showHeader();
+if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true)))
+{
+	unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
+	$suppress = true;
+}
+
+$console->showHeader($suppress);
 
 // fire off the command in the main framework.
 $response = $console->run();

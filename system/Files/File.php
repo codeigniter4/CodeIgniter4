@@ -200,7 +200,7 @@ class File extends SplFileInfo
 				{
 					$i = end($parts);
 					array_pop($parts);
-					array_push($parts, ++ $i);
+					$parts[]     = ++ $i;
 					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
 				}
 				else

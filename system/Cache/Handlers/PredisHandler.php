@@ -15,19 +15,13 @@ use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Exception;
 use Predis\Client;
+use Predis\Collection\Iterator\Keyspace;
 
 /**
  * Predis cache handler
  */
 class PredisHandler extends BaseHandler
 {
-	/**
-	 * Prefixed to all cache names.
-	 *
-	 * @var string
-	 */
-	protected $prefix;
-
 	/**
 	 * Default config
 	 *
@@ -57,7 +51,7 @@ class PredisHandler extends BaseHandler
 	 */
 	public function __construct(Cache $config)
 	{
-		$this->prefix = (string) $config->prefix;
+		$this->prefix = $config->prefix;
 
 		if (isset($config->redis))
 		{
@@ -100,10 +94,13 @@ class PredisHandler extends BaseHandler
 	 */
 	public function get(string $key)
 	{
+		$key = static::validateKey($key);
+
 		$data = array_combine([
 			'__ci_type',
 			'__ci_value',
-		], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
+		],
+			$this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
@@ -137,10 +134,12 @@ class PredisHandler extends BaseHandler
 	 * @param mixed   $value The data to save
 	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
-	 * @return mixed
+	 * @return boolean Success or failure
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
+		$key = static::validateKey($key);
+
 		switch ($dataType = gettype($value))
 		{
 			case 'array':
@@ -175,11 +174,34 @@ class PredisHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function delete(string $key)
 	{
-		return ($this->redis->del($key) === 1);
+		$key = static::validateKey($key);
+
+		return $this->redis->del($key) === 1;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return integer The number of deleted items
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$matchedKeys = [];
+
+		foreach (new Keyspace($this->redis, $pattern) as $key)
+		{
+			$matchedKeys[] = $key;
+		}
+
+		return $this->redis->del($matchedKeys);
 	}
 
 	//--------------------------------------------------------------------
@@ -190,10 +212,12 @@ class PredisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
+		$key = static::validateKey($key);
+
 		return $this->redis->hincrby($key, 'data', $offset);
 	}
 
@@ -205,10 +229,12 @@ class PredisHandler extends BaseHandler
 	 * @param string  $key    Cache ID
 	 * @param integer $offset Step/value to increase by
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
+		$key = static::validateKey($key);
+
 		return $this->redis->hincrby($key, 'data', -$offset);
 	}
 
@@ -217,7 +243,7 @@ class PredisHandler extends BaseHandler
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return boolean
+	 * @return boolean Success or failure
 	 */
 	public function clean()
 	{
@@ -232,7 +258,7 @@ class PredisHandler extends BaseHandler
 	 * The information returned and the structure of the data
 	 * varies depending on the handler.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getCacheInfo()
 	{
@@ -246,17 +272,23 @@ class PredisHandler extends BaseHandler
 	 *
 	 * @param string $key Cache item name.
 	 *
-	 * @return mixed
+	 * @return array|false|null
+	 *   Returns null if the item does not exist, otherwise array<string, mixed>
+	 *   with at least the 'expire' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
+		$key = static::validateKey($key);
+
 		$data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
 		if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
 		{
 			$time = time();
+			$ttl  = $this->redis->ttl($key);
+
 			return [
-				'expire' => $time + $this->redis->ttl($key),
+				'expire' => $ttl > 0 ? time() + $ttl : null,
 				'mtime'  => $time,
 				'data'   => $data['__ci_value'],
 			];

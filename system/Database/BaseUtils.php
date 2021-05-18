@@ -49,7 +49,6 @@ abstract class BaseUtils
 	protected $repairTable = false;
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -120,7 +119,7 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param  string $tableName
-	 * @return mixed
+	 * @return boolean
 	 * @throws DatabaseException
 	 */
 	public function optimizeTable(string $tableName)
@@ -135,13 +134,8 @@ abstract class BaseUtils
 		}
 
 		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
-		if ($query !== false)
-		{
-			$query = $query->getResultArray();
-			return current($query);
-		}
 
-		return false;
+		return $query !== false;
 	}
 
 	//--------------------------------------------------------------------
@@ -226,7 +220,6 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Generate CSV from a query result object
 	 *
@@ -263,7 +256,6 @@ abstract class BaseUtils
 	}
 
 	//--------------------------------------------------------------------
-
 	/**
 	 * Generate XML data from a query result object
 	 *
@@ -344,7 +336,7 @@ abstract class BaseUtils
 		// Did the user submit any preferences? If so set them....
 		if (! empty($params))
 		{
-			foreach ($prefs as $key => $val)
+			foreach (array_keys($prefs) as $key)
 			{
 				if (isset($params[$key]))
 				{

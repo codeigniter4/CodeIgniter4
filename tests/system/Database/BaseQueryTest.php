@@ -1,21 +1,19 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
+class BaseQueryTest extends CIUnitTestCase
 {
 	protected $db;
-
-	//--------------------------------------------------------------------
 
 	protected function setUp(): void
 	{
 		parent::setUp();
-
 		$this->db = new MockConnection([]);
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testQueryStoresSQL()
 	{
@@ -28,8 +26,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($sql, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testStoresDuration()
 	{
 		$query = new Query($this->db);
@@ -40,8 +36,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(5, $query->getDuration());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testGetStartTime()
 	{
@@ -54,8 +48,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($start, $query->getStartTime(true));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testGetStartTimeNumberFormat()
 	{
 		$query = new Query($this->db);
@@ -66,8 +58,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(number_format($start, 6), $query->getStartTime());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testsStoresErrorInformation()
 	{
@@ -84,8 +74,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($msg, $query->getErrorMessage());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSwapPrefix()
 	{
 		$query = new Query($this->db);
@@ -101,8 +89,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($newSQL, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function queryTypes()
 	{
@@ -182,8 +168,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider queryTypes
 	 */
@@ -194,8 +178,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$query->setQuery($sql);
 		$this->assertSame($expected, $query->isWriteType());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSingleBindingOutsideOfArray()
 	{
@@ -208,8 +190,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBindingSingleElementInArray()
 	{
 		$query = new Query($this->db);
@@ -220,8 +200,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testBindingMultipleItems()
 	{
@@ -234,8 +212,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testBindingAutoEscapesParameters()
 	{
 		$query = new Query($this->db);
@@ -246,8 +222,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testNamedBinds()
 	{
@@ -260,7 +234,17 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $query->getQuery());
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3566
+	 */
+	public function testNamedBindsWithColonElseWhere()
+	{
+		$query = new Query($this->db);
+		$query->setQuery('SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = :id:', ['id' => 10]);
+
+		$sql = 'SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = 10';
+		$this->assertSame($sql, $query->getQuery());
+	}
 
 	/**
 	 * @group single
@@ -277,8 +261,6 @@ class BaseQueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705

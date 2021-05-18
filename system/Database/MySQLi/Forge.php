@@ -88,8 +88,10 @@ class Forge extends BaseForge
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var string
+	 *
+	 * @internal
 	 */
-	protected $_null = 'NULL';
+	protected $null = 'NULL';
 
 	//--------------------------------------------------------------------
 
@@ -235,8 +237,10 @@ class Forge extends BaseForge
 				continue;
 			}
 
-			// @phpstan-ignore-next-line
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
+			if (! is_array($this->keys[$i]))
+			{
+				$this->keys[$i] = [$this->keys[$i]];
+			}
 
 			$unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 
