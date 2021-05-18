@@ -1,7 +1,7 @@
 Version 4.1.2
 =============
 
-Release Date: Not released
+Release Date: May 16, 2021
 
 **4.1.2 release of CodeIgniter4**
 
@@ -52,8 +52,9 @@ Deprecations:
 - Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
 - Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
 - Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
-- Deprecated ``BaseModel::idValue()`` in favor of public ``BaseModel::getIdValue()``. ``BaseModel::getIdValue()`` will be defined as abstract in future any custom Model classes should be updated.
 
 Bugs Fixed:
+
+*See the repo's **CHANGELOG.MD** for a complete list of bugs fixed.*
 
 - ``BaseConnection::query()`` now returns ``false`` for failed queries (unless ``DBDebug==true``, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.
