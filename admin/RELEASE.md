@@ -57,7 +57,8 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 * Build the HTML version of the User Guide: `make html`
 * Build the ePub version of the User Guide: `make epub`
 * Switch to the **userguide** repo and create a new branch `release-4.x.x`
-* Merge the contents of **CodeIgniter4/user_guide_src/build/html** into **docs/** (be sure to keep the assets in **docs/_static**)
+* Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
+* Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders with an underscore prefix
 * Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter4.x.x.epub**
 * Commit the changes with "Update for 4.x.x" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
@@ -74,7 +75,7 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 
 Currently the User Guide on the website has to be updated manually. Visit Jim's user home
 where the served directory **codeigniter.com** exists. Copy the latest **docs** folder from
-the User Guide repo to **public/userguide4** and browse to the website to make sure.
+the User Guide repo to **public/userguide4** and browse to the website to make sure it works.
 
 ## Announcement
 
