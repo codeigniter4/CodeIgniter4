@@ -1,14 +1,20 @@
 # Release Process
 
-> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021
+> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
+> Updated for `4.1.2` on May 17, 2021.
 > -MGatner
 
 ## Preparation
 
 * Work off direct clones of the repos so the release branches persist for a time
 * Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and resolve any necessary PRs
-* Generate a new **CHANGELOG.md** ahead of time using [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator)
-* The Action deploy scripts *do not remove hidden files* (e.g. if you delete **.gitattributes**)! Vet the **admin/** folders for issues ahead of time
+* Vet the **admin/** folders for any removed hidden files (Action deploy scripts *do not remove these*)
+* Generate a new **CHANGELOG.md** ahead of time using [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator):
+```
+github_changelog_generator --user codeigniter4 --project codeigniter4 --since-tag v4.0.4 --future-release v4.0.5 --token {your_github_token}
+...or
+github_changelog_generator --user codeigniter4 --project codeigniter4 --since-commit "2021-02-01 13:26:28" --future-release v4.0.5 --token {your_github_token}
+```
 
 ## CodeIgniter4
 
