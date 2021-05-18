@@ -22,7 +22,7 @@
 		"phpstan/phpstan": "0.12.86",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
-		"rector/rector": "0.11.2",
+		"rector/rector": "0.11.4",
 		"squizlabs/php_codesniffer": "^3.3",
 		"symplify/package-builder": "^9.3"
 	},
