@@ -20,13 +20,6 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-	/**
-	 * Row offset
-	 *
-	 * @var integer
-	 */
-	private $rowOffset = 0;
-
 	//--------------------------------------------------------------------
 
 	/**
