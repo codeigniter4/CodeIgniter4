@@ -75,6 +75,61 @@ if (! function_exists('directory_map'))
 
 // ------------------------------------------------------------------------
 
+if (! function_exists('directory_mirror'))
+{
+	/**
+	 * Recursively copies the files and directories of the origin directory
+	 * into the target directory, i.e. "mirror" its contents.
+	 *
+	 * @param string $originDir
+	 * @param string $targetDir
+	 * @param bool $overwrite   Whether individual files overwrite on collision
+	 *
+	 * @return void
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	function directory_mirror(string $originDir, string $targetDir, bool $overwrite = true): void
+	{
+		$originDir = rtrim($originDir, '\\/');
+		$targetDir = rtrim($targetDir, '\\/');
+
+		if (! is_dir($originDir))
+		{
+			throw new InvalidArgumentException(sprintf('The origin directory "%s" was not found.', $originDir));
+		}
+
+		if (! is_dir($targetDir))
+		{
+			@mkdir($targetDir, 0755, true);
+		}
+
+
+		$dirLen = strlen($originDir);
+
+		/** @var SplFileInfo $file */
+		foreach (new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::SELF_FIRST
+		) as $file)
+		{
+			$origin = $file->getPathname();
+			$target = $targetDir . substr($origin, $dirLen);
+
+			if ($file->isDir())
+			{
+				mkdir($target, 0755);
+			}
+			elseif (! file_exists($target) || ($overwrite && is_file($target)))
+			{
+				copy($origin, $target);
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------
+
 if (! function_exists('write_file'))
 {
 	/**
@@ -443,6 +498,24 @@ if (! function_exists('octal_permissions'))
 	function octal_permissions(int $perms): string
 	{
 		return substr(sprintf('%o', $perms), -3);
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if (! function_exists('same_file'))
+{
+	/**
+	 * Checks if two files both exist and have identical hashes
+	 *
+	 * @param string $file1
+	 * @param string $file2
+	 *
+	 * @return bool  Same or not
+	 */
+	function same_file(string $file1, string $file2): bool
+	{
+		return is_file($file1) && is_file($file2) && md5_file($file1) === md5_file($file2);
 	}
 }
 
