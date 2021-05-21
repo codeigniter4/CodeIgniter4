@@ -1,10 +1,12 @@
-<?php namespace CodeIgniter\CLI;
+<?php
+
+namespace CodeIgniter\CLI;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use ReflectionProperty;
 
-class CLITest extends CIUnitTestCase
+final class CLITest extends CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -40,6 +42,12 @@ class CLITest extends CIUnitTestCase
 		CLI::beep(4);
 	}
 
+	/**
+	 * This test waits for 2 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 2.5
+	 */
 	public function testWait()
 	{
 		$time = time();
