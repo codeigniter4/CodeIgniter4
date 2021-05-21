@@ -138,7 +138,7 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - if: matrix.php-versions == '7.4'
+      - if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '7.4'
         name: Run Coveralls
         run: |
           composer global require php-coveralls/php-coveralls:^2.4
@@ -149,6 +149,7 @@ jobs:
           COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
   coveralls-finish:
+    if: github.repository_owner == 'codeigniter4'
     needs: [tests]
     runs-on: ubuntu-20.04
     steps:
