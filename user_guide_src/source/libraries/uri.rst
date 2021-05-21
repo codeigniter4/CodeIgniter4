@@ -61,6 +61,11 @@ using the URI class' static ``createURIString()`` method::
 	// Creates: http://exmample.com/some/path?foo=bar#first-heading
 	echo URI::createURIString('http', 'example.com', 'some/path', 'foo=bar', 'first-heading');
 
+.. important:: When ``URI`` is cast to a string, it will attempt to adjust project URLs to the
+	settings defined in ``Config\App``. If you need the exact, unaltered string representation
+	then use ``URI::createURIString()`` instead.
+
+
 =============
 The URI Parts
 =============
