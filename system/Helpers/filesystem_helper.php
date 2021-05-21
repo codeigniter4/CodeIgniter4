@@ -81,9 +81,9 @@ if (! function_exists('directory_mirror'))
 	 * Recursively copies the files and directories of the origin directory
 	 * into the target directory, i.e. "mirror" its contents.
 	 *
-	 * @param string $originDir
-	 * @param string $targetDir
-	 * @param bool $overwrite   Whether individual files overwrite on collision
+	 * @param string  $originDir
+	 * @param string  $targetDir
+	 * @param boolean $overwrite Whether individual files overwrite on collision
 	 *
 	 * @return void
 	 *
@@ -103,7 +103,7 @@ if (! function_exists('directory_mirror'))
 
 		$dirLen = strlen($originDir);
 
-		/** @var SplFileInfo $file */
+		// @var SplFileInfo $file
 		foreach (new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
 			RecursiveIteratorIterator::SELF_FIRST
@@ -210,12 +210,12 @@ if (! function_exists('delete_files'))
 					$isDir = $object->isDir();
 					if ($isDir && $delDir)
 					{
-						@rmdir($object->getPathname());
+						rmdir($object->getPathname());
 						continue;
 					}
 					if (! $isDir)
 					{
-						@unlink($object->getPathname());
+						unlink($object->getPathname());
 					}
 				}
 			}
@@ -507,7 +507,7 @@ if (! function_exists('same_file'))
 	 * @param string $file1
 	 * @param string $file2
 	 *
-	 * @return bool  Same or not
+	 * @return boolean  Same or not
 	 */
 	function same_file(string $file1, string $file2): bool
 	{
