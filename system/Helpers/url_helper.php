@@ -205,20 +205,9 @@ if (! function_exists('uri_string'))
 	 */
 	function uri_string(bool $relative = false): string
 	{
-		$request = Services::request();
-		$uri     = $request->uri;
-
-		// An absolute path is equivalent to getPath()
-		if (! $relative)
-		{
-			return $uri->getPath();
-		}
-
-		// Remove the baseURL from the entire URL
-		$url     = (string) $uri->__toString();
-		$baseURL = rtrim($request->config->baseURL, '/ ') . '/';
-
-		return substr($url, strlen($baseURL));
+		return $relative
+			? ltrim(Services::request()->getPath(), '/')
+			: Services::request()->getUri()->getPath();
 	}
 }
 
