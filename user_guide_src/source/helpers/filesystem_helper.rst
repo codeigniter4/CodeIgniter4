@@ -239,6 +239,19 @@ The following functions are available:
 
         echo octal_permissions(fileperms('./index.php')); // 644
 
+.. php:function:: same_file($file1, $file2)
+
+    :param	string	$file1: Path to the first file
+    :param	string	$file2: Path to the second file
+    :returns:	Whether both files exist with identical hashes
+    :rtype:	boolean
+
+    Compares two files to see if they are the same (based on their MD5 hash).
+
+    ::
+
+        echo same_file($newFile, $oldFile) ? 'Same!' : 'Different!';
+
 .. php:function:: set_realpath($path[, $check_existence = FALSE])
 
     :param	string	$path: Path

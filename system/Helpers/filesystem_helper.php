@@ -91,19 +91,15 @@ if (! function_exists('directory_mirror'))
 	 */
 	function directory_mirror(string $originDir, string $targetDir, bool $overwrite = true): void
 	{
-		$originDir = rtrim($originDir, '\\/');
-		$targetDir = rtrim($targetDir, '\\/');
-
-		if (! is_dir($originDir))
+		if (! is_dir($originDir = rtrim($originDir, '\\/')))
 		{
 			throw new InvalidArgumentException(sprintf('The origin directory "%s" was not found.', $originDir));
 		}
 
-		if (! is_dir($targetDir))
+		if (! is_dir($targetDir = rtrim($targetDir, '\\/')))
 		{
 			@mkdir($targetDir, 0755, true);
 		}
-
 
 		$dirLen = strlen($originDir);
 
@@ -120,7 +116,7 @@ if (! function_exists('directory_mirror'))
 			{
 				mkdir($target, 0755);
 			}
-			elseif (! file_exists($target) || ($overwrite && is_file($target)))
+			elseif (! is_file($target) || ($overwrite && is_file($target)))
 			{
 				copy($origin, $target);
 			}
