@@ -376,7 +376,7 @@ directories.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$source_dir</strong> (<em>string</em>) – Path to the source directory</p></li>
 <li><p><strong>$directory_depth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</p></li>
-<li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden directories</p></li>
+<li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden paths</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -400,8 +400,9 @@ parameter (integer). A depth of 1 will only map the top level directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, hidden files will not be included in the returned array. To
-override this behavior, you may set a third parameter to true (boolean):</p>
+<p>By default, hidden files will not be included in the returned array and
+hidden directories will be skipped. To override this behavior, you may
+set a third parameter to true (boolean):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -436,6 +437,34 @@ be numerically indexed. Here is an example of a typical array:</p>
 </pre></div>
 </div>
 <p>If no results are found, this will return an empty array.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="directory_mirror">
+<code class="sig-name descname">directory_mirror</code><span class="sig-paren">(</span><em class="sig-param">$original</em>, <em class="sig-param">$target</em><span class="optional">[</span>, <em class="sig-param">$overwrite = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_mirror" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$original</strong> (<em>string</em>) – Original source directory</p></li>
+<li><p><strong>$target</strong> (<em>string</em>) – Target destination directory</p></li>
+<li><p><strong>$overwrite</strong> (<em>bool</em>) – Whether individual files overwrite on collision</p></li>
+</ul>
+</dd>
+</dl>
+<p>Recursively copies the files and directories of the origin directory
+into the target directory, i.e. “mirror” its contents.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span>
+<span class="p">{</span>
+    <span class="nx">directory_mirror</span><span class="p">(</span><span class="nv">$uploadedImages</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;images/&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Failed to export uploads!&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can optionally change the overwrite behavior via the third parameter.</p>
 </dd></dl>
 
 <dl class="function">
@@ -656,6 +685,29 @@ a three character octal notation of file permissions.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="same_file">
+<code class="sig-name descname">same_file</code><span class="sig-paren">(</span><em class="sig-param">$file1</em>, <em class="sig-param">$file2</em><span class="sig-paren">)</span><a class="headerlink" href="#same_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$file1</strong> (<em>string</em>) – Path to the first file</p></li>
+<li><p><strong>$file2</strong> (<em>string</em>) – Path to the second file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whether both files exist with identical hashes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+<p>Compares two files to see if they are the same (based on their MD5 hash).</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">same_file</span><span class="p">(</span><span class="nv">$newFile</span><span class="p">,</span> <span class="nv">$oldFile</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;Same!&#39;</span> <span class="o">:</span> <span class="s1">&#39;Different!&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="set_realpath">
 <code class="sig-name descname">set_realpath</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$check_existence = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -712,7 +764,7 @@ cause an error to be triggered if the path cannot be resolved.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 18, 2021.
+        Last updated on May 21, 2021.
       </span>
 
     </p>
