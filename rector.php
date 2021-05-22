@@ -27,6 +27,7 @@ use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
+use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -84,4 +85,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ChangeArrayPushToArrayAssignRector::class);
 	$services->set(UnnecessaryTernaryExpressionRector::class);
 	$services->set(RemoveUnusedPrivatePropertyRector::class);
+	$services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
 };
