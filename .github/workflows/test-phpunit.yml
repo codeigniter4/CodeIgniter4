@@ -42,10 +42,15 @@ jobs:
       matrix:
         php-versions: ['7.3', '7.4', '8.0']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+        mysql-versions: ['5.7']
+        include:
+          - php-versions: 7.4
+            db-platforms: MySQLi
+            mysql-versions: 8.0
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql-versions }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
