@@ -15,18 +15,18 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
 {
 	public function getRuleDefinition(): RuleDefinition
 	{
-		return new RuleDefinition('Remove error suppress @', [
+		return new RuleDefinition('Remove error suppression operator `@` inside try...catch blocks', [
 			new CodeSample(
 				<<<'CODE_SAMPLE'
-try {
-	@rmdir($dirname);
-} catch (Exception $e) {}
+	try {
+		@rmdir($dirname);
+	} catch (Exception $e) {}
 CODE_SAMPLE
 ,
 				<<<'CODE_SAMPLE'
-try {
-	rmdir($dirname);
-} catch (Exception $e) {}
+	try {
+		rmdir($dirname);
+	} catch (Exception $e) {}
 CODE_SAMPLE
 			),
 		]);
@@ -52,11 +52,11 @@ CODE_SAMPLE
 			return null;
 		}
 
-		// not in stmts, means it in catch or finally
-		$inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, function (Node $n) use ($node) : bool {
+		$inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static function (Node $n) use ($node) : bool {
 			return $n === $node;
 		});
 
+		// not in stmts, means it in catch or finally
 		if (! $inStmts)
 		{
 			return null;
