@@ -45,8 +45,9 @@ CODE_SAMPLE
 	 */
 	public function refactor(Node $node): ?Node
 	{
-		// not in try catch
 		$tryCatch = $this->betterNodeFinder->findParentType($node, TryCatch::class);
+
+		// not in try catch
 		if (! $tryCatch instanceof TryCatch)
 		{
 			return null;
