@@ -42,10 +42,15 @@ jobs:
       matrix:
         php-versions: ['7.3', '7.4', '8.0']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+        mysql-versions: ['5.7']
+        include:
+          - php-versions: 7.4
+            db-platforms: MySQLi
+            mysql-versions: 8.0
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql-versions }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
@@ -133,7 +138,7 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - if: matrix.php-versions == '7.4'
+      - if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '7.4'
         name: Run Coveralls
         run: |
           composer global require php-coveralls/php-coveralls:^2.4
@@ -144,6 +149,7 @@ jobs:
           COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
   coveralls-finish:
+    if: github.repository_owner == 'codeigniter4'
     needs: [tests]
     runs-on: ubuntu-20.04
     steps:
