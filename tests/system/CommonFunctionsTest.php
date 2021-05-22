@@ -507,4 +507,10 @@ class CommonFunctionsTest extends CIUnitTestCase
 		$this->assertFalse($exception);
 		Services::reset();
 	}
+
+	public function testIsCli()
+	{
+		$this->assertIsBool(is_cli());
+		$this->assertTrue(is_cli());
+	}
 }
