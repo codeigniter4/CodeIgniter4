@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Test\Mock;
 
-use \CodeIgniter\Config\BaseService;
+use CodeIgniter\Config\BaseService;
 use CodeIgniter\Autoloader\FileLocator;
 
 class MockServices extends BaseService
