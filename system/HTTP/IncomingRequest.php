@@ -270,7 +270,7 @@ class IncomingRequest extends Request
 			foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment)
 			{
 				// If these segments are not the same then we're done
-				if ($segment !== $segments[$i])
+				if (! isset($segments[$i]) || $segment !== $segments[$i])
 				{
 					break;
 				}
