@@ -329,7 +329,7 @@ Property Casting
 You can specify that properties in your Entity should be converted to common data types with the **casts** property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
-either the entity or the database. Properties can be cast to any of the following data types:
+either the entity or the database. Properties can be cast to any of the following data types by default:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, and **uri**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
@@ -432,7 +432,7 @@ Let's say the class will be located in the 'app/Entity/Cast' directory::
     
     use CodeIgniter\Entity\Cast\BaseCast;
 
-    //The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
+    // The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
     class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
@@ -456,14 +456,14 @@ Now you need to register it::
 
     class MyEntity extends Entity
     {
-        // Specifying the type for the field
-        protected $casts = [
-            'key' => 'base64',
+        // Bind the type to the handler
+        protected static $customCastHandlers = [
+            'base64' => 'App\Entity\Cast\CastBase64',
         ];
 
-        //Bind the type to the handler
-        protected $castHandlers = [
-            'base64' => 'App\Entity\Cast\CastBase64',
+        // ... and specify the type for the field
+        protected $casts = [
+            'key' => 'base64',
         ];
     }
 
@@ -485,6 +485,7 @@ If you don't need to change values when getting or setting a value. Then just do
         }
     }
 
+Use the static method ``getCastHandlers()`` to determine which casts and handlers are available for any Entity child.
 
 **Parameters**
 
