@@ -108,8 +108,8 @@ class Publisher
 			return [];
 		}
 
-		// Loop over each file checking to see if it is a Primer
-		foreach ($files as $file)
+		// Loop over each file checking to see if it is a Publisher
+		foreach (array_unique($files) as $file)
 		{
 			$className = $locator->findQualifiedNameFromPath($file);
 
@@ -228,8 +228,10 @@ class Publisher
 			$attempts = 10;
 			while ((bool) $attempts && ! delete_files($directory, true, false, true))
 			{
+				// @codeCoverageIgnoreStart
 				$attempts--;
 				usleep(100000); // .1s
+				// @codeCoverageIgnoreEnd
 			}
 
 			@rmdir($directory);
@@ -268,6 +270,13 @@ class Publisher
 
 			// Try to remove anything else
 			unlink($to);
+		}
+
+		// Make sure the directory exists
+		$directory = pathinfo($to, PATHINFO_DIRNAME);
+		if (! is_dir($directory))
+		{
+			mkdir($directory, 0775, true);
 		}
 
 		// Allow copy() to throw errors
@@ -311,10 +320,11 @@ class Publisher
 	 * This method should be reimplemented by
 	 * child classes intended for discovery.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function publish()
 	{
+		return $this->addPath('/')->merge(true);
 	}
 
 	//--------------------------------------------------------------------
@@ -686,7 +696,7 @@ class Publisher
 		$this->errors = [];
 
 		// Get the file from source for special handling
-		$sourced = self::matchFiles($this->getFiles(), $this->source);
+		$sourced = self::filterFiles($this->getFiles(), $this->source);
 
 		// Handle everything else with a flat copy
 		$this->files = array_diff($this->files, $sourced);
