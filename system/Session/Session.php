@@ -187,7 +187,9 @@ class Session implements SessionInterface
 		$this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
 		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-		/** @var CookieConfig */
+		/**
+		 * @var CookieConfig
+		 */
 		$cookie = config('Cookie');
 
 		$this->cookie = new Cookie($this->sessionCookieName, '', [
@@ -512,7 +514,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if (! empty($key) && (! is_null($value = isset($_SESSION[$key]) ? $_SESSION[$key] : null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
+		if (! empty($key) && (! is_null($value = $_SESSION[$key] ?? null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
 		{
 			return $value;
 		}

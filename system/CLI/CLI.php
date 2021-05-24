@@ -983,7 +983,7 @@ class CLI
 
 		// If the option didn't have a value, simply return TRUE
 		// so they know it was set, otherwise return the actual value.
-		$val = static::$options[$name] === null ? true : static::$options[$name];
+		$val = static::$options[$name] ?? true;
 
 		return $val;
 	}

@@ -320,7 +320,7 @@ class Table
 					}
 				}
 
-				$out .= $temp . (isset($heading['data']) ? $heading['data'] : '') . $this->template['heading_cell_end'];
+				$out .= $temp . ($heading['data'] ?? '') . $this->template['heading_cell_end'];
 			}
 
 			$out .= $this->template['heading_row_end'] . $this->newline . $this->template['thead_close'] . $this->newline;
@@ -352,7 +352,7 @@ class Table
 						}
 					}
 
-					$cell = isset($cell['data']) ? $cell['data'] : '';
+					$cell = $cell['data'] ?? '';
 					$out .= $temp;
 
 					if ($cell === '' || $cell === null)
@@ -394,7 +394,7 @@ class Table
 					}
 				}
 
-				$out .= $temp . (isset($footing['data']) ? $footing['data'] : '') . $this->template['footing_cell_end'];
+				$out .= $temp . ($footing['data'] ?? '') . $this->template['footing_cell_end'];
 			}
 
 			$out .= $this->template['footing_row_end'] . $this->newline . $this->template['tfoot_close'] . $this->newline;

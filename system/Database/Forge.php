@@ -964,8 +964,8 @@ class Forge
 
 			$field = [
 				'name'           => $key,
-				'new_name'       => isset($attributes['NAME']) ? $attributes['NAME'] : null,
-				'type'           => isset($attributes['TYPE']) ? $attributes['TYPE'] : null,
+				'new_name'       => $attributes['NAME'] ?? null,
+				'type'           => $attributes['TYPE'] ?? null,
 				'length'         => '',
 				'unsigned'       => '',
 				'null'           => '',

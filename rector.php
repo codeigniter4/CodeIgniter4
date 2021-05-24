@@ -22,6 +22,7 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
+use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Set\ValueObject\SetList;
@@ -86,4 +87,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(UnnecessaryTernaryExpressionRector::class);
 	$services->set(RemoveUnusedPrivatePropertyRector::class);
 	$services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
+	$services->set(TernaryToNullCoalescingRector::class);
 };
