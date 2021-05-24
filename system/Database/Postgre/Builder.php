@@ -310,7 +310,8 @@ class Builder extends BaseBuilder
 	 */
 	protected function _updateBatch(string $table, array $values, string $index): string
 	{
-		$ids = [];
+		$ids   = [];
+		$final = [];
 		foreach ($values as $val)
 		{
 			$ids[] = $val[$index];
@@ -319,13 +320,15 @@ class Builder extends BaseBuilder
 			{
 				if ($field !== $index)
 				{
+					$final[$field] = $final[$field] ?? [];
+
 					$final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
 				}
 			}
 		}
 
 		$cases = '';
-		foreach ($final as $k => $v) // @phpstan-ignore-line
+		foreach ($final as $k => $v)
 		{
 			$cases .= "{$k} = (CASE {$index}\n"
 					. implode("\n", $v)
@@ -383,11 +386,11 @@ class Builder extends BaseBuilder
 	 *
 	 * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
 	 *
-	 * @param string|null  $prefix
-	 * @param string       $column
-	 * @param string|null  $not
-	 * @param string       $bind
-	 * @param boolean      $insensitiveSearch
+	 * @param string|null $prefix
+	 * @param string      $column
+	 * @param string|null $not
+	 * @param string      $bind
+	 * @param boolean     $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */

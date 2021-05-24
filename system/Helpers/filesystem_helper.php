@@ -374,6 +374,8 @@ if (! function_exists('get_file_info'))
 			return null;
 		}
 
+		$fileInfo = [];
+
 		if (is_string($returnedValues))
 		{
 			$returnedValues = explode(',', $returnedValues);
@@ -409,7 +411,7 @@ if (! function_exists('get_file_info'))
 			}
 		}
 
-		return $fileInfo; // @phpstan-ignore-line
+		return $fileInfo;
 	}
 }
 
