@@ -34,6 +34,35 @@ use JsonSerializable;
 class Entity implements JsonSerializable
 {
 	/**
+	 * Default cast handlers
+	 *
+	 * @var array<string, string>
+	 */
+	private static $defaultCastHandlers = [
+		'array'     => ArrayCast::class,
+		'bool'      => BooleanCast::class,
+		'boolean'   => BooleanCast::class,
+		'csv'       => CSVCast::class,
+		'datetime'  => DatetimeCast::class,
+		'double'    => FloatCast::class,
+		'float'     => FloatCast::class,
+		'int'       => IntegerCast::class,
+		'integer'   => IntegerCast::class,
+		'json'      => JsonCast::class,
+		'object'    => ObjectCast::class,
+		'string'    => StringCast::class,
+		'timestamp' => TimestampCast::class,
+		'uri'       => URICast::class,
+	];
+
+	/**
+	 * Custom cast handlers
+	 *
+	 * @var array<string, string>
+	 */
+	protected static $customCastHandlers = [];
+
+	/**
 	 * Maps names used in sets and gets against unique
 	 * names within the class, allowing independence from
 	 * database column names.
@@ -61,30 +90,10 @@ class Entity implements JsonSerializable
 	 * Custom convert handlers
 	 *
 	 * @var array<string, string>
+	 *
+	 * @deprecated Use static::$customCastHandlers instead
 	 */
 	protected $castHandlers = [];
-
-	/**
-	 * Default convert handlers
-	 *
-	 * @var array<string, string>
-	 */
-	private $defaultCastHandlers = [
-		'array'     => ArrayCast::class,
-		'bool'      => BooleanCast::class,
-		'boolean'   => BooleanCast::class,
-		'csv'       => CSVCast::class,
-		'datetime'  => DatetimeCast::class,
-		'double'    => FloatCast::class,
-		'float'     => FloatCast::class,
-		'int'       => IntegerCast::class,
-		'integer'   => IntegerCast::class,
-		'json'      => JsonCast::class,
-		'object'    => ObjectCast::class,
-		'string'    => StringCast::class,
-		'timestamp' => TimestampCast::class,
-		'uri'       => URICast::class,
-	];
 
 	/**
 	 * Holds the current values of all class vars.
@@ -108,6 +117,21 @@ class Entity implements JsonSerializable
 	 * @var boolean
 	 **/
 	private $_cast = true;
+
+	/**
+	 * Returns this Entity's supported
+	 * cast types and their handlers.
+	 *
+	 * Note: This method does not support
+	 * handlers defined in the deprecated,
+	 * non-static $castHandlers property.
+	 *
+	 * @return array<string,string>
+	 */
+	final public static function getCastHandlers(): array
+	{
+		return array_merge(self::$defaultCastHandlers, static::$customCastHandlers);
+	}
 
 	/**
 	 * Allows filling in Entity parameters during construction.
@@ -393,7 +417,7 @@ class Entity implements JsonSerializable
 			$type = substr($type, 1);
 		}
 
-		//In order not to create a separate handler for the
+		// In order not to create a separate handler for the
 		// json-array type, we transform the required one.
 		$type = $type === 'json-array' ? 'json[array]' : $type;
 
@@ -419,7 +443,7 @@ class Entity implements JsonSerializable
 
 		$type = trim($type, '[]');
 
-		$handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
+		$handlers = array_merge(self::getCastHandlers(), $this->castHandlers);
 
 		if (empty($handlers[$type]))
 		{

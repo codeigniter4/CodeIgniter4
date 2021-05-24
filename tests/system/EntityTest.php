@@ -710,7 +710,7 @@ class EntityTest extends CIUnitTestCase
 
 	public function testCustomCast()
 	{
-		$entity = $this->getCustomCastEntity();
+		$entity = $this->getDeprecatedCustomCastEntity();
 
 		$entity->first = 'base 64';
 
@@ -723,7 +723,7 @@ class EntityTest extends CIUnitTestCase
 
 	public function testCustomCastException()
 	{
-		$entity = $this->getCustomCastEntity();
+		$entity = $this->getDeprecatedCustomCastEntity();
 
 		$this->expectException(CastException::class);
 		$this->expectErrorMessage(
@@ -735,7 +735,7 @@ class EntityTest extends CIUnitTestCase
 
 	public function testCustomCastParams()
 	{
-		$entity = $this->getCustomCastEntity();
+		$entity = $this->getDeprecatedCustomCastEntity();
 
 		$entity->third = 'value';
 
@@ -743,6 +743,36 @@ class EntityTest extends CIUnitTestCase
 
 		$entity->fourth = 'test_nullable_type';
 		$this->assertEquals('test_nullable_type:["nullable"]', $entity->fourth);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetCastHandlers()
+	{
+		$expected = [
+			'array'     => 'CodeIgniter\Entity\Cast\ArrayCast',
+			'bool'      => 'CodeIgniter\Entity\Cast\BooleanCast',
+			'boolean'   => 'CodeIgniter\Entity\Cast\BooleanCast',
+			'csv'       => 'Tests\Support\Entity\Cast\CastBase64',
+			'datetime'  => 'CodeIgniter\Entity\Cast\DatetimeCast',
+			'double'    => 'CodeIgniter\Entity\Cast\FloatCast',
+			'float'     => 'CodeIgniter\Entity\Cast\FloatCast',
+			'int'       => 'CodeIgniter\Entity\Cast\IntegerCast',
+			'integer'   => 'CodeIgniter\Entity\Cast\IntegerCast',
+			'json'      => 'CodeIgniter\Entity\Cast\JsonCast',
+			'object'    => 'Tests\Support\Entity\Cast\CastBase64',
+			'string'    => 'CodeIgniter\Entity\Cast\StringCast',
+			'timestamp' => 'CodeIgniter\Entity\Cast\TimestampCast',
+			'uri'       => 'CodeIgniter\Entity\Cast\URICast',
+			'base64'    => 'Tests\Support\Entity\Cast\CastBase64',
+			'someType'  => 'Tests\Support\Entity\Cast\NotExtendsBaseCast',
+			'type'      => 'Tests\Support\Entity\Cast\CastPassParameters',
+		];
+
+		$entity = $this->getCustomCastEntity();
+		$result = $entity::getCastHandlers();
+
+		$this->assertSame($expected, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -1163,7 +1193,7 @@ class EntityTest extends CIUnitTestCase
 		};
 	}
 
-	protected function getCustomCastEntity() : Entity
+	protected function getDeprecatedCustomCastEntity() : Entity
 	{
 		return new class extends Entity
 		{
@@ -1194,6 +1224,50 @@ class EntityTest extends CIUnitTestCase
 				'base64'   => CastBase64::class,
 				'someType' => NotExtendsBaseCast::class,
 				'type'     => CastPassParameters::class,
+			];
+		};
+	}
+
+	protected function getCustomCastEntity() : Entity
+	{
+		return new class extends Entity
+		{
+
+			protected static $customCastHandlers = [
+				'base64'   => CastBase64::class,
+				'someType' => NotExtendsBaseCast::class,
+				'type'     => CastPassParameters::class,
+				'object'   => CastBase64::class, // To verify overridden by deprecated
+				'csv'      => CastBase64::class, // To verify overrides defaults
+			];
+
+			protected $castHandlers = [
+				'base64'   => CastBase64::class,
+				'someType' => NotExtendsBaseCast::class,
+				'type'     => CastPassParameters::class,
+				'object'   => CastPassParameters::class, // To verify overrides static
+			];
+
+			protected $attributes = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			protected $_original = [
+				'first'  => null,
+				'second' => null,
+				'third'  => null,
+				'fourth' => null,
+			];
+
+			// 'bar' is db column, 'foo' is internal representation
+			protected $casts = [
+				'first'  => 'base64',
+				'second' => 'someType',
+				'third'  => 'type[param1, param2,param3]',
+				'fourth' => '?type',
 			];
 		};
 	}
