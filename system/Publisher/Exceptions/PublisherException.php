@@ -15,6 +15,11 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class PublisherException extends FrameworkException
 {
+	public static function forCollision(string $from, string $to)
+	{
+		return new static(lang('Publisher.collision', [filetype($to), $from, $to]));
+	}
+
 	public static function forExpectedDirectory(string $caller)
 	{
 		return new static(lang('Publisher.expectedDirectory', [$caller]));
@@ -23,10 +28,5 @@ class PublisherException extends FrameworkException
 	public static function forExpectedFile(string $caller)
 	{
 		return new static(lang('Publisher.expectedFile', [$caller]));
-	}
-
-	public static function forCollision(string $from, string $to)
-	{
-		return new static(lang('Publisher.collision', [filetype($to), $from, $to]));
 	}
 }
