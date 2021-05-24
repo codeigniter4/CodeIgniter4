@@ -60,7 +60,7 @@ trait RequestTrait
 		/**
 		 * @deprecated $this->proxyIPs property will be removed in the future
 		 */
-		$proxyIPs = isset($this->proxyIPs) ? $this->proxyIPs : config('App')->proxyIPs;
+		$proxyIPs = $this->proxyIPs ?? config('App')->proxyIPs;
 		if (! empty($proxyIPs) && ! is_array($proxyIPs))
 		{
 			$proxyIPs = explode(',', str_replace(' ', '', $proxyIPs));

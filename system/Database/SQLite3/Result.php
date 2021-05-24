@@ -76,7 +76,7 @@ class Result extends BaseResult
 			$retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
 			$type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
 			$retVal[$i]->type       = $type;
-			$retVal[$i]->type_name  = isset($dataTypes[$type]) ? $dataTypes[$type] : null;
+			$retVal[$i]->type_name  = $dataTypes[$type] ?? null;
 			$retVal[$i]->max_length = null;
 			$retVal[$i]->length     = null;
 		}

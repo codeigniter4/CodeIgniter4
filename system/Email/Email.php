@@ -1432,7 +1432,7 @@ class Email
 			{
 				continue;
 			}
-			$name  = isset($attachment['name'][1]) ? $attachment['name'][1] : basename($attachment['name'][0]);
+			$name  = $attachment['name'][1] ?? basename($attachment['name'][0]);
 			$body .= '--' . $boundary . $this->newline
 				. 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
 				. 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
