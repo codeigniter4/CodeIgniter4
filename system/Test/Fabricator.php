@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
@@ -42,7 +43,7 @@ class Fabricator
 	/**
 	 * Model instance (can be non-framework if it follows framework design)
 	 *
-	 * @var CodeIgniter\Model|object
+	 * @var Model|object
 	 */
 	protected $model;
 
