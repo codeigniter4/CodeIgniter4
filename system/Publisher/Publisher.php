@@ -20,24 +20,18 @@ use Throwable;
 /**
  * Publisher Class
  *
- * Publishers read in file paths from a variety
- * of sources and copy the files out to different
- * destinations.
- * This class acts both as a base for individual
- * publication directives as well as the mode of
- * discovery for said instances.
- * In this class a "file" is a full path to a
- * verified file while a "path" is relative to
- * to its source or destination and may indicate
- * either a file or directory fo unconfirmed
- * existence.
- * Class failures throw a PublisherException,
- * but some underlying methods may percolate
- * different exceptions, like FileException,
- * FileNotFoundException, InvalidArgumentException.
- * Write operations will catch all errors in the
- * file-specific $errors property to minimize
- * impact of partial batch operations.
+ * Publishers read in file paths from a variety of sources and copy
+ * the files out to different destinations. This class acts both as
+ * a base for individual publication directives as well as the mode
+ * of discovery for said instances. In this class a "file" is a full
+ * path to a verified file while a "path" is relative to its source
+ * or destination and may indicate either a file or directory of
+ * unconfirmed existence.
+ * class failures throw the PublisherException, but some underlying
+ * methods may percolate different exceptions, like FileException,
+ * FileNotFoundException or InvalidArgumentException.
+ * Write operations will catch all errors in the file-specific
+ * $errors property to minimize impact of partial batch operations.
  */
 class Publisher
 {
@@ -90,14 +84,17 @@ class Publisher
 	 * Discovers and returns all Publishers
 	 * in the specified namespace directory.
 	 *
+	 * @param string $directory
+	 *
 	 * @return self[]
 	 */
-	public static function discover($directory = 'Publishers'): array
+	public static function discover(string $directory = 'Publishers'): array
 	{
 		if (isset(self::$discovered[$directory]))
 		{
 			return self::$discovered[$directory];
 		}
+	
 		self::$discovered[$directory] = [];
 
 		/** @var FileLocator $locator */
@@ -145,8 +142,7 @@ class Publisher
 	}
 
 	/**
-	 * Resolves a full path and verifies
-	 * it is an actual file.
+	 * Resolves a full path and verifies it is an actual file.
 	 *
 	 * @param string $file
 	 *
@@ -184,11 +180,10 @@ class Publisher
 	}
 
 	/**
-	 * Returns any files whose basename matches
-	 * the given pattern.
+	 * Returns any files whose `basename` matches the given pattern.
 	 *
-	 * @param string[] $files
-	 * @param string $pattern Regex or pseudo-regex string
+	 * @param array<string> $files
+	 * @param string        $pattern Regex or pseudo-regex string
 	 *
 	 * @return string[]
 	 */
@@ -239,13 +234,12 @@ class Publisher
 	}
 
 	/**
-	 * Copies a file with directory creation
-	 * and identical file awareness.
+	 * Copies a file with directory creation and identical file awareness.
 	 * Intentionally allows errors.
 	 *
-	 * @param string $from
-	 * @param string $to
-	 * @param bool $replace
+	 * @param string  $from
+	 * @param string  $to
+	 * @param boolean $replace
 	 *
 	 * @return void
 	 *
@@ -301,8 +295,7 @@ class Publisher
 	}
 
 	/**
-	 * Cleans up any temporary files
-	 * in the scratch space.
+	 * Cleans up any temporary files in the scratch space.
 	 */
 	public function __destruct()
 	{
@@ -315,14 +308,13 @@ class Publisher
 	}
 
 	/**
-	 * Reads in file sources and copies out
-	 * the files to their destinations.
-	 * This method should be reimplemented by
-	 * child classes intended for discovery.
+	 * Reads files in the sources and copies them out to their destinations.
+	 * This method should be reimplemented by child classes intended for
+	 * discovery.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	public function publish()
+	public function publish(): bool
 	{
 		return $this->addPath('/')->merge(true);
 	}
@@ -347,8 +339,7 @@ class Publisher
 	}
 
 	/**
-	 * Returns any errors from the last
-	 * write operation.
+	 * Returns errors from the last write operation if any.
 	 *
 	 * @return array<string,Throwable>
 	 */
@@ -358,8 +349,7 @@ class Publisher
 	}
 
 	/**
-	 * Optimizes and returns the
-	 * current file list.
+	 * Optimizes and returns the current file list.
 	 *
 	 * @return string[]
 	 */
@@ -372,11 +362,10 @@ class Publisher
 	}
 
 	/**
-	 * Sets the file list directly.
-	 * Files are still subject to verification.
+	 * Sets the file list directly, files are still subject to verification.
 	 * This works as a "reset" method with [].
 	 *
-	 * @param string[] $files  A new file list to use
+	 * @param string[] $files The new file list to use
 	 *
 	 * @return $this
 	 */
@@ -407,8 +396,7 @@ class Publisher
 	}
 
 	/**
-	 * Verifies and adds a single file
-	 * to the file list.
+	 * Verifies and adds a single file to the file list.
 	 *
 	 * @param string $file
 	 *
@@ -469,11 +457,10 @@ class Publisher
 	}
 
 	/**
-	 * Verifies and adds all files
-	 * from a directory.
+	 * Verifies and adds all files from a directory.
 	 *
-	 * @param string $directory
-	 * @param bool $recursive
+	 * @param string  $directory
+	 * @param boolean $recursive
 	 *
 	 * @return $this
 	 */
@@ -520,8 +507,8 @@ class Publisher
 	/**
 	 * Adds a single path to the file list.
 	 *
-	 * @param string $path
-	 * @param bool $recursive
+	 * @param string  $path
+	 * @param boolean $recursive
 	 *
 	 * @return $this
 	 */
@@ -563,8 +550,7 @@ class Publisher
 	}
 
 	/**
-	 * Downloads a file from the URI
-	 * and adds it to the file list.
+	 * Downloads a file from the URI, and adds it to the file list.
 	 *
 	 * @param string $uri Because HTTP\URI is stringable it will still be accepted
 	 *
@@ -576,8 +562,7 @@ class Publisher
 		$file = $this->getScratch() . basename((new URI($uri))->getPath());
 
 		// Get the content and write it to the scratch space
-		$response = service('curlrequest')->get($uri);
-		write_file($file, $response->getBody());
+		write_file($file, service('curlrequest')->get($uri)->getBody());
 
 		return $this->addFile($file);
 	}
@@ -585,11 +570,11 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Removes any files from the list that match
-	 * the supplied pattern (within the optional scope).
+	 * Removes any files from the list that match the supplied pattern
+	 * (within the optional scope).
 	 *
-	 * @param string $pattern    Regex or pseudo-regex string
-	 * @param string|null $scope A directory to limit the scope
+	 * @param string      $pattern Regex or pseudo-regex string
+	 * @param string|null $scope The directory to limit the scope
 	 *
 	 * @return $this
 	 */
@@ -601,9 +586,7 @@ class Publisher
 		}
 
 		// Start with all files or those in scope
-		$files = is_null($scope)
-			? $this->files
-			: self::filterFiles($this->files, $scope);
+		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
 
 		// Remove any files that match the pattern
 		return $this->removeFiles(self::matchFiles($files, $pattern));
@@ -611,9 +594,9 @@ class Publisher
 
 	/**
 	 * Keeps only the files from the list that match
-	 * the supplied pattern (within the optional scope).
+	 * (within the optional scope).
 	 *
-	 * @param string $pattern    Regex or pseudo-regex string
+	 * @param string      $pattern Regex or pseudo-regex string
 	 * @param string|null $scope A directory to limit the scope
 	 *
 	 * @return $this
@@ -654,10 +637,9 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Copies all files into the destination.
-	 * Does not create directory structure.
+	 * Copies all files into the destination, does not create directory structure.
 	 *
-	 * @param bool $replace Whether to overwrite existing files.
+	 * @param boolean $replace Whether to overwrite existing files.
 	 *
 	 * @return boolean Whether all files were copied successfully
 	 */
@@ -684,10 +666,9 @@ class Publisher
 
 	/**
 	 * Merges all files into the destination.
-	 * Creates a mirrored directory structure
-	 * only for files from source.
+	 * Creates a mirrored directory structure only for files from source.
 	 *
-	 * @param bool $replace Whether to overwrite existing files.
+	 * @param boolean $replace Whether to overwrite existing files.
 	 *
 	 * @return boolean Whether all files were copied successfully
 	 */
