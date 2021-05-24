@@ -33,7 +33,7 @@ There are currently four (4) ways to create a new ``Cookie`` value object.
     use CodeIgniter\Cookie\Cookie;
     use DateTime;
 
-    // Throw the constructor
+    // Using the constructor
     $cookie = new Cookie(
         'remember_token',
         'f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6',
@@ -79,7 +79,7 @@ instance or an array of defaults to the static ``Cookie::setDefaults()`` method.
     use CodeIgniter\Cookie\Cookie;
     use Config\Cookie as CookieConfig;
 
-    // pass in an App instance before constructing a Cookie class
+    // pass in an Config\Cookie instance before constructing a Cookie class
     Cookie::setDefaults(new CookieConfig());
     $cookie = new Cookie('login_token');
 
@@ -456,11 +456,11 @@ Class Reference
 
     .. php:staticmethod:: setDefaults([$config = []])
 
-        :param App|array $config: The configuration array or instance
+        :param \Config\Cookie|array $config: The configuration array or instance
         :rtype: array<string, mixed>
         :returns: The old defaults
 
-        Set the default attributes to a Cookie instance by injecting the values from the ``App`` config or an array.
+        Set the default attributes to a Cookie instance by injecting the values from the ``\Config\Cookie`` config or an array.
 
     .. php:staticmethod:: fromHeaderString(string $header[, bool $raw = false])
 
