@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;

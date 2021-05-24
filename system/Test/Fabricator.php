@@ -12,7 +12,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\FrameworkException;
-use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
