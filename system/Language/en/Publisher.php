@@ -11,7 +11,7 @@
 
 // Publisher language settings
 return [
-	'expectedFile'      => 'Publisher::{0} expects a valid file.',
-	'expectedDirectory' => 'Publisher::{0} expects a valid directory.',
 	'collision'         => 'Publisher encountered an unexpected {0} while copying {1} to {2}.',
+	'expectedDirectory' => 'Publisher::{0} expects a valid directory.',
+	'expectedFile'      => 'Publisher::{0} expects a valid file.',
 ];
