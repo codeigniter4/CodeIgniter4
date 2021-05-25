@@ -79,7 +79,7 @@ final class Environment extends BaseCommand
 	{
 		if ($params === [])
 		{
-			CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(ENVIRONMENT, 'green')));
+			CLI::write(sprintf('Your environment is currently set as %s.', CLI::color($_SERVER['CI_ENVIRONMENT'] ?? ENVIRONMENT, 'green')));
 			CLI::newLine();
 
 			return;
@@ -119,7 +119,7 @@ final class Environment extends BaseCommand
 		(new DotEnv(ROOTPATH))->load();
 
 		CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
-		CLI::write('The ENVIRONMENT constant will be changed on the next script execution.');
+		CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
 		CLI::newLine();
 	}
 
