@@ -112,6 +112,8 @@ class FileHandler extends BaseHandler
 
 		flock($fp, LOCK_EX);
 
+		$result = null;
+
 		for ($written = 0, $length = strlen($msg); $written < $length; $written += $result)
 		{
 			if (($result = fwrite($fp, substr($msg, $written))) === false)
@@ -131,7 +133,7 @@ class FileHandler extends BaseHandler
 			chmod($filepath, $this->filePermissions);
 		}
 
-		return is_int($result); // @phpstan-ignore-line
+		return is_int($result);
 	}
 
 	//--------------------------------------------------------------------
