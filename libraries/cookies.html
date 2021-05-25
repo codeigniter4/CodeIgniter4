@@ -394,7 +394,7 @@ cookie interaction.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">DateTime</span><span class="p">;</span>
 
-<span class="c1">// Throw the constructor</span>
+<span class="c1">// Using the constructor</span>
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span>
     <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
     <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span>
@@ -438,7 +438,7 @@ instance or an array of defaults to the static <code class="docutils literal not
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Cookie</span> <span class="k">as</span> <span class="nx">CookieConfig</span><span class="p">;</span>
 
-<span class="c1">// pass in an App instance before constructing a Cookie class</span>
+<span class="c1">// pass in an Config\Cookie instance before constructing a Cookie class</span>
 <span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">CookieConfig</span><span class="p">());</span>
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
 
@@ -833,7 +833,7 @@ objects. However, you may wish to define your own settings by changing the follo
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$config</strong> (<em>App|array</em>) – The configuration array or instance</p></li>
+<li><p><strong>$config</strong> (<em>ConfigCookie|array</em>) – The configuration array or instance</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -843,7 +843,7 @@ objects. However, you may wish to define your own settings by changing the follo
 <dd class="field-odd"><p>The old defaults</p>
 </dd>
 </dl>
-<p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">App</span></code> config or an array.</p>
+<p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">\Config\Cookie</span></code> config or an array.</p>
 </dd></dl>
 
 <dl class="staticmethod">
