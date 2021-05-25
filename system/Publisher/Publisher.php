@@ -43,8 +43,7 @@ class Publisher
 	private static $discovered = [];
 
 	/**
-	 * Directory to use for methods
-	 * that need temporary storage.
+	 * Directory to use for methods that need temporary storage.
 	 * Created on-the-fly as needed.
 	 *
 	 * @var string|null
@@ -59,8 +58,7 @@ class Publisher
 	private $files = [];
 
 	/**
-	 * Exceptions for specific files
-	 * from the last write operation.
+	 * Exceptions for specific files from the last write operation.
 	 *
 	 * @var array<string,Throwable>
 	 */
@@ -81,8 +79,7 @@ class Publisher
 	protected $destination = FCPATH;
 
 	/**
-	 * Discovers and returns all Publishers
-	 * in the specified namespace directory.
+	 * Discovers and returns all Publishers in the specified namespace directory.
 	 *
 	 * @param string $directory
 	 *
@@ -115,6 +112,7 @@ class Publisher
 				self::$discovered[$directory][] = new $className();
 			}
 		}
+
 		sort(self::$discovered[$directory]);
 
 		return self::$discovered[$directory];
@@ -123,8 +121,7 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Resolves a full path and verifies
-	 * it is an actual directory.
+	 * Resolves a full path and verifies it is an actual directory.
 	 *
 	 * @param string $directory
 	 *
@@ -162,11 +159,10 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Filters an array of files, removing files not
-	 * part of the given directory (recursive).
+	 * Removes files that are not part of the given directory (recursive).
 	 *
 	 * @param string[] $files
-	 * @param string $directory
+	 * @param string   $directory
 	 *
 	 * @return string[]
 	 */
@@ -207,15 +203,14 @@ class Publisher
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Removes a directory and all its files
-	 * and subdirectories.
+	/*
+	 * Removes a directory and all its files and subdirectories.
 	 *
 	 * @param string $directory
 	 *
 	 * @return void
 	 */
-	private static function wipeDirectory(string $directory)
+	private static function wipeDirectory(string $directory): void
 	{
 		if (is_dir($directory))
 		{
@@ -267,8 +262,7 @@ class Publisher
 		}
 
 		// Make sure the directory exists
-		$directory = pathinfo($to, PATHINFO_DIRNAME);
-		if (! is_dir($directory))
+		if (! is_dir($directory = pathinfo($to, PATHINFO_DIRNAME)))
 		{
 			mkdir($directory, 0775, true);
 		}
@@ -280,8 +274,7 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the helper and verifies the
-	 * source and destination directories.
+	 * Loads the helper and verifies the source and destination directories.
 	 *
 	 * @param string|null $source
 	 * @param string|null $destination
@@ -322,8 +315,7 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the temporary workspace,
-	 * creating it if necessary.
+	 * Returns the temporary workspace, creating it if necessary.
 	 *
 	 * @return string
 	 */
@@ -532,8 +524,7 @@ class Publisher
 	//--------------------------------------------------------------------
 
 	/**
-	 * Downloads and stages files from
-	 * an array of URIs.
+	 * Downloads and stages files from an array of URIs.
 	 *
 	 * @param string[] $uris
 	 *
@@ -609,15 +600,10 @@ class Publisher
 		}
 
 		// Start with all files or those in scope
-		$files = is_null($scope)
-			? $this->files
-			: self::filterFiles($this->files, $scope);
+		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
 
-		// Match the pattern within the scoped files
-		$matched = self::matchFiles($files, $pattern);
-
-		// ... and remove their inverse
-		return $this->removeFiles(array_diff($files, $matched));
+		// Matches the pattern within the scoped files and remove their inverse.
+		return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
 	}
 
 	//--------------------------------------------------------------------
