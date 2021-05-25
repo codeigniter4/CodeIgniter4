@@ -14,6 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Router\RouteCollection;
