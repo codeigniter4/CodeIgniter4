@@ -763,7 +763,7 @@ if (! function_exists('is_cli'))
 			return true;
 		}
 
-		if (! isset($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']))
+		if (! isset($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']) && isset($_SERVER['argv']) && count($_SERVER['argv']) > 0)
 		{
 			return true;
 		}
