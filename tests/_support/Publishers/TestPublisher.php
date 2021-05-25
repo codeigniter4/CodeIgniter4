@@ -9,7 +9,7 @@ class TestPublisher extends Publisher
 	/**
 	 * Runs the defined Operations.
 	 */
-	public function publish()
+	public function publish(): bool
 	{
 		$this->downloadFromUrls($urls)->mergeToDirectory(FCPATH . 'assets');
 	}
