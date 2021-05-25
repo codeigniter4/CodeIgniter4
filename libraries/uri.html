@@ -425,6 +425,12 @@ using the URI class’ static <code class="docutils literal notranslate"><span c
 <span class="k">echo</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;some/path&#39;</span><span class="p">,</span> <span class="s1">&#39;foo=bar&#39;</span><span class="p">,</span> <span class="s1">&#39;first-heading&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">URI</span></code> is cast to a string, it will attempt to adjust project URLs to the
+settings defined in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>. If you need the exact, unaltered string representation
+then use <code class="docutils literal notranslate"><span class="pre">URI::createURIString()</span></code> instead.</p>
+</div>
 </div>
 <div class="section" id="the-uri-parts">
 <h2><a class="toc-backref" href="#id4">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this headline">¶</a></h2>
