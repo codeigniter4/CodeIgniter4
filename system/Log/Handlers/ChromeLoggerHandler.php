@@ -87,9 +87,7 @@ class ChromeLoggerHandler extends BaseHandler
 	{
 		parent::__construct($config);
 
-		$request = Services::request(null, true);
-
-		$this->json['request_uri'] = (string) $request->uri;
+		$this->json['request_uri'] = current_url();
 	}
 
 	//--------------------------------------------------------------------

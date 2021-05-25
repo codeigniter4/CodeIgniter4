@@ -90,7 +90,7 @@ class RedirectResponseTest extends CIUnitTestCase
 		$response = $response->to('/foo');
 
 		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
+		$this->assertEquals('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
 	}
 
 	//--------------------------------------------------------------------

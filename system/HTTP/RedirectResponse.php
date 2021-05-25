@@ -36,7 +36,7 @@ class RedirectResponse extends Response
 		// for better security.
 		if (strpos($uri, 'http') !== 0)
 		{
-			$uri = (string) current_url(true)->resolveRelativeURI($uri);
+			$uri = site_url($uri);
 		}
 
 		return $this->redirect($uri, $method, $code);

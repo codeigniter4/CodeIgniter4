@@ -156,7 +156,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->first - 1);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -200,7 +200,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->last + 1);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -223,7 +223,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, 1);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -246,7 +246,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->pageCount);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -269,7 +269,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->current);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -290,8 +290,9 @@ class PagerRenderer
 
 		for ($i = $this->first; $i <= $this->last; $i ++)
 		{
+			$uri     = $this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i);
 			$links[] = [
-				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i)),
+				'uri'    => URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment()),
 				'title'  => (int) $i,
 				'active' => ($i === $this->current),
 			];
@@ -359,7 +360,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->current - 1);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------
@@ -401,7 +402,7 @@ class PagerRenderer
 			$uri->setSegment($this->segment, $this->current + 1);
 		}
 
-		return (string) $uri;
+		return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	/**
