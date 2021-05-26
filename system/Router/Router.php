@@ -716,7 +716,7 @@ class Router implements RouterInterface
 			return;
 		}
 
-		list($controller, $method) = array_pad(explode('::', $segments[0]), 2, null);
+		[$controller, $method] = array_pad(explode('::', $segments[0]), 2, null);
 
 		$this->controller = $controller;
 

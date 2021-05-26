@@ -130,7 +130,7 @@ class Rules
 	public function is_not_unique(string $str = null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
-		list($field, $whereField, $whereValue) = array_pad(explode(',', $field), 3, null);
+		[$field, $whereField, $whereValue] = array_pad(explode(',', $field), 3, null);
 
 		// Break the table and field apart
 		sscanf($field, '%[^.].%[^.]', $table, $field);
@@ -186,7 +186,7 @@ class Rules
 	public function is_unique(string $str = null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
-		list($field, $ignoreField, $ignoreValue) = array_pad(explode(',', $field), 3, null);
+		[$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);
 
 		// Break the table and field apart
 		sscanf($field, '%[^.].%[^.]', $table, $field);
