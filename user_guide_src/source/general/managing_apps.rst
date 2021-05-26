@@ -30,7 +30,6 @@ they can find the ``Paths`` configuration file:
 - ``/public/index.php`` is the front controller for your webapp; the config
   path is specified on or about line 20::
 
-    // This is the line that might need to be changed, depending on your folder structure.
     $pathsConfig = FCPATH . '../app/Config/Paths.php';
     // ^^^ Change this if you move your application folder
 
