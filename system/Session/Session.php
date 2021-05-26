@@ -331,7 +331,7 @@ class Session implements SessionInterface
 		{
 			$this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
 		}
-		else
+		elseif ($this->sessionExpiration > 0)
 		{
 			ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
 		}
