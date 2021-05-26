@@ -450,7 +450,7 @@ class ImageMagickHandler extends BaseHandler
 		// Color
 		if (isset($options['color']))
 		{
-			list($r, $g, $b) = sscanf("#{$options['color']}", '#%02x%02x%02x');
+			[$r, $g, $b] = sscanf("#{$options['color']}", '#%02x%02x%02x');
 
 			$cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
 		}

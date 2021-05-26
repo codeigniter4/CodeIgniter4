@@ -23,6 +23,7 @@ use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
+use Rector\Php71\Rector\List_\ListToArrayDestructRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Set\ValueObject\SetList;
@@ -88,4 +89,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(RemoveUnusedPrivatePropertyRector::class);
 	$services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
 	$services->set(TernaryToNullCoalescingRector::class);
+	$services->set(ListToArrayDestructRector::class);
 };

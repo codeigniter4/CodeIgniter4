@@ -409,7 +409,7 @@ class Logger implements LoggerInterface
 		// Allow us to log the file/line that we are logging from
 		if (strpos($message, '{file}') !== false)
 		{
-			list($file, $line) = $this->determineFile();
+			[$file, $line] = $this->determineFile();
 
 			$replace['{file}'] = $file;
 			$replace['{line}'] = $line;

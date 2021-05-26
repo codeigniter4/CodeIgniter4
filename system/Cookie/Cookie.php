@@ -184,7 +184,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 		{
 			if (strpos($part, '=') !== false)
 			{
-				list($attr, $val) = explode('=', $part);
+				[$attr, $val] = explode('=', $part);
 			}
 			else
 			{
