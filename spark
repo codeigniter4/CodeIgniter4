@@ -33,8 +33,9 @@ if (strpos(PHP_SAPI, 'cgi') === 0)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
 
 // Load our paths config file
-require realpath('app/Config/Paths.php') ?: 'app/Config/Paths.php';
+$pathsConfig = 'app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
+require realpath($pathsConfig) ?: $pathsConfig;
 
 $paths = new Config\Paths();
 

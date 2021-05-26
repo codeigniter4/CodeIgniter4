@@ -23,14 +23,15 @@ they can find the ``Paths`` configuration file:
 
 - ``/spark`` runs command line apps; the path is specified on or about line 36::
 
-    require realpath('app/Config/Paths.php') ?: 'app/Config/Paths.php';
-    // ^^^ Change this if you move your application folder
+    $pathsConfig = 'app/Config/Paths.php';
+    // ^^^ Change this line if you move your application folder
 
 
 - ``/public/index.php`` is the front controller for your webapp; the config
   path is specified on or about line 20::
 
-    require realpath(FCPATH . '../app/Config/Paths.php') ?: FCPATH . '../app/Config/Paths.php';
+    // This is the line that might need to be changed, depending on your folder structure.
+    $pathsConfig = FCPATH . '../app/Config/Paths.php';
     // ^^^ Change this if you move your application folder
 
 
