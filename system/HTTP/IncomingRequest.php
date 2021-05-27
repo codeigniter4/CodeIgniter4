@@ -165,7 +165,7 @@ class IncomingRequest extends Request
                     // Get free space in memory by substracting already used memory
                     $freeMemory = $memoryLimitBytes - memory_get_peak_usage();
                     // If the send content is too big, it wouldn't be load to the memory
-                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > $freeMemory)
+                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > ($freeMemory  < 0 ? INF : $freeMemory))
                     {
                         log_message("debug", "The 'php://input' is too big for loading it into \$body");
                     } 
