@@ -15,6 +15,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -65,6 +66,13 @@ class Publisher
 	private $errors = [];
 
 	/**
+	 * List of file published curing the last write operation.
+	 *
+	 * @var string[]
+	 */
+	private $published = [];
+
+	/**
 	 * Base path to use for the source.
 	 *
 	 * @var string
@@ -85,7 +93,7 @@ class Publisher
 	 *
 	 * @return self[]
 	 */
-	public static function discover(string $directory = 'Publishers'): array
+	final public static function discover(string $directory = 'Publishers'): array
 	{
 		if (isset(self::$discovered[$directory]))
 		{
@@ -301,7 +309,7 @@ class Publisher
 	}
 
 	/**
-	 * Reads files in the sources and copies them out to their destinations.
+	 * Reads files from the sources and copies them out to their destinations.
 	 * This method should be reimplemented by child classes intended for
 	 * discovery.
 	 *
@@ -309,17 +317,42 @@ class Publisher
 	 */
 	public function publish(): bool
 	{
+		if ($this->source === ROOTPATH && $this->destination === FCPATH)
+		{
+			throw new RuntimeException('Child classes of Publisher should provide their own source and destination or publish method.');
+		}
+
 		return $this->addPath('/')->merge(true);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the source directory.
+	 *
+	 * @return string
+	 */
+	final public function getSource(): string
+	{
+		return $this->source;
+	}
+
+	/**
+	 * Returns the destination directory.
+	 *
+	 * @return string
+	 */
+	final public function getDestination(): string
+	{
+		return $this->destination;
+	}
+
+	/**
 	 * Returns the temporary workspace, creating it if necessary.
 	 *
 	 * @return string
 	 */
-	protected function getScratch(): string
+	final public function getScratch(): string
 	{
 		if (is_null($this->scratch))
 		{
@@ -335,9 +368,19 @@ class Publisher
 	 *
 	 * @return array<string,Throwable>
 	 */
-	public function getErrors(): array
+	final public function getErrors(): array
 	{
 		return $this->errors;
+	}
+
+	/**
+	 * Returns the files published by the last write operation.
+	 *
+	 * @return string[]
+	 */
+	final public function getPublished(): array
+	{
+		return $this->published;
 	}
 
 	/**
@@ -345,13 +388,15 @@ class Publisher
 	 *
 	 * @return string[]
 	 */
-	public function getFiles(): array
+	final public function getFiles(): array
 	{
 		$this->files = array_unique($this->files, SORT_STRING);
 		sort($this->files, SORT_STRING);
 
 		return $this->files;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the file list directly, files are still subject to verification.
@@ -361,14 +406,12 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function setFiles(array $files)
+	final public function setFiles(array $files)
 	{
 		$this->files = [];
 
 		return $this->addFiles($files);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Verifies and adds files to the list.
@@ -377,7 +420,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addFiles(array $files)
+	final public function addFiles(array $files)
 	{
 		foreach ($files as $file)
 		{
@@ -394,7 +437,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addFile(string $file)
+	final public function addFile(string $file)
 	{
 		$this->files[] = self::resolveFile($file);
 
@@ -408,7 +451,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function removeFiles(array $files)
+	final public function removeFiles(array $files)
 	{
 		$this->files = array_diff($this->files, $files);
 
@@ -422,7 +465,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function removeFile(string $file)
+	final public function removeFile(string $file)
 	{
 		return $this->removeFiles([$file]);
 	}
@@ -438,7 +481,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addDirectories(array $directories, bool $recursive = false)
+	final public function addDirectories(array $directories, bool $recursive = false)
 	{
 		foreach ($directories as $directory)
 		{
@@ -456,7 +499,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addDirectory(string $directory, bool $recursive = false)
+	final public function addDirectory(string $directory, bool $recursive = false)
 	{
 		$directory = self::resolveDirectory($directory);
 
@@ -486,7 +529,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addPaths(array $paths, bool $recursive = true)
+	final public function addPaths(array $paths, bool $recursive = true)
 	{
 		foreach ($paths as $path)
 		{
@@ -504,7 +547,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addPath(string $path, bool $recursive = true)
+	final public function addPath(string $path, bool $recursive = true)
 	{
 		$full = $this->source . $path;
 
@@ -530,7 +573,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addUris(array $uris)
+	final public function addUris(array $uris)
 	{
 		foreach ($uris as $uri)
 		{
@@ -547,7 +590,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function addUri(string $uri)
+	final public function addUri(string $uri)
 	{
 		// Figure out a good filename (using URI strips queries and fragments)
 		$file = $this->getScratch() . basename((new URI($uri))->getPath());
@@ -569,7 +612,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function removePattern(string $pattern, string $scope = null)
+	final public function removePattern(string $pattern, string $scope = null)
 	{
 		if ($pattern === '')
 		{
@@ -592,7 +635,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function retainPattern(string $pattern, string $scope = null)
+	final public function retainPattern(string $pattern, string $scope = null)
 	{
 		if ($pattern === '')
 		{
@@ -613,7 +656,7 @@ class Publisher
 	 *
 	 * @return $this
 	 */
-	public function wipe()
+	final public function wipe()
 	{
 		self::wipeDirectory($this->destination);
 
@@ -629,9 +672,9 @@ class Publisher
 	 *
 	 * @return boolean Whether all files were copied successfully
 	 */
-	public function copy(bool $replace = true): bool
+	final public function copy(bool $replace = true): bool
 	{
-		$this->errors = [];
+		$this->errors = $this->published = [];
 
 		foreach ($this->getFiles() as $file)
 		{
@@ -640,6 +683,7 @@ class Publisher
 			try
 			{
 				self::safeCopyFile($file, $to, $replace);
+				$this->published[] = $to;
 			}
 			catch (Throwable $e)
 			{
@@ -658,9 +702,9 @@ class Publisher
 	 *
 	 * @return boolean Whether all files were copied successfully
 	 */
-	public function merge(bool $replace = true): bool
+	final public function merge(bool $replace = true): bool
 	{
-		$this->errors = [];
+		$this->errors = $this->published = [];
 
 		// Get the file from source for special handling
 		$sourced = self::filterFiles($this->getFiles(), $this->source);
@@ -678,6 +722,7 @@ class Publisher
 			try
 			{
 				self::safeCopyFile($file, $to, $replace);
+				$this->published[] = $to;
 			}
 			catch (Throwable $e)
 			{
