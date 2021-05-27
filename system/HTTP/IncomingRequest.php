@@ -150,15 +150,24 @@ class IncomingRequest extends Request
 		{
 			throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
 		}
-
-		// Get Maximum avaible memory
-		$memoryLimit = preg_split('/\d+\K/', ini_get('memory_limit'));
-		// Translate memory limit from human readible to bytes and substract already used memory
-		$freeMemory = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, (array_search(strtolower($memoryLimit[1] ?? ""), ["k", "m", "g", "t"]) ?: -1) + 1) - memory_get_peak_usage();
-		// Get our body from php://input - if the send content is too big, it wouldn't be load to the memory
-		if ($body === 'php://input' && ((int) $_SERVER['CONTENT_LENGTH'] ?: 0) < $freeMemory)
+		// Get our body from php://input
+		if ($body === 'php://input')
 		{
+                    // Get Maximum avaible memory
+                    $memoryLimit = preg_split('/\d+\K/', ini_get('memory_limit'));
+                    // Translate memory limit from human readible to bytes
+                    $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, ((int) array_search(strtolower($memoryLimit[1] ?? ""), ["k", "m", "g", "t"]) ?: -1) + 1);
+                    // Get free space in memory by substracting already used memory
+                    $freeMemory = $memoryLimitBytes - memory_get_peak_usage();
+                    // If the send content is too big, it wouldn't be load to the memory
+                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > $freeMemory)
+                    {
+                        log_message(7, "The 'php://input' is too big for loading it to the \$body");
+                    } 
+                    else 
+                    {
 			$body = file_get_contents('php://input');
+                    }
 		}
 
 		$this->config       = $config;
