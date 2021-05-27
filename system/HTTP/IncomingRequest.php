@@ -158,7 +158,8 @@ class IncomingRequest extends Request
                     // Get unit
                     $unit = strtolower($memoryLimit[1] ?? "");
                     // Get the exponent
-                    $exponent = ((int) array_search($unit, ["k", "m", "g", "t"]) ?: - 1) + 1;
+                    $possibleExponents = ["", "k", "m", "g", "t"];
+                    $exponent = (int) array_search($unit, $possibleExponents) ?? 0;
                     // Translate memory limit from human readible to bytes
                     $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, $exponent);
                     // Get free space in memory by substracting already used memory
