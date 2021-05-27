@@ -83,17 +83,17 @@ class AlterTableTest extends CIUnitTestCase
 		$this->assertCount(4, $fields);
 		$this->assertTrue(array_key_exists('id', $fields));
 		$this->assertNull($fields['id']['default']);
-		$this->assertTrue($fields['id']['nullable']);
+		$this->assertTrue($fields['id']['null']);
 		$this->assertEquals('integer', strtolower($fields['id']['type']));
 
 		$this->assertTrue(array_key_exists('name', $fields));
 		$this->assertNull($fields['name']['default']);
-		$this->assertFalse($fields['name']['nullable']);
+		$this->assertFalse($fields['name']['null']);
 		$this->assertEquals('varchar', strtolower($fields['name']['type']));
 
 		$this->assertTrue(array_key_exists('email', $fields));
 		$this->assertNull($fields['email']['default']);
-		$this->assertTrue($fields['email']['nullable']);
+		$this->assertTrue($fields['email']['null']);
 		$this->assertEquals('varchar', strtolower($fields['email']['type']));
 
 		$keys = $this->getPrivateProperty($this->table, 'keys');
