@@ -59,6 +59,12 @@ more complex, multi-server setups.
 If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.
 
+**$ttl**
+
+The default number of seconds to save items when none is specified.
+WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
+to projects and modules. This will replace the hard-coded value in a future release.
+
 **$file**
 
 This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
