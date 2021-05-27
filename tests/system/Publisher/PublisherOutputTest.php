@@ -112,6 +112,7 @@ class PublisherOutputTest extends CIUnitTestCase
 
 		$result = $publisher->copy(true);
 		$this->assertTrue($result);
+		$this->assertSame([$this->root->url() . '/banana.php'], $publisher->getPublished());
 	}
 
 	public function testCopyIgnoresCollision()
@@ -121,10 +122,10 @@ class PublisherOutputTest extends CIUnitTestCase
 		mkdir($this->root->url() . '/banana.php');
 
 		$result = $publisher->addFile($this->file)->copy(false);
-		$errors = $publisher->getErrors();
 
 		$this->assertTrue($result);
-		$this->assertSame([], $errors);
+		$this->assertSame([], $publisher->getErrors());
+		$this->assertSame([$this->root->url() . '/banana.php'], $publisher->getPublished());
 	}
 
 	public function testCopyCollides()
@@ -140,6 +141,7 @@ class PublisherOutputTest extends CIUnitTestCase
 		$this->assertFalse($result);
 		$this->assertCount(1, $errors);
 		$this->assertSame([$this->file], array_keys($errors));
+		$this->assertSame([], $publisher->getPublished());
 		$this->assertSame($expected, $errors[$this->file]->getMessage());
 	}
 
@@ -148,6 +150,12 @@ class PublisherOutputTest extends CIUnitTestCase
 	public function testMerge()
 	{
 		$publisher = new Publisher(SUPPORTPATH . 'Files', $this->root->url());
+		$expected  = [
+			$this->root->url() . '/able/apple.php',
+			$this->root->url() . '/able/fig_3.php',
+			$this->root->url() . '/able/prune_ripe.php',
+			$this->root->url() . '/baker/banana.php',
+		];
 
 		$this->assertFileDoesNotExist($this->root->url() . '/able/fig_3.php');
 		$this->assertDirectoryDoesNotExist($this->root->url() . '/baker');
@@ -157,23 +165,36 @@ class PublisherOutputTest extends CIUnitTestCase
 		$this->assertTrue($result);
 		$this->assertFileExists($this->root->url() . '/able/fig_3.php');
 		$this->assertDirectoryExists($this->root->url() . '/baker');
+		$this->assertSame($expected, $publisher->getPublished());
 	}
 
 	public function testMergeReplace()
 	{
 		$this->assertFalse(same_file($this->directory . 'apple.php', $this->root->url() . '/able/apple.php'));
 		$publisher = new Publisher(SUPPORTPATH . 'Files', $this->root->url());
+		$expected  = [
+			$this->root->url() . '/able/apple.php',
+			$this->root->url() . '/able/fig_3.php',
+			$this->root->url() . '/able/prune_ripe.php',
+			$this->root->url() . '/baker/banana.php',
+		];
 
 		$result = $publisher->addPath('/')->merge(true);
 
 		$this->assertTrue($result);
 		$this->assertTrue(same_file($this->directory . 'apple.php', $this->root->url() . '/able/apple.php'));
+		$this->assertSame($expected, $publisher->getPublished());
 	}
 
 	public function testMergeCollides()
 	{
 		$publisher = new Publisher(SUPPORTPATH . 'Files', $this->root->url());
 		$expected  = lang('Publisher.collision', ['dir', $this->directory . 'fig_3.php', $this->root->url() . '/able/fig_3.php']);
+		$published = [
+			$this->root->url() . '/able/apple.php',
+			$this->root->url() . '/able/prune_ripe.php',
+			$this->root->url() . '/baker/banana.php',
+		];
 
 		mkdir($this->root->url() . '/able/fig_3.php');
 
@@ -183,6 +204,7 @@ class PublisherOutputTest extends CIUnitTestCase
 		$this->assertFalse($result);
 		$this->assertCount(1, $errors);
 		$this->assertSame([$this->directory . 'fig_3.php'], array_keys($errors));
+		$this->assertSame($published, $publisher->getPublished());
 		$this->assertSame($expected, $errors[$this->directory . 'fig_3.php']->getMessage());
 	}
 
