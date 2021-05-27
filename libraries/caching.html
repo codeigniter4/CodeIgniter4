@@ -409,6 +409,10 @@ more complex, multi-server setups.</p>
 <p><strong>$prefix</strong></p>
 <p>If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.</p>
+<p><strong>$ttl</strong></p>
+<p>The default number of seconds to save items when none is specified.
+WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
+to projects and modules. This will replace the hard-coded value in a future release.</p>
 <p><strong>$file</strong></p>
 <p>This is an array of settings specific to the  <code class="docutils literal notranslate"><span class="pre">File</span></code> handler to determine how it should save the cache files.</p>
 <p><strong>$memcached</strong></p>
@@ -800,7 +804,7 @@ support your chosen cache.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 26, 2021.
+        Last updated on May 27, 2021.
       </span>
 
     </p>
