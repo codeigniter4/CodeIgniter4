@@ -126,13 +126,26 @@ class PublisherSupportTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetSource()
+	{
+		$publisher = new Publisher(ROOTPATH);
+
+		$this->assertSame(ROOTPATH, $publisher->getSource());
+	}
+
+	public function testGetDestination()
+	{
+		$publisher = new Publisher(ROOTPATH, SUPPORTPATH);
+
+		$this->assertSame(SUPPORTPATH, $publisher->getDestination());
+	}
+
 	public function testGetScratch()
 	{
 		$publisher = new Publisher();
 		$this->assertNull($this->getPrivateProperty($publisher, 'scratch'));
 
-		$method  = $this->getPrivateMethodInvoker($publisher, 'getScratch');
-		$scratch = $method();
+		$scratch = $publisher->getScratch();
 
 		$this->assertIsString($scratch);
 		$this->assertDirectoryExists($scratch);
