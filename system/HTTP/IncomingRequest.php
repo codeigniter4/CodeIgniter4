@@ -155,8 +155,12 @@ class IncomingRequest extends Request
 		{
                     // Get Maximum avaible memory
                     $memoryLimit = preg_split('/\d+\K/', ini_get('memory_limit'));
+                    // Get unit
+                    $unit = strtolower($memoryLimit[1] ?? "");
+                    // Get the exponent
+                    $exponent = ((int) array_search($unit, ["k", "m", "g", "t"]) ?: - 1) + 1;
                     // Translate memory limit from human readible to bytes
-                    $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, ((int) array_search(strtolower($memoryLimit[1] ?? ""), ["k", "m", "g", "t"]) ?: -1) + 1);
+                    $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, $exponent);
                     // Get free space in memory by substracting already used memory
                     $freeMemory = $memoryLimitBytes - memory_get_peak_usage();
                     // If the send content is too big, it wouldn't be load to the memory
