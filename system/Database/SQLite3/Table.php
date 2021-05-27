@@ -332,9 +332,9 @@ class Table
 		foreach ($fields as $field)
 		{
 			$return[$field->name] = [
-				'type'     => $field->type,
-				'default'  => $field->default,
-				'nullable' => $field->nullable,
+				'type'    => $field->type,
+				'default' => $field->default,
+				'null'    => $field->nullable,
 			];
 
 			if ($field->primary_key)
