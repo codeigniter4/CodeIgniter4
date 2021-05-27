@@ -152,11 +152,11 @@ class IncomingRequest extends Request
 		}
 
 		// Get Maximum avaible memory
-		$memory_limit = preg_split('/\d+\K/', ini_get('memory_limit'));
+		$memoryLimit = preg_split('/\d+\K/', ini_get('memory_limit'));
 		// Translate memory limit from human readible to bytes and substract already used memory
-		$free_memory = ((int) $memory_limit[0]) * pow(1024, (array_search(strtolower($memory_limit[1]), ["k", "m", "g", "t", "p"]) ?: -1) + 1) - memory_get_peak_usage();
+		$freeMemory = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, (array_search(strtolower($memoryLimit[1] ?? ""), ["k", "m", "g", "t"]) ?: -1) + 1) - memory_get_peak_usage();
 		// Get our body from php://input - if the send content is too big, it wouldn't be load to the memory
-		if ($body === 'php://input' && ((int) $_SERVER['CONTENT_LENGTH'] ?: 0) < $free_memory)
+		if ($body === 'php://input' && ((int) $_SERVER['CONTENT_LENGTH'] ?: 0) < $freeMemory)
 		{
 			$body = file_get_contents('php://input');
 		}
