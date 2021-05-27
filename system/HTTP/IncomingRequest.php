@@ -162,7 +162,7 @@ class IncomingRequest extends Request
                     // If the send content is too big, it wouldn't be load to the memory
                     if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > $freeMemory)
                     {
-                        log_message(7, "The 'php://input' is too big for loading it to the \$body");
+                        log_message("debug", "The 'php://input' is too big for loading it into \$body");
                     } 
                     else 
                     {
