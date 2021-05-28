@@ -163,22 +163,23 @@ class IncomingRequest extends Request
                     $exponent = (int) array_search($unit, $possibleExponents, true) ?? 0;
                     // Translate memory limit from human readible to bytes
                     $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, $exponent);
+                    // Load Exception config
+                    $configException = new \Config\Exceptions();
+                    // Get the request length of body
+                    $contentLength = (int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0;
                     // If the send content is too big, it wouldn't be load to the memory
-                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > $memoryLimitBytes)
+                    if($contentLength < $memoryLimitBytes)
                     {
-                        $configException = new \Config\Exceptions();
-                        if(isset($configException->throwExceptionOnBigRequest) ? $configException->throwExceptionOnBigRequest : true )
-                        {
-                            throw new LengthException("The 'php://input' is too big for loading it into \$body");
-                        }
-                        else
-                        {
-                            log_message("debug", "The 'php://input' is too big for loading it into \$body");
-                        }
-                    } 
-                    else 
+                        $body = file_get_contents('php://input');
+                    }
+                    // The content is bigger then the memory_limit - throw an exceptin if is set in config
+                    else if(isset($configException->throwExceptionOnBigRequest) ? $configException->throwExceptionOnBigRequest : false )
                     {
-			$body = file_get_contents('php://input');
+                        throw new LengthException("The 'php://input' is too big for loading it into \$body");
+                    }
+                    else
+                    {
+                        log_message("debug", "The 'php://input' is too big for loading it into \$body");
                     }
 		}
 
