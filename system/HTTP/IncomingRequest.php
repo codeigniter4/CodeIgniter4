@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\App;
 use Config\Services;
+use Config\Exceptions;
 use InvalidArgumentException;
 use LengthException;
 use Locale;
@@ -164,7 +165,7 @@ class IncomingRequest extends Request
                     // Translate memory limit from human readible to bytes
                     $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, $exponent);
                     // Load Exception config
-                    $configException = new \Config\Exceptions();
+                    $configException = new Exceptions();
                     // Get the request length of body
                     $contentLength = (int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0;
                     // If the send content is too big, it wouldn't be load to the memory
@@ -173,7 +174,7 @@ class IncomingRequest extends Request
                         $body = file_get_contents('php://input');
                     }
                     // The content is bigger then the memory_limit - throw an exceptin if is set in config
-                    else if(isset($configException->throwExceptionOnBigRequest) ? $configException->throwExceptionOnBigRequest : false )
+                    else if($configException->throwExceptionOnBigRequest ?? false )
                     {
                         throw new LengthException("The 'php://input' is too big for loading it into \$body");
                     }
