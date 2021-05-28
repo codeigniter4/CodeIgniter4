@@ -57,4 +57,16 @@ class Exceptions extends BaseConfig
 	 * @var array
 	 */
 	public $sensitiveDataInTrace = [];
+        
+        
+        /**
+         * --------------------------------------------------------------------------
+         * Throw error on big request
+         * --------------------------------------------------------------------------
+         * If will be send big request on CI, throw an exception.
+         * 
+         * @var bool
+         */
+        
+        public $throwExceptionOnBigRequest = false;
 }
