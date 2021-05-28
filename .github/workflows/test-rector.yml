@@ -58,7 +58,7 @@ jobs:
         run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
