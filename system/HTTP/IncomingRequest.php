@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
+use LengthException;
 use Locale;
 
 /**
@@ -158,16 +159,22 @@ class IncomingRequest extends Request
                     // Get unit
                     $unit = strtolower($memoryLimit[1] ?? "");
                     // Get the exponent
-                    $possibleExponents = ["", "k", "m", "g", "t"];
-                    $exponent = (int) array_search($unit, $possibleExponents) ?? 0;
+                    $possibleExponents = ["" ,"k" , "m", "g", "t"];
+                    $exponent = (int) array_search($unit, $possibleExponents, true) ?? 0;
                     // Translate memory limit from human readible to bytes
                     $memoryLimitBytes = ((int) $memoryLimit[0] ?? 0 ) * pow(1024, $exponent);
-                    // Get free space in memory by substracting already used memory
-                    $freeMemory = $memoryLimitBytes - memory_get_peak_usage();
                     // If the send content is too big, it wouldn't be load to the memory
-                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > ($freeMemory  < 0 ? INF : $freeMemory))
+                    if(((int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0) > $memoryLimitBytes)
                     {
-                        log_message("debug", "The 'php://input' is too big for loading it into \$body");
+                        $configException = new \Config\Exceptions();
+                        if(isset($configException->throwExceptionOnBigRequest) ? $configException->throwExceptionOnBigRequest : true )
+                        {
+                            throw new LengthException("The 'php://input' is too big for loading it into \$body");
+                        }
+                        else
+                        {
+                            log_message("debug", "The 'php://input' is too big for loading it into \$body");
+                        }
                     } 
                     else 
                     {
