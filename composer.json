@@ -19,10 +19,10 @@
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",
 		"nexusphp/tachycardia": "^1.0",
-		"phpstan/phpstan": "0.12.86",
+		"phpstan/phpstan": "0.12.88",
 		"phpunit/phpunit": "^9.1",
 		"predis/predis": "^1.1",
-		"rector/rector": "0.11.2",
+		"rector/rector": "0.11.7",
 		"squizlabs/php_codesniffer": "^3.3",
 		"symplify/package-builder": "^9.3"
 	},

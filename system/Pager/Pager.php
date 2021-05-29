@@ -147,12 +147,11 @@ class Pager implements PagerInterface
 	 */
 	protected function displayLinks(string $group, string $template): string
 	{
-		$pager = new PagerRenderer($this->getDetails($group));
-
 		if (! array_key_exists($template, $this->config->templates))
 		{
 			throw PagerException::forInvalidTemplate($template);
 		}
+		$pager = new PagerRenderer($this->getDetails($group));
 
 		return $this->view->setVar('pager', $pager)
 						->render($this->config->templates[$template]);
