@@ -53,7 +53,7 @@ class PublisherSupportTest extends CIUnitTestCase
 	public function testDiscoverStores()
 	{
 		$publisher = Publisher::discover()[0];
-		$publisher->addFile($this->file);
+		$publisher->setFiles([])->addFile($this->file);
 
 		$result = Publisher::discover();
 		$this->assertSame($publisher, $result[0]);
