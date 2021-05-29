@@ -119,6 +119,8 @@ You want to display a "photo of the day" image on your homepage. You have a feed
 need to get the actual file into a browsable location in your project at **public/images/daily_photo.jpg**.
 You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will handle this for you::
 
+	<?php
+
 	namespace App\Commands;
 
 	use CodeIgniter\CLI\BaseCommand;
@@ -158,6 +160,8 @@ Asset Dependencies Example
 You want to integrate the frontend library "Bootstrap" into your project, but the frequent updates makes it a hassle
 to keep up with. You can create a publication definition in your project to sync frontend assets by adding extending
 ``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
+
+	<?php
 
 	namespace App\Publishers;
 
@@ -207,7 +211,7 @@ Now add the dependency via Composer and call ``spark publish`` to run the public
 	> composer require twbs/bootstrap
 	> php spark publish
 
-... and you'll end up with something like this:
+... and you'll end up with something like this::
 
 	public/.htaccess
 	public/favicon.ico
@@ -239,6 +243,8 @@ Module Deployment Example
 You want to allow developers using your popular authentication module the ability to expand on the default behavior
 of your Migration, Controller, and Model. You can create your own module "publish" command to inject these components
 into an application for use::
+
+	<?php
 
 	namespace Math\Auth\Commands;
 
