@@ -168,12 +168,15 @@ class IncomingRequest extends Request
                     $configException = new Exceptions();
                     // Get the request length of body
                     $contentLength = (int) $this->fetchGlobal("server", "CONTENT_LENGTH") ?? 0;
-                    // If the send content is too big, it wouldn't be load to the memory
+                    /* 
+		     * If the send content it's not too big, it wwill be load to the $body
+		     * If the content is bigger then the memory_limit - throw an exceptin if is set in config
+		     * otherwise send info to log
+		     */
                     if($contentLength < $memoryLimitBytes)
                     {
                         $body = file_get_contents('php://input');
                     }
-                    // The content is bigger then the memory_limit - throw an exceptin if is set in config
                     else if($configException->throwExceptionOnBigRequest ?? false )
                     {
                         throw new LengthException("The 'php://input' is too big for loading it into \$body");
