@@ -3,6 +3,7 @@
 namespace Tests\Support\Publishers;
 
 use CodeIgniter\Publisher\Publisher;
+use RuntimeException;
 
 final class TestPublisher extends Publisher
 {
@@ -11,17 +12,17 @@ final class TestPublisher extends Publisher
 	 *
 	 * @return $this
 	 */
-	public static function setError(string $file)
+	public static function setResult(bool $result)
 	{
-		self::$error = $file;
+		self::$result = $result;
 	}
 
 	/**
-	 * A file to cause an error
+	 * Return value for publish()
 	 *
-	 * @var string
+	 * @var boolean
 	 */
-	private static $error = '';
+	private static $result = true;
 
 	/**
 	 * Base path to use for the source.
@@ -42,24 +43,8 @@ final class TestPublisher extends Publisher
 	 */
 	public function publish(): bool
 	{
-		$this->errors = $this->published = [];
-
 		$this->addPath('');
 
-		// Copy each sourced file to its relative destination
-		foreach ($this->getFiles() as $file)
-		{
-			if ($file === self::$error)
-			{
-				$this->errors[$file] = new RuntimeException('Have an error, dear.');
-			}
-			else
-			{
-				// Resolve the destination path
-				$this->published[] = $this->destination . substr($file, strlen($this->source));
-			}
-		}
-
-		return $this->errors === [];
+		return self::$result;
 	}
 }

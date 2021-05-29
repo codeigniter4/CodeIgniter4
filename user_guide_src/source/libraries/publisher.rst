@@ -246,7 +246,7 @@ into an application for use::
 	use CodeIgniter\Publisher\Publisher;
 	use Throwable;
 
-	class Publish extends BaseCommand
+	class AuthPublish extends BaseCommand
 	{
 		protected $group       = 'Auth';
 		protected $name        = 'auth:publish';
@@ -275,11 +275,8 @@ into an application for use::
 			}
 
 			// If publication succeeded then update namespaces
-			foreach ($publisher->getFiles as $original)
+			foreach ($publisher->getPublished() as $file)
 			{
-				// Get the location of the new file
-				$file = str_replace($source, APPPATH, $original);
-
 				// Replace the namespace
 				$contents = file_get_contents($file);
 				$contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, );
