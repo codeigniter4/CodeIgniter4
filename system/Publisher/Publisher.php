@@ -317,6 +317,7 @@ class Publisher
 	 */
 	public function publish(): bool
 	{
+		// Safeguard against accidental misuse
 		if ($this->source === ROOTPATH && $this->destination === FCPATH)
 		{
 			throw new RuntimeException('Child classes of Publisher should provide their own source and destination or publish method.');
