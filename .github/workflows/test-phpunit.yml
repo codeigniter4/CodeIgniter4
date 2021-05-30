@@ -103,12 +103,6 @@ jobs:
         env:
           update: true
 
-      - name: Install latest ImageMagick
-        run: |
-          sudo apt-get remove ghostscript
-          sudo apt-get update
-          sudo apt-get install -y imagemagick ghostscript-x gsfonts
-
       - name: Get composer cache directory
         id: composercache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
