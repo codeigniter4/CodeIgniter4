@@ -9,7 +9,13 @@ use Tests\Support\Validation\TestRules;
 class FormatRulesTest extends CIUnitTestCase
 {
 
-	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
+	/**
+	 * @var string
+	 */
+	const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
+	/**
+	 * @var string
+	 */
 	const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
 	/**

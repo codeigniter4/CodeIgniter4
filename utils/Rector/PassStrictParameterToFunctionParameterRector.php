@@ -18,6 +18,9 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class PassStrictParameterToFunctionParameterRector extends AbstractRector
 {
+	/**
+	 * @var array<string, int>
+	 */
 	private const FUNCTION_WITH_ARG_POSITION = [
 		// position start from 0
 		'array_search'  => 2,

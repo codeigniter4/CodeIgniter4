@@ -12,6 +12,7 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodeQualityStrict\Rector\Variable\MoveVariableDeclarationNearReferenceRector;
+use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
@@ -92,4 +93,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(TernaryToNullCoalescingRector::class);
 	$services->set(ListToArrayDestructRector::class);
 	$services->set(MoveVariableDeclarationNearReferenceRector::class);
+	$services->set(VarConstantCommentRector::class);
 };

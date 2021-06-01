@@ -43,6 +43,8 @@ class CodeIgniter
 {
 	/**
 	 * The current version of CodeIgniter Framework
+	 *
+	 * @var string
 	 */
 	const CI_VERSION = '4.1.2';
 
