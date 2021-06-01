@@ -15,6 +15,27 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class MailerException extends FrameworkException
 {
+	/**
+	 * Thrown when specified handler was not found.
+	 *
+	 * @return static
+	 */
+	public static function forHandlerNotFound()
+	{
+		return new static(lang('Mailer.handlerNotFound'));
+	}
+
+	/**
+	 * Thrown when an email address fails validation
+	 *
+	 * @return static
+	 */
+	public static function forInvalidAddress(string $value = null)
+	{
+		return new static(lang('Mailer.invalidAddress', [$value]));
+	}
+
+/*
 	public static function forAttachmentMissing(string $file = null)
 	{
 		return new static(lang('Mailer.attachmentMissing', [$file]));
@@ -30,10 +51,6 @@ class MailerException extends FrameworkException
 		return new static(lang('Mailer.mustBeArray', []));
 	}
 
-	public static function forInvalidAddress(string $value = null)
-	{
-		return new static(lang('Mailer.invalidAddress', [$value]));
-	}
 
 	public static function forInvalidProtocol(string $value = null)
 	{
@@ -94,4 +111,5 @@ class MailerException extends FrameworkException
 	{
 		return new static(lang('Mailer.SMTPDataFailure', [$data]));
 	}
+*/
 }

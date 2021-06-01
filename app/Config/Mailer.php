@@ -5,17 +5,21 @@ namespace Config;
 class Mailer
 {
 	/**
-	 * Default "from" address.
+	 * Default values to use for every email.
+	 * Valid keys:
+	 * - body, subject, from, to, cc, bcc, replyTo, returnPath, priority, date
 	 *
-	 * @var string|null
+	 * @see \CodeIgniter\Mailer\Email::__construct()
+	 *
+	 * @var array<string,mixed>
 	 */
-	public $from;
+	public $defaults = [];
 
 	/**
-	 * Default email priority.
-	 * 1 = highest, 3 = normal, 5 = lowest
+	 * The name of the preferred handler to use.
+	 * Testing disables mail by default.
 	 *
-	 * @var integer
+	 * @var string
 	 */
-	public $priority = 3;
+	public $handler = ENVIRONMENT === 'testing' ? 'dummy' : 'mail';
 }

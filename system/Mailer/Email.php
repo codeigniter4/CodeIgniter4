@@ -39,6 +39,9 @@ class Email extends Message
 	 */
 	public function __construct(array $data = [])
 	{
+		// Start with config defaults but prioritize any overrides
+		$data = array_merge(config('Mailer')->defaults, $data);
+
 		// Check for any keys that match our setters
 		foreach ([
 			'body',
@@ -58,18 +61,6 @@ class Email extends Message
 				$this->$method($data[$method]);
 			}
 		}
-/*
-		// Check for missing defaults and set the config values
-		$config = config('Mailer');
-		if (! array_key_exists('from', $data) && isset($config->from))
-		{
-			$this->from(Address::create($config->from));
-		}
-		if (! array_key_exists('priority', $data))
-		{
-			$this->priority($config->priority);
-		}
-*/
 	}
 
 	//--------------------------------------------------------------------
@@ -297,6 +288,8 @@ class Email extends Message
 	 * @param array $arguments
 	 *
 	 * @return mixed
+	 *
+	 * @throws BadMethodCallException
 	 */
 	public function __call(string $name, array $arguments)
 	{

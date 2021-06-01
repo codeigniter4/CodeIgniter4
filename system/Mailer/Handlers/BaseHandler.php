@@ -39,9 +39,9 @@ namespace CodeIgniter\Mailer\Handlers;
  * @filesource
  */
 
+use CodeIgniter\Mailer\Email;
 use CodeIgniter\Mailer\Exceptions\MailerException;
 use CodeIgniter\Mailer\MailerInterface;
-use CodeIgniter\Mailer\Message;
 use Config\Mimes;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -835,14 +835,13 @@ class BaseHandler implements MailerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Send a Message
+	 * Sends an Email
 	 *
-	 * @param boolean $autoClear
-	 * @param boolean $reallySend
+	 * @param Email $email
 	 *
 	 * @return boolean
 	 */
-	public function send(Message $message, bool $autoClear = true, bool $reallySend = true)
+	public function send(Email $email)
 	{
 		if (! isset($this->headers['From']) && ! empty($this->fromEmail))
 		{

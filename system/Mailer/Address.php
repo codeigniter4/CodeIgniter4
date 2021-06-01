@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Mailer;
 
-use InvalidArgumentException;
+use CodeIgniter\Mailer\Exceptions\MailerException;
 
 class Address
 {
@@ -102,6 +102,8 @@ class Address
 	 *
 	 * @param string $email
 	 * @param string|null $name
+	 *
+	 * @throws MailerException
 	 */
 	final public function __construct(string $email, string $name = null)
 	{
@@ -109,7 +111,7 @@ class Address
 
 		if (! service('validation')->check($this->email, 'required|valid_email'))
 		{
-			throw new InvalidArgumentException(lang('Mailer.invalidAddress', [$email]));
+			throw MailerException::forInvalidAddress($email);
 		}
 
 		$this->name  = isset($name) ? trim($name, ' \'"') : null;

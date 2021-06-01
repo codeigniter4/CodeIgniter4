@@ -42,6 +42,8 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Language\Language;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Mailer\Exceptions\MailerException;
+use CodeIgniter\Mailer\MailerInterface;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -386,36 +388,38 @@ class Services extends BaseService
     //--------------------------------------------------------------------
 
     /**
-     * The Mailer class lets you send composed messages via mail, sendmail, SMTP.
+     * The Mailer class sends emails from any of the available protocol handlers.
      *
      * @param MailerConfig|null $config
      * @param boolean $getShared
      *
-     * @return \CodeIgniter\Mailer\MailerInterface
+     * @return MailerInterface
+     *
+     * @throws MailerException
      */
-    public static function mailer(MailerConfig $config = null, bool $getShared = true)
+    public static function mailer(MailerConfig $config = null, bool $getShared = true): MailerInterface
     {
         if ($getShared)
         {
             return static::getSharedInstance('mailer', $config);
         }
 
-        if (empty($config))
-        {
-            $config = new MailerConfig();
-        }
-
-        $protocolMap = [
-            'mail'     => 'MailHandler',
-            'sendmail' => 'SendmailHandler',
-            'smtp'     => 'SMTPHandler',
+        // Factories to load the configured default handler 
+        $config  = $config ?? config('Mailer');
+        $handler = ucfirst($config->handler) . 'Handler';
+        $options = [
+            'path'       => 'Mailer/Handlers',
+            'instanceOf' => MailerInterface::class,
+            'getShared'  => false, // allows Services to handle sharing
+            'preferApp'  => true,
         ];
 
-        $handler   = '\\CodeIgniter\\Mailer\\Handlers\\' . ($protocolMap[$config->protocol ?? 'mail'] );
-        $mailer = new $handler($config);
-        $mailer->setLogger(static::logger(true));
+        if ($result = Factories::mailer($handler, $options, $config))
+        {
+            return $result;
+        }
 
-        return $mailer;
+        throw MailerException::forHandlerNotFound();
     }
 
     //--------------------------------------------------------------------
