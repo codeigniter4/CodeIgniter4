@@ -321,7 +321,7 @@ class Query implements QueryInterface
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = preg_match('/:[a-z\d.)_(]+:/i', $sql) === 1;
+		$hasNamedBinds = strpos($sql, ':') !== false && strpos($sql, ':=') === false;
 
 		if (empty($this->binds)
 			|| empty($this->bindMarker)
