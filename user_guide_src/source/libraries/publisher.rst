@@ -162,6 +162,8 @@ You want to integrate the frontend library "Bootstrap" into your project, but th
 to keep up with. You can create a publication definition in your project to sync frontend assets by adding extending
 ``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
 
+	<?php
+	
 	namespace App\Publishers;
 
 	use CodeIgniter\Publisher\Publisher;
@@ -195,11 +197,11 @@ to keep up with. You can create a publication definition in your project to sync
 		public function publish(): bool
 		{
 			return $this
-				// Add all the files relative to $source			
+				// Add all the files relative to $source
 				->addPath('dist')
 
 				// Indicate we only want the minimized versions
-				->retainPattern('*.min.*)
+				->retainPattern('*.min.*')
 
 				// Merge-and-replace to retain the original directory structure
 				->merge(true);
