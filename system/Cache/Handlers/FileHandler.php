@@ -21,6 +21,12 @@ use Throwable;
 class FileHandler extends BaseHandler
 {
 	/**
+	 * Reserved characters that cannot be used in a key or tag.
+	 * From https://github.com/symfony/cache-contracts/blob/c0446463729b89dd4fa62e9aeecc80287323615d/ItemInterface.php#L43
+	 */
+	public const RESERVED_CHARACTERS = '{}()\@:';
+
+	/**
 	 * Maximum key length.
 	 *
 	 * @var int

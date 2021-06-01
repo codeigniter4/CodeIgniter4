@@ -64,9 +64,9 @@ abstract class BaseHandler implements CacheInterface
 		{
 			throw new InvalidArgumentException('Cache key cannot be empty.');
 		}
-		if (strpbrk($key, self::RESERVED_CHARACTERS) !== false)
+		if (strpbrk($key, static::RESERVED_CHARACTERS) !== false)
 		{
-			throw new InvalidArgumentException('Cache key contains reserved characters ' . self::RESERVED_CHARACTERS);
+			throw new InvalidArgumentException('Cache key contains reserved characters ' . static::RESERVED_CHARACTERS);
 		}
 
 		// If the key with prefix exceeds the length then return the hashed version
