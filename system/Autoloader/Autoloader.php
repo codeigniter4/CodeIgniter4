@@ -22,17 +22,17 @@ use InvalidArgumentException;
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.
  *
  * Given a foo-bar package of classes in the file system at the following paths:
- *```
+ * ```
  *      /path/to/packages/foo-bar/
  *          /src
  *              Baz.php         # Foo\Bar\Baz
  *              Qux/
  *                  Quux.php    # Foo\Bar\Qux\Quux
- *```
+ * ```
  * you can add the path to the configuration array that is passed in the constructor.
  * The Config array consists of 2 primary keys, both of which are associative arrays:
  * 'psr4', and 'classmap'.
- *```
+ * ```
  *      $Config = [
  *          'psr4' => [
  *              'Foo\Bar'   => '/path/to/packages/foo-bar'
@@ -41,9 +41,9 @@ use InvalidArgumentException;
  *              'MyClass'   => '/path/to/class/file.php'
  *          ]
  *      ];
- *```
+ * ```
  * Example:
- *```
+ * ```
  *      <?php
  *      // our configuration array
  *      $Config = [ ... ];
@@ -51,7 +51,7 @@ use InvalidArgumentException;
  *
  *      // register the autoloader
  *      $loader->register();
- *```
+ * ```
  */
 class Autoloader
 {
@@ -258,15 +258,6 @@ class Autoloader
 	{
 		if (strpos($class, '\\') === false)
 		{
-			$class    = 'Config\\' . $class;
-			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-			$filename = $this->includeFile($filePath);
-
-			if ($filename)
-			{
-				return $filename;
-			}
-
 			return false;
 		}
 
@@ -353,7 +344,9 @@ class Autoloader
 			return;
 		}
 
-		/** @var ClassLoader $composer */
+		/**
+		 * @var ClassLoader $composer
+		 */
 		$composer = include COMPOSER_PATH;
 		$paths    = $composer->getPrefixesPsr4();
 		$classes  = $composer->getClassMap();

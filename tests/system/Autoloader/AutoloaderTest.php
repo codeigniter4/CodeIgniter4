@@ -172,19 +172,9 @@ class AutoloaderTest extends CIUnitTestCase
 		$this->assertFalse((bool) $this->loader->loadClass('My\App\AutoloaderTest'));
 	}
 
-	public function testloadClassConfigFound()
+	public function testloadClassNonNamespaced()
 	{
-		$this->loader->addNamespace('Config', APPPATH . 'Config');
-		$this->assertSame(
-			APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Modules.php',
-			$this->loader->loadClass('Modules')
-		);
-	}
-
-	public function testloadClassConfigNotFound()
-	{
-		$this->loader->addNamespace('Config', APPPATH . 'Config');
-		$this->assertFalse($this->loader->loadClass('NotFound'));
+		$this->assertFalse($this->loader->loadClass('Modules'));
 	}
 
 	//--------------------------------------------------------------------
