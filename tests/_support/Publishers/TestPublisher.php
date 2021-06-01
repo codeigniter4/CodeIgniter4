@@ -9,8 +9,6 @@ final class TestPublisher extends Publisher
 {
 	/**
 	 * Fakes an error on the given file.
-	 *
-	 * @return $this
 	 */
 	public static function setResult(bool $result)
 	{
