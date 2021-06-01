@@ -49,7 +49,7 @@ class Publish extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'publish [directory]';
+	protected $usage = 'publish [<directory>]';
 
 	/**
 	 * The Command's arguments
@@ -104,9 +104,8 @@ class Publish extends BaseCommand
 				foreach ($publisher->getErrors() as $file => $exception)
 				{
 					CLI::write($file);
+					CLI::error($exception->getMessage());
 					CLI::newLine();
-
-					$this->showError($exception);
 				}
 			}
 		}
