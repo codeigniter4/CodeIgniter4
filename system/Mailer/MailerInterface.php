@@ -42,13 +42,11 @@
 interface MailerInterface
 {
 	/**
-	 * Send a Message
+	 * Send an Email
 	 *
-	 * @param Message $message    The email to send
-	 * @param boolean $autoClear  Should old session data be destroyed?
-	 * @param boolean $reallySend Should the message really be sent? or everything but that
+	 * @param Email $email
 	 */
-	public function send(Message $message, bool $autoClear = true, bool $reallySend = true);
+	public function send(Email $email);
 
 	/**
 	 * Which protocol is this a handler for?
