@@ -44,11 +44,12 @@ By default the source and destination will be set to ``ROOTPATH`` and ``FCPATH``
 easy access to take any file from your project and make it web-accessible. Alternatively you may pass a new source
 or source and destination into the constructor::
 
+	use CodeIgniter\Publisher\Publisher;
+	
 	$vendorPublisher = new Publisher(ROOTPATH . 'vendor');
 	$filterPublisher = new Publisher('/path/to/module/Filters', APPPATH . 'Filters');
 
-Once the source and destination are set you may start adding relative input files::
-
+	// Once the source and destination are set you may start adding relative input files
 	$frameworkPublisher = new Publisher(ROOTPATH . 'vendor/codeigniter4/codeigniter4');
 
 	// All "path" commands are relative to $source
@@ -73,7 +74,7 @@ to their destination(s)::
 	// Place files into their relative $destination directories, overwriting and saving the boolean result
 	$result = $frameworkPublisher->merge(true);
 
-See the Library Reference for a full description of available methods.
+See the :ref:`reference` for a full description of available methods.
 
 Automation and Discovery
 ========================
@@ -90,7 +91,7 @@ the powerful ``Autoloader`` to locate any child classes primed for publication::
 
 		if ($result === false)
 		{
-			CLI::write(get_class($publisher) . ' failed to publish!', 'red');
+			CLI::error(get_class($publisher) . ' failed to publish!', 'red');
 		}
 	}
 
@@ -139,7 +140,7 @@ You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will 
 
 			try
 			{
-				$publisher->addPath('daily_photo.jpg')->copy($replace = true);
+				$publisher->addPath('daily_photo.jpg')->copy(true); // `true` to enable overwrites
 			}
 			catch (Throwable $e)
 			{
@@ -152,7 +153,7 @@ Now running ``spark publish:daily`` will keep your homepage's image up-to-date. 
 coming from an external API? You can use ``addUri()`` in place of ``addPath()`` to download the remote
 resource and publish it out instead::
 
-	$publisher->addUri('https://example.com/feeds/daily_photo.jpg')->copy($replace = true);
+	$publisher->addUri('https://example.com/feeds/daily_photo.jpg')->copy(true);
 
 Asset Dependencies Example
 ==========================
@@ -160,8 +161,6 @@ Asset Dependencies Example
 You want to integrate the frontend library "Bootstrap" into your project, but the frequent updates makes it a hassle
 to keep up with. You can create a publication definition in your project to sync frontend assets by adding extending
 ``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
-
-	<?php
 
 	namespace App\Publishers;
 
@@ -205,6 +204,7 @@ to keep up with. You can create a publication definition in your project to sync
 				// Merge-and-replace to retain the original directory structure
 				->merge(true);
 		}
+	}
 
 Now add the dependency via Composer and call ``spark publish`` to run the publication::
 
@@ -297,6 +297,8 @@ Now when your module users run ``php spark auth:publish`` they will have the fol
 	app/Database/Migrations/2017-11-20-223112_create_auth_tables.php.php
 	app/Models/LoginModel.php
 	app/Models/UserModel.php
+
+.. _reference:
 
 *****************
 Library Reference
