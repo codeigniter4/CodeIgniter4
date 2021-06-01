@@ -69,6 +69,7 @@ use Config\Filters as FiltersConfig;
 use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images;
+use Config\Mailer as MailerConfig;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
 use Config\Services as AppServices;
@@ -95,6 +96,7 @@ use Config\View as ViewConfig;
  */
 class Services extends BaseService
 {
+<<<<<<< HEAD
     /**
      * The cache class provides a simple way to store and retrieve
      * complex data for later.
@@ -381,6 +383,43 @@ class Services extends BaseService
 
         return new Logger(config('Logger'));
     }
+
+	//--------------------------------------------------------------------
+
+    /**
+     * The Mailer class lets you send composed messages via mail, sendmail, SMTP.
+     *
+     * @param MailerConfig|null $config
+     * @param boolean $getShared
+     *
+     * @return \CodeIgniter\Mailer\MailerInterface
+     */
+    public static function mailer($config = null, bool $getShared = true)
+    {
+        if ($getShared)
+        {
+            return static::getSharedInstance('mailer', $config);
+        }
+
+        if (empty($config))
+        {
+            $config = new \Config\MailerConfig();
+        }
+
+        $protocolMap = [
+            'mail'     => 'MailHandler',
+            'sendmail' => 'SendmailHandler',
+            'smtp'     => 'SMTPHandler',
+        ];
+
+        $handler   = '\\CodeIgniter\\Mailer\\Handlers\\' . ($protocolMap[$config->protocol ?? 'mail'] );
+        $mailer = new $handler($config);
+        $mailer->setLogger(static::logger(true));
+
+        return $mailer;
+    }
+
+    //--------------------------------------------------------------------
 
     /**
      * Return the appropriate Migration runner.

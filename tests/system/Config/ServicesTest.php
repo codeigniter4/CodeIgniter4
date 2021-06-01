@@ -28,6 +28,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\ImageHandlerInterface;
 use CodeIgniter\Language\Language;
+use CodeIgniter\Mailer\MailerInterface;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\Router;
@@ -122,6 +123,18 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::email(new \Config\Email(), false);
         $this->assertInstanceOf(Email::class, $actual);
+    }
+
+    public function testNewMailer()
+    {
+        $actual = Services::mailer();
+        $this->assertInstanceOf(MailerInterface::class, $actual);
+    }
+
+    public function testNewUnsharedMailer()
+    {
+        $actual = Services::mailer(null, false);
+        $this->assertInstanceOf(MailerInterface::class, $actual);
     }
 
     public function testNewExceptions()
