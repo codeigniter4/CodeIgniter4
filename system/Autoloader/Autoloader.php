@@ -258,15 +258,6 @@ class Autoloader
 	{
 		if (strpos($class, '\\') === false)
 		{
-			$class    = 'Config\\' . $class;
-			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-			$filename = $this->sanitizeFilename($filePath);
-
-			if (is_file($filename))
-			{
-				return $filename;
-			}
-
 			return false;
 		}
 
