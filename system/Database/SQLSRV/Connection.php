@@ -129,12 +129,11 @@ class Connection extends BaseConnection
 			unset($connection['UID'], $connection['PWD']);
 		}
 
+		sqlsrv_configure('WarningsReturnAsErrors', 0);
 		$this->connID = sqlsrv_connect($this->hostname, $connection);
 
 		if ($this->connID !== false)
 		{
-			sqlsrv_configure('WarningsReturnAsErrors', 0);
-
 			// Determine how identifiers are escaped
 			$query = $this->query('SELECT CASE WHEN (@@OPTIONS | 256) = @@OPTIONS THEN 1 ELSE 0 END AS qi');
 			$query = $query->getResultObject();
