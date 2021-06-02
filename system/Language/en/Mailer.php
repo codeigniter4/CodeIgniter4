@@ -10,14 +10,16 @@
  */
 
 return [
-	'handlerNotFound' => 'Mailer config has an invalid or missing handler.',
-	'invalidAddress'  => 'Invalid email address: {0}',
+	'handlerNotFound'     => 'Mailer config has an invalid or missing handler.',
+	'handlerNotSupported' => '{0} is not supported on your system.',
+	'invalidAddress'      => 'Invalid email address: {0}',
+	'noFrom'              => 'Cannot send mail with no "From" header.',
+	'noRecipients'        => 'You must include recipients: To, Cc, or Bcc',
+
 /*
 	'mustBeArray'          => 'The email validation method must be passed an array.',
 	'attachmentMissing'    => 'Unable to locate the following email attachment: {0}',
 	'attachmentUnreadable' => 'Unable to open this attachment: {0}',
-	'noFrom'               => 'Cannot send mail with no "From" header.',
-	'noRecipients'         => 'You must include recipients: To, Cc, or Bcc',
 	'sendFailurePHPMail'   => 'Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.',
 	'sendFailureSendmail'  => 'Unable to send email using PHP Sendmail. Your server might not be configured to send mail using this method.',
 	'sendFailureSmtp'      => 'Unable to send email using PHP SMTP. Your server might not be configured to send mail using this method.',

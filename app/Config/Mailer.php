@@ -22,4 +22,39 @@ class Mailer
 	 * @var string
 	 */
 	public $handler = ENVIRONMENT === 'testing' ? 'dummy' : 'mail';
+
+	/**
+	 * The User Agent to specify when sending.
+	 *
+	 * @var string
+	 */
+	public $userAgent = 'CodeIgniter';
+
+	/**
+	 * Whether to send bulk BCC emails in batches.
+	 *
+	 * @var boolean
+	 */
+	public $batchMode = false;
+
+	/**
+	 * Number of emails in each BCC batch.
+	 *
+	 * @var integer
+	 */
+	public $batchSize = 200;
+
+	/**
+	 * System-specific criteria for handling encodings.
+	 *
+	 * @see \CodeIgniter\Mailer\Encoder::__construct()
+	 *
+	 * @var array<string,string>
+	 */
+	public $encoder = [
+		'charset'  => 'UTF-8',
+		'encoding' => '8bit',
+		'newline'  => "\r\n",
+		'crlf'     => "\r\n",
+	];
 }

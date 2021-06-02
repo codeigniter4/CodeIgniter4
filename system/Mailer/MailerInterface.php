@@ -11,10 +11,34 @@
 
 namespace CodeIgniter\Mailer;
 
+use Config\Mailer;
+
+/**
+ * Mailer Interface
+ *
+ * Defines the methods and types for a Mailer class to handle sending emails.
+ * It is highly recommended that any interface implementations extend
+ * \CodeIgniter\Mailer\Handlers\BaseHandler which fulfills most of these
+ * methods and provides a lot of additional email utility.
+ */
 interface MailerInterface
 {
 	/**
-	 * Sends an Email
+	 * Stores the Mailer config.
+	 *
+	 * @param Mailer $config
+	 */
+	public function __construct(Mailer $config);
+
+	/**
+	 * Whether this handler is supported on this system.
+	 *
+	 * @return boolean
+	 */
+	public function isSupported(): bool;
+
+	/**
+	 * Sends an Email.
 	 *
 	 * @param Email $email
 	 */

@@ -26,13 +26,47 @@ class MailerException extends FrameworkException
 	}
 
 	/**
+	 * Thrown when specified handler is not supported.
+	 *
+	 * @param string $class
+	 *
+	 * @return static
+	 */
+	public static function forHandlerNotSupported(string $class)
+	{
+		return new static(lang('Mailer.handlerNotSupported', [$class]));
+	}
+
+	/**
 	 * Thrown when an email address fails validation
+	 *
+	 * @param string|null $value
 	 *
 	 * @return static
 	 */
 	public static function forInvalidAddress(string $value = null)
 	{
 		return new static(lang('Mailer.invalidAddress', [$value]));
+	}
+
+	/**
+	 * Thrown when an Email is missing the "From" header
+	 *
+	 * @return static
+	 */
+	public static function forNoFrom()
+	{
+		return new static(lang('Mailer.noFrom'));
+	}
+
+	/**
+	 * Thrown when an Email has no "To", "Cc", and "Bcc" headers
+	 *
+	 * @return static
+	 */
+	public static function forNoRecipients()
+	{
+		return new static(lang('Mailer.noRecipients'));
 	}
 
 /*
@@ -55,16 +89,6 @@ class MailerException extends FrameworkException
 	public static function forInvalidProtocol(string $value = null)
 	{
 		return new static(lang('Mailer.invalidProtocolRequested', [$value]));
-	}
-
-	public static function forNoFrom()
-	{
-		return new static(lang('Mailer.noFrom', []));
-	}
-
-	public static function forNoRecipients()
-	{
-		return new static(lang('Mailer.noRecipients', []));
 	}
 
 	public static function forSendFailure(string $protocol = '?')

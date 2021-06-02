@@ -33,16 +33,43 @@ class Email extends Message
 	];
 
 	/**
-	 * Matches input keys to their setter method to store values.
+	 * This email's unique Message ID.
+	 *
+	 * @var string|null
+	 */
+	private $messageId;
+
+	/**
+	 * Stores any initial values.
 	 *
 	 * @param array $data
 	 */
 	public function __construct(array $data = [])
 	{
-		// Start with config defaults but prioritize any overrides
-		$data = array_merge(config('Mailer')->defaults, $data);
+		$this->set($data);
+	}
 
-		// Check for any keys that match our setters
+	/**
+	 * Resets $messageId for clones to ensure each is unique.
+	 */
+	public function __clone()
+	{
+		unset($this->messageId);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Bulk stores values by matching input keys to their setter method.
+	 *
+	 * @param array $data
+	 * @param boolean $overwrite
+	 *
+	 * @return $this
+	 */
+	public function set(array $data, bool $overwrite = true): self
+	{
+		// Check for matching keys
 		foreach ([
 			'body',
 			'subject',
@@ -54,11 +81,16 @@ class Email extends Message
 			'returnPath',
 			'priority',
 			'date',			
-		] as $method)
+		] as $setter)
 		{
-			if (array_key_exists($method, $data))
+			$getter = 'get' . ucfirst($setter);
+
+			if (array_key_exists($setter, $data))
 			{
-				$this->$method($data[$method]);
+				if ($overwrite || is_null($this->$getter()))
+				{
+					$this->$method($data[$method]);
+				}
 			}
 		}
 	}
@@ -76,7 +108,7 @@ class Email extends Message
 	 */
 	public function setBody($body): self
 	{
-		return parent::setBody(rtrim(str_replace("\r", '', $body)));
+		return $this->body($body);
 	}
 
 	/**
@@ -86,7 +118,7 @@ class Email extends Message
 	 */
 	public function body(string $body)
 	{
-		return $this->setBody($body);
+		return parent::setBody(rtrim(str_replace("\r", '', $body)));
 	}
 
 	/**
@@ -150,13 +182,18 @@ class Email extends Message
 	}
 
 	/**
+	 * Return-Path must be only an email enclosed in angle brackets, e.g. "<admin@codeigniter.com>"
+	 *
 	 * @param string $address
 	 *
 	 * @return $this
 	 */
 	public function returnPath(string $address)
 	{
-	    return $this->setHeader('Return-Path', Address::create($address));
+		// Force Address to use angle braces by giving an empty display name
+		$email = Address::split($address)['email'];
+
+	    return $this->setHeader('Return-Path', new Address($email, ''));
 	}
 
 	/**
@@ -239,23 +276,33 @@ class Email extends Message
 	 */
 	public function getReturnPath(): ?Address
 	{
-		return $this->hasHeader('Return-Path') ? Address::create($this->getHeader('Return-Path')->getValue()) : null;
+		if (! $this->hasHeader('Return-Path'))
+		{
+			return null;
+		}
+
+		// Get just the email portion of the stored address
+		$address = $this->getHeader('Return-Path')->getValue();
+		$email   = Address::split($address)['email'];
+
+		// Force Address to use angle braces by giving an empty display name
+	    return new Address($email, '');
 	}
 
 	/**
 	 * Returns the priority as an integer parsed from the header,
-	 * where 1 is the highest and 5 is the lowest. Default is 3.
+	 * where 1 is the highest and 5 is the lowest.
 	 *
 	 * @return int
 	 */
-	public function getPriority(): int
+	public function getPriority(): ?int
 	{
 		if ($this->hasHeader('X-Priority'))
 		{
-			return array_search($this->getHeader('X-Priority')->getValue(), self::PRIORITIES, true) ?: 3;
+			return array_search($this->getHeader('X-Priority')->getValue(), self::PRIORITIES, true) ?: null;
 		}
 
-		return 3;
+		return null;
 	}
 
 	/**
@@ -264,6 +311,23 @@ class Email extends Message
 	public function getDate(): ?Time
 	{
 		return $this->hasHeader('Date') ? Time::parse($this->getHeader('Date')->getValue()) : null;
+	}
+
+	/**
+	 * Gets or creates the unique Message ID.
+	 * Requires Return-Path to be set.
+	 *
+	 * @return string|null
+	 */
+	public function getMessageId(): ?string
+	{
+		if (is_null($this->messageId) && $returnPath = $this->getReturnPath())
+		{
+			// Use a unique ID with the same domain as the Return-Path email
+			$this->messageId = '<' . uniqid('', true) . strstr($returnPath->getEmail(), '@'). '>';
+		}
+
+		return $this->messageId;
 	}
 
 	//--------------------------------------------------------------------
@@ -275,14 +339,14 @@ class Email extends Message
 	 *
 	 * @return $this
 	 */
-	public function setMessage($body)
+	public function setMessage($body): self
 	{
-		return $this->body(rtrim(str_replace("\r", '', $body)));
+		return $this->body($body);
 	}
 
 	/**
 	 * Magic method to allow CI3-style methods (like "setReplyTo()") to
-	 * forward to their new equivalent.
+	 * forward to their equivalent setters.
 	 *
 	 * @param string $name
 	 * @param array $arguments

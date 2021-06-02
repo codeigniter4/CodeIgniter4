@@ -16,6 +16,11 @@ use CodeIgniter\Mailer\Exceptions\MailerException;
 class Address
 {
 	/**
+	 * Characters to trim from display names.
+	 */
+	private const TRIM = ' \'"';
+
+	/**
 	 * @var string
 	 */
 	protected $email;
@@ -75,7 +80,7 @@ class Address
 		{
 			return [
 				'email' => trim($matches[1]),
-				'name'  => trim(substr($address, 0, -1 * strlen($matches[0])), ' \'"'),
+				'name'  => trim(substr($address, 0, -1 * strlen($matches[0])), self::TRIM),
 			];
 		}
 
@@ -86,7 +91,8 @@ class Address
 	}
 
 	/**
-	 * Combines an email and (optional) display name into an address.
+	 * Combines an email and (optional) display name into an address
+	 * with wrapping quotes and angle brackets.
 	 * Trims content but does no validation or encoding.
 	 *
 	 * @param string $email
@@ -94,7 +100,22 @@ class Address
 	 */
 	final public static function merge(string $email, string $name = null): string
 	{
-		return empty($name) ? $email : $name . ' <' . $email . '>';
+		if (is_null($name))
+		{
+			return trim($email);
+		}
+
+		// Enclose the email in angle brackets
+		$email = '<' . $email . '>';
+
+		// If there is no name then finish
+		if ('' === $name = trim($name, SELF::TRIM))
+		{
+			return $email;
+		}
+
+		// Wrap the name in quotes and prepend it to the email
+		return '"' . $name . '" ' . $email;
 	}
 
 	/**
@@ -114,7 +135,7 @@ class Address
 			throw MailerException::forInvalidAddress($email);
 		}
 
-		$this->name  = isset($name) ? trim($name, ' \'"') : null;
+		$this->name = isset($name) ? trim($name, self::TRIM) : null;
 	}
 
 	/**

@@ -71,7 +71,7 @@ use Config\Filters as FiltersConfig;
 use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images;
-use Config\Mailer as MailerConfig;
+use Config\Mailer as Mailer;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
 use Config\Services as AppServices;
@@ -397,14 +397,14 @@ class Services extends BaseService
      *
      * @throws MailerException
      */
-    public static function mailer(MailerConfig $config = null, bool $getShared = true): MailerInterface
+    public static function mailer(Mailer $config = null, bool $getShared = true): MailerInterface
     {
         if ($getShared)
         {
             return static::getSharedInstance('mailer', $config);
         }
 
-        // Factories to load the configured default handler 
+        // Use Factories to load the default handler
         $config  = $config ?? config('Mailer');
         $handler = ucfirst($config->handler) . 'Handler';
         $options = [
@@ -414,12 +414,16 @@ class Services extends BaseService
             'preferApp'  => true,
         ];
 
-        if ($result = Factories::mailer($handler, $options, $config))
+        if (! $mailer = Factories::mailer($handler, $options, $config))
         {
-            return $result;
+            throw MailerException::forHandlerNotFound();
+        }
+        if (! $mailer->isSupported())
+        {
+            throw MailerException::forHandlerNotSupported(get_class($mailer));
         }
 
-        throw MailerException::forHandlerNotFound();
+        return $mailer;
     }
 
     //--------------------------------------------------------------------
