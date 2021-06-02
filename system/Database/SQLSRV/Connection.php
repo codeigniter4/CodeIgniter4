@@ -130,7 +130,6 @@ class Connection extends BaseConnection
 		}
 
 		sqlsrv_configure('WarningsReturnAsErrors', 0);
-		
 		$this->connID = sqlsrv_connect($this->hostname, $connection);
 
 		if ($this->connID !== false)
