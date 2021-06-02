@@ -22,8 +22,6 @@ class FileHandler extends BaseHandler
 {
 	/**
 	 * Maximum key length.
-	 *
-	 * @var int
 	 */
 	public const MAX_KEY_LENGTH = 255;
 

@@ -22,8 +22,6 @@ interface CookieInterface
 	 * Cookies will be sent in all contexts, i.e in responses to both
 	 * first-party and cross-origin requests. If `SameSite=None` is set,
 	 * the cookie `Secure` attribute must also be set (or the cookie will be blocked).
-	 *
-	 * @var string
 	 */
 	public const SAMESITE_NONE = 'none';
 
@@ -31,23 +29,17 @@ interface CookieInterface
 	 * Cookies are not sent on normal cross-site subrequests (for example to
 	 * load images or frames into a third party site), but are sent when a
 	 * user is navigating to the origin site (i.e. when following a link).
-	 *
-	 * @var string
 	 */
 	public const SAMESITE_LAX = 'lax';
 
 	/**
 	 * Cookies will only be sent in a first-party context and not be sent
 	 * along with requests initiated by third party websites.
-	 *
-	 * @var string
 	 */
 	public const SAMESITE_STRICT = 'strict';
 
 	/**
 	 * RFC 6265 allowed values for the "SameSite" attribute.
-	 *
-	 * @var string[]
 	 *
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
 	 */
@@ -59,8 +51,6 @@ interface CookieInterface
 
 	/**
 	 * Expires date format.
-	 *
-	 * @var string
 	 *
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
 	 * @see https://tools.ietf.org/html/rfc7231#section-7.1.1.2

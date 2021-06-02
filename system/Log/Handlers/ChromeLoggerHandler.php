@@ -26,8 +26,6 @@ class ChromeLoggerHandler extends BaseHandler
 {
 	/**
 	 * Version of this library - for ChromeLogger use.
-	 *
-	 * @var float
 	 */
 	const VERSION = 1.0;
 
