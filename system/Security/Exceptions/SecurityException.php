@@ -15,18 +15,18 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class SecurityException extends FrameworkException
 {
-	public static function forDisallowedAction()
-	{
-		return new static(lang('Security.disallowedAction'), 403);
-	}
+    public static function forDisallowedAction()
+    {
+        return new static(lang('Security.disallowedAction'), 403);
+    }
 
-	/**
-	 * @deprecated Use `CookieException::forInvalidSameSite()` instead.
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public static function forInvalidSameSite(string $samesite)
-	{
-		return new static(lang('Security.invalidSameSite', [$samesite]));
-	}
+    /**
+     * @deprecated Use `CookieException::forInvalidSameSite()` instead.
+     *
+     * @codeCoverageIgnore
+     */
+    public static function forInvalidSameSite(string $samesite)
+    {
+        return new static(lang('Security.invalidSameSite', [$samesite]));
+    }
 }

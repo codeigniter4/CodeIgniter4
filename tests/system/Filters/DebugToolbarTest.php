@@ -11,41 +11,41 @@ use Config\Filters as FilterConfig;
 class DebugToolbarTest extends CIUnitTestCase
 {
 
-	protected $request;
-	protected $response;
+    protected $request;
+    protected $response;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->request  = Services::request();
-		$this->response = Services::response();
-	}
+        $this->request  = Services::request();
+        $this->response = Services::response();
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDebugToolbarFilter()
-	{
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+    public function testDebugToolbarFilter()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config          = new FilterConfig();
-		$config->globals = [
-			'before' => ['toolbar'], // not normal; exercising its before()
-			'after'  => ['toolbar'],
-		];
+        $config          = new FilterConfig();
+        $config->globals = [
+            'before' => ['toolbar'], // not normal; exercising its before()
+            'after'  => ['toolbar'],
+        ];
 
-		$filter = new DebugToolbar();
+        $filter = new DebugToolbar();
 
-		$expectedBefore = $this->request;
-		$expectedAfter  = $this->response;
+        $expectedBefore = $this->request;
+        $expectedAfter  = $this->response;
 
-		// nothing should change here, since we have no before logic
-		$filter->before($this->request);
-		$this->assertEquals($expectedBefore, $this->request);
+        // nothing should change here, since we have no before logic
+        $filter->before($this->request);
+        $this->assertEquals($expectedBefore, $this->request);
 
-		// nothing should change here, since we are running in the CLI
-		$filter->after($this->request, $this->response);
-		$this->assertEquals($expectedAfter, $this->response);
-	}
+        // nothing should change here, since we are running in the CLI
+        $filter->after($this->request, $this->response);
+        $this->assertEquals($expectedAfter, $this->response);
+    }
 
 }

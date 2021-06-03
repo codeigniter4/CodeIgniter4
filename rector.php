@@ -35,63 +35,63 @@ use Utils\Rector\RemoveVarTagFromClassConstantRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-	$containerConfigurator->import(SetList::PHP_73);
+    $containerConfigurator->import(SetList::PHP_73);
 
-	$parameters = $containerConfigurator->parameters();
+    $parameters = $containerConfigurator->parameters();
 
-	// paths to refactor; solid alternative to CLI arguments
-	$parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
+    // paths to refactor; solid alternative to CLI arguments
+    $parameters->set(Option::PATHS, [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
 
-	// do you need to include constants, class aliases or custom autoloader? files listed will be executed
-	$parameters->set(Option::BOOTSTRAP_FILES, [
-		__DIR__ . '/system/Test/bootstrap.php',
-	]);
+    // do you need to include constants, class aliases or custom autoloader? files listed will be executed
+    $parameters->set(Option::BOOTSTRAP_FILES, [
+        __DIR__ . '/system/Test/bootstrap.php',
+    ]);
 
-	// is there a file you need to skip?
-	$parameters->set(Option::SKIP, [
-		__DIR__ . '/app/Views',
-		__DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
-		__DIR__ . '/system/ThirdParty',
-		__DIR__ . '/tests/system/Config/fixtures',
-		__DIR__ . '/tests/_support',
-		PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
-		JsonThrowOnErrorRector::class,
-		StringifyStrNeedlesRector::class,
-	]);
+    // is there a file you need to skip?
+    $parameters->set(Option::SKIP, [
+        __DIR__ . '/app/Views',
+        __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
+        __DIR__ . '/system/ThirdParty',
+        __DIR__ . '/tests/system/Config/fixtures',
+        __DIR__ . '/tests/_support',
+        PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
+        JsonThrowOnErrorRector::class,
+        StringifyStrNeedlesRector::class,
+    ]);
 
-	// auto import fully qualified class names
-	$parameters->set(Option::AUTO_IMPORT_NAMES, true);
-	$parameters->set(Option::ENABLE_CACHE, true);
-	$parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
+    // auto import fully qualified class names
+    $parameters->set(Option::AUTO_IMPORT_NAMES, true);
+    $parameters->set(Option::ENABLE_CACHE, true);
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
 
-	$services = $containerConfigurator->services();
-	$services->load('Symplify\\PackageBuilder\\', __DIR__ . '/vendor/symplify/package-builder/src');
+    $services = $containerConfigurator->services();
+    $services->load('Symplify\\PackageBuilder\\', __DIR__ . '/vendor/symplify/package-builder/src');
 
-	$services->set(UnderscoreToCamelCaseVariableNameRector::class);
-	$services->set(SimplifyUselessVariableRector::class);
-	$services->set(RemoveAlwaysElseRector::class);
-	$services->set(PassStrictParameterToFunctionParameterRector::class);
-	$services->set(CountArrayToEmptyArrayComparisonRector::class);
-	$services->set(ForToForeachRector::class);
-	$services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
-	$services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
-	$services->set(SimplifyStrposLowerRector::class);
-	$services->set(CombineIfRector::class);
-	$services->set(SimplifyIfReturnBoolRector::class);
-	$services->set(RemoveDuplicatedCaseInSwitchRector::class);
-	$services->set(InlineIfToExplicitIfRector::class);
-	$services->set(PreparedValueToEarlyReturnRector::class);
-	$services->set(ShortenElseIfRector::class);
-	$services->set(RemoveUnusedForeachKeyRector::class);
-	$services->set(SimplifyIfElseToTernaryRector::class);
-	$services->set(UnusedForeachValueToArrayKeysRector::class);
-	$services->set(RemoveConcatAutocastRector::class);
-	$services->set(ChangeArrayPushToArrayAssignRector::class);
-	$services->set(UnnecessaryTernaryExpressionRector::class);
-	$services->set(RemoveUnusedPrivatePropertyRector::class);
-	$services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
-	$services->set(TernaryToNullCoalescingRector::class);
-	$services->set(ListToArrayDestructRector::class);
-	$services->set(MoveVariableDeclarationNearReferenceRector::class);
-	$services->set(RemoveVarTagFromClassConstantRector::class);
+    $services->set(UnderscoreToCamelCaseVariableNameRector::class);
+    $services->set(SimplifyUselessVariableRector::class);
+    $services->set(RemoveAlwaysElseRector::class);
+    $services->set(PassStrictParameterToFunctionParameterRector::class);
+    $services->set(CountArrayToEmptyArrayComparisonRector::class);
+    $services->set(ForToForeachRector::class);
+    $services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
+    $services->set(ChangeIfElseValueAssignToEarlyReturnRector::class);
+    $services->set(SimplifyStrposLowerRector::class);
+    $services->set(CombineIfRector::class);
+    $services->set(SimplifyIfReturnBoolRector::class);
+    $services->set(RemoveDuplicatedCaseInSwitchRector::class);
+    $services->set(InlineIfToExplicitIfRector::class);
+    $services->set(PreparedValueToEarlyReturnRector::class);
+    $services->set(ShortenElseIfRector::class);
+    $services->set(RemoveUnusedForeachKeyRector::class);
+    $services->set(SimplifyIfElseToTernaryRector::class);
+    $services->set(UnusedForeachValueToArrayKeysRector::class);
+    $services->set(RemoveConcatAutocastRector::class);
+    $services->set(ChangeArrayPushToArrayAssignRector::class);
+    $services->set(UnnecessaryTernaryExpressionRector::class);
+    $services->set(RemoveUnusedPrivatePropertyRector::class);
+    $services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
+    $services->set(TernaryToNullCoalescingRector::class);
+    $services->set(ListToArrayDestructRector::class);
+    $services->set(MoveVariableDeclarationNearReferenceRector::class);
+    $services->set(RemoveVarTagFromClassConstantRector::class);
 };

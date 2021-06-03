@@ -7,55 +7,55 @@ use Tests\Support\Models\UserModel;
 
 class ModelFactoryTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		ModelFactory::reset();
-	}
+        ModelFactory::reset();
+    }
 
-	public function testCreateSeparateInstances()
-	{
-		$basenameModel  = ModelFactory::get('JobModel', false);
-		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
+    public function testCreateSeparateInstances()
+    {
+        $basenameModel  = ModelFactory::get('JobModel', false);
+        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
 
-		$this->assertInstanceOf(JobModel::class, $basenameModel);
-		$this->assertInstanceOf(JobModel::class, $namespaceModel);
-		$this->assertNotSame($basenameModel, $namespaceModel);
-	}
+        $this->assertInstanceOf(JobModel::class, $basenameModel);
+        $this->assertInstanceOf(JobModel::class, $namespaceModel);
+        $this->assertNotSame($basenameModel, $namespaceModel);
+    }
 
-	public function testCreateSharedInstance()
-	{
-		$basenameModel  = ModelFactory::get('JobModel', true);
-		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
+    public function testCreateSharedInstance()
+    {
+        $basenameModel  = ModelFactory::get('JobModel', true);
+        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
 
-		$this->assertSame($basenameModel, $namespaceModel);
-	}
+        $this->assertSame($basenameModel, $namespaceModel);
+    }
 
-	public function testInjection()
-	{
-		ModelFactory::injectMock('Banana', new JobModel());
+    public function testInjection()
+    {
+        ModelFactory::injectMock('Banana', new JobModel());
 
-		$this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
-	}
+        $this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
+    }
 
-	public function testReset()
-	{
-		ModelFactory::injectMock('Banana', new JobModel());
+    public function testReset()
+    {
+        ModelFactory::injectMock('Banana', new JobModel());
 
-		ModelFactory::reset();
+        ModelFactory::reset();
 
-		$this->assertNull(ModelFactory::get('Banana'));
-	}
+        $this->assertNull(ModelFactory::get('Banana'));
+    }
 
-	public function testBasenameReturnsExistingNamespaceInstance()
-	{
-		ModelFactory::injectMock(UserModel::class, new JobModel());
+    public function testBasenameReturnsExistingNamespaceInstance()
+    {
+        ModelFactory::injectMock(UserModel::class, new JobModel());
 
-		$basenameModel = ModelFactory::get('UserModel');
+        $basenameModel = ModelFactory::get('UserModel');
 
-		$this->assertInstanceOf(JobModel::class, $basenameModel);
-	}
+        $this->assertInstanceOf(JobModel::class, $basenameModel);
+    }
 }

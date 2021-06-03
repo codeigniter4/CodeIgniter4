@@ -4,23 +4,23 @@ use CodeIgniter\Model;
 
 class ExampleModel extends Model
 {
-	protected $table      = 'factories';
-	protected $primaryKey = 'id';
+    protected $table      = 'factories';
+    protected $primaryKey = 'id';
 
-	protected $returnType     = 'object';
-	protected $useSoftDeletes = false;
+    protected $returnType     = 'object';
+    protected $useSoftDeletes = false;
 
-	protected $allowedFields = [
-		'name',
-		'uid',
-		'class',
-		'icon',
-		'summary',
-	];
+    protected $allowedFields = [
+        'name',
+        'uid',
+        'class',
+        'icon',
+        'summary',
+    ];
 
-	protected $useTimestamps = true;
+    protected $useTimestamps = true;
 
-	protected $validationRules    = [];
-	protected $validationMessages = [];
-	protected $skipValidation     = false;
+    protected $validationRules    = [];
+    protected $validationMessages = [];
+    protected $skipValidation     = false;
 }

@@ -8,117 +8,117 @@ use Config\Services;
 
 class ParserPluginTest extends CIUnitTestCase
 {
-	/**
-	 * @var Parser
-	 */
-	protected $parser;
-	/**
-	 * @var Validation
-	 */
-	protected $validator;
+    /**
+     * @var Parser
+     */
+    protected $parser;
+    /**
+     * @var Validation
+     */
+    protected $validator;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		Services::reset(true);
+        Services::reset(true);
 
-		$this->parser    = Services::parser();
-		$this->validator = Services::validation();
-	}
+        $this->parser    = Services::parser();
+        $this->validator = Services::validation();
+    }
 
-	public function testCurrentURL()
-	{
-		helper('url');
-		$template = '{+ current_url +}';
+    public function testCurrentURL()
+    {
+        helper('url');
+        $template = '{+ current_url +}';
 
-		$this->assertEquals(current_url(), $this->parser->renderString($template));
-	}
+        $this->assertEquals(current_url(), $this->parser->renderString($template));
+    }
 
-	public function testPreviousURL()
-	{
-		helper('url');
-		$template = '{+ previous_url +}';
+    public function testPreviousURL()
+    {
+        helper('url');
+        $template = '{+ previous_url +}';
 
-		// Ensure a previous URL exists to work with.
-		$_SESSION['_ci_previous_url'] = 'http://example.com/foo';
+        // Ensure a previous URL exists to work with.
+        $_SESSION['_ci_previous_url'] = 'http://example.com/foo';
 
-		$this->assertEquals(previous_url(), $this->parser->renderString($template));
-	}
+        $this->assertEquals(previous_url(), $this->parser->renderString($template));
+    }
 
-	public function testMailto()
-	{
-		helper('url');
-		$template = '{+ mailto email=foo@example.com title=Silly +}';
+    public function testMailto()
+    {
+        helper('url');
+        $template = '{+ mailto email=foo@example.com title=Silly +}';
 
-		$this->assertEquals(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
-	}
+        $this->assertEquals(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3523
-	 */
-	public function testMailtoWithDashAndParenthesis()
-	{
-		helper('url');
-		$template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3523
+     */
+    public function testMailtoWithDashAndParenthesis()
+    {
+        helper('url');
+        $template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
 
-		$this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
-	}
+        $this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
+    }
 
-	public function testSafeMailto()
-	{
-		helper('url');
-		$template = '{+ safe_mailto email=foo@example.com title=Silly +}';
+    public function testSafeMailto()
+    {
+        helper('url');
+        $template = '{+ safe_mailto email=foo@example.com title=Silly +}';
 
-		$this->assertEquals(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
-	}
+        $this->assertEquals(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
+    }
 
-	public function testLang()
-	{
-		$template = '{+ lang Number.terabyteAbbr +}';
+    public function testLang()
+    {
+        $template = '{+ lang Number.terabyteAbbr +}';
 
-		$this->assertEquals('TB', $this->parser->renderString($template));
-	}
+        $this->assertEquals('TB', $this->parser->renderString($template));
+    }
 
-	public function testValidationErrors()
-	{
-		$this->validator->setError('email', 'Invalid email address');
+    public function testValidationErrors()
+    {
+        $this->validator->setError('email', 'Invalid email address');
 
-		$template = '{+ validation_errors field=email +}';
+        $template = '{+ validation_errors field=email +}';
 
-		$this->assertEquals($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
-	}
+        $this->assertEquals($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
+    }
 
-	public function testRoute()
-	{
-		// prime the pump
-		$routes = service('routes');
-		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+    public function testRoute()
+    {
+        // prime the pump
+        $routes = service('routes');
+        $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$template = '{+ route myController::goto string 13 +}';
+        $template = '{+ route myController::goto string 13 +}';
 
-		$this->assertEquals('/path/string/to/13', $this->parser->renderString($template));
-	}
+        $this->assertEquals('/path/string/to/13', $this->parser->renderString($template));
+    }
 
-	public function testSiteURL()
-	{
-		$template = '{+ siteURL +}';
+    public function testSiteURL()
+    {
+        $template = '{+ siteURL +}';
 
-		$this->assertEquals('http://example.com/index.php', $this->parser->renderString($template));
-	}
+        $this->assertEquals('http://example.com/index.php', $this->parser->renderString($template));
+    }
 
-	public function testValidationErrorsList()
-	{
-		$this->validator->setError('email', 'Invalid email address');
-		$this->validator->setError('username', 'User name must be unique');
-		$template = '{+ validation_errors +}';
+    public function testValidationErrorsList()
+    {
+        $this->validator->setError('email', 'Invalid email address');
+        $this->validator->setError('username', 'User name must be unique');
+        $template = '{+ validation_errors +}';
 
-		$this->assertEquals($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
-	}
+        $this->assertEquals($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
+    }
 
-	public function setHints($output)
-	{
-		return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
-	}
+    public function setHints($output)
+    {
+        return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
+    }
 
 }

@@ -14,43 +14,43 @@ use CodeIgniter\Test\ReflectionHelper;
  */
 abstract class LiveModelTestCase extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
-	use ReflectionHelper;
+    use DatabaseTestTrait;
+    use ReflectionHelper;
 
-	/**
-	 * Current instance of the Model.
-	 *
-	 * @var Model
-	 */
-	protected $model;
+    /**
+     * Current instance of the Model.
+     *
+     * @var Model
+     */
+    protected $model;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	protected function setUp(): void
-	{
-		parent::setUp();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
 
-	protected function tearDown(): void
-	{
-		parent::tearDown();
-		$this->resetServices();
-		$this->resetFactories();
-	}
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->resetServices();
+        $this->resetFactories();
+    }
 
-	/**
-	 * Create an instance of Model for use in testing.
-	 *
-	 * @param string              $modelName
-	 * @param BaseConnection|null $db
-	 *
-	 * @return Model
-	 */
-	protected function createModel(string $modelName, BaseConnection $db = null): Model
-	{
-		$this->db    = $db ?? $this->db;
-		$this->model = new $modelName($this->db);
+    /**
+     * Create an instance of Model for use in testing.
+     *
+     * @param string              $modelName
+     * @param BaseConnection|null $db
+     *
+     * @return Model
+     */
+    protected function createModel(string $modelName, BaseConnection $db = null): Model
+    {
+        $this->db    = $db ?? $this->db;
+        $this->model = new $modelName($this->db);
 
-		return $this->model;
-	}
+        return $this->model;
+    }
 }

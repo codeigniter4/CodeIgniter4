@@ -13,13 +13,13 @@ use Psr\Log\LoggerInterface;
 
 class SampleClassWithInitController
 {
-	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-	{
-		$this->response = $response;
-	}
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        $this->response = $response;
+    }
 
-	public function index()
-	{
-		return get_class($this->response);
-	}
+    public function index()
+    {
+        return get_class($this->response);
+    }
 }

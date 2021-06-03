@@ -9,19 +9,19 @@
 class TestRegistrar
 {
 
-	public static function RegistrarConfig()
-	{
-		return [
-			'bar'    => [
-				'first',
-				'second',
-			],
-			'format' => 'nice',
-			'fruit'  => [
-				'apple',
-				'banana',
-			],
-		];
-	}
+    public static function RegistrarConfig()
+    {
+        return [
+            'bar'    => [
+                'first',
+                'second',
+            ],
+            'format' => 'nice',
+            'fruit'  => [
+                'apple',
+                'banana',
+            ],
+        ];
+    }
 
 }

@@ -10,769 +10,769 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 class RouterTest extends CIUnitTestCase
 {
 
-	/**
-	 * @var RouteCollection $collection
-	 */
-	protected $collection;
+    /**
+     * @var RouteCollection $collection
+     */
+    protected $collection;
 
-	/**
-	 * vfsStream root directory
-	 *
-	 * @var
-	 */
-	protected $root;
+    /**
+     * vfsStream root directory
+     *
+     * @var
+     */
+    protected $root;
 
-	/**
-	 * @var IncomingRequest
-	 */
-	protected $request;
+    /**
+     * @var IncomingRequest
+     */
+    protected $request;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$moduleConfig          = new Modules;
-		$moduleConfig->enabled = false;
-		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
+        $moduleConfig          = new Modules;
+        $moduleConfig->enabled = false;
+        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
-		$routes = [
-			'users'                                           => 'Users::index',
-			'user-setting/show-list'                          => 'User_setting::show_list',
-			'user-setting/(:segment)'                         => 'User_setting::detail/$1',
-			'posts'                                           => 'Blog::posts',
-			'pages'                                           => 'App\Pages::list_all',
-			'posts/(:num)'                                    => 'Blog::show/$1',
-			'posts/(:num)/edit'                               => 'Blog::edit/$1',
-			'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
-			'closure/(:num)/(:alpha)'                         => function ($num, $str) {
-				return $num . '-' . $str;
-			},
-			'{locale}/pages'                                  => 'App\Pages::list_all',
-			'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
-			'/some/slash'                                     => 'App\Slash::index',
-			'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
-		];
+        $routes = [
+            'users'                                           => 'Users::index',
+            'user-setting/show-list'                          => 'User_setting::show_list',
+            'user-setting/(:segment)'                         => 'User_setting::detail/$1',
+            'posts'                                           => 'Blog::posts',
+            'pages'                                           => 'App\Pages::list_all',
+            'posts/(:num)'                                    => 'Blog::show/$1',
+            'posts/(:num)/edit'                               => 'Blog::edit/$1',
+            'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
+            'closure/(:num)/(:alpha)'                         => function ($num, $str) {
+                return $num . '-' . $str;
+            },
+            '{locale}/pages'                                  => 'App\Pages::list_all',
+            'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
+            '/some/slash'                                     => 'App\Slash::index',
+            'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
+        ];
 
-		$this->collection->map($routes);
-		$this->request = Services::request();
-		$this->request->setMethod('get');
-	}
+        $this->collection->map($routes);
+        $this->request = Services::request();
+        $this->request->setMethod('get');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function tearDown(): void
-	{
-	}
+    public function tearDown(): void
+    {
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testEmptyURIMatchesDefaults()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testEmptyURIMatchesDefaults()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('');
+        $router->handle('');
 
-		$this->assertEquals($this->collection->getDefaultController(), $router->controllerName());
-		$this->assertEquals($this->collection->getDefaultMethod(), $router->methodName());
-	}
+        $this->assertEquals($this->collection->getDefaultController(), $router->controllerName());
+        $this->assertEquals($this->collection->getDefaultMethod(), $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testZeroAsURIPath()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testZeroAsURIPath()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$this->expectException(PageNotFoundException::class);
+        $this->expectException(PageNotFoundException::class);
 
-		$router->handle('0');
-	}
+        $router->handle('0');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsToController()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsToController()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('users');
+        $router->handle('users');
 
-		$this->assertEquals('\Users', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('\Users', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsToControllerAltMethod()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsToControllerAltMethod()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('posts');
+        $router->handle('posts');
 
-		$this->assertEquals('\Blog', $router->controllerName());
-		$this->assertEquals('posts', $router->methodName());
-	}
+        $this->assertEquals('\Blog', $router->controllerName());
+        $this->assertEquals('posts', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsToNamespacedController()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsToNamespacedController()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('pages');
+        $router->handle('pages');
 
-		$this->assertEquals('\App\Pages', $router->controllerName());
-		$this->assertEquals('list_all', $router->methodName());
-	}
+        $this->assertEquals('\App\Pages', $router->controllerName());
+        $this->assertEquals('list_all', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsParamsToBackReferences()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsParamsToBackReferences()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('posts/123');
+        $router->handle('posts/123');
 
-		$this->assertEquals('show', $router->methodName());
-		$this->assertEquals([123], $router->params());
-	}
+        $this->assertEquals('show', $router->methodName());
+        $this->assertEquals([123], $router->params());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsParamsToRearrangedBackReferences()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsParamsToRearrangedBackReferences()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('posts/123/edit');
+        $router->handle('posts/123/edit');
 
-		$this->assertEquals('edit', $router->methodName());
-		$this->assertEquals([123], $router->params());
-	}
+        $this->assertEquals('edit', $router->methodName());
+        $this->assertEquals([123], $router->params());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testURIMapsParamsToBackReferencesWithUnused()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testURIMapsParamsToBackReferencesWithUnused()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('books/123/sometitle/456');
+        $router->handle('books/123/sometitle/456');
 
-		$this->assertEquals('show', $router->methodName());
-		$this->assertEquals([456, 123], $router->params());
-	}
+        $this->assertEquals('show', $router->methodName());
+        $this->assertEquals([456, 123], $router->params());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
-	 */
-	public function testURIMapsParamsWithMany()
-	{
-		$router = new Router($this->collection, $this->request);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
+     */
+    public function testURIMapsParamsWithMany()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('objects/123/sort/abc/FOO');
+        $router->handle('objects/123/sort/abc/FOO');
 
-		$this->assertEquals('objectsSortCreate', $router->methodName());
-		$this->assertEquals([123, 'abc', 'FOO'], $router->params());
-	}
+        $this->assertEquals('objectsSortCreate', $router->methodName());
+        $this->assertEquals([123, 'abc', 'FOO'], $router->params());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testClosures()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testClosures()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('closure/123/alpha', $this->request);
+        $router->handle('closure/123/alpha', $this->request);
 
-		$closure = $router->controllerName();
+        $closure = $router->controllerName();
 
-		$expects = $closure(...$router->params());
+        $expects = $closure(...$router->params());
 
-		$this->assertIsCallable($router->controllerName());
-		$this->assertEquals($expects, '123-alpha');
-	}
+        $this->assertIsCallable($router->controllerName());
+        $this->assertEquals($expects, '123-alpha');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsControllerWithFileAndMethod()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testAutoRouteFindsControllerWithFileAndMethod()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->autoRoute('myController/someMethod');
+        $router->autoRoute('myController/someMethod');
 
-		$this->assertEquals('MyController', $router->controllerName());
-		$this->assertEquals('someMethod', $router->methodName());
-	}
+        $this->assertEquals('MyController', $router->controllerName());
+        $this->assertEquals('someMethod', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsControllerWithFile()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testAutoRouteFindsControllerWithFile()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->autoRoute('myController');
+        $router->autoRoute('myController');
 
-		$this->assertEquals('MyController', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('MyController', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsControllerWithSubfolder()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testAutoRouteFindsControllerWithSubfolder()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		mkdir(APPPATH . 'Controllers/Subfolder');
+        mkdir(APPPATH . 'Controllers/Subfolder');
 
-		$router->autoRoute('subfolder/myController/someMethod');
+        $router->autoRoute('subfolder/myController/someMethod');
 
-		rmdir(APPPATH . 'Controllers/Subfolder');
+        rmdir(APPPATH . 'Controllers/Subfolder');
 
-		$this->assertEquals('MyController', $router->controllerName());
-		$this->assertEquals('someMethod', $router->methodName());
-	}
+        $this->assertEquals('MyController', $router->controllerName());
+        $this->assertEquals('someMethod', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsDashedSubfolder()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsDashedSubfolder()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		mkdir(APPPATH . 'Controllers/Dash_folder');
+        mkdir(APPPATH . 'Controllers/Dash_folder');
 
-		$router->autoRoute('dash-folder/mycontroller/somemethod');
+        $router->autoRoute('dash-folder/mycontroller/somemethod');
 
-		rmdir(APPPATH . 'Controllers/Dash_folder');
+        rmdir(APPPATH . 'Controllers/Dash_folder');
 
-		$this->assertEquals('Dash_folder/', $router->directory());
-		$this->assertEquals('Mycontroller', $router->controllerName());
-		$this->assertEquals('somemethod', $router->methodName());
-	}
+        $this->assertEquals('Dash_folder/', $router->directory());
+        $this->assertEquals('Mycontroller', $router->controllerName());
+        $this->assertEquals('somemethod', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsDashedController()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsDashedController()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		mkdir(APPPATH . 'Controllers/Dash_folder');
-		file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        mkdir(APPPATH . 'Controllers/Dash_folder');
+        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
 
-		$router->autoRoute('dash-folder/dash-controller/somemethod');
+        $router->autoRoute('dash-folder/dash-controller/somemethod');
 
-		unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
-		rmdir(APPPATH . 'Controllers/Dash_folder');
+        unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+        rmdir(APPPATH . 'Controllers/Dash_folder');
 
-		$this->assertEquals('Dash_folder/', $router->directory());
-		$this->assertEquals('Dash_controller', $router->controllerName());
-		$this->assertEquals('somemethod', $router->methodName());
-	}
+        $this->assertEquals('Dash_folder/', $router->directory());
+        $this->assertEquals('Dash_controller', $router->controllerName());
+        $this->assertEquals('somemethod', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsDashedMethod()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsDashedMethod()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		mkdir(APPPATH . 'Controllers/Dash_folder');
-		file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        mkdir(APPPATH . 'Controllers/Dash_folder');
+        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
 
-		$router->autoRoute('dash-folder/dash-controller/dash-method');
+        $router->autoRoute('dash-folder/dash-controller/dash-method');
 
-		unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
-		rmdir(APPPATH . 'Controllers/Dash_folder');
+        unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+        rmdir(APPPATH . 'Controllers/Dash_folder');
 
-		$this->assertEquals('Dash_folder/', $router->directory());
-		$this->assertEquals('Dash_controller', $router->controllerName());
-		$this->assertEquals('dash_method', $router->methodName());
-	}
+        $this->assertEquals('Dash_folder/', $router->directory());
+        $this->assertEquals('Dash_controller', $router->controllerName());
+        $this->assertEquals('dash_method', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsDefaultDashFolder()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsDefaultDashFolder()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		mkdir(APPPATH . 'Controllers/Dash_folder');
+        mkdir(APPPATH . 'Controllers/Dash_folder');
 
-		$router->autoRoute('dash-folder');
+        $router->autoRoute('dash-folder');
 
-		rmdir(APPPATH . 'Controllers/Dash_folder');
+        rmdir(APPPATH . 'Controllers/Dash_folder');
 
-		$this->assertEquals('Dash_folder/', $router->directory());
-		$this->assertEquals('Home', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('Dash_folder/', $router->directory());
+        $this->assertEquals('Home', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsMByteDir()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsMByteDir()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		mkdir(APPPATH . 'Controllers/Φ');
+        mkdir(APPPATH . 'Controllers/Φ');
 
-		$router->autoRoute('Φ');
+        $router->autoRoute('Φ');
 
-		rmdir(APPPATH . 'Controllers/Φ');
+        rmdir(APPPATH . 'Controllers/Φ');
 
-		$this->assertEquals('Φ/', $router->directory());
-		$this->assertEquals('Home', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('Φ/', $router->directory());
+        $this->assertEquals('Home', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteFindsMByteController()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteFindsMByteController()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		file_put_contents(APPPATH . 'Controllers/Φ', '');
+        file_put_contents(APPPATH . 'Controllers/Φ', '');
 
-		$router->autoRoute('Φ');
+        $router->autoRoute('Φ');
 
-		unlink(APPPATH . 'Controllers/Φ');
+        unlink(APPPATH . 'Controllers/Φ');
 
-		$this->assertEquals('Φ', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('Φ', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteRejectsSingleDot()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteRejectsSingleDot()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		$this->expectException(PageNotFoundException::class);
+        $this->expectException(PageNotFoundException::class);
 
-		$router->autoRoute('.');
-	}
+        $router->autoRoute('.');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteRejectsDoubleDot()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteRejectsDoubleDot()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		$this->expectException(PageNotFoundException::class);
+        $this->expectException(PageNotFoundException::class);
 
-		$router->autoRoute('..');
-	}
+        $router->autoRoute('..');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testAutoRouteRejectsMidDot()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    public function testAutoRouteRejectsMidDot()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		$this->expectException(PageNotFoundException::class);
+        $this->expectException(PageNotFoundException::class);
 
-		$router->autoRoute('Foo.bar');
-	}
+        $router->autoRoute('Foo.bar');
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDetectsLocales()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testDetectsLocales()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('fr/pages');
+        $router->handle('fr/pages');
 
-		$this->assertTrue($router->hasLocale());
-		$this->assertEquals('fr', $router->getLocale());
-	}
+        $this->assertTrue($router->hasLocale());
+        $this->assertEquals('fr', $router->getLocale());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRouteResource()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testRouteResource()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('Admin/Admins');
+        $router->handle('Admin/Admins');
 
-		$this->assertEquals('\App\Admin\Admins', $router->controllerName());
-		$this->assertEquals('list_all', $router->methodName());
-	}
+        $this->assertEquals('\App\Admin\Admins', $router->controllerName());
+        $this->assertEquals('list_all', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRouteWithLeadingSlash()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testRouteWithLeadingSlash()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('some/slash');
+        $router->handle('some/slash');
 
-		$this->assertEquals('\App\Slash', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $this->assertEquals('\App\Slash', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
-	// options need to be declared separately, to not confuse PHPCBF
-	public function testMatchedRouteOptions()
-	{
-		$optionsFoo = [
-			'as'  => 'login',
-			'foo' => 'baz',
-		];
-		$this->collection->add('foo', function () {
-		}, $optionsFoo);
-		$optionsBaz = [
-			'as'  => 'admin',
-			'foo' => 'bar',
-		];
-		$this->collection->add('baz', function () {
-		}, $optionsBaz);
+    //--------------------------------------------------------------------
+    // options need to be declared separately, to not confuse PHPCBF
+    public function testMatchedRouteOptions()
+    {
+        $optionsFoo = [
+            'as'  => 'login',
+            'foo' => 'baz',
+        ];
+        $this->collection->add('foo', function () {
+        }, $optionsFoo);
+        $optionsBaz = [
+            'as'  => 'admin',
+            'foo' => 'bar',
+        ];
+        $this->collection->add('baz', function () {
+        }, $optionsBaz);
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('foo');
+        $router->handle('foo');
 
-		$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
-	}
+        $this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+    }
 
-	public function testRouteWorksWithFilters()
-	{
-		$collection = $this->collection;
+    public function testRouteWorksWithFilters()
+    {
+        $collection = $this->collection;
 
-		$collection->group('foo', ['filter' => 'test'], function ($routes) {
-			$routes->add('bar', 'TestController::foobar');
-		});
+        $collection->group('foo', ['filter' => 'test'], function ($routes) {
+            $routes->add('bar', 'TestController::foobar');
+        });
 
-		$router = new Router($collection, $this->request);
+        $router = new Router($collection, $this->request);
 
-		$router->handle('foo/bar');
+        $router->handle('foo/bar');
 
-		$this->assertEquals('\TestController', $router->controllerName());
-		$this->assertEquals('foobar', $router->methodName());
-		$this->assertEquals('test', $router->getFilter());
-	}
+        $this->assertEquals('\TestController', $router->controllerName());
+        $this->assertEquals('foobar', $router->methodName());
+        $this->assertEquals('test', $router->getFilter());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1247
-	 */
-	public function testGroupedResourceRoutesWithFilters()
-	{
-		$group = [
-			'api',
-			[
-				'namespace' => 'App\Controllers\Api',
-				'filter'    => 'api-auth',
-			],
-			function (RouteCollection $routes) {
-				$routes->resource('posts', [
-					'controller' => 'PostController',
-				]);
-			},
-		];
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1247
+     */
+    public function testGroupedResourceRoutesWithFilters()
+    {
+        $group = [
+            'api',
+            [
+                'namespace' => 'App\Controllers\Api',
+                'filter'    => 'api-auth',
+            ],
+            function (RouteCollection $routes) {
+                $routes->resource('posts', [
+                    'controller' => 'PostController',
+                ]);
+            },
+        ];
 
-		// GET
-		$this->collection->group(...$group);
+        // GET
+        $this->collection->group(...$group);
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('api/posts');
+        $router->handle('api/posts');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		$router->handle('api/posts/new');
+        $router->handle('api/posts/new');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('new', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('new', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		$router->handle('api/posts/50');
+        $router->handle('api/posts/50');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('show', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('show', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		$router->handle('api/posts/50/edit');
+        $router->handle('api/posts/50/edit');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('edit', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('edit', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		// POST
-		$this->collection->group(...$group);
+        // POST
+        $this->collection->group(...$group);
 
-		$router = new Router($this->collection, $this->request);
-		$this->collection->setHTTPVerb('post');
+        $router = new Router($this->collection, $this->request);
+        $this->collection->setHTTPVerb('post');
 
-		$router->handle('api/posts');
+        $router->handle('api/posts');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('create', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('create', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		// PUT
-		$this->collection->group(...$group);
+        // PUT
+        $this->collection->group(...$group);
 
-		$router = new Router($this->collection, $this->request);
-		$this->collection->setHTTPVerb('put');
+        $router = new Router($this->collection, $this->request);
+        $this->collection->setHTTPVerb('put');
 
-		$router->handle('api/posts/50');
+        $router->handle('api/posts/50');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('update', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('update', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		// PATCH
-		$this->collection->group(...$group);
+        // PATCH
+        $this->collection->group(...$group);
 
-		$router = new Router($this->collection, $this->request);
-		$this->collection->setHTTPVerb('patch');
+        $router = new Router($this->collection, $this->request);
+        $this->collection->setHTTPVerb('patch');
 
-		$router->handle('api/posts/50');
+        $router->handle('api/posts/50');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('update', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('update', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
 
-		// DELETE
-		$this->collection->group(...$group);
+        // DELETE
+        $this->collection->group(...$group);
 
-		$router = new Router($this->collection, $this->request);
-		$this->collection->setHTTPVerb('delete');
+        $router = new Router($this->collection, $this->request);
+        $this->collection->setHTTPVerb('delete');
 
-		$router->handle('api/posts/50');
+        $router->handle('api/posts/50');
 
-		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
-		$this->assertEquals('delete', $router->methodName());
-		$this->assertEquals('api-auth', $router->getFilter());
-	}
+        $this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+        $this->assertEquals('delete', $router->methodName());
+        $this->assertEquals('api-auth', $router->getFilter());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
-	 */
-	public function testMatchesCorrectlyWithMixedVerbs()
-	{
-		$this->collection->setHTTPVerb('get');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
+     */
+    public function testMatchesCorrectlyWithMixedVerbs()
+    {
+        $this->collection->setHTTPVerb('get');
 
-		$this->collection->add('/', 'Home::index');
-		$this->collection->get('news', 'News::index');
-		$this->collection->get('news/(:segment)', 'News::view/$1');
-		$this->collection->add('(:any)', 'Pages::view/$1');
+        $this->collection->add('/', 'Home::index');
+        $this->collection->get('news', 'News::index');
+        $this->collection->get('news/(:segment)', 'News::view/$1');
+        $this->collection->add('(:any)', 'Pages::view/$1');
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('/');
-		$this->assertEquals('\Home', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
+        $router->handle('/');
+        $this->assertEquals('\Home', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
 
-		$router->handle('news');
-		$this->assertEquals('\News', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
+        $router->handle('news');
+        $this->assertEquals('\News', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
 
-		$router->handle('news/daily');
-		$this->assertEquals('\News', $router->controllerName());
-		$this->assertEquals('view', $router->methodName());
+        $router->handle('news/daily');
+        $this->assertEquals('\News', $router->controllerName());
+        $this->assertEquals('view', $router->methodName());
 
-		$router->handle('about');
-		$this->assertEquals('\Pages', $router->controllerName());
-		$this->assertEquals('view', $router->methodName());
-	}
+        $router->handle('about');
+        $this->assertEquals('\Pages', $router->controllerName());
+        $this->assertEquals('view', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
-	 */
-	public function testRouteOrder()
-	{
-		$this->collection->post('auth', 'Main::auth_post');
-		$this->collection->add('auth', 'Main::index');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
+     */
+    public function testRouteOrder()
+    {
+        $this->collection->post('auth', 'Main::auth_post');
+        $this->collection->add('auth', 'Main::index');
 
-		$router = new Router($this->collection, $this->request);
-		$this->collection->setHTTPVerb('post');
+        $router = new Router($this->collection, $this->request);
+        $this->collection->setHTTPVerb('post');
 
-		$router->handle('auth');
-		$this->assertEquals('\Main', $router->controllerName());
-		$this->assertEquals('auth_post', $router->methodName());
-	}
+        $router->handle('auth');
+        $this->assertEquals('\Main', $router->controllerName());
+        $this->assertEquals('auth_post', $router->methodName());
+    }
 
-	public function testRoutePriorityOrder()
-	{
-		$this->collection->add('main', 'Main::index');
-		$this->collection->add('(.*)', 'Main::wildcard', ['priority' => 1]);
-		$this->collection->add('module', 'Module::index');
+    public function testRoutePriorityOrder()
+    {
+        $this->collection->add('main', 'Main::index');
+        $this->collection->add('(.*)', 'Main::wildcard', ['priority' => 1]);
+        $this->collection->add('module', 'Module::index');
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$this->collection->setHTTPVerb('get');
+        $this->collection->setHTTPVerb('get');
 
-		$router->handle('module');
-		$this->assertEquals('\Main', $router->controllerName());
-		$this->assertEquals('wildcard', $router->methodName());
+        $router->handle('module');
+        $this->assertEquals('\Main', $router->controllerName());
+        $this->assertEquals('wildcard', $router->methodName());
 
-		$this->collection->setPrioritize();
+        $this->collection->setPrioritize();
 
-		$router->handle('module');
-		$this->assertEquals('\Module', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+        $router->handle('module');
+        $this->assertEquals('\Module', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
-	 */
-	public function testTranslateURIDashes()
-	{
-		$router = new Router($this->collection, $this->request);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+     */
+    public function testTranslateURIDashes()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('user-setting/show-list');
+        $router->handle('user-setting/show-list');
 
-		$router->setTranslateURIDashes(true);
+        $router->setTranslateURIDashes(true);
 
-		$this->assertEquals('\User_setting', $router->controllerName());
-		$this->assertEquals('show_list', $router->methodName());
-	}
+        $this->assertEquals('\User_setting', $router->controllerName());
+        $this->assertEquals('show_list', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
-	 */
-	public function testTranslateURIDashesForParams()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+     */
+    public function testTranslateURIDashesForParams()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		$router->handle('user-setting/2018-12-02');
+        $router->handle('user-setting/2018-12-02');
 
-		$this->assertEquals('\User_setting', $router->controllerName());
-		$this->assertEquals('detail', $router->methodName());
-		$this->assertEquals(['2018-12-02'], $router->params());
-	}
+        $this->assertEquals('\User_setting', $router->controllerName());
+        $this->assertEquals('detail', $router->methodName());
+        $this->assertEquals(['2018-12-02'], $router->params());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
-	 */
-	public function testTranslateURIDashesForAutoRoute()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setTranslateURIDashes(true);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+     */
+    public function testTranslateURIDashesForAutoRoute()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
 
-		$router->autoRoute('admin-user/show-list');
+        $router->autoRoute('admin-user/show-list');
 
-		$this->assertEquals('Admin_user', $router->controllerName());
-		$this->assertEquals('show_list', $router->methodName());
-	}
+        $this->assertEquals('Admin_user', $router->controllerName());
+        $this->assertEquals('show_list', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2032
-	 */
-	public function testAutoRouteMatchesZeroParams()
-	{
-		$router = new Router($this->collection, $this->request);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2032
+     */
+    public function testAutoRouteMatchesZeroParams()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->autoRoute('myController/someMethod/0/abc');
+        $router->autoRoute('myController/someMethod/0/abc');
 
-		$this->assertEquals('MyController', $router->controllerName());
-		$this->assertEquals('someMethod', $router->methodName());
+        $this->assertEquals('MyController', $router->controllerName());
+        $this->assertEquals('someMethod', $router->methodName());
 
-		$expected = [
-			'0',
-			'abc',
-		];
-		$this->assertEquals($expected, $router->params());
-	}
+        $expected = [
+            '0',
+            'abc',
+        ];
+        $this->assertEquals($expected, $router->params());
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2965
-	 */
-	public function testAutoRouteMethodEmpty()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->handle('Home/');
-		$this->assertEquals('Home', $router->controllerName());
-		$this->assertEquals('index', $router->methodName());
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2965
+     */
+    public function testAutoRouteMethodEmpty()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->handle('Home/');
+        $this->assertEquals('Home', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
-	 */
-	public function testRegularExpressionWithUnicode()
-	{
-		$this->collection->get('news/([a-z0-9\x{0980}-\x{09ff}-]+)', 'News::view/$1');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
+     */
+    public function testRegularExpressionWithUnicode()
+    {
+        $this->collection->get('news/([a-z0-9\x{0980}-\x{09ff}-]+)', 'News::view/$1');
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('news/a0%E0%A6%80%E0%A7%BF-');
-		$this->assertEquals('\News', $router->controllerName());
-		$this->assertEquals('view', $router->methodName());
+        $router->handle('news/a0%E0%A6%80%E0%A7%BF-');
+        $this->assertEquals('\News', $router->controllerName());
+        $this->assertEquals('view', $router->methodName());
 
-		$expected = [
-			'a0ঀ৿-',
-		];
-		$this->assertEquals($expected, $router->params());
-	}
+        $expected = [
+            'a0ঀ৿-',
+        ];
+        $this->assertEquals($expected, $router->params());
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
-	 */
-	public function testRegularExpressionPlaceholderWithUnicode()
-	{
-		$this->collection->addPlaceholder('custom', '[a-z0-9\x{0980}-\x{09ff}-]+');
-		$this->collection->get('news/(:custom)', 'News::view/$1');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
+     */
+    public function testRegularExpressionPlaceholderWithUnicode()
+    {
+        $this->collection->addPlaceholder('custom', '[a-z0-9\x{0980}-\x{09ff}-]+');
+        $this->collection->get('news/(:custom)', 'News::view/$1');
 
-		$router = new Router($this->collection, $this->request);
+        $router = new Router($this->collection, $this->request);
 
-		$router->handle('news/a0%E0%A6%80%E0%A7%BF-');
-		$this->assertEquals('\News', $router->controllerName());
-		$this->assertEquals('view', $router->methodName());
+        $router->handle('news/a0%E0%A6%80%E0%A7%BF-');
+        $this->assertEquals('\News', $router->controllerName());
+        $this->assertEquals('view', $router->methodName());
 
-		$expected = [
-			'a0ঀ৿-',
-		];
-		$this->assertEquals($expected, $router->params());
-	}
+        $expected = [
+            'a0ঀ৿-',
+        ];
+        $this->assertEquals($expected, $router->params());
+    }
 
-	public function testRouterPriorDirectory()
-	{
-		$router = new Router($this->collection, $this->request);
+    public function testRouterPriorDirectory()
+    {
+        $router = new Router($this->collection, $this->request);
 
-		$router->setDirectory('foo/bar/baz', false, true);
-		$router->handle('Some_controller/some_method/param1/param2/param3');
+        $router->setDirectory('foo/bar/baz', false, true);
+        $router->handle('Some_controller/some_method/param1/param2/param3');
 
-		$this->assertEquals('foo/bar/baz/', $router->directory());
-		$this->assertEquals('Some_controller', $router->controllerName());
-		$this->assertEquals('some_method', $router->methodName());
-	}
+        $this->assertEquals('foo/bar/baz/', $router->directory());
+        $this->assertEquals('Some_controller', $router->controllerName());
+        $this->assertEquals('some_method', $router->methodName());
+    }
 
-	public function testSetDirectoryValid()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setDirectory('foo/bar/baz', false, true);
+    public function testSetDirectoryValid()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setDirectory('foo/bar/baz', false, true);
 
-		$this->assertEquals('foo/bar/baz/', $router->directory());
-	}
+        $this->assertEquals('foo/bar/baz/', $router->directory());
+    }
 
-	public function testSetDirectoryInvalid()
-	{
-		$router = new Router($this->collection, $this->request);
-		$router->setDirectory('foo/bad-segment/bar', false, true);
+    public function testSetDirectoryInvalid()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setDirectory('foo/bad-segment/bar', false, true);
 
-		$internal = $this->getPrivateProperty($router, 'directory');
+        $internal = $this->getPrivateProperty($router, 'directory');
 
-		$this->assertNull($internal);
-		$this->assertEquals('', $router->directory());
-	}
+        $this->assertNull($internal);
+        $this->assertEquals('', $router->directory());
+    }
 }

@@ -1,38 +1,38 @@
 {
-	"name": "mydomain/mymodule",
-	"description": "CodeIgniter4 starter module",
-	"homepage": "https://codeigniter.com",
-	"license": "MIT",
-	"require": {
-		"php": "^7.3||^8.0"
-	},
-	"require-dev": {
-		"codeigniter4/codeigniter4": "dev-develop",
-		"fakerphp/faker": "^1.9",
-		"mikey179/vfsstream": "^1.6",
-		"phpunit/phpunit": "^9.1"
-	},
-	"suggest": {
-		"ext-fileinfo": "Improves mime type detection for files"
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\Support\\": "tests/_support"
-		}
-	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/codeigniter4/codeigniter4"
-		}
-	],
-	"minimum-stability": "dev",
-	"scripts": {
-		"test": "phpunit"
-	},
-	"support": {
-		"forum": "http://forum.codeigniter.com/",
-		"source": "https://github.com/codeigniter4/CodeIgniter4",
-		"slack": "https://codeigniterchat.slack.com"
-	}
+    "name": "mydomain/mymodule",
+    "description": "CodeIgniter4 starter module",
+    "homepage": "https://codeigniter.com",
+    "license": "MIT",
+    "require": {
+        "php": "^7.3 || ^8.0"
+    },
+    "require-dev": {
+        "codeigniter4/codeigniter4": "dev-develop",
+        "fakerphp/faker": "^1.9",
+        "mikey179/vfsstream": "^1.6",
+        "phpunit/phpunit": "^9.1"
+    },
+    "suggest": {
+        "ext-fileinfo": "Improves mime type detection for files"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Support\\": "tests/_support"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/codeigniter4/codeigniter4"
+        }
+    ],
+    "minimum-stability": "dev",
+    "scripts": {
+        "test": "phpunit"
+    },
+    "support": {
+        "forum": "http://forum.codeigniter.com/",
+        "source": "https://github.com/codeigniter4/CodeIgniter4",
+        "slack": "https://codeigniterchat.slack.com"
+    }
 }

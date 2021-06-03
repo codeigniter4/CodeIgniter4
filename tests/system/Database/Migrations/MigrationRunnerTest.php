@@ -19,389 +19,389 @@ use org\bovigo\vfs\vfsStream;
  */
 class MigrationRunnerTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
-
-	protected $refresh = true;
+    use DatabaseTestTrait;
+
+    protected $refresh = true;
 
-	protected $root;
-	protected $start;
-	protected $config;
+    protected $root;
+    protected $start;
+    protected $config;
 
-	public function setUp(): void
-	{
-		parent::setUp();
+    public function setUp(): void
+    {
+        parent::setUp();
 
-		$this->root            = vfsStream::setup('root');
-		$this->start           = $this->root->url() . '/';
-		$this->config          = new Migrations();
-		$this->config->enabled = true;
+        $this->root            = vfsStream::setup('root');
+        $this->start           = $this->root->url() . '/';
+        $this->config          = new Migrations();
+        $this->config->enabled = true;
 
-		Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', TESTPATH . '_support/MigrationTestMigrations');
-	}
+        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', TESTPATH . '_support/MigrationTestMigrations');
+    }
 
-	public function testLoadsDefaultDatabaseWhenNoneSpecified()
-	{
-		$dbConfig = new Database();
-		$runner   = new MigrationRunner($this->config);
+    public function testLoadsDefaultDatabaseWhenNoneSpecified()
+    {
+        $dbConfig = new Database();
+        $runner   = new MigrationRunner($this->config);
 
-		$db = $this->getPrivateProperty($runner, 'db');
+        $db = $this->getPrivateProperty($runner, 'db');
 
-		$this->assertInstanceOf(BaseConnection::class, $db);
-		$this->assertEquals(
-			($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
-			$this->getPrivateProperty($db, 'database')
-		);
-		$this->assertEquals($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
-	}
+        $this->assertInstanceOf(BaseConnection::class, $db);
+        $this->assertEquals(
+            ($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
+            $this->getPrivateProperty($db, 'database')
+        );
+        $this->assertEquals($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
+    }
 
-	public function testGetCliMessages()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testGetCliMessages()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$messages = [
-			'foo',
-			'bar',
-		];
+        $messages = [
+            'foo',
+            'bar',
+        ];
 
-		$this->setPrivateProperty($runner, 'cliMessages', $messages);
+        $this->setPrivateProperty($runner, 'cliMessages', $messages);
 
-		$this->assertEquals($messages, $runner->getCliMessages());
-	}
+        $this->assertEquals($messages, $runner->getCliMessages());
+    }
 
-	public function testGetHistory()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->ensureTable();
+    public function testGetHistory()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->ensureTable();
 
-		$history = [
-			'id'        => 4,
-			'version'   => 'abc123',
-			'class'     => 'changesomething',
-			'group'     => 'default',
-			'namespace' => 'App',
-			'time'      => time(),
-			'batch'     => 1,
-		];
+        $history = [
+            'id'        => 4,
+            'version'   => 'abc123',
+            'class'     => 'changesomething',
+            'group'     => 'default',
+            'namespace' => 'App',
+            'time'      => time(),
+            'batch'     => 1,
+        ];
 
-		if ($this->db->DBDriver === 'SQLSRV')
-		{
-			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
-		}
+        if ($this->db->DBDriver === 'SQLSRV')
+        {
+            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
+        }
 
-		$this->hasInDatabase('migrations', $history);
+        $this->hasInDatabase('migrations', $history);
 
-		$this->assertEquals($history, (array) $runner->getHistory()[0]);
+        $this->assertEquals($history, (array) $runner->getHistory()[0]);
 
-		if ($this->db->DBDriver === 'SQLSRV')
-		{
-			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
+        if ($this->db->DBDriver === 'SQLSRV')
+        {
+            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
 
-			$db = $this->getPrivateProperty($runner, 'db');
-			$db->table('migrations')->delete(['id' => 4]);
-		}
-	}
+            $db = $this->getPrivateProperty($runner, 'db');
+            $db->table('migrations')->delete(['id' => 4]);
+        }
+    }
 
-	public function testGetHistoryReturnsEmptyArrayWithNoResults()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->ensureTable();
+    public function testGetHistoryReturnsEmptyArrayWithNoResults()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->ensureTable();
 
-		$this->assertEquals([], $runner->getHistory());
-	}
+        $this->assertEquals([], $runner->getHistory());
+    }
 
-	public function testGetMigrationNumberAllDigits()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testGetMigrationNumberAllDigits()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
-		$this->assertEquals('20190806235100', $method('20190806235100_Foo'));
-	}
-
-	public function testGetMigrationNumberDashes()
-	{
-		$runner = new MigrationRunner($this->config);
+        $this->assertEquals('20190806235100', $method('20190806235100_Foo'));
+    }
+
+    public function testGetMigrationNumberDashes()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
-		$this->assertEquals('2019-08-06-235100', $method('2019-08-06-235100_Foo'));
-	}
+        $this->assertEquals('2019-08-06-235100', $method('2019-08-06-235100_Foo'));
+    }
 
-	public function testGetMigrationNumberUnderscores()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testGetMigrationNumberUnderscores()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
-
-		$this->assertEquals('2019_08_06_235100', $method('2019_08_06_235100_Foo'));
-	}
+        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+
+        $this->assertEquals('2019_08_06_235100', $method('2019_08_06_235100_Foo'));
+    }
 
-	public function testGetMigrationNumberReturnsZeroIfNoneFound()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testGetMigrationNumberReturnsZeroIfNoneFound()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
-		$this->assertEquals('0', $method('Foo'));
-	}
+        $this->assertEquals('0', $method('Foo'));
+    }
 
-	public function testSetSilentStoresValue()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testSetSilentStoresValue()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$runner->setSilent(true);
-		$this->assertTrue($this->getPrivateProperty($runner, 'silent'));
+        $runner->setSilent(true);
+        $this->assertTrue($this->getPrivateProperty($runner, 'silent'));
 
-		$runner->setSilent(false);
-		$this->assertFalse($this->getPrivateProperty($runner, 'silent'));
-	}
+        $runner->setSilent(false);
+        $this->assertFalse($this->getPrivateProperty($runner, 'silent'));
+    }
 
-	public function testSetNameStoresValue()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testSetNameStoresValue()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$runner->setName('foo');
-		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'name'));
-	}
+        $runner->setName('foo');
+        $this->assertEquals('foo', $this->getPrivateProperty($runner, 'name'));
+    }
 
-	public function testSetGroupStoresValue()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testSetGroupStoresValue()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$runner->setGroup('foo');
-		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'group'));
-	}
+        $runner->setGroup('foo');
+        $this->assertEquals('foo', $this->getPrivateProperty($runner, 'group'));
+    }
 
-	public function testSetNamespaceStoresValue()
-	{
-		$runner = new MigrationRunner($this->config);
+    public function testSetNamespaceStoresValue()
+    {
+        $runner = new MigrationRunner($this->config);
 
-		$runner->setNamespace('foo');
-		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'namespace'));
-	}
+        $runner->setNamespace('foo');
+        $this->assertEquals('foo', $this->getPrivateProperty($runner, 'namespace'));
+    }
 
-	public function testFindMigrationsReturnsEmptyArrayWithNoneFound()
-	{
-		$config       = $this->config;
-		$config->type = 'timestamp';
-		$runner       = new MigrationRunner($config);
+    public function testFindMigrationsReturnsEmptyArrayWithNoneFound()
+    {
+        $config       = $this->config;
+        $config->type = 'timestamp';
+        $runner       = new MigrationRunner($config);
 
-		//      $runner->setPath($this->start);
+        //      $runner->setPath($this->start);
 
-		$this->assertEquals([], $runner->findMigrations());
-	}
+        $this->assertEquals([], $runner->findMigrations());
+    }
 
-	public function testFindMigrationsSuccessTimestamp()
-	{
-		$config       = $this->config;
-		$config->type = 'timestamp';
-		$runner       = new MigrationRunner($config);
+    public function testFindMigrationsSuccessTimestamp()
+    {
+        $config       = $this->config;
+        $config->type = 'timestamp';
+        $runner       = new MigrationRunner($config);
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+        $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$mig1      = (object)[
-								 'name'      => 'Some_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
-								 'version'   => '2018-01-24-102301',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-							 ];
-		$mig1->uid = $runner->getObjectUid($mig1);
+        $mig1      = (object)[
+                                 'name'      => 'Some_migration',
+                                 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+                                 'version'   => '2018-01-24-102301',
+                                 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+                                 'namespace' => 'Tests\Support\MigrationTestMigrations',
+                             ];
+        $mig1->uid = $runner->getObjectUid($mig1);
 
-		$mig2      = (object)[
-								 'name'      => 'Another_migration',
-								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
-								 'version'   => '2018-01-24-102302',
-								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-								 'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-							 ];
-		$mig1->uid = $runner->getObjectUid($mig1);
+        $mig2      = (object)[
+                                 'name'      => 'Another_migration',
+                                 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+                                 'version'   => '2018-01-24-102302',
+                                 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+                                 'namespace' => 'Tests\Support\MigrationTestMigrations',
+                                 'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+                             ];
+        $mig1->uid = $runner->getObjectUid($mig1);
 
-		$migrations = $runner->findMigrations();
+        $migrations = $runner->findMigrations();
 
-		$this->assertCount(2, $migrations);
-		$this->assertEquals($mig1, array_shift($migrations));
-		$this->assertEquals($mig2, array_shift($migrations));
-	}
+        $this->assertCount(2, $migrations);
+        $this->assertEquals($mig1, array_shift($migrations));
+        $this->assertEquals($mig2, array_shift($migrations));
+    }
 
-	public function testMigrationThrowsDisabledException()
-	{
-		$this->expectException('CodeIgniter\Exceptions\ConfigException');
-		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
+    public function testMigrationThrowsDisabledException()
+    {
+        $this->expectException('CodeIgniter\Exceptions\ConfigException');
+        $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
-		$config          = $this->config;
-		$config->enabled = false;
-		$runner          = new MigrationRunner($config);
+        $config          = $this->config;
+        $config->enabled = false;
+        $runner          = new MigrationRunner($config);
 
-		$runner->setSilent(false);
+        $runner->setSilent(false);
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+        $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		vfsStream::copyFromFileSystem(
-			TESTPATH . '_support/MigrationTestMigrations/Database/Migrations',
-			$this->root
-		);
+        vfsStream::copyFromFileSystem(
+            TESTPATH . '_support/MigrationTestMigrations/Database/Migrations',
+            $this->root
+        );
 
-		$this->expectException(ConfigException::class);
-		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
-		$runner->latest();
-	}
+        $runner->latest();
+    }
 
-	public function testVersionReturnsUpDownSuccess()
-	{
-		$forge = Database::forge();
-		$forge->dropTable('foo', true);
-
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-		$runner->clearHistory();
+    public function testVersionReturnsUpDownSuccess()
+    {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
+        $config = $this->config;
+        $runner = new MigrationRunner($config);
+        $runner->setSilent(false);
+        $runner->clearHistory();
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
-
-		$runner->latest();
-		$version = $runner->getBatchEnd($runner->getLastBatch());
+        $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+
+        $runner->latest();
+        $version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals('2018-01-24-102302', $version);
-		$this->seeInDatabase('foo', ['key' => 'foobar']);
+        $this->assertEquals('2018-01-24-102302', $version);
+        $this->seeInDatabase('foo', ['key' => 'foobar']);
 
-		$runner->regress(0);
-		$version = $runner->getBatchEnd($runner->getLastBatch());
+        $runner->regress(0);
+        $version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals('0', $version);
-		$this->assertFalse($this->db->tableExists('foo'));
-	}
+        $this->assertEquals('0', $version);
+        $this->assertFalse($this->db->tableExists('foo'));
+    }
 
-	public function testLatestSuccess()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->setSilent(false)
-			->setNamespace('Tests\Support\MigrationTestMigrations')
-			->clearHistory();
+    public function testLatestSuccess()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->setSilent(false)
+            ->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
 
-		$runner->latest();
-		$version = $runner->getBatchEnd($runner->getLastBatch());
+        $runner->latest();
+        $version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals('2018-01-24-102302', $version);
-		$this->assertTrue(db_connect()->tableExists('foo'));
+        $this->assertEquals('2018-01-24-102302', $version);
+        $this->assertTrue(db_connect()->tableExists('foo'));
 
-		$this->seeInDatabase('migrations', [
-			'batch' => 1,
-		]);
-	}
+        $this->seeInDatabase('migrations', [
+            'batch' => 1,
+        ]);
+    }
 
-	public function testRegressSuccess()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->setSilent(false)
-			->setNamespace('Tests\Support\MigrationTestMigrations')
-			->clearHistory();
+    public function testRegressSuccess()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->setSilent(false)
+            ->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
 
-		$runner->latest();
-		$runner->regress();
+        $runner->latest();
+        $runner->regress();
 
-		$version = $runner->getBatchEnd($runner->getLastBatch());
+        $version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals(0, $version);
-		$this->assertFalse(db_connect()->tableExists('foo'));
+        $this->assertEquals(0, $version);
+        $this->assertFalse(db_connect()->tableExists('foo'));
 
-		$history = $runner->getHistory();
-		$this->assertEmpty($history);
-	}
+        $history = $runner->getHistory();
+        $this->assertEmpty($history);
+    }
 
-	public function testLatestTriggersEvent()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->setSilent(false)
-			->setNamespace('Tests\Support\MigrationTestMigrations')
-			->clearHistory();
+    public function testLatestTriggersEvent()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->setSilent(false)
+            ->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
 
-		$result = null;
-		Events::on('migrate', function ($arg) use (&$result) {
-			$result = $arg;
-		});
+        $result = null;
+        Events::on('migrate', function ($arg) use (&$result) {
+            $result = $arg;
+        });
 
-		$runner->latest();
+        $runner->latest();
 
-		$this->assertIsArray($result);
-		$this->assertEquals('latest', $result['method']);
-	}
+        $this->assertIsArray($result);
+        $this->assertEquals('latest', $result['method']);
+    }
 
-	public function testRegressTriggersEvent()
-	{
-		$runner = new MigrationRunner($this->config);
-		$runner->setSilent(false)
-			->setNamespace('Tests\Support\MigrationTestMigrations')
-			->clearHistory();
+    public function testRegressTriggersEvent()
+    {
+        $runner = new MigrationRunner($this->config);
+        $runner->setSilent(false)
+            ->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
 
-		$result = null;
-		Events::on('migrate', function ($arg) use (&$result) {
-			$result = $arg;
-		});
+        $result = null;
+        Events::on('migrate', function ($arg) use (&$result) {
+            $result = $arg;
+        });
 
-		$runner->latest();
-		$runner->regress();
+        $runner->latest();
+        $runner->regress();
 
-		$this->assertIsArray($result);
-		$this->assertEquals('regress', $result['method']);
-	}
+        $this->assertIsArray($result);
+        $this->assertEquals('regress', $result['method']);
+    }
 
-	public function testHistoryRecordsBatches()
-	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-		$runner->clearHistory();
-		$this->resetTables();
+    public function testHistoryRecordsBatches()
+    {
+        $config = $this->config;
+        $runner = new MigrationRunner($config);
+        $runner->setSilent(false);
+        $runner->clearHistory();
+        $this->resetTables();
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+        $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$runner->latest();
-		$version = $runner->getBatchEnd($runner->getLastBatch());
+        $runner->latest();
+        $version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals('2018-01-24-102302', $version);
+        $this->assertEquals('2018-01-24-102302', $version);
 
-		$history = $runner->getHistory('tests');
+        $history = $runner->getHistory('tests');
 
-		$this->assertEquals(1, $history[0]->batch);
+        $this->assertEquals(1, $history[0]->batch);
 
-		$this->assertEquals(1, $history[0]->batch);
-		$this->assertEquals(1, $history[1]->batch);
+        $this->assertEquals(1, $history[0]->batch);
+        $this->assertEquals(1, $history[1]->batch);
 
-		$this->seeInDatabase('migrations', [
-			'batch' => 1,
-		]);
-	}
+        $this->seeInDatabase('migrations', [
+            'batch' => 1,
+        ]);
+    }
 
-	public function testGetBatchVersions()
-	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-		$runner->clearHistory();
-		$this->resetTables();
+    public function testGetBatchVersions()
+    {
+        $config = $this->config;
+        $runner = new MigrationRunner($config);
+        $runner->setSilent(false);
+        $runner->clearHistory();
+        $this->resetTables();
 
-		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+        $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$runner->latest();
+        $runner->latest();
 
-		$this->assertEquals('2018-01-24-102301', $runner->getBatchStart(1));
-		$this->assertEquals('2018-01-24-102302', $runner->getBatchEnd(1));
-	}
+        $this->assertEquals('2018-01-24-102301', $runner->getBatchStart(1));
+        $this->assertEquals('2018-01-24-102302', $runner->getBatchEnd(1));
+    }
 
-	protected function resetTables()
-	{
-		$db    = db_connect();
-		$forge = Config::forge();
+    protected function resetTables()
+    {
+        $db    = db_connect();
+        $forge = Config::forge();
 
-		$tables = $db->listTables();
-		foreach ($tables as $table)
-		{
-			$table = str_replace('db_', '', $table);
+        $tables = $db->listTables();
+        foreach ($tables as $table)
+        {
+            $table = str_replace('db_', '', $table);
 
-			$forge->dropTable($table, true);
-		}
-	}
+            $forge->dropTable($table, true);
+        }
+    }
 }

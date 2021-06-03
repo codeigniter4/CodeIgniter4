@@ -20,5 +20,5 @@ namespace CodeIgniter\Test;
  */
 abstract class CIDatabaseTestCase extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 }

@@ -4,18 +4,18 @@ use CodeIgniter\Model;
 
 class SecondaryModel extends Model
 {
-	protected $table = 'secondary';
+    protected $table = 'secondary';
 
-	protected $primaryKey = 'id';
+    protected $primaryKey = 'id';
 
-	protected $returnType = 'object';
+    protected $returnType = 'object';
 
-	protected $useSoftDeletes = false;
+    protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'int';
+    protected $dateFormat = 'int';
 
-	protected $allowedFields = [
-		'key',
-		'value',
-	];
+    protected $allowedFields = [
+        'key',
+        'value',
+    ];
 }

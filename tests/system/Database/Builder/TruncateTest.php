@@ -6,28 +6,28 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 class TruncateTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->db = new MockConnection([]);
-	}
+        $this->db = new MockConnection([]);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testTruncate()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+    public function testTruncate()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-		$expectedSQL = 'TRUNCATE "user"';
+        $expectedSQL = 'TRUNCATE "user"';
 
-		$this->assertEquals($expectedSQL, $builder->testMode()->truncate());
-	}
+        $this->assertEquals($expectedSQL, $builder->testMode()->truncate());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 }

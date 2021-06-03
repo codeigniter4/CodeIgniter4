@@ -6,29 +6,29 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 class DistinctTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->db = new MockConnection([]);
-	}
+        $this->db = new MockConnection([]);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDelete()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+    public function testDelete()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-		$builder->select('country')->distinct();
+        $builder->select('country')->distinct();
 
-		$expectedSQL = 'SELECT DISTINCT "country" FROM "user"';
+        $expectedSQL = 'SELECT DISTINCT "country" FROM "user"';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }

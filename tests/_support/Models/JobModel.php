@@ -4,20 +4,20 @@ use CodeIgniter\Model;
 
 class JobModel extends Model
 {
-	protected $table = 'job';
+    protected $table = 'job';
 
-	protected $returnType = 'object';
+    protected $returnType = 'object';
 
-	protected $useSoftDeletes = false;
+    protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'int';
+    protected $dateFormat = 'int';
 
-	protected $allowedFields = [
-		'name',
-		'description',
-	];
+    protected $allowedFields = [
+        'name',
+        'description',
+    ];
 
-	public $name = '';
+    public $name = '';
 
-	public $description = '';
+    public $description = '';
 }

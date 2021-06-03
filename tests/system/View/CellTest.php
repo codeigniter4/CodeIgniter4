@@ -10,272 +10,272 @@ use CodeIgniter\View\Exceptions\ViewException;
 class CellTest extends CIUnitTestCase
 {
 
-	protected $cache;
+    protected $cache;
 
-	/**
-	 * @var Cell
-	 */
-	protected $cell;
+    /**
+     * @var Cell
+     */
+    protected $cell;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->cache = new MockCache();
-		$this->cell  = new Cell($this->cache);
-	}
+        $this->cache = new MockCache();
+        $this->cell  = new Cell($this->cache);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
-	{
-		$this->assertEquals([], $this->cell->prepareParams(1.023));
-	}
+    public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
+    {
+        $this->assertEquals([], $this->cell->prepareParams(1.023));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsNullWithEmptyString()
-	{
-		$this->assertEquals([], $this->cell->prepareParams(''));
-	}
+    public function testPrepareParamsReturnsNullWithEmptyString()
+    {
+        $this->assertEquals([], $this->cell->prepareParams(''));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsSelfWhenArray()
-	{
-		$object = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testPrepareParamsReturnsSelfWhenArray()
+    {
+        $object = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals($object, $this->cell->prepareParams($object));
-	}
+        $this->assertEquals($object, $this->cell->prepareParams($object));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
-	{
-		$this->assertEquals([], $this->cell->prepareParams([]));
-	}
+    public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
+    {
+        $this->assertEquals([], $this->cell->prepareParams([]));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsArrayWithString()
-	{
-		$params   = 'one=two three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testPrepareParamsReturnsArrayWithString()
+    {
+        $params   = 'one=two three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsHandlesCommas()
-	{
-		$params   = 'one=2, three=4.15';
-		$expected = [
-			'one'   => 2,
-			'three' => 4.15,
-		];
+    public function testPrepareParamsHandlesCommas()
+    {
+        $params   = 'one=2, three=4.15';
+        $expected = [
+            'one'   => 2,
+            'three' => 4.15,
+        ];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsWorksWithoutSpaces()
-	{
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testPrepareParamsWorksWithoutSpaces()
+    {
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsWorksWithOddEqualsSpaces()
-	{
-		$params   = 'one= two,three =four, five = six';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-			'five'  => 'six',
-		];
+    public function testPrepareParamsWorksWithOddEqualsSpaces()
+    {
+        $params   = 'one= two,three =four, five = six';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Render
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Render
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithNamespacedClass()
-	{
-		$expected = 'Hello';
+    public function testDisplayRendersWithNamespacedClass()
+    {
+        $expected = 'Hello';
 
-		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::hello'));
-	}
+        $this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::hello'));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithValidParamString()
-	{
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testDisplayRendersWithValidParamString()
+    {
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithStaticMethods()
-	{
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testDisplayRendersWithStaticMethods()
+    {
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testOptionsEmptyArray()
-	{
-		$params   = [];
-		$expected = [];
+    public function testOptionsEmptyArray()
+    {
+        $params   = [];
+        $expected = [];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
+    }
 
-	public function testOptionsNoParams()
-	{
-		$expected = [];
+    public function testOptionsNoParams()
+    {
+        $expected = [];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho'));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho'));
+    }
 
-	public function testCellEmptyParams()
-	{
-		$params   = ',';
-		$expected = 'Hello World';
+    public function testCellEmptyParams()
+    {
+        $params   = ',';
+        $expected = 'Hello World';
 
-		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::index', $params));
-	}
+        $this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::index', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testCellClassMissing()
-	{
-		$this->expectException(ViewException::class);
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testCellClassMissing()
+    {
+        $this->expectException(ViewException::class);
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('::echobox', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('::echobox', $params));
+    }
 
-	public function testCellMethodMissing()
-	{
-		$this->expectException(ViewException::class);
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testCellMethodMissing()
+    {
+        $this->expectException(ViewException::class);
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::', $params));
+    }
 
-	public function testCellBadClass()
-	{
-		$this->expectException(ViewException::class);
-		$params   = 'one=two,three=four';
-		$expected = 'Hello World';
+    public function testCellBadClass()
+    {
+        $this->expectException(ViewException::class);
+        $params   = 'one=two,three=four';
+        $expected = 'Hello World';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\GoodQuestion::', $params));
-	}
+        $this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\GoodQuestion::', $params));
+    }
 
-	public function testCellBadMethod()
-	{
-		$this->expectException(ViewException::class);
-		$params   = 'one=two,three=four';
-		$expected = 'Hello World';
+    public function testCellBadMethod()
+    {
+        $this->expectException(ViewException::class);
+        $params   = 'one=two,three=four';
+        $expected = 'Hello World';
 
-		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::notThere', $params));
-	}
+        $this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::notThere', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRenderCached()
-	{
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testRenderCached()
+    {
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60, 'rememberme'));
-		$params = 'one=six,three=five';
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1, 'rememberme'));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60, 'rememberme'));
+        $params = 'one=six,three=five';
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1, 'rememberme'));
+    }
 
-	public function testRenderCachedAutoName()
-	{
-		$params   = 'one=two,three=four';
-		$expected = [
-			'one'   => 'two',
-			'three' => 'four',
-		];
+    public function testRenderCachedAutoName()
+    {
+        $params   = 'one=two,three=four';
+        $expected = [
+            'one'   => 'two',
+            'three' => 'four',
+        ];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60));
-		$params = 'one=six,three=five';
-		// When auto-generating it takes the params as part of cachename, so it wouldn't have actually cached this, but
-		// we want to make sure it doesn't throw us a curveball here.
-		$this->assertEquals('six,five', $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60));
+        $params = 'one=six,three=five';
+        // When auto-generating it takes the params as part of cachename, so it wouldn't have actually cached this, but
+        // we want to make sure it doesn't throw us a curveball here.
+        $this->assertEquals('six,five', $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testParametersMatch()
-	{
-		$params   = [
-			'p1' => 'one',
-			'p2' => 'two',
-			'p4' => 'three',
-		];
-		$expected = 'Right on';
+    public function testParametersMatch()
+    {
+        $params   = [
+            'p1' => 'one',
+            'p2' => 'two',
+            'p4' => 'three',
+        ];
+        $expected = 'Right on';
 
-		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
-	}
+        $this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
+    }
 
-	public function testParametersDontMatch()
-	{
-		$this->expectException(ViewException::class);
-		$params   = 'p1=one,p2=two,p3=three';
-		$expected = 'Right on';
+    public function testParametersDontMatch()
+    {
+        $this->expectException(ViewException::class);
+        $params   = 'p1=one,p2=two,p3=three';
+        $expected = 'Right on';
 
-		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
-	}
+        $this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
+    }
 
-	public function testCallInitControllerIfMethodExists()
-	{
-		$this->assertEquals('CodeIgniter\HTTP\Response', $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
-	}
+    public function testCallInitControllerIfMethodExists()
+    {
+        $this->assertEquals('CodeIgniter\HTTP\Response', $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
+    }
 
 }

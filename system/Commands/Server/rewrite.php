@@ -22,7 +22,7 @@
 // Avoid this file run when listing commands
 if (PHP_SAPI === 'cli')
 {
-	return;
+    return;
 }
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -37,7 +37,7 @@ $path = $fcpath . ltrim($uri, '/');
 // then let the request handle it like normal.
 if ($uri !== '/' && (is_file($path) || is_dir($path)))
 {
-	return false;
+    return false;
 }
 
 // Otherwise, we'll load the index file and let
