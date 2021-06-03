@@ -24,6 +24,9 @@ use DateTimeInterface;
  */
 class Email extends Message
 {
+	/**
+	 * Array of priorities and their encoded value.
+	 */
 	private const PRIORITIES = [
 		1 => '1 (Highest)',
 		2 => '2 (High)',
@@ -33,11 +36,30 @@ class Email extends Message
 	];
 
 	/**
+	 * Array of Headers to collapse into a CSV.
+	 */
+	private const CSV_HEADERS = ['To', 'Cc', 'Bcc'];
+
+	/**
+	 * Attachments to this email
+	 *
+	 * @var Attachment[]
+	 */
+	protected $attachements = [];
+
+	/**
 	 * This email's unique Message ID.
 	 *
 	 * @var string|null
 	 */
 	private $messageId;
+
+	/**
+	 * Boundaries for header & body divisions.
+	 *
+	 * @var array<string,string>
+	 */
+	private $boundaries = [];
 
 	/**
 	 * Stores any initial values.
@@ -57,6 +79,8 @@ class Email extends Message
 		unset($this->messageId);
 	}
 
+	//--------------------------------------------------------------------
+	// Class Operations
 	//--------------------------------------------------------------------
 
 	/**
@@ -91,6 +115,54 @@ class Email extends Message
 				{
 					$this->$method($data[$method]);
 				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Compiles headers into a spool-ready string.
+	 *
+	 * @param string $newline        Character(s) to use when combining the sequence
+	 * @param string[]|null $exclude An array of header names to exclude
+	 * @param string[]|null $include An array of header names to include
+	 *
+	 * @return string
+	 */
+	public function getHeaderString(string $newline = "\r\n", array $exclude = null, array $include = null): string
+	{
+		$string = '';
+
+		// Use $headers directly instead of headers() so as not to trigger populateHeaders()
+		foreach ($this->headers as $name => $value)
+		{
+			// Check exclusion
+			if (isset($exclude) && in_array($name, $exclude))
+			{
+				continue;
+			}
+			// Check includion
+			if (isset($include) && ! in_array($name, $include))
+			{
+				continue;
+			}
+
+			// Check for a collapsible
+			if (in_array($name, self::CSV_HEADERS) && is_array($value))
+			{
+				$string .= implode(',', array_map('__toString', $value));
+			}
+			elseif (is_array($value))
+			{
+				foreach ($value as $header)
+				{
+					$string .= $header . $this->newline;
+				}
+			}
+			else
+			{
+				$string .= $value . $this->newline; // Trailing newline is intentional
 			}
 		}
 	}
@@ -328,6 +400,83 @@ class Email extends Message
 		}
 
 		return $this->messageId;
+	}
+
+	/**
+	 * Tracks boundary keys so they can be reused.
+	 *
+	 * @return string
+	 */
+	public function getBoundary(string $name): string
+	{
+		if (! isset($this->boundaries[$name]))
+		{
+			$this->boundaries[$name] = uniqid($name . '_', true);
+		}
+
+		return $this->boundaries[$name];
+	}
+
+	//--------------------------------------------------------------------
+	// Attachments
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds an Attachment.
+	 *
+	 * @param Attachment $attachment
+	 *
+	 * @return $this
+	 */
+	public function attach(Attachment $attachment): self
+	{
+		$this->attachments[] = $attachment;
+
+		return $this;
+	}
+
+	/**
+	 * Returns all or filtered Attachments.
+	 *
+	 * @param bool|null $contentFilter (Optional) Whether to include/exclude attachments with Content ID
+	 *
+	 * @return Attachment[]
+	 */
+	public function getAttachments(bool $contentFilter = null): array
+	{
+		if (is_null($contentFilter))
+		{
+			return $this->attachments;
+		}
+
+		$attachments = [];
+		foreach ($this->attachments as $attachment)
+		{
+			if ($contentFilter && $attachment->hasContentId())
+			{
+				$attachments[] = $attachment;
+			}
+			if (! $contentFilter && ! $attachment->hasContentId())
+			{
+				$attachments[] = $attachment;
+			}
+		}
+
+		return $attachments;
+	}
+
+	/**
+	 * Removes and returns all Attachments.
+	 *
+	 * @return Attachment[]
+	 */
+	public function detach(): array
+	{
+		$attachments = $this->getAttachments();
+
+		$this->attachments = [];
+
+		return $attachments;
 	}
 
 	//--------------------------------------------------------------------

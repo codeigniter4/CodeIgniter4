@@ -15,6 +15,7 @@ return [
 	'invalidAddress'      => 'Invalid email address: {0}',
 	'noFrom'              => 'Cannot send mail with no "From" header.',
 	'noRecipients'        => 'You must include recipients: To, Cc, or Bcc',
+	'mimeMessage'         => 'This is a multi-part message in MIME format.{0}Your email application may not support this format.',
 
 /*
 	'mustBeArray'          => 'The email validation method must be passed an array.',

@@ -12,24 +12,27 @@
 namespace CodeIgniter\Mailer\Handlers;
 
 use CodeIgniter\Mailer\Email;
-use CodeIgniter\Mailer\MailerInterface;
-use Config\Mailer;
 
-class DummyHandler implements MailerInterface
+class DummyHandler extends BaseHandler
 {
 	/**
-	 * @param Mailer $config
+	 * Whether this handler is supported on this system.
+	 *
+	 * @return boolean
 	 */
-	public function __construct(Mailer $config)
+	public function isSupported(): bool
 	{
+		return true;
 	}
 
 	/**
-	 * Does not send an Email
+	 * Does not spools an Email to the server.
 	 *
 	 * @param Email $email
+	 *
+	 * @return boolean
 	 */
-	public function send(Email $email)
+	protected function spool(Email $email)
 	{
 	}
 }
