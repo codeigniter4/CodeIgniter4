@@ -13,14 +13,16 @@ use Nexus\CsConfig\Ruleset\AbstractRuleset;
  */
 final class CodeIgniter4 extends AbstractRuleset
 {
-	public function __construct()
-	{
-		$this->name = 'CodeIgniter4 Revised Coding Standards';
+    public function __construct()
+    {
+        $this->name = 'CodeIgniter4 Revised Coding Standards';
 
-		$this->rules = [];
+        $this->rules = [
+            'indentation_type' => true,
+        ];
 
-		$this->requiredPHPVersion = 70300;
+        $this->requiredPHPVersion = 70300;
 
-		$this->autoActivateIsRiskyAllowed = true;
-	}
+        $this->autoActivateIsRiskyAllowed = true;
+    }
 }

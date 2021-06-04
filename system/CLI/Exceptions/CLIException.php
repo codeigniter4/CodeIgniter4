@@ -19,19 +19,19 @@ use RuntimeException;
  */
 class CLIException extends RuntimeException
 {
-	use DebugTraceableTrait;
+    use DebugTraceableTrait;
 
-	/**
-	 * Thrown when `$color` specified for `$type` is not within the
-	 * allowed list of colors.
-	 *
-	 * @param string $type
-	 * @param string $color
-	 *
-	 * @return CLIException
-	 */
-	public static function forInvalidColor(string $type, string $color)
-	{
-		return new static(lang('CLI.invalidColor', [$type, $color]));
-	}
+    /**
+     * Thrown when `$color` specified for `$type` is not within the
+     * allowed list of colors.
+     *
+     * @param string $type
+     * @param string $color
+     *
+     * @return CLIException
+     */
+    public static function forInvalidColor(string $type, string $color)
+    {
+        return new static(lang('CLI.invalidColor', [$type, $color]));
+    }
 }

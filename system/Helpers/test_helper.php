@@ -19,30 +19,30 @@ use CodeIgniter\Test\Fabricator;
 
 if (! function_exists('fake'))
 {
-	/**
-	 * Creates a single item using Fabricator.
-	 *
-	 * @param Model|object|string $model     Instance or name of the model
-	 * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
-	 *
-	 * @return object|array
-	 */
-	function fake($model, array $overrides = null, $persist = true)
-	{
-		// Get a model-appropriate Fabricator instance
-		$fabricator = new Fabricator($model);
+    /**
+     * Creates a single item using Fabricator.
+     *
+     * @param Model|object|string $model     Instance or name of the model
+     * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
+     *
+     * @return object|array
+     */
+    function fake($model, array $overrides = null, $persist = true)
+    {
+        // Get a model-appropriate Fabricator instance
+        $fabricator = new Fabricator($model);
 
-		// Set overriding data, if necessary
-		if ($overrides)
-		{
-			$fabricator->setOverrides($overrides);
-		}
+        // Set overriding data, if necessary
+        if ($overrides)
+        {
+            $fabricator->setOverrides($overrides);
+        }
 
-		if ($persist)
-		{
-			return $fabricator->create();
-		}
+        if ($persist)
+        {
+            return $fabricator->create();
+        }
 
-		return $fabricator->make();
-	}
+        return $fabricator->make();
+    }
 }

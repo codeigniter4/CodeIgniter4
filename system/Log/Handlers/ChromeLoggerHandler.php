@@ -24,157 +24,157 @@ use Config\Services;
  */
 class ChromeLoggerHandler extends BaseHandler
 {
-	/**
-	 * Version of this library - for ChromeLogger use.
-	 */
-	const VERSION = 1.0;
+    /**
+     * Version of this library - for ChromeLogger use.
+     */
+    const VERSION = 1.0;
 
-	/**
-	 * The number of track frames returned from the backtrace.
-	 *
-	 * @var integer
-	 */
-	protected $backtraceLevel = 0;
+    /**
+     * The number of track frames returned from the backtrace.
+     *
+     * @var integer
+     */
+    protected $backtraceLevel = 0;
 
-	/**
-	 * The final data that is sent to the browser.
-	 *
-	 * @var array
-	 */
-	protected $json = [
-		'version' => self::VERSION,
-		'columns' => [
-			'log',
-			'backtrace',
-			'type',
-		],
-		'rows'    => [],
-	];
+    /**
+     * The final data that is sent to the browser.
+     *
+     * @var array
+     */
+    protected $json = [
+        'version' => self::VERSION,
+        'columns' => [
+            'log',
+            'backtrace',
+            'type',
+        ],
+        'rows'    => [],
+    ];
 
-	/**
-	 * The header used to pass the data.
-	 *
-	 * @var string
-	 */
-	protected $header = 'X-ChromeLogger-Data';
+    /**
+     * The header used to pass the data.
+     *
+     * @var string
+     */
+    protected $header = 'X-ChromeLogger-Data';
 
-	/**
-	 * Maps the log levels to the ChromeLogger types.
-	 *
-	 * @var array
-	 */
-	protected $levels = [
-		'emergency' => 'error',
-		'alert'     => 'error',
-		'critical'  => 'error',
-		'error'     => 'error',
-		'warning'   => 'warn',
-		'notice'    => 'warn',
-		'info'      => 'info',
-		'debug'     => 'info',
-	];
+    /**
+     * Maps the log levels to the ChromeLogger types.
+     *
+     * @var array
+     */
+    protected $levels = [
+        'emergency' => 'error',
+        'alert'     => 'error',
+        'critical'  => 'error',
+        'error'     => 'error',
+        'warning'   => 'warn',
+        'notice'    => 'warn',
+        'info'      => 'info',
+        'debug'     => 'info',
+    ];
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Constructor
-	 *
-	 * @param array $config
-	 */
-	public function __construct(array $config = [])
-	{
-		parent::__construct($config);
+    /**
+     * Constructor
+     *
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
 
-		$this->json['request_uri'] = current_url();
-	}
+        $this->json['request_uri'] = current_url();
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
-	 *
-	 * @param string $level
-	 * @param string $message
-	 *
-	 * @return boolean
-	 */
-	public function handle($level, $message): bool
-	{
-		// Format our message
-		$message = $this->format($message);
+    /**
+     * Handles logging the message.
+     * If the handler returns false, then execution of handlers
+     * will stop. Any handlers that have not run, yet, will not
+     * be run.
+     *
+     * @param string $level
+     * @param string $message
+     *
+     * @return boolean
+     */
+    public function handle($level, $message): bool
+    {
+        // Format our message
+        $message = $this->format($message);
 
-		// Generate Backtrace info
-		$backtrace = debug_backtrace(0, $this->backtraceLevel);
-		$backtrace = end($backtrace);
+        // Generate Backtrace info
+        $backtrace = debug_backtrace(0, $this->backtraceLevel);
+        $backtrace = end($backtrace);
 
-		$backtraceMessage = 'unknown';
-		if (isset($backtrace['file']) && isset($backtrace['line']))
-		{
-			$backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
-		}
+        $backtraceMessage = 'unknown';
+        if (isset($backtrace['file']) && isset($backtrace['line']))
+        {
+            $backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
+        }
 
-		// Default to 'log' type.
-		$type = '';
+        // Default to 'log' type.
+        $type = '';
 
-		if (array_key_exists($level, $this->levels))
-		{
-			$type = $this->levels[$level];
-		}
+        if (array_key_exists($level, $this->levels))
+        {
+            $type = $this->levels[$level];
+        }
 
-		$this->json['rows'][] = [
-			[$message],
-			$backtraceMessage,
-			$type,
-		];
+        $this->json['rows'][] = [
+            [$message],
+            $backtraceMessage,
+            $type,
+        ];
 
-		$this->sendLogs();
+        $this->sendLogs();
 
-		return true;
-	}
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Converts the object to display nicely in the Chrome Logger UI.
-	 *
-	 * @param mixed $object
-	 *
-	 * @return array
-	 */
-	protected function format($object)
-	{
-		if (! is_object($object))
-		{
-			return $object;
-		}
+    /**
+     * Converts the object to display nicely in the Chrome Logger UI.
+     *
+     * @param mixed $object
+     *
+     * @return array
+     */
+    protected function format($object)
+    {
+        if (! is_object($object))
+        {
+            return $object;
+        }
 
-		// @todo Modify formatting of objects once we can view them in browser.
-		$objectArray = (array) $object;
+        // @todo Modify formatting of objects once we can view them in browser.
+        $objectArray = (array) $object;
 
-		$objectArray['___class_name'] = get_class($object);
+        $objectArray['___class_name'] = get_class($object);
 
-		return $objectArray;
-	}
+        return $objectArray;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Attaches the header and the content to the passed in request object.
-	 *
-	 * @param ResponseInterface $response
-	 */
-	public function sendLogs(ResponseInterface &$response = null)
-	{
-		if (is_null($response))
-		{
-			$response = Services::response(null, true);
-		}
+    /**
+     * Attaches the header and the content to the passed in request object.
+     *
+     * @param ResponseInterface $response
+     */
+    public function sendLogs(ResponseInterface &$response = null)
+    {
+        if (is_null($response))
+        {
+            $response = Services::response(null, true);
+        }
 
-		$data = base64_encode(utf8_encode(json_encode($this->json)));
+        $data = base64_encode(utf8_encode(json_encode($this->json)));
 
-		$response->setHeader($this->header, $data);
-	}
+        $response->setHeader($this->header, $data);
+    }
 }

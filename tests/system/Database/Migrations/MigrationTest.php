@@ -8,27 +8,27 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 class MigrationTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
+    public function setUp(): void
+    {
+        parent::setUp();
+    }
 
-	public function testDBGroup()
-	{
-		$migration = new class extends Migration {
-			protected $DBGroup = 'tests';
-			function up()
-			{
-			}
-			function down()
-			{
-			}
-		};
+    public function testDBGroup()
+    {
+        $migration = new class extends Migration {
+            protected $DBGroup = 'tests';
+            function up()
+            {
+            }
+            function down()
+            {
+            }
+        };
 
-		$dbGroup = $migration->getDBGroup();
+        $dbGroup = $migration->getDBGroup();
 
-		$this->assertEquals('tests', $dbGroup);
-	}
+        $this->assertEquals('tests', $dbGroup);
+    }
 }

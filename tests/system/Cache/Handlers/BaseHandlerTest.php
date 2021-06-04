@@ -6,61 +6,61 @@ use Tests\Support\Cache\RestrictiveHandler;
 
 class BaseHandlerTest extends CIUnitTestCase
 {
-	/**
-	 * @dataProvider invalidTypeProvider
-	 */
-	public function testValidateKeyInvalidType($input)
-	{
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('Cache key must be a string');
+    /**
+     * @dataProvider invalidTypeProvider
+     */
+    public function testValidateKeyInvalidType($input)
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cache key must be a string');
 
-		BaseHandler::validateKey($input);
-	}
+        BaseHandler::validateKey($input);
+    }
 
-	public function invalidTypeProvider(): array
-	{
-		return [
-			[true],
-			[false],
-			[null],
-			[42],
-			[new stdClass],
-		];
-	}
+    public function invalidTypeProvider(): array
+    {
+        return [
+            [true],
+            [false],
+            [null],
+            [42],
+            [new stdClass],
+        ];
+    }
 
-	public function testValidateKeySuccess()
-	{
-		$string = 'banana';
-		$result = BaseHandler::validateKey($string);
+    public function testValidateKeySuccess()
+    {
+        $string = 'banana';
+        $result = BaseHandler::validateKey($string);
 
-		$this->assertSame($string, $result);
-	}
+        $this->assertSame($string, $result);
+    }
 
-	public function testValidateKeySuccessWithPrefix()
-	{
-		$string = 'banana';
-		$result = BaseHandler::validateKey($string, 'prefix');
+    public function testValidateKeySuccessWithPrefix()
+    {
+        $string = 'banana';
+        $result = BaseHandler::validateKey($string, 'prefix');
 
-		$this->assertSame('prefix' . $string, $result);
-	}
+        $this->assertSame('prefix' . $string, $result);
+    }
 
-	public function testValidateExcessiveLength()
-	{
-		$string   = 'MoreThanTenCharacters';
-		$expected = md5($string);
+    public function testValidateExcessiveLength()
+    {
+        $string   = 'MoreThanTenCharacters';
+        $expected = md5($string);
 
-		$result = RestrictiveHandler::validateKey($string);
+        $result = RestrictiveHandler::validateKey($string);
 
-		$this->assertSame($expected, $result);
-	}
+        $this->assertSame($expected, $result);
+    }
 
-	public function testValidateExcessiveLengthWithPrefix()
-	{
-		$string   = 'MoreThanTenCharacters';
-		$expected = 'prefix' . md5($string);
+    public function testValidateExcessiveLengthWithPrefix()
+    {
+        $string   = 'MoreThanTenCharacters';
+        $expected = 'prefix' . md5($string);
 
-		$result = RestrictiveHandler::validateKey($string, 'prefix');
+        $result = RestrictiveHandler::validateKey($string, 'prefix');
 
-		$this->assertSame($expected, $result);
-	}
+        $this->assertSame($expected, $result);
+    }
 }

@@ -9,34 +9,34 @@ use CodeIgniter\HTTP\ResponseInterface;
 class Role implements FilterInterface
 {
 
-	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-	{
-		if (is_array($arguments))
-		{
-			$response->setBody(join(';', $arguments));
-		}
-		elseif (is_null($arguments))
-		{
-			$response->setBody('Is null');
-		}
-		else
-		{
-			$response->setBody('Something else');
-		}
-		return $response;
-	}
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+        if (is_array($arguments))
+        {
+            $response->setBody(join(';', $arguments));
+        }
+        elseif (is_null($arguments))
+        {
+            $response->setBody('Is null');
+        }
+        else
+        {
+            $response->setBody('Something else');
+        }
+        return $response;
+    }
 
-	public function before(RequestInterface $request, $arguments = null)
-	{
-		if (is_array($arguments))
-		{
-			return join(';', $arguments);
-		}
-		if (is_null($arguments))
-		{
-			return 'Is null';
-		}
-		return 'Something else';
-	}
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        if (is_array($arguments))
+        {
+            return join(';', $arguments);
+        }
+        if (is_null($arguments))
+        {
+            return 'Is null';
+        }
+        return 'Something else';
+    }
 
 }

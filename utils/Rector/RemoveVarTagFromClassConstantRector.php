@@ -13,48 +13,48 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 
 final class RemoveVarTagFromClassConstantRector extends AbstractRector
 {
-	public function getRuleDefinition(): RuleDefinition
-	{
-		return new RuleDefinition('Remove @var tag from class constant', [
-			new CodeSample(
-				<<<'CODE_SAMPLE'
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition('Remove @var tag from class constant', [
+            new CodeSample(
+                <<<'CODE_SAMPLE'
 				class Foo
 				{
 					/** @var string */
 					const X = 'test';
 				}
 				CODE_SAMPLE,
-				<<<'CODE_SAMPLE'
+                <<<'CODE_SAMPLE'
 				class Foo
 				{
 					const X = 'test';
 				}
 				CODE_SAMPLE
-			),
-		]);
-	}
+            ),
+        ]);
+    }
 
-	/**
-	 * @return string[]
-	 */
-	public function getNodeTypes(): array
-	{
-		return [ClassConst::class];
-	}
+    /**
+     * @return string[]
+     */
+    public function getNodeTypes(): array
+    {
+        return [ClassConst::class];
+    }
 
-	/**
-	 * @param ClassConst $node
-	 */
-	public function refactor(Node $node): ?Node
-	{
-		$phpDocInfo      = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
-		$varTagValueNode = $phpDocInfo->getVarTagValueNode();
-		if (! $varTagValueNode instanceof VarTagValueNode)
-		{
-			return null;
-		}
+    /**
+     * @param ClassConst $node
+     */
+    public function refactor(Node $node): ?Node
+    {
+        $phpDocInfo      = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
+        $varTagValueNode = $phpDocInfo->getVarTagValueNode();
+        if (! $varTagValueNode instanceof VarTagValueNode)
+        {
+            return null;
+        }
 
-		$phpDocInfo->removeByType(VarTagValueNode::class);
-		return $node;
-	}
+        $phpDocInfo->removeByType(VarTagValueNode::class);
+        return $node;
+    }
 }

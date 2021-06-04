@@ -7,57 +7,57 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 class DeleteTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->db = new MockConnection([]);
-	}
+        $this->db = new MockConnection([]);
+    }
 
-	public function testDelete()
-	{
-		$builder = $this->db->table('jobs');
+    public function testDelete()
+    {
+        $builder = $this->db->table('jobs');
 
-		$answer = $builder->testMode()->delete(['id' => 1], null, true);
+        $answer = $builder->testMode()->delete(['id' => 1], null, true);
 
-		$expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
-		$expectedBinds = [
-			'id' => [
-				1,
-				true,
-			],
-		];
+        $expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+        ];
 
-		$this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-	public function testGetCompiledDelete()
-	{
-		$builder = $this->db->table('jobs');
+    public function testGetCompiledDelete()
+    {
+        $builder = $this->db->table('jobs');
 
-		$builder->where('id', 1);
-		$sql = $builder->getCompiledDelete();
+        $builder->where('id', 1);
+        $sql = $builder->getCompiledDelete();
 
-		$expectedSQL = <<<'EOL'
+        $expectedSQL = <<<'EOL'
 		DELETE FROM "jobs"
 		WHERE "id" = 1
 		EOL;
-		$this->assertSame($expectedSQL, $sql);
-	}
+        $this->assertSame($expectedSQL, $sql);
+    }
 
-	public function testGetCompiledDeleteWithLimit()
-	{
-		$builder = $this->db->table('jobs');
+    public function testGetCompiledDeleteWithLimit()
+    {
+        $builder = $this->db->table('jobs');
 
-		$sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
+        $sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
 
-		$expectedSQL = <<<'EOL'
+        $expectedSQL = <<<'EOL'
 		DELETE FROM "jobs"
 		WHERE "id" = 1 LIMIT 10
 		EOL;
-		$this->assertSame($expectedSQL, $sql);
-	}
+        $this->assertSame($expectedSQL, $sql);
+    }
 }

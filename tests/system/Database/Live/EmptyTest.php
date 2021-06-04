@@ -8,27 +8,27 @@ use CodeIgniter\Test\DatabaseTestTrait;
  */
 class EmptyTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	protected $refresh = true;
+    protected $refresh = true;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function testEmpty()
-	{
-		$this->db->table('misc')->emptyTable();
+    public function testEmpty()
+    {
+        $this->db->table('misc')->emptyTable();
 
-		$this->assertEquals(0, $this->db->table('misc')->countAll());
-	}
+        $this->assertEquals(0, $this->db->table('misc')->countAll());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testTruncate()
-	{
-		$this->db->table('misc')->truncate();
+    public function testTruncate()
+    {
+        $this->db->table('misc')->truncate();
 
-		$this->assertEquals(0, $this->db->table('misc')->countAll());
-	}
+        $this->assertEquals(0, $this->db->table('misc')->countAll());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }

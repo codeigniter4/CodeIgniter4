@@ -17,10 +17,10 @@ use RuntimeException;
 
 class FileNotFoundException extends RuntimeException implements ExceptionInterface
 {
-	use DebugTraceableTrait;
+    use DebugTraceableTrait;
 
-	public static function forFileNotFound(string $path)
-	{
-		return new static(lang('Files.fileNotFound', [$path]));
-	}
+    public static function forFileNotFound(string $path)
+    {
+        return new static(lang('Files.fileNotFound', [$path]));
+    }
 }

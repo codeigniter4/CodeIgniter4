@@ -10,9 +10,9 @@
 class BadRegistrar
 {
 
-	public static function RegistrarConfig()
-	{
-		return 'I am not worthy';
-	}
+    public static function RegistrarConfig()
+    {
+        return 'I am not worthy';
+    }
 
 }

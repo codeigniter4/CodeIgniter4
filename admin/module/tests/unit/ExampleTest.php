@@ -2,15 +2,15 @@
 
 class ExampleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
+    public function setUp(): void
+    {
+        parent::setUp();
+    }
 
-	public function testIsDefinedAppPath()
-	{
-		$test = defined('APPPATH');
+    public function testIsDefinedAppPath()
+    {
+        $test = defined('APPPATH');
 
-		$this->assertTrue($test);
-	}
+        $this->assertTrue($test);
+    }
 }

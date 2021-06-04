@@ -44,212 +44,212 @@ use ReflectionMethod;
  */
 class Cell
 {
-	/**
-	 * Instance of the current Cache Instance
-	 *
-	 * @var CacheInterface
-	 */
-	protected $cache;
+    /**
+     * Instance of the current Cache Instance
+     *
+     * @var CacheInterface
+     */
+    protected $cache;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Cell constructor.
-	 *
-	 * @param CacheInterface $cache
-	 */
-	public function __construct(CacheInterface $cache)
-	{
-		$this->cache = $cache;
-	}
+    /**
+     * Cell constructor.
+     *
+     * @param CacheInterface $cache
+     */
+    public function __construct(CacheInterface $cache)
+    {
+        $this->cache = $cache;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Render a cell, returning its body as a string.
-	 *
-	 * @param string      $library
-	 * @param null        $params
-	 * @param integer     $ttl
-	 * @param string|null $cacheName
-	 *
-	 * @return string
-	 * @throws ReflectionException
-	 */
-	public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
-	{
-		[$class, $method] = $this->determineClass($library);
+    /**
+     * Render a cell, returning its body as a string.
+     *
+     * @param string      $library
+     * @param null        $params
+     * @param integer     $ttl
+     * @param string|null $cacheName
+     *
+     * @return string
+     * @throws ReflectionException
+     */
+    public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
+    {
+        [$class, $method] = $this->determineClass($library);
 
-		// Is it cached?
-		$cacheName = ! empty($cacheName)
-			? $cacheName
-			: str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
+        // Is it cached?
+        $cacheName = ! empty($cacheName)
+            ? $cacheName
+            : str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
 
-		if (! empty($this->cache) && $output = $this->cache->get($cacheName))
-		{
-			return $output;
-		}
+        if (! empty($this->cache) && $output = $this->cache->get($cacheName))
+        {
+            return $output;
+        }
 
-		// Not cached - so grab it...
-		$instance = new $class();
+        // Not cached - so grab it...
+        $instance = new $class();
 
-		if (method_exists($instance, 'initController'))
-		{
-			$instance->initController(Services::request(), Services::response(), Services::logger());
-		}
+        if (method_exists($instance, 'initController'))
+        {
+            $instance->initController(Services::request(), Services::response(), Services::logger());
+        }
 
-		if (! method_exists($instance, $method))
-		{
-			throw ViewException::forInvalidCellMethod($class, $method);
-		}
+        if (! method_exists($instance, $method))
+        {
+            throw ViewException::forInvalidCellMethod($class, $method);
+        }
 
-		// Try to match up the parameter list we were provided
-		// with the parameter name in the callback method.
-		$paramArray = $this->prepareParams($params);
-		$refMethod  = new ReflectionMethod($instance, $method);
-		$paramCount = $refMethod->getNumberOfParameters();
-		$refParams  = $refMethod->getParameters();
+        // Try to match up the parameter list we were provided
+        // with the parameter name in the callback method.
+        $paramArray = $this->prepareParams($params);
+        $refMethod  = new ReflectionMethod($instance, $method);
+        $paramCount = $refMethod->getNumberOfParameters();
+        $refParams  = $refMethod->getParameters();
 
-		if ($paramCount === 0)
-		{
-			if (! empty($paramArray))
-			{
-				throw ViewException::forMissingCellParameters($class, $method);
-			}
+        if ($paramCount === 0)
+        {
+            if (! empty($paramArray))
+            {
+                throw ViewException::forMissingCellParameters($class, $method);
+            }
 
-			$output = $instance->{$method}();
-		}
-		elseif (($paramCount === 1)
-			&& ((! array_key_exists($refParams[0]->name, $paramArray))
-			|| (array_key_exists($refParams[0]->name, $paramArray)
-			&& count($paramArray) !== 1))
-		)
-		{
-			$output = $instance->{$method}($paramArray);
-		}
-		else
-		{
-			$fireArgs     = [];
-			$methodParams = [];
+            $output = $instance->{$method}();
+        }
+        elseif (($paramCount === 1)
+            && ((! array_key_exists($refParams[0]->name, $paramArray))
+            || (array_key_exists($refParams[0]->name, $paramArray)
+            && count($paramArray) !== 1))
+        )
+        {
+            $output = $instance->{$method}($paramArray);
+        }
+        else
+        {
+            $fireArgs     = [];
+            $methodParams = [];
 
-			foreach ($refParams as $arg)
-			{
-				$methodParams[$arg->name] = true;
-				if (array_key_exists($arg->name, $paramArray))
-				{
-					$fireArgs[$arg->name] = $paramArray[$arg->name];
-				}
-			}
+            foreach ($refParams as $arg)
+            {
+                $methodParams[$arg->name] = true;
+                if (array_key_exists($arg->name, $paramArray))
+                {
+                    $fireArgs[$arg->name] = $paramArray[$arg->name];
+                }
+            }
 
-			foreach (array_keys($paramArray) as $key)
-			{
-				if (! isset($methodParams[$key]))
-				{
-					throw ViewException::forInvalidCellParameter($key);
-				}
-			}
+            foreach (array_keys($paramArray) as $key)
+            {
+                if (! isset($methodParams[$key]))
+                {
+                    throw ViewException::forInvalidCellParameter($key);
+                }
+            }
 
-			$output = $instance->$method(...array_values($fireArgs));
-		}
-		// Can we cache it?
-		if (! empty($this->cache) && $ttl !== 0)
-		{
-			$this->cache->save($cacheName, $output, $ttl);
-		}
-		return $output;
-	}
+            $output = $instance->$method(...array_values($fireArgs));
+        }
+        // Can we cache it?
+        if (! empty($this->cache) && $ttl !== 0)
+        {
+            $this->cache->save($cacheName, $output, $ttl);
+        }
+        return $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Parses the params attribute. If an array, returns untouched.
-	 * If a string, it should be in the format "key1=value key2=value".
-	 * It will be split and returned as an array.
-	 *
-	 * @param mixed $params
-	 *
-	 * @return array|null
-	 */
-	public function prepareParams($params)
-	{
-		if (empty($params) || (! is_string($params) && ! is_array($params)))
-		{
-			return [];
-		}
+    /**
+     * Parses the params attribute. If an array, returns untouched.
+     * If a string, it should be in the format "key1=value key2=value".
+     * It will be split and returned as an array.
+     *
+     * @param mixed $params
+     *
+     * @return array|null
+     */
+    public function prepareParams($params)
+    {
+        if (empty($params) || (! is_string($params) && ! is_array($params)))
+        {
+            return [];
+        }
 
-		if (is_string($params))
-		{
-			$newParams = [];
-			$separator = ' ';
+        if (is_string($params))
+        {
+            $newParams = [];
+            $separator = ' ';
 
-			if (strpos($params, ',') !== false)
-			{
-				$separator = ',';
-			}
+            if (strpos($params, ',') !== false)
+            {
+                $separator = ',';
+            }
 
-			$params = explode($separator, $params);
-			unset($separator);
+            $params = explode($separator, $params);
+            unset($separator);
 
-			foreach ($params as $p)
-			{
-				if (! empty($p))
-				{
-					[$key, $val]       = explode('=', $p);
-					$newParams[trim($key)] = trim($val, ', ');
-				}
-			}
+            foreach ($params as $p)
+            {
+                if (! empty($p))
+                {
+                    [$key, $val]       = explode('=', $p);
+                    $newParams[trim($key)] = trim($val, ', ');
+                }
+            }
 
-			$params = $newParams;
+            $params = $newParams;
 
-			unset($newParams);
-		}
+            unset($newParams);
+        }
 
-		if (is_array($params) && empty($params))
-		{
-			return [];
-		}
+        if (is_array($params) && empty($params))
+        {
+            return [];
+        }
 
-		return $params;
-	}
+        return $params;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Given the library string, attempts to determine the class and method
-	 * to call.
-	 *
-	 * @param string $library
-	 *
-	 * @return array
-	 */
-	protected function determineClass(string $library): array
-	{
-		// We don't want to actually call static methods
-		// by default, so convert any double colons.
-		$library = str_replace('::', ':', $library);
+    /**
+     * Given the library string, attempts to determine the class and method
+     * to call.
+     *
+     * @param string $library
+     *
+     * @return array
+     */
+    protected function determineClass(string $library): array
+    {
+        // We don't want to actually call static methods
+        // by default, so convert any double colons.
+        $library = str_replace('::', ':', $library);
 
-		[$class, $method] = explode(':', $library);
+        [$class, $method] = explode(':', $library);
 
-		if (empty($class))
-		{
-			throw ViewException::forNoCellClass();
-		}
+        if (empty($class))
+        {
+            throw ViewException::forNoCellClass();
+        }
 
-		if (! class_exists($class, true))
-		{
-			throw ViewException::forInvalidCellClass($class);
-		}
+        if (! class_exists($class, true))
+        {
+            throw ViewException::forInvalidCellClass($class);
+        }
 
-		if (empty($method))
-		{
-			$method = 'index';
-		}
+        if (empty($method))
+        {
+            $method = 'index';
+        }
 
-		return [
-			$class,
-			$method,
-		];
-	}
+        return [
+            $class,
+            $method,
+        ];
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }

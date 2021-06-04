@@ -6,44 +6,44 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 class BaseTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->db = new MockConnection([]);
-	}
+        $this->db = new MockConnection([]);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDbReturnsConnection()
-	{
-		$builder = $this->db->table('jobs');
+    public function testDbReturnsConnection()
+    {
+        $builder = $this->db->table('jobs');
 
-		$result = $builder->db();
+        $result = $builder->db();
 
-		$this->assertInstanceOf(MockConnection::class, $result);
-	}
+        $this->assertInstanceOf(MockConnection::class, $result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testGetTableReturnsTable()
-	{
-		$builder = $this->db->table('jobs');
+    public function testGetTableReturnsTable()
+    {
+        $builder = $this->db->table('jobs');
 
-		$result = $builder->getTable();
-		$this->assertEquals('jobs', $result);
-	}
+        $result = $builder->getTable();
+        $this->assertEquals('jobs', $result);
+    }
 
-	public function testGetTableIgnoresFrom()
-	{
-		$builder = $this->db->table('jobs');
+    public function testGetTableIgnoresFrom()
+    {
+        $builder = $this->db->table('jobs');
 
-		$builder->from('foo');
-		$result = $builder->getTable();
-		$this->assertEquals('jobs', $result);
-	}
+        $builder->from('foo');
+        $result = $builder->getTable();
+        $this->assertEquals('jobs', $result);
+    }
 }

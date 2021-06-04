@@ -18,120 +18,120 @@ use CodeIgniter\HTTP\RequestInterface;
  */
 interface ValidationInterface
 {
-	/**
-	 * Runs the validation process, returning true/false determining whether
-	 * or not validation was successful.
-	 *
-	 * @param array  $data  The array of data to validate.
-	 * @param string $group The pre-defined group of rules to apply.
-	 *
-	 * @return boolean
-	 */
-	public function run(array $data = null, string $group = null): bool;
+    /**
+     * Runs the validation process, returning true/false determining whether
+     * or not validation was successful.
+     *
+     * @param array  $data  The array of data to validate.
+     * @param string $group The pre-defined group of rules to apply.
+     *
+     * @return boolean
+     */
+    public function run(array $data = null, string $group = null): bool;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Check; runs the validation process, returning true or false
-	 * determining whether or not validation was successful.
-	 *
-	 * @param mixed    $value  Value to validation.
-	 * @param string   $rule   Rule.
-	 * @param string[] $errors Errors.
-	 *
-	 * @return boolean True if valid, else false.
-	 */
-	public function check($value, string $rule, array $errors = []): bool;
+    /**
+     * Check; runs the validation process, returning true or false
+     * determining whether or not validation was successful.
+     *
+     * @param mixed    $value  Value to validation.
+     * @param string   $rule   Rule.
+     * @param string[] $errors Errors.
+     *
+     * @return boolean True if valid, else false.
+     */
+    public function check($value, string $rule, array $errors = []): bool;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Takes a Request object and grabs the input data to use from its
-	 * array values.
-	 *
-	 * @param RequestInterface $request
-	 *
-	 * @return ValidationInterface
-	 */
-	public function withRequest(RequestInterface $request): ValidationInterface;
+    /**
+     * Takes a Request object and grabs the input data to use from its
+     * array values.
+     *
+     * @param RequestInterface $request
+     *
+     * @return ValidationInterface
+     */
+    public function withRequest(RequestInterface $request): ValidationInterface;
 
-	//--------------------------------------------------------------------
-	// Rules
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Rules
+    //--------------------------------------------------------------------
 
-	/**
-	 * Stores the rules that should be used to validate the items.
-	 *
-	 * @param array $rules
-	 * @param array $messages
-	 *
-	 * @return ValidationInterface
-	 */
-	public function setRules(array $rules, array $messages = []): ValidationInterface;
+    /**
+     * Stores the rules that should be used to validate the items.
+     *
+     * @param array $rules
+     * @param array $messages
+     *
+     * @return ValidationInterface
+     */
+    public function setRules(array $rules, array $messages = []): ValidationInterface;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Checks to see if the rule for key $field has been set or not.
-	 *
-	 * @param string $field
-	 *
-	 * @return boolean
-	 */
-	public function hasRule(string $field): bool;
+    /**
+     * Checks to see if the rule for key $field has been set or not.
+     *
+     * @param string $field
+     *
+     * @return boolean
+     */
+    public function hasRule(string $field): bool;
 
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Errors
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Errors
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns the error for a specified $field (or empty string if not set).
-	 *
-	 * @param string $field
-	 *
-	 * @return string
-	 */
-	public function getError(string $field): string;
+    /**
+     * Returns the error for a specified $field (or empty string if not set).
+     *
+     * @param string $field
+     *
+     * @return string
+     */
+    public function getError(string $field): string;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns the array of errors that were encountered during
-	 * a run() call. The array should be in the following format:
-	 *
-	 *    [
-	 *        'field1' => 'error message',
-	 *        'field2' => 'error message',
-	 *    ]
-	 *
-	 * @return array<string,string>
-	 */
-	public function getErrors(): array;
+    /**
+     * Returns the array of errors that were encountered during
+     * a run() call. The array should be in the following format:
+     *
+     *    [
+     *        'field1' => 'error message',
+     *        'field2' => 'error message',
+     *    ]
+     *
+     * @return array<string,string>
+     */
+    public function getErrors(): array;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Sets the error for a specific field. Used by custom validation methods.
-	 *
-	 * @param string $alias
-	 * @param string $error
-	 *
-	 * @return ValidationInterface
-	 */
-	public function setError(string $alias, string $error): ValidationInterface;
+    /**
+     * Sets the error for a specific field. Used by custom validation methods.
+     *
+     * @param string $alias
+     * @param string $error
+     *
+     * @return ValidationInterface
+     */
+    public function setError(string $alias, string $error): ValidationInterface;
 
-	//--------------------------------------------------------------------
-	// Misc
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Misc
+    //--------------------------------------------------------------------
 
-	/**
-	 * Resets the class to a blank slate. Should be called whenever
-	 * you need to process more than one array.
-	 *
-	 * @return ValidationInterface
-	 */
-	public function reset(): ValidationInterface;
+    /**
+     * Resets the class to a blank slate. Should be called whenever
+     * you need to process more than one array.
+     *
+     * @return ValidationInterface
+     */
+    public function reset(): ValidationInterface;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }
