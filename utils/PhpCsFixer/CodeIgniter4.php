@@ -19,6 +19,7 @@ final class CodeIgniter4 extends AbstractRuleset
 
         $this->rules = [
             'align_multiline_comment' => ['comment_type' => 'phpdocs_only'],
+            'array_indentation' => true,
             'indentation_type' => true,
         ];
 

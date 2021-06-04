@@ -200,16 +200,17 @@ class ParserTest extends CIUnitTestCase
         $eagle->home = 'Rockies';
 
         $data = [
-            'birds' => [[
-                            'pop'  => $eagle,
-                            'mom'  => 'Owl',
-                            'kids' => [
-                                'Tom',
-                                'Dick',
-                                'Harry',
-                            ],
-                            'home' => opendir('.'),
-                        ],
+            'birds' => [
+                [
+                    'pop'  => $eagle,
+                    'mom'  => 'Owl',
+                    'kids' => [
+                        'Tom',
+                        'Dick',
+                        'Harry',
+                    ],
+                    'home' => opendir('.'),
+                ],
             ],
         ];
 

@@ -24,8 +24,8 @@ class FabricatorModel extends Model
     public function fake(Generator &$faker)
     {
         return (object) [
-                            'name'        => $faker->ipv4,
-                            'description' => $faker->words(10),
-                        ];
+            'name'        => $faker->ipv4,
+            'description' => $faker->words(10),
+        ];
     }
 }

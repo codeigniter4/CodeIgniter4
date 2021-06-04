@@ -168,9 +168,9 @@ class FeatureTestTraitTest extends CIUnitTestCase
                 },
             ],
         ])->withSession([
-              'fruit'    => 'apple',
-              'greeting' => 'hello',
-          ])->get('home');
+            'fruit'    => 'apple',
+            'greeting' => 'hello',
+        ])->get('home');
 
         $response->assertSessionHas('fruit', 'apple');
         $response->assertSessionMissing('popcorn');

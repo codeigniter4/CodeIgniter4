@@ -40,13 +40,13 @@ class FilesystemHelperTest extends CIUnitTestCase
 
         $expected = [
             'foo' . DIRECTORY_SEPARATOR           => [
-                        'bar',
-                        'baz',
-                    ],
+                'bar',
+                'baz',
+            ],
             'boo' . DIRECTORY_SEPARATOR           => [
-                        'far',
-                        'faz',
-                    ],
+                'far',
+                'faz',
+            ],
             'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
             'simpleFile'
         ];
@@ -64,13 +64,13 @@ class FilesystemHelperTest extends CIUnitTestCase
 
         $expected = [
             'foo' . DIRECTORY_SEPARATOR => [
-                        'bar',
-                        'baz',
-                    ],
+                'bar',
+                'baz',
+            ],
             'boo' . DIRECTORY_SEPARATOR => [
-                        'far',
-                        'faz',
-                    ],
+                'far',
+                'faz',
+            ],
             'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
             'simpleFile',
             '.hidden'
