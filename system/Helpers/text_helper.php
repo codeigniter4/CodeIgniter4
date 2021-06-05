@@ -122,7 +122,7 @@ if (! function_exists('ascii_to_entities'))
 				 */
 				if (count($temp) === 1)
 				{
-					$out .= '&#' . array_shift($temp) . ';';
+					$out  .= '&#' . array_shift($temp) . ';';
 					$count = 1;
 				}
 
@@ -140,9 +140,9 @@ if (! function_exists('ascii_to_entities'))
 				if (count($temp) === $count)
 				{
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
-					$out .= '&#' . $number . ';';
-					$count = 1;
-					$temp  = [];
+					$out   .= '&#' . $number . ';';
+					$count  = 1;
+					$temp   = [];
 				}
 				// If this is the last iteration, just output whatever we have
 				elseif ($i === $s)
@@ -486,7 +486,7 @@ if (! function_exists('word_wrap'))
 				}
 				// Trim the word down
 				$temp .= mb_substr($line, 0, $charlim - 1);
-				$line = mb_substr($line, $charlim - 1);
+				$line  = mb_substr($line, $charlim - 1);
 			}
 
 			// If $temp contains data it means we had to split up an over-length
@@ -811,14 +811,14 @@ if (! function_exists('excerpt'))
 			$phrasePos = stripos($text, $phrase);
 			$phraseLen = strlen($phrase);
 		}
-		elseif (! isset($phrase))
+		else
 		{
 			$phrasePos = $radius / 2;
 			$phraseLen = 1;
 		}
 
-		$pre = explode(' ', substr($text, 0, $phrasePos)); // @phpstan-ignore-line
-		$pos = explode(' ', substr($text, $phrasePos + $phraseLen)); // @phpstan-ignore-line
+		$pre = explode(' ', substr($text, 0, $phrasePos));
+		$pos = explode(' ', substr($text, $phrasePos + $phraseLen));
 
 		$prev  = ' ';
 		$post  = ' ';

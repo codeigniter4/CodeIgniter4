@@ -147,12 +147,11 @@ class Pager implements PagerInterface
 	 */
 	protected function displayLinks(string $group, string $template): string
 	{
-		$pager = new PagerRenderer($this->getDetails($group));
-
 		if (! array_key_exists($template, $this->config->templates))
 		{
 			throw PagerException::forInvalidTemplate($template);
 		}
+		$pager = new PagerRenderer($this->getDetails($group));
 
 		return $this->view->setVar('pager', $pager)
 						->render($this->config->templates[$template]);
@@ -377,7 +376,7 @@ class Pager implements PagerInterface
 			$uri->setQueryArray($query);
 		}
 
-		return $returnObject === true ? $uri : (string) $uri;
+		return $returnObject === true ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
 	}
 
 	//--------------------------------------------------------------------

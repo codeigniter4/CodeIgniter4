@@ -117,9 +117,9 @@ final class ResponseCookieTest extends CIUnitTestCase
 
 		$response->setCookie('foo', 'bar');
 		$cookie = $response->getCookie('foo');
-		$this->assertTrue($cookie->isHTTPOnly());
+		$this->assertFalse($cookie->isHTTPOnly());
 
-		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => false]);
+		$response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => true]);
 		$cookie = $response->getCookie('bee');
 		$this->assertTrue($cookie->isHTTPOnly());
 	}

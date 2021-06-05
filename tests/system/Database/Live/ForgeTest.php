@@ -249,8 +249,16 @@ class ForgeTest extends CIUnitTestCase
 	public function testCreateTableWithNullableFieldsGivesNullDataType(): void
 	{
 		$this->forge->addField([
-			'id'   => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => true],
-			'name' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+			'id'   => [
+				'type'           => 'INT',
+				'constraint'     => 11,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => true,
+			],
 		]);
 
 		$createTable = $this->getPrivateMethodInvoker($this->forge, '_createTable');
@@ -620,7 +628,13 @@ class ForgeTest extends CIUnitTestCase
 			$this->assertEquals($fieldsData[0]->type, 'int');
 			$this->assertEquals($fieldsData[1]->type, 'varchar');
 
-			$this->assertEquals($fieldsData[0]->max_length, 11);
+			if (version_compare($this->db->getVersion(), '8.0.17', '<'))
+			{
+				// As of MySQL 8.0.17, the display width attribute for integer data types
+				// is deprecated and is not reported back anymore.
+				// @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
+				$this->assertEquals($fieldsData[0]->max_length, 11);
+			}
 
 			$this->assertNull($fieldsData[0]->default);
 			$this->assertNull($fieldsData[1]->default);

@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**

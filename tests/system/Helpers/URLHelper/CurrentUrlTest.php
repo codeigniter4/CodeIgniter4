@@ -153,7 +153,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('/assets/image.jpg', uri_string());
 	}
 
@@ -167,7 +166,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('assets/image.jpg', uri_string(true));
 	}
 
@@ -182,7 +180,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('/assets/image.jpg', uri_string());
 	}
 
@@ -197,7 +194,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('assets/image.jpg', uri_string(true));
 	}
 
@@ -208,7 +204,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('/', uri_string());
 	}
 
@@ -219,7 +214,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('', uri_string(true));
 	}
 
@@ -234,15 +228,14 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('/subfolder/assets/image.jpg', uri_string());
 	}
 
 	public function testUriStringSubfolderRelative()
 	{
 		$_SERVER['HTTP_HOST']   = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 		$_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+		$_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
 
 		$this->config->baseURL = 'http://example.com/subfolder/';
 		$request               = Services::request($this->config);
@@ -250,7 +243,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$url = current_url();
 		$this->assertEquals('assets/image.jpg', uri_string(true));
 	}
 
@@ -304,7 +296,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 	 */
 	public function testUrlIs(string $currentPath, string $testPath, bool $expected)
 	{
-		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/' . $currentPath;
 
 		$request      = Services::request();
 		$request->uri = new URI('http://example.com/' . $currentPath);
@@ -319,6 +312,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 	public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
 	{
 		$_SERVER['HTTP_HOST']    = 'example.com';
+		$_SERVER['REQUEST_URI']  = '/' . $currentPath;
 		$this->config->indexPage = '';
 
 		$request      = Services::request($this->config);
@@ -333,8 +327,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 	 */
 	public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
 	{
-		$_SERVER['HTTP_HOST']  = 'example.com';
-		$this->config->baseURL = 'http://example.com/subfolder/';
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/' . $currentPath;
+		$_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
+		$this->config->baseURL  = 'http://example.com/subfolder/';
 
 		$request      = Services::request($this->config);
 		$request->uri = new URI('http://example.com/subfolder/' . $currentPath);

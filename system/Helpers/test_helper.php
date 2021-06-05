@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use CodeIgniter\Model;
 use CodeIgniter\Test\Fabricator;
 
 /**

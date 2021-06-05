@@ -7,7 +7,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use Exception;
 
-class MemcachedHandlerTest extends CIUnitTestCase
+final class MemcachedHandlerTest extends CIUnitTestCase
 {
 	private $memcachedHandler;
 	private static $key1 = 'key1';
@@ -32,10 +32,6 @@ class MemcachedHandlerTest extends CIUnitTestCase
 		$this->config = new Cache();
 
 		$this->memcachedHandler = new MemcachedHandler($this->config);
-		if (! $this->memcachedHandler->isSupported())
-		{
-			$this->markTestSkipped('Not support memcached and memcache');
-		}
 
 		$this->memcachedHandler->initialize();
 	}
@@ -53,6 +49,12 @@ class MemcachedHandlerTest extends CIUnitTestCase
 		$this->assertInstanceOf(MemcachedHandler::class, $this->memcachedHandler);
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testGet()
 	{
 		$this->memcachedHandler->save(self::$key1, 'value', 2);
@@ -64,6 +66,12 @@ class MemcachedHandlerTest extends CIUnitTestCase
 		$this->assertNull($this->memcachedHandler->get(self::$key1));
 	}
 
+	/**
+	 * This test waits for 3 seconds before last assertion so this
+	 * is naturally a "slow" test on the perspective of the default limit.
+	 *
+	 * @timeLimit 3.5
+	 */
 	public function testRemember()
 	{
 		$this->memcachedHandler->remember(self::$key1, 2, function () {

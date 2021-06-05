@@ -358,7 +358,7 @@ class Filters
 		// Get parameters and clean name
 		if (strpos($name, ':') !== false)
 		{
-			list($name, $params) = explode(':', $name);
+			[$name, $params] = explode(':', $name);
 
 			$params = explode(',', $params);
 			array_walk($params, function (&$item) {

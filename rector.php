@@ -11,6 +11,7 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
+use Rector\CodeQualityStrict\Rector\Variable\MoveVariableDeclarationNearReferenceRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
@@ -22,11 +23,15 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
+use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
+use Rector\Php71\Rector\List_\ListToArrayDestructRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
+use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
+use Utils\Rector\RemoveVarTagFromClassConstantRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -84,4 +89,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$services->set(ChangeArrayPushToArrayAssignRector::class);
 	$services->set(UnnecessaryTernaryExpressionRector::class);
 	$services->set(RemoveUnusedPrivatePropertyRector::class);
+	$services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
+	$services->set(TernaryToNullCoalescingRector::class);
+	$services->set(ListToArrayDestructRector::class);
+	$services->set(MoveVariableDeclarationNearReferenceRector::class);
+	$services->set(RemoveVarTagFromClassConstantRector::class);
 };

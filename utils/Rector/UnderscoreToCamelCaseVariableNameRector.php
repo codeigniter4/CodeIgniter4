@@ -24,7 +24,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 {
 	/**
-	 * @var string
 	 * @see https://regex101.com/r/OtFn8I/1
 	 */
 	private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';

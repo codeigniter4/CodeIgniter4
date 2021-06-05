@@ -12,10 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\Database\Seeder;
 use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;

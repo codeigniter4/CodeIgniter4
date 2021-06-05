@@ -34,6 +34,24 @@ class CURLRequestTest extends CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/4707
+	 */
+	public function testPrepareURLIgnoresAppConfig()
+	{
+		config('App')->baseURL = 'http://example.com/fruit/';
+
+		$request = $this->getRequest([
+			'base_uri' => 'http://example.com/v1/',
+		]);
+
+		$method = $this->getPrivateMethodInvoker($request, 'prepareURL');
+
+		$this->assertEquals('http://example.com/v1/bananas', $method('bananas'));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
 	 */
 	public function testGetRemembersBaseURI()

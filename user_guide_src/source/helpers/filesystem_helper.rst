@@ -26,7 +26,7 @@ The following functions are available:
 
     :param	string  $source_dir: Path to the source directory
     :param	int	    $directory_depth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
-    :param	bool	$hidden: Whether to include hidden directories
+    :param	bool	$hidden: Whether to include hidden paths
     :returns:	An array of files
     :rtype:	array
 
@@ -42,8 +42,9 @@ The following functions are available:
 
         $map = directory_map('./mydirectory/', 1);
 
-    By default, hidden files will not be included in the returned array. To
-    override this behavior, you may set a third parameter to true (boolean)::
+    By default, hidden files will not be included in the returned array and
+    hidden directories will be skipped. To override this behavior, you may
+    set a third parameter to true (boolean)::
 
         $map = directory_map('./mydirectory/', FALSE, TRUE);
 
@@ -78,6 +79,28 @@ The following functions are available:
         )
 
     If no results are found, this will return an empty array.
+
+.. php:function:: directory_mirror($original, $target[, $overwrite = true])
+
+    :param	string	$original: Original source directory
+    :param	string	$target: Target destination directory
+    :param	bool	$overwrite: Whether individual files overwrite on collision
+
+    Recursively copies the files and directories of the origin directory
+    into the target directory, i.e. "mirror" its contents.
+
+    Example::
+
+        try
+        {     
+            directory_mirror($uploadedImages, FCPATH . 'images/');
+        }
+        catch (Throwable $e)
+        {     
+            echo 'Failed to export uploads!';
+        }
+
+    You can optionally change the overwrite behavior via the third parameter.
 
 .. php:function:: write_file($path, $data[, $mode = 'wb'])
 
@@ -215,6 +238,19 @@ The following functions are available:
     ::
 
         echo octal_permissions(fileperms('./index.php')); // 644
+
+.. php:function:: same_file($file1, $file2)
+
+    :param	string	$file1: Path to the first file
+    :param	string	$file2: Path to the second file
+    :returns:	Whether both files exist with identical hashes
+    :rtype:	boolean
+
+    Compares two files to see if they are the same (based on their MD5 hash).
+
+    ::
+
+        echo same_file($newFile, $oldFile) ? 'Same!' : 'Different!';
 
 .. php:function:: set_realpath($path[, $check_existence = FALSE])
 

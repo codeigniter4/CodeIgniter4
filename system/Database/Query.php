@@ -315,13 +315,13 @@ class Query implements QueryInterface
 	 *
 	 * @return void
 	 *
-	 * @see https://regex101.com/r/EUEhay/1 Test
+	 * @see https://regex101.com/r/EUEhay/4
 	 */
 	protected function compileBinds()
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = preg_match('/:[a-z\d.)_(]+:/i', $sql) === 1;
+		$hasNamedBinds = preg_match('/:((?!=).+):/', $sql) === 1;
 
 		if (empty($this->binds)
 			|| empty($this->bindMarker)

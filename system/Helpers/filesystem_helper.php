@@ -75,6 +75,59 @@ if (! function_exists('directory_map'))
 
 // ------------------------------------------------------------------------
 
+if (! function_exists('directory_mirror'))
+{
+	/**
+	 * Recursively copies the files and directories of the origin directory
+	 * into the target directory, i.e. "mirror" its contents.
+	 *
+	 * @param string  $originDir
+	 * @param string  $targetDir
+	 * @param boolean $overwrite Whether individual files overwrite on collision
+	 *
+	 * @return void
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	function directory_mirror(string $originDir, string $targetDir, bool $overwrite = true): void
+	{
+		if (! is_dir($originDir = rtrim($originDir, '\\/')))
+		{
+			throw new InvalidArgumentException(sprintf('The origin directory "%s" was not found.', $originDir));
+		}
+
+		if (! is_dir($targetDir = rtrim($targetDir, '\\/')))
+		{
+			@mkdir($targetDir, 0755, true);
+		}
+
+		$dirLen = strlen($originDir);
+
+		/**
+		 * @var SplFileInfo $file
+		 */
+		foreach (new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::SELF_FIRST
+		) as $file)
+		{
+			$origin = $file->getPathname();
+			$target = $targetDir . substr($origin, $dirLen);
+
+			if ($file->isDir())
+			{
+				mkdir($target, 0755);
+			}
+			elseif (! is_file($target) || ($overwrite && is_file($target)))
+			{
+				copy($origin, $target);
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------
+
 if (! function_exists('write_file'))
 {
 	/**
@@ -159,12 +212,12 @@ if (! function_exists('delete_files'))
 					$isDir = $object->isDir();
 					if ($isDir && $delDir)
 					{
-						@rmdir($object->getPathname());
+						rmdir($object->getPathname());
 						continue;
 					}
 					if (! $isDir)
 					{
-						@unlink($object->getPathname());
+						unlink($object->getPathname());
 					}
 				}
 			}
@@ -264,7 +317,7 @@ if (! function_exists('get_dir_file_info'))
 
 		try
 		{
-			$fp = @opendir($sourceDir); {
+			$fp = opendir($sourceDir); {
 				// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 				{
@@ -321,6 +374,8 @@ if (! function_exists('get_file_info'))
 			return null;
 		}
 
+		$fileInfo = [];
+
 		if (is_string($returnedValues))
 		{
 			$returnedValues = explode(',', $returnedValues);
@@ -356,7 +411,7 @@ if (! function_exists('get_file_info'))
 			}
 		}
 
-		return $fileInfo; // @phpstan-ignore-line
+		return $fileInfo;
 	}
 }
 
@@ -443,6 +498,24 @@ if (! function_exists('octal_permissions'))
 	function octal_permissions(int $perms): string
 	{
 		return substr(sprintf('%o', $perms), -3);
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if (! function_exists('same_file'))
+{
+	/**
+	 * Checks if two files both exist and have identical hashes
+	 *
+	 * @param string $file1
+	 * @param string $file2
+	 *
+	 * @return boolean  Same or not
+	 */
+	function same_file(string $file1, string $file2): bool
+	{
+		return is_file($file1) && is_file($file2) && md5_file($file1) === md5_file($file2);
 	}
 }
 

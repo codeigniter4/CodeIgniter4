@@ -6,6 +6,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+
 class FilesystemHelperTest extends CIUnitTestCase
 {
 
@@ -100,6 +103,58 @@ class FilesystemHelperTest extends CIUnitTestCase
 	public function testDirectoryMapHandlesNotfound()
 	{
 		$this->assertEquals([], directory_map(SUPPORTPATH . 'Files/shaker/'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDirectoryMirror()
+	{
+		$this->assertTrue(function_exists('directory_mirror'));
+
+		// Create a subdirectory
+		$this->structure['foo']['bam'] = ['zab' => 'A deep file'];
+
+		$vfs  = vfsStream::setup('root', null, $this->structure);
+		$root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+		directory_mirror($root . 'foo', $root . 'boo');
+
+		$this->assertFileExists($root . 'boo/bar');
+		$this->assertFileExists($root . 'boo/bam/zab');
+	}
+
+	public function testDirectoryMirrorOverwrites()
+	{
+		$this->assertTrue(function_exists('directory_mirror'));
+
+		// Create duplicate files
+		$this->structure['foo']['far'] = 'all your base';
+		$this->structure['foo']['faz'] = 'are belong to us';
+
+		$vfs  = vfsStream::setup('root', null, $this->structure);
+		$root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+		directory_mirror($root . 'foo', $root . 'boo', true);
+		$result = file_get_contents($root . 'boo/faz');
+
+		$this->assertEquals($this->structure['foo']['faz'], $result);
+	}
+
+	public function testDirectoryMirrorNotOverwrites()
+	{
+		$this->assertTrue(function_exists('directory_mirror'));
+
+		// Create duplicate files
+		$this->structure['foo']['far'] = 'all your base';
+		$this->structure['foo']['faz'] = 'are belong to us';
+
+		$vfs  = vfsStream::setup('root', null, $this->structure);
+		$root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+		directory_mirror($root . 'foo', $root . 'boo', false);
+		$result = file_get_contents($root . 'boo/faz');
+
+		$this->assertEquals($this->structure['boo']['faz'], $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -379,6 +434,49 @@ class FilesystemHelperTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSameFileSame()
+	{
+		$file1 = SUPPORTPATH . 'Files/able/apple.php';
+		$file2 = SUPPORTPATH . 'Files/able/apple.php';
+
+		$this->assertTrue(same_file($file1, $file2));
+	}
+
+	public function testSameFileIdentical()
+	{
+		$file1 = SUPPORTPATH . 'Files/able/apple.php';
+		$file2 = SUPPORTPATH . 'Files/baker/banana.php';
+
+		$this->assertTrue(same_file($file1, $file2));
+	}
+
+	public function testSameFileDifferent()
+	{
+		$file1 = SUPPORTPATH . 'Files/able/apple.php';
+		$file2 = SUPPORTPATH . 'Images/ci-logo.gif';
+
+		$this->assertFalse(same_file($file1, $file2));
+	}
+
+	public function testSameFileOrder()
+	{
+		$file1 = SUPPORTPATH . 'Files/able/apple.php';
+		$file2 = SUPPORTPATH . 'Images/ci-logo.gif';
+
+		$this->assertFalse(same_file($file2, $file1));
+	}
+
+	public function testSameFileDirectory()
+	{
+		$file1 = SUPPORTPATH . 'Files/able/apple.php';
+		$file2 = SUPPORTPATH . 'Images/';
+
+		$this->assertFalse(same_file($file1, $file2));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testOctalPermissions()
 	{
 		$this->assertEquals('777', octal_permissions(0777));

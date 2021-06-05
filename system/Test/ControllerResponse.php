@@ -46,7 +46,7 @@ class ControllerResponse extends TestResponse
 	 */
 	public function __construct()
 	{
-		parent::__construct($response ?? Services::response());
+		parent::__construct(Services::response());
 
 		$this->dom = &$this->domParser;
 	}

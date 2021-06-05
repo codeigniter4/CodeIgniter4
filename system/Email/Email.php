@@ -1272,6 +1272,8 @@ class Email
 				return;
 
 			case 'html':
+				$boundary = uniqid('B_ALT_', true);
+
 				if ($this->sendMultipart === false)
 				{
 					$hdr .= 'Content-Type: text/html; charset='
@@ -1280,8 +1282,6 @@ class Email
 				}
 				else
 				{
-					$boundary = uniqid('B_ALT_', true);
-
 					$hdr  .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
 					$body .= $this->getMimeMessage() . $this->newline . $this->newline
 						. '--' . $boundary . $this->newline
@@ -1306,7 +1306,7 @@ class Email
 
 				if ($this->sendMultipart !== false)
 				{
-					$this->finalBody .= '--' . $boundary . '--'; // @phpstan-ignore-line
+					$this->finalBody .= '--' . $boundary . '--';
 				}
 
 				return;
@@ -1432,7 +1432,7 @@ class Email
 			{
 				continue;
 			}
-			$name  = isset($attachment['name'][1]) ? $attachment['name'][1] : basename($attachment['name'][0]);
+			$name  = $attachment['name'][1] ?? basename($attachment['name'][0]);
 			$body .= '--' . $boundary . $this->newline
 				. 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
 				. 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
@@ -2184,13 +2184,16 @@ class Email
 				$this->sendData('QUIT');
 				$resp = 221;
 				break;
+
+			default:
+				$resp = null;
 		}
 
 		$reply = $this->getSMTPData();
 
 		$this->debugMessage[] = '<pre>' . $cmd . ': ' . $reply . '</pre>';
 
-		if ((int) static::substr($reply, 0, 3) !== $resp) // @phpstan-ignore-line
+		if ($resp === null || ((int) static::substr($reply, 0, 3) !== $resp))
 		{
 			$this->setErrorMessage(lang('Email.SMTPError', [$reply]));
 
@@ -2278,6 +2281,8 @@ class Email
 	{
 		$data .= $this->newline;
 
+		$result = null;
+
 		for ($written = $timestamp = 0, $length = static::strlen($data); $written < $length; $written += $result)
 		{
 			if (($result = fwrite($this->SMTPConnect, static::substr($data, $written))) === false)
@@ -2307,7 +2312,7 @@ class Email
 			$timestamp = 0;
 		}
 
-		if ($result === false) // @phpstan-ignore-line
+		if (! is_int($result))
 		{
 			$this->setErrorMessage(lang('Email.SMTPDataFailure', [$data]));
 

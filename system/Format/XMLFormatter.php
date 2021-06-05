@@ -63,15 +63,15 @@ class XMLFormatter implements FormatterInterface
 	{
 		foreach ($data as $key => $value)
 		{
+			$key = $this->normalizeXMLTag($key);
+
 			if (is_array($value))
 			{
-				$key     = $this->normalizeXMLTag($key);
 				$subnode = $output->addChild("$key");
 				$this->arrayToXML($value, $subnode);
 			}
 			else
 			{
-				$key = $this->normalizeXMLTag($key);
 				$output->addChild("$key", htmlspecialchars("$value"));
 			}
 		}

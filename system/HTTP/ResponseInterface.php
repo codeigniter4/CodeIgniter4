@@ -38,32 +38,29 @@ interface ResponseInterface
 	 * From  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 	 */
 	// Informational
-	const HTTP_CONTINUE            = 100;
-	const HTTP_SWITCHING_PROTOCOLS = 101;
-	const HTTP_PROCESSING          = 102;
-	const HTTP_EARLY_HINTS         = 103;
-	// Success
-	const HTTP_OK                           = 200;
-	const HTTP_CREATED                      = 201;
-	const HTTP_ACCEPTED                     = 202;
-	const HTTP_NONAUTHORITATIVE_INFORMATION = 203;
-	const HTTP_NO_CONTENT                   = 204;
-	const HTTP_RESET_CONTENT                = 205;
-	const HTTP_PARTIAL_CONTENT              = 206;
-	const HTTP_MULTI_STATUS                 = 207;
-	const HTTP_ALREADY_REPORTED             = 208;
-	const HTTP_IM_USED                      = 226;
-	// Redirection
-	const HTTP_MULTIPLE_CHOICES   = 300;
-	const HTTP_MOVED_PERMANENTLY  = 301;
-	const HTTP_FOUND              = 302;
-	const HTTP_SEE_OTHER          = 303;
-	const HTTP_NOT_MODIFIED       = 304;
-	const HTTP_USE_PROXY          = 305;
-	const HTTP_SWITCH_PROXY       = 306;
-	const HTTP_TEMPORARY_REDIRECT = 307;
-	const HTTP_PERMANENT_REDIRECT = 308;
-	// Client Error
+	const HTTP_CONTINUE                        = 100;
+	const HTTP_SWITCHING_PROTOCOLS             = 101;
+	const HTTP_PROCESSING                      = 102;
+	const HTTP_EARLY_HINTS                     = 103;
+	const HTTP_OK                              = 200;
+	const HTTP_CREATED                         = 201;
+	const HTTP_ACCEPTED                        = 202;
+	const HTTP_NONAUTHORITATIVE_INFORMATION    = 203;
+	const HTTP_NO_CONTENT                      = 204;
+	const HTTP_RESET_CONTENT                   = 205;
+	const HTTP_PARTIAL_CONTENT                 = 206;
+	const HTTP_MULTI_STATUS                    = 207;
+	const HTTP_ALREADY_REPORTED                = 208;
+	const HTTP_IM_USED                         = 226;
+	const HTTP_MULTIPLE_CHOICES                = 300;
+	const HTTP_MOVED_PERMANENTLY               = 301;
+	const HTTP_FOUND                           = 302;
+	const HTTP_SEE_OTHER                       = 303;
+	const HTTP_NOT_MODIFIED                    = 304;
+	const HTTP_USE_PROXY                       = 305;
+	const HTTP_SWITCH_PROXY                    = 306;
+	const HTTP_TEMPORARY_REDIRECT              = 307;
+	const HTTP_PERMANENT_REDIRECT              = 308;
 	const HTTP_BAD_REQUEST                     = 400;
 	const HTTP_UNAUTHORIZED                    = 401;
 	const HTTP_PAYMENT_REQUIRED                = 402;
@@ -94,7 +91,6 @@ interface ResponseInterface
 	const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
 	const HTTP_UNAVAILABLE_FOR_LEGAL_REASONS   = 451;
 	const HTTP_CLIENT_CLOSED_REQUEST           = 499;
-	// Server Error
 	const HTTP_INTERNAL_SERVER_ERROR           = 500;
 	const HTTP_NOT_IMPLEMENTED                 = 501;
 	const HTTP_BAD_GATEWAY                     = 502;

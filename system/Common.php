@@ -740,15 +740,36 @@ if (! function_exists('helper'))
 if (! function_exists('is_cli'))
 {
 	/**
-	 * Is CLI?
-	 *
-	 * Test to see if a request was made from the command line.
+	 * Check if PHP was invoked from the command line.
 	 *
 	 * @return boolean
+	 *
+	 * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
 	 */
 	function is_cli(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		if (PHP_SAPI === 'cli')
+		{
+			return true;
+		}
+
+		if (defined('STDIN'))
+		{
+			return true;
+		}
+
+		if (stristr(PHP_SAPI, 'cgi') && getenv('TERM'))
+		{
+			return true;
+		}
+
+		if (! isset($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']) && isset($_SERVER['argv']) && count($_SERVER['argv']) > 0)
+		{
+			return true;
+		}
+
+		// if source of request is from CLI, the `$_SERVER` array will not populate this key
+		return ! isset($_SERVER['REQUEST_METHOD']);
 	}
 }
 
@@ -1278,14 +1299,16 @@ if (! function_exists('view_cell'))
  *
  * @see https://github.com/laravel/framework/blob/8.x/src/Illuminate/Support/helpers.php
  */
-// @codeCoverageIgnoreStart
 if (! function_exists('class_basename'))
 {
 	/**
 	 * Get the class "basename" of the given object / class.
 	 *
-	 * @param  string|object $class
+	 * @param string|object $class
+	 *
 	 * @return string
+	 *
+	 * @codeCoverageIgnore
 	 */
 	function class_basename($class)
 	{
@@ -1300,8 +1323,11 @@ if (! function_exists('class_uses_recursive'))
 	/**
 	 * Returns all traits used by a class, its parent classes and trait of their traits.
 	 *
-	 * @param  object|string $class
+	 * @param object|string $class
+	 *
 	 * @return array
+	 *
+	 * @codeCoverageIgnore
 	 */
 	function class_uses_recursive($class)
 	{
@@ -1327,8 +1353,11 @@ if (! function_exists('trait_uses_recursive'))
 	/**
 	 * Returns all traits used by a trait and its traits.
 	 *
-	 * @param  string $trait
+	 * @param string $trait
+	 *
 	 * @return array
+	 *
+	 * @codeCoverageIgnore
 	 */
 	function trait_uses_recursive($trait)
 	{
@@ -1342,4 +1371,3 @@ if (! function_exists('trait_uses_recursive'))
 		return $traits;
 	}
 }
-// @codeCoverageIgnoreEnd

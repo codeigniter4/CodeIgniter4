@@ -13,7 +13,6 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\Modules;
 use Config\Services;
