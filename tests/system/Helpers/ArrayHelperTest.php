@@ -368,81 +368,81 @@ class ArrayHelperTest extends CIUnitTestCase
     public function arrayFlattenProvider(): iterable
     {
         yield 'normal' => [
-                  [
-                      'id'   => '12',
-                      'user' => [
-                          'first_name' => 'john',
-                          'last_name'  => 'smith',
-                          'age'        => '26 years',
-                      ],
-                  ],
-                  [
-                      'id'              => '12',
-                      'user.first_name' => 'john',
-                      'user.last_name'  => 'smith',
-                      'user.age'        => '26 years',
-                  ],
-              ];
+            [
+                'id'   => '12',
+                'user' => [
+                    'first_name' => 'john',
+                    'last_name'  => 'smith',
+                    'age'        => '26 years',
+                ],
+            ],
+            [
+                'id'              => '12',
+                'user.first_name' => 'john',
+                'user.last_name'  => 'smith',
+                'user.age'        => '26 years',
+            ],
+        ];
 
         yield 'many-levels' => [
-                  [
-                      'foo' => 1,
-                      'bar' => [
-                          'bax' => [
-                              'baz' => 2,
-                              'biz' => 3,
-                          ],
-                      ],
-                      'baz' => [
-                          'fizz' => 4,
-                      ],
-                  ],
-                  [
-                      'foo'         => 1,
-                      'bar.bax.baz' => 2,
-                      'bar.bax.biz' => 3,
-                      'baz.fizz'    => 4,
-                  ],
-              ];
+            [
+                'foo' => 1,
+                'bar' => [
+                    'bax' => [
+                        'baz' => 2,
+                        'biz' => 3,
+                    ],
+                ],
+                'baz' => [
+                    'fizz' => 4,
+                ],
+            ],
+            [
+                'foo'         => 1,
+                'bar.bax.baz' => 2,
+                'bar.bax.biz' => 3,
+                'baz.fizz'    => 4,
+            ],
+        ];
 
         yield 'with-empty-arrays' => [
-                  [
-                      'foo' => 'bar',
-                      'baz' => [],
-                      'bar' => [
-                          'fizz' => 'buzz',
-                          'nope' => 'yeah',
-                          'why'  => [],
-                      ],
-                  ],
-                  [
-                      'foo'      => 'bar',
-                      'bar.fizz' => 'buzz',
-                      'bar.nope' => 'yeah',
-                  ],
-              ];
+            [
+                'foo' => 'bar',
+                'baz' => [],
+                'bar' => [
+                    'fizz' => 'buzz',
+                    'nope' => 'yeah',
+                    'why'  => [],
+                ],
+            ],
+            [
+                'foo'      => 'bar',
+                'bar.fizz' => 'buzz',
+                'bar.nope' => 'yeah',
+            ],
+        ];
 
         yield 'with-mixed-empty' => [
-                  [
-                      'foo' => 1,
-                      ''    => [
-                          'bar' => 2,
-                          'baz' => 3,
-                      ],
-                      0     => [
-                          'fizz' => 4,
-                      ],
-                      1     => [
-                          'buzz' => 5,
-                      ],
-                  ],
-                  [
-                      'foo'    => 1,
-                      '.bar'   => 2,
-                      '.baz'   => 3,
-                      '0.fizz' => 4,
-                      '1.buzz' => 5,
-                  ],
-              ];
+            [
+                'foo' => 1,
+                ''    => [
+                    'bar' => 2,
+                    'baz' => 3,
+                ],
+                0     => [
+                    'fizz' => 4,
+                ],
+                1     => [
+                    'buzz' => 5,
+                ],
+            ],
+            [
+                'foo'    => 1,
+                '.bar'   => 2,
+                '.baz'   => 3,
+                '0.fizz' => 4,
+                '1.buzz' => 5,
+            ],
+        ];
     }
 }

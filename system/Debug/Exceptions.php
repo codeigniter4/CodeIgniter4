@@ -126,8 +126,8 @@ class Exceptions
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
         {
             log_message('critical', $exception->getMessage() . "\n{trace}", [
-                            'trace' => $exception->getTraceAsString(),
-                        ]);
+                'trace' => $exception->getTraceAsString(),
+            ]);
         }
 
         if (! is_cli())

@@ -50,10 +50,10 @@ class TestLogger extends Logger
         }
 
         self::$op_logs[] = [
-                  'level'   => $level,
-                  'message' => $logMessage,
-                  'file'    => $file,
-              ];
+            'level'   => $level,
+            'message' => $logMessage,
+            'file'    => $file,
+        ];
 
         // Let the parent do it's thing.
         return parent::log($level, $message, $context);

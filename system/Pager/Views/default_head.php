@@ -12,8 +12,8 @@
 use CodeIgniter\Pager\PagerRenderer;
 
  /**
- * @var PagerRenderer $pager
- */
+  * @var PagerRenderer $pager
+  */
 $pager->setSurroundCount(0);
 
 if ($pager->hasPrevious())
