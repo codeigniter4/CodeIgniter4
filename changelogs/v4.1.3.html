@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Version 4.1.3 &mdash; CodeIgniter 4.1.2 documentation</title>
+  <title>Version 4.1.3 &mdash; CodeIgniter 4.1.3 documentation</title>
   
 
   
@@ -44,7 +44,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Version 4.1.2" href="v4.1.2.html" />
-    <link rel="prev" title="Change Logs" href="index.html" /> 
+    <link rel="prev" title="Version 4.1.4" href="v4.1.4.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -350,8 +350,27 @@
             
   <div class="section" id="version-4-1-3">
 <h1>Version 4.1.3<a class="headerlink" href="#version-4-1-3" title="Permalink to this headline">¶</a></h1>
-<p>Release Date: Not released</p>
+<p>Release Date: June 6, 2021</p>
 <p><strong>4.1.3 release of CodeIgniter4</strong></p>
+<p>Enhancements:</p>
+<ul class="simple">
+<li><p>New functions in the File Helper: <code class="docutils literal notranslate"><span class="pre">directory_mirror()</span></code> and <code class="docutils literal notranslate"><span class="pre">same_file()</span></code></p></li>
+<li><p>Implemented NexusPHP’s <code class="docutils literal notranslate"><span class="pre">Tachycardia</span></code> for slow test identification</p></li>
+<li><p>Added a new <code class="docutils literal notranslate"><span class="pre">$ttl</span></code> option to <code class="docutils literal notranslate"><span class="pre">Cache</span></code> config for future use</p></li>
+</ul>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>Added MySQL 8.0 to the test matrix</p></li>
+<li><p>Improved environment detection from <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code></p></li>
+<li><p>Numerous sweeping code improvements via Rector and analysis</p></li>
+</ul>
+<p>Bugs Fixed:</p>
+<ul class="simple">
+<li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> would try to use a project URI instead of its base</p></li>
+<li><p>Fixed a bug where CLI mode was not detected under <code class="docutils literal notranslate"><span class="pre">cgi-fcgi</span></code></p></li>
+<li><p>Fixed a logic bug in Cookie construction</p></li>
+<li><p>Fixed numerous issues in SQLite3’s <code class="docutils literal notranslate"><span class="pre">Forge</span></code> class related to an incorrect attribute name</p></li>
+</ul>
 </div>
 
 
@@ -361,7 +380,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="v4.1.2.html" class="btn btn-neutral float-right" title="Version 4.1.2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.1.4.html" class="btn btn-neutral float-left" title="Version 4.1.4" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -370,7 +389,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on May 27, 2021.
+        Last updated on Jun 06, 2021.
       </span>
 
     </p>
