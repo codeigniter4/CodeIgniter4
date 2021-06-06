@@ -122,7 +122,7 @@ if (! function_exists('ascii_to_entities'))
                  */
                 if (count($temp) === 1)
                 {
-                    $out  .= '&#' . array_shift($temp) . ';';
+                    $out .= '&#' . array_shift($temp) . ';';
                     $count = 1;
                 }
 
@@ -140,7 +140,7 @@ if (! function_exists('ascii_to_entities'))
                 if (count($temp) === $count)
                 {
                     $number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
-                    $out   .= '&#' . $number . ';';
+                    $out .= '&#' . $number . ';';
                     $count  = 1;
                     $temp   = [];
                 }

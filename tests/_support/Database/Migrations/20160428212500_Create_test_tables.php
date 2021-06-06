@@ -118,7 +118,7 @@ class Migration_Create_test_tables extends Migration
 
         // IP Table
         $this->forge->addField([
-            'ip' => ['type' => 'VARCHAR', 'constraint' => 100],
+            'ip'  => ['type' => 'VARCHAR', 'constraint' => 100],
             'ip2' => ['type' => 'VARCHAR', 'constraint' => 100],
         ])->createTable('ip_table', true);
     }

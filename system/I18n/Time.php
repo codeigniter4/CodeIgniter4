@@ -759,7 +759,8 @@ class Time extends DateTime
     protected function setValue(string $name, $value)
     {
         [$year, $month, $day, $hour, $minute, $second] = explode('-', $this->format('Y-n-j-G-i-s'));
-        $$name                                             = $value;
+
+        $$name = $value;
 
         return Time::create(
             (int) $year,
