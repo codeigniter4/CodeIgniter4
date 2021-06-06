@@ -32,9 +32,10 @@ final class CodeIgniter4 extends AbstractRuleset
                     '.=' => 'align_single_space',
                 ],
             ],
-            'indentation_type' => true,
-            'line_ending'      => true,
-            'static_lambda'    => true,
+            'blank_line_after_namespace' => true,
+            'indentation_type'           => true,
+            'line_ending'                => true,
+            'static_lambda'              => true,
         ];
 
         $this->requiredPHPVersion = 70300;
