@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Test\CIUnitTestCase;

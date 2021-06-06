@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live\SQLite;
+<?php
+
+namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;

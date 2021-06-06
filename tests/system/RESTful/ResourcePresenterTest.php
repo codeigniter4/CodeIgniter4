@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\CodeIgniter;

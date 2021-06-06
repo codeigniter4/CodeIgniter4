@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;

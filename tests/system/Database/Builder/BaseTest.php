@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;

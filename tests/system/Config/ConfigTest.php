@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;

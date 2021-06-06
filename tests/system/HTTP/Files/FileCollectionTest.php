@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;

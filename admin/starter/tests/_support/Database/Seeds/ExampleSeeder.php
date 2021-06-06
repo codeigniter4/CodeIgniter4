@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Database\Seeds;
+<?php
+
+namespace Tests\Support\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 

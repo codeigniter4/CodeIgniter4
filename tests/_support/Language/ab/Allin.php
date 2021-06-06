@@ -1,4 +1,5 @@
 <?php
+
 // seven deadly sins
 return [
     'two' => 'gluttony',

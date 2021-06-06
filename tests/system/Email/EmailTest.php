@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Email;
+<?php
+
+namespace CodeIgniter\Email;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;

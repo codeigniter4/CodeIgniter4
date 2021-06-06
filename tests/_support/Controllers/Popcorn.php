@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Support\Controllers;
 
 use CodeIgniter\API\ResponseTrait;

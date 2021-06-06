@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Throttle;
+<?php
+
+namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;

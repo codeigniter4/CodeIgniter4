@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Commands;
+<?php
+
+namespace CodeIgniter\Commands;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Test\CIUnitTestCase;

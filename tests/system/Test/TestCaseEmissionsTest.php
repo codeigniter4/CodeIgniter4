@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;

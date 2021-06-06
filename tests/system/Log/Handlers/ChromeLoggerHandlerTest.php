@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php
+
+namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Services;
 use CodeIgniter\Test\CIUnitTestCase;

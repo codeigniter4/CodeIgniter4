@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Log;
+<?php
+
+namespace CodeIgniter\Log;
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;

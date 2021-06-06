@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php
+
+namespace CodeIgniter;
 
 use \CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;

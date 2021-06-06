@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+namespace CodeIgniter\Images;
 
 use Imagick;
 use CodeIgniter\Config\Services;

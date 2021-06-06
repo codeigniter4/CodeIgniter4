@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Typography;
+<?php
+
+namespace CodeIgniter\Typography;
 
 use CodeIgniter\Test\CIUnitTestCase;
 

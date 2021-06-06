@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Format;
+<?php
+
+namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
