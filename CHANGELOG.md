@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
+## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...v4.1.3)
 
 **Fixed bugs:**
 
