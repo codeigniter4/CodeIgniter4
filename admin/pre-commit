@@ -6,11 +6,11 @@ STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \
 # Determine if a file list is passed
 if [ "$#" -eq 1 ]
 then
-	oIFS=$IFS
-	IFS='
-	'
-	SFILES="$1"
-	IFS=$oIFS
+    oIFS=$IFS
+    IFS='
+    '
+    SFILES="$1"
+    IFS=$oIFS
 fi
 SFILES=${SFILES:-$STAGED_FILES_CMD}
 
@@ -18,46 +18,35 @@ echo "Starting CodeIgniter precommit..."
 
 if [ "$SFILES" != "" ]
 then
-	echo "Linting PHP code..."
-	for FILE in $SFILES
-	do
-		php -l -d display_errors=0 "$PROJECT/$FILE"
-		if [ $? != 0 ]
-		then
-			echo "Fix the error(s) before commit."
-			exit 1
-		fi
-		FILES="$FILES $FILE"
-	done
+    echo "Linting PHP code..."
+    for FILE in $SFILES
+    do
+        php -l -d display_errors=0 "$PROJECT/$FILE"
+        if [ $? != 0 ]
+        then
+            echo "Fix the error(s) before commit."
+            exit 1
+        fi
+        FILES="$FILES $FILE"
+    done
 fi
 
 if [ "$FILES" != "" ]
 then
-	echo "Running PHPStan..."
-	# Run on whole codebase
-	if [ -d /proc/cygdrive ]
-	then
-		./vendor/bin/phpstan analyse
-	else
-		php ./vendor/bin/phpstan analyse
-	fi
+    echo "Running PHPStan..."
+    # Run on whole codebase
+    if [ -d /proc/cygdrive ]
+    then
+        ./vendor/bin/phpstan analyse
+    else
+        php ./vendor/bin/phpstan analyse
+    fi
 
-	if [ $? != 0 ]
-	then
-		echo "Fix the phpstan error(s) before commit."
-		exit 1
-	fi
-fi
-
-if [ "$FILES" != "" ]
-then
-	echo "Running Code Sniffer..."
-	if [ -d /proc/cygdrive ]
-	then
-		./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
-	else
-		php ./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
-	fi
+    if [ $? != 0 ]
+    then
+        echo "Fix the phpstan error(s) before commit."
+        exit 1
+    fi
 fi
 
 exit $?
