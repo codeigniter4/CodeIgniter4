@@ -70,7 +70,7 @@ class PreparedQuery extends BasePreparedQuery
         foreach ($data as $key => $item)
         {
             // Determine the type string
-            if (is_integer($item))
+            if (is_int($item))
             {
                 $bindType = SQLITE3_INTEGER;
             }

@@ -37,6 +37,9 @@ final class CodeIgniter4 extends AbstractRuleset
             'function_to_constant'         => true,
             'indentation_type'             => true,
             'line_ending'                  => true,
+            'no_alias_functions'           => [
+                'sets' => ['@all'],
+            ],
             'static_lambda'                => true,
             'yoda_style'                   => [
                 'equal'                => false,
