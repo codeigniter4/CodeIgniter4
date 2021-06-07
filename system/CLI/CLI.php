@@ -715,7 +715,7 @@ class CLI
                 // Shells such as `Cygwin` and `Git bash` returns incorrect values
                 // when executing `mode CON`, so we use `tput` instead
                 // @codeCoverageIgnoreStart
-                if (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell) || getenv('TERM'))
+                if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell)))
                 {
                     static::$height = (int) exec('tput lines');
                     static::$width  = (int) exec('tput cols');
@@ -1141,7 +1141,7 @@ class CLI
             $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
 
             // Set the thead and table borders-bottom
-            if (isset($cols) && ($row === 0 && ! empty($thead) || $row + 1 === $totalRows))
+            if (isset($cols) && (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows)))
             {
                 $table .= $cols . PHP_EOL;
             }
