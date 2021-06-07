@@ -353,9 +353,6 @@ class MemcachedHandler extends BaseHandler
 
         [$data, $time, $limit] = $stored;
 
-        // Calculate the remaining time to live from the original limit
-        $ttl = time() - $time - $limit;
-
         return [
             'expire' => $limit > 0 ? $time + $limit : null,
             'mtime'  => $time,

@@ -299,7 +299,7 @@ class Fabricator
         }
         else
         {
-            $formatters = $this->detectFormatters();
+            $this->detectFormatters();
         }
 
         return $this;
@@ -567,8 +567,10 @@ class Fabricator
         {
             case 'datetime':
                 $datetime = date('Y-m-d H:i:s');
+                break;
             case 'date':
                 $datetime = date('Y-m-d');
+                break;
             default:
                 $datetime = time();
         }

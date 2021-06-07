@@ -606,7 +606,7 @@ class BaseBuilder
                     $v = trim($v);
                     $this->trackAliases($v);
 
-                    $this->QBFrom[] = $v = $this->db->protectIdentifiers($v, true, null, false);
+                    $this->QBFrom[] = $this->db->protectIdentifiers($v, true, null, false);
                 }
             }
             else
@@ -712,7 +712,7 @@ class BaseBuilder
         }
 
         // Assemble the JOIN statement
-        $this->QBJoin[] = $join = $type . 'JOIN ' . $table . $cond;
+        $this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
 
         return $this;
     }
