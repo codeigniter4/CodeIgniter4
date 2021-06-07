@@ -299,7 +299,7 @@ class Parser extends View
      */
     protected function parseSingle(string $key, string $val): array
     {
-        $pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#ms';
+        $pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key, '#') . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#ms';
 
         return [$pattern => $val];
     }
@@ -325,8 +325,8 @@ class Parser extends View
         // Find all matches of space-flexible versions of {tag}{/tag} so we
         // have something to loop over.
         preg_match_all(
-            '#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
-            $this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
+            '#' . $this->leftDelimiter . '\s*' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '(.+?)' .
+            $this->leftDelimiter . '\s*' . '/' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
         );
 
         /*
@@ -383,7 +383,7 @@ class Parser extends View
                         $val = 'Resource';
                     }
 
-                    $temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#s'] = $val;
+                    $temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key, '#') . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#s'] = $val;
                 }
 
                 // Now replace our placeholders with the new content.
