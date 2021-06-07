@@ -550,6 +550,7 @@ trait ResponseTrait
             case 'refresh':
                 $this->setHeader('Refresh', '0;url=' . $uri);
                 break;
+
             default:
                 $this->setHeader('Location', $uri);
                 break;
@@ -672,6 +673,7 @@ trait ResponseTrait
         catch (CookieException $e)
         {
             log_message('error', $e->getMessage());
+
             return null;
         }
     }

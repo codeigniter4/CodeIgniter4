@@ -27,6 +27,7 @@ class FatalLocator extends FileLocator
     public function locateFile(string $file, string $folder = null, string $ext = 'php')
     {
         $folder = $folder ?? 'null';
+
         throw new RuntimeException("locateFile({$file}, {$folder}, {$ext})");
     }
 
@@ -54,6 +55,7 @@ class FatalLocator extends FileLocator
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
         $prioritizeApp = $prioritizeApp ? 'true' : 'false';
+
         throw new RuntimeException("search({$path}, {$ext}, {$prioritizeApp})");
     }
 }

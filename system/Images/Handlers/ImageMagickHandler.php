@@ -419,6 +419,7 @@ class ImageMagickHandler extends BaseHandler
                         $yAxis   = $options['vOffset'] - $options['padding'];
                     }
                     break;
+
                 case 'center':
                     $xAxis   = $options['hOffset'] + $options['padding'];
                     $yAxis   = $options['vOffset'] + $options['padding'];
@@ -429,6 +430,7 @@ class ImageMagickHandler extends BaseHandler
                         $gravity = 'South';
                     }
                     break;
+
                 case 'right':
                     $xAxis   = $options['hOffset'] - $options['padding'];
                     $yAxis   = $options['vOffset'] + $options['padding'];
@@ -514,21 +516,28 @@ class ImageMagickHandler extends BaseHandler
         {
             case 2:
                 return $this->flip('horizontal');
+
             case 3:
                 return $this->rotate(180);
+
             case 4:
                 return $this->rotate(180)
                                 ->flip('horizontal');
+
             case 5:
                 return $this->rotate(90)
                                 ->flip('horizontal');
+
             case 6:
                 return $this->rotate(90);
+
             case 7:
                 return $this->rotate(270)
                                 ->flip('horizontal');
+
             case 8:
                 return $this->rotate(270);
+
             default:
                 return $this;
         }

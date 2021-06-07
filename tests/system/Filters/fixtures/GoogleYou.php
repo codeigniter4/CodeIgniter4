@@ -14,6 +14,7 @@ class GoogleYou implements FilterInterface
     {
         $response      = Services::response();
         $response->csp = 'http://google.com';
+
         return $response;
     }
 

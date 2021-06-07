@@ -123,6 +123,7 @@ CODE_SAMPLE
     private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
     {
         $parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
+
         while ($parentNode)
         {
             /**

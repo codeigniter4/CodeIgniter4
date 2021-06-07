@@ -77,6 +77,7 @@ class Namespaces extends BaseCommand
         $config = new Autoload();
 
         $tbody = [];
+
         foreach ($config->psr4 as $ns => $path)
         {
             $path = realpath($path) ?: $path;

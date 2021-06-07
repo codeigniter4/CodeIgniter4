@@ -214,6 +214,7 @@ class Validation implements ValidationInterface
 
                 $dataIsExisting = array_reduce(array_keys($flattenedData), static function ($carry, $item) use ($ifExistField) {
                     $pattern = sprintf('/%s/u', $ifExistField);
+
                     return $carry || preg_match($pattern, $item) === 1;
                 }, false);
             }
@@ -356,6 +357,7 @@ class Validation implements ValidationInterface
         if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false)
         {
             $this->data = $request->getJSON(true);
+
             return $this;
         }
 
@@ -666,6 +668,7 @@ class Validation implements ValidationInterface
 
                         $row = strtr($row, $replacements);
                     }
+
                     continue;
                 }
 

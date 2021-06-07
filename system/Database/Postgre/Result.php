@@ -40,6 +40,7 @@ class Result extends BaseResult
     public function getFieldNames(): array
     {
         $fieldNames = [];
+
         for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
         {
             $fieldNames[] = pg_field_name($this->resultID, $i);
@@ -137,6 +138,7 @@ class Result extends BaseResult
         {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
         }
+
         return pg_fetch_object($this->resultID, null, $className);
     }
 

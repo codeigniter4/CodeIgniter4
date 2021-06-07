@@ -54,6 +54,7 @@ class UpdateTest extends CIUnitTestCase
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);
+
             return;
         }
     }
@@ -103,6 +104,7 @@ class UpdateTest extends CIUnitTestCase
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);
+
             return;
         }
     }

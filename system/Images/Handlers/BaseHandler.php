@@ -228,6 +228,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     public function getResource()
     {
         $this->ensureResource();
+
         return $this->resource;
     }
 
@@ -243,6 +244,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     public function withResource()
     {
         $this->ensureResource();
+
         return $this;
     }
 
@@ -328,6 +330,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     public function convert(int $imageType)
     {
         $this->image()->imageType = $imageType;
+
         return $this;
     }
 
@@ -549,21 +552,28 @@ abstract class BaseHandler implements ImageHandlerInterface
         {
             case 2:
                 return $this->flip('horizontal');
+
             case 3:
                 return $this->rotate(180);
+
             case 4:
                 return $this->rotate(180)
                                 ->flip('horizontal');
+
             case 5:
                 return $this->rotate(270)
                                 ->flip('horizontal');
+
             case 6:
                 return $this->rotate(270);
+
             case 7:
                 return $this->rotate(90)
                                 ->flip('horizontal');
+
             case 8:
                 return $this->rotate(90);
+
             default:
                 return $this;
         }
@@ -597,6 +607,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         }
 
         $exif = null; // default
+
         switch ($this->image()->imageType)
         {
             case IMAGETYPE_JPEG:
@@ -725,34 +736,42 @@ abstract class BaseHandler implements ImageHandlerInterface
                 $x = 0;
                 $y = 0;
                 break;
+
             case 'top':
                 $x = floor(($origWidth - $width) / 2);
                 $y = 0;
                 break;
+
             case 'top-right':
                 $x = $origWidth - $width;
                 $y = 0;
                 break;
+
             case 'left':
                 $x = 0;
                 $y = floor(($origHeight - $height) / 2);
                 break;
+
             case 'center':
                 $x = floor(($origWidth - $width) / 2);
                 $y = floor(($origHeight - $height) / 2);
                 break;
+
             case 'right':
                 $x = ($origWidth - $width);
                 $y = floor(($origHeight - $height) / 2);
                 break;
+
             case 'bottom-left':
                 $x = 0;
                 $y = $origHeight - $height;
                 break;
+
             case 'bottom':
                 $x = floor(($origWidth - $width) / 2);
                 $y = $origHeight - $height;
                 break;
+
             case 'bottom-right':
                 $x = ($origWidth - $width);
                 $y = $origHeight - $height;

@@ -151,6 +151,7 @@ trait RequestTrait
                     if ($separator === ':')
                     {
                         $netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
+
                         for ($i = 0; $i < 8; $i++)
                         {
                             $netaddr[$i] = intval($netaddr[$i], 16);
@@ -264,6 +265,7 @@ trait RequestTrait
         if (is_null($index))
         {
             $values = [];
+
             foreach ($this->globals[$method] as $key => $value)
             {
                 $values[$key] = is_array($value)
@@ -291,6 +293,7 @@ trait RequestTrait
         if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
         {
             $value = $this->globals[$method];
+
             for ($i = 0; $i < $count; $i++)
             {
                 $key = trim($matches[0][$i], '[]');
@@ -364,15 +367,19 @@ trait RequestTrait
             case 'get':
                 $this->globals['get'] = $_GET;
                 break;
+
             case 'post':
                 $this->globals['post'] = $_POST;
                 break;
+
             case 'request':
                 $this->globals['request'] = $_REQUEST;
                 break;
+
             case 'cookie':
                 $this->globals['cookie'] = $_COOKIE;
                 break;
+
             case 'server':
                 $this->globals['server'] = $_SERVER;
                 break;

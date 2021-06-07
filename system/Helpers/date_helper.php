@@ -62,6 +62,7 @@ if (! function_exists('timezone_select'))
         $timezones = DateTimeZone::listIdentifiers($what, $country);
 
         $buffer = "<select name='timezone' class='{$class}'>" . PHP_EOL;
+
         foreach ($timezones as $timezone)
         {
             $selected = ($timezone === $default) ? 'selected' : '';

@@ -403,12 +403,15 @@ class Exceptions
             case strpos($file, APPPATH) === 0:
                 $file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
                 break;
+
             case strpos($file, SYSTEMPATH) === 0:
                 $file = 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(SYSTEMPATH));
                 break;
+
             case strpos($file, FCPATH) === 0:
                 $file = 'FCPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(FCPATH));
                 break;
+
             case defined('VENDORPATH') && strpos($file, VENDORPATH) === 0:
                 $file = 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VENDORPATH));
                 break;

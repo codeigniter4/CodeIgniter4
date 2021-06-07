@@ -81,6 +81,7 @@ abstract class BaseUtils
             {
                 throw new DatabaseException('Unsupported feature of the database platform you are using.');
             }
+
             return false;
         }
 
@@ -130,6 +131,7 @@ abstract class BaseUtils
             {
                 throw new DatabaseException('Unsupported feature of the database platform you are using.');
             }
+
             return false;
         }
 
@@ -154,10 +156,12 @@ abstract class BaseUtils
             {
                 throw new DatabaseException('Unsupported feature of the database platform you are using.');
             }
+
             return false;
         }
 
         $result = [];
+
         foreach ($this->db->listTables() as $tableName)
         {
             $res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
@@ -206,6 +210,7 @@ abstract class BaseUtils
             {
                 throw new DatabaseException('Unsupported feature of the database platform you are using.');
             }
+
             return false;
         }
 
@@ -216,6 +221,7 @@ abstract class BaseUtils
         }
 
         $query = $query->getResultArray();
+
         return current($query);
     }
 
@@ -245,6 +251,7 @@ abstract class BaseUtils
         while ($row = $query->getUnbufferedRow('array'))
         {
             $line = [];
+
             foreach ($row as $item)
             {
                 $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
@@ -285,6 +292,7 @@ abstract class BaseUtils
         helper('xml');
         // Generate the result
         $xml = '<' . $root . '>' . $newline;
+
         while ($row = $query->getUnbufferedRow())
         {
             $xml .= $tab . '<' . $element . '>' . $newline;

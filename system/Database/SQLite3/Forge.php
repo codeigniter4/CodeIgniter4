@@ -141,6 +141,7 @@ class Forge extends BaseForge
                     ->run();
 
                 return '';
+
             case 'CHANGE':
                 $sqlTable = new Table($this->db, $this);
 
@@ -149,6 +150,7 @@ class Forge extends BaseForge
                          ->run();
 
                 return null;
+
             default:
                 return parent::_alterTable($alterType, $table, $field);
         }
@@ -213,6 +215,7 @@ class Forge extends BaseForge
                 $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                           . ' ON ' . $this->db->escapeIdentifiers($table)
                           . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+
                 continue;
             }
 
@@ -243,6 +246,7 @@ class Forge extends BaseForge
             case 'SET':
                 $attributes['TYPE'] = 'TEXT';
                 break;
+
             default:
                 break;
         }

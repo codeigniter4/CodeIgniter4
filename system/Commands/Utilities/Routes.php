@@ -89,6 +89,7 @@ class Routes extends BaseCommand
         ];
 
         $tbody = [];
+
         foreach ($methods as $method)
         {
             $routes = $collection->getRoutes($method);

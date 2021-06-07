@@ -159,12 +159,14 @@ class Typography
                 }
 
                 $str .= $chunks[$i];
+
                 continue;
             }
 
             if ($process === false)
             {
                 $str .= $chunks[$i];
+
                 continue;
             }
 
@@ -363,6 +365,7 @@ class Typography
     public function nl2brExceptPre(string $str): string
     {
         $newstr = '';
+
         for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i ++)
         {
             $newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];

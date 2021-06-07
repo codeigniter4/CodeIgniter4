@@ -113,12 +113,14 @@ class PredisHandler extends BaseHandler
             case 'array':
             case 'object':
                 return unserialize($data['__ci_value']);
+
             case 'boolean':
             case 'integer':
             case 'double': // Yes, 'double' is returned and NOT 'float'
             case 'string':
             case 'NULL':
                 return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
+
             case 'resource':
             default:
                 return null;
@@ -146,12 +148,14 @@ class PredisHandler extends BaseHandler
             case 'object':
                 $value = serialize($value);
                 break;
+
             case 'boolean':
             case 'integer':
             case 'double': // Yes, 'double' is returned and NOT 'float'
             case 'string':
             case 'NULL':
                 break;
+
             case 'resource':
             default:
                 return false;

@@ -183,6 +183,7 @@ class Filters
                 if ($result instanceof RequestInterface)
                 {
                     $this->request = $result;
+
                     continue;
                 }
 
@@ -480,6 +481,7 @@ class Filters
         if (array_key_exists($method, $this->config->methods))
         {
             $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+
             return;
         }
     }

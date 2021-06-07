@@ -107,6 +107,7 @@ class EventsTest extends CIUnitTestCase
         // $result = 1.
         Events::on('foo', static function ($arg) use (&$result) {
             $result = 1;
+
             return false;
         });
         Events::on('foo', static function ($arg) use (&$result) {
@@ -123,12 +124,14 @@ class EventsTest extends CIUnitTestCase
 
         Events::on('foo', static function () use (&$result) {
             $result = 1;
+
             return false;
         }, EVENT_PRIORITY_NORMAL);
         // Since this has a higher priority, it will
         // run first.
         Events::on('foo', static function () use (&$result) {
             $result = 2;
+
             return false;
         }, EVENT_PRIORITY_HIGH);
 

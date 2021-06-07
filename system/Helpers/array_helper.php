@@ -173,6 +173,7 @@ if (! function_exists('array_sort_by_multiple_keys'))
 
         // Group sorting indexes and data
         $tempArray = [];
+
         foreach ($sortColumns as $key => $sortFlag)
         {
             // Get sorting values

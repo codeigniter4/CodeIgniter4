@@ -94,6 +94,7 @@ class GenerateKey extends BaseCommand
         {
             CLI::write($encodedKey, 'yellow');
             CLI::newLine();
+
             return;
         }
 
@@ -101,6 +102,7 @@ class GenerateKey extends BaseCommand
         {
             CLI::write('Error in setting new encryption key to .env file.', 'light_gray', 'red');
             CLI::newLine();
+
             return;
         }
 
@@ -189,6 +191,7 @@ class GenerateKey extends BaseCommand
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
                 CLI::newLine();
+
                 return false;
             }
 

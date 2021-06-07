@@ -64,6 +64,7 @@ if (! function_exists('directory_map'))
             }
 
             closedir($fp);
+
             return $fileData;
         }
         catch (Throwable $e)
@@ -213,6 +214,7 @@ if (! function_exists('delete_files'))
                     if ($isDir && $delDir)
                     {
                         rmdir($object->getPathname());
+
                         continue;
                     }
                     if (! $isDir)
@@ -340,6 +342,7 @@ if (! function_exists('get_dir_file_info'))
             }
 
                 closedir($fp);
+
                 return $fileData;
             }
         }
@@ -387,24 +390,31 @@ if (! function_exists('get_file_info'))
                 case 'name':
                     $fileInfo['name'] = basename($file);
                     break;
+
                 case 'server_path':
                     $fileInfo['server_path'] = $file;
                     break;
+
                 case 'size':
                     $fileInfo['size'] = filesize($file);
                     break;
+
                 case 'date':
                     $fileInfo['date'] = filemtime($file);
                     break;
+
                 case 'readable':
                     $fileInfo['readable'] = is_readable($file);
                     break;
+
                 case 'writable':
                     $fileInfo['writable'] = is_really_writable($file);
                     break;
+
                 case 'executable':
                     $fileInfo['executable'] = is_executable($file);
                     break;
+
                 case 'fileperms':
                     $fileInfo['fileperms'] = fileperms($file);
                     break;

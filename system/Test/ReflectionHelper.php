@@ -40,6 +40,7 @@ trait ReflectionHelper
 
         return static function () use ($obj, $refMethod) {
             $args = func_get_args();
+
             return $refMethod->invokeArgs($obj, $args);
         };
     }
@@ -90,6 +91,7 @@ trait ReflectionHelper
     public static function getPrivateProperty($obj, $property)
     {
         $refProperty = self::getAccessibleRefProperty($obj, $property);
+
         return is_string($obj) ? $refProperty->getValue() : $refProperty->getValue($obj);
     }
 }

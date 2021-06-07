@@ -779,6 +779,7 @@ class Model extends BaseModel
         {
             return true;
         }
+
         return isset($this->builder()->$name);
     }
 
@@ -878,12 +879,15 @@ class Model extends BaseModel
                         case 'datetime':
                             $converted = $value->format('Y-m-d H:i:s');
                             break;
+
                         case 'date':
                             $converted = $value->format('Y-m-d');
                             break;
+
                         case 'int':
                             $converted = $value->getTimestamp();
                             break;
+
                         default:
                             $converted = (string) $value;
                     }

@@ -389,9 +389,11 @@ class Session implements SessionInterface
             case 4:
                 $this->sidRegexp = '[0-9a-f]';
                 break;
+
             case 5:
                 $this->sidRegexp = '[0-9a-v]';
                 break;
+
             case 6:
                 $this->sidRegexp = '[0-9a-zA-Z,-]';
                 break;
@@ -793,6 +795,7 @@ class Session implements SessionInterface
         }
 
         $keys = [];
+
         foreach (array_keys($_SESSION['__ci_vars']) as $key)
         {
             if (! is_int($_SESSION['__ci_vars'][$key]))
@@ -966,6 +969,7 @@ class Session implements SessionInterface
         }
 
         $keys = [];
+
         foreach (array_keys($_SESSION['__ci_vars']) as $key)
         {
             if (is_int($_SESSION['__ci_vars'][$key]))
@@ -995,6 +999,7 @@ class Session implements SessionInterface
         if (ENVIRONMENT === 'testing')
         {
             $_SESSION = [];
+
             return;
         }
 

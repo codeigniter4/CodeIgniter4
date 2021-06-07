@@ -72,6 +72,7 @@ class ClearLogs extends BaseCommand
             CLI::error('Deleting logs aborted.', 'light_gray', 'red');
             CLI::error('If you want, use the "-force" option to force delete all log files.', 'light_gray', 'red');
             CLI::newLine();
+
             return;
             // @codeCoverageIgnoreEnd
         }
@@ -83,6 +84,7 @@ class ClearLogs extends BaseCommand
             // @codeCoverageIgnoreStart
             CLI::error('Error in deleting the logs files.', 'light_gray', 'red');
             CLI::newLine();
+
             return;
             // @codeCoverageIgnoreEnd
         }

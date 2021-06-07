@@ -694,6 +694,7 @@ class CURLRequest extends Request
                 }
 
                 $protocols = 0;
+
                 foreach ($settings['protocols'] as $proto)
                 {
                     $protocols += constant('CURLPROTO_' . strtoupper($proto));

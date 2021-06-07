@@ -204,6 +204,7 @@ trait DatabaseTestTrait
             }
 
             $seeds = is_array($this->seed) ? $this->seed : [$this->seed];
+
             foreach ($seeds as $seed)
             {
                 $this->seed($seed);

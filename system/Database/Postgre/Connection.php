@@ -177,6 +177,7 @@ class Connection extends BaseConnection
                 throw $e;
             }
         }
+
         return false;
     }
 
@@ -305,6 +306,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         for ($i = 0, $c = count($query); $i < $c; $i ++)
         {
             $retVal[$i]             = new stdClass();
@@ -340,6 +342,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         foreach ($query as $row)
         {
             $obj         = new stdClass();
@@ -394,6 +397,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         foreach ($query as $row)
         {
             $obj                      = new stdClass();
@@ -493,6 +497,7 @@ class Connection extends BaseConnection
 
         $query = $this->query($sql);
         $query = $query->getRow();
+
         return (int) $query->ins_id;
     }
 

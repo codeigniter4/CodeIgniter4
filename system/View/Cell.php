@@ -156,6 +156,7 @@ class Cell
         {
             $this->cache->save($cacheName, $output, $ttl);
         }
+
         return $output;
     }
 

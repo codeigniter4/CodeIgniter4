@@ -33,6 +33,7 @@ class ResponseTraitTest extends CIUnitTestCase
     protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
     {
         $config = new App();
+
         foreach ([
             'baseURL'          => 'http://example.com/',
             'uriProtocol'      => 'REQUEST_URI',
@@ -443,6 +444,7 @@ EOH;
             'application/json',
             'application/xml',
         ];
+
         foreach ($goodMimes as $goodMime)
         {
             $this->tryValidContentType($goodMime, $goodMime . $chars);
@@ -471,6 +473,7 @@ EOH;
             'application/json',
             'application/xml',
         ];
+
         foreach ($goodMimes as $goodMime)
         {
             $this->tryValidContentType($goodMime, $goodMime . $chars);
@@ -496,6 +499,7 @@ EOH;
     public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
     {
         $config = new App();
+
         foreach ([
             'baseURL'          => 'http://example.com/',
             'uriProtocol'      => 'REQUEST_URI',

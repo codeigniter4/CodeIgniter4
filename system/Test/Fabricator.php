@@ -173,6 +173,7 @@ class Fabricator
     public static function setCount(string $table, int $count): int
     {
         self::$tableCounts[$table] = $count;
+
         return $count;
     }
 
@@ -338,6 +339,7 @@ class Fabricator
         try
         {
             $this->faker->getFormatter($field);
+
             return $field;
         }
         catch (InvalidArgumentException $e)
@@ -353,6 +355,7 @@ class Fabricator
                 case 'datetime':
                 case 'date':
                     return 'date';
+
                 case 'int':
                     return 'unixTime';
             }
@@ -539,6 +542,7 @@ class Fabricator
             {
                 $ids[] = $id;
                 self::upCount($this->model->table);
+
                 continue;
             }
 
@@ -568,9 +572,11 @@ class Fabricator
             case 'datetime':
                 $datetime = date('Y-m-d H:i:s');
                 break;
+
             case 'date':
                 $datetime = date('Y-m-d');
                 break;
+
             default:
                 $datetime = time();
         }
@@ -591,6 +597,7 @@ class Fabricator
 
         // Iterate over new entities and add the necessary fields
         $return = [];
+
         foreach ($this->make($count ?? 1) as $i => $result)
         {
             // Set the ID

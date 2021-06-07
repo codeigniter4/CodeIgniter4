@@ -37,6 +37,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
         {
             ob_end_clean();
         }
+
         return $buffer;
     }
 

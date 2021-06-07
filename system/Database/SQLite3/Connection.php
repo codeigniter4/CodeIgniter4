@@ -53,6 +53,7 @@ class Connection extends BaseConnection
         {
             throw new DatabaseException('SQLite3 doesn\'t support persistent connections.');
         }
+
         try
         {
             if ($this->database !== ':memory:' && strpos($this->database, DIRECTORY_SEPARATOR) === false)
@@ -154,6 +155,7 @@ class Connection extends BaseConnection
                 throw $e;
             }
         }
+
         return false;
     }
 
@@ -295,6 +297,7 @@ class Connection extends BaseConnection
             return [];
         }
         $retVal = [];
+
         for ($i = 0, $c = count($query); $i < $c; $i++)
         {
             $retVal[$i]              = new stdClass();
@@ -330,6 +333,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         foreach ($query as $row)
         {
             $obj       = new stdClass();

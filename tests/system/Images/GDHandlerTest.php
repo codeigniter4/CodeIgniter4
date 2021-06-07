@@ -24,6 +24,7 @@ class GDHandlerTest extends CIUnitTestCase
         if (! extension_loaded('gd'))
         {
             $this->markTestSkipped('The GD extension is not available.');
+
             return;
         }
 
@@ -281,6 +282,7 @@ class GDHandlerTest extends CIUnitTestCase
             'bottom-right',
         ];
         $this->handler->withFile($this->path);
+
         foreach ($choices as $position)
         {
             $this->handler->fit(100, 100, $position);

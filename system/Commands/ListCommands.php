@@ -113,6 +113,7 @@ class ListCommands extends BaseCommand
         foreach ($groups as $group => $commands)
         {
             CLI::write($group, 'yellow');
+
             foreach ($commands as $name => $command)
             {
                 $name   = $this->setPad($name, $length, 2, 2);

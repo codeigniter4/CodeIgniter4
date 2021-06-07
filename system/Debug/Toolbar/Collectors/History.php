@@ -76,6 +76,7 @@ class History extends BaseCollector
             if ($limit >= 0 && $counter > $limit)
             {
                 unlink($filename);
+
                 continue;
             }
 

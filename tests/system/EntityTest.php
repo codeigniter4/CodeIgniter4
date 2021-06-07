@@ -606,12 +606,13 @@ class EntityTest extends CIUnitTestCase
         $keys    = rtrim(str_repeat('test.', 513), '.');
         $keys    = explode('.', $keys);
         $current = &$array;
+
         foreach ($keys as $key)
         {
             $current = &$current[$key];
         }
-        $current = $value;
 
+        $current = $value;
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Maximum stack depth exceeded');
 

@@ -94,6 +94,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
     {
         ob_start();
         system('php -f ' . $file);
+
         return ob_get_clean();
     }
 

@@ -523,6 +523,7 @@ class ContentSecurityPolicy
     public function addSandbox($flags, bool $explicitReporting = null)
     {
         $this->addOption($flags, 'sandbox', $explicitReporting ?? $this->reportOnly);
+
         return $this;
     }
 

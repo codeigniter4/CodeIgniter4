@@ -23,6 +23,7 @@ class Role implements FilterInterface
         {
             $response->setBody('Something else');
         }
+
         return $response;
     }
 
@@ -36,6 +37,7 @@ class Role implements FilterInterface
         {
             return 'Is null';
         }
+
         return 'Something else';
     }
 

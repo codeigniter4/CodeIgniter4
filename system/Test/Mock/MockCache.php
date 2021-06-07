@@ -144,6 +144,7 @@ class MockCache extends BaseHandler implements CacheInterface
     public function deleteMatching(string $pattern)
     {
         $count = 0;
+
         foreach (array_keys($this->cache) as $key)
         {
             if (fnmatch($pattern, $key))

@@ -187,6 +187,7 @@ class FileHandler extends BaseHandler
 
         $sessionData = '';
         clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
+
         for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
         {
             if (($buffer = fread($this->fileHandle, $length - $read)) === false)
@@ -393,9 +394,11 @@ class FileHandler extends BaseHandler
             case 4:
                 $this->sessionIDRegex = '[0-9a-f]';
                 break;
+
             case 5:
                 $this->sessionIDRegex = '[0-9a-v]';
                 break;
+
             case 6:
                 $this->sessionIDRegex = '[0-9a-zA-Z,-]';
                 break;

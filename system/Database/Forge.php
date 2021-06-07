@@ -245,6 +245,7 @@ class Forge
             {
                 throw new DatabaseException('Unable to create the specified database.', 0, $e);
             }
+
             return false; // @codeCoverageIgnore
         }
     }
@@ -572,6 +573,7 @@ class Forge
             : 'CREATE TABLE';
 
         $columns = $this->_processFields(true);
+
         for ($i = 0, $c = count($columns); $i < $c; $i++)
         {
             $columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
@@ -922,6 +924,7 @@ class Forge
         $sql .= ($alterType === 'ADD') ? 'ADD ' : $alterType . ' COLUMN ';
 
         $sqls = [];
+
         foreach ($fields as $data)
         {
             $sqls[] = $sql
@@ -949,6 +952,7 @@ class Forge
             if (is_int($key) && ! is_array($attributes))
             {
                 $fields[] = ['_literal' => $attributes];
+
                 continue;
             }
 
@@ -1259,6 +1263,7 @@ class Forge
                 $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
                           . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                           . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+
                 continue;
             }
 

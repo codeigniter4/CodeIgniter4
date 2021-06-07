@@ -57,6 +57,7 @@ class FeatureTestCase extends CIUnitTestCase
         if ($routes)
         {
             $collection->resetRoutes();
+
             foreach ($routes as $route)
             {
                 $collection->{$route[0]}($route[1], $route[2]);
@@ -212,6 +213,7 @@ class FeatureTestCase extends CIUnitTestCase
         {
             \ob_end_clean();
         }
+
         while (\ob_get_level() < $buffer)
         {
             \ob_start();
@@ -408,6 +410,7 @@ class FeatureTestCase extends CIUnitTestCase
         if (isset($this->requestBody) && $this->requestBody !== '')
         {
             $request->setBody($this->requestBody);
+
             return $request;
         }
 

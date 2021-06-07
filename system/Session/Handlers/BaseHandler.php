@@ -149,6 +149,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected function lockSession(string $sessionID): bool
     {
         $this->lock = true;
+
         return true;
     }
 

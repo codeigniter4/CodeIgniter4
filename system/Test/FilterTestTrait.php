@@ -201,6 +201,7 @@ trait FilterTestTrait
         $aliases = $this->filters->initialize($route)->getFilters();
 
         $this->filters->reset();
+
         return $aliases[$position];
     }
 

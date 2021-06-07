@@ -114,6 +114,7 @@ class PreparedQuery extends BasePreparedQuery
 
         return preg_replace_callback('/\?/', static function () use (&$count) {
             $count ++;
+
             return "\${$count}";
         }, $sql);
     }

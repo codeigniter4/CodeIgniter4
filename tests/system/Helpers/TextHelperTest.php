@@ -38,6 +38,7 @@ class TextHelperTest extends CIUnitTestCase
             '"me oh my!"'    => 'me oh my!',
             "it's a winner!" => 'its a winner!',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, strip_quotes($str));
@@ -51,6 +52,7 @@ class TextHelperTest extends CIUnitTestCase
             '"me oh my!"'    => '&quot;me oh my!&quot;',
             "it's a winner!" => 'it&#39;s a winner!',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, quotes_to_entities($str));
@@ -65,6 +67,7 @@ class TextHelperTest extends CIUnitTestCase
             '//var/www/html/example.com/' => '/var/www/html/example.com/',
             '/var/www/html//index.php'    => '/var/www/html/index.php',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, reduce_double_slashes($str));
@@ -78,6 +81,7 @@ class TextHelperTest extends CIUnitTestCase
             'Fred, Bill,, Joe, Jimmy' => 'Fred, Bill, Joe, Jimmy',
             'Ringo, John, Paul,,'     => 'Ringo, John, Paul,',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, reduce_multiples($str));
@@ -86,6 +90,7 @@ class TextHelperTest extends CIUnitTestCase
             'Fred, Bill,, Joe, Jimmy' => 'Fred, Bill, Joe, Jimmy',
             'Ringo, John, Paul,,'     => 'Ringo, John, Paul',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, reduce_multiples($str, ',', true));
@@ -150,6 +155,7 @@ class TextHelperTest extends CIUnitTestCase
             '“‘ “test” '     => '&#8220;&#8216; &#8220;test&#8221; ',
             '†¥¨ˆøåß∂ƒ©˙∆˚¬' => '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, ascii_to_entities($str));
@@ -163,6 +169,7 @@ class TextHelperTest extends CIUnitTestCase
             '&#8220;&#8216; &#8220;test&#8221; '                                                      => '“‘ “test” ',
             '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;' => '†¥¨ˆøåß∂ƒ©˙∆˚¬',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, entities_to_ascii($str));
@@ -207,6 +214,7 @@ class TextHelperTest extends CIUnitTestCase
             'Jake is really a boob'        => 'Jake is really a $*#',
             'Jake is really a (boob)'      => 'Jake is really a ($*#)',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, word_censor($str, $censored, '$*#'));
@@ -230,6 +238,7 @@ class TextHelperTest extends CIUnitTestCase
             'Or tell me what this is' => 'Or tell me what <mark>this is</mark>',
             ''                        => '',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, highlight_phrase($str, 'this is'));
@@ -260,6 +269,7 @@ class TextHelperTest extends CIUnitTestCase
                 'short'                         => 'short',
             ],
         ];
+
         foreach ($strs as $pos => $s)
         {
             foreach ($s as $str => $expect)
@@ -345,6 +355,7 @@ class TextHelperTest extends CIUnitTestCase
         $phrase = ' scream! ';
         $result = '';
         alternator();
+
         for ($i = 0; $i < 4; $i ++)
         {
             $result .= alternator('I', 'you', 'we') . $phrase;
@@ -356,6 +367,7 @@ class TextHelperTest extends CIUnitTestCase
     {
         $phrase = ' scream! ';
         $result = '';
+
         for ($i = 0; $i < 4; $i ++)
         {
             $result .= alternator() . $phrase;

@@ -12,6 +12,7 @@ class Multiple1 implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $request->csp = 'http://exampleMultipleCSP.com';
+
         return $request;
     }
 

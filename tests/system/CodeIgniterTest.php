@@ -179,6 +179,7 @@ class CodeIgniterTest extends CIUnitTestCase
         $routes->add('pages/(:segment)', static function ($segment) {
             $response = Services::response();
             $string   = "You want to see 'about' page.";
+
             return $response->setBody($string);
         });
         $router = Services::router($routes, Services::request());

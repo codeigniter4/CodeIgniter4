@@ -64,6 +64,7 @@ class FileCollection
             {
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+
                 return ($uploadedFile instanceof UploadedFile) ?
                      $uploadedFile : null;
             }
@@ -71,6 +72,7 @@ class FileCollection
             if (array_key_exists($name, $this->files))
             {
                 $uploadedFile = $this->files[$name];
+
                 return  ($uploadedFile instanceof UploadedFile) ?
                     $uploadedFile : null;
             }
@@ -106,6 +108,7 @@ class FileCollection
             if (array_key_exists($name, $this->files))
             {
                 $uploadedFile = $this->files[$name];
+
                 return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
                     $uploadedFile : null;
             }
@@ -240,6 +243,7 @@ class FileCollection
                 if (! is_array($value))
                 {
                     $pointer[$field] = $value;
+
                     continue;
                 }
 

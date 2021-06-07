@@ -25,6 +25,7 @@ class TypographyTest extends CIUnitTestCase
             'this sentence has no punctuations' => '<p>this sentence has no punctuations</p>',
             'Hello World !!, How are you?'      => '<p>Hello World !!, How are you?</p>',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -37,6 +38,7 @@ class TypographyTest extends CIUnitTestCase
             'this sentence has  a double spacing'              => '<p>this sentence has  a double spacing</p>',
             'this  sentence   has    a     weird      spacing' => '<p>this  sentence &nbsp; has &nbsp;  a &nbsp;   weird &nbsp;  &nbsp; spacing</p>',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -57,6 +59,7 @@ class TypographyTest extends CIUnitTestCase
             "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p>Line Three</p>",
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -77,6 +80,7 @@ class TypographyTest extends CIUnitTestCase
             "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br />\nLine Three</p>",
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str, true));
@@ -90,6 +94,7 @@ class TypographyTest extends CIUnitTestCase
             'This is not a comment.<!-- this is an HTML comment -->' => '<p>This is not a comment.<!-- this is an HTML comment --></p>',
             '<!-- this is an HTML comment -->This is not a comment.' => '<p><!-- this is an HTML comment -->This is not a comment.</p>',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -105,6 +110,7 @@ class TypographyTest extends CIUnitTestCase
             "<pre>Line One\nLine Two\n\nLine Three\n\n\n</pre>" => "<pre>Line One\nLine Two\n\nLine Three\n\n</pre>",
             'Line One</pre>'                                    => 'Line One</pre>',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -118,6 +124,7 @@ class TypographyTest extends CIUnitTestCase
             '"Text in double quotes"'        => '<p>&#8220;Text in double quotes&#8221;</p>',
             'Double dash -- becomes em-dash' => '<p>Double dash&#8212;becomes em-dash</p>',
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
@@ -131,6 +138,7 @@ class TypographyTest extends CIUnitTestCase
             "<pre>Line One\nLine Two</pre>" => "<pre>Line One\nLine Two</pre>",
             "<div>Line One\nLine Two</div>" => "<div>Line One<br />\nLine Two</div>",
         ];
+
         foreach ($strs as $str => $expect)
         {
             $this->assertEquals($expect, $this->typography->nl2brExceptPre($str));

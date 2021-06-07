@@ -64,6 +64,7 @@ class ClearDebugbar extends BaseCommand
             // @codeCoverageIgnoreStart
             CLI::error('Error deleting the debugbar JSON files.');
             CLI::newLine();
+
             return;
             // @codeCoverageIgnoreEnd
         }

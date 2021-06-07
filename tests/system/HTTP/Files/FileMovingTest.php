@@ -300,6 +300,7 @@ function is_uploaded_file($filename)
     {
         file_put_contents($filename, 'data');
     }
+
     return file_exists($filename);
 }
 
@@ -318,6 +319,7 @@ function move_uploaded_file($filename, $destination)
 function rrmdir($src)
 {
     $dir = opendir($src);
+
     while (false !== ( $file = readdir($dir)))
     {
         if (( $file !== '.' ) && ( $file !== '..' ))

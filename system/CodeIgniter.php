@@ -328,6 +328,7 @@ class CodeIgniter
 
             $this->response->pretend($this->useSafeOutput)->send();
             $this->callExit(EXIT_SUCCESS);
+
             return;
         }
 
@@ -346,6 +347,7 @@ class CodeIgniter
             $this->sendResponse();
 
             $this->callExit(EXIT_SUCCESS);
+
             return;
         }
         catch (PageNotFoundException $e)
@@ -526,6 +528,7 @@ class CodeIgniter
             // @codeCoverageIgnoreStart
             header('HTTP/1.1 503 Service Unavailable.', true, 503);
             echo 'The application environment is not set correctly.';
+
             exit(EXIT_ERROR); // EXIT_ERROR
             // @codeCoverageIgnoreEnd
         }
@@ -707,6 +710,7 @@ class CodeIgniter
     public function cachePage(Cache $config)
     {
         $headers = [];
+
         foreach ($this->response->headers() as $header)
         {
             $headers[$header->getName()] = $header->getValueLine();
@@ -872,6 +876,7 @@ class CodeIgniter
         if (is_object($this->controller) && (get_class($this->controller) === 'Closure'))
         {
             $controller = $this->controller;
+
             return $controller(...$this->router->params());
         }
 
@@ -1014,6 +1019,7 @@ class CodeIgniter
         if ($returned instanceof DownloadResponse)
         {
             $this->response = $returned;
+
             return;
         }
         // If the controller returned a response object,

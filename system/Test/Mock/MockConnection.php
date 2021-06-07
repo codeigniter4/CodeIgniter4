@@ -89,6 +89,7 @@ class MockConnection extends BaseConnection
 
         // query is not write-type, so it must be read-type query; return QueryResult
         $resultClass = str_replace('Connection', 'Result', static::class);
+
         return new $resultClass($this->connID, $this->resultID);
     }
 

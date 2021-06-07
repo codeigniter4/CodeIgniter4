@@ -285,6 +285,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forSaveFailed();
                 }
                 break;
+
             case IMAGETYPE_JPEG:
                 if (! function_exists('imagejpeg'))
                 {
@@ -296,6 +297,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forSaveFailed();
                 }
                 break;
+
             case IMAGETYPE_PNG:
                 if (! function_exists('imagepng'))
                 {
@@ -307,6 +309,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forSaveFailed();
                 }
                 break;
+
             case IMAGETYPE_WEBP:
                 if (! function_exists('imagewebp'))
                 {
@@ -318,6 +321,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forSaveFailed();
                 }
                 break;
+
             default:
                 throw ImageException::forInvalidImageCreate();
         }
@@ -400,6 +404,7 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefromgif($path);
+
             case IMAGETYPE_JPEG:
                 if (! function_exists('imagecreatefromjpeg'))
                 {
@@ -407,6 +412,7 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefromjpeg($path);
+
             case IMAGETYPE_PNG:
                 if (! function_exists('imagecreatefrompng'))
                 {
@@ -414,6 +420,7 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefrompng($path);
+
             case IMAGETYPE_WEBP:
                 if (! function_exists('imagecreatefromwebp'))
                 {
@@ -421,6 +428,7 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefromwebp($path);
+
             default:
                 throw ImageException::forInvalidImageCreate('Ima');
         }

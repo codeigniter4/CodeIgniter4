@@ -25,6 +25,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
         if (! extension_loaded('imagick'))
         {
             $this->markTestSkipped('The ImageMagick extension is not available.');
+
             return;
         }
 
@@ -279,6 +280,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
             'bottom-right',
         ];
         $this->handler->withFile($this->path);
+
         foreach ($choices as $position)
         {
             $this->handler->fit(100, 100, $position);

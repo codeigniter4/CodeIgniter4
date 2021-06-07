@@ -143,6 +143,7 @@ class RedisHandler extends BaseHandler
         else
         {
             $this->redis = $redis;
+
             return true;
         }
 
@@ -222,6 +223,7 @@ class RedisHandler extends BaseHandler
                 {
                     $this->fingerprint = $fingerprint;
                     $this->keyExists   = true;
+
                     return true;
                 }
 
@@ -346,12 +348,14 @@ class RedisHandler extends BaseHandler
             if (($ttl = $this->redis->ttl($lockKey)) > 0)
             {
                 sleep(1);
+
                 continue;
             }
 
             if (! $this->redis->setex($lockKey, 300, (string) time()))
             {
                 $this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
+
                 return false;
             }
 
@@ -363,6 +367,7 @@ class RedisHandler extends BaseHandler
         if ($attempt === 30)
         {
             log_message('error', 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
+
             return false;
         }
 
@@ -372,6 +377,7 @@ class RedisHandler extends BaseHandler
         }
 
         $this->lock = true;
+
         return true;
     }
 
@@ -391,6 +397,7 @@ class RedisHandler extends BaseHandler
             if (! $this->redis->del($this->lockKey))
             {
                 $this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);
+
                 return false;
             }
 

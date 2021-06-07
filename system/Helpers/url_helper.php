@@ -399,6 +399,7 @@ if (! function_exists('safe_mailto'))
                 foreach ($attributes as $key => $val)
                 {
                     $x[] = ' ' . $key . '="';
+
                     for ($i = 0, $l = strlen($val); $i < $l; $i ++)
                     {
                         $x[] = '|' . ord($val[$i]);
@@ -418,6 +419,7 @@ if (! function_exists('safe_mailto'))
         $x[] = '>';
 
         $temp = [];
+
         for ($i = 0, $l = strlen($title); $i < $l; $i ++)
         {
             $ordinal = ord($title[$i]);
@@ -589,6 +591,7 @@ if (! function_exists('url_title'))
         ];
 
         $str = strip_tags($str);
+
         foreach ($trans as $key => $val)
         {
             $str = preg_replace('#' . $key . '#iu', $val, $str);

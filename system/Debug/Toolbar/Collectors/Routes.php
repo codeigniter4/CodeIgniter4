@@ -86,6 +86,7 @@ class Routes extends BaseCollector
         $rawParams = $method->getParameters();
 
         $params = [];
+
         foreach ($rawParams as $key => $param)
         {
             $params[] = [

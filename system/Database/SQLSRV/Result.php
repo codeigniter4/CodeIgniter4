@@ -40,6 +40,7 @@ class Result extends BaseResult
     public function getFieldNames(): array
     {
         $fieldNames = [];
+
         foreach (sqlsrv_field_metadata($this->resultID) as $field)
         {
             $fieldNames[] = $field['Name'];
@@ -94,6 +95,7 @@ class Result extends BaseResult
         ];
 
         $retVal = [];
+
         foreach (sqlsrv_field_metadata($this->resultID) as $i => $field)
         {
             $retVal[$i]             = new stdClass();
@@ -172,6 +174,7 @@ class Result extends BaseResult
         {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
         }
+
         return sqlsrv_fetch_object($this->resultID, $className);
     }
 

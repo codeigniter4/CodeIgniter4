@@ -131,6 +131,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_YEAR);
     }
 
@@ -149,6 +150,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MONTH);
     }
 
@@ -167,6 +169,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return (int) ($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
     }
 
@@ -185,6 +188,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR);
     }
 
@@ -203,6 +207,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_HOUR_OF_DAY);
     }
 
@@ -221,6 +226,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MINUTE);
     }
 
@@ -239,6 +245,7 @@ class TimeDifference
         }
 
         $time = clone($this->currentTime);
+
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_SECOND);
     }
 

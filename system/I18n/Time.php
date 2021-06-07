@@ -374,6 +374,7 @@ class Time extends DateTime
         if (is_null($datetime))
         {
             static::$testNow = null;
+
             return;
         }
 
@@ -580,6 +581,7 @@ class Time extends DateTime
         $transitions = $this->timezone->getTransitions($start, $end);
 
         $daylightSaving = false;
+
         foreach ($transitions as $transition)
         {
             if ($transition['time'] > $this->format('U'))
@@ -588,6 +590,7 @@ class Time extends DateTime
                 break;
             }
         }
+
         return $daylightSaving;
     }
 
@@ -785,6 +788,7 @@ class Time extends DateTime
     public function setTimezone($timezone)
     {
         $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+
         return Time::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
     }
 

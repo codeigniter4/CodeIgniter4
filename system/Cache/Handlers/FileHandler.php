@@ -519,24 +519,31 @@ class FileHandler extends BaseHandler
                 case 'name':
                     $fileInfo['name'] = basename($file);
                     break;
+
                 case 'server_path':
                     $fileInfo['server_path'] = $file;
                     break;
+
                 case 'size':
                     $fileInfo['size'] = filesize($file);
                     break;
+
                 case 'date':
                     $fileInfo['date'] = filemtime($file);
                     break;
+
                 case 'readable':
                     $fileInfo['readable'] = is_readable($file);
                     break;
+
                 case 'writable':
                     $fileInfo['writable'] = is_writable($file);
                     break;
+
                 case 'executable':
                     $fileInfo['executable'] = is_executable($file);
                     break;
+
                 case 'fileperms':
                     $fileInfo['fileperms'] = fileperms($file);
                     break;

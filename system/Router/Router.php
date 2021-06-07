@@ -618,6 +618,7 @@ class Router implements RouterInterface
         // Loop through our segments and return as soon as a controller
         // is found or when such a directory doesn't exist
         $c = count($segments);
+
         while ($c-- > 0)
         {
             $segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
@@ -634,6 +635,7 @@ class Router implements RouterInterface
             {
                 $this->setDirectory($segmentConvert, true, false);
                 array_shift($segments);
+
                 continue;
             }
 
@@ -658,12 +660,14 @@ class Router implements RouterInterface
         if (empty($dir))
         {
             $this->directory = null;
+
             return;
         }
 
         if ($validate)
         {
             $segments = explode('/', trim($dir, '/'));
+
             foreach ($segments as $segment)
             {
                 if (! $this->isValidSegment($segment))

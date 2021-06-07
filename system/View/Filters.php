@@ -304,8 +304,10 @@ class Filters
         {
             case 'common':
                 return round((float) $value, $precision);
+
             case 'ceil':
                 return ceil((float) $value);
+
             case 'floor':
                 return floor((float) $value);
         }
