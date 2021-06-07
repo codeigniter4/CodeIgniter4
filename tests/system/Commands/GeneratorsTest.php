@@ -77,7 +77,7 @@ class GeneratorsTest extends CIUnitTestCase
     {
         command('make:controller admin/user');
         $file = APPPATH . 'Controllers/Admin/User.php';
-        $dir = dirname($file);
+        $dir  = dirname($file);
         $this->assertFileExists($file);
         $this->assertDirectoryExists($dir);
         is_file($file) && unlink($file);

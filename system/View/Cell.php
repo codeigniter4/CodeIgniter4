@@ -194,13 +194,13 @@ class Cell
             {
                 if (! empty($p))
                 {
-                    [$key, $val]       = explode('=', $p);
+                    [$key, $val] = explode('=', $p);
+
                     $newParams[trim($key)] = trim($val, ', ');
                 }
             }
 
             $params = $newParams;
-
             unset($newParams);
         }
 

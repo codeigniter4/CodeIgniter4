@@ -1313,7 +1313,7 @@ class Email
 
             case 'plain-attach':
                 $boundary = uniqid('B_ATC_', true);
-                $hdr     .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
+                $hdr .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
 
                 if ($this->getProtocol() === 'mail')
                 {
@@ -1338,7 +1338,7 @@ class Email
                 if ($this->attachmentsHaveMultipart('mixed'))
                 {
                     $atcBoundary  = uniqid('B_ATC_', true);
-                    $hdr         .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
+                    $hdr .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
                     $lastBoundary = $atcBoundary;
                 }
 
@@ -1788,7 +1788,7 @@ class Email
             if ($i === $float)
             {
                 $chunk[] = static::substr($set, 1);
-                $float  += $this->BCCBatchSize;
+                $float += $this->BCCBatchSize;
                 $set     = '';
             }
 

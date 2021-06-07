@@ -312,12 +312,13 @@ class DOMParser
             $text = trim(array_shift($text));
 
             [$name, $value] = explode('=', $text);
-            $name               = trim($name);
-            $value              = trim($value);
-            $attr               = [$name => trim($value, '] ')];
+
+            $name  = trim($name);
+            $value = trim($value);
+            $attr  = [$name => trim($value, '] ')];
         }
         // Class?
-        elseif ($pos = strpos($selector, '.') !== false)
+        elseif (strpos($selector, '.') !== false)
         {
             [$tag, $class] = explode('.', $selector);
         }
