@@ -143,7 +143,7 @@ class Autoloader
      * Registers namespaces with the autoloader.
      *
      * @param array|string $namespace
-     * @param string       $path
+     * @param string|null  $path
      *
      * @return $this
      */
@@ -151,13 +151,13 @@ class Autoloader
     {
         if (is_array($namespace))
         {
-            foreach ($namespace as $prefix => $path)
+            foreach ($namespace as $prefix => $namespacedPath)
             {
                 $prefix = trim($prefix, '\\');
 
-                if (is_array($path))
+                if (is_array($namespacedPath))
                 {
-                    foreach ($path as $dir)
+                    foreach ($namespacedPath as $dir)
                     {
                         $this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
                     }
@@ -165,7 +165,7 @@ class Autoloader
                     continue;
                 }
 
-                $this->prefixes[$prefix][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
+                $this->prefixes[$prefix][] = rtrim($namespacedPath, '\\/') . DIRECTORY_SEPARATOR;
             }
         }
         else
