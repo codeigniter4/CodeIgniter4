@@ -30,7 +30,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                function () {
+                static function () {
                     return 'Hello World';
                 },
             ],
@@ -47,7 +47,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'add',
                 'home',
-                function () {
+                static function () {
                     return 'Hello Earth';
                 },
             ],
@@ -67,7 +67,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                function () {
+                static function () {
                     return 'Hello Mars';
                 },
             ],
@@ -83,7 +83,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                function () {
+                static function () {
                     return 'Hello ' . service('request')->getPost('foo') . '!';
                 },
             ],
@@ -99,7 +99,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'put',
                 'home',
-                function () {
+                static function () {
                     return 'Hello Pluto';
                 },
             ],
@@ -115,7 +115,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'patch',
                 'home',
-                function () {
+                static function () {
                     return 'Hello Jupiter';
                 },
             ],
@@ -131,7 +131,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'options',
                 'home',
-                function () {
+                static function () {
                     return 'Hello George';
                 },
             ],
@@ -147,7 +147,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'delete',
                 'home',
-                function () {
+                static function () {
                     return 'Hello Wonka';
                 },
             ],
@@ -163,7 +163,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                function () {
+                static function () {
                     return 'Home';
                 },
             ],
@@ -187,7 +187,7 @@ class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                function () {
+                static function () {
                     return 'Home';
                 },
             ],

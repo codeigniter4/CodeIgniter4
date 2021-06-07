@@ -82,7 +82,7 @@ final class PredisHandlerTest extends CIUnitTestCase
      */
     public function testRemember()
     {
-        $this->PredisHandler->remember(self::$key1, 2, function () {
+        $this->PredisHandler->remember(self::$key1, 2, static function () {
             return 'value';
         });
 

@@ -22,12 +22,12 @@ use CodeIgniter\Exceptions\PageNotFoundException;
  */
 
 // Prevent access to BaseController
-$routes->add('BaseController(:any)', function () {
+$routes->add('BaseController(:any)', static function () {
     throw PageNotFoundException::forPageNotFound();
 });
 
 // Prevent access to initController method
-$routes->add('(:any)/initController', function () {
+$routes->add('(:any)/initController', static function () {
     throw PageNotFoundException::forPageNotFound();
 });
 

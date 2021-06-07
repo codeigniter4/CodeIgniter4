@@ -24,7 +24,7 @@ class DummyHandlerTest extends CIUnitTestCase
 
     public function testRemember()
     {
-        $dummyHandler = $this->dummyHandler->remember('key', 2, function () {
+        $dummyHandler = $this->dummyHandler->remember('key', 2, static function () {
             return 'value';
         });
 

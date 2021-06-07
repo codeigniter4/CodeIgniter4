@@ -22,7 +22,7 @@ use CodeIgniter\Exceptions\FrameworkException;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
-Events::on('pre_system', function () {
+Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing')
     {
         if (ini_get('zlib.output_compression'))
@@ -35,7 +35,7 @@ Events::on('pre_system', function () {
             ob_end_flush();
         }
 
-        ob_start(function ($buffer) {
+        ob_start(static function ($buffer) {
             return $buffer;
         });
     }

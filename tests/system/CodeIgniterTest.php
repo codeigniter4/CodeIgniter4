@@ -72,7 +72,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', function ($segment) {
+        $routes->add('pages/(:segment)', static function ($segment) {
             echo 'You want to see "' . esc($segment) . '" page.';
         });
         $router = Services::router($routes, Services::request());
@@ -122,7 +122,7 @@ class CodeIgniterTest extends CIUnitTestCase
         // Inject mock router.
         $routes = new RouteCollection(Services::locator(), new Modules());
         $routes->setAutoRoute(false);
-        $routes->set404Override(function () {
+        $routes->set404Override(static function () {
             echo '404 Override by Closure.';
         });
         $router = Services::router($routes, Services::request());
@@ -148,7 +148,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', function ($segment) {
+        $routes->add('pages/(:segment)', static function ($segment) {
             return 'You want to see "' . esc($segment) . '" page.';
         });
         $router = Services::router($routes, Services::request());
@@ -174,7 +174,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', function ($segment) {
+        $routes->add('pages/(:segment)', static function ($segment) {
             $response = Services::response();
             $string   = "You want to see 'about' page.";
             return $response->setBody($string);
@@ -297,7 +297,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/named', function () {
+        $routes->add('pages/named', static function () {
         }, ['as' => 'name']);
         $routes->addRedirect('example', 'name');
 
@@ -322,7 +322,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/uri', function () {
+        $routes->add('pages/uri', static function () {
         });
         $routes->addRedirect('example', 'pages/uri');
 

@@ -44,7 +44,7 @@ class RouterTest extends CIUnitTestCase
             'posts/(:num)'                                    => 'Blog::show/$1',
             'posts/(:num)/edit'                               => 'Blog::edit/$1',
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
-            'closure/(:num)/(:alpha)'                         => function ($num, $str) {
+            'closure/(:num)/(:alpha)'                         => static function ($num, $str) {
                 return $num . '-' . $str;
             },
             '{locale}/pages'                                  => 'App\Pages::list_all',
@@ -421,13 +421,13 @@ class RouterTest extends CIUnitTestCase
             'as'  => 'login',
             'foo' => 'baz',
         ];
-        $this->collection->add('foo', function () {
+        $this->collection->add('foo', static function () {
         }, $optionsFoo);
         $optionsBaz = [
             'as'  => 'admin',
             'foo' => 'bar',
         ];
-        $this->collection->add('baz', function () {
+        $this->collection->add('baz', static function () {
         }, $optionsBaz);
 
         $router = new Router($this->collection, $this->request);
@@ -441,7 +441,7 @@ class RouterTest extends CIUnitTestCase
     {
         $collection = $this->collection;
 
-        $collection->group('foo', ['filter' => 'test'], function ($routes) {
+        $collection->group('foo', ['filter' => 'test'], static function ($routes) {
             $routes->add('bar', 'TestController::foobar');
         });
 
@@ -467,7 +467,7 @@ class RouterTest extends CIUnitTestCase
                 'namespace' => 'App\Controllers\Api',
                 'filter'    => 'api-auth',
             ],
-            function (RouteCollection $routes) {
+            static function (RouteCollection $routes) {
                 $routes->resource('posts', [
                     'controller' => 'PostController',
                 ]);

@@ -319,7 +319,7 @@ class MigrationRunnerTest extends CIUnitTestCase
             ->clearHistory();
 
         $result = null;
-        Events::on('migrate', function ($arg) use (&$result) {
+        Events::on('migrate', static function ($arg) use (&$result) {
             $result = $arg;
         });
 
@@ -337,7 +337,7 @@ class MigrationRunnerTest extends CIUnitTestCase
             ->clearHistory();
 
         $result = null;
-        Events::on('migrate', function ($arg) use (&$result) {
+        Events::on('migrate', static function ($arg) use (&$result) {
             $result = $arg;
         });
 

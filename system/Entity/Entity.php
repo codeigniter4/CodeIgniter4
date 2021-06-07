@@ -160,7 +160,7 @@ class Entity implements JsonSerializable
     {
         $this->_cast = $cast;
 
-        $keys = array_filter(array_keys($this->attributes), function ($key) {
+        $keys = array_filter(array_keys($this->attributes), static function ($key) {
             return strpos($key, '_') !== 0;
         });
 
@@ -217,7 +217,7 @@ class Entity implements JsonSerializable
         {
             if ($recursive)
             {
-                return array_map(function ($value) use ($onlyChanged, $recursive) {
+                return array_map(static function ($value) use ($onlyChanged, $recursive) {
                     if ($value instanceof Entity)
                     {
                         $value = $value->toRawArray($onlyChanged, $recursive);

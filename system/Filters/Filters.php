@@ -361,7 +361,7 @@ class Filters
             [$name, $params] = explode(':', $name);
 
             $params = explode(',', $params);
-            array_walk($params, function (&$item) {
+            array_walk($params, static function (&$item) {
                 $item = trim($item);
             });
 
