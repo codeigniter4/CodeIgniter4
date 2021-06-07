@@ -1202,7 +1202,7 @@ abstract class BaseModel
 
         if (empty($this->allowedFields))
         {
-            throw DataException::forInvalidAllowedFields(get_class($this));
+            throw DataException::forInvalidAllowedFields(static::class);
         }
 
         foreach (array_keys($data) as $key)

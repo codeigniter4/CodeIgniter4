@@ -707,7 +707,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // query is not write-type, so it must be read-type query; return QueryResult
-        $resultClass = str_replace('Connection', 'Result', get_class($this));
+        $resultClass = str_replace('Connection', 'Result', static::class);
         return new $resultClass($this->connID, $this->resultID);
     }
 
@@ -965,7 +965,7 @@ abstract class BaseConnection implements ConnectionInterface
             throw new DatabaseException('You must set the database table to be used with your query.');
         }
 
-        $className = str_replace('Connection', 'Builder', get_class($this));
+        $className = str_replace('Connection', 'Builder', static::class);
 
         return new $className($tableName, $this);
     }
@@ -1009,7 +1009,7 @@ abstract class BaseConnection implements ConnectionInterface
             $sql = $sql->getOriginalQuery();
         }
 
-        $class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+        $class = str_ireplace('Connection', 'PreparedQuery', static::class);
         /**
          * @var BasePreparedQuery $class
          */

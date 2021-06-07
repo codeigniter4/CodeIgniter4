@@ -389,7 +389,7 @@
 
 			<p>
 				Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
-				PHP: <?= esc(phpversion()) ?>  &mdash;
+				PHP: <?= esc(PHP_VERSION) ?>  &mdash;
 				CodeIgniter: <?= esc(\CodeIgniter\CodeIgniter::CI_VERSION) ?>
 			</p>
 
