@@ -82,7 +82,7 @@ final class RedisHandlerTest extends CIUnitTestCase
      */
     public function testRemember()
     {
-        $this->redisHandler->remember(self::$key1, 2, function () {
+        $this->redisHandler->remember(self::$key1, 2, static function () {
             return 'value';
         });
 

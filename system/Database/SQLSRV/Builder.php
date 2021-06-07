@@ -441,7 +441,7 @@ class Builder extends BaseBuilder
 
         // Get the binds
         $binds = $this->binds;
-        array_walk($binds, function (&$item) {
+        array_walk($binds, static function (&$item) {
             $item = $item[0];
         });
 

@@ -711,7 +711,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testCanAddAndRemovePlugins()
     {
-        $this->parser->addPlugin('first', function ($str) {
+        $this->parser->addPlugin('first', static function ($str) {
             return $str;
         });
 
@@ -745,7 +745,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserPluginNoParams()
     {
-        $this->parser->addPlugin('hit:it', function ($str) {
+        $this->parser->addPlugin('hit:it', static function ($str) {
             return str_replace('here', 'Hip to the Hop', $str);
         }, true);
 
@@ -762,7 +762,7 @@ class ParserTest extends CIUnitTestCase
     public function testParserPluginClosure()
     {
         $config                   = $this->config;
-        $config->plugins['hello'] = function (array $params = []) {
+        $config->plugins['hello'] = static function (array $params = []) {
             return 'Hello, ' . trim($params[0]);
         };
 
@@ -780,7 +780,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserPluginParams()
     {
-        $this->parser->addPlugin('growth', function ($str, array $params) {
+        $this->parser->addPlugin('growth', static function ($str, array $params) {
             $step  = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
@@ -806,7 +806,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserSingleTag()
     {
-        $this->parser->addPlugin('hit:it', function () {
+        $this->parser->addPlugin('hit:it', static function () {
             return 'Hip to the Hop';
         }, false);
 
@@ -820,7 +820,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserSingleTagWithParams()
     {
-        $this->parser->addPlugin('hit:it', function (array $params = []) {
+        $this->parser->addPlugin('hit:it', static function (array $params = []) {
             return "{$params['first']} to the {$params['last']}";
         }, false);
 
@@ -834,7 +834,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserSingleTagWithSingleParams()
     {
-        $this->parser->addPlugin('hit:it', function (array $params = []) {
+        $this->parser->addPlugin('hit:it', static function (array $params = []) {
             return "{$params[0]} to the {$params[1]}";
         }, false);
 
@@ -848,7 +848,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserSingleTagWithQuotedParams()
     {
-        $this->parser->addPlugin('count', function (array $params = []) {
+        $this->parser->addPlugin('count', static function (array $params = []) {
             $out = '';
 
             foreach ($params as $index => $param)
@@ -869,7 +869,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testParserSingleTagWithNamedParams()
     {
-        $this->parser->addPlugin('read_params', function (array $params = []) {
+        $this->parser->addPlugin('read_params', static function (array $params = []) {
             $out = '';
 
             foreach ($params as $index => $param)

@@ -38,7 +38,7 @@ class TestCaseTest extends CIUnitTestCase
 
     public function testEventTriggering()
     {
-        Events::on('foo', function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result) {
             $result = $arg;
         });
 

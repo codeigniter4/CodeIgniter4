@@ -119,7 +119,7 @@ final class FileHandlerTest extends CIUnitTestCase
      */
     public function testRemember()
     {
-        $this->fileHandler->remember(self::$key1, 2, function () {
+        $this->fileHandler->remember(self::$key1, 2, static function () {
             return 'value';
         });
 

@@ -96,7 +96,7 @@ class EmailTest extends CIUnitTestCase
 
         $result = null;
 
-        Events::on('email', function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result) {
             $result = $arg;
         });
 
@@ -116,7 +116,7 @@ class EmailTest extends CIUnitTestCase
 
         $result = null;
 
-        Events::on('email', function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result) {
             $result = $arg;
         });
 

@@ -116,7 +116,7 @@ class Query implements QueryInterface
 
             if ($setEscape)
             {
-                array_walk($binds, function (&$item) {
+                array_walk($binds, static function (&$item) {
                     $item = [
                         $item,
                         true,
@@ -141,7 +141,7 @@ class Query implements QueryInterface
     {
         if ($setEscape)
         {
-            array_walk($binds, function (&$item) {
+            array_walk($binds, static function (&$item) {
                 $item = [
                     $item,
                     true,

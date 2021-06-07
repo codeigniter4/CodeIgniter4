@@ -326,7 +326,7 @@ trait RequestTrait
         )
         {
             // Iterate over array and append filter and flags
-            array_walk_recursive($value, function (&$val) use ($filter, $flags) {
+            array_walk_recursive($value, static function (&$val) use ($filter, $flags) {
                 $val = filter_var($val, $filter, $flags);
             });
 

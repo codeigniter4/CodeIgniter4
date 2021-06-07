@@ -251,7 +251,7 @@ if (! function_exists('number_to_roman'))
             return null;
         }
 
-        $_number_to_roman = function ($num, $th) use (&$_number_to_roman) {
+        $_number_to_roman = static function ($num, $th) use (&$_number_to_roman) {
             $return = '';
             $key1   = null;
             $key2   = null;

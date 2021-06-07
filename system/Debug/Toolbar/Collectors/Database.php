@@ -138,7 +138,7 @@ class Database extends BaseCollector
      */
     public function display(): array
     {
-        $data['queries'] = array_map(function (Query $query) {
+        $data['queries'] = array_map(static function (Query $query) {
             return [
                 'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
                 'sql'      => $query->debugToolbarDisplay(),

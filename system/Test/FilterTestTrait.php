@@ -163,14 +163,14 @@ trait FilterTestTrait
 
         if ($position === 'before')
         {
-            return function (array $params = null) use ($filter, $request) {
+            return static function (array $params = null) use ($filter, $request) {
                 return $filter->before($request, $params);
             };
         }
 
         $response = clone $this->response;
 
-        return function (array $params = null) use ($filter, $request, $response) {
+        return static function (array $params = null) use ($filter, $request, $response) {
             return $filter->after($request, $response, $params);
         };
     }

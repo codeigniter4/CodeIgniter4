@@ -113,7 +113,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('neworder');
 
-        $builder->where('advance_amount <', function (BaseBuilder $builder) {
+        $builder->where('advance_amount <', static function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
         });
         $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
@@ -191,7 +191,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->whereIn('id', function (BaseBuilder $builder) {
+        $builder->whereIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -264,7 +264,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->whereNotIn('id', function (BaseBuilder $builder) {
+        $builder->whereNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -302,7 +302,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereIn('id', function (BaseBuilder $builder) {
+        $builder->where('deleted_at', null)->orWhereIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -340,7 +340,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereNotIn('id', function (BaseBuilder $builder) {
+        $builder->where('deleted_at', null)->orWhereNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 

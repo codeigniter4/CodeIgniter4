@@ -259,7 +259,7 @@ class Connection extends BaseConnection
             $obj->name = $row->index_name;
 
             $_fields     = explode(',', trim($row->index_keys));
-            $obj->fields = array_map(function ($v) {
+            $obj->fields = array_map(static function ($v) {
                 return trim($v);
             }, $_fields);
 

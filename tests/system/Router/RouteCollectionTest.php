@@ -258,7 +258,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', function ($routes) {
+                'admin', static function ($routes) {
                     $routes->add('users/list', '\Users::list');
                 }
         );
@@ -277,7 +277,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                '<script>admin', function ($routes) {
+                '<script>admin', static function ($routes) {
                     $routes->add('users/list', '\Users::list');
                 }
         );
@@ -296,7 +296,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['namespace' => 'Admin'], function ($routes) {
+                'admin', ['namespace' => 'Admin'], static function ($routes) {
                     $routes->add('users/list', 'Users::list');
                 }
         );
@@ -315,7 +315,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                '', function ($routes) {
+                '', static function ($routes) {
                     $routes->add('users/list', '\Users::list');
                 }
         );
@@ -335,12 +335,12 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $routes->add('verify/begin', '\VerifyController::begin');
 
-        $routes->group('admin', function ($routes) {
+        $routes->group('admin', static function ($routes) {
             $routes->group(
-                '', function ($routes) {
+                '', static function ($routes) {
                     $routes->add('users/list', '\Users::list');
 
-                    $routes->group('delegate', function ($routes) {
+                    $routes->group('delegate', static function ($routes) {
                         $routes->add('foo', '\Users::foo');
                     });
                 });
@@ -795,13 +795,13 @@ class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->environment(
-                'testing', function ($routes) {
+                'testing', static function ($routes) {
                     $routes->get('here', 'there');
                 }
         );
 
         $routes->environment(
-                'badenvironment', function ($routes) {
+                'badenvironment', static function ($routes) {
                     $routes->get('from', 'to');
                 }
         );
@@ -938,11 +938,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
         $routes->post(
-                'user/insert', function () {
+                'user/insert', static function () {
                 }, ['as' => 'namedRoute2']
         );
         $routes->put(
-                'user/insert', function () {
+                'user/insert', static function () {
                 }, ['as' => 'namedRoute3']
         );
 
@@ -967,13 +967,13 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes->get('{locale}/user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
         $routes->post(
             '{locale}/user/insert',
-            function () {
+            static function () {
             },
             ['as' => 'namedRoute2']
         );
         $routes->put(
             '{locale}/user/insert',
-            function () {
+            static function () {
             },
             ['as' => 'namedRoute3']
         );
@@ -1216,7 +1216,7 @@ class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $routes->add('login', function () {
+        $routes->add('login', static function () {
         });
 
         $match = $routes->reverseRoute('login');
@@ -1228,7 +1228,7 @@ class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $routes->add('login', function () {
+        $routes->add('login', static function () {
         });
 
         $this->assertFalse($routes->reverseRoute('foobar'));
@@ -1286,7 +1286,7 @@ class RouteCollectionTest extends CIUnitTestCase
             'foo' => 'baz',
         ];
         $routes->add(
-                'administrator', function () {
+                'administrator', static function () {
                 }, $options
         );
 
@@ -1312,15 +1312,15 @@ class RouteCollectionTest extends CIUnitTestCase
             'bar' => 'baz',
         ];
         $routes->get(
-                'administrator', function () {
+                'administrator', static function () {
                 }, $options1
         );
         $routes->post(
-                'administrator', function () {
+                'administrator', static function () {
                 }, $options2
         );
         $routes->add(
-                'administrator', function () {
+                'administrator', static function () {
                 }, $options3
         );
 
@@ -1343,7 +1343,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['filter' => 'role'], function ($routes) {
+                'admin', ['filter' => 'role'], static function ($routes) {
                     $routes->add('users', '\Users::list');
                 }
         );
@@ -1360,7 +1360,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['filter' => 'role:admin,manager'], function ($routes) {
+                'admin', ['filter' => 'role:admin,manager'], static function ($routes) {
                     $routes->add('users', '\Users::list');
                 }
         );
@@ -1394,7 +1394,7 @@ class RouteCollectionTest extends CIUnitTestCase
         Services::request()->setMethod('get');
         $routes = $this->getCollector();
 
-        $routes->set404Override(function () {
+        $routes->set404Override(static function () {
             echo 'Explode now';
         }
         );

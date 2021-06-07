@@ -46,7 +46,7 @@ class CookieStore implements Countable, IteratorAggregate
         /**
          * @var Cookie[] $cookies
          */
-        $cookies = array_filter(array_map(function (string $header) use ($raw) {
+        $cookies = array_filter(array_map(static function (string $header) use ($raw) {
             try
             {
                 return Cookie::fromHeaderString($header, $raw);

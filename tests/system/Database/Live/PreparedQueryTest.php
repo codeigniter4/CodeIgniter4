@@ -21,7 +21,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareReturnsPreparedQuery()
     {
-        $query = $this->db->prepare(function ($db) {
+        $query = $this->db->prepare(static function ($db) {
             return $db->table('user')->insert([
                 'name'  => 'a',
                 'email' => 'b@example.com',
@@ -56,7 +56,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareReturnsManualPreparedQuery()
     {
-        $query = $this->db->prepare(function ($db) {
+        $query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
             return (new Query($db))->setQuery($sql);
@@ -83,7 +83,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryAndReturnsResultObject()
     {
-        $query = $this->db->prepare(function ($db) {
+        $query = $this->db->prepare(static function ($db) {
             return $db->table('user')->insert([
                 'name'    => 'a',
                 'email'   => 'b@example.com',
@@ -102,7 +102,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryAndReturnsManualResultObject()
     {
-        $query = $this->db->prepare(function ($db) {
+        $query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
             return (new Query($db))->setQuery($sql);

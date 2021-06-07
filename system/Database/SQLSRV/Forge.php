@@ -149,7 +149,7 @@ class Forge extends BaseForge
 
             $sql = 'ALTER TABLE [' . $table . '] DROP ';
 
-            $fields = array_map(function ($item) {
+            $fields = array_map(static function ($item) {
                 return 'COLUMN [' . trim($item) . ']';
             }, (array) $field);
 

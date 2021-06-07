@@ -265,7 +265,7 @@ class Negotiate
         }
 
         // Sort to get the highest results first
-        usort($results, function ($a, $b) {
+        usort($results, static function ($a, $b) {
             if ($a['q'] === $b['q'])
             {
                 $aAst = substr_count($a['value'], '*');

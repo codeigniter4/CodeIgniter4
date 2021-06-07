@@ -86,7 +86,7 @@ class GroupTest extends CIUnitTestCase
         $builder->select('name')
                 ->groupBy('name');
 
-        $builder->havingIn('id', function (BaseBuilder $builder) {
+        $builder->havingIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
         });
 
@@ -120,10 +120,10 @@ class GroupTest extends CIUnitTestCase
         $builder->select('name')
                 ->groupBy('name');
 
-        $builder->havingIn('id', function (BaseBuilder $builder) {
+        $builder->havingIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
         });
-        $builder->orHavingIn('group_id', function (BaseBuilder $builder) {
+        $builder->orHavingIn('group_id', static function (BaseBuilder $builder) {
             return $builder->select('group_id')->from('groups')->where('group_id', 6);
         });
 
@@ -156,7 +156,7 @@ class GroupTest extends CIUnitTestCase
         $builder->select('name')
                 ->groupBy('name');
 
-        $builder->havingNotIn('id', function (BaseBuilder $builder) {
+        $builder->havingNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
         });
 
@@ -190,10 +190,10 @@ class GroupTest extends CIUnitTestCase
         $builder->select('name')
                 ->groupBy('name');
 
-        $builder->havingNotIn('id', function (BaseBuilder $builder) {
+        $builder->havingNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
         });
-        $builder->orHavingNotIn('group_id', function (BaseBuilder $builder) {
+        $builder->orHavingNotIn('group_id', static function (BaseBuilder $builder) {
             return $builder->select('group_id')->from('groups')->where('group_id', 6);
         });
 

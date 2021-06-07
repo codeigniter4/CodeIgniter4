@@ -74,7 +74,7 @@ final class MemcachedHandlerTest extends CIUnitTestCase
      */
     public function testRemember()
     {
-        $this->memcachedHandler->remember(self::$key1, 2, function () {
+        $this->memcachedHandler->remember(self::$key1, 2, static function () {
             return 'value';
         });
 
