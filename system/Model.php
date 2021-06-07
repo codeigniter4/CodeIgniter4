@@ -753,17 +753,7 @@ class Model extends BaseModel
      */
     public function __get(string $name)
     {
-        if (parent::__isset($name))
-        {
-            return parent::__get($name);
-        }
-
-        if (isset($this->builder()->$name))
-        {
-            return $this->builder()->$name;
-        }
-
-        return null;
+        return parent::__get($name) ?? $this->builder()->$name ?? null;
     }
 
     /**

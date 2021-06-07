@@ -239,12 +239,7 @@ abstract class BaseCommand
      */
     public function __get(string $key)
     {
-        if (isset($this->$key))
-        {
-            return $this->$key;
-        }
-
-        return null;
+        return $this->$key ?? null;
     }
 
     /**

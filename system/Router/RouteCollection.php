@@ -812,12 +812,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // In order to allow customization of allowed id values
         // we need someplace to store them.
-        $id = $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
-
-        if (isset($options['placeholder']))
-        {
-            $id = $options['placeholder'];
-        }
+        $id = $options['placeholder'] ?? $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
 
         // Make sure we capture back-references
         $id = '(' . trim($id, '()') . ')';
@@ -925,12 +920,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // In order to allow customization of allowed id values
         // we need someplace to store them.
-        $id = $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
-
-        if (isset($options['placeholder']))
-        {
-            $id = $options['placeholder'];
-        }
+        $id = $options['placeholder'] ?? $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
 
         // Make sure we capture back-references
         $id = '(' . trim($id, '()') . ')';

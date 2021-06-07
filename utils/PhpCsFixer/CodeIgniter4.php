@@ -41,6 +41,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'sets' => ['@all'],
             ],
             'static_lambda'                => true,
+            'ternary_to_null_coalescing'   => true,
             'yoda_style'                   => [
                 'equal'                => false,
                 'identical'            => null,

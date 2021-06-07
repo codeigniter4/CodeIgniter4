@@ -1397,12 +1397,7 @@ abstract class BaseConnection implements ConnectionInterface
             return "'{$str}'";
         }
 
-        if ($str === null)
-        {
-            return 'NULL';
-        }
-
-        return $str;
+        return $str ?? 'NULL';
     }
 
     //--------------------------------------------------------------------

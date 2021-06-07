@@ -1707,12 +1707,7 @@ abstract class BaseModel
             return $this->$name;
         }
 
-        if (isset($this->db->$name))
-        {
-            return $this->db->$name;
-        }
-
-        return null;
+        return $this->db->$name ?? null;
     }
 
     /**
