@@ -68,7 +68,7 @@ class PreparedQuery extends BasePreparedQuery
         // Determine the type string
         foreach ($data as $item)
         {
-            if (is_integer($item))
+            if (is_int($item))
             {
                 $bindTypes .= 'i';
             }

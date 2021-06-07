@@ -1956,8 +1956,8 @@ class Email
             return false;
         }
 
-        fputs($fp, $this->headerStr);
-        fputs($fp, $this->finalBody);
+        fwrite($fp, $this->headerStr);
+        fwrite($fp, $this->finalBody);
         $status = pclose($fp);
 
         if ($status !== 0)

@@ -13,7 +13,7 @@ class Role implements FilterInterface
     {
         if (is_array($arguments))
         {
-            $response->setBody(join(';', $arguments));
+            $response->setBody(implode(';', $arguments));
         }
         elseif (is_null($arguments))
         {
@@ -30,7 +30,7 @@ class Role implements FilterInterface
     {
         if (is_array($arguments))
         {
-            return join(';', $arguments);
+            return implode(';', $arguments);
         }
         if (is_null($arguments))
         {
