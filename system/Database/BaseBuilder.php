@@ -2188,9 +2188,9 @@ class BaseBuilder
 
             $clean = [];
 
-            foreach ($row as $k => $value)
+            foreach ($row as $k => $rowValue)
             {
-                $clean[] = ':' . $this->setBind($k, $value, $escape) . ':';
+                $clean[] = ':' . $this->setBind($k, $rowValue, $escape) . ':';
             }
 
             $row = $clean;
