@@ -1,4 +1,7 @@
-<?php namespace Tests\Support;
+<?php
+
+namespace Tests\Support;
+
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 

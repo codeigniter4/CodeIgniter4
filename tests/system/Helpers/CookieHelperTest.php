@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Cookie\Exceptions\CookieException;

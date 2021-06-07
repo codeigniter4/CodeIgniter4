@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
+
+namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 

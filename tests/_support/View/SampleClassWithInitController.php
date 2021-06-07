@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\View;
+<?php
+
+namespace Tests\Support\View;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;

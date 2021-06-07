@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Debug;
+<?php
+
+namespace CodeIgniter\Debug;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;

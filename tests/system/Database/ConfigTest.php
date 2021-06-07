@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\BaseConnection;

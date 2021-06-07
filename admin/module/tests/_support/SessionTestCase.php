@@ -1,4 +1,6 @@
-<?php namespace Tests\Support;
+<?php
+
+namespace Tests\Support;
 
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Session\SessionInterface;

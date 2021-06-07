@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Test\CIUnitTestCase;

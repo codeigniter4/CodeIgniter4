@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Support\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;

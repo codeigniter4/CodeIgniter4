@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\API;
 
 use CodeIgniter\Format\JSONFormatter;

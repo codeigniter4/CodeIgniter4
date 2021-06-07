@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
+
+namespace CodeIgniter\Autoloader;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;

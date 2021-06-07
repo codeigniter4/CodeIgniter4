@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
+
+namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 

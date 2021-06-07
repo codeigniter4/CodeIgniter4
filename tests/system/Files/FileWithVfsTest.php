@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Files;
+<?php
+
+namespace CodeIgniter\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;

@@ -1,4 +1,6 @@
-<?php namespace Tests\Support\Validation;
+<?php
+
+namespace Tests\Support\Validation;
 
 class TestRules {
 

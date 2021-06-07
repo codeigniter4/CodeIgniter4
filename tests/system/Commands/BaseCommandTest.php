@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\CommandRunner;
