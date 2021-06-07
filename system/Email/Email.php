@@ -410,7 +410,7 @@ class Email
             $config = get_object_vars($config);
         }
 
-        foreach (array_keys(get_class_vars(get_class($this))) as $key)
+        foreach (array_keys(get_class_vars(static::class)) as $key)
         {
             if (property_exists($this, $key) && isset($config[$key]))
             {

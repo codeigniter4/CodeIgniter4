@@ -143,7 +143,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         Events::trigger('DBQuery', $query);
 
         // Return a result object
-        $resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
+        $resultClass = str_replace('PreparedQuery', 'Result', static::class);
 
         $resultID = $this->_getResult();
 

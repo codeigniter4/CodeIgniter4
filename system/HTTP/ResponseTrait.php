@@ -485,7 +485,7 @@ trait ResponseTrait
 
         // Per spec, MUST be sent with each request, if possible.
         // http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-        if (! isset($this->headers['Date']) && php_sapi_name() !== 'cli-server')
+        if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server')
         {
             $this->setDate(DateTime::createFromFormat('U', (string) time()));
         }

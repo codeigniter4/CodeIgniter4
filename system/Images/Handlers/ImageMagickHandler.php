@@ -73,7 +73,7 @@ class ImageMagickHandler extends BaseHandler
         $destination = $this->getResourcePath();
 
         $escape = '\\';
-        if (stripos(PHP_OS, 'WIN') === 0)
+        if (PHP_OS_FAMILY === 'Windows')
         {
             $escape = '';
         }
