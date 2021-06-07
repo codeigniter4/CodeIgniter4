@@ -1495,7 +1495,7 @@ abstract class BaseConnection implements ConnectionInterface
         $driver = strtolower($this->DBDriver);
         $driver = ($driver === 'postgre' ? 'pg' : $driver) . '_';
 
-        if (false === strpos($driver, $functionName))
+        if (strpos($driver, $functionName) === false)
         {
             $functionName = $driver . $functionName;
         }

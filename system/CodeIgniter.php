@@ -240,7 +240,7 @@ class CodeIgniter
             spl_autoload_register(function ($class) {
                 $class = explode('\\', $class);
 
-                if ('Kint' !== array_shift($class))
+                if (array_shift($class) !== 'Kint')
                 {
                     return;
                 }

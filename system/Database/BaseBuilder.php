@@ -1746,7 +1746,7 @@ class BaseBuilder
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
-        return $sql . ' LIMIT ' . (false === $offsetIgnore && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
+        return $sql . ' LIMIT ' . ($offsetIgnore === false && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
     }
 
     //--------------------------------------------------------------------

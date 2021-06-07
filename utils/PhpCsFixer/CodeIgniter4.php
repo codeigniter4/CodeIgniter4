@@ -37,6 +37,12 @@ final class CodeIgniter4 extends AbstractRuleset
             'indentation_type'             => true,
             'line_ending'                  => true,
             'static_lambda'                => true,
+            'yoda_style'                   => [
+                'equal'                => false,
+                'identical'            => null,
+                'less_and_greater'     => false,
+                'always_move_variable' => false,
+            ],
         ];
 
         $this->requiredPHPVersion = 70300;
