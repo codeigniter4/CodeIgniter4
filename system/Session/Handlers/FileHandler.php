@@ -347,7 +347,7 @@ class FileHandler extends BaseHandler
 
         $pattern = sprintf(
             '#\A%s' . $pattern . $this->sessionIDRegex . '\z#',
-            preg_quote($this->cookieName)
+            preg_quote($this->cookieName, '#')
         );
 
         while (($file = readdir($directory)) !== false)

@@ -366,7 +366,7 @@ class UserAgent
         {
             foreach ($this->config->platforms as $key => $val)
             {
-                if (preg_match('|' . preg_quote($key) . '|i', $this->agent))
+                if (preg_match('|' . preg_quote($key, '|') . '|i', $this->agent))
                 {
                     $this->platform = $val;
 
@@ -421,7 +421,7 @@ class UserAgent
         {
             foreach ($this->config->robots as $key => $val)
             {
-                if (preg_match('|' . preg_quote($key) . '|i', $this->agent))
+                if (preg_match('|' . preg_quote($key, '|') . '|i', $this->agent))
                 {
                     $this->isRobot = true;
                     $this->robot   = $val;
