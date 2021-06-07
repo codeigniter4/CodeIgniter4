@@ -2363,7 +2363,12 @@ class Email
             return $_SERVER['SERVER_NAME'];
         }
 
-        return isset($_SERVER['SERVER_ADDR']) ? '[' . $_SERVER['SERVER_ADDR'] . ']' : '[127.0.0.1]';
+        if (isset($_SERVER['SERVER_ADDR']))
+        {
+            return '[' . $_SERVER['SERVER_ADDR'] . ']';
+        }
+
+        return '[127.0.0.1]';
     }
 
     /**

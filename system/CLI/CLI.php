@@ -944,12 +944,7 @@ class CLI
      */
     public static function getSegment(int $index)
     {
-        if (! isset(static::$segments[$index - 1]))
-        {
-            return null;
-        }
-
-        return static::$segments[$index - 1];
+        return static::$segments[$index - 1] ?? null;
     }
 
     //--------------------------------------------------------------------
