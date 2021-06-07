@@ -61,6 +61,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'position_after_control_structures'                 => 'same',
                 'position_after_functions_and_oop_constructs'       => 'next',
             ],
+            'cast_spaces'                  => ['space' => 'single'],
             'function_to_constant'         => true,
             'indentation_type'             => true,
             'line_ending'                  => true,

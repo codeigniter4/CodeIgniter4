@@ -295,9 +295,10 @@ class DatabaseHandler extends BaseHandler
      */
     public function gc($maxlifetime): bool
     {
-        $interval = implode(" '"[(int)($this->platform === 'postgre')], ['', "{$maxlifetime} second", '']);
+        $separator = $this->platform === 'postgre' ? '\'' : ' ';
+        $interval  = implode($separator, ['', "{$maxlifetime} second", '']);
 
-        return ($this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}")) ? true : $this->fail();
+        return $this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}") ? true : $this->fail();
     }
 
     //--------------------------------------------------------------------

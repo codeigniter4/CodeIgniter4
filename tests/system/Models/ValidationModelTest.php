@@ -290,7 +290,7 @@ final class ValidationModelTest extends LiveModelTestCase
         $this->createModel(ValidErrorsModel::class);
 
         $id = $this->model->insert($data);
-        $this->assertFalse((bool)$id);
+        $this->assertFalse((bool) $id);
         $this->assertSame('Minimum Length Error', $this->model->errors()['name']);
     }
 

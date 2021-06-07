@@ -229,9 +229,9 @@ class PagerTest extends CIUnitTestCase
         $this->pager->store('foo', 2, 12, 70);
 
         $expected = current_url(true);
-        $expected = (string)$expected->setQuery('page_foo=3');
+        $expected = (string) $expected->setQuery('page_foo=3');
 
-        $this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+        $this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
     }
 
     public function testGetNextURIReturnsNullOnLastPage()
@@ -246,7 +246,7 @@ class PagerTest extends CIUnitTestCase
         $this->pager->store('foo', 1, 12, 70);
 
         $expected = current_url(true);
-        $expected = (string)$expected->setQuery('page_foo=2');
+        $expected = (string) $expected->setQuery('page_foo=2');
 
         $this->assertEquals($expected, $this->pager->getNextPageURI('foo'));
     }
@@ -258,9 +258,9 @@ class PagerTest extends CIUnitTestCase
         $this->pager->store('foo', 2, 12, 70);
 
         $expected = current_url(true);
-        $expected = (string)$expected->setQuery('page_foo=1');
+        $expected = (string) $expected->setQuery('page_foo=1');
 
-        $this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testGetNextURIReturnsNullOnFirstPage()
@@ -278,11 +278,11 @@ class PagerTest extends CIUnitTestCase
         ];
 
         $expected = current_url(true);
-        $expected = (string)$expected->setQueryArray($_GET);
+        $expected = (string) $expected->setQueryArray($_GET);
 
         $this->pager->store('foo', $_GET['page_foo'] - 1, 12, 70);
 
-        $this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+        $this->assertEquals((string) $expected, $this->pager->getNextPageURI('foo'));
     }
 
     public function testGetPreviousURIWithQueryStringUsesCurrentURI()
@@ -292,11 +292,11 @@ class PagerTest extends CIUnitTestCase
             'status'   => 1,
         ];
         $expected = current_url(true);
-        $expected = (string)$expected->setQueryArray($_GET);
+        $expected = (string) $expected->setQueryArray($_GET);
 
         $this->pager->store('foo', $_GET['page_foo'] + 1, 12, 70);
 
-        $this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testGetOnlyQueries()
@@ -319,15 +319,15 @@ class PagerTest extends CIUnitTestCase
 
         $this->assertEquals(
             $this->pager->only($onlyQueries)
-                        ->getPreviousPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=1')
+                        ->getPreviousPageURI(), (string) $uri->setQuery('search=foo&order=asc&page=1')
         );
         $this->assertEquals(
             $this->pager->only($onlyQueries)
-                        ->getNextPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=3')
+                        ->getNextPageURI(), (string) $uri->setQuery('search=foo&order=asc&page=3')
         );
         $this->assertEquals(
             $this->pager->only($onlyQueries)
-                        ->getPageURI(4), (string)$uri->setQuery('search=foo&order=asc&page=4')
+                        ->getPageURI(4), (string) $uri->setQuery('search=foo&order=asc&page=4')
         );
     }
 
@@ -430,9 +430,9 @@ class PagerTest extends CIUnitTestCase
         $this->pager->store('foo', 2, 12, 70);
 
         $expected = current_url(true);
-        $expected = (string)$expected->setQuery('page_foo=1');
+        $expected = (string) $expected->setQuery('page_foo=1');
 
-        $this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertEquals((string) $expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testAccessPageMoreThanPageCountGetLastPage()

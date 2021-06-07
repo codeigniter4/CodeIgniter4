@@ -43,7 +43,7 @@ class RulesTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->validation = new Validation((object)$this->config, Services::renderer());
+        $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
 
         $_FILES = [];

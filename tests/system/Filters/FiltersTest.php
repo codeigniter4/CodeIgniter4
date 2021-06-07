@@ -727,8 +727,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $filters = new Filters((object)$config, $this->request, $this->response);
-
+        $filters = new Filters((object) $config, $this->request, $this->response);
         $filters = $filters->initialize('admin/foo/bar');
 
         $filters->enableFilter('role:admin , super', 'before');
@@ -759,7 +758,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $filters = new Filters((object)$config, $this->request, $this->response);
+        $filters = new Filters((object) $config, $this->request, $this->response);
 
         $filters = $filters->initialize('admin/foo/bar');
 
