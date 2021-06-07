@@ -184,7 +184,7 @@ class Builder extends BaseBuilder
         }
 
         // Assemble the JOIN statement
-        $this->QBJoin[] = $join = $type . 'JOIN ' . $this->getFullName($table) . $cond;
+        $this->QBJoin[] = $type . 'JOIN ' . $this->getFullName($table) . $cond;
 
         return $this;
     }
@@ -353,7 +353,7 @@ class Builder extends BaseBuilder
             $sql .= is_int($this->QBOffset) ? ' OFFSET ' . $this->QBOffset : ' OFFSET 0 ';
         }
 
-        return $sql .= ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
+        return $sql . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
     }
 
     /**
@@ -649,7 +649,7 @@ class Builder extends BaseBuilder
         // LIMIT
         if ($this->QBLimit)
         {
-            return $sql = $this->_limit($sql . "\n");
+            $sql = $this->_limit($sql . "\n");
         }
 
         return $sql;

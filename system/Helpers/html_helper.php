@@ -83,11 +83,8 @@ if (! function_exists('_list'))
         // Cycle through the list elements.  If an array is
         // encountered we will recursively call _list()
 
-        static $_last_list_item = '';
         foreach ($list as $key => $val)
         {
-            $_last_list_item = $key;
-
             $out .= str_repeat(' ', $depth + 2) . '<li>';
 
             if (! is_array($val))
@@ -96,7 +93,7 @@ if (! function_exists('_list'))
             }
             else
             {
-                $out .= $_last_list_item
+                $out .= $key
                         . "\n"
                         . _list($type, $val, '', $depth + 4)
                         . str_repeat(' ', $depth + 2);

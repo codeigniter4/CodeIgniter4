@@ -554,8 +554,6 @@ abstract class CIUnitTestCase extends TestCase
      */
     protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
     {
-        $found = false;
-
         if (! function_exists('xdebug_get_headers'))
         {
             $this->markTestSkipped('XDebug not found.');

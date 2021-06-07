@@ -288,13 +288,12 @@ class DOMParser
      */
     public function parseSelector(string $selector)
     {
-        $tag   = null;
         $id    = null;
         $class = null;
         $attr  = null;
 
         // ID?
-        if ($pos = strpos($selector, '#') !== false)
+        if (strpos($selector, '#') !== false)
         {
             [$tag, $id] = explode('#', $selector);
         }

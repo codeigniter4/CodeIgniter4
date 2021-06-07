@@ -640,7 +640,7 @@ class ContentSecurityPolicy
         }
 
         // Replace style placeholders with nonces
-        $body = preg_replace_callback('/{csp-style-nonce}/', function ($matches) {
+        $body = preg_replace_callback('/{csp-style-nonce}/', function () {
             $nonce = bin2hex(random_bytes(12));
 
             $this->styleSrc[] = 'nonce-' . $nonce;
@@ -649,7 +649,7 @@ class ContentSecurityPolicy
         }, $body);
 
         // Replace script placeholders with nonces
-        $body = preg_replace_callback('/{csp-script-nonce}/', function ($matches) {
+        $body = preg_replace_callback('/{csp-script-nonce}/', function () {
             $nonce = bin2hex(random_bytes(12));
 
             $this->scriptSrc[] = 'nonce-' . $nonce;

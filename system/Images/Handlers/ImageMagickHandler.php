@@ -296,7 +296,7 @@ class ImageMagickHandler extends BaseHandler
         // a chance to convert file format.
         $action = escapeshellarg($this->resource) . ' ' . escapeshellarg($target);
 
-        $result = $this->process($action, $quality);
+        $this->process($action, $quality);
 
         unlink($this->resource);
 
