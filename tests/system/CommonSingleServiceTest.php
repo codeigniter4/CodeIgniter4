@@ -70,8 +70,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     {
         $methods = (new ReflectionClass(Services::class))->getMethods(ReflectionMethod::IS_PUBLIC);
 
-        foreach ($methods as $method)
-        {
+        foreach ($methods as $method) {
             $name = $method->getName();
             $excl = [
                 '__callStatic',
@@ -83,8 +82,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
                 'session', // Headers already sent
             ];
 
-            if (in_array($name, $excl, true))
-            {
+            if (in_array($name, $excl, true)) {
                 continue;
             }
 

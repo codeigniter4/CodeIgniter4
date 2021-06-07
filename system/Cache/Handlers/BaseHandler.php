@@ -52,16 +52,13 @@ abstract class BaseHandler implements CacheInterface
      */
     public static function validateKey($key, $prefix = ''): string
     {
-        if (! is_string($key))
-        {
+        if (! is_string($key)) {
             throw new InvalidArgumentException('Cache key must be a string');
         }
-        if ($key === '')
-        {
+        if ($key === '') {
             throw new InvalidArgumentException('Cache key cannot be empty.');
         }
-        if (strpbrk($key, self::RESERVED_CHARACTERS) !== false)
-        {
+        if (strpbrk($key, self::RESERVED_CHARACTERS) !== false) {
             throw new InvalidArgumentException('Cache key contains reserved characters ' . self::RESERVED_CHARACTERS);
         }
 
@@ -84,8 +81,7 @@ abstract class BaseHandler implements CacheInterface
     {
         $value = $this->get($key);
 
-        if (! is_null($value))
-        {
+        if (! is_null($value)) {
             return $value;
         }
 

@@ -35,29 +35,23 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
     {
         $comments = $node->getComments();
 
-        if ($comments === [])
-        {
+        if ($comments === []) {
             return [];
         }
 
-        foreach ($comments as $comment)
-        {
-            if (! $comment instanceof Doc)
-            {
+        foreach ($comments as $comment) {
+            if (! $comment instanceof Doc) {
                 continue;
             }
 
-            if (! preg_match(self::COPYRIGHT_REGEX, $comment->getText()))
-            {
+            if (! preg_match(self::COPYRIGHT_REGEX, $comment->getText())) {
                 continue;
             }
 
             $previous = $node->getAttribute('previous');
 
-            while ($previous)
-            {
-                if ($previous instanceof Use_)
-                {
+            while ($previous) {
+                if ($previous instanceof Use_) {
                     return [self::ERROR_MESSAGE];
                 }
 

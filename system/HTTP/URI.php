@@ -151,28 +151,23 @@ class URI
     public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
     {
         $uri = '';
-        if (! empty($scheme))
-        {
+        if (! empty($scheme)) {
             $uri .= $scheme . '://';
         }
 
-        if (! empty($authority))
-        {
+        if (! empty($authority)) {
             $uri .= $authority;
         }
 
-        if (isset($path) && $path !== '')
-        {
+        if (isset($path) && $path !== '') {
             $uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
         }
 
-        if ($query)
-        {
+        if ($query) {
             $uri .= '?' . $query;
         }
 
-        if ($fragment)
-        {
+        if ($fragment) {
             $uri .= '#' . $fragment;
         }
 
@@ -193,8 +188,7 @@ class URI
      */
     public static function removeDotSegments(string $path): string
     {
-        if ($path === '' || $path === '/')
-        {
+        if ($path === '' || $path === '/') {
             return $path;
         }
 
@@ -202,8 +196,7 @@ class URI
 
         $input = explode('/', $path);
 
-        if ($input[0] === '')
-        {
+        if ($input[0] === '') {
             unset($input[0]);
             $input = array_values($input);
         }
@@ -212,14 +205,10 @@ class URI
         // RFC, but matches most cases and is pretty
         // much what Guzzle uses. Should be good enough
         // for almost every real use case.
-        foreach ($input as $segment)
-        {
-            if ($segment === '..')
-            {
+        foreach ($input as $segment) {
+            if ($segment === '..') {
                 array_pop($output);
-            }
-            elseif ($segment !== '.' && $segment !== '')
-            {
+            } elseif ($segment !== '.' && $segment !== '') {
                 $output[] = $segment;
             }
         }
@@ -228,14 +217,12 @@ class URI
         $output = trim($output, '/ ');
 
         // Add leading slash if necessary
-        if (strpos($path, '/') === 0)
-        {
+        if (strpos($path, '/') === 0) {
             $output = '/' . $output;
         }
 
         // Add trailing slash if necessary
-        if ($output !== '/' && substr($path, -1, 1) === '/')
-        {
+        if ($output !== '/' && substr($path, -1, 1) === '/') {
             $output .= '/';
         }
 
@@ -253,8 +240,7 @@ class URI
      */
     public function __construct(string $uri = null)
     {
-        if (! is_null($uri))
-        {
+        if (! is_null($uri)) {
             $this->setURI($uri);
         }
     }
@@ -304,14 +290,11 @@ class URI
      */
     public function setURI(string $uri = null)
     {
-        if (! is_null($uri))
-        {
+        if (! is_null($uri)) {
             $parts = parse_url($uri);
 
-            if ($parts === false)
-            {
-                if ($this->silent)
-                {
+            if ($parts === false) {
+                if ($this->silent) {
                     return $this;
                 }
 
@@ -370,22 +353,19 @@ class URI
      */
     public function getAuthority(bool $ignorePort = false): string
     {
-        if (empty($this->host))
-        {
+        if (empty($this->host)) {
             return '';
         }
 
         $authority = $this->host;
 
-        if (! empty($this->getUserInfo()))
-        {
+        if (! empty($this->getUserInfo())) {
             $authority = $this->getUserInfo() . '@' . $authority;
         }
 
         // Don't add port if it's a standard port for
         // this scheme
-        if (! empty($this->port) && ! $ignorePort && $this->port !== $this->defaultPorts[$this->scheme])
-        {
+        if (! empty($this->port) && ! $ignorePort && $this->port !== $this->defaultPorts[$this->scheme]) {
             $authority .= ':' . $this->port;
         }
 
@@ -420,8 +400,7 @@ class URI
     {
         $userInfo = $this->user;
 
-        if ($this->showPassword === true && ! empty($this->password))
-        {
+        if ($this->showPassword === true && ! empty($this->password)) {
             $userInfo .= ':' . $this->password;
         }
 
@@ -530,31 +509,23 @@ class URI
     {
         $vars = $this->query;
 
-        if (array_key_exists('except', $options))
-        {
-            if (! is_array($options['except']))
-            {
+        if (array_key_exists('except', $options)) {
+            if (! is_array($options['except'])) {
                 $options['except'] = [$options['except']];
             }
 
-            foreach ($options['except'] as $var)
-            {
+            foreach ($options['except'] as $var) {
                 unset($vars[$var]);
             }
-        }
-        elseif (array_key_exists('only', $options))
-        {
+        } elseif (array_key_exists('only', $options)) {
             $temp = [];
 
-            if (! is_array($options['only']))
-            {
+            if (! is_array($options['only'])) {
                 $options['only'] = [$options['only']];
             }
 
-            foreach ($options['only'] as $var)
-            {
-                if (array_key_exists($var, $vars))
-                {
+            foreach ($options['only'] as $var) {
+                if (array_key_exists($var, $vars)) {
                     $temp[$var] = $vars[$var];
                 }
             }
@@ -606,8 +577,7 @@ class URI
         // but we still have to deal with a zero-based array.
         $number -= 1;
 
-        if ($number > count($this->segments) && ! $this->silent)
-        {
+        if ($number > count($this->segments) && ! $this->silent) {
             throw HTTPException::forURISegmentOutOfRange($number);
         }
 
@@ -629,10 +599,8 @@ class URI
         // but we still have to deal with a zero-based array.
         $number -= 1;
 
-        if ($number > count($this->segments) + 1)
-        {
-            if ($this->silent)
-            {
+        if ($number > count($this->segments) + 1) {
+            if ($this->silent) {
                 return $this;
             }
 
@@ -679,20 +647,17 @@ class URI
         $baseUri = new self($config->baseURL);
 
         // If the hosts matches then assume this should be relative to baseURL
-        if ($this->getHost() === $baseUri->getHost())
-        {
+        if ($this->getHost() === $baseUri->getHost()) {
             // Check for additional segments
             $basePath = trim($baseUri->getPath(), '/') . '/';
             $trimPath = ltrim($path, '/');
 
-            if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0)
-            {
+            if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0) {
                 $path = $basePath . $trimPath;
             }
 
             // Check for forced HTTPS
-            if ($config->forceGlobalSecureRequests)
-            {
+            if ($config->forceGlobalSecureRequests) {
                 $scheme = 'https';
             }
         }
@@ -716,13 +681,11 @@ class URI
     {
         $parts = parse_url($str);
 
-        if (! isset($parts['path']))
-        {
+        if (! isset($parts['path'])) {
             $parts['path'] = $this->getPath();
         }
 
-        if (empty($parts['host']) && $parts['path'] !== '')
-        {
+        if (empty($parts['host']) && $parts['path'] !== '') {
             $parts['host'] = $parts['path'];
             unset($parts['path']); // @phpstan-ignore-line
         }
@@ -801,15 +764,12 @@ class URI
      */
     public function setPort(int $port = null)
     {
-        if (is_null($port))
-        {
+        if (is_null($port)) {
             return $this;
         }
 
-        if ($port <= 0 || $port > 65535)
-        {
-            if ($this->silent)
-            {
+        if ($port <= 0 || $port > 65535) {
+            if ($this->silent) {
                 return $this;
             }
 
@@ -869,10 +829,8 @@ class URI
      */
     public function setQuery(string $query)
     {
-        if (strpos($query, '#') !== false)
-        {
-            if ($this->silent)
-            {
+        if (strpos($query, '#') !== false) {
+            if ($this->silent) {
                 return $this;
             }
 
@@ -880,17 +838,13 @@ class URI
         }
 
         // Can't have leading ?
-        if (! empty($query) && strpos($query, '?') === 0)
-        {
+        if (! empty($query) && strpos($query, '?') === 0) {
             $query = substr($query, 1);
         }
 
-        if ($this->rawQueryString)
-        {
+        if ($this->rawQueryString) {
             $this->query = $this->parseStr($query);
-        }
-        else
-        {
+        } else {
             parse_str($query, $this->query);
         }
 
@@ -942,8 +896,7 @@ class URI
      */
     public function stripQuery(...$params)
     {
-        foreach ($params as $param)
-        {
+        foreach ($params as $param) {
             unset($this->query[$param]);
         }
 
@@ -964,10 +917,8 @@ class URI
     {
         $temp = [];
 
-        foreach ($this->query as $key => $value)
-        {
-            if (! in_array($key, $params, true))
-            {
+        foreach ($this->query as $key => $value) {
+            if (! in_array($key, $params, true)) {
                 continue;
             }
 
@@ -1020,12 +971,10 @@ class URI
         $path = self::removeDotSegments($path);
 
         // Fix up some leading slash edge cases...
-        if (strpos($orig, './') === 0)
-        {
+        if (strpos($orig, './') === 0) {
             $path = '/' . $path;
         }
-        if (strpos($orig, '../') === 0)
-        {
+        if (strpos($orig, '../') === 0) {
             $path = '/' . $path;
         }
 
@@ -1048,53 +997,42 @@ class URI
      */
     protected function applyParts(array $parts)
     {
-        if (! empty($parts['host']))
-        {
+        if (! empty($parts['host'])) {
             $this->host = $parts['host'];
         }
-        if (! empty($parts['user']))
-        {
+        if (! empty($parts['user'])) {
             $this->user = $parts['user'];
         }
-        if (isset($parts['path']) && $parts['path'] !== '')
-        {
+        if (isset($parts['path']) && $parts['path'] !== '') {
             $this->path = $this->filterPath($parts['path']);
         }
-        if (! empty($parts['query']))
-        {
+        if (! empty($parts['query'])) {
             $this->setQuery($parts['query']);
         }
-        if (! empty($parts['fragment']))
-        {
+        if (! empty($parts['fragment'])) {
             $this->fragment = $parts['fragment'];
         }
 
         // Scheme
-        if (isset($parts['scheme']))
-        {
+        if (isset($parts['scheme'])) {
             $this->setScheme(rtrim($parts['scheme'], ':/'));
-        }
-        else
-        {
+        } else {
             $this->setScheme('http');
         }
 
         // Port
-        if (isset($parts['port']) && ! is_null($parts['port']))
-        {
+        if (isset($parts['port']) && ! is_null($parts['port'])) {
             // Valid port numbers are enforced by earlier parse_url or setPort()
             $port       = $parts['port'];
             $this->port = $port;
         }
 
-        if (isset($parts['pass']))
-        {
+        if (isset($parts['pass'])) {
             $this->password = $parts['pass'];
         }
 
         // Populate our segments array
-        if (isset($parts['path']) && $parts['path'] !== '')
-        {
+        if (isset($parts['path']) && $parts['path'] !== '') {
             $tempPath = trim($parts['path'], '/');
 
             $this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
@@ -1122,43 +1060,30 @@ class URI
         $relative = new self();
         $relative->setURI($uri);
 
-        if ($relative->getScheme() === $this->getScheme())
-        {
+        if ($relative->getScheme() === $this->getScheme()) {
             $relative->setScheme('');
         }
 
         $transformed = clone $relative;
 
         // 5.2.2 Transform References in a non-strict method (no scheme)
-        if (! empty($relative->getAuthority()))
-        {
+        if (! empty($relative->getAuthority())) {
             $transformed->setAuthority($relative->getAuthority())
                     ->setPath($relative->getPath())
                     ->setQuery($relative->getQuery());
-        }
-        else
-        {
-            if ($relative->getPath() === '')
-            {
+        } else {
+            if ($relative->getPath() === '') {
                 $transformed->setPath($this->getPath());
 
-                if ($relative->getQuery())
-                {
+                if ($relative->getQuery()) {
                     $transformed->setQuery($relative->getQuery());
-                }
-                else
-                {
+                } else {
                     $transformed->setQuery($this->getQuery());
                 }
-            }
-            else
-            {
-                if (strpos($relative->getPath(), '/') === 0)
-                {
+            } else {
+                if (strpos($relative->getPath(), '/') === 0) {
                     $transformed->setPath($relative->getPath());
-                }
-                else
-                {
+                } else {
                     $transformed->setPath($this->mergePaths($this, $relative));
                 }
 
@@ -1190,15 +1115,13 @@ class URI
      */
     protected function mergePaths(URI $base, URI $reference): string
     {
-        if (! empty($base->getAuthority()) && $base->getPath() === '')
-        {
+        if (! empty($base->getAuthority()) && $base->getPath() === '') {
             return '/' . ltrim($reference->getPath(), '/ ');
         }
 
         $path = explode('/', $base->getPath());
 
-        if ($path[0] === '')
-        {
+        if ($path[0] === '') {
             unset($path[0]);
         }
 
@@ -1232,8 +1155,7 @@ class URI
         $params = implode('&', $params);
         parse_str($params, $params);
 
-        foreach ($params as $key => $value)
-        {
+        foreach ($params as $key => $value) {
             $return[hex2bin($key)] = $value;
         }
 

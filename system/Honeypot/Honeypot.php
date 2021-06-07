@@ -40,23 +40,19 @@ class Honeypot
     {
         $this->config = $config;
 
-        if (! $this->config->hidden)
-        {
+        if (! $this->config->hidden) {
             throw HoneypotException::forNoHiddenValue();
         }
 
-        if (empty($this->config->container) || strpos($this->config->container, '{template}') === false)
-        {
+        if (empty($this->config->container) || strpos($this->config->container, '{template}') === false) {
             $this->config->container = '<div style="display:none">{template}</div>';
         }
 
-        if ($this->config->template === '')
-        {
+        if ($this->config->template === '') {
             throw HoneypotException::forNoTemplate();
         }
 
-        if ($this->config->name === '')
-        {
+        if ($this->config->name === '') {
             throw HoneypotException::forNoNameField();
         }
     }
@@ -99,8 +95,7 @@ class Honeypot
         $template = str_ireplace('{label}', $this->config->label, $template);
         $template = str_ireplace('{name}', $this->config->name, $template);
 
-        if ($this->config->hidden)
-        {
+        if ($this->config->hidden) {
             $template = str_ireplace('{template}', $template, $this->config->container);
         }
 

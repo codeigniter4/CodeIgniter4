@@ -75,14 +75,11 @@ class Connection extends BaseConnection
     public function connect(bool $persistent = false)
     {
         // Do we have a socket path?
-        if ($this->hostname[0] === '/')
-        {
+        if ($this->hostname[0] === '/') {
             $hostname = null;
             $port     = null;
             $socket   = $this->hostname;
-        }
-        else
-        {
+        } else {
             $hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
             $port     = empty($this->port) ? null : $this->port;
             $socket   = '';
@@ -95,15 +92,11 @@ class Connection extends BaseConnection
 
         $this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
-        if (isset($this->strictOn))
-        {
-            if ($this->strictOn)
-            {
+        if (isset($this->strictOn)) {
+            if ($this->strictOn) {
                 $this->mysqli->options(MYSQLI_INIT_COMMAND,
                     'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
-            }
-            else
-            {
+            } else {
                 $this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode =
 						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
 												@@sql_mode,
@@ -117,37 +110,28 @@ class Connection extends BaseConnection
             }
         }
 
-        if (is_array($this->encrypt))
-        {
+        if (is_array($this->encrypt)) {
             $ssl = [];
 
-            if (! empty($this->encrypt['ssl_key']))
-            {
+            if (! empty($this->encrypt['ssl_key'])) {
                 $ssl['key'] = $this->encrypt['ssl_key'];
             }
-            if (! empty($this->encrypt['ssl_cert']))
-            {
+            if (! empty($this->encrypt['ssl_cert'])) {
                 $ssl['cert'] = $this->encrypt['ssl_cert'];
             }
-            if (! empty($this->encrypt['ssl_ca']))
-            {
+            if (! empty($this->encrypt['ssl_ca'])) {
                 $ssl['ca'] = $this->encrypt['ssl_ca'];
             }
-            if (! empty($this->encrypt['ssl_capath']))
-            {
+            if (! empty($this->encrypt['ssl_capath'])) {
                 $ssl['capath'] = $this->encrypt['ssl_capath'];
             }
-            if (! empty($this->encrypt['ssl_cipher']))
-            {
+            if (! empty($this->encrypt['ssl_cipher'])) {
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
-            if (! empty($ssl))
-            {
-                if (isset($this->encrypt['ssl_verify']))
-                {
-                    if ($this->encrypt['ssl_verify'])
-                    {
+            if (! empty($ssl)) {
+                if (isset($this->encrypt['ssl_verify'])) {
+                    if ($this->encrypt['ssl_verify']) {
                         defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
                         $this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, 1);
                     }
@@ -157,8 +141,7 @@ class Connection extends BaseConnection
                     //
                     // https://secure.php.net/ChangeLog-5.php#5.6.16
                     // https://bugs.php.net/bug.php?id=68344
-                    elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, 'mysqlnd 5.6', '>='))
-                    {
+                    elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, 'mysqlnd 5.6', '>=')) {
                         $clientFlags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
                     }
                 }
@@ -171,38 +154,32 @@ class Connection extends BaseConnection
             }
         }
 
-        try
-        {
+        try {
             if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
                 $this->database, $port, $socket, $clientFlags)
-            )
-            {
+            ) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
                 if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
                     && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
                                           ->fetch_object()->Value)
-                )
-                {
+                ) {
                     $this->mysqli->close();
                     $message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
                     log_message('error', $message);
 
-                    if ($this->DBDebug)
-                    {
+                    if ($this->DBDebug) {
                         throw new DatabaseException($message);
                     }
 
                     return false;
                 }
 
-                if (! $this->mysqli->set_charset($this->charset))
-                {
+                if (! $this->mysqli->set_charset($this->charset)) {
                     log_message('error',
                         "Database: Unable to set the configured connection charset ('{$this->charset}').");
                     $this->mysqli->close();
 
-                    if ($this->DBDebug)
-                    {
+                    if ($this->DBDebug) {
                         throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
                     }
 
@@ -211,9 +188,7 @@ class Connection extends BaseConnection
 
                 return $this->mysqli;
             }
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             // Clean sensitive information from errors.
             $msg = $e->getMessage();
 
@@ -263,18 +238,15 @@ class Connection extends BaseConnection
      */
     public function setDatabase(string $databaseName): bool
     {
-        if ($databaseName === '')
-        {
+        if ($databaseName === '') {
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID))
-        {
+        if (empty($this->connID)) {
             $this->initialize();
         }
 
-        if ($this->connID->select_db($databaseName))
-        {
+        if ($this->connID->select_db($databaseName)) {
             $this->database = $databaseName;
 
             return true;
@@ -292,13 +264,11 @@ class Connection extends BaseConnection
      */
     public function getVersion(): string
     {
-        if (isset($this->dataCache['version']))
-        {
+        if (isset($this->dataCache['version'])) {
             return $this->dataCache['version'];
         }
 
-        if (empty($this->mysqli))
-        {
+        if (empty($this->mysqli)) {
             $this->initialize();
         }
 
@@ -316,25 +286,19 @@ class Connection extends BaseConnection
      */
     public function execute(string $sql)
     {
-        while ($this->connID->more_results())
-        {
+        while ($this->connID->more_results()) {
             $this->connID->next_result();
-            if ($res = $this->connID->store_result())
-            {
+            if ($res = $this->connID->store_result()) {
                 $res->free();
             }
         }
 
-        try
-        {
+        try {
             return $this->connID->query($this->prepQuery($sql));
-        }
-        catch (mysqli_sql_exception $e)
-        {
+        } catch (mysqli_sql_exception $e) {
             log_message('error', $e->getMessage());
 
-            if ($this->DBDebug)
-            {
+            if ($this->DBDebug) {
                 throw $e;
             }
         }
@@ -357,8 +321,7 @@ class Connection extends BaseConnection
     {
         // mysqli_affected_rows() returns 0 for "DELETE FROM TABLE" queries. This hack
         // modifies the query so that it a proper number of affected rows is returned.
-        if ($this->deleteHack === true && preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql))
-        {
+        if ($this->deleteHack === true && preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql)) {
             return trim($sql) . ' WHERE 1=1';
         }
 
@@ -387,8 +350,7 @@ class Connection extends BaseConnection
      */
     protected function _escapeString(string $str): string
     {
-        if (! $this->connID)
-        {
+        if (! $this->connID) {
             $this->initialize();
         }
 
@@ -408,10 +370,8 @@ class Connection extends BaseConnection
      */
     public function escapeLikeStringDirect($str)
     {
-        if (is_array($str))
-        {
-            foreach ($str as $key => $val)
-            {
+        if (is_array($str)) {
+            foreach ($str as $key => $val) {
                 $str[$key] = $this->escapeLikeStringDirect($val);
             }
 
@@ -447,8 +407,7 @@ class Connection extends BaseConnection
     {
         $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
 
-        if ($prefixLimit !== false && $this->DBPrefix !== '')
-        {
+        if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . " LIKE '" . $this->escapeLikeStringDirect($this->DBPrefix) . "%'";
         }
 
@@ -482,16 +441,14 @@ class Connection extends BaseConnection
     {
         $table = $this->protectIdentifiers($table, true, null, false);
 
-        if (($query = $this->query('SHOW COLUMNS FROM ' . $table)) === false)
-        {
+        if (($query = $this->query('SHOW COLUMNS FROM ' . $table)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
         }
         $query = $query->getResultObject();
 
         $retVal = [];
 
-        for ($i = 0, $c = count($query); $i < $c; $i++)
-        {
+        for ($i = 0, $c = count($query); $i < $c; $i++) {
             $retVal[$i]       = new stdClass();
             $retVal[$i]->name = $query[$i]->Field;
 
@@ -519,39 +476,28 @@ class Connection extends BaseConnection
     {
         $table = $this->protectIdentifiers($table, true, null, false);
 
-        if (($query = $this->query('SHOW INDEX FROM ' . $table)) === false)
-        {
+        if (($query = $this->query('SHOW INDEX FROM ' . $table)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
 
-        if (! $indexes = $query->getResultArray())
-        {
+        if (! $indexes = $query->getResultArray()) {
             return [];
         }
 
         $keys = [];
 
-        foreach ($indexes as $index)
-        {
-            if (empty($keys[$index['Key_name']]))
-            {
+        foreach ($indexes as $index) {
+            if (empty($keys[$index['Key_name']])) {
                 $keys[$index['Key_name']]       = new stdClass();
                 $keys[$index['Key_name']]->name = $index['Key_name'];
 
-                if ($index['Key_name'] === 'PRIMARY')
-                {
+                if ($index['Key_name'] === 'PRIMARY') {
                     $type = 'PRIMARY';
-                }
-                elseif ($index['Index_type'] === 'FULLTEXT')
-                {
+                } elseif ($index['Index_type'] === 'FULLTEXT') {
                     $type = 'FULLTEXT';
-                }
-                elseif ($index['Non_unique'])
-                {
+                } elseif ($index['Non_unique']) {
                     $type = $index['Index_type'] === 'SPATIAL' ? 'SPATIAL' : 'INDEX';
-                }
-                else
-                {
+                } else {
                     $type = 'UNIQUE';
                 }
 
@@ -592,16 +538,14 @@ class Connection extends BaseConnection
                         tc.TABLE_SCHEMA = ' . $this->escape($this->database) . ' AND
                         tc.TABLE_NAME = ' . $this->escape($table);
 
-        if (($query = $this->query($sql)) === false)
-        {
+        if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
         $query = $query->getResultObject();
 
         $retVal = [];
 
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $obj                      = new stdClass();
             $obj->constraint_name     = $row->CONSTRAINT_NAME;
             $obj->table_name          = $row->TABLE_NAME;
@@ -650,8 +594,7 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        if (! empty($this->mysqli->connect_errno))
-        {
+        if (! empty($this->mysqli->connect_errno)) {
             return [
                 'code'    => $this->mysqli->connect_errno,
                 'message' => $this->mysqli->connect_error,
@@ -699,8 +642,7 @@ class Connection extends BaseConnection
      */
     protected function _transCommit(): bool
     {
-        if ($this->connID->commit())
-        {
+        if ($this->connID->commit()) {
             $this->connID->autocommit(true);
 
             return true;
@@ -718,8 +660,7 @@ class Connection extends BaseConnection
      */
     protected function _transRollback(): bool
     {
-        if ($this->connID->rollback())
-        {
+        if ($this->connID->rollback()) {
             $this->connID->autocommit(true);
 
             return true;

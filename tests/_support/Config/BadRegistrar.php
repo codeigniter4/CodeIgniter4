@@ -11,10 +11,8 @@ namespace Tests\Support\Config;
 
 class BadRegistrar
 {
-
     public static function RegistrarConfig()
     {
         return 'I am not worthy';
     }
-
 }

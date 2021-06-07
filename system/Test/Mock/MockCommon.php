@@ -9,8 +9,7 @@
  * file that was distributed with this source code.
  */
 
-if (! function_exists('is_cli'))
-{
+if (! function_exists('is_cli')) {
     /**
      * Is CLI?
      *
@@ -25,8 +24,7 @@ if (! function_exists('is_cli'))
         // PHPUnit always runs via CLI.
         static $returnValue = true;
 
-        if ($newReturn !== null)
-        {
+        if ($newReturn !== null) {
             $returnValue = $newReturn;
         }
 

@@ -10,7 +10,6 @@ use Config\Filters;
 
 class FormHelperTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,8 +29,7 @@ class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
-        {
+        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -39,9 +37,7 @@ class FormHelperTest extends CIUnitTestCase
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
-        }
-        else
-        {
+        } else {
             $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -91,8 +87,7 @@ EOH;
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
-        {
+        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -100,9 +95,7 @@ EOH;
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
-        }
-        else
-        {
+        } else {
             $expected = <<<EOH
 <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -128,8 +121,7 @@ EOH;
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
-        {
+        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -137,9 +129,7 @@ EOH;
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
-        }
-        else
-        {
+        } else {
             $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 
@@ -165,8 +155,7 @@ EOH;
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
-        {
+        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -175,9 +164,7 @@ EOH;
 <input type="hidden" name="$Name" value="$Value" />
 
 EOH;
-        }
-        else
-        {
+        } else {
             $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -209,8 +196,7 @@ EOH;
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before))
-        {
+        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -218,9 +204,7 @@ EOH;
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
-        }
-        else
-        {
+        } else {
             $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 

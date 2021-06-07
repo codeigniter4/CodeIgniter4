@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class NumberHelperTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -125,5 +124,4 @@ final class NumberHelperTest extends CIUnitTestCase
         $this->assertFalse(number_to_size('1232x'));
         $this->assertFalse(number_to_amount('1232x'));
     }
-
 }

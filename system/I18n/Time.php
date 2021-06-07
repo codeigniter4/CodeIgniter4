@@ -82,10 +82,8 @@ class Time extends DateTime
         $this->locale = ! empty($locale) ? $locale : Locale::getDefault();
 
         // If a test instance has been provided, use it instead.
-        if (is_null($time) && static::$testNow instanceof Time)
-        {
-            if (empty($timezone))
-            {
+        if (is_null($time) && static::$testNow instanceof Time) {
+            if (empty($timezone)) {
                 $timezone = static::$testNow->getTimezone();
             }
 
@@ -98,8 +96,7 @@ class Time extends DateTime
         // If the time string was a relative string (i.e. 'next Tuesday')
         // then we need to adjust the time going in so that we have a current
         // timezone to work with.
-        if (! empty($time) && (is_string($time) && static::hasRelativeKeywords($time)))
-        {
+        if (! empty($time) && (is_string($time) && static::hasRelativeKeywords($time))) {
             $instance = new DateTime('now', $this->timezone);
             $instance->modify($time);
             $time = $instance->format('Y-m-d H:i:s');
@@ -275,8 +272,7 @@ class Time extends DateTime
      */
     public static function createFromFormat($format, $datetime, $timeZone = null)
     {
-        if (! $date = parent::createFromFormat($format, $datetime))
-        {
+        if (! $date = parent::createFromFormat($format, $datetime)) {
             throw I18nException::forInvalidFormat($format);
         }
 
@@ -371,20 +367,16 @@ class Time extends DateTime
     public static function setTestNow($datetime = null, $timezone = null, string $locale = null)
     {
         // Reset the test instance
-        if (is_null($datetime))
-        {
+        if (is_null($datetime)) {
             static::$testNow = null;
 
             return;
         }
 
         // Convert to a Time instance
-        if (is_string($datetime))
-        {
+        if (is_string($datetime)) {
             $datetime = new Time($datetime, $timezone, $locale);
-        }
-        elseif ($datetime instanceof DateTimeInterface && ! $datetime instanceof Time)
-        {
+        } elseif ($datetime instanceof DateTimeInterface && ! $datetime instanceof Time) {
             $datetime = new Time($datetime->format('Y-m-d H:i:s'), $timezone);
         }
 
@@ -582,10 +574,8 @@ class Time extends DateTime
 
         $daylightSaving = false;
 
-        foreach ($transitions as $transition)
-        {
-            if ($transition['time'] > $this->format('U'))
-            {
+        foreach ($transitions as $transition) {
+            if ($transition['time'] > $this->format('U')) {
                 $daylightSaving = (bool) ($transition['isdst'] ?? $daylightSaving);
                 break;
             }
@@ -658,13 +648,11 @@ class Time extends DateTime
      */
     public function setMonth($value)
     {
-        if (is_numeric($value) && ($value < 1 || $value > 12))
-        {
+        if (is_numeric($value) && ($value < 1 || $value > 12)) {
             throw I18nException::forInvalidMonth($value);
         }
 
-        if (is_string($value) && ! is_numeric($value))
-        {
+        if (is_string($value) && ! is_numeric($value)) {
             $value = date('m', strtotime("{$value} 1 2017"));
         }
 
@@ -681,15 +669,13 @@ class Time extends DateTime
      */
     public function setDay($value)
     {
-        if ($value < 1 || $value > 31)
-        {
+        if ($value < 1 || $value > 31) {
             throw I18nException::forInvalidDay($value);
         }
 
         $date    = $this->getYear() . '-' . $this->getMonth();
         $lastDay = date('t', strtotime($date));
-        if ($value > $lastDay)
-        {
+        if ($value > $lastDay) {
             throw I18nException::forInvalidOverDay($lastDay, $value);
         }
 
@@ -706,8 +692,7 @@ class Time extends DateTime
      */
     public function setHour($value)
     {
-        if ($value < 0 || $value > 23)
-        {
+        if ($value < 0 || $value > 23) {
             throw I18nException::forInvalidHour($value);
         }
 
@@ -724,8 +709,7 @@ class Time extends DateTime
      */
     public function setMinute($value)
     {
-        if ($value < 0 || $value > 59)
-        {
+        if ($value < 0 || $value > 59) {
             throw I18nException::forInvalidMinutes($value);
         }
 
@@ -742,8 +726,7 @@ class Time extends DateTime
      */
     public function setSecond($value)
     {
-        if ($value < 0 || $value > 59)
-        {
+        if ($value < 0 || $value > 59) {
             throw I18nException::forInvalidSeconds($value);
         }
 
@@ -1094,12 +1077,9 @@ class Time extends DateTime
      */
     public function sameAs($testTime, string $timezone = null): bool
     {
-        if ($testTime instanceof DateTimeInterface)
-        {
+        if ($testTime instanceof DateTimeInterface) {
             $testTime = $testTime->format('Y-m-d H:i:s');
-        }
-        elseif (is_string($testTime))
-        {
+        } elseif (is_string($testTime)) {
             $timezone = $timezone ?: $this->timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $testTime = new DateTime($testTime, $timezone);
@@ -1180,46 +1160,32 @@ class Time extends DateTime
 
         $phrase = null;
 
-        if ($years !== 0)
-        {
+        if ($years !== 0) {
             $phrase = lang('Time.years', [abs($years)]);
             $before = $years < 0;
-        }
-        elseif ($months !== 0)
-        {
+        } elseif ($months !== 0) {
             $phrase = lang('Time.months', [abs($months)]);
             $before = $months < 0;
-        }
-        elseif ($days !== 0 && (abs($days) >= 7))
-        {
+        } elseif ($days !== 0 && (abs($days) >= 7)) {
             $weeks  = ceil($days / 7);
             $phrase = lang('Time.weeks', [abs($weeks)]);
             $before = $days < 0;
-        }
-        elseif ($days !== 0)
-        {
+        } elseif ($days !== 0) {
             $before = $days < 0;
 
             // Yesterday/Tomorrow special cases
-            if (abs($days) === 1)
-            {
+            if (abs($days) === 1) {
                 return $before ? lang('Time.yesterday') : lang('Time.tomorrow');
             }
 
             $phrase = lang('Time.days', [abs($days)]);
-        }
-        elseif ($hours !== 0)
-        {
+        } elseif ($hours !== 0) {
             $phrase = lang('Time.hours', [abs($hours)]);
             $before = $hours < 0;
-        }
-        elseif ($minutes !== 0)
-        {
+        } elseif ($minutes !== 0) {
             $phrase = lang('Time.minutes', [abs($minutes)]);
             $before = $minutes < 0;
-        }
-        else
-        {
+        } else {
             return lang('Time.now');
         }
 
@@ -1256,19 +1222,15 @@ class Time extends DateTime
      */
     public function getUTCObject($time, string $timezone = null)
     {
-        if ($time instanceof Time)
-        {
+        if ($time instanceof Time) {
             $time = $time->toDateTime();
-        }
-        elseif (is_string($time))
-        {
+        } elseif (is_string($time)) {
             $timezone = $timezone ?: $this->timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $time     = new DateTime($time, $timezone);
         }
 
-        if ($time instanceof DateTime || $time instanceof DateTimeImmutable)
-        {
+        if ($time instanceof DateTime || $time instanceof DateTimeImmutable) {
             $time = $time->setTimezone(new DateTimeZone('UTC'));
         }
 
@@ -1304,8 +1266,7 @@ class Time extends DateTime
     protected static function hasRelativeKeywords(string $time): bool
     {
         // skip common format with a '-' in it
-        if (preg_match('/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/', $time) !== 1)
-        {
+        if (preg_match('/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/', $time) !== 1) {
             return preg_match(static::$relativePattern, $time) > 0;
         }
 
@@ -1343,8 +1304,7 @@ class Time extends DateTime
     {
         $method = 'get' . ucfirst($name);
 
-        if (method_exists($this, $method))
-        {
+        if (method_exists($this, $method)) {
             return $this->$method();
         }
 

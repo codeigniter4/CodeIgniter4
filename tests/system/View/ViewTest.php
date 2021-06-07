@@ -11,7 +11,6 @@ use RuntimeException;
 
 class ViewTest extends CIUnitTestCase
 {
-
     protected $loader;
     protected $viewsDir;
     protected $config;

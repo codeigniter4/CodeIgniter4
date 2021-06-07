@@ -52,5 +52,4 @@ class BadQueryTest extends CIUnitTestCase
         // restore the DBDebug value in effect when this unit test began
         $this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
     }
-
 }

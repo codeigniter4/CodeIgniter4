@@ -52,8 +52,7 @@ class ResponseSendTest extends CIUnitTestCase
         $response->send();
 
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -88,8 +87,7 @@ class ResponseSendTest extends CIUnitTestCase
         $response->send();
 
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -126,8 +124,7 @@ class ResponseSendTest extends CIUnitTestCase
         $response->send();
 
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -135,5 +132,4 @@ class ResponseSendTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
         $this->assertHeaderEmitted('Set-Cookie: login_time');
     }
-
 }

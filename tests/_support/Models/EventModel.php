@@ -92,8 +92,7 @@ class EventModel extends Model
         $this->tokens[]  = 'beforeFind';
         $this->eventData = $data;
 
-        if ($this->beforeFindReturnData)
-        {
+        if ($this->beforeFindReturnData) {
             $data['data']       = 'foobar';
             $data['returnData'] = true;
         }
@@ -113,5 +112,4 @@ class EventModel extends Model
     {
         return in_array($token, $this->tokens);
     }
-
 }

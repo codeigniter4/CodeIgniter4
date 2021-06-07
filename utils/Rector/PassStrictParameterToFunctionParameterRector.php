@@ -48,23 +48,20 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
     public function refactor(Node $node): ?Node
     {
         $name = $node->name;
-        if (! method_exists($name, 'toString'))
-        {
+        if (! method_exists($name, 'toString')) {
             return null;
         }
 
         $functions           = array_keys(self::FUNCTION_WITH_ARG_POSITION);
         $currentFunctionName = $name->toString();
 
-        if (! in_array($currentFunctionName, $functions, true))
-        {
+        if (! in_array($currentFunctionName, $functions, true)) {
             return null;
         }
 
         $position = self::FUNCTION_WITH_ARG_POSITION[$currentFunctionName];
 
-        if (isset($node->args[$position]))
-        {
+        if (isset($node->args[$position])) {
             return null;
         }
 

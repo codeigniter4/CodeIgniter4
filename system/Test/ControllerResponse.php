@@ -82,8 +82,7 @@ class ControllerResponse extends TestResponse
     {
         $this->body = $body;
 
-        if ($body !== '')
-        {
+        if ($body !== '') {
             $this->domParser->withString($body);
         }
 

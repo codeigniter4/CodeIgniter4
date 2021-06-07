@@ -33,8 +33,7 @@ class Honeypot implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $honeypot = Services::honeypot(new \Config\Honeypot());
-        if ($honeypot->hasContent($request))
-        {
+        if ($honeypot->hasContent($request)) {
             throw HoneypotException::isBot();
         }
     }

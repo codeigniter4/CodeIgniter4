@@ -48,8 +48,7 @@ class SessionsCommandsTest extends CIUnitTestCase
 
     public function testCannotWriteFileOnCreateMigrationCommand()
     {
-        if ('\\' === DIRECTORY_SEPARATOR)
-        {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             $this->markTestSkipped('chmod does not work as expected on Windows');
         }
 

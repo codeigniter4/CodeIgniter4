@@ -8,7 +8,6 @@ use CodeIgniter\CodeIgniter;
 
 class InvalidCommand extends BaseCommand
 {
-
     protected $group       = 'demo';
     protected $name        = 'app:invalid';
     protected $description = '';

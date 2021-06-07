@@ -16,8 +16,7 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! extension_loaded('openssl'))
-        {
+        if (! extension_loaded('openssl')) {
             $this->markTestSkipped('OpenSSL is not available.');
         }
 

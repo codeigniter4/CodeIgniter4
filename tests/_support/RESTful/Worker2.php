@@ -9,5 +9,4 @@ use CodeIgniter\RESTful\ResourcePresenter;
  */
 class Worker2 extends ResourcePresenter
 {
-
 }

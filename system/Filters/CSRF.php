@@ -45,21 +45,16 @@ class CSRF implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if ($request->isCLI())
-        {
+        if ($request->isCLI()) {
             return;
         }
 
         $security = Services::security();
 
-        try
-        {
+        try {
             $security->verify($request);
-        }
-        catch (SecurityException $e)
-        {
-            if ($security->shouldRedirect() && ! $request->isAJAX())
-            {
+        } catch (SecurityException $e) {
+            if ($security->shouldRedirect() && ! $request->isAJAX()) {
                 return redirect()->back()->with('error', $e->getMessage());
             }
 

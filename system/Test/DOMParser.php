@@ -36,8 +36,7 @@ class DOMParser
      */
     public function __construct()
     {
-        if (! extension_loaded('DOM'))
-        {
+        if (! extension_loaded('DOM')) {
             // always there in travis-ci
             // @codeCoverageIgnoreStart
             throw new BadMethodCallException('DOM extension is required, but not currently loaded.');
@@ -72,8 +71,7 @@ class DOMParser
         //turning off some errors
         libxml_use_internal_errors(true);
 
-        if (! $this->dom->loadHTML($content))
-        {
+        if (! $this->dom->loadHTML($content)) {
             // unclear how we would get here, given that we are trapping libxml errors
             // @codeCoverageIgnoreStart
             libxml_clear_errors();
@@ -98,8 +96,7 @@ class DOMParser
      */
     public function withFile(string $path)
     {
-        if (! is_file($path))
-        {
+        if (! is_file($path)) {
             throw new InvalidArgumentException(basename($path) . ' is not a valid file.');
         }
 
@@ -119,8 +116,7 @@ class DOMParser
     public function see(string $search = null, string $element = null): bool
     {
         // If Element is null, we're just scanning for text
-        if (is_null($element))
-        {
+        if (is_null($element)) {
             $content = $this->dom->saveHTML($this->dom->documentElement);
 
             return mb_strpos($content, $search) !== false;
@@ -235,45 +231,37 @@ class DOMParser
         $path = '';
 
         // By ID
-        if (! empty($selector['id']))
-        {
+        if (! empty($selector['id'])) {
             $path = empty($selector['tag'])
                 ? "id(\"{$selector['id']}\")"
                 : "//{$selector['tag']}[@id=\"{$selector['id']}\"]";
         }
         // By Class
-        elseif (! empty($selector['class']))
-        {
+        elseif (! empty($selector['class'])) {
             $path = empty($selector['tag'])
                 ? "//*[@class=\"{$selector['class']}\"]"
                 : "//{$selector['tag']}[@class=\"{$selector['class']}\"]";
         }
         // By tag only
-        elseif (! empty($selector['tag']))
-        {
+        elseif (! empty($selector['tag'])) {
             $path = "//{$selector['tag']}";
         }
 
-        if (! empty($selector['attr']))
-        {
-            foreach ($selector['attr'] as $key => $value)
-            {
+        if (! empty($selector['attr'])) {
+            foreach ($selector['attr'] as $key => $value) {
                 $path .= "[@{$key}=\"{$value}\"]";
             }
         }
 
         // $paths might contain a number of different
         // ready to go xpath portions to tack on.
-        if (! empty($paths) && is_array($paths))
-        {
-            foreach ($paths as $extra)
-            {
+        if (! empty($paths) && is_array($paths)) {
+            foreach ($paths as $extra) {
                 $path .= $extra;
             }
         }
 
-        if (! is_null($search))
-        {
+        if (! is_null($search)) {
             $path .= "[contains(., \"{$search}\")]";
         }
 
@@ -295,13 +283,11 @@ class DOMParser
         $attr  = null;
 
         // ID?
-        if (strpos($selector, '#') !== false)
-        {
+        if (strpos($selector, '#') !== false) {
             [$tag, $id] = explode('#', $selector);
         }
         // Attribute
-        elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false)
-        {
+        elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false) {
             $open  = strpos($selector, '[');
             $close = strpos($selector, ']');
 
@@ -319,13 +305,11 @@ class DOMParser
             $attr  = [$name => trim($value, '] ')];
         }
         // Class?
-        elseif (strpos($selector, '.') !== false)
-        {
+        elseif (strpos($selector, '.') !== false) {
             [$tag, $class] = explode('.', $selector);
         }
         // Otherwise, assume the entire string is our tag
-        else
-        {
+        else {
             $tag = $selector;
         }
 

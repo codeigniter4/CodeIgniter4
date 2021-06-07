@@ -123,21 +123,18 @@ class Exceptions
         ] = $this->determineCodes($exception);
 
         // Log it
-        if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true))
-        {
+        if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', $exception->getMessage() . "\n{trace}", [
                 'trace' => $exception->getTraceAsString(),
             ]);
         }
 
-        if (! is_cli())
-        {
+        if (! is_cli()) {
             $this->response->setStatusCode($statusCode);
             $header = "HTTP/{$this->request->getProtocolVersion()} {$this->response->getStatusCode()} {$this->response->getReason()}";
             header($header, true, $statusCode);
 
-            if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false)
-            {
+            if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
                 exit($exitCode);
@@ -167,8 +164,7 @@ class Exceptions
      */
     public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
     {
-        if (! (error_reporting() & $severity))
-        {
+        if (! (error_reporting() & $severity)) {
             return;
         }
 
@@ -190,8 +186,7 @@ class Exceptions
         // it to an Exception and use the Exception handler to display it
         // to the user.
         // Fatal Error?
-        if (! is_null($error) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
-        {
+        if (! is_null($error) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
             $this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
         }
     }
@@ -213,20 +208,17 @@ class Exceptions
         $view         = 'production.php';
         $templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
 
-        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
-        {
+        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors'))) {
             $view = 'error_exception.php';
         }
 
         // 404 Errors
-        if ($exception instanceof PageNotFoundException)
-        {
+        if ($exception instanceof PageNotFoundException) {
             return 'error_404.php';
         }
 
         // Allow for custom views based upon the status code
-        if (is_file($templatePath . 'error_' . $exception->getCode() . '.php'))
-        {
+        if (is_file($templatePath . 'error_' . $exception->getCode() . '.php')) {
             return 'error_' . $exception->getCode() . '.php';
         }
 
@@ -255,12 +247,9 @@ class Exceptions
         $altView = $this->determineView($exception, $altPath);
 
         // Check if the view exists
-        if (is_file($path . $view))
-        {
+        if (is_file($path . $view)) {
             $viewFile = $path . $view;
-        }
-        elseif (is_file($altPath . $altView))
-        {
+        } elseif (is_file($altPath . $altView)) {
             $viewFile = $altPath . $altView;
         }
 
@@ -269,8 +258,7 @@ class Exceptions
         extract($vars);
 
         // Render it
-        if (ob_get_level() > $this->ob_level + 1)
-        {
+        if (ob_get_level() > $this->ob_level + 1) {
             ob_end_clean();
         }
 
@@ -294,8 +282,7 @@ class Exceptions
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
         $trace = $exception->getTrace();
-        if (! empty($this->config->sensitiveDataInTrace))
-        {
+        if (! empty($this->config->sensitiveDataInTrace)) {
             $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
         }
 
@@ -317,35 +304,27 @@ class Exceptions
      * @param array        $keysToMask
      * @param string       $path
      */
-    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '') 
+    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
     {
-        foreach ($keysToMask as $keyToMask) 
-        {
+        foreach ($keysToMask as $keyToMask) {
             $explode = explode('/', $keyToMask);
             $index   = end($explode);
 
-            if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0)
-            {
-                if (is_array($trace) && array_key_exists($index, $trace)) 
-                {
+            if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0) {
+                if (is_array($trace) && array_key_exists($index, $trace)) {
                     $trace[$index] = '******************';
-                } 
-                elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) 
-                {
+                } elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) {
                     $trace->$index = '******************';
                 }
             }
         }
 
-        if (! is_iterable($trace) && is_object($trace)) 
-        {
+        if (! is_iterable($trace) && is_object($trace)) {
             $trace = get_object_vars($trace);
         }
 
-        if (is_iterable($trace)) 
-        {
-            foreach ($trace as $pathKey => $subarray) 
-            {
+        if (is_iterable($trace)) {
+            foreach ($trace as $pathKey => $subarray) {
                 $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
             }
         }
@@ -362,17 +341,13 @@ class Exceptions
     {
         $statusCode = abs($exception->getCode());
 
-        if ($statusCode < 100 || $statusCode > 599)
-        {
+        if ($statusCode < 100 || $statusCode > 599) {
             $exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
-            if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX
-            {
+            if ($exitStatus > EXIT__AUTO_MAX) { // 125 is EXIT__AUTO_MAX
                 $exitStatus = EXIT_ERROR; // EXIT_ERROR
             }
             $statusCode = 500;
-        }
-        else
-        {
+        } else {
             $exitStatus = 1; // EXIT_ERROR
         }
 
@@ -398,8 +373,7 @@ class Exceptions
      */
     public static function cleanPath(string $file): string
     {
-        switch (true)
-        {
+        switch (true) {
             case strpos($file, APPPATH) === 0:
                 $file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
                 break;
@@ -432,12 +406,10 @@ class Exceptions
      */
     public static function describeMemory(int $bytes): string
     {
-        if ($bytes < 1024)
-        {
+        if ($bytes < 1024) {
             return $bytes . 'B';
         }
-        if ($bytes < 1048576)
-        {
+        if ($bytes < 1048576) {
             return round($bytes / 1024, 2) . 'KB';
         }
 
@@ -457,14 +429,12 @@ class Exceptions
      */
     public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {
-        if (empty($file) || ! is_readable($file))
-        {
+        if (empty($file) || ! is_readable($file)) {
             return false;
         }
 
         // Set our highlight colors:
-        if (function_exists('ini_set'))
-        {
+        if (function_exists('ini_set')) {
             ini_set('highlight.comment', '#767a7e; font-style: italic');
             ini_set('highlight.default', '#c7c7c7');
             ini_set('highlight.html', '#06B');
@@ -472,12 +442,9 @@ class Exceptions
             ini_set('highlight.string', '#869d6a');
         }
 
-        try
-        {
+        try {
             $source = file_get_contents($file);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             return false;
         }
 
@@ -504,26 +471,21 @@ class Exceptions
         // showing correctly.
         $spans = 1;
 
-        foreach ($source as $n => $row)
-        {
+        foreach ($source as $n => $row) {
             $spans += substr_count($row, '<span') - substr_count($row, '</span');
 
             $row = str_replace(["\r", "\n"], ['', ''], $row);
 
-            if (($n + $start + 1) === $lineNumber)
-            {
+            if (($n + $start + 1) === $lineNumber) {
                 preg_match_all('#<[^>]+>#', $row, $tags);
                 $out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, strip_tags($row), implode('', $tags[0])
                 );
-            }
-            else
-            {
+            } else {
                 $out .= sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
             }
         }
 
-        if ($spans > 0)
-        {
+        if ($spans > 0) {
             $out .= str_repeat('</span>', $spans);
         }
 

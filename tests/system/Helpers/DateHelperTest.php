@@ -28,5 +28,4 @@ final class DateHelperTest extends CIUnitTestCase
         // Chicago should be two hours ahead of Vancouver
         $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'));
     }
-
 }

@@ -38,8 +38,7 @@ final class RedisHandlerTest extends CIUnitTestCase
 
     public function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key)
-        {
+        foreach (self::getKeyArray() as $key) {
             $this->redisHandler->delete($key);
         }
     }
@@ -109,8 +108,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingPrefix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->redisHandler->save('key_' . $i, 'value' . $i);
         }
 
@@ -130,8 +128,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingSuffix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->redisHandler->save('key_' . $i, 'value' . $i);
         }
 

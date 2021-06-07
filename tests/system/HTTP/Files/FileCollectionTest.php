@@ -7,7 +7,6 @@ use Config\Mimes;
 
 class FileCollectionTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();

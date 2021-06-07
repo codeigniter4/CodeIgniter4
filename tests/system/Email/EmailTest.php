@@ -37,8 +37,7 @@ class EmailTest extends CIUnitTestCase
 
         $this->assertTrue($email->send($autoClear));
 
-        if (! $autoClear)
-        {
+        if (! $autoClear) {
             $this->assertEquals('foo@foo.com', $email->archive['recipients'][0]);
         }
     }

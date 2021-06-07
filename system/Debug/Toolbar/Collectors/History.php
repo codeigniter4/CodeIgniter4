@@ -68,13 +68,11 @@ class History extends BaseCollector
         $files   = [];
         $counter = 0;
 
-        foreach (array_reverse($filenames) as $filename)
-        {
+        foreach (array_reverse($filenames) as $filename) {
             $counter++;
 
             // Oldest files will be deleted
-            if ($limit >= 0 && $counter > $limit)
-            {
+            if ($limit >= 0 && $counter > $limit) {
                 unlink($filename);
 
                 continue;
@@ -84,8 +82,7 @@ class History extends BaseCollector
             $contents = file_get_contents($filename);
 
             $contents = @json_decode($contents);
-            if (json_last_error() === JSON_ERROR_NONE)
-            {
+            if (json_last_error() === JSON_ERROR_NONE) {
                 preg_match_all('/\d+/', $filename, $time);
                 $time = (int) end($time[0]);
 

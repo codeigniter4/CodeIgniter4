@@ -69,8 +69,7 @@ class Events
     public static function initialize()
     {
         // Don't overwrite anything....
-        if (static::$initialized)
-        {
+        if (static::$initialized) {
             return;
         }
 
@@ -81,14 +80,12 @@ class Events
         $events = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php';
         $files  = [];
 
-        if ($config->shouldDiscover('events'))
-        {
+        if ($config->shouldDiscover('events')) {
             $files = Services::locator()->search('Config/Events.php');
         }
 
         $files = array_filter(array_map(static function (string $file) {
-            if (is_file($file))
-            {
+            if (is_file($file)) {
                 return realpath($file) ?: $file;
             }
 
@@ -97,8 +94,7 @@ class Events
 
         static::$files = array_unique(array_merge($files, [$events]));
 
-        foreach (static::$files as $file)
-        {
+        foreach (static::$files as $file) {
             include $file;
         }
 
@@ -122,16 +118,13 @@ class Events
      */
     public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
     {
-        if (! isset(static::$listeners[$eventName]))
-        {
+        if (! isset(static::$listeners[$eventName])) {
             static::$listeners[$eventName] = [
                 true, // If there's only 1 item, it's sorted.
                 [$priority],
                 [$callback],
             ];
-        }
-        else
-        {
+        } else {
             static::$listeners[$eventName][0]   = false; // Not sorted
             static::$listeners[$eventName][1][] = $priority;
             static::$listeners[$eventName][2][] = $callback;
@@ -152,21 +145,18 @@ class Events
     public static function trigger($eventName, ...$arguments): bool
     {
         // Read in our Config/Events file so that we have them all!
-        if (! static::$initialized)
-        {
+        if (! static::$initialized) {
             static::initialize();
         }
 
         $listeners = static::listeners($eventName);
 
-        foreach ($listeners as $listener)
-        {
+        foreach ($listeners as $listener) {
             $start = microtime(true);
 
             $result = static::$simulate === false ? call_user_func($listener, ...$arguments) : true;
 
-            if (CI_DEBUG)
-            {
+            if (CI_DEBUG) {
                 static::$performanceLog[] = [
                     'start' => $start,
                     'end'   => microtime(true),
@@ -174,8 +164,7 @@ class Events
                 ];
             }
 
-            if ($result === false)
-            {
+            if ($result === false) {
                 return false;
             }
         }
@@ -193,14 +182,12 @@ class Events
      */
     public static function listeners($eventName): array
     {
-        if (! isset(static::$listeners[$eventName]))
-        {
+        if (! isset(static::$listeners[$eventName])) {
             return [];
         }
 
         // The list is not sorted
-        if (! static::$listeners[$eventName][0])
-        {
+        if (! static::$listeners[$eventName][0]) {
             // Sort it!
             array_multisort(static::$listeners[$eventName][1], SORT_NUMERIC, static::$listeners[$eventName][2]);
 
@@ -224,15 +211,12 @@ class Events
      */
     public static function removeListener($eventName, callable $listener): bool
     {
-        if (! isset(static::$listeners[$eventName]))
-        {
+        if (! isset(static::$listeners[$eventName])) {
             return false;
         }
 
-        foreach (static::$listeners[$eventName][2] as $index => $check)
-        {
-            if ($check === $listener)
-            {
+        foreach (static::$listeners[$eventName][2] as $index => $check) {
+            if ($check === $listener) {
                 unset(static::$listeners[$eventName][1][$index]);
                 unset(static::$listeners[$eventName][2][$index]);
 
@@ -255,12 +239,9 @@ class Events
      */
     public static function removeAllListeners($eventName = null)
     {
-        if (! is_null($eventName))
-        {
+        if (! is_null($eventName)) {
             unset(static::$listeners[$eventName]);
-        }
-        else
-        {
+        } else {
             static::$listeners = [];
         }
     }

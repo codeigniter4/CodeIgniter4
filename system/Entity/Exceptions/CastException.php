@@ -39,8 +39,7 @@ class CastException extends FrameworkException
      */
     public static function forInvalidJsonFormat(int $error)
     {
-        switch ($error)
-        {
+        switch ($error) {
             case JSON_ERROR_DEPTH:
                 return new static(lang('Cast.jsonErrorDepth'));
 

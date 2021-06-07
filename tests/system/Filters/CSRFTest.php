@@ -10,7 +10,6 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 class CSRFTest extends CIUnitTestCase
 {
-
     protected $config;
     protected $request;
     protected $response;
@@ -40,5 +39,4 @@ class CSRFTest extends CIUnitTestCase
         $request  = $filters->run($uri, 'before');
         $this->assertEquals($expected, $request);
     }
-
 }

@@ -215,8 +215,7 @@ class ArrayHelperTest extends CIUnitTestCase
     public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
     {
         // Morph to objects
-        foreach ($data as $index => $dataSet)
-        {
+        foreach ($data as $index => $dataSet) {
             $data[$index] = (object) $dataSet;
         }
 
@@ -254,12 +253,9 @@ class ArrayHelperTest extends CIUnitTestCase
     public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data)
     {
         // PHP 8 changes this error type
-        if (version_compare(PHP_VERSION, '8.0', '<'))
-        {
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
             $this->expectException('ErrorException');
-        }
-        else
-        {
+        } else {
             $this->expectException('ValueError');
         }
 

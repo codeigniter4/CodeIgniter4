@@ -28,8 +28,7 @@ class FactoriesTest extends CIUnitTestCase
         $property   = $properties[$name] ?? [];
 
         // If any additional parameters were provided then drill into the array
-        foreach ($params as $param)
-        {
+        foreach ($params as $param) {
             $property = $property[$param];
         }
 
@@ -237,8 +236,7 @@ class FactoriesTest extends CIUnitTestCase
     {
         // Create a fake class in App
         $class = 'App\Widgets\OtherWidget';
-        if (! class_exists($class))
-        {
+        if (! class_exists($class)) {
             class_alias(SomeWidget::class, $class);
         }
 
@@ -250,8 +248,7 @@ class FactoriesTest extends CIUnitTestCase
     {
         // Create a fake class in App
         $class = 'App\Widgets\OtherWidget';
-        if (! class_exists($class))
-        {
+        if (! class_exists($class)) {
             class_alias(SomeWidget::class, $class);
         }
 

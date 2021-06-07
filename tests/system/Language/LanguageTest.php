@@ -95,8 +95,7 @@ class LanguageTest extends CIUnitTestCase
     public function testGetLineFormatsMessage()
     {
         // No intl extension? then we can't test this - go away....
-        if (! class_exists('MessageFormatter'))
-        {
+        if (! class_exists('MessageFormatter')) {
             $this->markTestSkipped('No intl support.');
         }
 
@@ -112,8 +111,7 @@ class LanguageTest extends CIUnitTestCase
     public function testGetLineArrayFormatsMessages()
     {
         // No intl extension? Then we can't test this - go away...
-        if (! class_exists('MessageFormatter'))
-        {
+        if (! class_exists('MessageFormatter')) {
             $this->markTestSkipped('No intl support.');
         }
 

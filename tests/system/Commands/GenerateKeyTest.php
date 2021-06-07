@@ -22,8 +22,7 @@ class GenerateKeyTest extends CIUnitTestCase
         $this->envPath       = ROOTPATH . '.env';
         $this->backupEnvPath = ROOTPATH . '.env.backup';
 
-        if (file_exists($this->envPath))
-        {
+        if (file_exists($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
         }
 
@@ -34,13 +33,11 @@ class GenerateKeyTest extends CIUnitTestCase
     {
         stream_filter_remove($this->streamFilter);
 
-        if (file_exists($this->envPath))
-        {
+        if (file_exists($this->envPath)) {
             unlink($this->envPath);
         }
 
-        if (file_exists($this->backupEnvPath))
-        {
+        if (file_exists($this->backupEnvPath)) {
             rename($this->backupEnvPath, $this->envPath);
         }
 

@@ -141,49 +141,40 @@ abstract class BaseCommand
     {
         CLI::write(lang('CLI.helpUsage'), 'yellow');
 
-        if (! empty($this->usage))
-        {
+        if (! empty($this->usage)) {
             $usage = $this->usage;
-        }
-        else
-        {
+        } else {
             $usage = $this->name;
 
-            if (! empty($this->arguments))
-            {
+            if (! empty($this->arguments)) {
                 $usage .= ' [arguments]';
             }
         }
 
         CLI::write($this->setPad($usage, 0, 0, 2));
 
-        if (! empty($this->description))
-        {
+        if (! empty($this->description)) {
             CLI::newLine();
             CLI::write(lang('CLI.helpDescription'), 'yellow');
             CLI::write($this->setPad($this->description, 0, 0, 2));
         }
 
-        if (! empty($this->arguments))
-        {
+        if (! empty($this->arguments)) {
             CLI::newLine();
             CLI::write(lang('CLI.helpArguments'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->arguments)));
 
-            foreach ($this->arguments as $argument => $description)
-            {
+            foreach ($this->arguments as $argument => $description) {
                 CLI::write(CLI::color($this->setPad($argument, $length, 2, 2), 'green') . $description);
             }
         }
 
-        if (! empty($this->options))
-        {
+        if (! empty($this->options)) {
             CLI::newLine();
             CLI::write(lang('CLI.helpOptions'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->options)));
 
-            foreach ($this->options as $option => $description)
-            {
+            foreach ($this->options as $option => $description) {
                 CLI::write(CLI::color($this->setPad($option, $length, 2, 2), 'green') . $description);
             }
         }
@@ -222,8 +213,7 @@ abstract class BaseCommand
     {
         $max = 0;
 
-        foreach (array_keys($array) as $key)
-        {
+        foreach (array_keys($array) as $key) {
             $max = max($max, strlen($key));
         }
 

@@ -53,8 +53,7 @@ class PredisHandler extends BaseHandler
     {
         $this->prefix = $config->prefix;
 
-        if (isset($config->redis))
-        {
+        if (isset($config->redis)) {
             $this->config = array_merge($this->config, $config->redis);
         }
     }
@@ -68,16 +67,13 @@ class PredisHandler extends BaseHandler
     {
         // Try to connect to Redis, if an issue occurs throw a CriticalError exception,
         // so that the CacheFactory can attempt to initiate the next cache handler.
-        try
-        {
+        try {
             // Create a new instance of Predis\Client
             $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
 
             // Check if the connection is valid by trying to get the time.
             $this->redis->time();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             // thrown if can't connect to redis server.
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
         }
@@ -103,13 +99,11 @@ class PredisHandler extends BaseHandler
             $this->redis->hmget($key, ['__ci_type', '__ci_value'])
         );
 
-        if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
-        {
+        if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false) {
             return null;
         }
 
-        switch ($data['__ci_type'])
-        {
+        switch ($data['__ci_type']) {
             case 'array':
             case 'object':
                 return unserialize($data['__ci_value']);
@@ -142,8 +136,7 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        switch ($dataType = gettype($value))
-        {
+        switch ($dataType = gettype($value)) {
             case 'array':
             case 'object':
                 $value = serialize($value);
@@ -161,8 +154,7 @@ class PredisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]))
-        {
+        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
             return false;
         }
 
@@ -200,8 +192,7 @@ class PredisHandler extends BaseHandler
     {
         $matchedKeys = [];
 
-        foreach (new Keyspace($this->redis, $pattern) as $key)
-        {
+        foreach (new Keyspace($this->redis, $pattern) as $key) {
             $matchedKeys[] = $key;
         }
 
@@ -286,8 +277,7 @@ class PredisHandler extends BaseHandler
 
         $data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
-        if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
-        {
+        if (isset($data['__ci_value']) && $data['__ci_value'] !== false) {
             $time = time();
             $ttl  = $this->redis->ttl($key);
 

@@ -9,7 +9,6 @@ use stdClass;
 
 class TableTest extends CIUnitTestCase
 {
-
     public function setUp(): void
     {
         $this->table = new MockTable();
@@ -156,8 +155,7 @@ class TableTest extends CIUnitTestCase
             'table_close',
         ];
 
-        foreach ($keys as $key)
-        {
+        foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $this->table->defaultTemplate());
         }
     }
@@ -234,8 +232,7 @@ class TableTest extends CIUnitTestCase
             'Blue',
         ], 3);
 
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $this->table->addRow($row);
         }
 
@@ -498,13 +495,11 @@ class TableTest extends CIUnitTestCase
 
         $this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
     }
-
 }
 
 // We need this for the _set_from_db_result() test
 class DBResultDummy extends Result
 {
-
     public function getFieldNames(): array
     {
         return [
@@ -526,5 +521,4 @@ class DBResultDummy extends Result
             ],
         ];
     }
-
 }

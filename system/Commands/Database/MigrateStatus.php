@@ -90,47 +90,39 @@ class MigrateStatus extends BaseCommand
         // Collection of migration status
         $status = [];
 
-        foreach (array_keys($namespaces) as $namespace)
-        {
-            if (ENVIRONMENT !== 'testing')
-            {
+        foreach (array_keys($namespaces) as $namespace) {
+            if (ENVIRONMENT !== 'testing') {
                 // Make Tests\\Support discoverable for testing
                 $this->ignoredNamespaces[] = 'Tests\Support'; // @codeCoverageIgnore
             }
 
-            if (in_array($namespace, $this->ignoredNamespaces, true))
-            {
+            if (in_array($namespace, $this->ignoredNamespaces, true)) {
                 continue;
             }
 
-            if (APP_NAMESPACE !== 'App' && $namespace === 'App')
-            {
+            if (APP_NAMESPACE !== 'App' && $namespace === 'App') {
                 continue; // @codeCoverageIgnore
             }
 
             $migrations = $runner->findNamespaceMigrations($namespace);
 
-            if (empty($migrations))
-            {
+            if (empty($migrations)) {
                 continue;
             }
 
             $history = $runner->getHistory((string) $group);
             ksort($migrations);
 
-            foreach ($migrations as $uid => $migration)
-            {
+            foreach ($migrations as $uid => $migration) {
                 $migrations[$uid]->name = mb_substr($migration->name, mb_strpos($migration->name, $uid . '_'));
 
                 $date  = '---';
                 $group = '---';
                 $batch = '---';
 
-                foreach ($history as $row)
-                {
+                foreach ($history as $row) {
                     // @codeCoverageIgnoreStart
-                    if ($runner->getObjectUid($row) !== $migration->uid)
-                    {
+                    if ($runner->getObjectUid($row) !== $migration->uid) {
                         continue;
                     }
 
@@ -151,8 +143,7 @@ class MigrateStatus extends BaseCommand
             }
         }
 
-        if (! $status)
-        {
+        if (! $status) {
             // @codeCoverageIgnoreStart
             CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
             CLI::newLine();

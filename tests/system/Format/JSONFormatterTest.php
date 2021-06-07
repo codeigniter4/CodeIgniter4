@@ -61,5 +61,4 @@ class JSONFormatterTest extends CIUnitTestCase
         $expected = 'Boom';
         $this->assertEquals($expected, $this->jsonFormatter->format($data));
     }
-
 }

@@ -41,8 +41,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
     public function __construct(
         ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
         StringFormatConverter $stringFormatConverter
-    )
-    {
+    ) {
         $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
         $this->stringFormatConverter   = $stringFormatConverter;
     }
@@ -88,29 +87,24 @@ CODE_SAMPLE
     public function refactor(Node $node): ?Node
     {
         $nodeName = $this->getName($node);
-        if ($nodeName === null)
-        {
+        if ($nodeName === null) {
             return null;
         }
 
-        if (! Strings::contains($nodeName, '_'))
-        {
+        if (! Strings::contains($nodeName, '_')) {
             return null;
         }
 
-        if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName))
-        {
+        if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName)) {
             return null;
         }
 
-        if ($nodeName[0] === '_')
-        {
+        if ($nodeName[0] === '_') {
             return null;
         }
 
         $camelCaseName = $this->stringFormatConverter->underscoreAndHyphenToCamelCase($nodeName);
-        if ($camelCaseName === 'this')
-        {
+        if ($camelCaseName === 'this') {
             return null;
         }
 
@@ -124,47 +118,40 @@ CODE_SAMPLE
     {
         $parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
 
-        while ($parentNode)
-        {
+        while ($parentNode) {
             /**
              * @var ClassMethod|Function_ $parentNode
              */
             $parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
-            if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_)
-            {
+
+            if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_) {
                 break;
             }
         }
 
-        if ($parentNode === null)
-        {
+        if ($parentNode === null) {
             return;
         }
 
         $docComment = $parentNode->getDocComment();
-        if ($docComment === null)
-        {
+        if ($docComment === null) {
             return;
         }
 
         $docCommentText = $docComment->getText();
-        if ($docCommentText === null)
-        {
+        if ($docCommentText === null) {
             return;
         }
 
-        if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
-        {
+        if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName))) {
             return;
         }
 
         $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentNode);
         $paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
 
-        foreach ($paramTagValueNodes as $paramTagValueNode)
-        {
-            if ($paramTagValueNode->parameterName === '$' . $variableName)
-            {
+        foreach ($paramTagValueNodes as $paramTagValueNode) {
+            if ($paramTagValueNode->parameterName === '$' . $variableName) {
                 $paramTagValueNode->parameterName = '$' . $camelCaseName;
                 break;
             }

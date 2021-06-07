@@ -42,8 +42,7 @@ class Result extends BaseResult
         $fieldNames = [];
         $this->resultID->field_seek(0);
 
-        while ($field = $this->resultID->fetch_field())
-        {
+        while ($field = $this->resultID->fetch_field()) {
             $fieldNames[] = $field->name;
         }
 
@@ -94,8 +93,7 @@ class Result extends BaseResult
         $retVal    = [];
         $fieldData = $this->resultID->fetch_fields();
 
-        foreach ($fieldData as $i => $data)
-        {
+        foreach ($fieldData as $i => $data) {
             $retVal[$i]              = new stdClass();
             $retVal[$i]->name        = $data->name;
             $retVal[$i]->type        = $data->type;
@@ -118,8 +116,7 @@ class Result extends BaseResult
      */
     public function freeResult()
     {
-        if (is_object($this->resultID))
-        {
+        if (is_object($this->resultID)) {
             $this->resultID->free();
             $this->resultID = false;
         }
@@ -168,8 +165,7 @@ class Result extends BaseResult
      */
     protected function fetchObject(string $className = 'stdClass')
     {
-        if (is_subclass_of($className, Entity::class))
-        {
+        if (is_subclass_of($className, Entity::class)) {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
         }
 
@@ -185,8 +181,7 @@ class Result extends BaseResult
      */
     public function getNumRows(): int
     {
-        if (! is_int($this->numRows))
-        {
+        if (! is_int($this->numRows)) {
             $this->numRows = $this->resultID->num_rows;
         }
 

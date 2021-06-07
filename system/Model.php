@@ -136,25 +136,19 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->tempUseSoftDeletes)
-        {
+        if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        if (is_array($id))
-        {
+        if (is_array($id)) {
             $row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getResult($this->tempReturnType);
-        }
-        elseif ($singleton)
-        {
+        } elseif ($singleton) {
             $row = $builder->where($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getFirstRow($this->tempReturnType);
-        }
-        else
-        {
+        } else {
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
@@ -188,8 +182,7 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->tempUseSoftDeletes)
-        {
+        if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
@@ -209,19 +202,15 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->tempUseSoftDeletes)
-        {
+        if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
-        }
-        elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey)
-        {
+        } elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey) {
             $builder->groupBy($this->table . '.' . $this->primaryKey);
         }
 
         // Some databases, like PostgreSQL, need order
         // information to consistently return correct results.
-        if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey)
-        {
+        if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey) {
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
@@ -243,24 +232,21 @@ class Model extends BaseModel
 
         // Require non empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($data[$this->primaryKey]))
-        {
+        if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
         $builder = $this->builder();
 
         // Must use the set() method to ensure to set the correct escape flag
-        foreach ($data as $key => $val)
-        {
+        foreach ($data as $key => $val) {
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
         $result = $builder->insert();
 
         // If insertion succeeded then save the insert ID
-        if ($result)
-        {
+        if ($result) {
             $this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
         }
 
@@ -280,14 +266,11 @@ class Model extends BaseModel
      */
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if (is_array($set))
-        {
-            foreach ($set as $row)
-            {
+        if (is_array($set)) {
+            foreach ($set as $row) {
                 // Require non empty primaryKey when
                 // not using auto-increment feature
-                if (! $this->useAutoIncrement && empty($row[$this->primaryKey]))
-                {
+                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
             }
@@ -312,14 +295,12 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if ($id)
-        {
+        if ($id) {
             $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
         // Must use the set() method to ensure to set the correct escape flag
-        foreach ($data as $key => $val)
-        {
+        foreach ($data as $key => $val) {
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
@@ -360,17 +341,13 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($id)
-        {
+        if ($id) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 
-        if ($this->useSoftDeletes && ! $purge)
-        {
-            if (empty($builder->getCompiledQBWhere()))
-            {
-                if (CI_DEBUG)
-                {
+        if ($this->useSoftDeletes && ! $purge) {
+            if (empty($builder->getCompiledQBWhere())) {
+                if (CI_DEBUG) {
                     throw new DatabaseException(
                         'Deletes are not allowed unless they contain a "where" or "like" clause.'
                     );
@@ -381,8 +358,7 @@ class Model extends BaseModel
 
             $set[$this->deletedField] = $this->setDate();
 
-            if ($this->useTimestamps && $this->updatedField)
-            {
+            if ($this->useTimestamps && $this->updatedField) {
                 $set[$this->updatedField] = $this->setDate();
             }
 
@@ -445,8 +421,7 @@ class Model extends BaseModel
         // $error is always ['code' => string|int, 'message' => string]
         $error = $this->db->error();
 
-        if ((int) $error['code'] === 0)
-        {
+        if ((int) $error['code'] === 0) {
             return [];
         }
 
@@ -476,13 +451,11 @@ class Model extends BaseModel
      */
     public function getIdValue($data)
     {
-        if (is_object($data) && isset($data->{$this->primaryKey}))
-        {
+        if (is_object($data) && isset($data->{$this->primaryKey})) {
             return $data->{$this->primaryKey};
         }
 
-        if (is_array($data) && ! empty($data[$this->primaryKey]))
-        {
+        if (is_array($data) && ! empty($data[$this->primaryKey])) {
             return $data[$this->primaryKey];
         }
 
@@ -507,13 +480,11 @@ class Model extends BaseModel
         $total  = $this->builder()->countAllResults(false);
         $offset = 0;
 
-        while ($offset <= $total)
-        {
+        while ($offset <= $total) {
             $builder = clone $this->builder();
             $rows    = $builder->get($size, $offset);
 
-            if (! $rows)
-            {
+            if (! $rows) {
                 throw DataException::forEmptyDataset('chunk');
             }
 
@@ -521,15 +492,12 @@ class Model extends BaseModel
 
             $offset += $size;
 
-            if (empty($rows))
-            {
+            if (empty($rows)) {
                 continue;
             }
 
-            foreach ($rows as $row)
-            {
-                if ($userFunc($row) === false)
-                {
+            foreach ($rows as $row) {
+                if ($userFunc($row) === false) {
                     return;
                 }
             }
@@ -546,8 +514,7 @@ class Model extends BaseModel
      */
     public function countAllResults(bool $reset = true, bool $test = false)
     {
-        if ($this->tempUseSoftDeletes)
-        {
+        if ($this->tempUseSoftDeletes) {
             $this->builder()->where($this->table . '.' . $this->deletedField, null);
         }
 
@@ -572,11 +539,9 @@ class Model extends BaseModel
     public function builder(?string $table = null)
     {
         // Check for an existing Builder
-        if ($this->builder instanceof BaseBuilder)
-        {
+        if ($this->builder instanceof BaseBuilder) {
             // Make sure the requested table matches the builder
-            if ($table && $this->builder->getTable() !== $table)
-            {
+            if ($table && $this->builder->getTable() !== $table) {
                 return $this->db->table($table);
             }
 
@@ -586,24 +551,21 @@ class Model extends BaseModel
         // We're going to force a primary key to exist
         // so we don't have overly convoluted code,
         // and future features are likely to require them.
-        if (empty($this->primaryKey))
-        {
+        if (empty($this->primaryKey)) {
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
         $table = empty($table) ? $this->table : $table;
 
         // Ensure we have a good db connection
-        if (! $this->db instanceof BaseConnection)
-        {
+        if (! $this->db instanceof BaseConnection) {
             $this->db = Database::connect($this->DBGroup);
         }
 
         $builder = $this->db->table($table);
 
         // Only consider it "shared" if the table is correct
-        if ($table === $this->table)
-        {
+        if ($table === $this->table) {
             $this->builder = $builder;
         }
 
@@ -625,8 +587,7 @@ class Model extends BaseModel
     {
         $data = is_array($key) ? $key : [$key => $value];
 
-        foreach (array_keys($data) as $k)
-        {
+        foreach (array_keys($data) as $k) {
             $this->tempData['escape'][$k] = $escape;
         }
 
@@ -667,14 +628,10 @@ class Model extends BaseModel
      */
     public function insert($data = null, bool $returnID = true)
     {
-        if (! empty($this->tempData['data']))
-        {
-            if (empty($data))
-            {
+        if (! empty($this->tempData['data'])) {
+            if (empty($data)) {
                 $data = $this->tempData['data'] ?? null;
-            }
-            else
-            {
+            } else {
                 $data = $this->transformDataToArray($data, 'insert');
                 $data = array_merge($this->tempData['data'], $data);
             }
@@ -699,14 +656,10 @@ class Model extends BaseModel
      */
     public function update($id = null, $data = null): bool
     {
-        if (! empty($this->tempData['data']))
-        {
-            if (empty($data))
-            {
+        if (! empty($this->tempData['data'])) {
+            if (empty($data)) {
                 $data = $this->tempData['data'] ?? null;
-            }
-            else
-            {
+            } else {
                 $data = $this->transformDataToArray($data, 'update');
                 $data = array_merge($this->tempData['data'], $data);
             }
@@ -736,8 +689,7 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey})))
-        {
+                && ! empty($data->{$this->primaryKey}))) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }
 
@@ -765,8 +717,7 @@ class Model extends BaseModel
      */
     public function __isset(string $name): bool
     {
-        if (parent::__isset($name))
-        {
+        if (parent::__isset($name)) {
             return true;
         }
 
@@ -786,15 +737,12 @@ class Model extends BaseModel
     {
         $result = parent::__call($name, $params);
 
-        if ($result === null && method_exists($builder = $this->builder(), $name))
-        {
+        if ($result === null && method_exists($builder = $this->builder(), $name)) {
             $result = $builder->{$name}(...$params);
         }
 
-        if (empty($result))
-        {
-            if (! method_exists($this->builder(), $name))
-            {
+        if (empty($result)) {
+            if (! method_exists($this->builder(), $name)) {
                 $className = static::class;
 
                 throw new BadMethodCallException('Call to undefined method ' . $className . '::' . $name);
@@ -803,8 +751,7 @@ class Model extends BaseModel
             return $result;
         }
 
-        if ($result instanceof BaseBuilder)
-        {
+        if ($result instanceof BaseBuilder) {
             return $this;
         }
 
@@ -830,18 +777,14 @@ class Model extends BaseModel
      */
     public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
     {
-        if (method_exists($data, 'toRawArray'))
-        {
+        if (method_exists($data, 'toRawArray')) {
             $properties = $data->toRawArray($onlyChanged);
 
             // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey}))
-            {
+            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
                 $properties[$primaryKey] = $data->{$primaryKey};
             }
-        }
-        else
-        {
+        } else {
             $mirror = new ReflectionClass($data);
             $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
@@ -849,8 +792,7 @@ class Model extends BaseModel
 
             // Loop over each property,
             // saving the name/value in a new array we can return.
-            foreach ($props as $prop)
-            {
+            foreach ($props as $prop) {
                 // Must make protected values accessible.
                 $prop->setAccessible(true);
                 $properties[$prop->getName()] = $prop->getValue($data);
@@ -858,14 +800,10 @@ class Model extends BaseModel
         }
 
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties)
-        {
-            foreach ($properties as $key => $value)
-            {
-                if ($value instanceof Time)
-                {
-                    switch ($dateFormat)
-                    {
+        if ($properties) {
+            foreach ($properties as $key => $value) {
+                if ($value instanceof Time) {
+                    switch ($dateFormat) {
                         case 'datetime':
                             $converted = $value->format('Y-m-d H:i:s');
                             break;

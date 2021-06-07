@@ -60,10 +60,8 @@ class Toolbar
     {
         $this->config = $config;
 
-        foreach ($config->collectors as $collector)
-        {
-            if (! class_exists($collector))
-            {
+        foreach ($config->collectors as $collector) {
+            if (! class_exists($collector)) {
                 log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
                         'please check $collectors in the Config\Toolbar.php file.');
 
@@ -105,25 +103,18 @@ class Toolbar
         $data['CI_VERSION']      = CodeIgniter::CI_VERSION;
         $data['collectors']      = [];
 
-        foreach ($this->collectors as $collector)
-        {
+        foreach ($this->collectors as $collector) {
             $data['collectors'][] = $collector->getAsArray();
         }
 
-        foreach ($this->collectVarData() as $heading => $items)
-        {
+        foreach ($this->collectVarData() as $heading => $items) {
             $varData = [];
 
-            if (is_array($items))
-            {
-                foreach ($items as $key => $value)
-                {
-                    if (is_string($value))
-                    {
+            if (is_array($items)) {
+                foreach ($items as $key => $value) {
+                    if (is_string($value)) {
                         $varData[esc($key)] = esc($value);
-                    }
-                    else
-                    {
+                    } else {
                         $oldKintMode       = Kint::$mode_default;
                         $oldKintCalledFrom = Kint::$display_called_from;
 
@@ -144,13 +135,10 @@ class Toolbar
             $data['vars']['varData'][esc($heading)] = $varData;
         }
 
-        if (! empty($_SESSION))
-        {
-            foreach ($_SESSION as $key => $value)
-            {
+        if (! empty($_SESSION)) {
+            foreach ($_SESSION as $key => $value) {
                 // Replace the binary data with string to avoid json_encode failure.
-                if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value))
-                {
+                if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value)) {
                     $value = 'binary data';
                 }
 
@@ -158,23 +146,19 @@ class Toolbar
             }
         }
 
-        foreach ($request->getGet() as $name => $value)
-        {
+        foreach ($request->getGet() as $name => $value) {
             $data['vars']['get'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
-        foreach ($request->getPost() as $name => $value)
-        {
+        foreach ($request->getPost() as $name => $value) {
             $data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
-        foreach ($request->headers() as $header)
-        {
+        foreach ($request->headers() as $header) {
             $data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
         }
 
-        foreach ($request->getCookie() as $name => $value)
-        {
+        foreach ($request->getCookie() as $name => $value) {
             $data['vars']['cookies'][esc($name)] = esc($value);
         }
 
@@ -188,8 +172,7 @@ class Toolbar
 
         $data['config'] = Config::display();
 
-        if ($response->CSP !== null)
-        {
+        if ($response->CSP !== null) {
             $response->CSP->addImageSrc('data:');
         }
 
@@ -217,8 +200,7 @@ class Toolbar
         $output      = '';
         $styleCount  = 0;
 
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $output .= '<tr>';
             $output .= "<td>{$row['name']}</td>";
             $output .= "<td>{$row['component']}</td>";
@@ -254,10 +236,8 @@ class Toolbar
         $data = [];
 
         // Collect it
-        foreach ($collectors as $collector)
-        {
-            if (! $collector['hasTimelineData'])
-            {
+        foreach ($collectors as $collector) {
+            if (! $collector['hasTimelineData']) {
                 continue;
             }
 
@@ -281,10 +261,8 @@ class Toolbar
     {
         $data = [];
 
-        foreach ($this->collectors as $collector)
-        {
-            if (! $collector->hasVarData())
-            {
+        foreach ($this->collectors as $collector) {
+            if (! $collector->hasVarData()) {
                 continue;
             }
 
@@ -328,16 +306,14 @@ class Toolbar
          * @var Response $response
          */
 
-        if (CI_DEBUG && ! is_cli())
-        {
+        if (CI_DEBUG && ! is_cli()) {
             global $app;
 
             $request  = $request ?? Services::request();
             $response = $response ?? Services::response();
 
             // Disable the toolbar for downloads
-            if ($response instanceof DownloadResponse)
-            {
+            if ($response instanceof DownloadResponse) {
                 return;
             }
 
@@ -355,8 +331,7 @@ class Toolbar
             // Updated to time() so we can get history
             $time = time();
 
-            if (! is_dir(WRITEPATH . 'debugbar'))
-            {
+            if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
             }
 
@@ -367,8 +342,7 @@ class Toolbar
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($request->isAJAX() || strpos($format, 'html') === false)
-            {
+            if ($request->isAJAX() || strpos($format, 'html') === false) {
                 $response->setHeader('Debugbar-Time', "$time")
                         ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
                         ->getBody();
@@ -391,8 +365,7 @@ class Toolbar
                     . $kintScript
                     . PHP_EOL;
 
-            if (strpos($response->getBody(), '<head>') !== false)
-            {
+            if (strpos($response->getBody(), '<head>') !== false) {
                 $response->setBody(preg_replace('/<head>/', '<head>' . $script, $response->getBody(), 1));
 
                 return;
@@ -409,8 +382,7 @@ class Toolbar
      */
     public function respond()
     {
-        if (ENVIRONMENT === 'testing')
-        {
+        if (ENVIRONMENT === 'testing') {
             return;
         }
 
@@ -419,8 +391,7 @@ class Toolbar
 
         // If the request contains '?debugbar then we're
         // simply returning the loading script
-        if ($request->getGet('debugbar') !== null)
-        {
+        if ($request->getGet('debugbar') !== null) {
             // Let the browser know that we are sending javascript
             header('Content-Type: application/javascript');
 
@@ -433,8 +404,7 @@ class Toolbar
 
         // Otherwise, if it includes ?debugbar_time, then
         // we should return the entire debugbar.
-        if ($request->getGet('debugbar_time'))
-        {
+        if ($request->getGet('debugbar_time')) {
             helper('security');
 
             // Negotiate the content-type to format the output
@@ -449,8 +419,7 @@ class Toolbar
             $filename = WRITEPATH . 'debugbar/' . $file . '.json';
 
             // Show the toolbar
-            if (is_file($filename))
-            {
+            if (is_file($filename)) {
                 $contents = $this->format(file_get_contents($filename), $format);
 
                 exit($contents);
@@ -476,8 +445,7 @@ class Toolbar
     {
         $data = json_decode($data, true);
 
-        if ($this->config->maxHistory !== 0)
-        {
+        if ($this->config->maxHistory !== 0) {
             $history = new History();
             $history->setFiles(
                 (int) Services::request()->getGet('debugbar_time'),
@@ -489,8 +457,7 @@ class Toolbar
 
         $output = '';
 
-        switch ($format)
-        {
+        switch ($format) {
             case 'html':
                 $data['styles'] = [];
                 extract($data);

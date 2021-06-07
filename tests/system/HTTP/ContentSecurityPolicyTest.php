@@ -33,8 +33,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
         ob_start();
         $this->response->send();
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -522,5 +521,4 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertHeaderNotEmitted('content-security-policy', true);
     }
-
 }

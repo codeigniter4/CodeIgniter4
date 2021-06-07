@@ -74,8 +74,7 @@ class Builder extends BaseBuilder
     {
         $from = [];
 
-        foreach ($this->QBFrom as $value)
-        {
+        foreach ($this->QBFrom as $value) {
             $from[] = $this->getFullName($value);
         }
 
@@ -113,16 +112,12 @@ class Builder extends BaseBuilder
      */
     public function join(string $table, string $cond, string $type = '', bool $escape = null)
     {
-        if ($type !== '')
-        {
+        if ($type !== '') {
             $type = strtoupper(trim($type));
 
-            if (! in_array($type, $this->joinTypes, true))
-            {
+            if (! in_array($type, $this->joinTypes, true)) {
                 $type = '';
-            }
-            else
-            {
+            } else {
                 $type .= ' ';
             }
         }
@@ -131,47 +126,36 @@ class Builder extends BaseBuilder
         // in the protectIdentifiers to know whether to add a table prefix
         $this->trackAliases($table);
 
-        if (! is_bool($escape))
-        {
+        if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
 
-        if (! $this->hasOperator($cond))
-        {
+        if (! $this->hasOperator($cond)) {
             $cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
-        }
-        elseif ($escape === false)
-        {
+        } elseif ($escape === false) {
             $cond = ' ON ' . $cond;
-        }
-        else
-        {
+        } else {
             // Split multiple conditions
-            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
-            {
+            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
                 $conditions = [];
                 $joints     = $joints[0];
                 array_unshift($joints, ['', 0]);
 
-                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i --)
-                {
+                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i --) {
                     $joints[$i][1] += strlen($joints[$i][0]); // offset
                     $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
                     $pos            = $joints[$i][1] - strlen($joints[$i][0]);
                     $joints[$i]     = $joints[$i][0];
                 }
                 ksort($conditions);
-            }
-            else
-            {
+            } else {
                 $conditions = [$cond];
                 $joints     = [''];
             }
 
             $cond = ' ON ';
 
-            foreach ($conditions as $i => $condition)
-            {
+            foreach ($conditions as $i => $condition) {
                 $operator = $this->getOperator($condition);
 
                 $cond .= $joints[$i];
@@ -180,8 +164,7 @@ class Builder extends BaseBuilder
         }
 
         // Do we want to escape the table name?
-        if ($escape === true)
-        {
+        if ($escape === true) {
             $table = $this->db->protectIdentifiers($table, true, null, false);
         }
 
@@ -229,8 +212,7 @@ class Builder extends BaseBuilder
     {
         $valstr = [];
 
-        foreach ($values as $key => $val)
-        {
+        foreach ($values as $key => $val) {
             $valstr[] = $key . ' = ' . $val;
         }
 
@@ -254,12 +236,9 @@ class Builder extends BaseBuilder
     {
         $column = $this->db->protectIdentifiers($column);
 
-        if ($this->castTextToInt)
-        {
+        if ($this->castTextToInt) {
             $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})"];
-        }
-        else
-        {
+        } else {
             $values = [$column => "{$column} + {$value}"];
         }
         $sql = $this->_update($this->QBFrom[0], $values);
@@ -279,12 +258,9 @@ class Builder extends BaseBuilder
     {
         $column = $this->db->protectIdentifiers($column);
 
-        if ($this->castTextToInt)
-        {
+        if ($this->castTextToInt) {
             $values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})"];
-        }
-        else
-        {
+        } else {
             $values = [$column => "{$column} + {$value}"];
         }
         $sql = $this->_update($this->QBFrom[0], $values);
@@ -303,15 +279,13 @@ class Builder extends BaseBuilder
     {
         $alias = '';
 
-        if (strpos($table, ' ') !== false)
-        {
+        if (strpos($table, ' ') !== false) {
             $alias = explode(' ', $table);
             $table = array_shift($alias);
             $alias = ' ' . implode(' ', $alias);
         }
 
-        if ($this->db->escapeChar === '"')
-        {
+        if ($this->db->escapeChar === '"') {
             return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
         }
 
@@ -341,17 +315,13 @@ class Builder extends BaseBuilder
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
-        if (empty($this->QBOrderBy))
-        {
+        if (empty($this->QBOrderBy)) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
 
-        if ($offsetIgnore)
-        {
+        if ($offsetIgnore) {
             $sql .= ' OFFSET 0 ';
-        }
-        else
-        {
+        } else {
             $sql .= is_int($this->QBOffset) ? ' OFFSET ' . $this->QBOffset : ' OFFSET 0 ';
         }
 
@@ -370,15 +340,12 @@ class Builder extends BaseBuilder
      */
     public function replace(array $set = null)
     {
-        if ($set !== null)
-        {
+        if ($set !== null) {
             $this->set($set);
         }
 
-        if (empty($this->QBSet))
-        {
-            if (CI_DEBUG)
-            {
+        if (empty($this->QBSet)) {
+            if (CI_DEBUG) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
 
@@ -391,8 +358,7 @@ class Builder extends BaseBuilder
 
         $this->resetWrite();
 
-        if ($this->testMode)
-        {
+        if ($this->testMode) {
             return $sql;
         }
 
@@ -423,15 +389,12 @@ class Builder extends BaseBuilder
         $pKeys     = $this->db->getIndexData($table);
         $keyFields = [];
 
-        foreach ($pKeys as $key)
-        {
-            if ($key->type === 'PRIMARY')
-            {
+        foreach ($pKeys as $key) {
+            if ($key->type === 'PRIMARY') {
                 $keyFields = array_merge($keyFields, $key->fields);
             }
 
-            if ($key->type === 'UNIQUE')
-            {
+            if ($key->type === 'UNIQUE') {
                 $keyFields = array_merge($keyFields, $key->fields);
             }
         }
@@ -451,8 +414,7 @@ class Builder extends BaseBuilder
         $common = array_intersect($keys, $escKeyFields);
         $bingo  = [];
 
-        foreach ($common as $v)
-        {
+        foreach ($common as $v) {
             $k = array_search($v, $escKeyFields, true);
 
             $bingo[$keyFields[$k]] = $binds[trim($values[$k], ':')];
@@ -461,20 +423,17 @@ class Builder extends BaseBuilder
         // Querying existing data
         $builder = $this->db->table($table);
 
-        foreach ($bingo as $k => $v)
-        {
+        foreach ($bingo as $k => $v) {
             $builder->where($k, $v);
         }
 
         $q = $builder->get()->getResult();
 
         // Delete entries if we find them
-        if ($q !== [])
-        {
+        if ($q !== []) {
             $delete = $this->db->table($table);
 
-            foreach ($bingo as $k => $v)
-            {
+            foreach ($bingo as $k => $v) {
                 $delete->where($k, $v);
             }
 
@@ -498,23 +457,19 @@ class Builder extends BaseBuilder
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
         // int functions can be handled by parent
-        if ($type !== 'AVG')
-        {
+        if ($type !== 'AVG') {
             return parent::maxMinAvgSum($select, $alias, $type);
         }
 
-        if ($select === '')
-        {
+        if ($select === '') {
             throw DataException::forEmptyInputGiven('Select');
         }
 
-        if (strpos($select, ',') !== false)
-        {
+        if (strpos($select, ',') !== false) {
             throw DataException::forInvalidArgument('Column name not separated by comma');
         }
 
-        if ($alias === '')
-        {
+        if ($alias === '') {
             $alias = $this->createAliasFromTable(trim($select));
         }
 
@@ -554,30 +509,25 @@ class Builder extends BaseBuilder
     {
         $table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 
-        if ($where !== '')
-        {
+        if ($where !== '') {
             $this->where($where);
         }
 
-        if (empty($this->QBWhere))
-        {
-            if (CI_DEBUG)
-            {
+        if (empty($this->QBWhere)) {
+            if (CI_DEBUG) {
                 throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
             }
 
             return false; // @codeCoverageIgnore
         }
 
-        if (! empty($limit))
-        {
+        if (! empty($limit)) {
             $this->QBLimit = $limit;
         }
 
         $sql = $this->_delete($table);
 
-        if ($resetData)
-        {
+        if ($resetData) {
             $this->resetWrite();
         }
 
@@ -596,34 +546,25 @@ class Builder extends BaseBuilder
     protected function compileSelect($selectOverride = false): string
     {
         // Write the "select" portion of the query
-        if ($selectOverride !== false)
-        {
+        if ($selectOverride !== false) {
             $sql = $selectOverride;
-        }
-        else
-        {
+        } else {
             $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
             // SQL Server can't work with select * if group by is specified
-            if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy))
-            {
-                foreach ($this->QBGroupBy as $field)
-                {
+            if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy)) {
+                foreach ($this->QBGroupBy as $field) {
                     $this->QBSelect[] = is_array($field) ? $field['field'] : $field;
                 }
             }
 
-            if (empty($this->QBSelect))
-            {
+            if (empty($this->QBSelect)) {
                 $sql .= '*';
-            }
-            else
-            {
+            } else {
                 // Cycle through the "select" portion of the query and prep each column name.
                 // The reason we protect identifiers here rather than in the select() function
                 // is because until the user calls the from() function we don't know if there are aliases
-                foreach ($this->QBSelect as $key => $val)
-                {
+                foreach ($this->QBSelect as $key => $val) {
                     $noEscape             = $this->QBNoEscape[$key] ?? null;
                     $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $noEscape);
                 }
@@ -633,14 +574,12 @@ class Builder extends BaseBuilder
         }
 
         // Write the "FROM" portion of the query
-        if (! empty($this->QBFrom))
-        {
+        if (! empty($this->QBFrom)) {
             $sql .= "\nFROM " . $this->_fromTables();
         }
 
         // Write the "JOIN" portion of the query
-        if (! empty($this->QBJoin))
-        {
+        if (! empty($this->QBJoin)) {
             $sql .= "\n" . implode("\n", $this->QBJoin);
         }
 
@@ -649,8 +588,7 @@ class Builder extends BaseBuilder
                 . $this->compileWhereHaving('QBHaving')
                 . $this->compileOrderBy(); // ORDER BY
         // LIMIT
-        if ($this->QBLimit)
-        {
+        if ($this->QBLimit) {
             $sql = $this->_limit($sql . "\n");
         }
 
@@ -670,67 +608,51 @@ class Builder extends BaseBuilder
      */
     protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
     {
-        if (! is_array($key))
-        {
+        if (! is_array($key)) {
             $key = [$key => $value];
         }
 
         // If the escape value was not set will base it on the global setting
-        if (! is_bool($escape))
-        {
+        if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
 
-        foreach ($key as $k => $v)
-        {
+        foreach ($key as $k => $v) {
             $prefix = empty($this->$qbKey) ? $this->groupGetType('') : $this->groupGetType($type);
 
-            if ($v !== null)
-            {
+            if ($v !== null) {
                 $op = $this->getOperator($k, true);
 
-                if (! empty($op))
-                {
+                if (! empty($op)) {
                     $k = trim($k);
 
                     end($op);
 
                     $op = trim(current($op));
 
-                    if (substr($k, -1 * strlen($op)) === $op)
-                    {
+                    if (substr($k, -1 * strlen($op)) === $op) {
                         $k = rtrim(strrev(preg_replace(strrev('/' . $op . '/'), strrev(''), strrev($k), 1)));
                     }
                 }
 
                 $bind = $this->setBind($k, $v, $escape);
 
-                if (empty($op))
-                {
+                if (empty($op)) {
                     $k .= ' =';
-                }
-                else
-                {
+                } else {
                     $k .= " $op";
                 }
 
-                if ($v instanceof Closure)
-                {
+                if ($v instanceof Closure) {
                     $builder = $this->cleanClone();
                     $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
-                }
-                else
-                {
+                } else {
                     $v = " :$bind:";
                 }
-            }
-            elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving')
-            {
+            } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
                 $k .= ' IS NULL';
-            }
-            elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE))
-            {
+            } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
                 $k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
             }
 
@@ -757,15 +679,13 @@ class Builder extends BaseBuilder
      */
     public function get(int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (! is_null($limit))
-        {
+        if (! is_null($limit)) {
             $this->limit($limit, $offset);
         }
 
         $result = $this->testMode ? $this->getCompiledSelect($reset) : $this->db->query($this->compileSelect(), $this->binds, false);
 
-        if ($reset)
-        {
+        if ($reset) {
             $this->resetSelect();
 
             // Clear our binds so we don't eat up memory

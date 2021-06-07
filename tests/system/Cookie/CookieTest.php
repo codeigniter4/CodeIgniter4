@@ -150,8 +150,7 @@ final class CookieTest extends CIUnitTestCase
             'float'              => [10.0],
         ];
 
-        foreach ($cases as $type => $case)
-        {
+        foreach ($cases as $type => $case) {
             yield $type => $case;
         }
     }

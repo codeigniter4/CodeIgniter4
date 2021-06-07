@@ -34,14 +34,10 @@ class JsonCast extends BaseCast
                     && in_array($value[0], ['[', '{', '"'], true))
                 || is_numeric($value)
             )
-        )
-        {
-            try
-            {
+        ) {
+            try {
                 $tmp = json_decode($value, $associative, 512, JSON_THROW_ON_ERROR);
-            }
-            catch (JsonException $e)
-            {
+            } catch (JsonException $e) {
                 throw CastException::forInvalidJsonFormat($e->getCode());
             }
         }
@@ -54,14 +50,10 @@ class JsonCast extends BaseCast
      */
     public static function set($value, array $params = []): string
     {
-        if (function_exists('json_encode'))
-        {
-            try
-            {
+        if (function_exists('json_encode')) {
+            try {
                 $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
-            }
-            catch (JsonException $e)
-            {
+            } catch (JsonException $e) {
                 throw CastException::forInvalidJsonFormat($e->getCode());
             }
         }

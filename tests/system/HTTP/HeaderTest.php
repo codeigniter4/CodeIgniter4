@@ -55,16 +55,16 @@ class HeaderTest extends CIUnitTestCase
             'baz',
         ];
 
-                $header = new Header($name);
-                $this->assertEquals($name, $header->getName());
-                $this->assertEquals(null, $header->getValue());
-                $this->assertEquals($name . ': ', (string) $header);
+        $header = new Header($name);
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals(null, $header->getValue());
+        $this->assertEquals($name . ': ', (string) $header);
 
-                $name = 'foo2';
+        $name = 'foo2';
         $header->setName($name)->setValue($value);
         $this->assertEquals($name, $header->getName());
         $this->assertEquals($value, $header->getValue());
-                $this->assertEquals($name . ': bar, baz', (string) $header);
+        $this->assertEquals($name . ': bar, baz', (string) $header);
     }
 
     //--------------------------------------------------------------------

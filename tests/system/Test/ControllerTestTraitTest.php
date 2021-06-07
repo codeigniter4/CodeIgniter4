@@ -228,5 +228,4 @@ class ControllerTestTraitTest extends CIUnitTestCase
                         ->execute('toindex');
         $this->assertTrue($result->isRedirect());
     }
-
 }

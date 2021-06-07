@@ -77,8 +77,7 @@ class SessionMigrationGenerator extends BaseCommand
 
         $table = 'ci_sessions';
 
-        if (array_key_exists('t', $params) || CLI::getOption('t'))
-        {
+        if (array_key_exists('t', $params) || CLI::getOption('t')) {
             $table = $params['t'] ?? CLI::getOption('t');
         }
 

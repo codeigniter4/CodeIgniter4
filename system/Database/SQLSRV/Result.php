@@ -41,8 +41,7 @@ class Result extends BaseResult
     {
         $fieldNames = [];
 
-        foreach (sqlsrv_field_metadata($this->resultID) as $field)
-        {
+        foreach (sqlsrv_field_metadata($this->resultID) as $field) {
             $fieldNames[] = $field['Name'];
         }
 
@@ -96,9 +95,9 @@ class Result extends BaseResult
 
         $retVal = [];
 
-        foreach (sqlsrv_field_metadata($this->resultID) as $i => $field)
-        {
+        foreach (sqlsrv_field_metadata($this->resultID) as $i => $field) {
             $retVal[$i]             = new stdClass();
+
             $retVal[$i]->name       = $field['Name'];
             $retVal[$i]->type       = $field['Type'];
             $retVal[$i]->type_name  = $dataTypes[$field['Type']] ?? null;
@@ -115,8 +114,7 @@ class Result extends BaseResult
      */
     public function freeResult()
     {
-        if (is_resource($this->resultID))
-        {
+        if (is_resource($this->resultID)) {
             sqlsrv_free_stmt($this->resultID);
             $this->resultID = false;
         }
@@ -133,12 +131,9 @@ class Result extends BaseResult
      */
     public function dataSeek(int $n = 0)
     {
-        if ($n > 0)
-        {
-            for ($i = 0; $i < $n; $i++)
-            {
-                if (sqlsrv_fetch($this->resultID) === false)
-                {
+        if ($n > 0) {
+            for ($i = 0; $i < $n; $i++) {
+                if (sqlsrv_fetch($this->resultID) === false) {
                     return false;
                 }
             }
@@ -170,8 +165,7 @@ class Result extends BaseResult
      */
     protected function fetchObject(string $className = 'stdClass')
     {
-        if (is_subclass_of($className, Entity::class))
-        {
+        if (is_subclass_of($className, Entity::class)) {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
         }
 
@@ -186,8 +180,7 @@ class Result extends BaseResult
      */
     public function getNumRows(): int
     {
-        if (! is_int($this->numRows))
-        {
+        if (! is_int($this->numRows)) {
             $this->numRows = sqlsrv_num_rows($this->resultID);
         }
 

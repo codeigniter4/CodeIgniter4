@@ -10,7 +10,6 @@ use org\bovigo\vfs\vfsStream;
  */
 class DotEnvTest extends CIUnitTestCase
 {
-
     protected $fixturesFolder;
 
     //--------------------------------------------------------------------

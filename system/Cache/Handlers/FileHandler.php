@@ -52,8 +52,7 @@ class FileHandler extends BaseHandler
      */
     public function __construct(Cache $config)
     {
-        if (! property_exists($config, 'file'))
-        {
+        if (! property_exists($config, 'file')) {
             $config->file = [
                 'storePath' => $config->storePath ?? WRITEPATH . 'cache',
                 'mode'      => 0640,
@@ -63,8 +62,7 @@ class FileHandler extends BaseHandler
         $this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
         $this->path = rtrim($this->path, '/') . '/';
 
-        if (! is_really_writable($this->path))
-        {
+        if (! is_really_writable($this->path)) {
             throw CacheException::forUnableToWrite($this->path);
         }
 
@@ -119,15 +117,12 @@ class FileHandler extends BaseHandler
             'data' => $value,
         ];
 
-        if ($this->writeFile($this->path . $key, serialize($contents)))
-        {
-            try
-            {
+        if ($this->writeFile($this->path . $key, serialize($contents))) {
+            try {
                 chmod($this->path . $key, $this->mode);
             }
             // @codeCoverageIgnoreStart
-            catch (Throwable $e)
-            {
+            catch (Throwable $e) {
                 log_message('debug', 'Failed to set mode on cache file: ' . $e->getMessage());
             }
             // @codeCoverageIgnoreEnd
@@ -167,10 +162,8 @@ class FileHandler extends BaseHandler
     {
         $deleted = 0;
 
-        foreach (glob($this->path . $pattern, GLOB_NOSORT) as $filename)
-        {
-            if (is_file($filename) && @unlink($filename))
-            {
+        foreach (glob($this->path . $pattern, GLOB_NOSORT) as $filename) {
+            if (is_file($filename) && @unlink($filename)) {
                 $deleted++;
             }
         }
@@ -193,15 +186,12 @@ class FileHandler extends BaseHandler
         $key  = static::validateKey($key, $this->prefix);
         $data = $this->getItem($key);
 
-        if ($data === false)
-        {
+        if ($data === false) {
             $data = [
                 'data' => 0,
                 'ttl'  => 60,
             ];
-        }
-        elseif (! is_int($data['data']))
-        {
+        } elseif (! is_int($data['data'])) {
             return false;
         }
 
@@ -225,15 +215,12 @@ class FileHandler extends BaseHandler
         $key  = static::validateKey($key, $this->prefix);
         $data = $this->getItem($key);
 
-        if ($data === false)
-        {
+        if ($data === false) {
             $data = [
                 'data' => 0,
                 'ttl'  => 60,
             ];
-        }
-        elseif (! is_int($data['data']))
-        {
+        } elseif (! is_int($data['data'])) {
             return false;
         }
 
@@ -285,8 +272,7 @@ class FileHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        if (false === $data = $this->getItem($key))
-        {
+        if (false === $data = $this->getItem($key)) {
             return false; // This will return null in a future release
         }
 
@@ -321,23 +307,19 @@ class FileHandler extends BaseHandler
      */
     protected function getItem(string $filename)
     {
-        if (! is_file($this->path . $filename))
-        {
+        if (! is_file($this->path . $filename)) {
             return false;
         }
 
         $data = @unserialize(file_get_contents($this->path . $filename));
-        if (! is_array($data) || ! isset($data['ttl']))
-        {
+        if (! is_array($data) || ! isset($data['ttl'])) {
             return false;
         }
 
         // @phpstan-ignore-next-line
-        if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
-        {
+        if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl']) {
             // If the file is still there then try to remove it
-            if (is_file($this->path . $filename))
-            {
+            if (is_file($this->path . $filename)) {
                 @unlink($this->path . $filename);
             }
 
@@ -363,17 +345,14 @@ class FileHandler extends BaseHandler
      */
     protected function writeFile($path, $data, $mode = 'wb')
     {
-        if (($fp = @fopen($path, $mode)) === false)
-        {
+        if (($fp = @fopen($path, $mode)) === false) {
             return false;
         }
 
         flock($fp, LOCK_EX);
 
-        for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
-        {
-            if (($result = fwrite($fp, substr($data, $written))) === false)
-            {
+        for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result) {
+            if (($result = fwrite($fp, substr($data, $written))) === false) {
                 break;
             }
         }
@@ -406,21 +385,15 @@ class FileHandler extends BaseHandler
         // Trim the trailing slash
         $path = rtrim($path, '/\\');
 
-        if (! $currentDir = @opendir($path))
-        {
+        if (! $currentDir = @opendir($path)) {
             return false;
         }
 
-        while (false !== ($filename = @readdir($currentDir)))
-        {
-            if ($filename !== '.' && $filename !== '..')
-            {
-                if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
-                {
+        while (false !== ($filename = @readdir($currentDir))) {
+            if ($filename !== '.' && $filename !== '..') {
+                if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.') {
                     $this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
-                }
-                elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
-                {
+                } elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename)) {
                     @unlink($path . DIRECTORY_SEPARATOR . $filename);
                 }
             }
@@ -452,24 +425,18 @@ class FileHandler extends BaseHandler
         static $_filedata = [];
         $relativePath     = $sourceDir;
 
-        if ($fp = @opendir($sourceDir))
-        {
+        if ($fp = @opendir($sourceDir)) {
             // reset the array and make sure $source_dir has a trailing slash on the initial call
-            if ($_recursion === false)
-            {
+            if ($_recursion === false) {
                 $_filedata = [];
                 $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
-            while (false !== ($file = readdir($fp)))
-            {
-                if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false)
-                {
+            while (false !== ($file = readdir($fp))) {
+                if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     $this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
-                }
-                elseif ($file[0] !== '.')
-                {
+                } elseif ($file[0] !== '.') {
                     $_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
                     $_filedata[$file]['relative_path'] = $relativePath;
                 }
@@ -500,22 +467,18 @@ class FileHandler extends BaseHandler
      */
     protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
     {
-        if (! is_file($file))
-        {
+        if (! is_file($file)) {
             return false;
         }
 
-        if (is_string($returnedValues))
-        {
+        if (is_string($returnedValues)) {
             $returnedValues = explode(',', $returnedValues);
         }
 
         $fileInfo = [];
 
-        foreach ($returnedValues as $key)
-        {
-            switch ($key)
-            {
+        foreach ($returnedValues as $key) {
+            switch ($key) {
                 case 'name':
                     $fileInfo['name'] = basename($file);
                     break;

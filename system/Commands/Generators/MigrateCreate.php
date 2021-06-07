@@ -83,8 +83,7 @@ class MigrateCreate extends BaseCommand
 
         $params['namespace'] = $params['namespace'] ?? CLI::getOption('namespace') ?? APP_NAMESPACE;
 
-        if (array_key_exists('force', $params) || CLI::getOption('force'))
-        {
+        if (array_key_exists('force', $params) || CLI::getOption('force')) {
             $params['force'] = null;
         }
 

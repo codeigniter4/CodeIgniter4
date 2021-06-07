@@ -78,36 +78,30 @@ class Migrate extends BaseCommand
         $namespace = $params['n'] ?? CLI::getOption('n');
         $group     = $params['g'] ?? CLI::getOption('g');
 
-        try
-        {
+        try {
             // Check for 'all' namespaces
-            if (array_key_exists('all', $params) || CLI::getOption('all'))
-            {
+            if (array_key_exists('all', $params) || CLI::getOption('all')) {
                 $runner->setNamespace(null);
             }
             // Check for a specified namespace
-            elseif ($namespace)
-            {
+            elseif ($namespace) {
                 $runner->setNamespace($namespace);
             }
 
-            if (! $runner->latest($group))
-            {
+            if (! $runner->latest($group)) {
                 CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
             }
 
             $messages = $runner->getCliMessages();
 
-            foreach ($messages as $message)
-            {
+            foreach ($messages as $message) {
                 CLI::write($message);
             }
 
             CLI::write('Done migrations.', 'green');
         }
         // @codeCoverageIgnoreStart
-        catch (Throwable $e)
-        {
+        catch (Throwable $e) {
             $this->showError($e);
         }
         // @codeCoverageIgnoreEnd

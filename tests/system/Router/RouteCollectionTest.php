@@ -12,7 +12,6 @@ use Config\Modules;
  */
 class RouteCollectionTest extends CIUnitTestCase
 {
-
     public function tearDown(): void
     {
     }
@@ -31,8 +30,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $loader = Services::locator();
 
-        if ($moduleConfig === null)
-        {
+        if ($moduleConfig === null) {
             $moduleConfig          = new Modules();
             $moduleConfig->enabled = false;
         }

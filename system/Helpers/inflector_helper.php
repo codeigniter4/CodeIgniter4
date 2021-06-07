@@ -14,8 +14,7 @@
 /**
  * CodeIgniter Inflector Helpers
  */
-if (! function_exists('singular'))
-{
+if (! function_exists('singular')) {
     /**
      * Singular
      *
@@ -29,8 +28,7 @@ if (! function_exists('singular'))
     {
         $result = $string;
 
-        if (! is_pluralizable($result))
-        {
+        if (! is_pluralizable($result)) {
             return $result;
         }
 
@@ -66,10 +64,8 @@ if (! function_exists('singular'))
             '/([^us])s$/'                                                     => '\1',
         ];
 
-        foreach ($singularRules as $rule => $replacement)
-        {
-            if (preg_match($rule, $result))
-            {
+        foreach ($singularRules as $rule => $replacement) {
+            if (preg_match($rule, $result)) {
                 $result = preg_replace($rule, $replacement, $result);
                 break;
             }
@@ -81,8 +77,7 @@ if (! function_exists('singular'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('plural'))
-{
+if (! function_exists('plural')) {
     /**
      * Plural
      *
@@ -96,8 +91,7 @@ if (! function_exists('plural'))
     {
         $result = $string;
 
-        if (! is_pluralizable($result))
-        {
+        if (! is_pluralizable($result)) {
             return $result;
         }
 
@@ -124,10 +118,8 @@ if (! function_exists('plural'))
             '/$/'                     => 's',
         ];
 
-        foreach ($pluralRules as $rule => $replacement)
-        {
-            if (preg_match($rule, $result))
-            {
+        foreach ($pluralRules as $rule => $replacement) {
+            if (preg_match($rule, $result)) {
                 $result = preg_replace($rule, $replacement, $result);
                 break;
             }
@@ -139,8 +131,7 @@ if (! function_exists('plural'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('counted'))
-{
+if (! function_exists('counted')) {
     /**
      * Counted
      *
@@ -162,8 +153,7 @@ if (! function_exists('counted'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('camelize'))
-{
+if (! function_exists('camelize')) {
     /**
      * Camelize
      *
@@ -181,8 +171,7 @@ if (! function_exists('camelize'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('pascalize'))
-{
+if (! function_exists('pascalize')) {
     /**
      * Pascalize
      *
@@ -202,8 +191,7 @@ if (! function_exists('pascalize'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('underscore'))
-{
+if (! function_exists('underscore')) {
     /**
      * Underscore
      *
@@ -223,8 +211,7 @@ if (! function_exists('underscore'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('humanize'))
-{
+if (! function_exists('humanize')) {
     /**
      * Humanize
      *
@@ -249,8 +236,7 @@ if (! function_exists('humanize'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('is_pluralizable'))
-{
+if (! function_exists('is_pluralizable')) {
     /**
      * Checks if the given word has a plural version.
      *
@@ -317,8 +303,7 @@ if (! function_exists('is_pluralizable'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('dasherize'))
-{
+if (! function_exists('dasherize')) {
     /**
      * Replaces underscores with dashes in the string.
      *
@@ -334,8 +319,7 @@ if (! function_exists('dasherize'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('ordinal'))
-{
+if (! function_exists('ordinal')) {
     /**
      * Returns the suffix that should be added to a
      * number to denote the position in an ordered
@@ -366,8 +350,7 @@ if (! function_exists('ordinal'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('ordinalize'))
-{
+if (! function_exists('ordinalize')) {
     /**
      * Turns a number into an ordinal string used
      * to denote the position in an ordered sequence

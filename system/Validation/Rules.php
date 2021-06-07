@@ -32,8 +32,7 @@ class Rules
      */
     public function differs(string $str = null, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false)
-        {
+        if (strpos($field, '.') !== false) {
             return $str !== dot_array_search($field, $data);
         }
 
@@ -70,10 +69,8 @@ class Rules
     {
         $val = explode(',', $val);
 
-        foreach ($val as $tmp)
-        {
-            if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
-            {
+        foreach ($val as $tmp) {
+            if (is_numeric($tmp) && (int) $tmp === mb_strlen($str)) {
                 return true;
             }
         }
@@ -143,8 +140,7 @@ class Rules
                   ->where($field, $str)
                   ->limit(1);
 
-        if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue))
-        {
+        if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue)) {
             $row = $row->where($whereField, $whereValue);
         }
 
@@ -200,8 +196,7 @@ class Rules
                   ->where($field, $str)
                   ->limit(1);
 
-        if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue))
-        {
+        if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);
         }
 
@@ -251,8 +246,7 @@ class Rules
      */
     public function matches(string $str = null, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false)
-        {
+        if (strpos($field, '.') !== false) {
             return $str === dot_array_search($field, $data);
         }
 
@@ -330,8 +324,7 @@ class Rules
      */
     public function required($str = null): bool
     {
-        if (is_object($str))
-        {
+        if (is_object($str)) {
             return true;
         }
 
@@ -356,8 +349,7 @@ class Rules
      */
     public function required_with($str = null, string $fields = null, array $data = []): bool
     {
-        if (is_null($fields) || empty($data))
-        {
+        if (is_null($fields) || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
@@ -368,8 +360,7 @@ class Rules
         // search field is present or not.
         $present = $this->required($str ?? '');
 
-        if ($present)
-        {
+        if ($present) {
             return true;
         }
 
@@ -378,11 +369,9 @@ class Rules
         // as $fields is the lis
         $requiredFields = [];
 
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field) {
             if ((array_key_exists($field, $data) && ! empty($data[$field])) ||
-                (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))                )
-            {
+                (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))                ) {
                 $requiredFields[] = $field;
             }
         }
@@ -408,8 +397,7 @@ class Rules
      */
     public function required_without($str = null, string $fields = null, array $data = []): bool
     {
-        if (is_null($fields) || empty($data))
-        {
+        if (is_null($fields) || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
@@ -420,19 +408,16 @@ class Rules
         // search field is present or not.
         $present = $this->required($str ?? '');
 
-        if ($present)
-        {
+        if ($present) {
             return true;
         }
 
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field) {
             if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) ||
                 (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))
-            )
-            {
+            ) {
                 return false;
             }
         }

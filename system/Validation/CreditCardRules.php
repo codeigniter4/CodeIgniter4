@@ -183,24 +183,20 @@ class CreditCardRules
         $info = null;
 
         // Get our card info based on provided name.
-        foreach ($this->cards as $card)
-        {
-            if ($card['name'] === $type)
-            {
+        foreach ($this->cards as $card) {
+            if ($card['name'] === $type) {
                 $info = $card;
                 break;
             }
         }
 
         // If empty, it's not a card type we recognize, or invalid type.
-        if (empty($info))
-        {
+        if (empty($info)) {
             return false;
         }
 
         // Make sure we have a valid length
-        if (strlen($ccNumber) === 0)
-        {
+        if (strlen($ccNumber) === 0) {
             return false;
         }
 
@@ -208,16 +204,14 @@ class CreditCardRules
         $ccNumber = str_replace([' ', '-'], '', $ccNumber);
 
         // Non-numeric values cannot be a number...duh
-        if (! is_numeric($ccNumber))
-        {
+        if (! is_numeric($ccNumber)) {
             return false;
         }
 
         // Make sure it's a valid length for this card
         $lengths = explode(',', $info['length']);
 
-        if (! in_array((string) strlen($ccNumber), $lengths, true))
-        {
+        if (! in_array((string) strlen($ccNumber), $lengths, true)) {
             return false;
         }
 
@@ -226,25 +220,21 @@ class CreditCardRules
 
         $validPrefix = false;
 
-        foreach ($prefixes as $prefix)
-        {
-            if (strpos($ccNumber, $prefix) === 0)
-            {
-                              $validPrefix = true;
-                              break;
+        foreach ($prefixes as $prefix) {
+            if (strpos($ccNumber, $prefix) === 0) {
+                $validPrefix = true;
+                break;
             }
         }
 
-        if ($validPrefix === false)
-        {
+        if ($validPrefix === false) {
             return false;
         }
 
         // Still here? Then check the number against the Luhn algorithm, if required
         // @see https://en.wikipedia.org/wiki/Luhn_algorithm
         // @see https://gist.github.com/troelskn/1287893
-        if ($info['checkdigit'] === true)
-        {
+        if ($info['checkdigit'] === true) {
             return $this->isValidLuhn($ccNumber);
         }
 
@@ -294,8 +284,7 @@ class CreditCardRules
         $sum  = 0;
         $flip = 0;
 
-        for ($i = strlen($number) - 1; $i >= 0; $i --)
-        {
+        for ($i = strlen($number) - 1; $i >= 0; $i --) {
             $sum += $sumTable[$flip ++ & 0x1][$number[$i]];
         }
 

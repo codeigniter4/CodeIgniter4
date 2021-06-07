@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class CommonFunctionsSendTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,8 +41,7 @@ class CommonFunctionsSendTest extends CIUnitTestCase
         $response->send();
 
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -51,5 +49,4 @@ class CommonFunctionsSendTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Set-Cookie: foo=onething;');
         $this->assertHeaderEmitted('Set-Cookie: login_time');
     }
-
 }

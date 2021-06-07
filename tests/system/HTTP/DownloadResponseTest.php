@@ -10,11 +10,9 @@ use DateTimeZone;
 
 class DownloadResponseTest extends CIUnitTestCase
 {
-
     public function tearDown(): void
     {
-        if (isset($_SERVER['HTTP_USER_AGENT']))
-        {
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
             unset($_SERVER['HTTP_USER_AGENT']);
         }
     }
@@ -303,8 +301,7 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->send();
 
         $buffer = ob_clean();
-        if (ob_get_level() > 0)
-        {
+        if (ob_get_level() > 0) {
             ob_end_clean();
         }
 
@@ -312,5 +309,4 @@ class DownloadResponseTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Content-Length: ' . filesize(__FILE__));
         $this->assertHeaderEmitted('Date:');
     }
-
 }

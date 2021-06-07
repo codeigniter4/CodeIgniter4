@@ -20,8 +20,7 @@
 
 // @codeCoverageIgnoreStart
 // Avoid this file run when listing commands
-if (PHP_SAPI === 'cli')
-{
+if (PHP_SAPI === 'cli') {
     return;
 }
 
@@ -35,8 +34,7 @@ $path = $fcpath . ltrim($uri, '/');
 
 // If $path is an existing file or folder within the public folder
 // then let the request handle it like normal.
-if ($uri !== '/' && (is_file($path) || is_dir($path)))
-{
+if ($uri !== '/' && (is_file($path) || is_dir($path))) {
     return false;
 }
 

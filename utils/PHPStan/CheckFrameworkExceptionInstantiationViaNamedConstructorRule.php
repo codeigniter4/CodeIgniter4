@@ -29,13 +29,11 @@ final class CheckFrameworkExceptionInstantiationViaNamedConstructorRule implemen
     public function processNode(Node $node, Scope $scope): array
     {
         $class = $node->class;
-        if (! $class instanceof FullyQualified)
-        {
+        if (! $class instanceof FullyQualified) {
             return [];
         }
 
-        if (! is_a((string) $class, FrameworkException::class, true))
-        {
+        if (! is_a((string) $class, FrameworkException::class, true)) {
             return [];
         }
 

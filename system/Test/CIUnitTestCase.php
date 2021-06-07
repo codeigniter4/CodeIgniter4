@@ -231,19 +231,16 @@ abstract class CIUnitTestCase extends TestCase
     {
         parent::setUp();
 
-        if (! $this->app) // @phpstan-ignore-line
-        {
+        if (! $this->app) { // @phpstan-ignore-line
             $this->app = $this->createApplication();
         }
 
-        foreach ($this->setUpMethods as $method)
-        {
+        foreach ($this->setUpMethods as $method) {
             $this->$method();
         }
 
         // Check for the database trait
-        if (method_exists($this, 'setUpDatabase'))
-        {
+        if (method_exists($this, 'setUpDatabase')) {
             $this->setUpDatabase();
         }
 
@@ -255,14 +252,12 @@ abstract class CIUnitTestCase extends TestCase
     {
         parent::tearDown();
 
-        foreach ($this->tearDownMethods as $method)
-        {
+        foreach ($this->tearDownMethods as $method) {
             $this->$method();
         }
 
         // Check for the database trait
-        if (method_exists($this, 'tearDownDatabase'))
-        {
+        if (method_exists($this, 'tearDownDatabase')) {
             $this->tearDownDatabase();
         }
 
@@ -280,17 +275,14 @@ abstract class CIUnitTestCase extends TestCase
      */
     private function callTraitMethods(string $stage): void
     {
-        if (is_null($this->traits))
-        {
+        if (is_null($this->traits)) {
             $this->traits = class_uses_recursive($this);
         }
 
-        foreach ($this->traits as $trait)
-        {
+        foreach ($this->traits as $trait) {
             $method = $stage . class_basename($trait);
 
-            if (method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method();
             }
         }
@@ -386,10 +378,8 @@ abstract class CIUnitTestCase extends TestCase
         $found     = false;
         $eventName = strtolower($eventName);
 
-        foreach (Events::getPerformanceLogs() as $log)
-        {
-            if ($log['event'] !== $eventName)
-            {
+        foreach (Events::getPerformanceLogs() as $log) {
+            if ($log['event'] !== $eventName) {
                 continue;
             }
 
@@ -415,18 +405,15 @@ abstract class CIUnitTestCase extends TestCase
     {
         $found = false;
 
-        if (! function_exists('xdebug_get_headers'))
-        {
+        if (! function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 
-        foreach (xdebug_get_headers() as $emitted)
-        {
+        foreach (xdebug_get_headers() as $emitted) {
             $found = $ignoreCase ?
                     (stripos($emitted, $header) === 0) :
                     (strpos($emitted, $header) === 0);
-            if ($found)
-            {
+            if ($found) {
                 break;
             }
         }
@@ -447,18 +434,15 @@ abstract class CIUnitTestCase extends TestCase
     {
         $found = false;
 
-        if (! function_exists('xdebug_get_headers'))
-        {
+        if (! function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 
-        foreach (xdebug_get_headers() as $emitted)
-        {
+        foreach (xdebug_get_headers() as $emitted) {
             $found = $ignoreCase ?
                     (stripos($emitted, $header) === 0) :
                     (strpos($emitted, $header) === 0);
-            if ($found)
-            {
+            if ($found) {
                 break;
             }
         }
@@ -505,21 +489,17 @@ abstract class CIUnitTestCase extends TestCase
     {
         $expected = (string) $expected;
         $actual   = (string) $actual;
-        if (strlen($expected) !== strlen($actual))
-        {
+        if (strlen($expected) !== strlen($actual)) {
             return false;
         }
 
-        try
-        {
+        try {
             $expected   = (int) substr($expected, -2);
             $actual     = (int) substr($actual, -2);
             $difference = abs($expected - $actual);
 
             $this->assertLessThanOrEqual($tolerance, $difference, $message);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -555,18 +535,15 @@ abstract class CIUnitTestCase extends TestCase
      */
     protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
     {
-        if (! function_exists('xdebug_get_headers'))
-        {
+        if (! function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 
-        foreach (xdebug_get_headers() as $emitted)
-        {
+        foreach (xdebug_get_headers() as $emitted) {
             $found = $ignoreCase ?
                     (stripos($emitted, $header) === 0) :
                     (strpos($emitted, $header) === 0);
-            if ($found)
-            {
+            if ($found) {
                 return $emitted;
             }
         }

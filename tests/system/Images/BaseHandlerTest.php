@@ -19,11 +19,9 @@ use org\bovigo\vfs\vfsStream;
  */
 class BaseHandlerTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
-        if (! extension_loaded('gd'))
-        {
+        if (! extension_loaded('gd')) {
             $this->markTestSkipped('The GD extension is not available.');
 
             return;
@@ -118,5 +116,4 @@ class BaseHandlerTest extends CIUnitTestCase
         $handler->withFile($this->path);
         $this->assertEquals($this->path, $handler->getPathname());
     }
-
 }

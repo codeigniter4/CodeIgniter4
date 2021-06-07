@@ -58,10 +58,8 @@ class FileCollection
     {
         $this->populateFiles();
 
-        if ($this->hasFile($name))
-        {
-            if (strpos($name, '.') !== false)
-            {
+        if ($this->hasFile($name)) {
+            if (strpos($name, '.') !== false) {
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
@@ -69,8 +67,7 @@ class FileCollection
                      $uploadedFile : null;
             }
 
-            if (array_key_exists($name, $this->files))
-            {
+            if (array_key_exists($name, $this->files)) {
                 $uploadedFile = $this->files[$name];
 
                 return  ($uploadedFile instanceof UploadedFile) ?
@@ -94,10 +91,8 @@ class FileCollection
     {
         $this->populateFiles();
 
-        if ($this->hasFile($name))
-        {
-            if (strpos($name, '.') !== false)
-            {
+        if ($this->hasFile($name)) {
+            if (strpos($name, '.') !== false) {
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
@@ -105,8 +100,7 @@ class FileCollection
                     $uploadedFile : null;
             }
 
-            if (array_key_exists($name, $this->files))
-            {
+            if (array_key_exists($name, $this->files)) {
                 $uploadedFile = $this->files[$name];
 
                 return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
@@ -131,16 +125,13 @@ class FileCollection
     {
         $this->populateFiles();
 
-        if (strpos($fileID, '.') !== false)
-        {
+        if (strpos($fileID, '.') !== false) {
             $segments = explode('.', $fileID);
 
             $el = $this->files;
 
-            foreach ($segments as $segment)
-            {
-                if (! array_key_exists($segment, $el))
-                {
+            foreach ($segments as $segment) {
+                if (! array_key_exists($segment, $el)) {
                     return false;
                 }
 
@@ -163,22 +154,19 @@ class FileCollection
      */
     protected function populateFiles()
     {
-        if (is_array($this->files))
-        {
+        if (is_array($this->files)) {
             return;
         }
 
         $this->files = [];
 
-        if (empty($_FILES))
-        {
+        if (empty($_FILES)) {
             return;
         }
 
         $files = $this->fixFilesArray($_FILES);
 
-        foreach ($files as $name => $file)
-        {
+        foreach ($files as $name => $file) {
             $this->files[$name] = $this->createFileObject($file);
         }
     }
@@ -193,14 +181,11 @@ class FileCollection
      */
     protected function createFileObject(array $array)
     {
-        if (! isset($array['name']))
-        {
+        if (! isset($array['name'])) {
             $output = [];
 
-            foreach ($array as $key => $values)
-            {
-                if (! is_array($values))
-                {
+            foreach ($array as $key => $values) {
+                if (! is_array($values)) {
                     continue;
                 }
 
@@ -234,14 +219,11 @@ class FileCollection
     {
         $output = [];
 
-        foreach ($data as $name => $array)
-        {
-            foreach ($array as $field => $value)
-            {
+        foreach ($data as $name => $array) {
+            foreach ($array as $field => $value) {
                 $pointer = &$output[$name];
 
-                if (! is_array($value))
-                {
+                if (! is_array($value)) {
                     $pointer[$field] = $value;
 
                     continue;
@@ -252,14 +234,12 @@ class FileCollection
                         new RecursiveArrayIterator($value), RecursiveIteratorIterator::SELF_FIRST
                 );
 
-                foreach ($iterator as $key => $val)
-                {
+                foreach ($iterator as $key => $val) {
                     array_splice($stack, $iterator->getDepth() + 1);
                     $pointer = &$stack[count($stack) - 1];
                     $pointer = &$pointer[$key];
                     $stack[] = &$pointer;
-                    if (! $iterator->hasChildren())
-                    {
+                    if (! $iterator->hasChildren()) {
                         $pointer[$field] = $val;
                     }
                 }
@@ -281,12 +261,10 @@ class FileCollection
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {
-        if (! empty($index))
-        {
+        if (! empty($index)) {
             $currentIndex = array_shift($index);
         }
-        if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex])
-        {
+        if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex]) {
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 

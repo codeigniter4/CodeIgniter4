@@ -80,16 +80,13 @@ trait MessageTrait
     public function populateHeaders(): void
     {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? getenv('CONTENT_TYPE');
-        if (! empty($contentType))
-        {
+        if (! empty($contentType)) {
             $this->setHeader('Content-Type', $contentType);
         }
         unset($contentType);
 
-        foreach (array_keys($_SERVER) as $key)
-        {
-            if (sscanf($key, 'HTTP_%s', $header) === 1)
-            {
+        foreach (array_keys($_SERVER) as $key) {
+            if (sscanf($key, 'HTTP_%s', $header) === 1) {
                 // take SOME_HEADER and turn it into Some-Header
                 $header = str_replace('_', ' ', strtolower($header));
                 $header = str_replace(' ', '-', ucwords($header));
@@ -112,8 +109,7 @@ trait MessageTrait
         // If no headers are defined, but the user is
         // requesting it, then it's likely they want
         // it to be populated so do that...
-        if (empty($this->headers))
-        {
+        if (empty($this->headers)) {
             $this->populateHeaders();
         }
 
@@ -147,20 +143,15 @@ trait MessageTrait
     {
         $origName = $this->getHeaderName($name);
 
-        if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue()))
-        {
-            if (! is_array($value))
-            {
+        if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue())) {
+            if (! is_array($value)) {
                 $value = [$value];
             }
 
-            foreach ($value as $v)
-            {
+            foreach ($value as $v) {
                 $this->appendHeader($origName, $v);
             }
-        }
-        else
-        {
+        } else {
             $this->headers[$origName]               = new Header($origName, $value);
             $this->headerMap[strtolower($origName)] = $origName;
         }
@@ -249,16 +240,14 @@ trait MessageTrait
      */
     public function setProtocolVersion(string $version): self
     {
-        if (! is_numeric($version))
-        {
+        if (! is_numeric($version)) {
             $version = substr($version, strpos($version, '/') + 1);
         }
 
         // Make sure that version is in the correct format
         $version = number_format((float) $version, 1);
 
-        if (! in_array($version, $this->validProtocolVersions, true))
-        {
+        if (! in_array($version, $this->validProtocolVersions, true)) {
             throw HTTPException::forInvalidHTTPProtocol(implode(', ', $this->validProtocolVersions));
         }
 

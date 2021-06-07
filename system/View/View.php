@@ -185,15 +185,13 @@ class View implements RendererInterface
         $this->renderVars['options'] = $options ?? [];
 
         // Was it cached?
-        if (isset($this->renderVars['options']['cache']))
-        {
+        if (isset($this->renderVars['options']['cache'])) {
             $cacheName = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
             $cacheName = str_replace(['\\', '/'], '', $cacheName);
 
             $this->renderVars['cacheName'] = $cacheName;
 
-            if ($output = cache($this->renderVars['cacheName']))
-            {
+            if ($output = cache($this->renderVars['cacheName'])) {
                 $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
                 return $output;
@@ -202,22 +200,19 @@ class View implements RendererInterface
 
         $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
-        if (! is_file($this->renderVars['file']))
-        {
+        if (! is_file($this->renderVars['file'])) {
             $this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
         }
 
         // locateFile will return an empty string if the file cannot be found.
-        if (empty($this->renderVars['file']))
-        {
+        if (empty($this->renderVars['file'])) {
             throw ViewException::forInvalidFile($this->renderVars['view']);
         }
 
         // Make our view data available to the view.
         $this->tempData = $this->tempData ?? $this->data;
 
-        if ($saveData)
-        {
+        if ($saveData) {
             $this->data = $this->tempData;
         }
 
@@ -238,8 +233,7 @@ class View implements RendererInterface
         // When using layouts, the data has already been stored
         // in $this->sections, and no other valid output
         // is allowed in $output so we'll overwrite it.
-        if (! is_null($this->layout) && $this->sectionStack === [])
-        {
+        if (! is_null($this->layout) && $this->sectionStack === []) {
             $layoutView   = $this->layout;
             $this->layout = null;
             // Save current vars
@@ -253,12 +247,10 @@ class View implements RendererInterface
 
         if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
             && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true)
-        )
-        {
+        ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 
-            if (in_array(Views::class, $toolbarCollectors, true))
-            {
+            if (in_array(Views::class, $toolbarCollectors, true)) {
                 // Clean up our path names to make them a little cleaner
                 $this->renderVars['file'] = clean_path($this->renderVars['file']);
                 $this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
@@ -270,8 +262,7 @@ class View implements RendererInterface
         }
 
         // Should we cache?
-        if (isset($this->renderVars['options']['cache']))
-        {
+        if (isset($this->renderVars['options']['cache'])) {
             cache()->save($this->renderVars['cacheName'], $output, (int) $this->renderVars['options']['cache']);
         }
 
@@ -301,8 +292,7 @@ class View implements RendererInterface
         $saveData       = $saveData ?? $this->saveData;
         $this->tempData = $this->tempData ?? $this->data;
 
-        if ($saveData)
-        {
+        if ($saveData) {
             $this->data = $this->tempData;
         }
 
@@ -343,8 +333,7 @@ class View implements RendererInterface
      */
     public function setData(array $data = [], string $context = null): RendererInterface
     {
-        if ($context)
-        {
+        if ($context) {
             $data = \esc($data, $context);
         }
 
@@ -366,8 +355,7 @@ class View implements RendererInterface
      */
     public function setVar(string $name, $value = null, string $context = null): RendererInterface
     {
-        if ($context)
-        {
+        if ($context) {
             $value = \esc($value, $context);
         }
 
@@ -438,16 +426,14 @@ class View implements RendererInterface
     {
         $contents = ob_get_clean();
 
-        if ($this->sectionStack === [])
-        {
+        if ($this->sectionStack === []) {
             throw new RuntimeException('View themes, no current section.');
         }
 
         $section = array_pop($this->sectionStack);
 
         // Ensure an array exists so we can store multiple entries for this.
-        if (! array_key_exists($section, $this->sections))
-        {
+        if (! array_key_exists($section, $this->sections)) {
             $this->sections[$section] = [];
         }
 
@@ -461,15 +447,13 @@ class View implements RendererInterface
      */
     public function renderSection(string $sectionName)
     {
-        if (! isset($this->sections[$sectionName]))
-        {
+        if (! isset($this->sections[$sectionName])) {
             echo '';
 
             return;
         }
 
-        foreach ($this->sections[$sectionName] as $key => $contents)
-        {
+        foreach ($this->sections[$sectionName] as $key => $contents) {
             echo $contents;
             unset($this->sections[$sectionName][$key]);
         }
@@ -511,8 +495,7 @@ class View implements RendererInterface
      */
     protected function logPerformance(float $start, float $end, string $view)
     {
-        if ($this->debug)
-        {
+        if ($this->debug) {
             $this->performanceData[] = [
                 'start' => $start,
                 'end'   => $end,

@@ -97,8 +97,7 @@ class Views extends BaseCollector
 
         $rows = $this->viewer->getPerformanceData(); // @phpstan-ignore-line
 
-        foreach ($rows as $info)
-        {
+        foreach ($rows as $info) {
             $data[] = [
                 'name'      => 'View: ' . $info['view'],
                 'component' => 'Views',

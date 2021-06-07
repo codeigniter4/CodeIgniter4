@@ -54,8 +54,7 @@ class Commands
      */
     public function run(string $command, array $params)
     {
-        if (! $this->verifyCommand($command, $this->commands))
-        {
+        if (! $this->verifyCommand($command, $this->commands)) {
             return;
         }
 
@@ -85,8 +84,7 @@ class Commands
      */
     public function discoverCommands()
     {
-        if ($this->commands !== [])
-        {
+        if ($this->commands !== []) {
             return;
         }
 
@@ -96,36 +94,30 @@ class Commands
 
         // If no matching command files were found, bail
         // This should never happen in unit testing.
-        if ($files === [])
-        {
+        if ($files === []) {
             return; // @codeCoverageIgnore
         }
 
         // Loop over each file checking to see if a command with that
         // alias exists in the class.
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             $className = $locator->findQualifiedNameFromPath($file);
 
-            if (empty($className) || ! class_exists($className))
-            {
+            if (empty($className) || ! class_exists($className)) {
                 continue;
             }
 
-            try
-            {
+            try {
                 $class = new ReflectionClass($className);
 
-                if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
-                {
+                if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class)) {
                     continue;
                 }
 
                 /** @var BaseCommand $class */
                 $class = new $className($this->logger, $this);
 
-                if (isset($class->group))
-                {
+                if (isset($class->group)) {
                     $this->commands[$class->name] = [
                         'class'       => $className,
                         'file'        => $file,
@@ -135,9 +127,7 @@ class Commands
                 }
 
                 unset($class);
-            }
-            catch (ReflectionException $e)
-            {
+            } catch (ReflectionException $e) {
                 $this->logger->error($e->getMessage());
             }
         }
@@ -156,21 +146,16 @@ class Commands
      */
     public function verifyCommand(string $command, array $commands): bool
     {
-        if (isset($commands[$command]))
-        {
+        if (isset($commands[$command])) {
             return true;
         }
 
         $message = lang('CLI.commandNotFound', [$command]);
 
-        if ($alternatives = $this->getCommandAlternatives($command, $commands))
-        {
-            if (count($alternatives) === 1)
-            {
+        if ($alternatives = $this->getCommandAlternatives($command, $commands)) {
+            if (count($alternatives) === 1) {
                 $message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
-            }
-            else
-            {
+            } else {
                 $message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
             }
 
@@ -196,12 +181,10 @@ class Commands
     {
         $alternatives = [];
 
-        foreach (array_keys($collection) as $commandName)
-        {
+        foreach (array_keys($collection) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
-            if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false)
-            {
+            if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false) {
                 $alternatives[$commandName] = $lev;
             }
         }

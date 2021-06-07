@@ -8,7 +8,6 @@ use org\bovigo\vfs\vfsStream;
 
 class FileMovingTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -19,8 +18,7 @@ class FileMovingTest extends CIUnitTestCase
         $this->start = $this->root->url() . '/';
 
         $this->destination = $this->start . 'destination';
-        if (is_dir($this->destination))
-        {
+        if (is_dir($this->destination)) {
             rmdir($this->destination);
         }
 
@@ -34,8 +32,7 @@ class FileMovingTest extends CIUnitTestCase
 
         // cleanup folder being left behind (why?)
         $leftover = WRITEPATH . 'uploads/vfs:';
-        if (is_dir($leftover))
-        {
+        if (is_dir($leftover)) {
             rrmdir($leftover);
         }
     }
@@ -73,8 +70,7 @@ class FileMovingTest extends CIUnitTestCase
         // Create the destination if not exists
         is_dir($destination) || mkdir($destination, 0777, true);
 
-        foreach ($collection->all() as $file)
-        {
+        foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
             $file->move($destination, $file->getName(), false);
         }
@@ -124,8 +120,7 @@ class FileMovingTest extends CIUnitTestCase
         // Create the destination if not exists
         is_dir($destination) || mkdir($destination, 0777, true);
 
-        foreach ($collection->all() as $file)
-        {
+        foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
             $file->move($destination, $file->getName(), true);
         }
@@ -228,8 +223,7 @@ class FileMovingTest extends CIUnitTestCase
 
         $this->expectException(HTTPException::class);
 
-        foreach ($collection->all() as $file)
-        {
+        foreach ($collection->all() as $file) {
             $file->move($destination, $file->getName(), false);
             $file->move($destination, $file->getName(), false);
         }
@@ -296,8 +290,7 @@ class FileMovingTest extends CIUnitTestCase
 
 function is_uploaded_file($filename)
 {
-    if (! file_exists($filename))
-    {
+    if (! file_exists($filename)) {
         file_put_contents($filename, 'data');
     }
 
@@ -320,21 +313,18 @@ function rrmdir($src)
 {
     $dir = opendir($src);
 
-    while (false !== ( $file = readdir($dir)))
-    {
-        if (( $file !== '.' ) && ( $file !== '..' ))
-        {
+    while (false !== $file = readdir($dir)) {
+        if (( $file !== '.' ) && ( $file !== '..' )) {
             $full = $src . '/' . $file;
-            if (is_dir($full))
-            {
+
+            if (is_dir($full)) {
                 rrmdir($full);
-            }
-            else
-            {
+            } else {
                 unlink($full);
             }
         }
     }
+
     closedir($dir);
     rmdir($src);
 }

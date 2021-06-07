@@ -446,5 +446,4 @@ class PagerTest extends CIUnitTestCase
         $this->pager->store('default', 10, 1, 10, 1000);
         $this->assertEquals(1, $this->pager->getCurrentPage());
     }
-
 }

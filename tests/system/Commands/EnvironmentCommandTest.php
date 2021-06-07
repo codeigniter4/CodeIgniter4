@@ -21,8 +21,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 
-        if (is_file($this->envPath))
-        {
+        if (is_file($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
         }
     }
@@ -32,13 +31,11 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         parent::tearDown();
         stream_filter_remove($this->streamFilter);
 
-        if (is_file($this->envPath))
-        {
+        if (is_file($this->envPath)) {
             unlink($this->envPath);
         }
 
-        if (is_file($this->backupEnvPath))
-        {
+        if (is_file($this->backupEnvPath)) {
             rename($this->backupEnvPath, $this->envPath);
         }
 

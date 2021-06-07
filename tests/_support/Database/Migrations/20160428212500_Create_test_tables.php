@@ -63,21 +63,18 @@ class Migration_Create_test_tables extends Migration
             'type_blob'       => ['type' => 'BLOB', 'null' => true],
         ];
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             unset(
                 $data_type_fields['type_real'],
                 $data_type_fields['type_decimal']
             );
         }
 
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             unset($data_type_fields['type_timestamp']);
         }
 
-        if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
             unset(
                 $data_type_fields['type_enum'],
                 $data_type_fields['type_set'],

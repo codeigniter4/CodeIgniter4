@@ -32,17 +32,13 @@ class CreateDatabaseTest extends CIUnitTestCase
     {
         stream_filter_remove($this->streamFilter);
 
-        if ($this->connection instanceof Connection)
-        {
+        if ($this->connection instanceof Connection) {
             $file = WRITEPATH . 'foobar.db';
 
-            if (file_exists($file))
-            {
+            if (file_exists($file)) {
                 unlink($file);
             }
-        }
-        else
-        {
+        } else {
             Database::forge()->dropDatabase('foobar');
         }
 
@@ -62,8 +58,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 
     public function testSqliteDatabaseDuplicated()
     {
-        if (! $this->connection instanceof Connection)
-        {
+        if (! $this->connection instanceof Connection) {
             $this->markTestSkipped('Needs to run on SQLite3.');
         }
 
@@ -76,8 +71,7 @@ class CreateDatabaseTest extends CIUnitTestCase
 
     public function testOtherDriverDuplicatedDatabase()
     {
-        if ($this->connection instanceof Connection)
-        {
+        if ($this->connection instanceof Connection) {
             $this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
         }
 

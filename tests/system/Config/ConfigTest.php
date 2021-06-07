@@ -8,7 +8,6 @@ use stdClass;
 
 class ConfigTest extends CIUnitTestCase
 {
-
     public function testCreateSingleInstance()
     {
         $Config          = Config::get('DocTypes', false);
@@ -50,5 +49,4 @@ class ConfigTest extends CIUnitTestCase
         Config::injectMock('Banana', new stdClass());
         $this->assertNotNull(Config::get('Banana'));
     }
-
 }

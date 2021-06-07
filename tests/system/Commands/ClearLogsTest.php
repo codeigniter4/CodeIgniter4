@@ -34,8 +34,7 @@ class ClearLogsTest extends CIUnitTestCase
         $path = WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$date}.log";
 
         // create 10 dummy log files
-        for ($i = 0; $i < 10; $i++)
-        {
+        for ($i = 0; $i < 10; $i++) {
             $newDate = date('Y-m-d', strtotime("+1 year -{$i} day"));
             $path    = str_replace($date, $newDate, $path);
             file_put_contents($path, 'Lorem ipsum');

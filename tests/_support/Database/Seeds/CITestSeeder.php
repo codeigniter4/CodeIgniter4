@@ -102,16 +102,14 @@ class CITestSeeder extends Seeder
         ];
 
         //set SQL times to more correct format
-        if ($this->db->DBDriver === 'SQLite3')
-        {
-             $data['type_test'][0]['type_date']      = '2020/01/11';
-             $data['type_test'][0]['type_time']      = '15:22:00';
-             $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
-             $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
+        if ($this->db->DBDriver === 'SQLite3') {
+            $data['type_test'][0]['type_date']      = '2020/01/11';
+            $data['type_test'][0]['type_time']      = '15:22:00';
+            $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
+            $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
         }
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $data['type_test'][0]['type_time'] = '15:22:00';
             unset($data['type_test'][0]['type_enum']);
             unset($data['type_test'][0]['type_set']);
@@ -122,8 +120,7 @@ class CITestSeeder extends Seeder
             unset($data['type_test'][0]['type_blob']);
         }
 
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $data['type_test'][0]['type_date']     = '2020-01-11';
             $data['type_test'][0]['type_time']     = '15:22:00.000';
             $data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
@@ -135,12 +132,10 @@ class CITestSeeder extends Seeder
             unset($data['type_test'][0]['type_blob']);
         }
 
-        foreach ($data as $table => $dummy_data)
-        {
+        foreach ($data as $table => $dummy_data) {
             $this->db->table($table)->truncate();
 
-            foreach ($dummy_data as $single_dummy_data)
-            {
+            foreach ($dummy_data as $single_dummy_data) {
                 $this->db->table($table)->insert($single_dummy_data);
             }
         }

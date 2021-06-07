@@ -54,12 +54,10 @@ class FeatureTestCase extends CIUnitTestCase
     {
         $collection = Services::routes();
 
-        if ($routes)
-        {
+        if ($routes) {
             $collection->resetRoutes();
 
-            foreach ($routes as $route)
-            {
+            foreach ($routes as $route) {
                 $collection->{$route[0]}($route[1], $route[2]);
             }
         }
@@ -159,8 +157,7 @@ class FeatureTestCase extends CIUnitTestCase
         // Clean up any open output buffers
         // not relevant to unit testing
         // @codeCoverageIgnoreStart
-        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true))
-        {
+        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
             \ob_end_clean();
         }
         // @codeCoverageIgnoreEnd
@@ -175,8 +172,7 @@ class FeatureTestCase extends CIUnitTestCase
         $request = $this->setRequestBody($request);
 
         // Initialize the RouteCollection
-        if (! $routes = $this->routes)
-        {
+        if (! $routes = $this->routes) {
             require APPPATH . 'Config/Routes.php';
 
             /**
@@ -199,8 +195,7 @@ class FeatureTestCase extends CIUnitTestCase
                 ->run($routes, true);
 
         $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! empty($output))
-        {
+        if (empty($response->getBody()) && ! empty($output)) {
             $response->setBody($output);
         }
 
@@ -209,13 +204,11 @@ class FeatureTestCase extends CIUnitTestCase
 
         // Ensure the output buffer is identical so no tests are risky
         // @codeCoverageIgnoreStart
-        while (\ob_get_level() > $buffer)
-        {
+        while (\ob_get_level() > $buffer) {
             \ob_end_clean();
         }
 
-        while (\ob_get_level() < $buffer)
-        {
+        while (\ob_get_level() < $buffer) {
             \ob_start();
         }
         // @codeCoverageIgnoreEnd
@@ -333,8 +326,7 @@ class FeatureTestCase extends CIUnitTestCase
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');
 
-        if ($config->forceGlobalSecureRequests)
-        {
+        if ($config->forceGlobalSecureRequests) {
             $_SERVER['HTTPS'] = 'test';
         }
 
@@ -350,10 +342,8 @@ class FeatureTestCase extends CIUnitTestCase
      */
     protected function setupHeaders(IncomingRequest $request)
     {
-        if (! empty($this->headers))
-        {
-            foreach ($this->headers as $name => $value)
-            {
+        if (! empty($this->headers)) {
+            foreach ($this->headers as $name => $value) {
                 $request->setHeader($name, $value);
             }
         }
@@ -383,8 +373,7 @@ class FeatureTestCase extends CIUnitTestCase
             : $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
 
         $request->setGlobal('get', $get);
-        if ($method !== 'get')
-        {
+        if ($method !== 'get') {
             $request->setGlobal($method, $params);
         }
 
@@ -407,30 +396,23 @@ class FeatureTestCase extends CIUnitTestCase
      */
     protected function setRequestBody(Request $request, array $params = null): Request
     {
-        if (isset($this->requestBody) && $this->requestBody !== '')
-        {
+        if (isset($this->requestBody) && $this->requestBody !== '') {
             $request->setBody($this->requestBody);
 
             return $request;
         }
 
-        if (isset($this->bodyFormat) && $this->bodyFormat !== '')
-        {
-            if (empty($params))
-            {
+        if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
+            if (empty($params)) {
                 $params = $request->fetchGlobal('request');
             }
             $formatMime = '';
-            if ($this->bodyFormat === 'json')
-            {
+            if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
-            }
-            elseif ($this->bodyFormat === 'xml')
-            {
+            } elseif ($this->bodyFormat === 'xml') {
                 $formatMime = 'application/xml';
             }
-            if (! empty($formatMime) && ! empty($params))
-            {
+            if (! empty($formatMime) && ! empty($params)) {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
                 $request->setBody($formatted);
                 $request->setHeader('Content-Type', $formatMime);

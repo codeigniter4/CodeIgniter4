@@ -35,5 +35,4 @@ class SecurityHelperTest extends CIUnitTestCase
     {
         $this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
     }
-
 }

@@ -31,8 +31,7 @@ class ClearDebugbarTest extends CIUnitTestCase
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
 
         // create 10 dummy debugbar json files
-        for ($i = 0; $i < 10; $i++)
-        {
+        for ($i = 0; $i < 10; $i++) {
             $path = str_replace($time, $time - $i, $path);
             file_put_contents($path, "{}\n");
 

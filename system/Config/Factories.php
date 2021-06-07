@@ -87,10 +87,8 @@ class Factories
         // Determine the component-specific options
         $options = array_merge(self::getOptions(strtolower($component)), $options);
 
-        if (! $options['getShared'])
-        {
-            if ($class = self::locateClass($options, $name))
-            {
+        if (! $options['getShared']) {
+            if ($class = self::locateClass($options, $name)) {
                 return new $class(...$arguments);
             }
 
@@ -100,20 +98,17 @@ class Factories
         $basename = self::getBasename($name);
 
         // Check for an existing instance
-        if (isset(self::$basenames[$options['component']][$basename]))
-        {
+        if (isset(self::$basenames[$options['component']][$basename])) {
             $class = self::$basenames[$options['component']][$basename];
 
             // Need to verify if the shared instance matches the request
-            if (self::verifyInstanceOf($options, $class))
-            {
+            if (self::verifyInstanceOf($options, $class)) {
                 return self::$instances[$options['component']][$class];
             }
         }
 
         // Try to locate the class
-        if (! $class = self::locateClass($options, $name))
-        {
+        if (! $class = self::locateClass($options, $name)) {
             return null;
         }
 
@@ -134,8 +129,7 @@ class Factories
     protected static function locateClass(array $options, string $name): ?string
     {
         // Check for low-hanging fruit
-        if (class_exists($name, false) && self::verifyPreferApp($options, $name) && self::verifyInstanceOf($options, $name))
-        {
+        if (class_exists($name, false) && self::verifyPreferApp($options, $name) && self::verifyInstanceOf($options, $name)) {
             return $name;
         }
 
@@ -146,14 +140,12 @@ class Factories
             : rtrim(APP_NAMESPACE, '\\') . '\\' . $options['path'] . '\\' . $basename;
 
         // If an App version was requested then see if it verifies
-        if ($options['preferApp'] && class_exists($appname) && self::verifyInstanceOf($options, $name))
-        {
+        if ($options['preferApp'] && class_exists($appname) && self::verifyInstanceOf($options, $name)) {
             return $appname;
         }
 
         // If we have ruled out an App version and the class exists then try it
-        if (class_exists($name) && self::verifyInstanceOf($options, $name))
-        {
+        if (class_exists($name) && self::verifyInstanceOf($options, $name)) {
             return $name;
         }
 
@@ -161,28 +153,23 @@ class Factories
         $locator = Services::locator();
 
         // Check if the class was namespaced
-        if (strpos($name, '\\') !== false)
-        {
-            if (! $file = $locator->locateFile($name, $options['path']))
-            {
+        if (strpos($name, '\\') !== false) {
+            if (! $file = $locator->locateFile($name, $options['path'])) {
                 return null;
             }
             $files = [$file];
         }
         // No namespace? Search for it
         // Check all namespaces, prioritizing App and modules
-        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name))
-        {
+        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name)) {
             return null;
         }
 
         // Check all files for a valid class
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             $class = $locator->getClassname($file);
 
-            if ($class && self::verifyInstanceOf($options, $class))
-            {
+            if ($class && self::verifyInstanceOf($options, $class)) {
                 return $class;
             }
         }
@@ -203,14 +190,12 @@ class Factories
     protected static function verifyPreferApp(array $options, string $name): bool
     {
         // Anything without that restriction passes
-        if (! $options['preferApp'])
-        {
+        if (! $options['preferApp']) {
             return true;
         }
 
         // Special case for Config since its App namespace is actually \Config
-        if ($options['component'] === 'config')
-        {
+        if ($options['component'] === 'config') {
             return strpos($name, 'Config') === 0;
         }
 
@@ -228,8 +213,7 @@ class Factories
     protected static function verifyInstanceOf(array $options, string $name): bool
     {
         // Anything without that restriction passes
-        if (! $options['instanceOf'])
-        {
+        if (! $options['instanceOf']) {
             return true;
         }
 
@@ -250,8 +234,7 @@ class Factories
         $component = strtolower($component);
 
         // Check for a stored version
-        if (isset(self::$options[$component]))
-        {
+        if (isset(self::$options[$component])) {
             return self::$options[$component];
         }
 
@@ -300,8 +283,7 @@ class Factories
      */
     public static function reset(string $component = null)
     {
-        if ($component)
-        {
+        if ($component) {
             unset(static::$options[$component]);
             unset(static::$basenames[$component]);
             unset(static::$instances[$component]);
@@ -344,8 +326,7 @@ class Factories
     public static function getBasename(string $name): string
     {
         // Determine the basename
-        if ($basename = strrchr($name, '\\'))
-        {
+        if ($basename = strrchr($name, '\\')) {
             return substr($basename, 1);
         }
 

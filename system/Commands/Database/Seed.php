@@ -73,17 +73,13 @@ class Seed extends BaseCommand
         $seeder   = new Seeder(new Database());
         $seedName = array_shift($params);
 
-        if (empty($seedName))
-        {
+        if (empty($seedName)) {
             $seedName = CLI::prompt(lang('Migrations.migSeeder'), null, 'required'); // @codeCoverageIgnore
         }
 
-        try
-        {
+        try {
             $seeder->call($seedName);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             $this->showError($e);
         }
     }

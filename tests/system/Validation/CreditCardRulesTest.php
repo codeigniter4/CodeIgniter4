@@ -1235,28 +1235,22 @@ class CreditCardRulesTest extends CIUnitTestCase
         $string = array_pad($string, $length, 0);
 
         // Fill all of the remaining values with random numbers, except the last one.
-        while ($pos < $length - 1)
-        {
+        while ($pos < $length - 1) {
             $string[$pos ++] = random_int(0, 9);
         }
 
         // Calculate the Luhn checksum of the current values.
         $lenOffset = ($length + 1) % 2;
 
-        for ($pos = 0; $pos < $length - 1; $pos ++)
-        {
-            if (($pos + $lenOffset) % 2)
-            {
+        for ($pos = 0; $pos < $length - 1; $pos ++) {
+            if (($pos + $lenOffset) % 2) {
                 $temp = $string[$pos] * 2;
-                if ($temp > 9)
-                {
+                if ($temp > 9) {
                     $temp -= 9;
                 }
 
                 $sum += $temp;
-            }
-            else
-            {
+            } else {
                 $sum += $string[$pos];
             }
         }

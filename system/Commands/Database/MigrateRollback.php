@@ -72,13 +72,11 @@ class MigrateRollback extends BaseCommand
      */
     public function run(array $params)
     {
-        if (ENVIRONMENT === 'production')
-        {
+        if (ENVIRONMENT === 'production') {
             // @codeCoverageIgnoreStart
             $force = array_key_exists('f', $params) || CLI::getOption('f');
 
-            if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n')
-            {
+            if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n') {
                 return;
             }
             // @codeCoverageIgnoreEnd
@@ -87,33 +85,28 @@ class MigrateRollback extends BaseCommand
         $runner = Services::migrations();
         $group  = $params['g'] ?? CLI::getOption('g');
 
-        if (is_string($group))
-        {
+        if (is_string($group)) {
             $runner->setGroup($group);
         }
 
-        try
-        {
+        try {
             $batch = $params['b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
             CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
 
-            if (! $runner->regress($batch))
-            {
+            if (! $runner->regress($batch)) {
                 CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
             }
 
             $messages = $runner->getCliMessages();
 
-            foreach ($messages as $message)
-            {
+            foreach ($messages as $message) {
                 CLI::write($message);
             }
 
             CLI::write('Done rolling back migrations.', 'green');
         }
         // @codeCoverageIgnoreStart
-        catch (Throwable $e)
-        {
+        catch (Throwable $e) {
             $this->showError($e);
         }
         // @codeCoverageIgnoreEnd

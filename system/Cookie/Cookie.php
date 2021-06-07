@@ -129,8 +129,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $oldDefaults = self::$defaults;
         $newDefaults = [];
 
-        if ($config instanceof CookieConfig)
-        {
+        if ($config instanceof CookieConfig) {
             $newDefaults = [
                 'prefix'   => $config->prefix,
                 'expires'  => $config->expires,
@@ -141,9 +140,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
                 'samesite' => $config->samesite,
                 'raw'      => $config->raw,
             ];
-        }
-        elseif (is_array($config))
-        {
+        } elseif (is_array($config)) {
             $newDefaults = $config;
         }
 
@@ -180,14 +177,10 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $value = isset($part[1]) ? ($raw ? $part[1] : urldecode($part[1])) : '';
         unset($part);
 
-        foreach ($parts as $part)
-        {
-            if (strpos($part, '=') !== false)
-            {
+        foreach ($parts as $part) {
+            if (strpos($part, '=') !== false) {
                 [$attr, $val] = explode('=', $part);
-            }
-            else
-            {
+            } else {
                 $attr = $part;
                 $val  = true;
             }
@@ -214,8 +207,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $options['expires'] = static::convertExpiresTimestamp($options['expires']);
 
         // If both `Expires` and `Max-Age` are set, `Max-Age` has precedence.
-        if (isset($options['max-age']) && is_numeric($options['max-age']))
-        {
+        if (isset($options['max-age']) && is_numeric($options['max-age'])) {
             $options['expires'] = time() + (int) $options['max-age'];
             unset($options['max-age']);
         }
@@ -283,12 +275,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $name = $this->getPrefix();
 
-        if ($this->isRaw())
-        {
+        if ($this->isRaw()) {
             $name .= $this->getName();
-        }
-        else
-        {
+        } else {
             $search  = str_split(self::$reservedCharsList);
             $replace = array_map('rawurlencode', $search);
 
@@ -596,8 +585,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function offsetGet($offset)
     {
-        if (! $this->offsetExists($offset))
-        {
+        if (! $this->offsetExists($offset)) {
             throw new InvalidArgumentException(sprintf('Undefined offset "%s".', $offset));
         }
 
@@ -652,49 +640,40 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $cookieHeader = [];
 
-        if ($this->getValue() === '')
-        {
+        if ($this->getValue() === '') {
             $cookieHeader[] = $this->getPrefixedName() . '=deleted';
             $cookieHeader[] = 'Expires=' . gmdate(self::EXPIRES_FORMAT, 0);
             $cookieHeader[] = 'Max-Age=0';
-        }
-        else
-        {
+        } else {
             $value = $this->isRaw() ? $this->getValue() : rawurlencode($this->getValue());
 
             $cookieHeader[] = sprintf('%s=%s', $this->getPrefixedName(), $value);
 
-            if ($this->getExpiresTimestamp() !== 0)
-            {
+            if ($this->getExpiresTimestamp() !== 0) {
                 $cookieHeader[] = 'Expires=' . $this->getExpiresString();
                 $cookieHeader[] = 'Max-Age=' . $this->getMaxAge();
             }
         }
 
-        if ($this->getPath() !== '')
-        {
+        if ($this->getPath() !== '') {
             $cookieHeader[] = 'Path=' . $this->getPath();
         }
 
-        if ($this->getDomain() !== '')
-        {
+        if ($this->getDomain() !== '') {
             $cookieHeader[] = 'Domain=' . $this->getDomain();
         }
 
-        if ($this->isSecure())
-        {
+        if ($this->isSecure()) {
             $cookieHeader[] = 'Secure';
         }
 
-        if ($this->isHTTPOnly())
-        {
+        if ($this->isHTTPOnly()) {
             $cookieHeader[] = 'HttpOnly';
         }
 
         $samesite = $this->getSameSite();
 
-        if ($samesite === '')
-        {
+        if ($samesite === '') {
             // modern browsers warn in console logs that an empty SameSite attribute
             // will be given the `Lax` value
             $samesite = self::SAMESITE_LAX;
@@ -727,22 +706,18 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     protected static function convertExpiresTimestamp($expires = 0): int
     {
-        if ($expires instanceof DateTimeInterface)
-        {
+        if ($expires instanceof DateTimeInterface) {
             $expires = $expires->format('U');
         }
 
-        if (! is_string($expires) && ! is_int($expires))
-        {
+        if (! is_string($expires) && ! is_int($expires)) {
             throw CookieException::forInvalidExpiresTime(gettype($expires));
         }
 
-        if (! is_numeric($expires))
-        {
+        if (! is_numeric($expires)) {
             $expires = strtotime($expires);
 
-            if ($expires === false)
-            {
+            if ($expires === false) {
                 throw CookieException::forInvalidExpiresValue();
             }
         }
@@ -769,13 +744,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     protected function validateName(string $name, bool $raw): void
     {
-        if ($raw && strpbrk($name, self::$reservedCharsList) !== false)
-        {
+        if ($raw && strpbrk($name, self::$reservedCharsList) !== false) {
             throw CookieException::forInvalidCookieName($name);
         }
 
-        if ($name === '')
-        {
+        if ($name === '') {
             throw CookieException::forEmptyCookieName();
         }
     }
@@ -794,13 +767,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     protected function validatePrefix(string $prefix, bool $secure, string $path, string $domain): void
     {
-        if (strpos($prefix, '__Secure-') === 0 && ! $secure)
-        {
+        if (strpos($prefix, '__Secure-') === 0 && ! $secure) {
             throw CookieException::forInvalidSecurePrefix();
         }
 
-        if (strpos($prefix, '__Host-') === 0 && (! $secure || $domain !== '' || $path !== '/'))
-        {
+        if (strpos($prefix, '__Host-') === 0 && (! $secure || $domain !== '' || $path !== '/')) {
             throw CookieException::forInvalidHostPrefix();
         }
     }
@@ -819,23 +790,19 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     protected function validateSameSite(string $samesite, bool $secure): void
     {
-        if ($samesite === '')
-        {
+        if ($samesite === '') {
             $samesite = self::$defaults['samesite'];
         }
 
-        if ($samesite === '')
-        {
+        if ($samesite === '') {
             $samesite = self::SAMESITE_LAX;
         }
 
-        if (! in_array(strtolower($samesite), self::ALLOWED_SAMESITE_VALUES, true))
-        {
+        if (! in_array(strtolower($samesite), self::ALLOWED_SAMESITE_VALUES, true)) {
             throw CookieException::forInvalidSameSite($samesite);
         }
 
-        if (strtolower($samesite) === self::SAMESITE_NONE && ! $secure)
-        {
+        if (strtolower($samesite) === self::SAMESITE_NONE && ! $secure) {
             throw CookieException::forInvalidSameSiteNone();
         }
     }

@@ -26,8 +26,7 @@ class TypographyTest extends CIUnitTestCase
             'Hello World !!, How are you?'      => '<p>Hello World !!, How are you?</p>',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -39,8 +38,7 @@ class TypographyTest extends CIUnitTestCase
             'this  sentence   has    a     weird      spacing' => '<p>this  sentence &nbsp; has &nbsp;  a &nbsp;   weird &nbsp;  &nbsp; spacing</p>',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -60,8 +58,7 @@ class TypographyTest extends CIUnitTestCase
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p>Line Three</p>",
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -81,8 +78,7 @@ class TypographyTest extends CIUnitTestCase
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br />\nLine Three</p>",
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str, true));
         }
     }
@@ -95,8 +91,7 @@ class TypographyTest extends CIUnitTestCase
             '<!-- this is an HTML comment -->This is not a comment.' => '<p><!-- this is an HTML comment -->This is not a comment.</p>',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -111,8 +106,7 @@ class TypographyTest extends CIUnitTestCase
             'Line One</pre>'                                    => 'Line One</pre>',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -125,8 +119,7 @@ class TypographyTest extends CIUnitTestCase
             'Double dash -- becomes em-dash' => '<p>Double dash&#8212;becomes em-dash</p>',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
@@ -139,8 +132,7 @@ class TypographyTest extends CIUnitTestCase
             "<div>Line One\nLine Two</div>" => "<div>Line One<br />\nLine Two</div>",
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, $this->typography->nl2brExceptPre($str));
         }
     }

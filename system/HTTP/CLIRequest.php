@@ -57,8 +57,7 @@ class CLIRequest extends Request
      */
     public function __construct(App $config)
     {
-        if (! is_cli())
-        {
+        if (! is_cli()) {
             throw new RuntimeException(static::class . ' needs to run from the command line.'); // @codeCoverageIgnore
         }
 
@@ -143,32 +142,24 @@ class CLIRequest extends Request
      */
     public function getOptionString(bool $useLongOpts = false): string
     {
-        if (empty($this->options))
-        {
+        if (empty($this->options)) {
             return '';
         }
 
         $out = '';
 
-        foreach ($this->options as $name => $value)
-        {
-            if ($useLongOpts && mb_strlen($name) > 1)
-            {
+        foreach ($this->options as $name => $value) {
+            if ($useLongOpts && mb_strlen($name) > 1) {
                 $out .= "--{$name} ";
-            }
-            else
-            {
+            } else {
                 $out .= "-{$name} ";
             }
 
             // If there's a space, we need to group
             // so it will pass correctly.
-            if (mb_strpos($value, ' ') !== false)
-            {
+            if (mb_strpos($value, ' ') !== false) {
                 $out .= '"' . $value . '" ';
-            }
-            elseif ($value !== null)
-            {
+            } elseif ($value !== null) {
                 $out .= "{$value} ";
             }
         }
@@ -192,16 +183,11 @@ class CLIRequest extends Request
 
         $optionValue = false;
 
-        foreach ($args as $i => $arg)
-        {
-            if (mb_strpos($arg, '-') !== 0)
-            {
-                if ($optionValue)
-                {
+        foreach ($args as $i => $arg) {
+            if (mb_strpos($arg, '-') !== 0) {
+                if ($optionValue) {
                     $optionValue = false;
-                }
-                else
-                {
+                } else {
                     $this->segments[] = filter_var($arg, FILTER_SANITIZE_STRING);
                 }
 
@@ -211,8 +197,7 @@ class CLIRequest extends Request
             $arg   = filter_var(ltrim($arg, '-'), FILTER_SANITIZE_STRING);
             $value = null;
 
-            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
-            {
+            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
                 $value       = filter_var($args[$i + 1], FILTER_SANITIZE_STRING);
                 $optionValue = true;
             }

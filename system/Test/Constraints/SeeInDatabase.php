@@ -83,20 +83,16 @@ class SeeInDatabase extends Constraint
             )->limit($this->show)
             ->get()->getResultArray();
 
-        if ($similar !== [])
-        {
+        if ($similar !== []) {
             $description = 'Found similar results: ' . json_encode($similar, JSON_PRETTY_PRINT);
-        }
-        else
-        {
+        } else {
             // Does the table have any results at all?
             $results = $this->db->table($table)
                 ->limit($this->show)
                 ->get()
                 ->getResultArray();
 
-            if ($results !== [])
-            {
+            if ($results !== []) {
                 return 'The table is empty.';
             }
 
@@ -104,8 +100,7 @@ class SeeInDatabase extends Constraint
         }
 
         $total = $this->db->table($table)->countAll();
-        if ($total > $this->show)
-        {
+        if ($total > $this->show) {
             $description .= sprintf(' and %s others', $total - $this->show);
         }
 

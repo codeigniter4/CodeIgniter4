@@ -49,8 +49,7 @@ class DatabaseTestCaseTest extends CIUnitTestCase
 
     public function setUp(): void
     {
-        if (! self::$loaded)
-        {
+        if (! self::$loaded) {
             Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
             self::$loaded = true;
         }

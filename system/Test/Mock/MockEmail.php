@@ -25,12 +25,10 @@ class MockEmail extends Email
 
     public function send($autoClear = true)
     {
-        if ($this->returnValue)
-        {
+        if ($this->returnValue) {
             $this->setArchiveValues();
 
-            if ($autoClear)
-            {
+            if ($autoClear) {
                 $this->clear();
             }
 

@@ -268,7 +268,7 @@
 	</div>
 </div>
 <style type="text/css">
-	<?php foreach($styles as $name => $style) : ?>
+	<?php foreach ($styles as $name => $style) : ?>
 	.<?= $name ?> {
 		<?= $style ?>
 	}

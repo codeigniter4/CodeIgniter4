@@ -40,10 +40,8 @@ class TestLogger extends Logger
         $trace = debug_backtrace();
         $file  = null;
 
-        foreach ($trace as $row)
-        {
-            if (! in_array($row['function'], ['log', 'log_message'], true))
-            {
+        foreach ($trace as $row) {
+            if (! in_array($row['function'], ['log', 'log_message'], true)) {
                 $file = basename($row['file'] ?? '');
                 break;
             }
@@ -71,10 +69,8 @@ class TestLogger extends Logger
      */
     public static function didLog(string $level, $message)
     {
-        foreach (self::$op_logs as $log)
-        {
-            if (strtolower($log['level']) === strtolower($level) && $message === $log['message'])
-            {
+        foreach (self::$op_logs as $log) {
+            if (strtolower($log['level']) === strtolower($level) && $message === $log['message']) {
                 return true;
             }
         }

@@ -14,8 +14,7 @@
  */
 // ------------------------------------------------------------------------
 
-if (! function_exists('directory_map'))
-{
+if (! function_exists('directory_map')) {
     /**
      * Create a Directory Map
      *
@@ -32,33 +31,26 @@ if (! function_exists('directory_map'))
      */
     function directory_map(string $sourceDir, int $directoryDepth = 0, bool $hidden = false): array
     {
-        try
-        {
+        try {
             $fp = opendir($sourceDir);
 
             $fileData  = [];
             $newDepth  = $directoryDepth - 1;
             $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-            while (false !== ($file = readdir($fp)))
-            {
+            while (false !== ($file = readdir($fp))) {
                 // Remove '.', '..', and hidden files [optional]
-                if ($file === '.' || $file === '..' || ($hidden === false && $file[0] === '.'))
-                {
+                if ($file === '.' || $file === '..' || ($hidden === false && $file[0] === '.')) {
                     continue;
                 }
 
-                if (is_dir($sourceDir . $file))
-                {
+                if (is_dir($sourceDir . $file)) {
                     $file .= DIRECTORY_SEPARATOR;
                 }
 
-                if (($directoryDepth < 1 || $newDepth > 0) && is_dir($sourceDir . $file))
-                {
+                if (($directoryDepth < 1 || $newDepth > 0) && is_dir($sourceDir . $file)) {
                     $fileData[$file] = directory_map($sourceDir . $file, $newDepth, $hidden);
-                }
-                else
-                {
+                } else {
                     $fileData[] = $file;
                 }
             }
@@ -66,9 +58,7 @@ if (! function_exists('directory_map'))
             closedir($fp);
 
             return $fileData;
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             return [];
         }
     }
@@ -76,8 +66,7 @@ if (! function_exists('directory_map'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('directory_mirror'))
-{
+if (! function_exists('directory_mirror')) {
     /**
      * Recursively copies the files and directories of the origin directory
      * into the target directory, i.e. "mirror" its contents.
@@ -92,13 +81,11 @@ if (! function_exists('directory_mirror'))
      */
     function directory_mirror(string $originDir, string $targetDir, bool $overwrite = true): void
     {
-        if (! is_dir($originDir = rtrim($originDir, '\\/')))
-        {
+        if (! is_dir($originDir = rtrim($originDir, '\\/'))) {
             throw new InvalidArgumentException(sprintf('The origin directory "%s" was not found.', $originDir));
         }
 
-        if (! is_dir($targetDir = rtrim($targetDir, '\\/')))
-        {
+        if (! is_dir($targetDir = rtrim($targetDir, '\\/'))) {
             @mkdir($targetDir, 0755, true);
         }
 
@@ -110,17 +97,13 @@ if (! function_exists('directory_mirror'))
         foreach (new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
             RecursiveIteratorIterator::SELF_FIRST
-        ) as $file)
-        {
+        ) as $file) {
             $origin = $file->getPathname();
             $target = $targetDir . substr($origin, $dirLen);
 
-            if ($file->isDir())
-            {
+            if ($file->isDir()) {
                 mkdir($target, 0755);
-            }
-            elseif (! is_file($target) || ($overwrite && is_file($target)))
-            {
+            } elseif (! is_file($target) || ($overwrite && is_file($target))) {
                 copy($origin, $target);
             }
         }
@@ -129,8 +112,7 @@ if (! function_exists('directory_mirror'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('write_file'))
-{
+if (! function_exists('write_file')) {
     /**
      * Write File
      *
@@ -145,16 +127,13 @@ if (! function_exists('write_file'))
      */
     function write_file(string $path, string $data, string $mode = 'wb'): bool
     {
-        try
-        {
+        try {
             $fp = fopen($path, $mode);
 
             flock($fp, LOCK_EX);
 
-            for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
-            {
-                if (($result = fwrite($fp, substr($data, $written))) === false)
-                {
+            for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result) {
+                if (($result = fwrite($fp, substr($data, $written))) === false) {
                     break;
                 }
             }
@@ -163,9 +142,7 @@ if (! function_exists('write_file'))
             fclose($fp);
 
             return is_int($result);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             return false;
         }
     }
@@ -173,8 +150,7 @@ if (! function_exists('write_file'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('delete_files'))
-{
+if (! function_exists('delete_files')) {
     /**
      * Delete Files
      *
@@ -195,39 +171,31 @@ if (! function_exists('delete_files'))
         $path = realpath($path) ?: $path;
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        try
-        {
+        try {
             foreach (new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
                 RecursiveIteratorIterator::CHILD_FIRST
-            ) as $object)
-            {
+            ) as $object) {
                 $filename = $object->getFilename();
-                if (! $hidden && $filename[0] === '.')
-                {
+                if (! $hidden && $filename[0] === '.') {
                     continue;
                 }
 
-                if (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
-                {
+                if (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename)) {
                     $isDir = $object->isDir();
-                    if ($isDir && $delDir)
-                    {
+                    if ($isDir && $delDir) {
                         rmdir($object->getPathname());
 
                         continue;
                     }
-                    if (! $isDir)
-                    {
+                    if (! $isDir) {
                         unlink($object->getPathname());
                     }
                 }
             }
 
             return true;
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             return false;
         }
     }
@@ -235,8 +203,7 @@ if (! function_exists('delete_files'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('get_filenames'))
-{
+if (! function_exists('get_filenames')) {
     /**
      * Get Filenames
      *
@@ -256,35 +223,25 @@ if (! function_exists('get_filenames'))
         $sourceDir = realpath($sourceDir) ?: $sourceDir;
         $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        try
-        {
+        try {
             foreach (new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS),
                     RecursiveIteratorIterator::SELF_FIRST
-                ) as $name => $object)
-            {
+                ) as $name => $object) {
                 $basename = pathinfo($name, PATHINFO_BASENAME);
-                if (! $hidden && $basename[0] === '.')
-                {
+                if (! $hidden && $basename[0] === '.') {
                     continue;
                 }
 
-                if ($includePath === false)
-                {
+                if ($includePath === false) {
                     $files[] = $basename;
-                }
-                elseif (is_null($includePath))
-                {
+                } elseif (is_null($includePath)) {
                     $files[] = str_replace($sourceDir, '', $name);
-                }
-                else
-                {
+                } else {
                     $files[] = $name;
                 }
             }
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             return [];
         }
 
@@ -296,8 +253,7 @@ if (! function_exists('get_filenames'))
 
 // --------------------------------------------------------------------
 
-if (! function_exists('get_dir_file_info'))
-{
+if (! function_exists('get_dir_file_info')) {
     /**
      * Get Directory File Information
      *
@@ -317,25 +273,20 @@ if (! function_exists('get_dir_file_info'))
         static $fileData = [];
         $relativePath    = $sourceDir;
 
-        try
-        {
-            $fp = opendir($sourceDir); {
+        try {
+            $fp = opendir($sourceDir);
+            {
                 // reset the array and make sure $source_dir has a trailing slash on the initial call
-            if ($recursion === false)
-                {
+            if ($recursion === false) {
                 $fileData  = [];
                 $sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
                 // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
-            while (false !== ($file = readdir($fp)))
-                {
-                if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false)
-                {
+            while (false !== ($file = readdir($fp))) {
+                if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
-                }
-                elseif ($file[0] !== '.')
-                {
+                } elseif ($file[0] !== '.') {
                     $fileData[$file]                  = get_file_info($sourceDir . $file);
                     $fileData[$file]['relative_path'] = $relativePath;
                 }
@@ -345,9 +296,7 @@ if (! function_exists('get_dir_file_info'))
 
                 return $fileData;
             }
-        }
-        catch (Throwable $fe)
-        {
+        } catch (Throwable $fe) {
             return [];
         }
     }
@@ -355,8 +304,7 @@ if (! function_exists('get_dir_file_info'))
 
 // --------------------------------------------------------------------
 
-if (! function_exists('get_file_info'))
-{
+if (! function_exists('get_file_info')) {
     /**
      * Get File Info
      *
@@ -372,20 +320,17 @@ if (! function_exists('get_file_info'))
      */
     function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
     {
-        if (! is_file($file))
-        {
+        if (! is_file($file)) {
             return null;
         }
 
         $fileInfo = [];
 
-        if (is_string($returnedValues))
-        {
+        if (is_string($returnedValues)) {
             $returnedValues = explode(',', $returnedValues);
         }
 
-        foreach ($returnedValues as $key)
-        {
+        foreach ($returnedValues as $key) {
             switch ($key) {
                 case 'name':
                     $fileInfo['name'] = basename($file);
@@ -427,8 +372,7 @@ if (! function_exists('get_file_info'))
 
 // --------------------------------------------------------------------
 
-if (! function_exists('symbolic_permissions'))
-{
+if (! function_exists('symbolic_permissions')) {
     /**
      * Symbolic Permissions
      *
@@ -440,36 +384,21 @@ if (! function_exists('symbolic_permissions'))
      */
     function symbolic_permissions(int $perms): string
     {
-        if (($perms & 0xC000) === 0xC000)
-        {
+        if (($perms & 0xC000) === 0xC000) {
             $symbolic = 's'; // Socket
-        }
-        elseif (($perms & 0xA000) === 0xA000)
-        {
+        } elseif (($perms & 0xA000) === 0xA000) {
             $symbolic = 'l'; // Symbolic Link
-        }
-        elseif (($perms & 0x8000) === 0x8000)
-        {
+        } elseif (($perms & 0x8000) === 0x8000) {
             $symbolic = '-'; // Regular
-        }
-        elseif (($perms & 0x6000) === 0x6000)
-        {
+        } elseif (($perms & 0x6000) === 0x6000) {
             $symbolic = 'b'; // Block special
-        }
-        elseif (($perms & 0x4000) === 0x4000)
-        {
+        } elseif (($perms & 0x4000) === 0x4000) {
             $symbolic = 'd'; // Directory
-        }
-        elseif (($perms & 0x2000) === 0x2000)
-        {
+        } elseif (($perms & 0x2000) === 0x2000) {
             $symbolic = 'c'; // Character special
-        }
-        elseif (($perms & 0x1000) === 0x1000)
-        {
+        } elseif (($perms & 0x1000) === 0x1000) {
             $symbolic = 'p'; // FIFO pipe
-        }
-        else
-        {
+        } else {
             $symbolic = 'u'; // Unknown
         }
 
@@ -494,8 +423,7 @@ if (! function_exists('symbolic_permissions'))
 
 // --------------------------------------------------------------------
 
-if (! function_exists('octal_permissions'))
-{
+if (! function_exists('octal_permissions')) {
     /**
      * Octal Permissions
      *
@@ -513,8 +441,7 @@ if (! function_exists('octal_permissions'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('same_file'))
-{
+if (! function_exists('same_file')) {
     /**
      * Checks if two files both exist and have identical hashes
      *
@@ -531,8 +458,7 @@ if (! function_exists('same_file'))
 
 // ------------------------------------------------------------------------
 
-if (! function_exists('set_realpath'))
-{
+if (! function_exists('set_realpath')) {
     /**
      * Set Realpath
      *
@@ -544,18 +470,14 @@ if (! function_exists('set_realpath'))
     function set_realpath(string $path, bool $checkExistence = false): string
     {
         // Security check to make sure the path is NOT a URL. No remote file inclusion!
-        if (preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) || filter_var($path, FILTER_VALIDATE_IP) === $path)
-        {
+        if (preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) || filter_var($path, FILTER_VALIDATE_IP) === $path) {
             throw new InvalidArgumentException('The path you submitted must be a local server path, not a URL');
         }
 
         // Resolve the path
-        if (realpath($path) !== false)
-        {
+        if (realpath($path) !== false) {
             $path = realpath($path);
-        }
-        elseif ($checkExistence && ! is_dir($path) && ! is_file($path))
-        {
+        } elseif ($checkExistence && ! is_dir($path) && ! is_file($path)) {
             throw new InvalidArgumentException('Not a valid path: ' . $path);
         }
 

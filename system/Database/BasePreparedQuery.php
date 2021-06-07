@@ -95,8 +95,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
         $query->setQuery($sql);
 
-        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix))
-        {
+        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix)) {
             $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
         }
 
@@ -179,8 +178,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function close()
     {
-        if (! is_object($this->statement))
-        {
+        if (! is_object($this->statement)) {
             return;
         }
 
@@ -196,8 +194,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function getQueryString(): string
     {
-        if (! $this->query instanceof QueryInterface)
-        {
+        if (! $this->query instanceof QueryInterface) {
             throw new BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
         }
 

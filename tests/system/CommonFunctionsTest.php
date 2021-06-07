@@ -369,8 +369,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 
         $appConfig = new App();
 
-        foreach ($defaults as $key => $config)
-        {
+        foreach ($defaults as $key => $config) {
             $appConfig->$key = $config;
         }
 
@@ -472,13 +471,10 @@ class CommonFunctionsTest extends CIUnitTestCase
         $locator = new FatalLocator(Services::autoloader());
         Services::injectMock('locator', $locator);
 
-        try
-        {
+        try {
             helper('baguette');
             $exception = false;
-        }
-        catch (RuntimeException $e)
-        {
+        } catch (RuntimeException $e) {
             $exception = true;
         }
 
@@ -495,13 +491,10 @@ class CommonFunctionsTest extends CIUnitTestCase
         $locator = new FatalLocator(Services::autoloader());
         Services::injectMock('locator', $locator);
 
-        try
-        {
+        try {
             helper('baguette');
             $exception = false;
-        }
-        catch (RuntimeException $e)
-        {
+        } catch (RuntimeException $e) {
             $exception = true;
         }
 

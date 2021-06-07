@@ -69,14 +69,12 @@ trait DatabaseTestTrait
      */
     public function loadDependencies()
     {
-        if ($this->db === null)
-        {
+        if ($this->db === null) {
             $this->db = Database::connect($this->DBGroup);
             $this->db->initialize();
         }
 
-        if ($this->migrations === null)
-        {
+        if ($this->migrations === null) {
             // Ensure that we can run migrations
             $config          = new Migrations();
             $config->enabled = true;
@@ -85,8 +83,7 @@ trait DatabaseTestTrait
             $this->migrations->setSilent(false);
         }
 
-        if ($this->seeder === null)
-        {
+        if ($this->seeder === null) {
             $this->seeder = Database::seeder($this->DBGroup);
             $this->seeder->setSilent(true);
         }
@@ -101,10 +98,8 @@ trait DatabaseTestTrait
      */
     protected function setUpMigrate()
     {
-        if ($this->migrateOnce === false || self::$doneMigration === false)
-        {
-            if ($this->refresh === true)
-            {
+        if ($this->migrateOnce === false || self::$doneMigration === false) {
+            if ($this->refresh === true) {
                 $this->regressDatabase();
 
                 // Reset counts on faked items
@@ -120,25 +115,21 @@ trait DatabaseTestTrait
      */
     protected function regressDatabase()
     {
-        if ($this->migrate === false)
-        {
+        if ($this->migrate === false) {
             return;
         }
 
         // If no namespace was specified then rollback all
-        if (empty($this->namespace))
-        {
+        if (empty($this->namespace)) {
             $this->migrations->setNamespace(null);
             $this->migrations->regress(0, 'tests');
         }
 
         // Regress each specified namespace
-        else
-        {
+        else {
             $namespaces = is_array($this->namespace) ? $this->namespace : [$this->namespace];
 
-            foreach ($namespaces as $namespace)
-            {
+            foreach ($namespaces as $namespace) {
                 $this->migrations->setNamespace($namespace);
                 $this->migrations->regress(0, 'tests');
             }
@@ -150,25 +141,21 @@ trait DatabaseTestTrait
      */
     protected function migrateDatabase()
     {
-        if ($this->migrate === false)
-        {
+        if ($this->migrate === false) {
             return;
         }
 
         // If no namespace was specified then migrate all
-        if (empty($this->namespace))
-        {
+        if (empty($this->namespace)) {
             $this->migrations->setNamespace(null);
             $this->migrations->latest('tests');
             self::$doneMigration = true;
         }
         // Run migrations for each specified namespace
-        else
-        {
+        else {
             $namespaces = is_array($this->namespace) ? $this->namespace : [$this->namespace];
 
-            foreach ($namespaces as $namespace)
-            {
+            foreach ($namespaces as $namespace) {
                 $this->migrations->setNamespace($namespace);
                 $this->migrations->latest('tests');
                 self::$doneMigration = true;
@@ -185,8 +172,7 @@ trait DatabaseTestTrait
      */
     protected function setUpSeed()
     {
-        if ($this->seedOnce === false || self::$doneSeed === false)
-        {
+        if ($this->seedOnce === false || self::$doneSeed === false) {
             $this->runSeeds();
         }
     }
@@ -196,17 +182,14 @@ trait DatabaseTestTrait
      */
     protected function runSeeds()
     {
-        if (! empty($this->seed))
-        {
-            if (! empty($this->basePath))
-            {
+        if (! empty($this->seed)) {
+            if (! empty($this->basePath)) {
                 $this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
             }
 
             $seeds = is_array($this->seed) ? $this->seed : [$this->seed];
 
-            foreach ($seeds as $seed)
-            {
+            foreach ($seeds as $seed) {
                 $this->seed($seed);
             }
         }
@@ -246,10 +229,8 @@ trait DatabaseTestTrait
      */
     protected function clearInsertCache()
     {
-        if (! empty($this->insertCache))
-        {
-            foreach ($this->insertCache as $row)
-            {
+        if (! empty($this->insertCache)) {
+            foreach ($this->insertCache as $row) {
                 $this->db->table($row[0])
                         ->where($row[1])
                         ->delete();

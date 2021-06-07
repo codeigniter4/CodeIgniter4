@@ -92,8 +92,7 @@ class Table
     public function __construct($config = [])
     {
         // initialize config
-        foreach ($config as $key => $val)
-        {
+        foreach ($config as $key => $val) {
             $this->template[$key] = $val;
         }
     }
@@ -106,8 +105,7 @@ class Table
      */
     public function setTemplate($template)
     {
-        if (! is_array($template))
-        {
+        if (! is_array($template)) {
             return false;
         }
 
@@ -156,8 +154,7 @@ class Table
      */
     public function makeColumns($array = [], $columnLimit = 0)
     {
-        if (! is_array($array) || $array === [] || ! is_int($columnLimit))
-        {
+        if (! is_array($array) || $array === [] || ! is_int($columnLimit)) {
             return false;
         }
 
@@ -165,28 +162,23 @@ class Table
         // will want headings from a one-dimensional array
         $this->autoHeading = false;
 
-        if ($columnLimit === 0)
-        {
+        if ($columnLimit === 0) {
             return $array;
         }
 
         $new = [];
 
-        do
-        {
+        do {
             $temp = array_splice($array, 0, $columnLimit);
 
-            if (count($temp) < $columnLimit)
-            {
-                for ($i = count($temp); $i < $columnLimit; $i++)
-                {
+            if (count($temp) < $columnLimit) {
+                for ($i = count($temp); $i < $columnLimit; $i++) {
                     $temp[] = '&nbsp;';
                 }
             }
 
             $new[] = $temp;
-        }
-        while (count($array) > 0);
+        } while (count($array) > 0);
 
         // @phpstan-ignore-next-line
         return $new;
@@ -234,15 +226,12 @@ class Table
         // If there is no $args[0], skip this and treat as an associative array
         // This can happen if there is only a single key, for example this is passed to table->generate
         // array(array('foo'=>'bar'))
-        if (isset($args[0]) && count($args) === 1 && is_array($args[0]) && ! isset($args[0]['data']))
-        {
+        if (isset($args[0]) && count($args) === 1 && is_array($args[0]) && ! isset($args[0]['data'])) {
             $args = $args[0];
         }
 
-        foreach ($args as $key => $val)
-        {
-            if (! is_array($val))
-            {
+        foreach ($args as $key => $val) {
+            if (! is_array($val)) {
                 $args[$key] = ['data' => $val];
             }
         }
@@ -274,21 +263,16 @@ class Table
     {
         // The table data can optionally be passed to this function
         // either as a database result object or an array
-        if (! empty($tableData))
-        {
-            if ($tableData instanceof BaseResult)
-            {
+        if (! empty($tableData)) {
+            if ($tableData instanceof BaseResult) {
                 $this->_setFromDBResult($tableData);
-            }
-            elseif (is_array($tableData))
-            {
+            } elseif (is_array($tableData)) {
                 $this->_setFromArray($tableData);
             }
         }
 
         // Is there anything to display? No? Smite them!
-        if (empty($this->heading) && empty($this->rows))
-        {
+        if (empty($this->heading) && empty($this->rows)) {
             return 'Undefined table data';
         }
 
@@ -296,8 +280,7 @@ class Table
         $this->_compileTemplate();
 
         // Validate a possibly existing custom cell manipulation function
-        if (isset($this->function) && ! is_callable($this->function))
-        {
+        if (isset($this->function) && ! is_callable($this->function)) {
             $this->function = null;
         }
 
@@ -305,24 +288,19 @@ class Table
         $out = $this->template['table_open'] . $this->newline;
 
         // Add any caption here
-        if ($this->caption)
-        {
+        if ($this->caption) {
             $out .= '<caption>' . $this->caption . '</caption>' . $this->newline;
         }
 
         // Is there a table heading to display?
-        if (! empty($this->heading))
-        {
+        if (! empty($this->heading)) {
             $out .= $this->template['thead_open'] . $this->newline . $this->template['heading_row_start'] . $this->newline;
 
-            foreach ($this->heading as $heading)
-            {
+            foreach ($this->heading as $heading) {
                 $temp = $this->template['heading_cell_start'];
 
-                foreach ($heading as $key => $val)
-                {
-                    if ($key !== 'data')
-                    {
+                foreach ($heading as $key => $val) {
+                    if ($key !== 'data') {
                         $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
                     }
                 }
@@ -334,27 +312,22 @@ class Table
         }
 
         // Build the table rows
-        if (! empty($this->rows))
-        {
+        if (! empty($this->rows)) {
             $out .= $this->template['tbody_open'] . $this->newline;
 
             $i = 1;
 
-            foreach ($this->rows as $row)
-            {
+            foreach ($this->rows as $row) {
                 // We use modulus to alternate the row colors
                 $name = fmod($i++, 2) ? '' : 'alt_';
 
                 $out .= $this->template['row_' . $name . 'start'] . $this->newline;
 
-                foreach ($row as $cell)
-                {
+                foreach ($row as $cell) {
                     $temp = $this->template['cell_' . $name . 'start'];
 
-                    foreach ($cell as $key => $val)
-                    {
-                        if ($key !== 'data')
-                        {
+                    foreach ($cell as $key => $val) {
+                        if ($key !== 'data') {
                             $temp = str_replace('<td', '<td ' . $key . '="' . $val . '"', $temp);
                         }
                     }
@@ -362,16 +335,11 @@ class Table
                     $cell = $cell['data'] ?? '';
                     $out .= $temp;
 
-                    if ($cell === '' || $cell === null)
-                    {
+                    if ($cell === '' || $cell === null) {
                         $out .= $this->emptyCells;
-                    }
-                    elseif (isset($this->function))
-                    {
+                    } elseif (isset($this->function)) {
                         $out .= call_user_func($this->function, $cell);
-                    }
-                    else
-                    {
+                    } else {
                         $out .= $cell;
                     }
 
@@ -385,18 +353,14 @@ class Table
         }
 
         // Any table footing to display?
-        if (! empty($this->footing))
-        {
+        if (! empty($this->footing)) {
             $out .= $this->template['tfoot_open'] . $this->newline . $this->template['footing_row_start'] . $this->newline;
 
-            foreach ($this->footing as $footing)
-            {
+            foreach ($this->footing as $footing) {
                 $temp = $this->template['footing_cell_start'];
 
-                foreach ($footing as $key => $val)
-                {
-                    if ($key !== 'data')
-                    {
+                foreach ($footing as $key => $val) {
+                    if ($key !== 'data') {
                         $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
                     }
                 }
@@ -441,13 +405,11 @@ class Table
     protected function _setFromDBResult($object)
     {
         // First generate the headings from the table column names
-        if ($this->autoHeading && empty($this->heading))
-        {
+        if ($this->autoHeading && empty($this->heading)) {
             $this->heading = $this->_prepArgs($object->getFieldNames());
         }
 
-        foreach ($object->getResultArray() as $row)
-        {
+        foreach ($object->getResultArray() as $row) {
             $this->rows[] = $this->_prepArgs($row);
         }
     }
@@ -461,13 +423,11 @@ class Table
      */
     protected function _setFromArray($data)
     {
-        if ($this->autoHeading && empty($this->heading))
-        {
+        if ($this->autoHeading && empty($this->heading)) {
             $this->heading = $this->_prepArgs(array_shift($data));
         }
 
-        foreach ($data as &$row)
-        {
+        foreach ($data as &$row) {
             $this->rows[] = $this->_prepArgs($row);
         }
     }
@@ -479,17 +439,14 @@ class Table
      */
     protected function _compileTemplate()
     {
-        if ($this->template === null)
-        {
+        if ($this->template === null) {
             $this->template = $this->_defaultTemplate();
 
             return;
         }
 
-        foreach ($this->_defaultTemplate() as $field => $template)
-        {
-            if (! isset($this->template[$field]))
-            {
+        foreach ($this->_defaultTemplate() as $field => $template) {
+            if (! isset($this->template[$field])) {
                 $this->template[$field] = $template;
             }
         }

@@ -9,7 +9,6 @@ use org\bovigo\vfs\vfsStream;
 
 class FileHandlerTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -80,5 +79,4 @@ class FileHandlerTest extends CIUnitTestCase
         $expectedResult = 'Test message';
         $this->assertStringContainsString($expectedResult, $line);
     }
-
 }

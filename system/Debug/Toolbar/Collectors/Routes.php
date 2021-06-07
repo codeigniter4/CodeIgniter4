@@ -65,18 +65,12 @@ class Routes extends BaseCollector
 
         // Get our parameters
         // Closure routes
-        if (is_callable($router->controllerName()))
-        {
+        if (is_callable($router->controllerName())) {
             $method = new ReflectionFunction($router->controllerName());
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 $method = new ReflectionMethod($router->controllerName(), $router->methodName());
-            }
-            catch (ReflectionException $e)
-            {
+            } catch (ReflectionException $e) {
                 // If we're here, the method doesn't exist
                 // and is likely calculated in _remap.
                 $method = new ReflectionMethod($router->controllerName(), '_remap');
@@ -87,8 +81,7 @@ class Routes extends BaseCollector
 
         $params = [];
 
-        foreach ($rawParams as $key => $param)
-        {
+        foreach ($rawParams as $key => $param) {
             $params[] = [
                 'name'  => $param->getName(),
                 'value' => $router->params()[$key] ??
@@ -124,15 +117,12 @@ class Routes extends BaseCollector
             'cli',
         ];
 
-        foreach ($methods as $method)
-        {
+        foreach ($methods as $method) {
             $raw = $rawRoutes->getRoutes($method);
 
-            foreach ($raw as $route => $handler)
-            {
+            foreach ($raw as $route => $handler) {
                 // filter for strings, as callbacks aren't displayable
-                if (is_string($handler))
-                {
+                if (is_string($handler)) {
                     $routes[] = [
                         'method'  => strtoupper($method),
                         'route'   => $route,

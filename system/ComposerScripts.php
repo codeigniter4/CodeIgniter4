@@ -70,8 +70,7 @@ final class ComposerScripts
     {
         self::recursiveDelete(self::$path);
 
-        foreach (self::$dependencies as $dependency)
-        {
+        foreach (self::$dependencies as $dependency) {
             self::recursiveMirror($dependency['from'], $dependency['to']);
         }
 
@@ -88,8 +87,7 @@ final class ComposerScripts
      */
     private static function recursiveDelete(string $directory): void
     {
-        if (! is_dir($directory))
-        {
+        if (! is_dir($directory)) {
             echo sprintf('Cannot recursively delete "%s" as it does not exist.', $directory);
         }
 
@@ -97,16 +95,12 @@ final class ComposerScripts
         foreach (new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(rtrim($directory, '\\/'), FilesystemIterator::SKIP_DOTS),
             RecursiveIteratorIterator::CHILD_FIRST
-        ) as $file)
-        {
+        ) as $file) {
             $path = $file->getPathname();
 
-            if ($file->isDir())
-            {
+            if ($file->isDir()) {
                 @rmdir($path);
-            }
-            else
-            {
+            } else {
                 @unlink($path);
             }
         }
@@ -126,15 +120,13 @@ final class ComposerScripts
         $originDir = rtrim($originDir, '\\/');
         $targetDir = rtrim($targetDir, '\\/');
 
-        if (! is_dir($originDir))
-        {
+        if (! is_dir($originDir)) {
             echo sprintf('The origin directory "%s" was not found.', $originDir);
 
             exit(1);
         }
 
-        if (is_dir($targetDir))
-        {
+        if (is_dir($targetDir)) {
             echo sprintf('The target directory "%s" is existing. Run %s::recursiveDelete(\'%s\') first.', $targetDir, self::class, $targetDir);
 
             exit(1);
@@ -148,17 +140,13 @@ final class ComposerScripts
         foreach (new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
             RecursiveIteratorIterator::SELF_FIRST
-        ) as $file)
-        {
+        ) as $file) {
             $origin = $file->getPathname();
             $target = $targetDir . substr($origin, $dirLen);
 
-            if ($file->isDir())
-            {
+            if ($file->isDir()) {
                 @mkdir($target, 0755);
-            }
-            else
-            {
+            } else {
                 @copy($origin, $target);
             }
         }
@@ -174,8 +162,7 @@ final class ComposerScripts
         $originDir = self::$dependencies['kint-src']['from'] . '../';
         $targetDir = self::$dependencies['kint-src']['to'];
 
-        foreach (['init.php', 'init_helpers.php'] as $kintInit)
-        {
+        foreach (['init.php', 'init_helpers.php'] as $kintInit) {
             @copy($originDir . $kintInit, $targetDir . $kintInit);
         }
     }

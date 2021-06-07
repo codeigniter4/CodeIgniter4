@@ -105,30 +105,23 @@ class Forge extends BaseForge
     {
         $sql = '';
 
-        foreach (array_keys($attributes) as $key)
-        {
-            if (is_string($key))
-            {
+        foreach (array_keys($attributes) as $key) {
+            if (is_string($key)) {
                 $sql .= ' ' . strtoupper($key) . ' = ';
 
-                if (in_array(strtoupper($key), $this->_quoted_table_options, true))
-                {
+                if (in_array(strtoupper($key), $this->_quoted_table_options, true)) {
                     $sql .= $this->db->escape($attributes[$key]);
-                }
-                else
-                {
+                } else {
                     $sql .= $this->db->escapeString($attributes[$key]);
                 }
             }
         }
 
-        if (! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
-        {
+        if (! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET')) {
             $sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escapeString($this->db->charset);
         }
 
-        if (! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
-        {
+        if (! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE')) {
             $sql .= ' COLLATE = ' . $this->db->escapeString($this->db->DBCollat);
         }
 
@@ -147,27 +140,19 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-        if ($alterType === 'DROP')
-        {
+        if ($alterType === 'DROP') {
             return parent::_alterTable($alterType, $table, $field);
         }
 
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
-        foreach ($field as $i => $data)
-        {
-            if ($data['_literal'] !== false)
-            {
+        foreach ($field as $i => $data) {
+            if ($data['_literal'] !== false) {
                 $field[$i] = ($alterType === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
-            }
-            else
-            {
-                if ($alterType === 'ADD')
-                {
+            } else {
+                if ($alterType === 'ADD') {
                     $field[$i]['_literal'] = "\n\tADD ";
-                }
-                else
-                {
+                } else {
                     $field[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
                 }
 
@@ -190,8 +175,7 @@ class Forge extends BaseForge
     {
         $extraClause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
-        if (empty($extraClause) && isset($field['first']) && $field['first'] === true)
-        {
+        if (empty($extraClause) && isset($field['first']) && $field['first'] === true) {
             $extraClause = ' FIRST';
         }
 
@@ -219,29 +203,22 @@ class Forge extends BaseForge
     {
         $sql = '';
 
-        for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
-        {
-            if (is_array($this->keys[$i]))
-            {
-                for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
-                {
-                    if (! isset($this->fields[$this->keys[$i][$i2]]))
-                    {
+        for ($i = 0, $c = count($this->keys); $i < $c; $i ++) {
+            if (is_array($this->keys[$i])) {
+                for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++) {
+                    if (! isset($this->fields[$this->keys[$i][$i2]])) {
                         unset($this->keys[$i][$i2]);
 
                         continue;
                     }
                 }
-            }
-            elseif (! isset($this->fields[$this->keys[$i]]))
-            {
+            } elseif (! isset($this->fields[$this->keys[$i]])) {
                 unset($this->keys[$i]);
 
                 continue;
             }
 
-            if (! is_array($this->keys[$i]))
-            {
+            if (! is_array($this->keys[$i])) {
                 $this->keys[$i] = [$this->keys[$i]];
             }
 

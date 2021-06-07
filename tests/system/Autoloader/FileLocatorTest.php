@@ -306,5 +306,4 @@ class FileLocatorTest extends CIUnitTestCase
             $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php')
         );
     }
-
 }

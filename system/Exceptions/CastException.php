@@ -31,8 +31,7 @@ class CastException extends CriticalError
 
     public static function forInvalidJsonFormatException(int $error)
     {
-        switch ($error)
-        {
+        switch ($error) {
             case JSON_ERROR_DEPTH:
                 return new static(lang('Cast.jsonErrorDepth'));
 

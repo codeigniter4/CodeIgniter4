@@ -22,13 +22,11 @@ class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
         $env        = false;
 
         // Check the baseURL in .env
-        if (is_file(HOMEPATH . '.env'))
-        {
+        if (is_file(HOMEPATH . '.env')) {
             $env = (bool) preg_grep('/^app\.baseURL = ./', file(HOMEPATH . '.env'));
         }
 
-        if ($env)
-        {
+        if ($env) {
             // BaseURL in .env is a valid URL?
             // phpunit.xml.dist sets app.baseURL in $_SERVER
             // So if you set app.baseURL in .env, it takes precedence

@@ -331,5 +331,4 @@ class FileRulesTest extends CIUnitTestCase
         ]);
         $this->assertFalse($this->validation->run([]));
     }
-
 }

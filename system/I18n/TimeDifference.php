@@ -125,8 +125,7 @@ class TimeDifference
      */
     public function getYears(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / YEAR;
         }
 
@@ -144,8 +143,7 @@ class TimeDifference
      */
     public function getMonths(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / MONTH;
         }
 
@@ -163,8 +161,7 @@ class TimeDifference
      */
     public function getWeeks(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / WEEK;
         }
 
@@ -182,8 +179,7 @@ class TimeDifference
      */
     public function getDays(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / DAY;
         }
 
@@ -201,8 +197,7 @@ class TimeDifference
      */
     public function getHours(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / HOUR;
         }
 
@@ -220,8 +215,7 @@ class TimeDifference
      */
     public function getMinutes(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference / MINUTE;
         }
 
@@ -239,8 +233,7 @@ class TimeDifference
      */
     public function getSeconds(bool $raw = false)
     {
-        if ($raw)
-        {
+        if ($raw) {
             return $this->difference;
         }
 
@@ -268,39 +261,26 @@ class TimeDifference
 
         $phrase = null;
 
-        if ($years !== 0)
-        {
+        if ($years !== 0) {
             $phrase = lang('Time.years', [abs($years)], $locale);
             $before = $years < 0;
-        }
-        elseif ($months !== 0)
-        {
+        } elseif ($months !== 0) {
             $phrase = lang('Time.months', [abs($months)], $locale);
             $before = $months < 0;
-        }
-        elseif ($days !== 0 && (abs($days) >= 7))
-        {
+        } elseif ($days !== 0 && (abs($days) >= 7)) {
             $weeks  = ceil($days / 7);
             $phrase = lang('Time.weeks', [abs($weeks)], $locale);
             $before = $days < 0;
-        }
-        elseif ($days !== 0)
-        {
+        } elseif ($days !== 0) {
             $phrase = lang('Time.days', [abs($days)], $locale);
             $before = $days < 0;
-        }
-        elseif ($hours !== 0)
-        {
+        } elseif ($hours !== 0) {
             $phrase = lang('Time.hours', [abs($hours)], $locale);
             $before = $hours < 0;
-        }
-        elseif ($minutes !== 0)
-        {
+        } elseif ($minutes !== 0) {
             $phrase = lang('Time.minutes', [abs($minutes)], $locale);
             $before = $minutes < 0;
-        }
-        else
-        {
+        } else {
             return lang('Time.now', [], $locale);
         }
 
@@ -321,8 +301,7 @@ class TimeDifference
         $name   = ucfirst(strtolower($name));
         $method = "get{$name}";
 
-        if (method_exists($this, $method))
-        {
+        if (method_exists($this, $method)) {
             return $this->{$method}();
         }
 

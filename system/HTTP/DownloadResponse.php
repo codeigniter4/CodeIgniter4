@@ -93,8 +93,7 @@ class DownloadResponse extends Response
      */
     public function setBinary(string $binary)
     {
-        if ($this->file !== null)
-        {
+        if ($this->file !== null) {
             throw DownloadException::forCannotSetBinary();
         }
 
@@ -108,8 +107,7 @@ class DownloadResponse extends Response
      */
     public function setFilePath(string $filepath)
     {
-        if ($this->binary !== null)
-        {
+        if ($this->binary !== null) {
             throw DownloadException::forCannotSetFilePath($filepath);
         }
 
@@ -137,13 +135,11 @@ class DownloadResponse extends Response
      */
     public function getContentLength() : int
     {
-        if (is_string($this->binary))
-        {
+        if (is_string($this->binary)) {
             return strlen($this->binary);
         }
 
-        if ($this->file instanceof File)
-        {
+        if ($this->file instanceof File) {
             return $this->file->getSize();
         }
 
@@ -158,14 +154,12 @@ class DownloadResponse extends Response
         $mime    = null;
         $charset = '';
 
-        if ($this->setMime === true && ($lastDotPosition = strrpos($this->filename, '.')) !== false)
-        {
+        if ($this->setMime === true && ($lastDotPosition = strrpos($this->filename, '.')) !== false) {
             $mime    = Mimes::guessTypeFromExtension(substr($this->filename, $lastDotPosition + 1));
             $charset = $this->charset;
         }
 
-        if (! is_string($mime))
-        {
+        if (! is_string($mime)) {
             // Set the default MIME type to send
             $mime    = 'application/octet-stream';
             $charset = '';
@@ -193,8 +187,7 @@ class DownloadResponse extends Response
          */
         // @todo: depend super global
         if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
-                && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
-        {
+                && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT'])) {
             $x[count($x) - 1] = strtoupper($extension);
             $filename         = implode('.', $x);
         }
@@ -213,15 +206,13 @@ class DownloadResponse extends Response
 
         $utf8Filename = $downloadFilename;
 
-        if (strtoupper($this->charset) !== 'UTF-8')
-        {
+        if (strtoupper($this->charset) !== 'UTF-8') {
             $utf8Filename = mb_convert_encoding($downloadFilename, 'UTF-8', $this->charset);
         }
 
         $result = sprintf('attachment; filename="%s"', $downloadFilename);
 
-        if ($utf8Filename)
-        {
+        if ($utf8Filename) {
             $result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8Filename);
         }
 
@@ -257,8 +248,7 @@ class DownloadResponse extends Response
     {
         parent::setContentType($mime, $charset);
 
-        if ($charset !== '')
-        {
+        if ($charset !== '') {
             $this->charset = $charset;
         }
 
@@ -315,8 +305,7 @@ class DownloadResponse extends Response
      */
     public function buildHeaders()
     {
-        if (! $this->hasHeader('Content-Type'))
-        {
+        if (! $this->hasHeader('Content-Type')) {
             $this->setContentTypeByMimeType();
         }
 
@@ -336,13 +325,11 @@ class DownloadResponse extends Response
      */
     public function sendBody()
     {
-        if ($this->binary !== null)
-        {
+        if ($this->binary !== null) {
             return $this->sendBodyByBinary();
         }
 
-        if ($this->file !== null)
-        {
+        if ($this->file !== null) {
             return $this->sendBodyByFilePath();
         }
 
@@ -359,8 +346,7 @@ class DownloadResponse extends Response
         $splFileObject = $this->file->openFile('rb');
 
         // Flush 1MB chunks of data
-        while (! $splFileObject->eof() && ($data = $splFileObject->fread(1048576)) !== false)
-        {
+        while (! $splFileObject->eof() && ($data = $splFileObject->fread(1048576)) !== false) {
             echo $data;
         }
 

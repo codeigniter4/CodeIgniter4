@@ -187,26 +187,22 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     protected function image(): Image
     {
-        if ($this->verified)
-        {
+        if ($this->verified) {
             return $this->image;
         }
 
         // Verify withFile has been called
-        if (empty($this->image))
-        {
+        if (empty($this->image)) {
             throw ImageException::forMissingImage();
         }
 
         // Verify the loaded image is an Image instance
-        if (! $this->image instanceof Image)
-        {
+        if (! $this->image instanceof Image) {
             throw ImageException::forInvalidPath();
         }
 
         // File::__construct has verified the file exists - make sure it is an image
-        if (! is_int($this->image->imageType))
-        {
+        if (! is_int($this->image->imageType)) {
             throw ImageException::forFileNotSupported();
         }
 
@@ -263,16 +259,14 @@ abstract class BaseHandler implements ImageHandlerInterface
     public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
     {
         // If the target width/height match the source, then we have nothing to do here.
-        if ($this->image()->origWidth === $width && $this->image()->origHeight === $height)
-        {
+        if ($this->image()->origWidth === $width && $this->image()->origHeight === $height) {
             return $this;
         }
 
         $this->width  = $width;
         $this->height = $height;
 
-        if ($maintainRatio)
-        {
+        if ($maintainRatio) {
             $this->masterDim = $masterDim;
             $this->reproportion();
         }
@@ -303,8 +297,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         $this->xAxis  = $x;
         $this->yAxis  = $y;
 
-        if ($maintainRatio)
-        {
+        if ($maintainRatio) {
             $this->masterDim = $masterDim;
             $this->reproportion();
         }
@@ -352,8 +345,7 @@ abstract class BaseHandler implements ImageHandlerInterface
             270.0,
         ];
 
-        if (! in_array($angle, $degs, true))
-        {
+        if (! in_array($angle, $degs, true)) {
             throw ImageException::forMissingAngle();
         }
 
@@ -361,8 +353,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         $angle = (int) $angle;
 
         // Reassign the width and height
-        if ($angle === 90 || $angle === 270)
-        {
+        if ($angle === 90 || $angle === 270) {
             $temp         = $this->height;
             $this->width  = $this->height;
             $this->height = $temp;
@@ -431,8 +422,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     {
         $dir = strtolower($dir);
 
-        if ($dir !== 'vertical' && $dir !== 'horizontal')
-        {
+        if ($dir !== 'vertical' && $dir !== 'horizontal') {
             throw ImageException::forInvalidDirection($dir);
         }
 
@@ -548,8 +538,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     {
         $orientation = $this->getEXIF('Orientation', $silent);
 
-        switch ($orientation)
-        {
+        switch ($orientation) {
             case 2:
                 return $this->flip('horizontal');
 
@@ -596,10 +585,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function getEXIF(string $key = null, bool $silent = false)
     {
-        if (! function_exists('exif_read_data'))
-        {
-            if ($silent)
-            {
+        if (! function_exists('exif_read_data')) {
+            if ($silent) {
                 return null;
             }
 
@@ -608,13 +595,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         $exif = null; // default
 
-        switch ($this->image()->imageType)
-        {
+        switch ($this->image()->imageType) {
             case IMAGETYPE_JPEG:
             case IMAGETYPE_TIFF_II:
                 $exif = @exif_read_data($this->image()->getPathname());
-                if (! is_null($key) && is_array($exif))
-                {
+                if (! is_null($key) && is_array($exif)) {
                     $exif = $exif[$key] ?? false;
                 }
         }
@@ -651,8 +636,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         [$cropWidth, $cropHeight] = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
-        if (is_null($height))
-        {
+        if (is_null($height)) {
             $height = ceil(($width / $cropWidth) * $cropHeight);
         }
 
@@ -676,15 +660,13 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     protected function calcAspectRatio($width, $height = null, $origWidth = 0, $origHeight = 0): array
     {
-        if (empty($origWidth) || empty($origHeight))
-        {
+        if (empty($origWidth) || empty($origHeight)) {
             throw new InvalidArgumentException('You must supply the parameters: origWidth, origHeight.');
         }
 
         // If $height is null, then we have it easy.
         // Calc based on full image size and be done.
-        if (is_null($height))
-        {
+        if (is_null($height)) {
             $height = ($width / $origWidth) * $origHeight;
 
             return [
@@ -696,8 +678,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         $xRatio = $width / $origWidth;
         $yRatio = $height / $origHeight;
 
-        if ($xRatio > $yRatio)
-        {
+        if ($xRatio > $yRatio) {
             return [
                 $origWidth,
                 (int) ($origWidth * $height / $width),
@@ -730,8 +711,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         $x = $y = 0;
 
-        switch ($position)
-        {
+        switch ($position) {
             case 'top-left':
                 $x = 0;
                 $y = 0;
@@ -833,8 +813,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function __call(string $name, array $args = [])
     {
-        if (method_exists($this->image(), $name))
-        {
+        if (method_exists($this->image(), $name)) {
             return $this->image()->$name(...$args);
         }
     }
@@ -856,8 +835,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     protected function reproportion()
     {
         if (($this->width === 0 && $this->height === 0) || $this->image()->origWidth === 0 || $this->image()->origHeight === 0 || (! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image()->origWidth) || ! ctype_digit((string) $this->image()->origHeight)
-        )
-        {
+        ) {
             return;
         }
 
@@ -865,29 +843,20 @@ abstract class BaseHandler implements ImageHandlerInterface
         $this->width  = (int) $this->width;
         $this->height = (int) $this->height;
 
-        if ($this->masterDim !== 'width' && $this->masterDim !== 'height')
-        {
-            if ($this->width > 0 && $this->height > 0)
-            {
+        if ($this->masterDim !== 'width' && $this->masterDim !== 'height') {
+            if ($this->width > 0 && $this->height > 0) {
                 $this->masterDim = ((($this->image()->origHeight / $this->image()->origWidth) - ($this->height / $this->width)) < 0) ? 'width' : 'height';
-            }
-            else
-            {
+            } else {
                 $this->masterDim = ($this->height === 0) ? 'width' : 'height';
             }
-        }
-        elseif (($this->masterDim === 'width' && $this->width === 0) || ($this->masterDim === 'height' && $this->height === 0)
-        )
-        {
+        } elseif (($this->masterDim === 'width' && $this->width === 0) || ($this->masterDim === 'height' && $this->height === 0)
+        ) {
             return;
         }
 
-        if ($this->masterDim === 'width')
-        {
+        if ($this->masterDim === 'width') {
             $this->height = (int) ceil($this->width * $this->image()->origHeight / $this->image()->origWidth);
-        }
-        else
-        {
+        } else {
             $this->width = (int) ceil($this->image()->origWidth * $this->height / $this->image()->origHeight);
         }
     }

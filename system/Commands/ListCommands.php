@@ -95,10 +95,8 @@ class ListCommands extends BaseCommand
         // Sort into buckets by group
         $groups = [];
 
-        foreach ($commands as $title => $command)
-        {
-            if (! isset($groups[$command['group']]))
-            {
+        foreach ($commands as $title => $command) {
+            if (! isset($groups[$command['group']])) {
                 $groups[$command['group']] = [];
             }
 
@@ -110,23 +108,21 @@ class ListCommands extends BaseCommand
         ksort($groups);
 
         // Display it all...
-        foreach ($groups as $group => $commands)
-        {
+        foreach ($groups as $group => $commands) {
             CLI::write($group, 'yellow');
 
-            foreach ($commands as $name => $command)
-            {
+            foreach ($commands as $name => $command) {
                 $name   = $this->setPad($name, $length, 2, 2);
                 $output = CLI::color($name, 'green');
-                if (isset($command['description']))
-                {
+
+                if (isset($command['description'])) {
                     $output .= CLI::wrap($command['description'], 125, strlen($name));
                 }
+
                 CLI::write($output);
             }
 
-            if ($group !== array_key_last($groups))
-            {
+            if ($group !== array_key_last($groups)) {
                 CLI::newLine();
             }
         }
@@ -139,8 +135,7 @@ class ListCommands extends BaseCommand
      */
     protected function listSimple(array $commands)
     {
-        foreach (array_keys($commands) as $title)
-        {
+        foreach (array_keys($commands) as $title) {
             CLI::write($title);
         }
     }

@@ -78,8 +78,7 @@ class Namespaces extends BaseCommand
 
         $tbody = [];
 
-        foreach ($config->psr4 as $ns => $path)
-        {
+        foreach ($config->psr4 as $ns => $path) {
             $path = realpath($path) ?: $path;
 
             $tbody[] = [

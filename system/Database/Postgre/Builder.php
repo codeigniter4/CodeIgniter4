@@ -54,8 +54,7 @@ class Builder extends BaseBuilder
     {
         $sql = parent::compileIgnore($statement);
 
-        if (! empty($sql))
-        {
+        if (! empty($sql)) {
             $sql = ' ' . trim($sql);
         }
 
@@ -76,15 +75,12 @@ class Builder extends BaseBuilder
     public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
     {
         $direction = strtoupper(trim($direction));
-        if ($direction === 'RANDOM')
-        {
-            if (ctype_digit($orderBy))
-            {
+        if ($direction === 'RANDOM') {
+            if (ctype_digit($orderBy)) {
                 $orderBy = (float) ($orderBy > 1 ? "0.{$orderBy}" : $orderBy);
             }
 
-            if (is_float($orderBy))
-            {
+            if (is_float($orderBy)) {
                 $this->db->simpleQuery("SET SEED {$orderBy}");
             }
 
@@ -156,15 +152,12 @@ class Builder extends BaseBuilder
      */
     public function replace(array $set = null)
     {
-        if ($set !== null)
-        {
+        if ($set !== null) {
             $this->set($set);
         }
 
-        if (! $this->QBSet)
-        {
-            if (CI_DEBUG)
-            {
+        if (! $this->QBSet) {
+            if (CI_DEBUG) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
             // @codeCoverageIgnoreStart
@@ -180,12 +173,9 @@ class Builder extends BaseBuilder
         $builder = $this->db->table($table);
         $exists  = $builder->where("$key = $value", null, false)->get()->getFirstRow();
 
-        if (empty($exists))
-        {
+        if (empty($exists)) {
             $result = $builder->insert($set);
-        }
-        else
-        {
+        } else {
             array_pop($set);
             $result = $builder->update($set, "$key = $value");
         }
@@ -245,8 +235,7 @@ class Builder extends BaseBuilder
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
     {
-        if (! empty($limit) || ! empty($this->QBLimit))
-        {
+        if (! empty($limit) || ! empty($this->QBLimit)) {
             throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
         }
 
@@ -286,8 +275,7 @@ class Builder extends BaseBuilder
      */
     protected function _update(string $table, array $values): string
     {
-        if (! empty($this->QBLimit))
-        {
+        if (! empty($this->QBLimit)) {
             throw new DatabaseException('Postgres does not support LIMITs with UPDATE queries.');
         }
 
@@ -314,14 +302,11 @@ class Builder extends BaseBuilder
         $ids   = [];
         $final = [];
 
-        foreach ($values as $val)
-        {
+        foreach ($values as $val) {
             $ids[] = $val[$index];
 
-            foreach (array_keys($val) as $field)
-            {
-                if ($field !== $index)
-                {
+            foreach (array_keys($val) as $field) {
+                if ($field !== $index) {
                     $final[$field] = $final[$field] ?? [];
 
                     $final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
@@ -331,8 +316,7 @@ class Builder extends BaseBuilder
 
         $cases = '';
 
-        foreach ($final as $k => $v)
-        {
+        foreach ($final as $k => $v) {
             $cases .= "{$k} = (CASE {$index}\n"
                     . implode("\n", $v)
                     . "\nELSE {$k} END), ";
@@ -421,8 +405,7 @@ class Builder extends BaseBuilder
      */
     public function join(string $table, string $cond, string $type = '', bool $escape = null)
     {
-        if (! in_array('FULL OUTER', $this->joinTypes, true))
-        {
+        if (! in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);
         }
 
@@ -430,5 +413,4 @@ class Builder extends BaseBuilder
     }
 
     //--------------------------------------------------------------------
-
 }

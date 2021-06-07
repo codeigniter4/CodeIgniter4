@@ -13,8 +13,7 @@
  * CodeIgniter Array Helpers
  */
 
-if (! function_exists('dot_array_search'))
-{
+if (! function_exists('dot_array_search')) {
     /**
      * Searches an array through dot syntax. Supports
      * wildcard searches, like foo.*.bar
@@ -36,8 +35,7 @@ if (! function_exists('dot_array_search'))
     }
 }
 
-if (! function_exists('_array_search_dot'))
-{
+if (! function_exists('_array_search_dot')) {
     /**
      * Used by `dot_array_search` to recursively search the
      * array with wildcards.
@@ -54,18 +52,15 @@ if (! function_exists('_array_search_dot'))
         // Grab the current index
         $currentIndex = $indexes ? array_shift($indexes) : null;
 
-        if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*'))
-        {
+        if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
             return null;
         }
 
         // Handle Wildcard (*)
-        if ($currentIndex === '*')
-        {
+        if ($currentIndex === '*') {
             $answer = [];
 
-            foreach ($array as $value)
-            {
+            foreach ($array as $value) {
                 $answer[] = _array_search_dot($indexes, $value);
             }
 
@@ -73,10 +68,8 @@ if (! function_exists('_array_search_dot'))
                 return $value !== null;
             });
 
-            if ($answer !== [])
-            {
-                if (count($answer) === 1)
-                {
+            if ($answer !== []) {
+                if (count($answer) === 1) {
                     // If array only has one element, we return that element for BC.
                     return current($answer);
                 }
@@ -89,14 +82,12 @@ if (! function_exists('_array_search_dot'))
 
         // If this is the last index, make sure to return it now,
         // and not try to recurse through things.
-        if (empty($indexes))
-        {
+        if (empty($indexes)) {
             return $array[$currentIndex];
         }
 
         // Do we need to recursively search this value?
-        if (is_array($array[$currentIndex]) && $array[$currentIndex] !== [])
-        {
+        if (is_array($array[$currentIndex]) && $array[$currentIndex] !== []) {
             return _array_search_dot($indexes, $array[$currentIndex]);
         }
 
@@ -105,8 +96,7 @@ if (! function_exists('_array_search_dot'))
     }
 }
 
-if (! function_exists('array_deep_search'))
-{
+if (! function_exists('array_deep_search')) {
     /**
      * Returns the value of an element at a key in an array of uncertain depth.
      *
@@ -117,15 +107,12 @@ if (! function_exists('array_deep_search'))
      */
     function array_deep_search($key, array $array)
     {
-        if (isset($array[$key]))
-        {
+        if (isset($array[$key])) {
             return $array[$key];
         }
 
-        foreach ($array as $value)
-        {
-            if (is_array($value) && ($result = array_deep_search($key, $value)))
-            {
+        foreach ($array as $value) {
+            if (is_array($value) && ($result = array_deep_search($key, $value))) {
                 return $result;
             }
         }
@@ -134,8 +121,7 @@ if (! function_exists('array_deep_search'))
     }
 }
 
-if (! function_exists('array_sort_by_multiple_keys'))
-{
+if (! function_exists('array_sort_by_multiple_keys')) {
     /**
      * Sorts a multidimensional array by its elements values. The array
      * columns to be used for sorting are passed as an associative
@@ -166,28 +152,23 @@ if (! function_exists('array_sort_by_multiple_keys'))
     function array_sort_by_multiple_keys(array &$array, array $sortColumns): bool
     {
         // Check if there really are columns to sort after
-        if (empty($sortColumns) || empty($array))
-        {
+        if (empty($sortColumns) || empty($array)) {
             return false;
         }
 
         // Group sorting indexes and data
         $tempArray = [];
 
-        foreach ($sortColumns as $key => $sortFlag)
-        {
+        foreach ($sortColumns as $key => $sortFlag) {
             // Get sorting values
             $carry = $array;
 
             // The '.' operator separates nested elements
-            foreach (explode('.', $key) as $keySegment)
-            {
+            foreach (explode('.', $key) as $keySegment) {
                 // Loop elements if they are objects
-                if (is_object(reset($carry)))
-                {
+                if (is_object(reset($carry))) {
                     // Extract the object attribute
-                    foreach ($carry as $index => $object)
-                    {
+                    foreach ($carry as $index => $object) {
                         $carry[$index] = $object->$keySegment;
                     }
 
@@ -211,8 +192,7 @@ if (! function_exists('array_sort_by_multiple_keys'))
     }
 }
 
-if (! function_exists('array_flatten_with_dots'))
-{
+if (! function_exists('array_flatten_with_dots')) {
     /**
      * Flatten a multidimensional array using dots as separators.
      *
@@ -225,16 +205,12 @@ if (! function_exists('array_flatten_with_dots'))
     {
         $flattened = [];
 
-        foreach ($array as $key => $value)
-        {
+        foreach ($array as $key => $value) {
             $newKey = $id . $key;
 
-            if (is_array($value))
-            {
+            if (is_array($value)) {
                 $flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
-            }
-            else
-            {
+            } else {
                 $flattened[$newKey] = $value;
             }
         }

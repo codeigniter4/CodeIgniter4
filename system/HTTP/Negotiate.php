@@ -39,8 +39,7 @@ class Negotiate
      */
     public function __construct(RequestInterface $request = null)
     {
-        if (! is_null($request))
-        {
+        if (! is_null($request)) {
             $this->request = $request;
         }
     }
@@ -101,8 +100,7 @@ class Negotiate
 
         // If no charset is shown as a match, ignore the directive
         // as allowed by the RFC, and tell it a default value.
-        if (empty($match))
-        {
+        if (empty($match)) {
             return 'utf-8';
         }
 
@@ -171,37 +169,30 @@ class Negotiate
      */
     protected function getBestMatch(array $supported, string $header = null, bool $enforceTypes = false, bool $strictMatch = false, bool $matchLocales = false): string
     {
-        if (empty($supported))
-        {
+        if (empty($supported)) {
             throw HTTPException::forEmptySupportedNegotiations();
         }
 
-        if (empty($header))
-        {
+        if (empty($header)) {
             return $strictMatch ? '' : $supported[0];
         }
 
         $acceptable = $this->parseHeader($header);
 
-        foreach ($acceptable as $accept)
-        {
+        foreach ($acceptable as $accept) {
             // if acceptable quality is zero, skip it.
-            if ($accept['q'] === 0.0)
-            {
+            if ($accept['q'] === 0.0) {
                 continue;
             }
 
             // if acceptable value is "anything", return the first available
-            if ($accept['value'] === '*' || $accept['value'] === '*/*')
-            {
+            if ($accept['value'] === '*' || $accept['value'] === '*/*') {
                 return $supported[0];
             }
 
             // If an acceptable value is supported, return it
-            foreach ($supported as $available)
-            {
-                if ($this->match($accept, $available, $enforceTypes, $matchLocales))
-                {
+            foreach ($supported as $available) {
+                if ($this->match($accept, $available, $enforceTypes, $matchLocales)) {
                     return $available;
                 }
             }
@@ -227,8 +218,7 @@ class Negotiate
         $results    = [];
         $acceptable = explode(',', $header);
 
-        foreach ($acceptable as $value)
-        {
+        foreach ($acceptable as $value) {
             $pairs = explode(';', $value);
 
             $value = $pairs[0];
@@ -237,22 +227,19 @@ class Negotiate
 
             $parameters = [];
 
-            foreach ($pairs as $pair)
-            {
+            foreach ($pairs as $pair) {
                 if (preg_match(
                     '/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
                     $pair,
                     $param
-                ))
-                {
+                )) {
                     $parameters[trim($param['name'])] = trim($param['value']);
                 }
             }
 
             $quality = 1.0;
 
-            if (array_key_exists('q', $parameters))
-            {
+            if (array_key_exists('q', $parameters)) {
                 $quality = $parameters['q'];
                 unset($parameters['q']);
             }
@@ -266,8 +253,7 @@ class Negotiate
 
         // Sort to get the highest results first
         usort($results, static function ($a, $b) {
-            if ($a['q'] === $b['q'])
-            {
+            if ($a['q'] === $b['q']) {
                 $aAst = substr_count($a['value'], '*');
                 $bAst = substr_count($b['value'], '*');
 
@@ -277,8 +263,7 @@ class Negotiate
                 // This seems backwards, but needs to be that way
                 // due to the way PHP7 handles ordering or array
                 // elements created by reference.
-                if ($aAst > $bAst)
-                {
+                if ($aAst > $bAst) {
                     return 1;
                 }
 
@@ -288,8 +273,7 @@ class Negotiate
                 // This seems backwards, but needs to be that way
                 // due to the way PHP7 handles ordering or array
                 // elements created by reference.
-                if ($aAst === $bAst)
-                {
+                if ($aAst === $bAst) {
                     return count($b['params']) - count($a['params']);
                 }
 
@@ -318,27 +302,23 @@ class Negotiate
     protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
     {
         $supported = $this->parseHeader($supported);
-        if (is_array($supported) && count($supported) === 1)
-        {
+        if (is_array($supported) && count($supported) === 1) {
             $supported = $supported[0];
         }
 
         // Is it an exact match?
-        if ($acceptable['value'] === $supported['value'])
-        {
+        if ($acceptable['value'] === $supported['value']) {
             return $this->matchParameters($acceptable, $supported);
         }
 
         // Do we need to compare types/sub-types? Only used
         // by negotiateMedia().
-        if ($enforceTypes)
-        {
+        if ($enforceTypes) {
             return $this->matchTypes($acceptable, $supported);
         }
 
         // Do we need to match locales against broader locales?
-        if ($matchLocales)
-        {
+        if ($matchLocales) {
             return $this->matchLocales($acceptable, $supported);
         }
 
@@ -358,17 +338,14 @@ class Negotiate
      */
     protected function matchParameters(array $acceptable, array $supported): bool
     {
-        if (count($acceptable['params']) !== count($supported['params']))
-        {
+        if (count($acceptable['params']) !== count($supported['params'])) {
             return false;
         }
 
-        foreach ($supported['params'] as $label => $value)
-        {
+        foreach ($supported['params'] as $label => $value) {
             if (! isset($acceptable['params'][$label])
                 || $acceptable['params'][$label] !== $value
-            )
-            {
+            ) {
                 return false;
             }
         }
@@ -395,14 +372,12 @@ class Negotiate
         [$sType, $sSubType] = explode('/', $supported['value']);
 
         // If the types don't match, we're done.
-        if ($aType !== $sType)
-        {
+        if ($aType !== $sType) {
             return false;
         }
 
         // If there's an asterisk, we're cool
-        if ($aSubType === '*')
-        {
+        if ($aSubType === '*') {
             return true;
         }
 

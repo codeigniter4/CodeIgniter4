@@ -6,5 +6,4 @@ class RegistrarConfig extends \CodeIgniter\Config\BaseConfig
     public $bar = [
         'baz'
     ];
-
 }

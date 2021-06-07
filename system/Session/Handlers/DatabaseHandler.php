@@ -72,8 +72,7 @@ class DatabaseHandler extends BaseHandler
         // Determine Table
         $this->table = $config->sessionSavePath;
 
-        if (empty($this->table))
-        {
+        if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
 
@@ -85,12 +84,9 @@ class DatabaseHandler extends BaseHandler
 
         // Determine Database type
         $driver = strtolower(get_class($this->db));
-        if (strpos($driver, 'mysql') !== false)
-        {
+        if (strpos($driver, 'mysql') !== false) {
             $this->platform = 'mysql';
-        }
-        elseif (strpos($driver, 'postgre') !== false)
-        {
+        } elseif (strpos($driver, 'postgre') !== false) {
             $this->platform = 'postgre';
         }
     }
@@ -110,8 +106,7 @@ class DatabaseHandler extends BaseHandler
      */
     public function open($savePath, $name): bool
     {
-        if (empty($this->db->connID))
-        {
+        if (empty($this->db->connID)) {
             $this->db->initialize();
         }
 
@@ -131,16 +126,14 @@ class DatabaseHandler extends BaseHandler
      */
     public function read($sessionID): string
     {
-        if ($this->lockSession($sessionID) === false)
-        {
+        if ($this->lockSession($sessionID) === false) {
             $this->fingerprint = md5('');
 
             return '';
         }
 
         // Needed by write() to detect session_regenerate_id() calls
-        if (is_null($this->sessionID)) // @phpstan-ignore-line
-        {
+        if (is_null($this->sessionID)) { // @phpstan-ignore-line
             $this->sessionID = $sessionID;
         }
 
@@ -148,15 +141,13 @@ class DatabaseHandler extends BaseHandler
                 ->select($this->platform === 'postgre' ? "encode(data, 'base64') AS data" : 'data')
                 ->where('id', $sessionID);
 
-        if ($this->matchIP)
-        {
+        if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
         }
 
         $result = $builder->get()->getRow();
 
-        if ($result === null)
-        {
+        if ($result === null) {
             // PHP7 will reuse the same SessionHandler object after
             // ID regeneration, so we need to explicitly set this to
             // FALSE instead of relying on the default ...
@@ -166,12 +157,9 @@ class DatabaseHandler extends BaseHandler
             return '';
         }
 
-        if (is_bool($result))
-        {
+        if (is_bool($result)) {
             $result = '';
-        }
-        else
-        {
+        } else {
             $result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data), true) : $result->data;
         }
 
@@ -195,20 +183,17 @@ class DatabaseHandler extends BaseHandler
      */
     public function write($sessionID, $sessionData): bool
     {
-        if ($this->lock === false)
-        {
+        if ($this->lock === false) {
             return $this->fail();
         }
 
         // Was the ID regenerated?
-        if ($sessionID !== $this->sessionID)
-        {
+        if ($sessionID !== $this->sessionID) {
             $this->rowExists = false;
             $this->sessionID = $sessionID;
         }
 
-        if ($this->rowExists === false)
-        {
+        if ($this->rowExists === false) {
             $insertData = [
                 'id'         => $sessionID,
                 'ip_address' => $this->ipAddress,
@@ -216,8 +201,7 @@ class DatabaseHandler extends BaseHandler
                 'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
             ];
 
-            if (! $this->db->table($this->table)->insert($insertData))
-            {
+            if (! $this->db->table($this->table)->insert($insertData)) {
                 return $this->fail();
             }
 
@@ -229,8 +213,7 @@ class DatabaseHandler extends BaseHandler
 
         $builder = $this->db->table($this->table)->where('id', $sessionID);
 
-        if ($this->matchIP)
-        {
+        if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
         }
 
@@ -238,13 +221,11 @@ class DatabaseHandler extends BaseHandler
             'timestamp' => 'now()',
         ];
 
-        if ($this->fingerprint !== md5($sessionData))
-        {
+        if ($this->fingerprint !== md5($sessionData)) {
             $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($sessionData) : $sessionData;
         }
 
-        if (! $builder->update($updateData))
-        {
+        if (! $builder->update($updateData)) {
             return $this->fail();
         }
 
@@ -280,23 +261,19 @@ class DatabaseHandler extends BaseHandler
      */
     public function destroy($sessionID): bool
     {
-        if ($this->lock)
-        {
+        if ($this->lock) {
             $builder = $this->db->table($this->table)->where('id', $sessionID);
 
-            if ($this->matchIP)
-            {
+            if ($this->matchIP) {
                 $builder = $builder->where('ip_address', $this->ipAddress);
             }
 
-            if (! $builder->delete())
-            {
+            if (! $builder->delete()) {
                 return $this->fail();
             }
         }
 
-        if ($this->close())
-        {
+        if ($this->close()) {
             $this->destroyCookie();
 
             return true;
@@ -333,11 +310,9 @@ class DatabaseHandler extends BaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
-        if ($this->platform === 'mysql')
-        {
+        if ($this->platform === 'mysql') {
             $arg = md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
-            if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
-            {
+            if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock) {
                 $this->lock = $arg;
 
                 return true;
@@ -346,11 +321,9 @@ class DatabaseHandler extends BaseHandler
             return $this->fail();
         }
 
-        if ($this->platform === 'postgre')
-        {
+        if ($this->platform === 'postgre') {
             $arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
-            if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
-            {
+            if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})")) {
                 $this->lock = $arg;
 
                 return true;
@@ -372,15 +345,12 @@ class DatabaseHandler extends BaseHandler
      */
     protected function releaseLock(): bool
     {
-        if (! $this->lock)
-        {
+        if (! $this->lock) {
             return true;
         }
 
-        if ($this->platform === 'mysql')
-        {
-            if ($this->db->query("SELECT RELEASE_LOCK('{$this->lock}') AS ci_session_lock")->getRow()->ci_session_lock)
-            {
+        if ($this->platform === 'mysql') {
+            if ($this->db->query("SELECT RELEASE_LOCK('{$this->lock}') AS ci_session_lock")->getRow()->ci_session_lock) {
                 $this->lock = false;
 
                 return true;
@@ -389,10 +359,8 @@ class DatabaseHandler extends BaseHandler
             return $this->fail();
         }
 
-        if ($this->platform === 'postgre')
-        {
-            if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})"))
-            {
+        if ($this->platform === 'postgre') {
+            if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})")) {
                 $this->lock = false;
 
                 return true;

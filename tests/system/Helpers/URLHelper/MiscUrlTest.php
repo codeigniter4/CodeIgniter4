@@ -737,8 +737,7 @@ final class MiscUrlTest extends CIUnitTestCase
             'Éléphant de PHP' => 'éléphant-de-php',
         ];
 
-        foreach ($words as $in => $out)
-        {
+        foreach ($words as $in => $out) {
             $this->assertEquals($out, url_title($in, '-', true));
         }
     }
@@ -751,8 +750,7 @@ final class MiscUrlTest extends CIUnitTestCase
             'Éléphant de PHP'           => 'Éléphant_de_PHP',
         ];
 
-        foreach ($words as $in => $out)
-        {
+        foreach ($words as $in => $out) {
             $this->assertEquals($out, url_title($in, '_'));
         }
     }
@@ -769,8 +767,7 @@ final class MiscUrlTest extends CIUnitTestCase
             'ä ö ü Ĝ β ę'     => 'ae-oe-ue-g-v-e',
         ];
 
-        foreach ($words as $in => $out)
-        {
+        foreach ($words as $in => $out) {
             $this->assertEquals($out, mb_url_title($in, '-', true));
         }
     }
@@ -784,8 +781,7 @@ final class MiscUrlTest extends CIUnitTestCase
             'ä ö ü Ĝ β ę'               => 'ae_oe_ue_G_v_e',
         ];
 
-        foreach ($words as $in => $out)
-        {
+        foreach ($words as $in => $out) {
             $this->assertEquals($out, mb_url_title($in, '_'));
         }
     }

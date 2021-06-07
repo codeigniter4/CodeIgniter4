@@ -268,8 +268,7 @@ class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityProperties()
     {
-        $power = new class extends Entity
-        {
+        $power             = new class extends Entity {
             public $foo    = 'bar';
             protected $bar = 'baz';
             public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
@@ -283,7 +282,6 @@ class ParserTest extends CIUnitTestCase
                     ],
                 ];
             }
-
         };
 
         $data = [
@@ -301,8 +299,7 @@ class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityObjectProperties()
     {
-        $power = new class extends Entity
-        {
+        $power                    = new class extends Entity {
             protected $attributes = [
                 'foo'     => 'bar',
                 'bar'     => 'baz',
@@ -417,8 +414,7 @@ class ParserTest extends CIUnitTestCase
      */
     public function testEscHandling($value, $expected = null)
     {
-        if ($expected === null)
-        {
+        if ($expected === null) {
             $expected = $value;
         }
         $this->assertEquals($expected, \esc($value));
@@ -786,8 +782,7 @@ class ParserTest extends CIUnitTestCase
 
             $out = '';
 
-            for ($i = 1; $i <= $count; $i ++)
-            {
+            for ($i = 1; $i <= $count; $i ++) {
                 $out .= ' ' . $i * $step;
             }
 
@@ -851,8 +846,7 @@ class ParserTest extends CIUnitTestCase
         $this->parser->addPlugin('count', static function (array $params = []) {
             $out = '';
 
-            foreach ($params as $index => $param)
-            {
+            foreach ($params as $index => $param) {
                 $out .= "{$index}. {$param} ";
             }
 
@@ -872,8 +866,7 @@ class ParserTest extends CIUnitTestCase
         $this->parser->addPlugin('read_params', static function (array $params = []) {
             $out = '';
 
-            foreach ($params as $index => $param)
-            {
+            foreach ($params as $index => $param) {
                 $out .= "{$index}: {$param}. ";
             }
 

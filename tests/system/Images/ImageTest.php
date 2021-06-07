@@ -8,7 +8,6 @@ use org\bovigo\vfs\vfsStream;
 
 class ImageTest extends CIUnitTestCase
 {
-
     protected $path = 'tests/_support/ci-logo.png';
 
     protected function setUp(): void
@@ -91,5 +90,4 @@ class ImageTest extends CIUnitTestCase
         $targetPath = $this->start . 'work';
         $this->image->copy($targetPath, '');
     }
-
 }

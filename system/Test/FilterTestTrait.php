@@ -89,8 +89,7 @@ trait FilterTestTrait
      */
     protected function setUpFilterTestTrait(): void
     {
-        if ($this->doneFilterSetUp === true)
-        {
+        if ($this->doneFilterSetUp === true) {
             return;
         }
 
@@ -104,8 +103,7 @@ trait FilterTestTrait
         $this->filtersConfig = $this->filtersConfig ?? config('Filters');
         $this->filters       = $this->filters ?? new Filters($this->filtersConfig, $this->request, $this->response);
 
-        if (is_null($this->collection))
-        {
+        if (is_null($this->collection)) {
             // Load the RouteCollection from Config to gather App route info
             // (creates $routes using the Service as a starting point)
             require APPPATH . 'Config/Routes.php';
@@ -132,18 +130,14 @@ trait FilterTestTrait
      */
     protected function getFilterCaller($filter, string $position): Closure
     {
-        if (! in_array($position, ['before', 'after'], true))
-        {
+        if (! in_array($position, ['before', 'after'], true)) {
             throw new InvalidArgumentException('Invalid filter position passed: ' . $position);
         }
 
-        if (is_string($filter))
-        {
+        if (is_string($filter)) {
             // Check for an alias (no namespace)
-            if (strpos($filter, '\\') === false)
-            {
-                if (! isset($this->filtersConfig->aliases[$filter]))
-                {
+            if (strpos($filter, '\\') === false) {
+                if (! isset($this->filtersConfig->aliases[$filter])) {
                     throw new RuntimeException("No filter found with alias '{$filter}'");
                 }
 
@@ -154,15 +148,13 @@ trait FilterTestTrait
             $filter = new $filter();
         }
 
-        if (! $filter instanceof FilterInterface)
-        {
+        if (! $filter instanceof FilterInterface) {
             throw FilterException::forIncorrectInterface(get_class($filter));
         }
 
         $request = clone $this->request;
 
-        if ($position === 'before')
-        {
+        if ($position === 'before') {
             return static function (array $params = null) use ($filter, $request) {
                 return $filter->before($request, $params);
             };
@@ -186,15 +178,13 @@ trait FilterTestTrait
      */
     protected function getFiltersForRoute(string $route, string $position): array
     {
-        if (! in_array($position, ['before', 'after'], true))
-        {
+        if (! in_array($position, ['before', 'after'], true)) {
             throw new InvalidArgumentException('Invalid filter position passed:' . $position);
         }
 
         $this->filters->reset();
 
-        if ($routeFilter = $this->collection->getFilterForRoute($route))
-        {
+        if ($routeFilter = $this->collection->getFilterForRoute($route)) {
             $this->filters->enableFilter($routeFilter, $position);
         }
 

@@ -26,8 +26,7 @@ use Config\Services;
  */
 
 // The path to the application directory.
-if (! defined('APPPATH'))
-{
+if (! defined('APPPATH')) {
     /**
      * @var Paths $paths
      */
@@ -35,14 +34,12 @@ if (! defined('APPPATH'))
 }
 
 // The path to the project root directory. Just above APPPATH.
-if (! defined('ROOTPATH'))
-{
+if (! defined('ROOTPATH')) {
     define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 }
 
 // The path to the system directory.
-if (! defined('SYSTEMPATH'))
-{
+if (! defined('SYSTEMPATH')) {
     /**
      * @var Paths $paths
      */
@@ -50,8 +47,7 @@ if (! defined('SYSTEMPATH'))
 }
 
 // The path to the writable directory.
-if (! defined('WRITEPATH'))
-{
+if (! defined('WRITEPATH')) {
     /**
      * @var Paths $paths
      */
@@ -59,8 +55,7 @@ if (! defined('WRITEPATH'))
 }
 
 // The path to the tests directory
-if (! defined('TESTPATH'))
-{
+if (! defined('TESTPATH')) {
     /**
      * @var Paths $paths
      */
@@ -72,14 +67,12 @@ if (! defined('TESTPATH'))
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
-if (! defined('APP_NAMESPACE'))
-{
+if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
 
 // Require app/Common.php file if exists.
-if (is_file(APPPATH . 'Common.php'))
-{
+if (is_file(APPPATH . 'Common.php')) {
     require_once APPPATH . 'Common.php';
 }
 
@@ -96,8 +89,7 @@ require_once SYSTEMPATH . 'Common.php';
  * files can use the path constants.
  */
 
-if (! class_exists('Config\Autoload', false))
-{
+if (! class_exists('Config\Autoload', false)) {
     require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
     require_once APPPATH . 'Config/Autoload.php';
     require_once SYSTEMPATH . 'Modules/Modules.php';
@@ -110,8 +102,7 @@ require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
-if (! class_exists('CodeIgniter\Services', false))
-{
+if (! class_exists('CodeIgniter\Services', false)) {
     class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
@@ -119,15 +110,13 @@ if (! class_exists('CodeIgniter\Services', false))
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
-if (is_file(COMPOSER_PATH))
-{
+if (is_file(COMPOSER_PATH)) {
     /*
      * The path to the vendor directory.
      *
      * We do not want to enforce this, so set the constant if Composer was used.
      */
-    if (! defined('VENDORPATH'))
-    {
+    if (! defined('VENDORPATH')) {
         define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
     }
 

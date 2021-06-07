@@ -39,8 +39,7 @@ class CodeIgniterTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (count( ob_list_handlers() ) > 1)
-        {
+        if (count( ob_list_handlers() ) > 1) {
             ob_end_clean();
         }
     }
@@ -434,5 +433,4 @@ class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
-
 }

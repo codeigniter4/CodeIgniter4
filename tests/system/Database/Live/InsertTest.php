@@ -113,5 +113,4 @@ class InsertTest extends CIUnitTestCase
 
         $this->seeInDatabase('misc', ['value' => $hash]);
     }
-
 }

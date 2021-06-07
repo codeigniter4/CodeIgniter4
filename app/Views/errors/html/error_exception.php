@@ -63,12 +63,9 @@
 							<!-- Trace info -->
 							<?php if (isset($row['file']) && is_file($row['file'])) :?>
 								<?php
-                                if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once'], true))
-                                {
+                                if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once'], true)) {
                                     echo esc($row['function'] . ' ' . static::cleanPath($row['file']));
-                                }
-                                else
-                                {
+                                } else {
                                     echo esc(static::cleanPath($row['file']) . ' : ' . $row['line']);
                                 }
                                 ?>
@@ -88,8 +85,7 @@
 										<?php
                                         $params = null;
                                         // Reflection by name is not available for closure function
-                                        if (substr($row['function'], -1) !== '}')
-                                        {
+                                        if (substr($row['function'], -1) !== '}') {
                                             $mirror = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) : new \ReflectionFunction($row['function']);
                                             $params = $mirror->getParameters();
                                         }
@@ -129,8 +125,8 @@
 			<!-- Server -->
 			<div class="content" id="server">
 				<?php foreach (['_SERVER', '_SESSION'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
-                    {
+					<?php
+                    if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) {
                         continue;
                     } ?>
 
@@ -232,8 +228,8 @@
 
 				<?php $empty = true; ?>
 				<?php foreach (['_GET', '_POST', '_COOKIE'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
-                    {
+					<?php
+                    if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) {
                         continue;
                     } ?>
 
@@ -288,12 +284,12 @@
 						</thead>
 						<tbody>
 						<?php foreach ($headers as $value) : ?>
-							<?php if (empty($value))
-                            {
+							<?php
+                            if (empty($value)) {
                                 continue;
-                            } ?>
-							<?php if (! is_array($value))
-                            {
+                            }
+
+                            if (! is_array($value)) {
                                 $value = [$value];
                             } ?>
 							<?php foreach ($value as $h) : ?>

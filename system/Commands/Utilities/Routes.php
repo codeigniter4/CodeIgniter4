@@ -90,15 +90,12 @@ class Routes extends BaseCommand
 
         $tbody = [];
 
-        foreach ($methods as $method)
-        {
+        foreach ($methods as $method) {
             $routes = $collection->getRoutes($method);
 
-            foreach ($routes as $route => $handler)
-            {
+            foreach ($routes as $route => $handler) {
                 // filter for strings, as callbacks aren't displayable
-                if (is_string($handler))
-                {
+                if (is_string($handler)) {
                     $tbody[] = [
                         strtoupper($method),
                         $route,

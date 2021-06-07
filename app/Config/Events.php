@@ -23,15 +23,12 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 
 Events::on('pre_system', static function () {
-    if (ENVIRONMENT !== 'testing')
-    {
-        if (ini_get('zlib.output_compression'))
-        {
+    if (ENVIRONMENT !== 'testing') {
+        if (ini_get('zlib.output_compression')) {
             throw FrameworkException::forEnabledZlibOutputCompression();
         }
 
-        while (ob_get_level() > 0)
-        {
+        while (ob_get_level() > 0) {
             ob_end_flush();
         }
 
@@ -46,8 +43,7 @@ Events::on('pre_system', static function () {
      * --------------------------------------------------------------------
      * If you delete, they will no longer be collected.
      */
-    if (CI_DEBUG && ! is_cli())
-    {
+    if (CI_DEBUG && ! is_cli()) {
         Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
         Services::toolbar()->respond();
     }

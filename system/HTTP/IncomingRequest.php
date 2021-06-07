@@ -146,14 +146,12 @@ class IncomingRequest extends Request
      */
     public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent = null)
     {
-        if (empty($uri) || empty($userAgent))
-        {
+        if (empty($uri) || empty($userAgent)) {
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
 
         // Get our body from php://input
-        if ($body === 'php://input')
-        {
+        if ($body === 'php://input') {
             $body = file_get_contents('php://input');
         }
 
@@ -182,8 +180,7 @@ class IncomingRequest extends Request
     {
         $this->locale = $this->defaultLocale = $config->defaultLocale;
 
-        if (! $config->negotiateLocale)
-        {
+        if (! $config->negotiateLocale) {
             return;
         }
 
@@ -217,13 +214,11 @@ class IncomingRequest extends Request
      */
     public function detectPath(string $protocol = ''): string
     {
-        if (empty($protocol))
-        {
+        if (empty($protocol)) {
             $protocol = 'REQUEST_URI';
         }
 
-        switch ($protocol)
-        {
+        switch ($protocol) {
             case 'REQUEST_URI':
                 $this->path = $this->parseRequestURI();
                 break;
@@ -251,8 +246,7 @@ class IncomingRequest extends Request
      */
     protected function parseRequestURI(): string
     {
-        if (! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
-        {
+        if (! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])) {
             return '';
         }
 
@@ -264,16 +258,13 @@ class IncomingRequest extends Request
         $uri   = $parts['path'] ?? '';
 
         // Strip the SCRIPT_NAME path from the URI
-        if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
-        {
+        if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php') {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $uri);
 
-            foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment)
-            {
+            foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment) {
                 // If these segments are not the same then we're done
-                if (! isset($segments[$i]) || $segment !== $segments[$i])
-                {
+                if (! isset($segments[$i]) || $segment !== $segments[$i]) {
                     break;
                 }
 
@@ -285,14 +276,11 @@ class IncomingRequest extends Request
 
         // This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
         // URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
-        if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
-        {
+        if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
             $query                   = explode('?', $query, 2);
             $uri                     = $query[0];
             $_SERVER['QUERY_STRING'] = $query[1] ?? '';
-        }
-        else
-        {
+        } else {
             $_SERVER['QUERY_STRING'] = $query;
         }
 
@@ -317,13 +305,11 @@ class IncomingRequest extends Request
     {
         $uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
-        if (trim($uri, '/') === '')
-        {
+        if (trim($uri, '/') === '') {
             return '';
         }
 
-        if (strncmp($uri, '/', 1) === 0)
-        {
+        if (strncmp($uri, '/', 1) === 0) {
             $uri                     = explode('?', $uri, 2);
             $_SERVER['QUERY_STRING'] = $uri[1] ?? '';
             $uri                     = $uri[0];
@@ -353,13 +339,11 @@ class IncomingRequest extends Request
      */
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
-        if (is_null($this->negotiator))
-        {
+        if (is_null($this->negotiator)) {
             $this->negotiator = Services::negotiator($this, true);
         }
 
-        switch (strtolower($type))
-        {
+        switch (strtolower($type)) {
             case 'media':
                 return $this->negotiator->media($supported, $strictMatch);
 
@@ -406,13 +390,11 @@ class IncomingRequest extends Request
      */
     public function isSecure(): bool
     {
-        if (! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-        {
+        if (! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
             return true;
         }
 
-        if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https')
-        {
+        if ($this->hasHeader('X-Forwarded-Proto') && $this->header('X-Forwarded-Proto')->getValue() === 'https') {
             return true;
         }
 
@@ -445,8 +427,7 @@ class IncomingRequest extends Request
 
         // Based on our baseURL provided by the developer
         // set our current domain name, scheme
-        if ($baseURL !== '')
-        {
+        if ($baseURL !== '') {
             $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
             $this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
             $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
@@ -455,14 +436,12 @@ class IncomingRequest extends Request
             $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 
             // Check if the baseURL scheme needs to be coerced into its secure version
-            if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http')
-            {
+            if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
                 $this->uri->setScheme('https');
             }
         }
         // @codeCoverageIgnoreStart
-        elseif (! is_cli())
-        {
+        elseif (! is_cli()) {
             die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
         }
         // @codeCoverageIgnoreEnd
@@ -478,8 +457,7 @@ class IncomingRequest extends Request
      */
     public function getPath(): string
     {
-        if (is_null($this->path))
-        {
+        if (is_null($this->path)) {
             $this->detectPath($this->config->uriProtocol);
         }
 
@@ -499,8 +477,7 @@ class IncomingRequest extends Request
     {
         // If it's not a valid locale, set it
         // to the default locale for the site.
-        if (! in_array($locale, $this->validLocales, true))
-        {
+        if (! in_array($locale, $this->validLocales, true)) {
             $locale = $this->defaultLocale;
         }
 
@@ -546,19 +523,15 @@ class IncomingRequest extends Request
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
-        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && ! is_null($this->body))
-        {
-            if (is_null($index))
-            {
+        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && ! is_null($this->body)) {
+            if (is_null($index)) {
                 return $this->getJSON();
             }
 
-            if (is_array($index))
-            {
+            if (is_array($index)) {
                 $output = [];
 
-                foreach ($index as $key)
-                {
+                foreach ($index as $key) {
                     $output[$key] = $this->getJsonVar($key, false, $filter, $flags);
                 }
 
@@ -608,16 +581,14 @@ class IncomingRequest extends Request
 
         $data = dot_array_search($index, $this->getJSON(true));
 
-        if (! is_array($data))
-        {
+        if (! is_array($data)) {
             $filter = $filter ?? FILTER_DEFAULT;
             $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
             return filter_var($data, $filter, $flags);
         }
 
-        if (! $assoc)
-        {
+        if (! $assoc) {
             return json_decode(json_encode($data));
         }
 
@@ -751,41 +722,34 @@ class IncomingRequest extends Request
     {
         // If the session hasn't been started, or no
         // data was previously saved, we're done.
-        if (empty($_SESSION['_ci_old_input']))
-        {
+        if (empty($_SESSION['_ci_old_input'])) {
             return null;
         }
 
         // Check for the value in the POST array first.
-        if (isset($_SESSION['_ci_old_input']['post'][$key]))
-        {
+        if (isset($_SESSION['_ci_old_input']['post'][$key])) {
             return $_SESSION['_ci_old_input']['post'][$key];
         }
 
         // Next check in the GET array.
-        if (isset($_SESSION['_ci_old_input']['get'][$key]))
-        {
+        if (isset($_SESSION['_ci_old_input']['get'][$key])) {
             return $_SESSION['_ci_old_input']['get'][$key];
         }
 
         helper('array');
 
         // Check for an array value in POST.
-        if (isset($_SESSION['_ci_old_input']['post']))
-        {
+        if (isset($_SESSION['_ci_old_input']['post'])) {
             $value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
-            if (! is_null($value))
-            {
+            if (! is_null($value)) {
                 return $value;
             }
         }
 
         // Check for an array value in GET.
-        if (isset($_SESSION['_ci_old_input']['get']))
-        {
+        if (isset($_SESSION['_ci_old_input']['get'])) {
             $value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
-            if (! is_null($value))
-            {
+            if (! is_null($value)) {
                 return $value;
             }
         }
@@ -804,8 +768,7 @@ class IncomingRequest extends Request
      */
     public function getFiles(): array
     {
-        if (is_null($this->files))
-        {
+        if (is_null($this->files)) {
             $this->files = new FileCollection();
         }
 
@@ -822,8 +785,7 @@ class IncomingRequest extends Request
      */
     public function getFileMultiple(string $fileID)
     {
-        if (is_null($this->files))
-        {
+        if (is_null($this->files)) {
             $this->files = new FileCollection();
         }
 
@@ -840,8 +802,7 @@ class IncomingRequest extends Request
      */
     public function getFile(string $fileID)
     {
-        if (is_null($this->files))
-        {
+        if (is_null($this->files)) {
             $this->files = new FileCollection();
         }
 

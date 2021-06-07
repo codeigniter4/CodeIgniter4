@@ -2,8 +2,8 @@
 
 namespace Tests\Support\Validation;
 
-class TestRules {
-
+class TestRules
+{
     public function customError(string $str, string &$error = null)
     {
         $error = 'My lovely error';
@@ -12,5 +12,4 @@ class TestRules {
     }
 
     //--------------------------------------------------------------------
-
 }

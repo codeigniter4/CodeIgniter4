@@ -107,8 +107,7 @@ class ResourceController extends BaseResource
      */
     public function setFormat(string $format = 'json')
     {
-        if (in_array($format, ['json', 'xml'], true))
-        {
+        if (in_array($format, ['json', 'xml'], true)) {
             $this->format = $format;
         }
     }

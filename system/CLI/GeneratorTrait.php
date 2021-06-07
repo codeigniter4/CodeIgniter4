@@ -95,14 +95,12 @@ trait GeneratorTrait
     {
         $this->params = $params;
 
-        if ($this->getOption('namespace') === 'CodeIgniter')
-        {
+        if ($this->getOption('namespace') === 'CodeIgniter') {
             // @codeCoverageIgnoreStart
             CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
             CLI::newLine();
 
-            if (CLI::prompt('Are you sure you want to continue?', ['y', 'n'], 'required') === 'n')
-            {
+            if (CLI::prompt('Are you sure you want to continue?', ['y', 'n'], 'required') === 'n') {
                 CLI::newLine();
                 CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
                 CLI::newLine();
@@ -121,8 +119,7 @@ trait GeneratorTrait
         $path = $this->buildPath($class);
 
         // Check if path is empty.
-        if (empty($path))
-        {
+        if (empty($path)) {
             return;
         }
 
@@ -130,8 +127,7 @@ trait GeneratorTrait
 
         // Overwriting files unknowingly is a serious annoyance, So we'll check if
         // we are duplicating things, If 'force' option is not supplied, we bail.
-        if (! $this->getOption('force') && $isFile)
-        {
+        if (! $this->getOption('force') && $isFile) {
             CLI::error(lang('CLI.generator.fileExist', [clean_path($path)]), 'light_gray', 'red');
             CLI::newLine();
 
@@ -141,8 +137,7 @@ trait GeneratorTrait
         // Check if the directory to save the file is existing.
         $dir = dirname($path);
 
-        if (! is_dir($dir))
-        {
+        if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
@@ -150,8 +145,7 @@ trait GeneratorTrait
 
         // Build the class based on the details we have, We'll be getting our file
         // contents from the template, and then we'll do the necessary replacements.
-        if (! write_file($path, $this->buildContent($class)))
-        {
+        if (! write_file($path, $this->buildContent($class))) {
             // @codeCoverageIgnoreStart
             CLI::error(lang('CLI.generator.fileError', [clean_path($path)]), 'light_gray', 'red');
             CLI::newLine();
@@ -160,8 +154,7 @@ trait GeneratorTrait
             // @codeCoverageIgnoreEnd
         }
 
-        if ($this->getOption('force') && $isFile)
-        {
+        if ($this->getOption('force') && $isFile) {
             CLI::write(lang('CLI.generator.fileOverwrite', [clean_path($path)]), 'yellow');
             CLI::newLine();
 
@@ -208,8 +201,7 @@ trait GeneratorTrait
         // Gets the class name from input.
         $class = $this->params[0] ?? CLI::getSegment(2);
 
-        if (is_null($class) && $this->hasClassName)
-        {
+        if (is_null($class) && $this->hasClassName) {
             // @codeCoverageIgnoreStart
             $nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
             $class    = CLI::prompt(lang($nameLang), null, 'required');
@@ -226,13 +218,11 @@ trait GeneratorTrait
          */
         $pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)/i', $component);
 
-        if (preg_match($pattern, $class, $matches) === 1)
-        {
+        if (preg_match($pattern, $class, $matches) === 1) {
             $class = $matches[1] . ucfirst($matches[2]);
         }
 
-        if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component))
-        {
+        if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component)) {
             $class .= ucfirst($component);
         }
 
@@ -242,8 +232,7 @@ trait GeneratorTrait
         // Gets the namespace from input.
         $namespace = trim(str_replace('/', '\\', $this->getOption('namespace') ?? APP_NAMESPACE), '\\');
 
-        if (strncmp($class, $namespace, strlen($namespace)) === 0)
-        {
+        if (strncmp($class, $namespace, strlen($namespace)) === 0) {
             return $class; // @codeCoverageIgnore
         }
 
@@ -260,12 +249,9 @@ trait GeneratorTrait
      */
     protected function renderTemplate(array $data = []): string
     {
-        try
-        {
+        try {
             return view(config('Generators')->views[$this->name], $data, ['debug' => false]);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             log_message('error', $e->getMessage());
 
             return view("CodeIgniter\Commands\Generators\Views\\{$this->template}", $data, ['debug' => false]);
@@ -309,8 +295,7 @@ trait GeneratorTrait
     {
         $template = $this->prepare($class);
 
-        if ($this->sortImports && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match))
-        {
+        if ($this->sortImports && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match)) {
             $imports = explode("\n", trim($match['imports']));
             sort($imports);
 
@@ -334,8 +319,7 @@ trait GeneratorTrait
         // Check if the namespace is actually defined and we are not just typing gibberish.
         $base = Services::autoloader()->getNamespace($namespace);
 
-        if (! $base = reset($base))
-        {
+        if (! $base = reset($base)) {
             CLI::error(lang('CLI.namespaceNotDefined', [$namespace]), 'light_gray', 'red');
             CLI::newLine();
 
@@ -400,8 +384,7 @@ trait GeneratorTrait
      */
     protected function getOption(string $name)
     {
-        if (! array_key_exists($name, $this->params))
-        {
+        if (! array_key_exists($name, $this->params)) {
             return CLI::getOption($name);
         }
 

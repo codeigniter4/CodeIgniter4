@@ -181,5 +181,4 @@ class ConfigTest extends CIUnitTestCase
         $this->assertEquals(true, $this->getPrivateProperty($conn, 'strictOn'));
         $this->assertEquals([], $this->getPrivateProperty($conn, 'failover'));
     }
-
 }

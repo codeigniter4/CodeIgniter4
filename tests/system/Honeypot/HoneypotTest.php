@@ -12,7 +12,6 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 class HoneypotTest extends CIUnitTestCase
 {
-
     protected $config;
     protected $honeypot;
     protected $request;
@@ -159,5 +158,4 @@ class HoneypotTest extends CIUnitTestCase
             $this->getPrivateProperty($honeypot, 'config')->container
         );
     }
-
 }

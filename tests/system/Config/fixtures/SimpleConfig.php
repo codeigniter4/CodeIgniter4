@@ -2,7 +2,6 @@
 
 class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 {
-
     public $QZERO;
     public $QZEROSTR;
     public $QEMPTYSTR;

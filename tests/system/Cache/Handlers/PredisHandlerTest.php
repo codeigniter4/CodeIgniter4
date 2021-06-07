@@ -38,8 +38,7 @@ final class PredisHandlerTest extends CIUnitTestCase
 
     public function tearDown(): void
     {
-        foreach (self::getKeyArray() as $key)
-        {
+        foreach (self::getKeyArray() as $key) {
             $this->PredisHandler->delete($key);
         }
     }
@@ -109,8 +108,7 @@ final class PredisHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingPrefix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->PredisHandler->save('key_' . $i, 'value' . $i);
         }
 
@@ -128,8 +126,7 @@ final class PredisHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingSuffix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->PredisHandler->save('key_' . $i, 'value' . $i);
         }
 

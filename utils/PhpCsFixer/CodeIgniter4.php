@@ -32,7 +32,9 @@ final class CodeIgniter4 extends AbstractRuleset
                     '.=' => 'align_single_space',
                 ],
             ],
-            'blank_line_before_statement' => [
+            'blank_line_after_namespace'   => true,
+            'blank_line_after_opening_tag' => true,
+            'blank_line_before_statement'  => [
                 'statements' => [
                     'case',
                     'continue',
@@ -52,8 +54,13 @@ final class CodeIgniter4 extends AbstractRuleset
                     'yield_from',
                 ],
             ],
-            'blank_line_after_namespace'   => true,
-            'blank_line_after_opening_tag' => true,
+            'braces' => [
+                'allow_single_line_anonymous_class_with_empty_body' => true,
+                'allow_single_line_closure'                         => true,
+                'position_after_anonymous_constructs'               => 'same',
+                'position_after_control_structures'                 => 'same',
+                'position_after_functions_and_oop_constructs'       => 'next',
+            ],
             'function_to_constant'         => true,
             'indentation_type'             => true,
             'line_ending'                  => true,

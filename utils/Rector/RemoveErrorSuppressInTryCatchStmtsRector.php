@@ -47,8 +47,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
         $tryCatch = $this->betterNodeFinder->findParentType($node, TryCatch::class);
 
         // not in try catch
-        if (! $tryCatch instanceof TryCatch)
-        {
+        if (! $tryCatch instanceof TryCatch) {
             return null;
         }
 
@@ -57,8 +56,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
         });
 
         // not in stmts, means it in catch or finally
-        if (! $inStmts)
-        {
+        if (! $inStmts) {
             return null;
         }
 

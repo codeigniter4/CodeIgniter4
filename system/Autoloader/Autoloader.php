@@ -89,29 +89,24 @@ class Autoloader
     {
         // We have to have one or the other, though we don't enforce the need
         // to have both present in order to work.
-        if (empty($config->psr4) && empty($config->classmap))
-        {
+        if (empty($config->psr4) && empty($config->classmap)) {
             throw new InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
         }
 
-        if (isset($config->psr4))
-        {
+        if (isset($config->psr4)) {
             $this->addNamespace($config->psr4);
         }
 
-        if (isset($config->classmap))
-        {
+        if (isset($config->classmap)) {
             $this->classmap = $config->classmap;
         }
 
-        if (isset($config->files))
-        {
+        if (isset($config->files)) {
             $this->files = $config->files;
         }
 
         // Should we load through Composer's namespaces, also?
-        if ($modules->discoverInComposer)
-        {
+        if ($modules->discoverInComposer) {
             $this->discoverComposerNamespaces();
         }
 
@@ -130,10 +125,8 @@ class Autoloader
         spl_autoload_register([$this, 'loadClassmap'], true, true); // @phpstan-ignore-line
 
         // Load our non-class files
-        foreach ($this->files as $file)
-        {
-            if (is_string($file))
-            {
+        foreach ($this->files as $file) {
+            if (is_string($file)) {
                 $this->includeFile($file);
             }
         }
@@ -149,16 +142,12 @@ class Autoloader
      */
     public function addNamespace($namespace, string $path = null)
     {
-        if (is_array($namespace))
-        {
-            foreach ($namespace as $prefix => $namespacedPath)
-            {
+        if (is_array($namespace)) {
+            foreach ($namespace as $prefix => $namespacedPath) {
                 $prefix = trim($prefix, '\\');
 
-                if (is_array($namespacedPath))
-                {
-                    foreach ($namespacedPath as $dir)
-                    {
+                if (is_array($namespacedPath)) {
+                    foreach ($namespacedPath as $dir) {
                         $this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
                     }
 
@@ -167,9 +156,7 @@ class Autoloader
 
                 $this->prefixes[$prefix][] = rtrim($namespacedPath, '\\/') . DIRECTORY_SEPARATOR;
             }
-        }
-        else
-        {
+        } else {
             $this->prefixes[trim($namespace, '\\')][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
         }
 
@@ -187,8 +174,7 @@ class Autoloader
      */
     public function getNamespace(string $prefix = null)
     {
-        if ($prefix === null)
-        {
+        if ($prefix === null) {
             return $this->prefixes;
         }
 
@@ -204,8 +190,7 @@ class Autoloader
      */
     public function removeNamespace(string $namespace)
     {
-        if (isset($this->prefixes[trim($namespace, '\\')]))
-        {
+        if (isset($this->prefixes[trim($namespace, '\\')])) {
             unset($this->prefixes[trim($namespace, '\\')]);
         }
 
@@ -223,8 +208,7 @@ class Autoloader
     {
         $file = $this->classmap[$class] ?? '';
 
-        if (is_string($file) && $file !== '')
-        {
+        if (is_string($file) && $file !== '') {
             return $this->includeFile($file);
         }
 
@@ -256,24 +240,19 @@ class Autoloader
      */
     protected function loadInNamespace(string $class)
     {
-        if (strpos($class, '\\') === false)
-        {
+        if (strpos($class, '\\') === false) {
             return false;
         }
 
-        foreach ($this->prefixes as $namespace => $directories)
-        {
-            foreach ($directories as $directory)
-            {
+        foreach ($this->prefixes as $namespace => $directories) {
+            foreach ($directories as $directory) {
                 $directory = rtrim($directory, '\\/');
 
-                if (strpos($class, $namespace) === 0)
-                {
+                if (strpos($class, $namespace) === 0) {
                     $filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
                     $filename = $this->includeFile($filePath);
 
-                    if ($filename)
-                    {
+                    if ($filename) {
                         return $filename;
                     }
                 }
@@ -295,8 +274,7 @@ class Autoloader
     {
         $file = $this->sanitizeFilename($file);
 
-        if (is_file($file))
-        {
+        if (is_file($file)) {
             include_once $file;
 
             return $file;
@@ -339,8 +317,7 @@ class Autoloader
      */
     protected function discoverComposerNamespaces()
     {
-        if (! is_file(COMPOSER_PATH))
-        {
+        if (! is_file(COMPOSER_PATH)) {
             return;
         }
 
@@ -354,15 +331,13 @@ class Autoloader
         unset($composer);
 
         // Get rid of CodeIgniter so we don't have duplicates
-        if (isset($paths['CodeIgniter\\']))
-        {
+        if (isset($paths['CodeIgniter\\'])) {
             unset($paths['CodeIgniter\\']);
         }
 
         $newPaths = [];
 
-        foreach ($paths as $key => $value)
-        {
+        foreach ($paths as $key => $value) {
             // Composer stores namespaces with trailing slash. We don't.
             $newPaths[rtrim($key, '\\ ')] = $value;
         }

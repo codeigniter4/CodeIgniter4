@@ -43,8 +43,7 @@ class Result extends BaseResult
     {
         $fieldNames = [];
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
-        {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
             $fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
         }
 
@@ -71,8 +70,7 @@ class Result extends BaseResult
         $retVal = [];
         $this->resultID->fetchArray(SQLITE3_NUM); // @phpstan-ignore-line
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
-        {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
             $retVal[$i]             = new stdClass();
             $retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
             $type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
@@ -95,8 +93,7 @@ class Result extends BaseResult
      */
     public function freeResult()
     {
-        if (is_object($this->resultID))
-        {
+        if (is_object($this->resultID)) {
             $this->resultID->finalize();
             $this->resultID = false;
         }
@@ -116,8 +113,7 @@ class Result extends BaseResult
      */
     public function dataSeek(int $n = 0)
     {
-        if ($n !== 0)
-        {
+        if ($n !== 0) {
             throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
         }
 
@@ -152,30 +148,25 @@ class Result extends BaseResult
     protected function fetchObject(string $className = 'stdClass')
     {
         // No native support for fetching rows as objects
-        if (($row = $this->fetchAssoc()) === false)
-        {
+        if (($row = $this->fetchAssoc()) === false) {
             return false;
         }
 
-        if ($className === 'stdClass')
-        {
+        if ($className === 'stdClass') {
             return (object) $row;
         }
 
         $classObj = new $className();
 
-        if (is_subclass_of($className, Entity::class))
-        {
+        if (is_subclass_of($className, Entity::class)) {
             return $classObj->setAttributes($row);
         }
 
         $classSet = Closure::bind(function ($key, $value) {
             $this->$key = $value;
-        }, $classObj, $className
-        );
+        }, $classObj, $className);
 
-        foreach (array_keys($row) as $key)
-        {
+        foreach (array_keys($row) as $key) {
             $classSet($key, $row[$key]);
         }
 

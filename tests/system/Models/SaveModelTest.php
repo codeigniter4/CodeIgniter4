@@ -92,8 +92,7 @@ final class SaveModelTest extends LiveModelTestCase
         $data = new stdClass();
 
         // Sqlsrv does not allow forcing an ID into an autoincrement field.
-        if ($this->db->DBDriver !== 'SQLSRV')
-        {
+        if ($this->db->DBDriver !== 'SQLSRV') {
             $data->id = 1;
         }
 
@@ -197,8 +196,7 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewEntityWithDateTime(): void
     {
-        $entity = new class extends Entity
-        {
+        $entity = new class extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -232,8 +230,7 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewEntityWithDate(): void
     {
-        $entity = new class extends Entity
-        {
+        $entity = new class extends Entity {
             protected $id;
             protected $name;
             protected $created_at;
@@ -249,8 +246,7 @@ final class SaveModelTest extends LiveModelTestCase
             ];
         };
 
-        $testModel = new class extends Model
-        {
+        $testModel                    = new class extends Model {
             protected $table          = 'empty';
             protected $allowedFields  = [
                 'name',

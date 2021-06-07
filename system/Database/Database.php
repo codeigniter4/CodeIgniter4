@@ -48,20 +48,17 @@ class Database
      */
     public function load(array $params = [], string $alias = '')
     {
-        if ($alias === '')
-        {
+        if ($alias === '') {
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
         // Handle universal DSN connection string
-        if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false)
-        {
+        if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false) {
             $params = $this->parseDSN($params);
         }
 
         // No DB specified? Beat them senseless...
-        if (empty($params['DBDriver']))
-        {
+        if (empty($params['DBDriver'])) {
             throw new InvalidArgumentException('You have not selected a database type to connect to.');
         }
 
@@ -82,8 +79,7 @@ class Database
     public function loadForge(ConnectionInterface $db): object
     {
         // Initialize database connection if not exists.
-        if (! $db->connID)
-        {
+        if (! $db->connID) {
             $db->initialize();
         }
 
@@ -101,8 +97,7 @@ class Database
     public function loadUtils(ConnectionInterface $db): object
     {
         // Initialize database connection if not exists.
-        if (! $db->connID)
-        {
+        if (! $db->connID) {
             $db->initialize();
         }
 
@@ -124,8 +119,7 @@ class Database
     {
         $dsn = parse_url($params['DSN']);
 
-        if (! $dsn)
-        {
+        if (! $dsn) {
             throw new InvalidArgumentException('Your DSN connection string is invalid.');
         }
 
@@ -140,14 +134,11 @@ class Database
         ];
 
         // Do we have additional config items set?
-        if (! empty($dsn['query']))
-        {
+        if (! empty($dsn['query'])) {
             parse_str($dsn['query'], $extra);
 
-            foreach ($extra as $key => $val)
-            {
-                if (is_string($val) && in_array(strtolower($val), ['true', 'false', 'null'], true))
-                {
+            foreach ($extra as $key => $val) {
+                if (is_string($val) && in_array(strtolower($val), ['true', 'false', 'null'], true)) {
                     $val = $val === 'null' ? null : filter_var($val, FILTER_VALIDATE_BOOLEAN);
                 }
 
@@ -173,8 +164,7 @@ class Database
     {
         $class = $driver . '\\' . $class;
 
-        if (strpos($driver, '\\') === false)
-        {
+        if (strpos($driver, '\\') === false) {
             $class = "CodeIgniter\Database\\{$class}";
         }
 

@@ -12,7 +12,6 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 class ConsoleTest extends CIUnitTestCase
 {
-
     private $stream_filter;
 
     protected function setUp(): void
@@ -26,8 +25,7 @@ class ConsoleTest extends CIUnitTestCase
         $this->env->load();
 
         // Set environment values that would otherwise stop the framework from functioning during tests.
-        if (! isset($_SERVER['app.baseURL']))
-        {
+        if (! isset($_SERVER['app.baseURL'])) {
             $_SERVER['app.baseURL'] = 'http://example.com/';
         }
 
@@ -84,5 +82,4 @@ class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Lists the available commands.', $result);
         $this->assertStringContainsString('Displays basic usage information.', $result);
     }
-
 }

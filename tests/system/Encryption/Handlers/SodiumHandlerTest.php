@@ -20,8 +20,7 @@ class SodiumHandlerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! extension_loaded('sodium'))
-        {
+        if (! extension_loaded('sodium')) {
             $this->markTestSkipped('Libsodium is not available.');
         }
 

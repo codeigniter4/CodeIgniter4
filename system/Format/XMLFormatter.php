@@ -33,8 +33,7 @@ class XMLFormatter implements FormatterInterface
 
         // SimpleXML is installed but default
         // but best to check, and then provide a fallback.
-        if (! extension_loaded('simplexml'))
-        {
+        if (! extension_loaded('simplexml')) {
             // never thrown in travis-ci
             // @codeCoverageIgnoreStart
             throw FormatException::forMissingExtension();
@@ -61,17 +60,13 @@ class XMLFormatter implements FormatterInterface
      */
     protected function arrayToXML(array $data, &$output)
     {
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $key = $this->normalizeXMLTag($key);
 
-            if (is_array($value))
-            {
+            if (is_array($value)) {
                 $subnode = $output->addChild("$key");
                 $this->arrayToXML($value, $subnode);
-            }
-            else
-            {
+            } else {
                 $output->addChild("$key", htmlspecialchars("$value"));
             }
         }

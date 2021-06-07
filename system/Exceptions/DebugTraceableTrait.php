@@ -26,8 +26,7 @@ trait DebugTraceableTrait
 
         $trace = $this->getTrace()[0];
 
-        if (isset($trace['class']) && $trace['class'] === static::class)
-        {
+        if (isset($trace['class']) && $trace['class'] === static::class) {
             [
                 'line' => $this->line,
                 'file' => $this->file,

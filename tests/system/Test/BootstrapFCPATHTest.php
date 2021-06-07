@@ -55,8 +55,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
     private function deleteDirectories() : void
     {
         // these need to be executed in reverse order: dir 2 in inside dir1
-        if (is_dir($this->dir1))
-        {
+        if (is_dir($this->dir1)) {
             rmdir( $this->dir1 );
         }
     }
@@ -69,8 +68,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function deleteFiles() : void
     {
-        if (file_exists($this->file1))
-        {
+        if (file_exists($this->file1)) {
             unlink( $this->file1 );
         }
     }
@@ -97,5 +95,4 @@ class BootstrapFCPATHTest extends CIUnitTestCase
 
         return ob_get_clean();
     }
-
 }

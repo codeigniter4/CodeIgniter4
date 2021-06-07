@@ -19,11 +19,9 @@ use Config\Images;
  */
 class ImageMagickHandlerTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
-        if (! extension_loaded('imagick'))
-        {
+        if (! extension_loaded('imagick')) {
             $this->markTestSkipped('The ImageMagick extension is not available.');
 
             return;
@@ -281,8 +279,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
         ];
         $this->handler->withFile($this->path);
 
-        foreach ($choices as $position)
-        {
+        foreach ($choices as $position) {
             $this->handler->fit(100, 100, $position);
             $this->assertEquals(100, $this->handler->getWidth(), 'Position ' . $position . ' failed');
             $this->assertEquals(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
@@ -313,10 +310,8 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageCreation()
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
-        {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
-            {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -332,10 +327,8 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageCopy()
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
-        {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
-            {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -353,8 +346,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageCopyWithNoTargetAndMaxQuality()
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
-        {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
             $this->handler->save(null, 100);
             $this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
@@ -368,10 +360,8 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageCompressionGetResource()
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
-        {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
-            {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -390,10 +380,8 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageCompressionWithResource()
     {
-        foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
-        {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true))
-            {
+        foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
+            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -422,8 +410,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageReorientLandscape()
     {
-        for ($i = 0; $i <= 8; $i++)
-        {
+        for ($i = 0; $i <= 8; $i++) {
             $source = $this->origin . 'EXIFsamples/landscape_' . '' . $i . '.jpg';
             $result = $this->root . 'landscape_' . $i . '_reoriented.jpg';
 
@@ -442,8 +429,7 @@ class ImageMagickHandlerTest extends CIUnitTestCase
 
     public function testImageReorientPortrait()
     {
-        for ($i = 0; $i <= 8; $i++)
-        {
+        for ($i = 0; $i <= 8; $i++) {
             $source = $this->origin . 'EXIFsamples/portrait_' . '' . $i . '.jpg';
             $result = $this->root . 'portrait_' . $i . '_reoriented.jpg';
 
@@ -459,5 +445,4 @@ class ImageMagickHandlerTest extends CIUnitTestCase
             $this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }
     }
-
 }

@@ -71,35 +71,29 @@ class GenerateKey extends BaseCommand
     public function run(array $params)
     {
         $prefix = $params['prefix'] ?? CLI::getOption('prefix');
-        if (in_array($prefix, [null, true], true))
-        {
+        if (in_array($prefix, [null, true], true)) {
             $prefix = 'hex2bin';
-        }
-        elseif (! in_array($prefix, ['hex2bin', 'base64'], true))
-        {
+        } elseif (! in_array($prefix, ['hex2bin', 'base64'], true)) {
             // @codeCoverageIgnoreStart
             $prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required');
             // @codeCoverageIgnoreEnd
         }
 
         $length = $params['length'] ?? CLI::getOption('length');
-        if (in_array($length, [null, true], true))
-        {
+        if (in_array($length, [null, true], true)) {
             $length = 32;
         }
 
         $encodedKey = $this->generateRandomKey($prefix, $length);
 
-        if (array_key_exists('show', $params) || (bool) CLI::getOption('show'))
-        {
+        if (array_key_exists('show', $params) || (bool) CLI::getOption('show')) {
             CLI::write($encodedKey, 'yellow');
             CLI::newLine();
 
             return;
         }
 
-        if (! $this->setNewEncryptionKey($encodedKey, $params))
-        {
+        if (! $this->setNewEncryptionKey($encodedKey, $params)) {
             CLI::write('Error in setting new encryption key to .env file.', 'light_gray', 'red');
             CLI::newLine();
 
@@ -128,8 +122,7 @@ class GenerateKey extends BaseCommand
     {
         $key = Encryption::createKey($length);
 
-        if ($prefix === 'hex2bin')
-        {
+        if ($prefix === 'hex2bin') {
             return 'hex2bin:' . bin2hex($key);
         }
 
@@ -148,8 +141,7 @@ class GenerateKey extends BaseCommand
     {
         $currentKey = env('encryption.key', '');
 
-        if (strlen($currentKey) !== 0 && ! $this->confirmOverwrite($params))
-        {
+        if (strlen($currentKey) !== 0 && ! $this->confirmOverwrite($params)) {
             // Not yet testable since it requires keyboard input
             // @codeCoverageIgnoreStart
             return false;
@@ -184,10 +176,8 @@ class GenerateKey extends BaseCommand
         $baseEnv = ROOTPATH . 'env';
         $envFile = ROOTPATH . '.env';
 
-        if (! file_exists($envFile))
-        {
-            if (! file_exists($baseEnv))
-            {
+        if (! file_exists($envFile)) {
+            if (! file_exists($baseEnv)) {
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
                 CLI::newLine();
@@ -218,8 +208,7 @@ class GenerateKey extends BaseCommand
     {
         $escaped = preg_quote($oldKey, '/');
 
-        if ($escaped !== '')
-        {
+        if ($escaped !== '') {
             $escaped = "[$escaped]*";
         }
 
