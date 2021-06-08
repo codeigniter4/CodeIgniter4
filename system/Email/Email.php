@@ -722,7 +722,7 @@ class Email
 
                 $this->attachments[$i]['cid'] = uniqid(basename($attachment['name'][0]) . '@', true);
 
-                return $attachment['cid'];
+                return $this->attachments[$i]['cid'];
             }
         }
 
