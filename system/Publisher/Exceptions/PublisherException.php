@@ -50,4 +50,26 @@ class PublisherException extends FrameworkException
 	{
 		return new static(lang('Publisher.expectedFile', [$caller]));
 	}
+
+	/**
+	 * Throws when given a destination that is not in the list of allowed directories.
+	 *
+	 * @param string $destination
+	 */
+	public static function forDestinationNotAllowed(string $destination)
+	{
+		return new static(lang('Publisher.destinationNotAllowed', [$destination]));
+	}
+
+	/**
+	 * Throws when a file fails to match the allowed pattern for its destination.
+	 *
+	 * @param string $file
+	 * @param string $directory
+	 * @param string $pattern
+	 */
+	public static function forFileNotAllowed(string $file, string $directory, string $pattern)
+	{
+		return new static(lang('Publisher.fileNotAllowed', [$file, $directory, $pattern]));
+	}
 }

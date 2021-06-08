@@ -107,6 +107,20 @@ Most of the time you will not need to handle your own discovery, just use the pr
 By default on your class extension ``publish()`` will add all files from your ``$source`` and merge them
 out to your destination, overwriting on collision.
 
+Security
+========
+
+In order to prevent modules from injecting malicious code into your projects, ``Publisher`` contains a config file
+that defines which directories and file patterns are allowed as destinations. By default, files may only be published
+to your project (to prevent access to the rest of the filesystem), and the **public/** folder (``FCPATH``) will only
+receive files with the following extensions:
+* Web assets: css, scss, js, map
+* Non-executable web files: htm, html, xml, json, webmanifest
+* Fonts: tff, eot, woff
+* Images: gif, jpg, jpeg, tiff, png, webp, bmp, ico, svg
+
+If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher``.
+
 ********
 Examples
 ********
@@ -159,7 +173,7 @@ Asset Dependencies Example
 ==========================
 
 You want to integrate the frontend library "Bootstrap" into your project, but the frequent updates makes it a hassle
-to keep up with. You can create a publication definition in your project to sync frontend assets by adding extending
+to keep up with. You can create a publication definition in your project to sync frontend assets by extending
 ``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
 
 	<?php
