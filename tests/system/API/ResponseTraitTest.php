@@ -166,7 +166,7 @@ EOH;
     "id": 1
 }
 EOH;
-        $controller->respond((array)$payload);
+        $controller->respond((array) $payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
 

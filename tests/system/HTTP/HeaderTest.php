@@ -209,6 +209,6 @@ class HeaderTest extends CIUnitTestCase
         $header->setValue('bar')
                ->appendValue(['baz' => 'fuzz']);
 
-        $this->assertEquals($expected, (string)$header);
+        $this->assertEquals($expected, (string) $header);
     }
 }
